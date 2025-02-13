@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.account.clientAccount.screens
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
@@ -23,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.account.generated.resources.Res
 import mifos_mobile.feature.account.generated.resources.feature_account_loan
@@ -50,7 +48,6 @@ import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 @Composable
 internal fun ClientAccountsScreen(
-    isNetworkConnected: Boolean,
     navigateBack: () -> Unit,
     navigateToLoanApplicationScreen: () -> Unit,
     navigateToSavingsApplicationScreen: () -> Unit,
@@ -76,7 +73,6 @@ internal fun ClientAccountsScreen(
     }
 
     ClientAccountsScreen(
-        isNetworkConnected = isNetworkConnected,
         currentPage = currentPage,
         isDialogActive = isDialogActive,
         filterList = filterList,
@@ -106,7 +102,6 @@ internal fun ClientAccountsScreen(
 
 @Composable
 private fun ClientAccountsScreen(
-    isNetworkConnected: Boolean,
     currentPage: Int,
     isDialogActive: Boolean,
     filterList: List<CheckboxStatus>,
@@ -161,14 +156,13 @@ private fun ClientAccountsScreen(
                     Icon(
                         imageVector = MifosIcons.Add,
                         contentDescription = "Create Account",
-                        tint = if (isSystemInDarkTheme()) Color.Black else Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 },
             )
         },
         content = {
             ClientAccountsTabRow(
-                isNetworkConnected = isNetworkConnected,
                 modifier = Modifier.padding(it),
                 pageChanged = pageChanged,
                 onItemClick = onItemClick,
@@ -181,7 +175,6 @@ private fun ClientAccountsScreen(
 
 @Composable
 private fun ClientAccountsTabRow(
-    isNetworkConnected: Boolean,
     currentPage: Int,
     pageChanged: (index: Int) -> Unit,
     onItemClick: (accountType: AccountType, accountId: Long) -> Unit,
@@ -225,7 +218,6 @@ private fun ClientAccountsTabRow(
     ) {
         when (page) {
             0 -> AccountsScreen(
-                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.SAVINGS_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -236,7 +228,6 @@ private fun ClientAccountsTabRow(
             )
 
             1 -> AccountsScreen(
-                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.LOAN_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -247,7 +238,6 @@ private fun ClientAccountsTabRow(
             )
 
             2 -> AccountsScreen(
-                isNetworkConnected = isNetworkConnected,
                 accountType = Constants.SHARE_ACCOUNTS,
                 onItemClick = { _, accountId ->
                     onItemClick.invoke(
@@ -265,7 +255,6 @@ private fun ClientAccountsTabRow(
 internal fun ClientAccountsScreenPreview() {
     MifosMobileTheme {
         ClientAccountsScreen(
-            isNetworkConnected = true,
             currentPage = 0,
             isDialogActive = false,
             filterList = listOf(),

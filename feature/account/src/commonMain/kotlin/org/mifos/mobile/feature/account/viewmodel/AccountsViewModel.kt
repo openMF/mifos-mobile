@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.HomeRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
@@ -39,10 +40,17 @@ class AccountsViewModel(
     private val accountsRepositoryImp: AccountsRepository,
     private val homeRepositoryImp: HomeRepository,
     userPreferencesRepository: UserPreferencesRepository,
+    networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val clientId = requireNotNull(userPreferencesRepository.clientId.value)
+
+    val isOnline = networkMonitor.isOnline.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = true,
+    )
 
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountsUiState: StateFlow<AccountState> = _accountsUiState

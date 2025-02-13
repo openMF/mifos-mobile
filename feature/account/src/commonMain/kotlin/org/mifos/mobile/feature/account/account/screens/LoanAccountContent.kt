@@ -39,13 +39,6 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.feature.account.Black
-import org.mifos.mobile.feature.account.Blue
-import org.mifos.mobile.feature.account.DepositGreen
-import org.mifos.mobile.feature.account.GrayDark
-import org.mifos.mobile.feature.account.LightYellow
-import org.mifos.mobile.feature.account.Purple
-import org.mifos.mobile.feature.account.Red
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
@@ -102,29 +95,29 @@ private fun AccountScreenLoanListItem(
     val (color, stringResource, numColor) = when {
         loanAccount.status?.active == true && loanAccount.inArrears == true -> {
             Triple(
-                Red,
+                MaterialTheme.colorScheme.error,
                 stringResource(resource = Res.string.feature_account_disbursement) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                Red,
+                MaterialTheme.colorScheme.error,
             )
         }
 
         loanAccount.status?.active == true -> {
             Triple(
-                DepositGreen,
+                MaterialTheme.colorScheme.primary,
                 stringResource(resource = Res.string.feature_account_disbursement) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                DepositGreen,
+                MaterialTheme.colorScheme.primary,
             )
         }
 
         loanAccount.status?.waitingForDisbursal == true -> {
             Triple(
-                Blue,
+                MaterialTheme.colorScheme.secondary,
                 stringResource(resource = Res.string.feature_account_approved) +
                     loanAccount.timeline?.approvedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -133,7 +126,7 @@ private fun AccountScreenLoanListItem(
 
         loanAccount.status?.pendingApproval == true -> {
             Triple(
-                LightYellow,
+                MaterialTheme.colorScheme.tertiary,
                 stringResource(resource = Res.string.feature_account_submitted) +
                     loanAccount.timeline?.submittedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -142,18 +135,18 @@ private fun AccountScreenLoanListItem(
 
         loanAccount.status?.overpaid == true -> {
             Triple(
-                Purple,
+                MaterialTheme.colorScheme.tertiaryContainer,
                 stringResource(resource = Res.string.feature_account_approved) +
                     loanAccount.timeline?.actualDisbursementDate?.let {
                         DateHelper.getDateAsString(it)
                     },
-                Purple,
+                MaterialTheme.colorScheme.tertiaryContainer,
             )
         }
 
         loanAccount.status?.closed == true -> {
             Triple(
-                Black,
+                MaterialTheme.colorScheme.onSurface,
                 stringResource(resource = Res.string.feature_account_closed) +
                     loanAccount.timeline?.closedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -162,7 +155,7 @@ private fun AccountScreenLoanListItem(
 
         else -> {
             Triple(
-                GrayDark,
+                MaterialTheme.colorScheme.outline,
                 stringResource(resource = Res.string.feature_account_withdrawn) +
                     loanAccount.timeline?.withdrawnOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -190,14 +183,14 @@ private fun AccountScreenLoanListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = GrayDark,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
             Text(
                 text = stringResource,
                 style = MaterialTheme.typography.labelLarge,
-                color = GrayDark,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

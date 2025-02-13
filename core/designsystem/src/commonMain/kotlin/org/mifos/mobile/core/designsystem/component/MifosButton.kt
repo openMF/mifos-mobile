@@ -143,7 +143,6 @@ fun MifosOutlinedButton(
  * clickable and will appear disabled to accessibility services.
  * @param content The button content.
  */
-// internal fun MifosTextButton(
 @Composable
 fun MifosTextButton(
     onClick: () -> Unit,

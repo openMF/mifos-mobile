@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.account.clientAccount.utils
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,10 +36,6 @@ import mifos_mobile.feature.account.generated.resources.feature_account_filter
 import mifos_mobile.feature.account.generated.resources.feature_account_select_you_want
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
-import org.mifos.mobile.feature.account.Black
-import org.mifos.mobile.feature.account.GrayDark
-import org.mifos.mobile.feature.account.GrayLight
-import org.mifos.mobile.feature.account.White
 import org.mifos.mobile.feature.account.utils.CheckboxStatus
 
 @Composable
@@ -127,25 +122,17 @@ private fun ClientAccountFilterCheckBox(
                     },
                     colors = CheckboxColors(
                         checkedBoxColor = checkBoxList[index].color,
-                        uncheckedBoxColor = if (isSystemInDarkTheme()) {
-                            GrayLight
-                        } else {
-                            White
-                        },
-                        checkedCheckmarkColor = if (isSystemInDarkTheme()) {
-                            Black
-                        } else {
-                            White
-                        },
-                        uncheckedCheckmarkColor = White,
+                        uncheckedBoxColor = MaterialTheme.colorScheme.surfaceVariant,
+                        checkedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
+                        uncheckedCheckmarkColor = MaterialTheme.colorScheme.onSurface,
                         checkedBorderColor = checkBoxList[index].color,
                         uncheckedBorderColor = checkBoxList[index].color,
-                        disabledBorderColor = GrayDark,
-                        disabledIndeterminateBorderColor = GrayDark,
-                        disabledCheckedBoxColor = Black,
-                        disabledUncheckedBoxColor = Black,
-                        disabledIndeterminateBoxColor = Black,
-                        disabledUncheckedBorderColor = Black,
+                        disabledBorderColor = MaterialTheme.colorScheme.onSurface,
+                        disabledIndeterminateBorderColor = MaterialTheme.colorScheme.onSurface,
+                        disabledCheckedBoxColor = MaterialTheme.colorScheme.onSurface,
+                        disabledUncheckedBoxColor = MaterialTheme.colorScheme.onSurface,
+                        disabledIndeterminateBoxColor = MaterialTheme.colorScheme.onSurface,
+                        disabledUncheckedBorderColor = MaterialTheme.colorScheme.onSurface,
                     ),
                 )
                 Text(

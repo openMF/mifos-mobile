@@ -38,11 +38,6 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.feature.account.DepositGreen
-import org.mifos.mobile.feature.account.GrayDark
-import org.mifos.mobile.feature.account.LightGreen
-import org.mifos.mobile.feature.account.LightYellow
-import org.mifos.mobile.feature.account.RedLight
 import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
 
 @Composable
@@ -99,15 +94,15 @@ private fun AccountScreenSavingsListItem(
     val (color, stringResource, numColor) = when {
         savingAccount.status?.active == true -> {
             Triple(
-                DepositGreen,
+                MaterialTheme.colorScheme.primary,
                 savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
-                DepositGreen,
+                MaterialTheme.colorScheme.primary,
             )
         }
 
         savingAccount.status?.approved == true -> {
             Triple(
-                LightGreen,
+                MaterialTheme.colorScheme.secondaryContainer,
                 stringResource(resource = Res.string.feature_account_approved) +
                     savingAccount.timeLine?.approvedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -116,7 +111,7 @@ private fun AccountScreenSavingsListItem(
 
         savingAccount.status?.submittedAndPendingApproval == true -> {
             Triple(
-                LightYellow,
+                MaterialTheme.colorScheme.tertiaryContainer,
                 stringResource(resource = Res.string.feature_account_submitted) +
                     savingAccount.timeLine?.submittedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -125,15 +120,15 @@ private fun AccountScreenSavingsListItem(
 
         savingAccount.status?.matured == true -> {
             Triple(
-                RedLight,
+                MaterialTheme.colorScheme.errorContainer,
                 savingAccount.lastActiveTransactionDate?.let { DateHelper.getDateAsString(it) },
-                RedLight,
+                MaterialTheme.colorScheme.errorContainer,
             )
         }
 
         else -> {
             Triple(
-                LightYellow,
+                MaterialTheme.colorScheme.surfaceVariant,
                 stringResource(resource = Res.string.feature_account_closed) +
                     savingAccount.timeLine?.closedOnDate?.let { DateHelper.getDateAsString(it) },
                 null,
@@ -161,7 +156,7 @@ private fun AccountScreenSavingsListItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.labelLarge,
-                    color = GrayDark,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
@@ -169,7 +164,7 @@ private fun AccountScreenSavingsListItem(
                 Text(
                     text = stringResource,
                     style = MaterialTheme.typography.labelLarge,
-                    color = GrayDark,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

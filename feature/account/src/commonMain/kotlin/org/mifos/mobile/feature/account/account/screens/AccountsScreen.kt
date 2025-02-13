@@ -42,13 +42,13 @@ import org.mifos.mobile.feature.account.viewmodel.AccountsViewModel
 
 @Composable
 internal fun AccountsScreen(
-    isNetworkConnected: Boolean,
     accountType: String,
     onItemClick: (accountType: String, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AccountsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.accountsUiState.collectAsStateWithLifecycle()
+    val isNetworkConnected by viewModel.isOnline.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val isSearching by viewModel.isSearching.collectAsStateWithLifecycle()
     val isFiltered by viewModel.isFiltered.collectAsStateWithLifecycle()
