@@ -38,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosBackground
 fun App(
     networkMonitor: NetworkMonitor,
     modifier: Modifier = Modifier,
+//    onClickLogout: () -> Unit,
 ) {
     MifosBackground(modifier) {
         val snackbarHostState = remember { SnackbarHostState() }
@@ -79,7 +80,7 @@ fun App(
             ) {
                 FeatureNavHost(
                     appState = appState,
-//                    onClickLogout = {},
+//                    onClickLogout = onClickLogout,
                     modifier = Modifier,
                 )
             }

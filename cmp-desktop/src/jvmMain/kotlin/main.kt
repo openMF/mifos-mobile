@@ -12,7 +12,10 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import cmp.shared.SharedApp
+import cmp.shared.generated.resources.Res
+import cmp.shared.generated.resources.application_title
 import cmp.shared.utils.initKoin
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Main function.
@@ -40,7 +43,7 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
-            title = "DesktopApp",
+            title = stringResource(Res.string.application_title),
         ) {
             // Sets the content of the window.
             SharedApp()

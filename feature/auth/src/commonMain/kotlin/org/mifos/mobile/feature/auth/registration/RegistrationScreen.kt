@@ -10,19 +10,19 @@
 package org.mifos.mobile.feature.auth.registration
 
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.account_number
@@ -62,6 +63,7 @@ import mifos_mobile.feature.auth.generated.resources.register
 import mifos_mobile.feature.auth.generated.resources.username
 import mifos_mobile.feature.auth.generated.resources.verification_mode
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
@@ -69,15 +71,13 @@ import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.component.MifosMobileIcon
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun RegistrationScreen(
-    onVerified: () -> Unit,
+    navigateToVerification: () -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = koinViewModel(),
@@ -95,16 +95,16 @@ internal fun RegistrationScreen(
                 }
             }
 
-            is SignUpEvent.NavigateToLogin -> onVerified.invoke()
+            is SignUpEvent.NavigateToVerification -> navigateToVerification.invoke()
+            is SignUpEvent.NavigateBack -> navigateBack.invoke()
         }
     }
 
     RegistrationScreen(
         state = state,
         snackbarHostState = snackbarHostState,
-        navigateBack = navigateBack,
         onAction = remember(viewModel) {
-            viewModel.trySendAction(it)
+            { viewModel.trySendAction(it) }
         },
         modifier = modifier,
     )
@@ -114,14 +114,13 @@ internal fun RegistrationScreen(
 private fun RegistrationScreen(
     state: SignUpState,
     snackbarHostState: SnackbarHostState,
-    navigateBack: () -> Unit,
     onAction: (SignUpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBarTitle = stringResource(Res.string.register),
-        backPress = navigateBack,
+        backPress = { onAction(SignUpAction.BackPress) },
         modifier = modifier,
         content = { contentPadding ->
             Box(
@@ -135,7 +134,7 @@ private fun RegistrationScreen(
                 )
 
                 when {
-                    state.dialogState is SignUpDialog.Loading -> {
+                    state.dialogState is SignUpState.SignUpDialog.Loading -> {
                         MifosProgressIndicatorOverlay()
                     }
                 }
@@ -164,7 +163,7 @@ private fun RegistrationScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 12.dp)
+            .padding(16.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = {
@@ -176,6 +175,7 @@ private fun RegistrationScreenContent(
                 state = scrollState,
                 enabled = true,
             ),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         MifosMobileIcon(mobileIcon = Res.drawable.feature_auth_mifos_logo)
 
@@ -190,7 +190,7 @@ private fun RegistrationScreenContent(
         )
         MifosOutlinedTextField(
             value = state.userNameInput,
-            onValueChange = { onAction(SignUpAction.EmailInputChange(it)) },
+            onValueChange = { onAction(SignUpAction.UserNameInputChange(it)) },
             label = stringResource(Res.string.username),
             modifier = Modifier.fillMaxWidth(),
             config = MifosTextFieldConfig(
@@ -269,29 +269,14 @@ private fun RegistrationScreenContent(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             ),
         )
-
+        Spacer(modifier = Modifier.height(8.dp))
         if (state.isPasswordChanged) {
-            val progress = when (state.passwordStrengthState) {
-                PasswordStrengthState.NONE -> 0f
-                PasswordStrengthState.WEAK_1 -> 0.25f
-                PasswordStrengthState.WEAK_2 -> 0.5f
-                PasswordStrengthState.WEAK_3 -> 0.75f
-                PasswordStrengthState.STRONG,
-                PasswordStrengthState.GOOD,
-                PasswordStrengthState.VERY_STRONG,
-                    -> 1f
-            }
+            val progress = state.passwordStrength
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                color = when (progress) {
-                    0.25f -> Color.Red
-                    0.5f -> Color(alpha = 255, red = 220, green = 185, blue = 0)
-                    0.75f -> Color.Green
-                    else -> Color.Blue
-                },
+                    .fillMaxWidth(),
+                color = state.getProgressColor,
                 trackColor = Color.White,
             )
         }
@@ -318,19 +303,17 @@ private fun RegistrationScreenContent(
                     }
                 },
                 isError = state.confirmPasswordInput.isEmpty(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             ),
         )
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(Res.string.verification_mode),
-                modifier = Modifier.padding(end = 8.dp),
                 color = MaterialTheme.colorScheme.onSurface,
             )
             radioOptions.forEach { authMode ->
@@ -346,33 +329,27 @@ private fun RegistrationScreenContent(
         }
 
         MifosButton(
-            text = { stringResource(Res.string.register) },
             onClick = {
                 onAction(SignUpAction.SubmitClick)
-
                 keyboardController?.hide()
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 4.dp),
-            contentPadding = PaddingValues(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-        )
+                .fillMaxWidth(),
+        ) {
+            Text(text = stringResource(Res.string.register))
+        }
 
         Spacer(modifier = Modifier.imePadding())
     }
 }
 
-@DevicePreview
+@Preview
 @Composable
-fun RegistrationScreenPreview() {
+private fun RegistrationScreenPreview() {
     MifosMobileTheme {
         RegistrationScreen(
             state = SignUpState(dialogState = null),
             snackbarHostState = remember { SnackbarHostState() },
-            navigateBack = {},
             onAction = {},
             modifier = Modifier,
         )

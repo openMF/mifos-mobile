@@ -17,6 +17,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+
+            implementation(projects.feature.auth)
+
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

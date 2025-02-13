@@ -58,7 +58,6 @@ class LoginViewModel(
                     )
                 }
             }
-
             is LoginAction.PasswordChanged -> {
                 updateState {
                     it.copy(
@@ -67,23 +66,18 @@ class LoginViewModel(
                     )
                 }
             }
-
             is LoginAction.TogglePasswordVisibility -> {
                 updateState { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
-
             is LoginAction.LoginClicked -> {
                 loginUser(state.username, state.password)
             }
-
             is LoginAction.Internal.ReceiveLoginResult -> {
                 handleLoginResult(action)
             }
-
             is LoginAction.SignupClicked -> {
                 sendEvent(LoginEvent.NavigateToSignup)
             }
-
             is LoginAction.ErrorDialogDismiss -> updateState { it.copy(dialogState = null) }
         }
     }
@@ -91,7 +85,7 @@ class LoginViewModel(
     private fun handleLoginResult(action: LoginAction.Internal.ReceiveLoginResult) {
         when (action.loginResult) {
             is DataState.Error -> {
-                val message = action.loginResult.exception.message ?: ""
+                val message = action.loginResult.exception.message ?: "Error logging in"
 
                 mutableStateFlow.update {
                     it.copy(dialogState = LoginState.DialogState.Error(message))
@@ -108,7 +102,9 @@ class LoginViewModel(
                 mutableStateFlow.update {
                     it.copy(dialogState = null)
                 }
-                sendEvent(LoginEvent.NavigateToPasscodeScreen)
+                // TODO: Can be removed after integrating passcode and navigate to passcode
+                sendEvent(LoginEvent.ShowToast("Successfully logged in"))
+//                sendEvent(LoginEvent.NavigateToPasscodeScreen)
             }
         }
     }
@@ -163,30 +159,30 @@ data class LoginState(
     val dialogState: DialogState?,
     val isLoginButtonEnabled: Boolean = false,
 ) : Parcelable {
-    sealed class DialogState : Parcelable {
+    sealed interface DialogState : Parcelable {
         @Parcelize
-        data class Error(val message: String) : DialogState()
+        data class Error(val message: String) : DialogState
 
         @Parcelize
-        data object Loading : DialogState()
+        data object Loading : DialogState
     }
 }
 
-sealed class LoginEvent {
-    data object NavigateToSignup : LoginEvent()
-    data object NavigateToPasscodeScreen : LoginEvent()
-    data class ShowToast(val message: String) : LoginEvent()
+sealed interface LoginEvent {
+    data object NavigateToSignup : LoginEvent
+    data object NavigateToPasscodeScreen : LoginEvent
+    data class ShowToast(val message: String) : LoginEvent
 }
 
-sealed class LoginAction {
-    data class UsernameChanged(val username: String) : LoginAction()
-    data class PasswordChanged(val password: String) : LoginAction()
-    data object TogglePasswordVisibility : LoginAction()
-    data object ErrorDialogDismiss : LoginAction()
-    data object LoginClicked : LoginAction()
-    data object SignupClicked : LoginAction()
+sealed interface LoginAction {
+    data class UsernameChanged(val username: String) : LoginAction
+    data class PasswordChanged(val password: String) : LoginAction
+    data object TogglePasswordVisibility : LoginAction
+    data object ErrorDialogDismiss : LoginAction
+    data object LoginClicked : LoginAction
+    data object SignupClicked : LoginAction
 
-    sealed class Internal : LoginAction() {
+    sealed class Internal : LoginAction {
         data class ReceiveLoginResult(
             val loginResult: DataState<User>,
         ) : Internal()

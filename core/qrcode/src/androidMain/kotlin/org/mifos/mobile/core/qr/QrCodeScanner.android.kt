@@ -23,5 +23,5 @@ actual fun QrCodeScanner(
         QrCodeAnalyzer(types.toFormat(), onScanned)
     }
 
-    CameraView(modifier, analyzer)
+    CameraView(analyzer, modifier)
 }
