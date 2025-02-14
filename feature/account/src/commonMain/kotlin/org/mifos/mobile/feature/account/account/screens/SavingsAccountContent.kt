@@ -9,23 +9,18 @@
  */
 package org.mifos.mobile.feature.account.account.screens
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.account.generated.resources.Res
@@ -38,7 +33,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
+import org.mifos.mobile.feature.account.account.utils.AccountCard
 
 @Composable
 internal fun SavingsAccountContent(
@@ -73,7 +68,8 @@ internal fun SavingsAccountContent(
     }
 
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(top = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyColumnState,
     ) {
         items(items = accounts) { savingAccount ->
@@ -136,63 +132,31 @@ private fun AccountScreenSavingsListItem(
         }
     }
 
-    Row(
-        modifier = modifier.clickable {
+    val currencySymbolOrCode =
+        savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code ?: ""
+
+    val formattedBalance = CurrencyFormatter.format(
+        balance = savingAccount.accountBalance,
+        currencyCode = savingAccount.currency?.code,
+        maximumFractionDigits = 2,
+    )
+
+    val amountAndCurrency = stringResource(
+        Res.string.feature_account_string_and_string,
+        formattedBalance,
+        currencySymbolOrCode,
+    )
+
+    AccountCard(
+        accountNo = savingAccount.accountNo,
+        productName = savingAccount.productName,
+        statusString = stringResource,
+        balance = amountAndCurrency,
+        indicatorColor = color,
+        textColor = numColor,
+        onClick = {
             onItemClick.invoke(Constants.SAVINGS_ACCOUNTS, savingAccount.id)
         },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        AccountTypeItemIndicator(color)
-
-        Column(modifier = Modifier.padding(all = 12.dp)) {
-            savingAccount.accountNo?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-
-            savingAccount.productName?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            if (stringResource != null) {
-                Text(
-                    text = stringResource,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-
-        Spacer(Modifier.weight(1f))
-
-        numColor?.let { color ->
-            val currencySymbolOrCode =
-                savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code ?: ""
-            val formattedBalance = CurrencyFormatter.format(
-                balance = savingAccount.accountBalance,
-                currencyCode = savingAccount.currency?.code,
-                maximumFractionDigits = 2,
-            )
-
-            val amountAndCurrency = stringResource(
-                Res.string.feature_account_string_and_string,
-                formattedBalance,
-                currencySymbolOrCode,
-            )
-
-            Text(
-                text = amountAndCurrency,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 16.dp),
-                color = color,
-            )
-        }
-    }
+        modifier = modifier,
+    )
 }

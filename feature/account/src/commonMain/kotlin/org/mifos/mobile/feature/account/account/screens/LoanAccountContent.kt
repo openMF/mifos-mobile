@@ -9,23 +9,18 @@
  */
 package org.mifos.mobile.feature.account.account.screens
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.account.generated.resources.Res
@@ -39,7 +34,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
+import org.mifos.mobile.feature.account.account.utils.AccountCard
 
 @Composable
 internal fun LoanAccountContent(
@@ -74,7 +69,8 @@ internal fun LoanAccountContent(
     }
 
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(top = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyColumnState,
     ) {
         items(items = accounts) { loanAccount ->
@@ -163,52 +159,20 @@ private fun AccountScreenLoanListItem(
         }
     }
 
-    Row(
-        modifier = modifier.clickable {
+    AccountCard(
+        accountNo = loanAccount.accountNo,
+        productName = loanAccount.productName,
+        statusString = stringResource,
+        balance = CurrencyFormatter.format(
+            balance = loanAccount.loanBalance,
+            currencyCode = loanAccount.currency?.code,
+            maximumFractionDigits = 2,
+        ),
+        indicatorColor = color,
+        textColor = numColor,
+        onClick = {
             onItemClick.invoke(Constants.LOAN_ACCOUNTS, loanAccount.id)
         },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        AccountTypeItemIndicator(color)
-
-        Column(modifier = Modifier.padding(all = 12.dp)) {
-            loanAccount.accountNo?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-
-            loanAccount.productName?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Text(
-                text = stringResource,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        Spacer(Modifier.weight(1f))
-
-        numColor?.let {
-            val amountBalance = if (loanAccount.loanBalance != 0.0) loanAccount.loanBalance else 0.0
-            Text(
-                text = CurrencyFormatter.format(
-                    balance = amountBalance,
-                    currencyCode = loanAccount.currency?.code,
-                    maximumFractionDigits = 2,
-                ),
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 16.dp),
-                color = it,
-            )
-        }
-    }
+        modifier = modifier,
+    )
 }

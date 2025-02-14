@@ -10,31 +10,21 @@
 package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import mifos_mobile.feature.account.generated.resources.Res
-import mifos_mobile.feature.account.generated.resources.feature_account_approved
-import mifos_mobile.feature.account.generated.resources.feature_account_pending
-import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
-import org.mifos.mobile.feature.account.account.utils.AccountTypeItemIndicator
+import org.mifos.mobile.feature.account.account.utils.ShareAccountCard
 
 @Composable
 internal fun AccountScreenShareContent(
@@ -68,7 +58,8 @@ internal fun AccountScreenShareContent(
     }
 
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(top = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyColumnState,
     ) {
         items(items = accounts) { shareAccount ->
@@ -102,64 +93,10 @@ private fun AccountScreenShareListItem(
         }
     }
 
-    Row(
+    ShareAccountCard(
+        shareAccount = shareAccount,
+        indicatorColor = color,
+        setSharingAccountDetail = setSharingAccountDetail,
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        AccountTypeItemIndicator(color)
-
-        Column(modifier = Modifier.padding(all = 12.dp)) {
-            shareAccount.accountNo?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-
-            shareAccount.productName?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Row {
-                    Text(
-                        text = stringResource(resource = Res.string.feature_account_pending),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-
-                    Text(
-                        text = " ${shareAccount.totalPendingForApprovalShares}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                }
-
-                if (setSharingAccountDetail) {
-                    Row {
-                        Text(
-                            text = stringResource(resource = Res.string.feature_account_approved),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-
-                        Text(
-                            modifier = Modifier.padding(end = 12.dp),
-                            text = " ${shareAccount.totalApprovedShares}",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-                }
-            }
-        }
-        Spacer(Modifier.weight(1f))
-    }
+    )
 }

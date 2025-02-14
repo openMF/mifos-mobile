@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -120,20 +119,6 @@ private fun ClientAccountFilterCheckBox(
                         checkBoxList = updatedList
                         updateList.invoke(checkBoxList)
                     },
-                    colors = CheckboxColors(
-                        checkedBoxColor = checkBoxList[index].color,
-                        uncheckedBoxColor = MaterialTheme.colorScheme.surfaceVariant,
-                        checkedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
-                        uncheckedCheckmarkColor = MaterialTheme.colorScheme.onSurface,
-                        checkedBorderColor = checkBoxList[index].color,
-                        uncheckedBorderColor = checkBoxList[index].color,
-                        disabledBorderColor = MaterialTheme.colorScheme.onSurface,
-                        disabledIndeterminateBorderColor = MaterialTheme.colorScheme.onSurface,
-                        disabledCheckedBoxColor = MaterialTheme.colorScheme.onSurface,
-                        disabledUncheckedBoxColor = MaterialTheme.colorScheme.onSurface,
-                        disabledIndeterminateBoxColor = MaterialTheme.colorScheme.onSurface,
-                        disabledUncheckedBorderColor = MaterialTheme.colorScheme.onSurface,
-                    ),
                 )
                 Text(
                     text = stringResource(resource = checkBoxList[index].status!!),
