@@ -14,5 +14,4 @@ package org.mifos.mobile.core.ui.utils
  * navigating to the same view twice, by default, events are ignored if the view is not currently
  * resumed. To avoid that restriction, specific events can implement [BackgroundEvent].
  */
-
 interface BackgroundEvent

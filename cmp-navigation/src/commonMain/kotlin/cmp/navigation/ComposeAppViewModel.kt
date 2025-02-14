@@ -16,13 +16,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mifos.library.passcode.data.PasscodeManager
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.model.UserData
 
 class ComposeAppViewModel(
     private val userDataRepository: UserDataRepository,
-//    private val passcodeManager: PasscodeManager,
+    private val passcodeManager: PasscodeManager,
 ) : ViewModel() {
 
     val uiState: StateFlow<MainUiState> = userDataRepository.userData.map { dataState ->
@@ -40,7 +41,7 @@ class ComposeAppViewModel(
     fun logOut() {
         viewModelScope.launch {
             userDataRepository.logOut()
-//            passcodeManager.clearPasscode()
+            passcodeManager.clearPasscode()
         }
     }
 }

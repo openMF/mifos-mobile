@@ -102,9 +102,9 @@ class LoginViewModel(
                 mutableStateFlow.update {
                     it.copy(dialogState = null)
                 }
-                // TODO: Can be removed after integrating passcode and navigate to passcode
+
                 sendEvent(LoginEvent.ShowToast("Successfully logged in"))
-//                sendEvent(LoginEvent.NavigateToPasscodeScreen)
+                sendEvent(LoginEvent.NavigateToPasscodeScreen)
             }
         }
     }
