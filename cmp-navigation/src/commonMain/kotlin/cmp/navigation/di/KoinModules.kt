@@ -12,6 +12,7 @@ package cmp.navigation.di
 import cmp.navigation.ComposeAppViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.library.passcode.di.PasscodeModule
 import org.mifos.mobile.core.common.di.DispatchersModule
 import org.mifos.mobile.core.data.di.RepositoryModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
@@ -39,9 +40,9 @@ object KoinModules {
             AuthModule,
         )
     }
-//    private val LibraryModule = module {
-//        includes(PasscodeModule)
-//    }
+    private val LibraryModule = module {
+        includes(PasscodeModule)
+    }
 
     val allModules = listOf(
         commonModules,
@@ -50,5 +51,6 @@ object KoinModules {
         networkModules,
         featureModules,
         sharedModule,
+        LibraryModule,
     )
 }

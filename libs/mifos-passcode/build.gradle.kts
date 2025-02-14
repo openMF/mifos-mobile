@@ -8,28 +8,43 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.library)
-    alias(libs.plugins.mifos.android.library.compose)
-    alias(libs.plugins.mifos.android.hilt)
+    alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.mifos.library.passcode"
 }
 
-dependencies {
-    implementation(libs.androidx.core.ktx)
+kotlin{
+    sourceSets{
+        commonMain.dependencies {
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
 
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundation.layout)
-    implementation(libs.androidx.compose.material.iconsExtended)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui.util)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose)
 
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-    implementation(libs.androidx.lifecycle.viewModelCompose)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
+            implementation(libs.jb.kotlin.stdlib)
+            implementation(libs.kotlin.reflect)
 
+
+            implementation(libs.kotlinx.serialization.core)
+
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.serialization)
+            implementation(libs.multiplatform.settings.coroutines)
+
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(projects.core.ui)
+        }
+        desktopMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+    }
 }

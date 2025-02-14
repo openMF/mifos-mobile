@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import cmp.navigation.navigation.NavGraphRoute.AUTH_GRAPH
 import cmp.navigation.navigation.NavGraphRoute.MAIN_GRAPH
 import cmp.navigation.ui.App
+import org.mifos.library.passcode.navigateToPasscodeScreen
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
 
@@ -36,9 +37,10 @@ fun RootNavGraph(
         authenticationNavGraph(
             navController = navHostController,
             route = AUTH_GRAPH,
-//            navigateToPasscodeScreen = navHostController::navigateToPasscodeScreen,
-            navigateToPasscodeScreen = { },
+            navigateToPasscodeScreen = navHostController::navigateToPasscodeScreen,
+
         )
+        passcodeNavGraph(navHostController)
         composable(MAIN_GRAPH) {
             App(
                 modifier = modifier,
