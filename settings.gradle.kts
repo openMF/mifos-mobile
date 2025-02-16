@@ -76,6 +76,10 @@ include(":feature:auth")
 //include(":feature:update-password")
 //include(":feature:home")
 //include(":feature:user-profile")
+include(":feature:accounts")
+include(":feature:share-account")
+include(":feature:loan-account")
+include(":feature:savings-account")
 
 // Lint Modules
 //include(":lint")
