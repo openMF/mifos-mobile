@@ -148,7 +148,7 @@ private fun LoanRepaymentScheduleCard(
             LoanRepaymentScheduleCardItem(
                 label = stringResource(Res.string.disbursement_date),
                 value = DateHelper.getDateAsString(
-                    loanWithAssociations.timeline?.expectedDisbursementDate ?: emptyList()
+                    loanWithAssociations.timeline?.expectedDisbursementDate ?: emptyList(),
                 ),
             )
             LoanRepaymentScheduleCardItem(
@@ -199,6 +199,7 @@ private fun RepaymentScheduleTable(
             }
         }
     } else {
+        // TODO() we have to replace this icon from Drawable to ImageVector
         EmptyDataView(icon = Res.drawable.ic_charges, error = Res.string.repayment_schedule)
     }
 }

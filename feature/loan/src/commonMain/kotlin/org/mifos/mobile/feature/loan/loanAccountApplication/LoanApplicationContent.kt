@@ -32,6 +32,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -70,7 +71,7 @@ import org.mifos.mobile.core.ui.utils.PresentOrFutureSelectableDates
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanApplicationContent(
-    uiData: LoanApplicationScreenData,
+    state: LoanApplicationState,
     selectProduct: (Int) -> Unit,
     selectPurpose: (Int) -> Unit,
     setDisbursementDate: (String) -> Unit,
@@ -82,21 +83,21 @@ internal fun LoanApplicationContent(
     var purposeTextFieldEnable by rememberSaveable { mutableStateOf(false) }
     var selectedLoanProductError by rememberSaveable { mutableStateOf<String?>(null) }
     var showSelectedLoanProductError by rememberSaveable { mutableStateOf(false) }
-    var expectedDisbursementDate by rememberSaveable { mutableStateOf(uiData.disbursementDate) }
+    var expectedDisbursementDate by rememberSaveable { mutableStateOf(state.disbursementDate) }
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
-    var selectedLoanProduct by rememberSaveable { mutableStateOf(uiData.selectedLoanProduct) }
-    var selectedLoanPurpose by rememberSaveable { mutableStateOf(uiData.selectedLoanPurpose) }
+    var selectedLoanProduct by rememberSaveable { mutableStateOf(state.selectedLoanProduct) }
+    var selectedLoanPurpose by rememberSaveable { mutableStateOf(state.selectedLoanPurpose) }
 
     val datePickerState = rememberDatePickerState(selectableDates = PresentOrFutureSelectableDates)
     var principalAmount by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(uiData.principalAmount ?: ""))
+        mutableStateOf(TextFieldValue(state.principalAmount ?: ""))
     }
 
     var principalAmountError by rememberSaveable { mutableStateOf<String?>(null) }
     var showPrincipalAmountError by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = uiData) {
-        principalAmount = TextFieldValue(uiData.principalAmount ?: "")
+    LaunchedEffect(key1 = state) {
+        principalAmount = TextFieldValue(state.principalAmount ?: "")
     }
 
     LaunchedEffect(key1 = selectedLoanProduct) {
@@ -104,7 +105,7 @@ internal fun LoanApplicationContent(
         showSelectedLoanProductError = false
         showPrincipalAmountError = false
         selectedLoanProductError = when {
-            uiData.selectedLoanProduct.isNullOrBlank() -> getString(Res.string.select_loan_product_field)
+            state.selectedLoanProduct.isNullOrBlank() -> getString(Res.string.select_loan_product_field)
             else -> null
         }
     }
@@ -126,11 +127,11 @@ internal fun LoanApplicationContent(
     ) {
         Text(
             style = MaterialTheme.typography.bodyMedium,
-            text = if (uiData.clientName != null) {
+            text = if (state.clientName != null) {
                 stringResource(
                     Res.string.string_and_string,
                     stringResource(Res.string.new_loan_application) + " ",
-                    uiData.clientName ?: "",
+                    state.clientName ?: "",
                 )
             } else {
                 stringResource(Res.string.loan_name)
@@ -146,7 +147,7 @@ internal fun LoanApplicationContent(
             text = stringResource(
                 Res.string.string_and_string,
                 stringResource(Res.string.account_number) + " ",
-                uiData.accountNumber ?: "",
+                state.accountNumber ?: "",
             ),
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.fillMaxWidth(),
@@ -155,8 +156,8 @@ internal fun LoanApplicationContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         MifosDropDownTextField(
-            optionsList = uiData.listLoanProducts.filterNotNull(),
-            selectedOption = uiData.selectedLoanProduct,
+            optionsList = state.listLoanProducts.filterNotNull(),
+            selectedOption = state.selectedLoanProduct,
             supportingText = selectedLoanProductError ?: "",
             error = showSelectedLoanProductError,
             labelResId = Res.string.select_loan_product,
@@ -170,8 +171,8 @@ internal fun LoanApplicationContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         MifosDropDownTextField(
-            optionsList = uiData.listLoanPurpose.filterNotNull(),
-            selectedOption = uiData.selectedLoanPurpose,
+            optionsList = state.listLoanPurpose.filterNotNull(),
+            selectedOption = state.selectedLoanPurpose,
             isEnabled = purposeTextFieldEnable,
             labelResId = Res.string.purpose_of_loan,
             onClick = { index, item ->
@@ -186,15 +187,13 @@ internal fun LoanApplicationContent(
             value = principalAmount.toString(),
             onValueChange = { principalAmount = TextFieldValue(it) },
             label = stringResource(Res.string.principal_amount),
-//            error = showPrincipalAmountError,
             modifier = Modifier.fillMaxWidth(),
-//            supportingText = principalAmountError ?: "",
-//            imeAction = ImeAction.Done,
-//            keyboardType = KeyboardType.Number,
             config = MifosTextFieldConfig(
                 errorText = principalAmountError ?: "",
+                isError = showPrincipalAmountError,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
                 ),
             ),
         )
@@ -203,14 +202,14 @@ internal fun LoanApplicationContent(
 
         MifosTextTitleDescSingleLine(
             title = stringResource(Res.string.currency),
-            description = uiData.currencyLabel ?: "",
+            description = state.currencyLabel ?: "",
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         MifosTextTitleDescSingleLine(
             title = stringResource(Res.string.submission_date),
-            description = uiData.submittedDate ?: "",
+            description = state.submittedDate ?: "",
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -285,7 +284,7 @@ internal fun LoanApplicationContent(
 private fun LoanAccountApplicationContentPreview() {
     MifosMobileTheme {
         LoanApplicationContent(
-            uiData = LoanApplicationScreenData(),
+            state = LoanApplicationState(dialogState = null),
             selectProduct = { },
             selectPurpose = { },
             reviewClicked = { },

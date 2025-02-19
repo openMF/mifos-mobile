@@ -90,20 +90,18 @@ private fun LoanAccountSummaryScreen(
     MifosScaffold(
         topBarTitle = stringResource(Res.string.loan_summary),
         backPress = { (onAction(LoanAccountSummaryAction.BackPress)) },
-        content = {
-            Box(modifier = Modifier.padding(it)) {
-                when (state.dialogState) {
-                    is LoanAccountSummaryState.DialogState.Error -> MifosProgressIndicatorOverlay()
-                    LoanAccountSummaryState.DialogState.Loading ->
-                        MifosErrorComponent(isNetworkConnected = state.isOnline)
-                    null -> LoanAccountSummaryContent(
-                        loanWithAssociations = state.loanAccountAssociations,
-                        modifier = modifier,
-                    )
-                }
+    ) {
+        Box(modifier = Modifier.padding(it)) {
+            when (state.dialogState) {
+                is LoanAccountSummaryState.DialogState.Error -> MifosErrorComponent(isNetworkConnected = state.isOnline)
+                LoanAccountSummaryState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+                null -> LoanAccountSummaryContent(
+                    loanWithAssociations = state.loanAccountAssociations,
+                    modifier = modifier,
+                )
             }
-        },
-    )
+        }
+    }
 }
 
 @Composable

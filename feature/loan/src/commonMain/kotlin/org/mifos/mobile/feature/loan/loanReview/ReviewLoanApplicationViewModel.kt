@@ -10,16 +10,14 @@
 package org.mifos.mobile.feature.loan.loanReview
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
@@ -27,113 +25,156 @@ import org.mifos.mobile.core.common.Constants.LOANS_PAYLOAD
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.Parcelable
+import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
-import org.mifos.mobile.feature.loan.loanReview.ReviewLoanApplicationUiState.Loading
+import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 internal class ReviewLoanApplicationViewModel(
-    private val reviewLoanApplicationRepositoryImpl: ReviewLoanApplicationRepository,
+    private val reviewLoanApplicationRepository: ReviewLoanApplicationRepository,
     private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : BaseViewModel<ReviewLoanApplicationState, ReviewLoanApplicationEvent, ReviewLoanApplicationAction>(
+    initialState = ReviewLoanApplicationState(dialogState = null),
+) {
 
-    private val mUiState = MutableStateFlow<ReviewLoanApplicationUiState>(Loading)
-    val uiState: StateFlow<ReviewLoanApplicationUiState> = mUiState.asStateFlow()
+    private val loanId = savedStateHandle.getStateFlow<Long?>(Constants.LOAN_ID, null)
+    private val loanState = savedStateHandle.getStateFlow(Constants.LOAN_STATE, LoanState.CREATE)
+    private val loanName = savedStateHandle.getStateFlow<String?>(Constants.LOAN_NAME, null)
+    private val accountNo = savedStateHandle.getStateFlow<String?>(Constants.ACCOUNT_NUMBER, null)
+    private val loansPayloadString = savedStateHandle.getStateFlow<String?>(LOANS_PAYLOAD, null)
 
-    private val isOnline = MutableStateFlow(false)
-    val onlineStatus: StateFlow<Boolean> = isOnline.asStateFlow()
+    private val loansPayload: StateFlow<LoansPayload?> = loansPayloadString.map { jsonString ->
+        jsonString?.let { Json.decodeFromString<LoansPayload>(it) }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     init {
+        observeNetworkStatus()
+        collectReviewLoanApplicationUiData()
+    }
+
+    private fun updateState(update: (ReviewLoanApplicationState) -> ReviewLoanApplicationState) {
+        mutableStateFlow.update(update)
+    }
+
+    private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline.collectLatest { connected ->
-                isOnline.value = connected
-                mUiState.value = ReviewLoanApplicationUiState.IsOnline(connected)
+                updateState { it.copy(isOnline = connected) }
             }
         }
     }
 
-    private val loanId =
-        savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
-    private val loanState =
-        savedStateHandle.getStateFlow(key = Constants.LOAN_STATE, initialValue = LoanState.CREATE)
-    private val loanName =
-        savedStateHandle.getStateFlow<String?>(key = Constants.LOAN_NAME, initialValue = null)
-    private val accountNo =
-        savedStateHandle.getStateFlow<String?>(key = Constants.ACCOUNT_NUMBER, initialValue = null)
-    private val loansPayloadString =
-        savedStateHandle.getStateFlow<String?>(key = LOANS_PAYLOAD, initialValue = null)
-
-    private val loansPayload: StateFlow<LoansPayload?> = loansPayloadString
-        .map { jsonString ->
-            jsonString?.let { Json.decodeFromString<LoansPayload>(it) }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = null,
-        )
-
-    val reviewLoanApplicationUiData: StateFlow<ReviewLoanApplicationUiData> = combine(
-        loanId,
-        loanState,
-        loanName,
-        accountNo,
-        loansPayload,
-    ) { loanId, loanState, loanName, accountNo, loansPayload ->
-        ReviewLoanApplicationUiData(
-            loanState = loanState,
-            loanName = loanName,
-            accountNo = accountNo,
-            loanProduct = loansPayload?.productName,
-            loanPurpose = loansPayload?.loanPurpose,
-            principal = loansPayload?.principal,
-            currency = loansPayload?.currency,
-            submissionDate = loansPayload?.submittedOnDate,
-            disbursementDate = loansPayload?.expectedDisbursementDate,
-            loanId = loanId ?: 0,
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = ReviewLoanApplicationUiData(),
-    )
-
-    fun submitLoan() = viewModelScope.launch {
-        try {
-            mUiState.value = Loading
-
-            val result = reviewLoanApplicationRepositoryImpl.submitLoan(
-                loanState = reviewLoanApplicationUiData.value.loanState,
-                loansPayload = loansPayload.value ?: LoansPayload(),
-                loanId = reviewLoanApplicationUiData.value.loanId,
-            )
-
-            when (result) {
-                DataState.Loading -> mUiState.value = Loading
-
-                is DataState.Success -> {
-                    mUiState.value =
-                        ReviewLoanApplicationUiState.Success(reviewLoanApplicationUiData.value.loanState)
-                }
-
-                is DataState.Error -> {
-                    mUiState.value = ReviewLoanApplicationUiState.Error(result.message)
-                }
+    private fun collectReviewLoanApplicationUiData() {
+        viewModelScope.launch {
+            combine(
+                loanId,
+                loanState,
+                loanName,
+                accountNo,
+                loansPayload) {
+                              loanId,
+                              loanState,
+                              loanName,
+                              accountNo,
+                              loansPayload ->
+                ReviewLoanApplicationUiData(
+                    loanState = loanState,
+                    loanName = loanName,
+                    accountNo = accountNo,
+                    loanProduct = loansPayload?.productName,
+                    loanPurpose = loansPayload?.loanPurpose,
+                    principal = loansPayload?.principal,
+                    currency = loansPayload?.currency,
+                    submissionDate = loansPayload?.submittedOnDate,
+                    disbursementDate = loansPayload?.expectedDisbursementDate,
+                    loanId = loanId ?: 0,
+                )
+            }.collectLatest { data ->
+                updateState { it.copy(reviewLoanApplicationUiData = data) }
             }
-        } catch (error: Exception) {
-            mUiState.value = ReviewLoanApplicationUiState.Error(error.message ?: "An error occurred")
+        }
+    }
+
+    override fun handleAction(action: ReviewLoanApplicationAction) {
+        when (action) {
+            is ReviewLoanApplicationAction.SubmitLoan -> submitLoan()
+            is ReviewLoanApplicationAction.NavigateBack ->
+                sendEvent(ReviewLoanApplicationEvent.NavigateBack(action.isSuccess))
+        }
+    }
+
+    private fun submitLoan() {
+        viewModelScope.launch {
+            updateState { it.copy(dialogState = ReviewLoanApplicationState.DialogState.Loading) }
+            try {
+                val result = reviewLoanApplicationRepository.submitLoan(
+                    loanState = state.reviewLoanApplicationUiData.loanState,
+                    loansPayload = loansPayload.value ?: LoansPayload(),
+                    loanId = state.reviewLoanApplicationUiData.loanId,
+                )
+                when (result) {
+                    DataState.Loading -> updateState {
+                        it.copy(
+                            dialogState =
+                            ReviewLoanApplicationState.DialogState.Loading,
+                        )
+                    }
+                    is DataState.Success -> {
+                        sendEvent(
+                            ReviewLoanApplicationEvent.ShowToast(result.data),
+                        )
+                        sendEvent(ReviewLoanApplicationEvent.NavigateBack(true))
+                    }
+                    is DataState.Error -> {
+                        updateState {
+                            it.copy(
+                                dialogState = ReviewLoanApplicationState
+                                    .DialogState.Error(result.message),
+                            )
+                        }
+                    }
+                }
+            } catch (error: Exception) {
+                updateState {
+                    it.copy(
+                        dialogState = ReviewLoanApplicationState
+                            .DialogState.Error(error.message ?: "An error occurred"),
+                    )
+                }
+                updateState { it.copy(dialogState = null) }
+            }
         }
     }
 }
 
-internal sealed class ReviewLoanApplicationUiState {
-    data object ReviewLoanUiReady : ReviewLoanApplicationUiState()
-    data object Loading : ReviewLoanApplicationUiState()
-    data class IsOnline(val connected: Boolean) : ReviewLoanApplicationUiState()
-    data class Error(val throwable: String?) : ReviewLoanApplicationUiState()
-    data class Success(val loanState: LoanState) : ReviewLoanApplicationUiState()
+@Parcelize
+data class ReviewLoanApplicationState(
+    val isOnline: Boolean = false,
+    val dialogState: DialogState?,
+    val reviewLoanApplicationUiData: ReviewLoanApplicationUiData = ReviewLoanApplicationUiData(),
+) : Parcelable {
+    sealed interface DialogState : Parcelable {
+        @Parcelize
+        data object Loading : DialogState
+
+        @Parcelize
+        data class Error(val message: String) : DialogState
+    }
 }
 
-internal class ReviewLoanApplicationUiData(
+sealed interface ReviewLoanApplicationAction {
+    data object SubmitLoan : ReviewLoanApplicationAction
+    data class NavigateBack(val isSuccess: Boolean) : ReviewLoanApplicationAction
+}
+
+sealed interface ReviewLoanApplicationEvent {
+    data class NavigateBack(val isSuccess: Boolean) : ReviewLoanApplicationEvent
+    data class ShowToast(val message: String) : ReviewLoanApplicationEvent
+}
+
+data class ReviewLoanApplicationUiData(
     val loanId: Long = 0,
     val loanState: LoanState = LoanState.CREATE,
     val accountNo: String? = null,

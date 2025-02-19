@@ -123,6 +123,7 @@ private fun LoanAccountDetailScreen(
                     is LoanAccountsState.DialogState.ApprovalPending -> {
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
+                            // TODO() we have to replace this icon from Drawable to ImageVector
                             icon = Res.drawable.ic_assignment_turned_in_black_24dp,
                             error = Res.string.approval_pending,
                         )
@@ -131,6 +132,7 @@ private fun LoanAccountDetailScreen(
                     is LoanAccountsState.DialogState.WaitingForDisburse -> {
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
+                            // TODO() we have to replace this icon from Drawable to ImageVector
                             icon = Res.drawable.ic_assignment_turned_in_black_24dp,
                             error = Res.string.waiting_for_disburse,
                         )

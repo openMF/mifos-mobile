@@ -16,32 +16,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan.generated.resources.Res
-import mifos_mobile.feature.loan.generated.resources.loan_application_submitted_successfully
-import mifos_mobile.feature.loan.generated.resources.loan_application_updated_successfully
 import mifos_mobile.feature.loan.generated.resources.no_internet_connection
 import mifos_mobile.feature.loan.generated.resources.update_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.enums.LoanState
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun ReviewLoanApplicationScreen(
@@ -49,61 +44,69 @@ internal fun ReviewLoanApplicationScreen(
     modifier: Modifier = Modifier,
     viewModel: ReviewLoanApplicationViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val data by viewModel.reviewLoanApplicationUiData.collectAsStateWithLifecycle()
-    val isOnline by viewModel.onlineStatus.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is ReviewLoanApplicationEvent.ShowToast -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+            }
+
+            is ReviewLoanApplicationEvent.NavigateBack -> {
+                navigateBack(event.isSuccess)
+            }
+        }
+    }
+
     ReviewLoanApplicationScreen(
-        uiState = uiState,
-        data = data,
-        isOnline = isOnline,
-        snackbarHostState = snackbarHostState,
-        navigateBack = navigateBack,
-        onSubmit = viewModel::submitLoan,
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
         modifier = modifier,
     )
-
-    HandleUiState(uiState, snackbarHostState, navigateBack)
 }
 
 @Composable
 private fun ReviewLoanApplicationScreen(
-    uiState: ReviewLoanApplicationUiState,
-    data: ReviewLoanApplicationUiData,
-    isOnline: Boolean,
-    snackbarHostState: SnackbarHostState,
-    navigateBack: (isSuccess: Boolean) -> Unit,
-    onSubmit: () -> Unit,
+    state: ReviewLoanApplicationState,
+    onAction: (ReviewLoanApplicationAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         MifosTopBar(
             modifier = Modifier.fillMaxWidth(),
-            backPress = { navigateBack(false) },
+            backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
             topBarTitle = stringResource(Res.string.update_loan),
         )
-
         Box(modifier = Modifier.weight(1f)) {
-            ReviewLoanApplicationContent(
-                data = data,
-                onSubmit = onSubmit,
-                modifier = Modifier.padding(16.dp),
-            )
-
-            if (uiState is ReviewLoanApplicationUiState.Loading) {
-                MifosProgressIndicator(
+            when (state.dialogState) {
+                is ReviewLoanApplicationState.DialogState.Error ->
+                    MifosErrorComponent(isNetworkConnected = state.isOnline)
+                ReviewLoanApplicationState.DialogState.Loading -> MifosProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background.copy(0.8f)),
                 )
+                else -> ReviewLoanApplicationContent(
+                    data = state.reviewLoanApplicationUiData,
+                    onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },
+                    modifier = Modifier.padding(16.dp),
+                )
             }
+            ReviewLoanApplicationContent(
+                data = state.reviewLoanApplicationUiData,
+                onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },
+                modifier = Modifier.padding(16.dp),
+            )
         }
 
-        SnackbarHost(hostState = snackbarHostState)
-
-        if (!isOnline) {
+        if (!state.isOnline) {
             NoInternet(
                 error = Res.string.no_internet_connection,
                 isRetryEnabled = false,
@@ -113,65 +116,13 @@ private fun ReviewLoanApplicationScreen(
     }
 }
 
-@Composable
-private fun HandleUiState(
-    uiState: ReviewLoanApplicationUiState,
-    snackbarHostState: SnackbarHostState,
-    navigateBack: (isSuccess: Boolean) -> Unit,
-) {
-
-    LaunchedEffect(uiState) {
-        when (uiState) {
-            is ReviewLoanApplicationUiState.Error -> {
-                snackbarHostState.showSnackbar(
-                    message = uiState.throwable.toString(),
-                    duration = SnackbarDuration.Short,
-                )
-            }
-
-            is ReviewLoanApplicationUiState.Success -> {
-                val message = when (uiState.loanState) {
-                    LoanState.CREATE -> Res.string.loan_application_submitted_successfully
-                    LoanState.UPDATE -> Res.string.loan_application_updated_successfully
-                }
-
-                snackbarHostState.showSnackbar(
-                    message = message.toString(),
-                    duration = SnackbarDuration.Short,
-                )
-
-                navigateBack(true)
-            }
-
-            else -> Unit
-        }
-    }
-}
-
-internal class UiStatesParameterProvider : PreviewParameterProvider<ReviewLoanApplicationUiState> {
-    override val values: Sequence<ReviewLoanApplicationUiState>
-        get() = sequenceOf(
-            ReviewLoanApplicationUiState.ReviewLoanUiReady,
-            ReviewLoanApplicationUiState.Error(throwable = null),
-            ReviewLoanApplicationUiState.Loading,
-            ReviewLoanApplicationUiState.Success(loanState = LoanState.CREATE),
-        )
-}
-
 @Preview
 @Composable
-private fun ReviewLoanApplicationScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class)
-    reviewLoanApplicationUiState: ReviewLoanApplicationUiState,
-) {
+private fun ReviewLoanApplicationScreenPreview() {
     MifosMobileTheme {
         ReviewLoanApplicationScreen(
-            uiState = reviewLoanApplicationUiState,
-            data = ReviewLoanApplicationUiData(),
-            isOnline = true,
-            navigateBack = {},
-            snackbarHostState = SnackbarHostState(),
-            onSubmit = {},
+            state = ReviewLoanApplicationState(dialogState = null),
+            onAction = {},
             modifier = Modifier,
 
         )

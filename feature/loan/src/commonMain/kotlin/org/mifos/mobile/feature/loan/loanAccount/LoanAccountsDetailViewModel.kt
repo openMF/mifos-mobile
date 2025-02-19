@@ -169,11 +169,11 @@ internal class LoanAccountsDetailViewModel(
 
                         loan.status?.pendingApproval == true ->
                             it.copy(
-                                dialogState = LoanAccountsState.DialogState.ApprovalPending
+                                dialogState = LoanAccountsState.DialogState.ApprovalPending,
                             )
                         loan.status?.waitingForDisbursal == true ->
                             it.copy(
-                                dialogState = LoanAccountsState.DialogState.WaitingForDisburse
+                                dialogState = LoanAccountsState.DialogState.WaitingForDisburse,
                             )
                         else -> it.copy(loanAccountAssociations = loan, dialogState = null)
                     }
