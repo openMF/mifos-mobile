@@ -198,8 +198,8 @@ data class LoanAccountsState(
     val loanAccountAssociations: LoanWithAssociations? = null,
     val isOnline: Boolean = false,
 ) : Parcelable {
-    sealed interface DialogState : Parcelable {
 
+    sealed interface DialogState : Parcelable {
         @Parcelize
         data object Loading : DialogState
 

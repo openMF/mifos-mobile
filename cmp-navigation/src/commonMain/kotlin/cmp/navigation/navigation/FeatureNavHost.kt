@@ -9,19 +9,12 @@
  */
 package cmp.navigation.navigation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import cmp.navigation.ui.AppState
-
-const val WELCOME_ROUTE = "home_route"
+import org.mifos.mobile.feature.loan.navigation.LoanNavigation
+import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -31,27 +24,21 @@ internal fun FeatureNavHost(
 ) {
     NavHost(
         route = NavGraphRoute.MAIN_GRAPH,
-        startDestination = WELCOME_ROUTE,
+        startDestination = LoanNavigation.LoanBase.route,
         navController = appState.navController,
         modifier = modifier,
     ) {
-        homeScreen()
-    }
-}
-
-fun NavGraphBuilder.homeScreen() {
-    composable(route = WELCOME_ROUTE) {
-        WelcomeScreen()
-    }
-}
-
-@Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(text = "Welcome to Mifos Mobile")
+//        homeScreen()
+        loanNavGraph(
+            navController = appState.navController,
+            viewQr = { },
+            viewGuarantor = { },
+            viewCharges = { },
+            makePayment = { _: Long, _: Double?, _: String -> },
+//            viewQr = navController::navigateToQrDisplayScreen,
+//            viewGuarantor = navController::navigateToGuarantorScreen,
+//            viewCharges = navController::navigateToClientChargeScreen,
+//            makePayment = navController::navigateToSavingsMakeTransfer,
+        )
     }
 }

@@ -36,7 +36,6 @@ import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.account_number
 import mifos_mobile.feature.loan.generated.resources.date
 import mifos_mobile.feature.loan.generated.resources.disbursement_date
-import mifos_mobile.feature.loan.generated.resources.ic_charges
 import mifos_mobile.feature.loan.generated.resources.loan_balance
 import mifos_mobile.feature.loan.generated.resources.loan_repayment_schedule
 import mifos_mobile.feature.loan.generated.resources.no_of_payments
@@ -49,6 +48,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
@@ -199,8 +199,7 @@ private fun RepaymentScheduleTable(
             }
         }
     } else {
-        // TODO() we have to replace this icon from Drawable to ImageVector
-        EmptyDataView(icon = Res.drawable.ic_charges, error = Res.string.repayment_schedule)
+        EmptyDataView(icon = MifosIcons.Error, error = Res.string.repayment_schedule)
     }
 }
 

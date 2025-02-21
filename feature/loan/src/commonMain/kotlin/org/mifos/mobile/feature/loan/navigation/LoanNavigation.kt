@@ -9,15 +9,13 @@
  */
 package org.mifos.mobile.feature.loan.navigation
 
-import org.mifos.mobile.core.common.Constants.ACCOUNT_NUMBER
-import org.mifos.mobile.core.common.Constants.LOANS_PAYLOAD
 import org.mifos.mobile.core.common.Constants.LOAN_ID
-import org.mifos.mobile.core.common.Constants.LOAN_NAME
 import org.mifos.mobile.core.common.Constants.LOAN_STATE
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_APPLICATION_SCREEN_ROUTE
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_DETAIL_SCREEN_ROUTE
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_NAVIGATION_ROUTE_BASE
+import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_REVIEW_ARGS
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_REVIEW_SCREEN_ROUTE
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_SCHEDULE_SCREEN_ROUTE
 import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_SUMMARY_SCREEN_ROUTE
@@ -54,17 +52,23 @@ sealed class LoanNavigation(val route: String) {
         fun passArguments(loanId: Long) = "$LOAN_SCHEDULE_SCREEN_ROUTE/$loanId"
     }
 
-    data object LoanReview : LoanNavigation(
-        route = "$LOAN_REVIEW_SCREEN_ROUTE/{$LOAN_STATE}/{${LOANS_PAYLOAD}}/{$LOAN_ID}/{$LOAN_NAME}/{$ACCOUNT_NUMBER}",
-    ) {
-        fun passArguments(
-            loanState: LoanState,
-            loansPayload: String,
-            loanId: Long? = null,
-            loanName: String,
-            accountNo: String,
-        ): String {
-            return "$LOAN_REVIEW_SCREEN_ROUTE/$loanState/$loansPayload/$loanId/$loanName/$accountNo"
+//    data object LoanReview : LoanNavigation(
+//        route =
+//        "$LOAN_REVIEW_SCREEN_ROUTE/{$LOAN_STATE}/{${LOANS_PAYLOAD}}/{$LOAN_ID}/{$LOAN_NAME}/{$ACCOUNT_NUMBER}",
+//    ) {
+//        fun passArguments(
+//            loanState: LoanState,
+//            loansPayload: String,
+//            loanId: Long? = null,
+//            loanName: String,
+//            accountNo: String,
+//        ): String {
+//            return "$LOAN_REVIEW_SCREEN_ROUTE/$loanState/$loansPayload/$loanId/$loanName/$accountNo"
+//        }
+//    }
+    data object LoanReview : LoanNavigation(route = "$LOAN_REVIEW_SCREEN_ROUTE/{$LOAN_REVIEW_ARGS}") {
+        fun passArguments(args: LoanReviewArgs): String {
+            return "$LOAN_REVIEW_SCREEN_ROUTE/${args.toJson()}"
         }
     }
 }
@@ -78,4 +82,6 @@ object LoanRoute {
     const val LOAN_WITHDRAW_SCREEN_ROUTE = "loan_withdraw_screen_route"
     const val LOAN_SCHEDULE_SCREEN_ROUTE = "loan_schedule_screen_route"
     const val LOAN_REVIEW_SCREEN_ROUTE = "loan_review_screen_route"
+
+    const val LOAN_REVIEW_ARGS = "loanReviewArgs"
 }

@@ -52,7 +52,7 @@ internal fun LoanAccountDetailTopBar(
         title = { Text(text = stringResource(Res.string.loan_account_details)) },
         navigationIcon = {
             IconButton(
-                onClick = { navigateBack.invoke() },
+                onClick = navigateBack,
             ) {
                 Icon(
                     imageVector = MifosIcons.ArrowBack,

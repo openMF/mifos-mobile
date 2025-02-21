@@ -63,6 +63,11 @@ internal fun ReviewLoanApplicationScreen(
         }
     }
 
+    LoginDialogs(
+        dialogState = state.dialogState,
+        state = state,
+    )
+
     ReviewLoanApplicationScreen(
         state = state,
         onAction = remember(viewModel) {
@@ -70,6 +75,25 @@ internal fun ReviewLoanApplicationScreen(
         },
         modifier = modifier,
     )
+}
+
+@Composable
+private fun LoginDialogs(
+    state: ReviewLoanApplicationState,
+    dialogState: ReviewLoanApplicationState.DialogState?,
+) {
+    when (dialogState) {
+        is ReviewLoanApplicationState.DialogState.Error ->
+            MifosErrorComponent(isNetworkConnected = state.isOnline)
+
+        ReviewLoanApplicationState.DialogState.Loading -> MifosProgressIndicator(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background.copy(0.8f)),
+        )
+
+        null -> Unit
+    }
 }
 
 @Composable
@@ -85,20 +109,6 @@ private fun ReviewLoanApplicationScreen(
             topBarTitle = stringResource(Res.string.update_loan),
         )
         Box(modifier = Modifier.weight(1f)) {
-            when (state.dialogState) {
-                is ReviewLoanApplicationState.DialogState.Error ->
-                    MifosErrorComponent(isNetworkConnected = state.isOnline)
-                ReviewLoanApplicationState.DialogState.Loading -> MifosProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background.copy(0.8f)),
-                )
-                else -> ReviewLoanApplicationContent(
-                    data = state.reviewLoanApplicationUiData,
-                    onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
             ReviewLoanApplicationContent(
                 data = state.reviewLoanApplicationUiData,
                 onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },

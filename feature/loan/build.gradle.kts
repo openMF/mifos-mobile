@@ -12,7 +12,7 @@ plugins {
 //    alias(libs.plugins.mifos.android.library.compose)
     alias(libs.plugins.mifos.cmp.feature)
     alias(libs.plugins.kotlin.serialization)
-//    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    id(libs.plugins.kotlin.parcelize.get().pluginId)
 }
 
 android {

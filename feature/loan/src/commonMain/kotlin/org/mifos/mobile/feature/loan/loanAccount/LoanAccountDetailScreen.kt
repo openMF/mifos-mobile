@@ -22,8 +22,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.approval_pending
-import mifos_mobile.feature.loan.generated.resources.ic_assignment_turned_in_black_24dp
-import mifos_mobile.feature.loan.generated.resources.ic_error_black_24dp
 import mifos_mobile.feature.loan.generated.resources.loan_account_details
 import mifos_mobile.feature.loan.generated.resources.no_internet_connection
 import mifos_mobile.feature.loan.generated.resources.waiting_for_disburse
@@ -31,6 +29,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -124,7 +123,8 @@ private fun LoanAccountDetailScreen(
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
                             // TODO() we have to replace this icon from Drawable to ImageVector
-                            icon = Res.drawable.ic_assignment_turned_in_black_24dp,
+//                            icon = Res.drawable.ic_assignment_turned_in_black_24dp,
+                            icon = MifosIcons.Error,
                             error = Res.string.approval_pending,
                         )
                     }
@@ -133,7 +133,8 @@ private fun LoanAccountDetailScreen(
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
                             // TODO() we have to replace this icon from Drawable to ImageVector
-                            icon = Res.drawable.ic_assignment_turned_in_black_24dp,
+//                            icon = Res.drawable.ic_assignment_turned_in_black_24dp,
+                            icon = MifosIcons.Error,
                             error = Res.string.waiting_for_disburse,
                         )
                     }
@@ -176,7 +177,8 @@ private fun ErrorComponent(
         )
     } else {
         EmptyDataView(
-            icon = Res.drawable.ic_error_black_24dp,
+//            icon = Res.drawable.ic_error_black_24dp,
+            icon = MifosIcons.Error,
             error = Res.string.loan_account_details,
             modifier = Modifier.fillMaxSize(),
         )

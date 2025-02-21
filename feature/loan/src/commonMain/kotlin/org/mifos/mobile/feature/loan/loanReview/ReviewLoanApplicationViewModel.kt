@@ -14,14 +14,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.Constants.LOANS_PAYLOAD
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -30,6 +27,8 @@ import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.loan.navigation.LoanReviewArgs
+import org.mifos.mobile.feature.loan.navigation.LoanRoute.LOAN_REVIEW_ARGS
 
 internal class ReviewLoanApplicationViewModel(
     private val reviewLoanApplicationRepository: ReviewLoanApplicationRepository,
@@ -39,14 +38,20 @@ internal class ReviewLoanApplicationViewModel(
     initialState = ReviewLoanApplicationState(dialogState = null),
 ) {
 
-    private val loanId = savedStateHandle.getStateFlow<Long?>(Constants.LOAN_ID, null)
-    private val loanState = savedStateHandle.getStateFlow(Constants.LOAN_STATE, LoanState.CREATE)
-    private val loanName = savedStateHandle.getStateFlow<String?>(Constants.LOAN_NAME, null)
-    private val accountNo = savedStateHandle.getStateFlow<String?>(Constants.ACCOUNT_NUMBER, null)
-    private val loansPayloadString = savedStateHandle.getStateFlow<String?>(LOANS_PAYLOAD, null)
+//    private val loanId = savedStateHandle.getStateFlow<Long?>(Constants.LOAN_ID, null)
+//    private val loanState = savedStateHandle.getStateFlow(Constants.LOAN_STATE, LoanState.CREATE)
+//    private val loanName = savedStateHandle.getStateFlow<String?>(Constants.LOAN_NAME, null)
+//    private val accountNo = savedStateHandle.getStateFlow<String?>(Constants.ACCOUNT_NUMBER, null)
+//    private val loansPayloadString = savedStateHandle.getStateFlow<String?>(LOANS_PAYLOAD, null)
+//
+//    private val loansPayload: StateFlow<LoansPayload?> = loansPayloadString.map { jsonString ->
+//        jsonString?.let { Json.decodeFromString<LoansPayload>(it) }
+//    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-    private val loansPayload: StateFlow<LoansPayload?> = loansPayloadString.map { jsonString ->
-        jsonString?.let { Json.decodeFromString<LoansPayload>(it) }
+    private val loanReviewArgsJson = savedStateHandle.getStateFlow<String?>(LOAN_REVIEW_ARGS, null)
+
+    private val loanReviewArgs: StateFlow<LoanReviewArgs?> = loanReviewArgsJson.map { jsonString ->
+        jsonString?.let { Json.decodeFromString<LoanReviewArgs>(it) }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     init {
@@ -68,34 +73,59 @@ internal class ReviewLoanApplicationViewModel(
 
     private fun collectReviewLoanApplicationUiData() {
         viewModelScope.launch {
-            combine(
-                loanId,
-                loanState,
-                loanName,
-                accountNo,
-                loansPayload) {
-                              loanId,
-                              loanState,
-                              loanName,
-                              accountNo,
-                              loansPayload ->
-                ReviewLoanApplicationUiData(
-                    loanState = loanState,
-                    loanName = loanName,
-                    accountNo = accountNo,
-                    loanProduct = loansPayload?.productName,
-                    loanPurpose = loansPayload?.loanPurpose,
-                    principal = loansPayload?.principal,
-                    currency = loansPayload?.currency,
-                    submissionDate = loansPayload?.submittedOnDate,
-                    disbursementDate = loansPayload?.expectedDisbursementDate,
-                    loanId = loanId ?: 0,
-                )
-            }.collectLatest { data ->
-                updateState { it.copy(reviewLoanApplicationUiData = data) }
+            loanReviewArgs.collectLatest { args ->
+                args?.let { loanArgs ->
+                    updateState { currentState ->
+                        currentState.copy(
+                            reviewLoanApplicationUiData = ReviewLoanApplicationUiData(
+                                loanState = loanArgs.loanState,
+                                loanName = loanArgs.loanName,
+                                accountNo = loanArgs.accountNo,
+                                loanProduct = loanArgs.loansPayload?.productName,
+                                loanPurpose = loanArgs.loansPayload?.loanPurpose,
+                                principal = loanArgs.loansPayload?.principal,
+                                currency = loanArgs.loansPayload?.currency,
+                                submissionDate = loanArgs.loansPayload?.submittedOnDate,
+                                disbursementDate = loanArgs.loansPayload?.expectedDisbursementDate,
+                                loanId = loanArgs.loanId ?: 0,
+                            ),
+                        )
+                    }
+                }
             }
         }
     }
+
+//    private fun collectReviewLoanApplicationUiData() {
+//        viewModelScope.launch {
+//            combine(
+//                loanId,
+//                loanState,
+//                loanName,
+//                accountNo,
+//                loansPayload) {
+//                              loanId,
+//                              loanState,
+//                              loanName,
+//                              accountNo,
+//                              loansPayload ->
+//                ReviewLoanApplicationUiData(
+//                    loanState = loanState,
+//                    loanName = loanName,
+//                    accountNo = accountNo,
+//                    loanProduct = loansPayload?.productName,
+//                    loanPurpose = loansPayload?.loanPurpose,
+//                    principal = loansPayload?.principal,
+//                    currency = loansPayload?.currency,
+//                    submissionDate = loansPayload?.submittedOnDate,
+//                    disbursementDate = loansPayload?.expectedDisbursementDate,
+//                    loanId = loanId ?: 0,
+//                )
+//            }.collectLatest { data ->
+//                updateState { it.copy(reviewLoanApplicationUiData = data) }
+//            }
+//        }
+//    }
 
     override fun handleAction(action: ReviewLoanApplicationAction) {
         when (action) {
@@ -111,7 +141,7 @@ internal class ReviewLoanApplicationViewModel(
             try {
                 val result = reviewLoanApplicationRepository.submitLoan(
                     loanState = state.reviewLoanApplicationUiData.loanState,
-                    loansPayload = loansPayload.value ?: LoansPayload(),
+                    loansPayload = loanReviewArgs.value?.loansPayload ?: LoansPayload(),
                     loanId = state.reviewLoanApplicationUiData.loanId,
                 )
                 when (result) {
@@ -174,6 +204,7 @@ sealed interface ReviewLoanApplicationEvent {
     data class ShowToast(val message: String) : ReviewLoanApplicationEvent
 }
 
+@Parcelize
 data class ReviewLoanApplicationUiData(
     val loanId: Long = 0,
     val loanState: LoanState = LoanState.CREATE,
@@ -185,4 +216,4 @@ data class ReviewLoanApplicationUiData(
     val principal: Double? = null,
     val loanPurpose: String? = null,
     val loanProduct: String? = null,
-)
+) : Parcelable

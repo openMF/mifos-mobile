@@ -15,7 +15,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.loan.loanAccount.LoanAccountDetailScreen
@@ -25,6 +29,8 @@ import org.mifos.mobile.feature.loan.loanAccountTransaction.LoanAccountTransacti
 import org.mifos.mobile.feature.loan.loanAccountWithdraw.LoanAccountWithdrawScreen
 import org.mifos.mobile.feature.loan.loanRepaymentSchedule.LoanRepaymentScheduleScreen
 import org.mifos.mobile.feature.loan.loanReview.ReviewLoanApplicationScreen
+
+
 
 fun NavController.navigateToLoanDetailScreen(loanId: Long) {
     navigate(LoanNavigation.LoanDetail.passArguments(loanId = loanId))
@@ -39,22 +45,26 @@ fun NavController.navigateToLoanApplication() {
     )
 }
 
-fun NavController.navigateToLoanReview(
-    loanState: LoanState,
-    loansPayloadString: String,
-    loanId: Long?,
-    loanName: String,
-    accountNo: String,
-) {
-    navigate(
-        LoanNavigation.LoanReview.passArguments(
-            accountNo = accountNo,
-            loanId = loanId,
-            loanState = loanState,
-            loansPayload = loansPayloadString,
-            loanName = loanName,
-        ),
-    )
+// fun NavController.navigateToLoanReview(
+//    loanState: LoanState,
+//    loansPayloadString: String,
+//    loanId: Long?,
+//    loanName: String,
+//    accountNo: String,
+// ) {
+//    navigate(
+//        LoanNavigation.LoanReview.passArguments(
+//            accountNo = accountNo,
+//            loanId = loanId,
+//            loanState = loanState,
+//            loansPayload = loansPayloadString,
+//            loanName = loanName,
+//        ),
+//    )
+// }
+
+fun NavController.navigateToLoanReview(args: LoanReviewArgs) {
+    navigate(LoanNavigation.LoanReview.passArguments(args))
 }
 
 fun NavGraphBuilder.loanNavGraph(
@@ -100,10 +110,36 @@ fun NavGraphBuilder.loanNavGraph(
             makePayment = makePayment,
         )
 
+//        loanApplication(
+//            navigateBack = navController::popBackStack,
+//            reviewNewLoanApplication = navController::navigateToLoanReview,
+//            submitUpdateLoanApplication = navController::navigateToLoanReview,
+//        )
+
         loanApplication(
             navigateBack = navController::popBackStack,
-            reviewNewLoanApplication = navController::navigateToLoanReview,
-            submitUpdateLoanApplication = navController::navigateToLoanReview,
+            reviewNewLoanApplication = { loanState, loansPayload, loanId, loanName, accountNo ->
+                navController.navigateToLoanReview(
+                    LoanReviewArgs(
+                        loanState = loanState,
+                        loanId = loanId,
+                        loanName = loanName,
+                        accountNo = accountNo,
+                        loansPayloadJson = Json.encodeToString(loansPayload),
+                    ),
+                )
+            },
+            submitUpdateLoanApplication = { loanState, loansPayload, loanId, loanName, accountNo ->
+                navController.navigateToLoanReview(
+                    LoanReviewArgs(
+                        loanState = loanState,
+                        loanId = loanId,
+                        loanName = loanName,
+                        accountNo = accountNo,
+                        loansPayloadJson = Json.encodeToString(loansPayload),
+                    ),
+                )
+            },
         )
 
         loanSummary(
@@ -250,17 +286,53 @@ fun NavGraphBuilder.loanReview(
 ) {
     composable(
         route = LoanNavigation.LoanReview.route,
-        arguments = listOf(
-            navArgument(Constants.LOAN_ID) { type = NavType.LongType },
-            navArgument(Constants.LOANS_PAYLOAD) { type = NavType.StringType },
-            navArgument(Constants.LOAN_NAME) { type = NavType.StringType },
-            navArgument(Constants.ACCOUNT_NUMBER) { type = NavType.StringType },
-//            navArgument(Constants.LOAN_STATE) { type = NavType.EnumType(LoanState::class.java) },
-            navArgument(Constants.LOAN_STATE) { type = NavType.StringType },
-        ),
-    ) {
-        ReviewLoanApplicationScreen(
-            navigateBack = { navigateBack() },
-        )
+        arguments = listOf(navArgument(LoanRoute.LOAN_REVIEW_ARGS) { type = NavType.StringType }),
+    ) { backStackEntry ->
+        val jsonArgs = backStackEntry.arguments?.getString(LoanRoute.LOAN_REVIEW_ARGS)
+        val loanReviewArgs = jsonArgs?.let { LoanReviewArgs.fromJson(it) }
+
+        loanReviewArgs?.let {
+            ReviewLoanApplicationScreen(
+                navigateBack = { navigateBack() },
+            )
+        }
     }
 }
+
+@Serializable
+data class LoanReviewArgs(
+    val loanState: LoanState,
+    val loanId: Long?,
+    val loanName: String,
+    val accountNo: String,
+    val loansPayloadJson: String?,
+) {
+    val loansPayload: LoansPayload?
+        get() = loansPayloadJson?.let { Json.decodeFromString<LoansPayload>(it) }
+
+    fun toJson(): String = Json.encodeToString(this)
+
+    companion object {
+        fun fromJson(json: String): LoanReviewArgs = Json.decodeFromString(json)
+    }
+}
+
+// fun NavGraphBuilder.loanReview(
+//    navigateBack: () -> Unit,
+// ) {
+//    composable(
+//        route = LoanNavigation.LoanReview.route,
+//        arguments = listOf(
+//            navArgument(Constants.LOAN_ID) { type = NavType.LongType },
+//            navArgument(Constants.LOANS_PAYLOAD) { type = NavType.StringType },
+//            navArgument(Constants.LOAN_NAME) { type = NavType.StringType },
+//            navArgument(Constants.ACCOUNT_NUMBER) { type = NavType.StringType },
+// //            navArgument(Constants.LOAN_STATE) { type = NavType.EnumType(LoanState::class.java) },
+//            navArgument(Constants.LOAN_STATE) { type = NavType.StringType },
+//        ),
+//    ) {
+//        ReviewLoanApplicationScreen(
+//            navigateBack = { navigateBack() },
+//        )
+//    }
+// }
