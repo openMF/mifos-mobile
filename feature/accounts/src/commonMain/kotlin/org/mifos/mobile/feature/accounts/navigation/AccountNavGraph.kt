@@ -60,7 +60,7 @@ fun NavGraphBuilder.accountsScreenRoute(
             navigateBack = navigateBack,
             navigateToLoanApplicationScreen = navigateToLoanApplicationScreen,
             navigateToSavingsApplicationScreen = navigateToSavingsApplicationScreen,
-            onItemClick = { accountType, accountId ->
+            onAccountClicked = { accountType, accountId ->
                 navigateToAccountDetail(
                     accountType,
                     accountId,
