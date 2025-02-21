@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hekmatullahamin.accounts"
+    namespace = "org.mifos.mobile.feature.accounts"
 }
 
 kotlin {
