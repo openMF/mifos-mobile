@@ -12,13 +12,18 @@ plugins {
 }
 
 android {
-    namespace = "com.hekmatullahamin.loan_account"
+    namespace = "org.mifos.mobile.feature.loanaccount"
 }
 
 kotlin {
     sourceSets{
         commonMain.dependencies {
+            implementation(compose.components.resources)
+            implementation(compose.foundation)
+            implementation(compose.material3)
 
+            api(projects.core.ui)
+            api(projects.core.model)
         }
     }
 }
