@@ -107,6 +107,9 @@ object StatusUtils {
             CheckboxStatus(
                 Res.string.feature_account_closed,
             ),
+            CheckboxStatus(
+                Res.string.feature_account_rejected,
+            ),
         )
     }
 }

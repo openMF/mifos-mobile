@@ -41,6 +41,9 @@ import org.mifos.mobile.feature.accounts.component.AccountFilterDialog
 import org.mifos.mobile.feature.accounts.component.AccountsScreenTopBar
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
+import org.mifos.mobile.feature.loanaccount.screen.LoanAccountScreen
+import org.mifos.mobile.feature.savingsaccount.screen.SavingsAccountScreen
+import org.mifos.mobile.feature.shareaccount.screen.ShareAccountScreen
 
 @Composable
 fun AccountsScreen(
@@ -54,8 +57,6 @@ fun AccountsScreen(
     var isDialogActive by rememberSaveable { mutableStateOf(false) }
     var currentPage by rememberSaveable { mutableIntStateOf(0) }
 
-    val isSearching by viewModel.isSearching.collectAsStateWithLifecycle()
-    val isFiltered by viewModel.isFiltered.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
     val accountType by viewModel.accountType.collectAsStateWithLifecycle()
@@ -75,8 +76,6 @@ fun AccountsScreen(
     AccountsScreenContent(
         currentPage = currentPage,
         searchQuery = searchQuery,
-        isSearching = isSearching,
-        isFiltered = isFiltered,
         isDialogActive = isDialogActive,
         checkboxOptions = checkboxOptions,
         openFilterDialog = { isDialogActive = true },
@@ -107,8 +106,6 @@ fun AccountsScreen(
 private fun AccountsScreenContent(
     currentPage: Int,
     searchQuery: String,
-    isSearching: Boolean,
-    isFiltered: Boolean,
     isDialogActive: Boolean,
     checkboxOptions: List<CheckboxStatus>,
     openFilterDialog: () -> Unit,
@@ -175,8 +172,6 @@ private fun AccountsScreenContent(
             checkboxOptions = checkboxOptions,
             currentPage = currentPage,
             searchQuery = searchQuery,
-            isSearching = isSearching,
-            isFiltered = isFiltered,
             onPageChange = onPageChange,
             onAccountClicked = onAccountClicked,
             modifier = Modifier.padding(paddingValues),
@@ -190,8 +185,6 @@ private fun ClientAccountsTabRow(
     checkboxOptions: List<CheckboxStatus>,
     currentPage: Int,
     searchQuery: String,
-    isSearching: Boolean,
-    isFiltered: Boolean,
     onPageChange: (index: Int) -> Unit,
     onAccountClicked: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
@@ -236,24 +229,18 @@ private fun ClientAccountsTabRow(
             0 -> SavingsAccountScreen(
                 checkboxOptionsLabels = selectedCheckboxLabels,
                 searchQuery = searchQuery,
-                isSearchActive = isSearching,
-                isFiltered = isFiltered,
                 onAccountSelected = onAccountClicked,
             )
 
             1 -> LoanAccountScreen(
                 checkboxOptionsLabels = selectedCheckboxLabels,
                 searchQuery = searchQuery,
-                isSearchActive = isSearching,
-                isFiltered = isFiltered,
                 onAccountSelected = onAccountClicked,
             )
 
             2 -> ShareAccountScreen(
                 checkboxOptionsLabels = selectedCheckboxLabels,
                 searchQuery = searchQuery,
-                isSearchActive = isSearching,
-                isFiltered = isFiltered,
                 onAccountSelected = onAccountClicked,
             )
         }
@@ -267,8 +254,6 @@ internal fun ClientAccountsScreenPreview() {
         AccountsScreenContent(
             currentPage = 0,
             searchQuery = "",
-            isSearching = false,
-            isFiltered = false,
             isDialogActive = false,
             checkboxOptions = listOf(),
             openFilterDialog = { },

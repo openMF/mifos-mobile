@@ -36,17 +36,9 @@ import org.mifos.mobile.feature.accounts.utils.StatusUtils
  */
 class AccountsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    /** Tracks whether a search operation is active. */
-    private val _isSearching = MutableStateFlow(false)
-    val isSearching: StateFlow<Boolean> get() = _isSearching.asStateFlow()
-
     /** Holds the current search query input. */
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-
-    /** Tracks whether any filters are applied via checkboxes. */
-    private val _isFiltered = MutableStateFlow(false)
-    val isFiltered: StateFlow<Boolean> get() = _isFiltered.asStateFlow()
 
     /** Holds the list of checkbox options for filtering accounts. */
     private val _checkboxOptions = MutableStateFlow(emptyList<CheckboxStatus>())
@@ -77,7 +69,6 @@ class AccountsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
      * @param query The new search query entered by the user.
      */
     fun updateSearchQuery(query: String) {
-        _isSearching.update { true }
         _searchQuery.update { query }
     }
 
@@ -86,7 +77,6 @@ class AccountsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
      */
     fun stoppedSearching() {
         _searchQuery.update { "" }
-        _isSearching.update { false }
     }
 
     /**
@@ -102,11 +92,8 @@ class AccountsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         currentPage: Int,
     ) {
         if (checkBoxList.isEmpty()) {
-            _isFiltered.value = false
             _checkboxOptions.value = getAccountCheckboxes(currentPage)
         } else {
-            val isChanged = checkBoxList.any { it.isChecked }
-            _isFiltered.value = isChanged
             _checkboxOptions.value = checkBoxList
         }
     }
