@@ -19,56 +19,98 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.share_account.generated.resources.Res
+import mifos_mobile.feature.share_account.generated.resources.feature_account_active
+import mifos_mobile.feature.share_account.generated.resources.feature_account_approval_pending
+import mifos_mobile.feature.share_account.generated.resources.feature_account_approved
+import mifos_mobile.feature.share_account.generated.resources.feature_account_closed
+import mifos_mobile.feature.share_account.generated.resources.feature_account_rejected
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.shareaccount.component.ShareAccountCard
 
 @Composable
-fun LoanAccountScreenContent(
+internal fun ShareAccountScreenContent(
     accountList: List<ShareAccount>,
+    onAccountSelected: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lazyListState = rememberLazyListState()
 
     LazyColumn(
-        modifier = modifier.fillMaxSize().padding(top = 8.dp),
+        modifier = modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyListState,
     ) {
-        items(items = accountList, key = { account -> account.id }) { loanAccount ->
-            LoanAccountListItem(
+        items(
+            items = accountList,
+            key = { account -> account.id },
+        ) { loanAccount ->
+            ShareAccountListItem(
                 shareAccount = loanAccount,
+                onAccountSelected = onAccountSelected,
             )
         }
     }
 }
 
 @Composable
-private fun LoanAccountListItem(
+private fun ShareAccountListItem(
     shareAccount: ShareAccount,
+    onAccountSelected: (accountType: AccountType, accountId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val (indicatorColor, shouldShowAccountDetail) = when {
+    val (indicatorColor, statusDescription, shouldShowAccountDetail) = when {
         shareAccount.status?.active == true -> {
-            Pair(MaterialTheme.colorScheme.primary, true)
+            Triple(
+                first = MaterialTheme.colorScheme.primary,
+                second = stringResource(Res.string.feature_account_active),
+                third = true,
+            )
         }
 
         shareAccount.status?.approved == true -> {
-            Pair(MaterialTheme.colorScheme.secondaryContainer, false)
+            Triple(
+                first = MaterialTheme.colorScheme.secondaryContainer,
+                second = stringResource(Res.string.feature_account_approved),
+                third = false,
+            )
         }
 
         shareAccount.status?.submittedAndPendingApproval == true -> {
-            Pair(MaterialTheme.colorScheme.tertiaryContainer, false)
+            Triple(
+                first = MaterialTheme.colorScheme.tertiaryContainer,
+                second = stringResource(Res.string.feature_account_approval_pending),
+                third = false,
+            )
+        }
+
+        shareAccount.status?.rejected == true -> {
+            Triple(
+                first = MaterialTheme.colorScheme.surfaceVariant,
+                second = stringResource(Res.string.feature_account_rejected),
+                third = false,
+            )
         }
 
         else -> {
-            Pair(MaterialTheme.colorScheme.surfaceVariant, false)
+            Triple(
+                first = MaterialTheme.colorScheme.errorContainer,
+                second = stringResource(Res.string.feature_account_closed),
+                third = false,
+            )
         }
     }
 
     ShareAccountCard(
         shareAccount = shareAccount,
         indicatorColor = indicatorColor,
+        statusDescription = statusDescription,
         shouldShowAccountDetail = shouldShowAccountDetail,
+        onClick = {
+            onAccountSelected(AccountType.SHARE, shareAccount.id)
+        },
         modifier = modifier,
     )
 }
