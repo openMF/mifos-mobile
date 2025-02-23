@@ -7,11 +7,12 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.shareaccount.model
+package org.mifos.mobile.feature.shareaccount.di
 
-import org.jetbrains.compose.resources.StringResource
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
+import org.mifos.mobile.feature.shareaccount.viewmodel.ShareAccountViewModel
 
-internal data class CheckboxStatus(
-    val status: StringResource?,
-    val isChecked: Boolean = false,
-)
+val shareAccountModule = module {
+    viewModelOf(::ShareAccountViewModel)
+}
