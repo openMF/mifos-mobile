@@ -118,7 +118,6 @@ dependencies {
 //    implementation(projects.feature.savings)
 //    implementation(projects.feature.qr)
 //    implementation(projects.feature.transferProcess)
-//    implementation(projects.feature.account)
 //    implementation(projects.feature.clientCharge)
 //    implementation(projects.feature.recentTransaction)
 //    implementation(projects.feature.thirdPartyTransfer)
