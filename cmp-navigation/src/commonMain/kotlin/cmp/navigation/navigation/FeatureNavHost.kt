@@ -12,33 +12,57 @@ package cmp.navigation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import cmp.navigation.callHelpline
+import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
-import org.mifos.mobile.feature.loan.navigation.LoanNavigation
-import org.mifos.mobile.feature.loan.navigation.loanNavGraph
+import org.mifos.mobile.feature.home.navigation.HomeDestinations
+import org.mifos.mobile.feature.home.navigation.HomeNavigation
+import org.mifos.mobile.feature.home.navigation.homeNavGraph
 
 @Composable
 internal fun FeatureNavHost(
     appState: AppState,
-//    onClickLogout: () -> Unit,
+    onClickLogout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         route = NavGraphRoute.MAIN_GRAPH,
-        startDestination = LoanNavigation.LoanBase.route,
+        startDestination = HomeNavigation.HomeBase.route,
         navController = appState.navController,
         modifier = modifier,
     ) {
-//        homeScreen()
-        loanNavGraph(
-            navController = appState.navController,
-            viewQr = { },
-            viewGuarantor = { },
-            viewCharges = { },
-            makePayment = { _: Long, _: Double?, _: String -> },
-//            viewQr = navController::navigateToQrDisplayScreen,
-//            viewGuarantor = navController::navigateToGuarantorScreen,
-//            viewCharges = navController::navigateToClientChargeScreen,
-//            makePayment = navController::navigateToSavingsMakeTransfer,
+        homeNavGraph(
+//            onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
+            onNavigate = { handleHomeNavigation(it, onClickLogout) },
+            callHelpline = { callHelpline() },
+            mailHelpline = { mailHelpline() },
         )
+    }
+}
+
+fun handleHomeNavigation(
+//    navController: NavHostController,
+    homeDestinations: HomeDestinations,
+    onClickLogout: () -> Unit,
+) {
+    when (homeDestinations) {
+        HomeDestinations.LOGOUT -> onClickLogout.invoke()
+        HomeDestinations.HOME -> { }
+        HomeDestinations.ACCOUNTS -> { }
+        HomeDestinations.LOAN_ACCOUNT -> { }
+        HomeDestinations.SAVINGS_ACCOUNT -> { }
+        HomeDestinations.RECENT_TRANSACTIONS -> { }
+        HomeDestinations.CHARGES -> { }
+        HomeDestinations.THIRD_PARTY_TRANSFER -> { }
+        HomeDestinations.SETTINGS -> { }
+        HomeDestinations.ABOUT_US -> { }
+        HomeDestinations.HELP -> { }
+        HomeDestinations.SHARE -> { }
+        HomeDestinations.APP_INFO -> { }
+        HomeDestinations.TRANSFER -> { }
+        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.SURVEY -> { }
+        HomeDestinations.NOTIFICATIONS -> { }
+        HomeDestinations.PROFILE -> { }
     }
 }

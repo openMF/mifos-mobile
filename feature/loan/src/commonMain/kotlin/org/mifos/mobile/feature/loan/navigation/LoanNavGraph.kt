@@ -30,8 +30,6 @@ import org.mifos.mobile.feature.loan.loanAccountWithdraw.LoanAccountWithdrawScre
 import org.mifos.mobile.feature.loan.loanRepaymentSchedule.LoanRepaymentScheduleScreen
 import org.mifos.mobile.feature.loan.loanReview.ReviewLoanApplicationScreen
 
-
-
 fun NavController.navigateToLoanDetailScreen(loanId: Long) {
     navigate(LoanNavigation.LoanDetail.passArguments(loanId = loanId))
 }

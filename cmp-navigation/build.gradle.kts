@@ -20,7 +20,7 @@ kotlin {
 
             implementation(projects.feature.auth)
             implementation(projects.feature.loan)
-
+            implementation(projects.feature.home)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
@@ -35,6 +35,9 @@ kotlin {
             implementation(libs.window.size)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+        }
+        androidMain.dependencies {
+            implementation(libs.koin.android)
         }
     }
 }
