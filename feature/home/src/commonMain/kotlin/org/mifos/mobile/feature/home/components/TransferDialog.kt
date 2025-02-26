@@ -10,10 +10,9 @@
 package org.mifos.mobile.feature.home.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
@@ -47,6 +46,7 @@ internal fun TransferDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
                     text = stringResource(Res.string.transfer),
@@ -56,9 +56,7 @@ internal fun TransferDialog(
                             navigateToTransfer()
                         },
                 )
-                Spacer(modifier = Modifier.height(20.dp))
                 HorizontalDivider()
-                Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = stringResource(Res.string.third_party_transfer),
                     modifier = Modifier

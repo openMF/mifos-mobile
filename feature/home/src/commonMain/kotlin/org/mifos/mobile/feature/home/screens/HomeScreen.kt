@@ -84,7 +84,6 @@ private fun HomeScreenDialog(
 
         is HomeState.DialogState.Loading -> MifosProgressIndicator(modifier = Modifier.fillMaxSize())
 
-        null -> Unit
         is HomeState.DialogState.LogoutConfirmationDialog -> {
             MifosAlertDialog(
                 onDismissRequest = { onAction(HomeAction.OnDismissDialog) },
@@ -95,6 +94,7 @@ private fun HomeScreenDialog(
                 dialogText = "",
             )
         }
+        null -> Unit
     }
 }
 

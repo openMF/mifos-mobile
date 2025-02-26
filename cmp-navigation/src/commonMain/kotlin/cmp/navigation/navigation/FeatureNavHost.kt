@@ -39,7 +39,6 @@ internal fun FeatureNavHost(
     ) {
         homeNavGraph(
             onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
-//            onNavigate = { handleHomeNavigation(it, onClickLogout) },
             callHelpline = { callHelpline() },
             mailHelpline = { mailHelpline() },
         )

@@ -19,6 +19,7 @@ import org.koin.core.context.GlobalContext
 
 actual fun callHelpline() {
     val context: Context = GlobalContext.get().get()
+//    val context = androidContext()
     val intent = Intent(Intent.ACTION_DIAL).apply {
         data = Uri.parse("tel:8000000000")
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

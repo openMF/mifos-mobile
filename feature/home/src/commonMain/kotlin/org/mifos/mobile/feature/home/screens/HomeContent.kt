@@ -16,16 +16,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -61,6 +58,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.CurrencyFormatter
+import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
@@ -132,6 +130,7 @@ private fun HomeScreenContent(
             .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(scrollState),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         UserDetailsRow(
             username = state.username,
@@ -139,16 +138,12 @@ private fun HomeScreenContent(
             userProfile = { onAction(HomeAction.OnNavigate(HomeDestinations.PROFILE)) },
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         AccountOverviewCard(
             totalLoanAmount = state.loanAmount,
             totalSavingsAmount = state.savingsAmount,
             totalLoan = { onAction(HomeAction.OnNavigate(HomeDestinations.LOAN_ACCOUNT)) },
             totalSavings = { onAction(HomeAction.OnNavigate(HomeDestinations.SAVINGS_ACCOUNT)) },
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         state.homeCardItems?.let {
             HomeCards(
@@ -234,7 +229,6 @@ private fun UserDetailsRow(
         Text(
             text = stringResource(Res.string.hello_client, username),
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .fillMaxWidth(1f),
@@ -264,13 +258,11 @@ private fun HomeCard(
                 imageVector = imageVector,
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.primary,
             )
             Text(
                 text = stringResource(titleId),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
             )
         }
     }
@@ -286,20 +278,19 @@ private fun AccountOverviewCard(
     val isInPreview = LocalInspectionMode.current
 
     Row {
-        Card(
+        MifosCard(
             modifier = Modifier
                 .fillMaxWidth(),
-            colors = CardDefaults.cardColors(),
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
                     text = stringResource(Res.string.accounts_overview),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
@@ -321,8 +312,6 @@ private fun AccountOverviewCard(
                     visibilityOffIconId = Res.drawable.ic_visibility_off_24px,
                     onClick = totalSavings,
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
 
                 MifosHiddenTextRow(
                     title = stringResource(Res.string.total_loan),
@@ -360,7 +349,6 @@ private fun ContactUsRow(
         Text(
             text = stringResource(Res.string.need_help),
             modifier = Modifier.weight(1f),
-            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyMedium,
         )
 

@@ -9,10 +9,11 @@
  */
 package org.mifos.mobile.feature.home.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -51,7 +52,10 @@ internal fun HomeNavigationDrawer(
         modifier = modifier,
         drawerContent = {
             ModalDrawerSheet {
-                LazyColumn {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
                     item {
                         MifosUserImage(
                             modifier = Modifier
@@ -63,19 +67,15 @@ internal fun HomeNavigationDrawer(
                         Text(
                             text = username,
                             style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier
                                 .padding(horizontal = 20.dp)
                                 .fillMaxWidth(1f),
                         )
-
-                        Spacer(modifier = Modifier.height(20.dp))
                     }
 
                     items(
                         items = HomeNavigationItems.entries.toTypedArray(),
                         itemContent = { item ->
-                            Spacer(modifier = Modifier.height(12.dp))
                             NavigationDrawerItem(
                                 modifier = Modifier.padding(horizontal = 20.dp),
                                 label = {
@@ -92,7 +92,6 @@ internal fun HomeNavigationDrawer(
                                 selected = item == HomeNavigationItems.Home,
                                 onClick = { navigateItem(item) },
                             )
-                            Spacer(modifier = Modifier.height(12.dp))
                             if (item == HomeNavigationItems.ManageBeneficiaries) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(horizontal = 20.dp),
