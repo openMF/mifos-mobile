@@ -49,14 +49,14 @@ fun ComposeApp(
             networkMonitor = networkMonitor,
             navHostController = navController,
             startDestination = navDestination,
-//            onClickLogout = {
-//                viewModel.logOut()
-//                navController.navigate(AUTH_GRAPH) {
-//                    popUpTo(navController.graph.id) {
-//                        inclusive = true
-//                    }
-//                }
-//            },
+            onClickLogout = {
+                viewModel.logOut()
+                navController.navigate(AUTH_GRAPH) {
+                    popUpTo(navController.graph.id) {
+                        inclusive = true
+                    }
+                }
+            },
         )
     }
 }

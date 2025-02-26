@@ -9,49 +9,74 @@
  */
 package cmp.navigation.navigation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import cmp.navigation.callHelpline
+import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
-
-const val WELCOME_ROUTE = "home_route"
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
+import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
+import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
+import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.home.navigation.HomeDestinations
+import org.mifos.mobile.feature.home.navigation.HomeNavigation
+import org.mifos.mobile.feature.home.navigation.homeNavGraph
 
 @Composable
 internal fun FeatureNavHost(
     appState: AppState,
-//    onClickLogout: () -> Unit,
+    onClickLogout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         route = NavGraphRoute.MAIN_GRAPH,
-        startDestination = WELCOME_ROUTE,
+        startDestination = HomeNavigation.HomeBase.route,
         navController = appState.navController,
         modifier = modifier,
     ) {
-        homeScreen()
+        homeNavGraph(
+            onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
+            callHelpline = { callHelpline() },
+            mailHelpline = { mailHelpline() },
+        )
+
+        accountsNavGraph(
+            navController = appState.navController,
+            navigateToLoanApplicationScreen = { },
+            navigateToSavingsApplicationScreen = { },
+            navigateToAccountDetail = { _, _ -> },
+        )
+
+        aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })
     }
 }
 
-fun NavGraphBuilder.homeScreen() {
-    composable(route = WELCOME_ROUTE) {
-        WelcomeScreen()
-    }
-}
-
-@Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(text = "Welcome to Mifos Mobile")
+fun handleHomeNavigation(
+    navController: NavHostController,
+    homeDestinations: HomeDestinations,
+    onClickLogout: () -> Unit,
+) {
+    when (homeDestinations) {
+        HomeDestinations.LOGOUT -> onClickLogout.invoke()
+        HomeDestinations.HOME -> Unit
+        HomeDestinations.ACCOUNTS -> navController.navigateToAccountsScreen()
+        HomeDestinations.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.LOAN)
+        HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
+        HomeDestinations.RECENT_TRANSACTIONS -> { }
+        HomeDestinations.CHARGES -> { }
+        HomeDestinations.THIRD_PARTY_TRANSFER -> { }
+        HomeDestinations.SETTINGS -> { }
+        HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
+        HomeDestinations.HELP -> { }
+        HomeDestinations.SHARE -> { }
+        HomeDestinations.APP_INFO -> { }
+        HomeDestinations.TRANSFER -> { }
+        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.SURVEY -> { }
+        HomeDestinations.NOTIFICATIONS -> { }
+        HomeDestinations.PROFILE -> { }
     }
 }
