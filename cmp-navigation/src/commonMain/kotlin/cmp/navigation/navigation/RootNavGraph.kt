@@ -27,7 +27,7 @@ fun RootNavGraph(
     navHostController: NavHostController,
     startDestination: String,
     modifier: Modifier = Modifier,
-//    onClickLogout: () -> Unit,
+    onClickLogout: () -> Unit,
 ) {
     NavHost(
         navController = navHostController,
@@ -45,7 +45,7 @@ fun RootNavGraph(
             App(
                 modifier = modifier,
                 networkMonitor = networkMonitor,
-//                onClickLogout = onClickLogout,
+                onClickLogout = onClickLogout,
             )
         }
     }

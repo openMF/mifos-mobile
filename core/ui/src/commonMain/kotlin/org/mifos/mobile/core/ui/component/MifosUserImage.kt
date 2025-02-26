@@ -14,19 +14,31 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import coil3.ImageLoader
+import coil3.compose.LocalPlatformContext
+import coil3.compose.rememberAsyncImagePainter
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosUserImage(
-    bitmap: ImageBitmap?,
+    bitmap: ByteArray?,
     modifier: Modifier = Modifier,
     username: String? = null,
 ) {
+    val context = LocalPlatformContext.current
+    val uploadedImage by remember { mutableStateOf<ByteArray?>(null) }
+
+    val painter = rememberAsyncImagePainter(
+        model = uploadedImage,
+        imageLoader = ImageLoader(context),
+    )
     if (bitmap == null) {
         MifosTextUserImage(
             text = username?.firstOrNull()?.toString() ?: "M",
@@ -37,7 +49,7 @@ fun MifosUserImage(
             modifier = modifier
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary),
-            bitmap = bitmap,
+            painter = painter,
             contentDescription = "Profile Image",
             contentScale = ContentScale.Crop,
         )
