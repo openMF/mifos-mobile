@@ -9,10 +9,11 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -37,9 +38,23 @@ class HomeRepositoryImp(
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
-    override fun clientImage(clientId: Long): Flow<DataState<HttpResponse>> {
+    override fun clientImage(clientId: Long): Flow<DataState<String>> {
+//        return dataManager.clientsApi.getClientImage(clientId)
+//            .asDataStateFlow().flowOn(ioDispatcher)
         return dataManager.clientsApi.getClientImage(clientId)
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow()
+            .map { response ->
+                when (response) {
+                    is DataState.Success -> {
+                        val encodedString = response.data.bodyAsText()
+                        val pureBase64Encoded = encodedString.substringAfter(',')
+                        DataState.Success(pureBase64Encoded)
+                    }
+                    is DataState.Error -> DataState.Error(response.exception)
+                    DataState.Loading -> DataState.Loading
+                }
+            }
+            .flowOn(ioDispatcher)
     }
 
     override fun unreadNotificationsCount(): Flow<DataState<Int>> {

@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.data.repository
 
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.client.Client
@@ -21,7 +20,7 @@ interface HomeRepository {
 
     fun currentClient(clientId: Long): Flow<DataState<Client>>
 
-    fun clientImage(clientId: Long): Flow<DataState<HttpResponse>>
+    fun clientImage(clientId: Long): Flow<DataState<String>>
 
     fun unreadNotificationsCount(): Flow<DataState<Int>>
 }

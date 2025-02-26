@@ -19,7 +19,12 @@ kotlin {
         commonMain.dependencies {
 
             implementation(projects.feature.auth)
-
+            implementation(projects.feature.home)
+            implementation(projects.feature.accounts)
+            implementation(projects.feature.loanAccount)
+            implementation(projects.feature.shareAccount)
+            implementation(projects.feature.savingsAccount)
+            implementation(projects.feature.about)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
@@ -34,6 +39,11 @@ kotlin {
             implementation(libs.window.size)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.tracing.ktx)
+            implementation(libs.koin.android)
         }
     }
 }

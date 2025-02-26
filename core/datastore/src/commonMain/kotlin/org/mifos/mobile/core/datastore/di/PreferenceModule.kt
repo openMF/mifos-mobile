@@ -12,6 +12,7 @@ package org.mifos.mobile.core.datastore.di
 import com.russhwolf.settings.Settings
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.mifos.mobile.core.common.MifosDispatchers
 import org.mifos.mobile.core.datastore.UserPreferencesDataSource
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepositoryImpl
@@ -33,11 +34,4 @@ val PreferencesModule = module {
             unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
         )
     }
-}
-
-// Should be removed after common module conversion
-enum class MifosDispatchers {
-    Default,
-    IO,
-    Unconfined,
 }
