@@ -20,6 +20,7 @@ import org.mifos.mobile.core.network.di.NetworkModule
 import org.mifos.mobile.feature.accounts.di.accountsModule
 import org.mifos.mobile.feature.auth.di.AuthModule
 import org.mifos.mobile.feature.home.di.HomeModule
+import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
@@ -48,6 +49,7 @@ object KoinModules {
             savingsAccountModule,
             loanAccountModule,
             shareAccountModule,
+            LoanModule,
         )
     }
     private val LibraryModule = module {

@@ -86,7 +86,7 @@ ktorfit = "2.2.0"
 ktorfitKsp = "2.2.0-1.0.29"
 
 # Koin CMP Dependencies
-koin = "4.0.1-RC1"
+koin = "4.0.2"
 koinAnnotationsVersion = "1.4.0-RC4"
 
 # CMP Libraries
