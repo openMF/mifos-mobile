@@ -27,7 +27,7 @@ internal fun MifosIcon(modifier: Modifier = Modifier) {
     ) {
         Image(
             modifier = Modifier.size(180.dp),
-            painter = painterResource(id = R.drawable.lib_mifos_passcode_mifos_logo),
+            painter = painterResource(id = R.drawable.ic_launcher_round),
             contentDescription = null,
         )
     }
