@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.charge.screens
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -59,8 +60,9 @@ internal fun ClientChargeScreen(
     viewModel: ClientChargeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.clientChargeUiState.collectAsStateWithLifecycle()
-
+    val topBarTitle by viewModel.topBarTitleResId.collectAsStateWithLifecycle()
     ClientChargeScreen(
+        topBarTitleResId = topBarTitle,
         uiState = uiState,
         navigateBack = navigateBack,
         onRetry = viewModel::loadCharges,
@@ -70,6 +72,7 @@ internal fun ClientChargeScreen(
 
 @Composable
 private fun ClientChargeScreen(
+    @StringRes topBarTitleResId: Int,
     uiState: ClientChargeState,
     navigateBack: () -> Unit,
     onRetry: () -> Unit,
@@ -77,7 +80,7 @@ private fun ClientChargeScreen(
 ) {
     val context = LocalContext.current
     MifosScaffold(
-        topBarTitleResId = R.string.client_charges,
+        topBarTitleResId = topBarTitleResId,
         navigateBack = navigateBack,
         modifier = modifier,
         content = { paddingValues ->
@@ -222,9 +225,10 @@ private fun ClientChargeScreenPreview(
 ) {
     MifosMobileTheme {
         ClientChargeScreen(
-            uiState = uiState,
             navigateBack = { },
+            uiState = uiState,
             onRetry = { },
+            topBarTitleResId = R.string.default_charges,
         )
     }
 }

@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -33,7 +34,7 @@ internal fun SavingsAccountDetailScreen(
     withdrawSavingsAccount: (Long) -> Unit,
     makeTransfer: (Long) -> Unit,
     viewTransaction: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQrCode: (String) -> Unit,
     callUs: () -> Unit,
     deposit: (Long) -> Unit,
@@ -51,7 +52,7 @@ internal fun SavingsAccountDetailScreen(
         withdrawSavingsAccount = { withdrawSavingsAccount(savingsId) },
         makeTransfer = { makeTransfer(savingsId) },
         viewTransaction = { viewTransaction(savingsId) },
-        viewCharges = viewCharges,
+        viewCharges = { viewCharges(ChargeType.SAVINGS, savingsId) },
         viewQrCode = { viewQrCode(viewModel.getQrString(it)) },
         callUs = callUs,
         deposit = { deposit(savingsId) },
