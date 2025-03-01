@@ -61,7 +61,6 @@ object ImageUtil {
     }
 }
 
-
 private fun calculateActualDimensions(
     options: BitmapFactory.Options,
     maxWidth: Float,

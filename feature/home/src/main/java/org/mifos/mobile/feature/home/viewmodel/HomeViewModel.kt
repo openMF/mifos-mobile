@@ -107,9 +107,6 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 
-
-
-
     /**
      * Fetches the count of unread notifications
      *
