@@ -172,7 +172,7 @@ private fun TransferProcessContent(
                 )
 
                 Text(
-                    text = payload?.fromAccountNumber.toString(),
+                    text = payload?.toAccountNumber.toString(),
                     modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
                 )
 

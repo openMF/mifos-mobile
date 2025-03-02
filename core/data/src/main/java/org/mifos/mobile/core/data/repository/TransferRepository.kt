@@ -29,8 +29,8 @@ interface TransferRepository {
         transferDescription: String?,
         dateFormat: String = "dd MMMM yyyy",
         locale: String = "en",
-        fromAccountNumber: String?,
-        toAccountNumber: String?,
+//        fromAccountNumber: String?,
+//        toAccountNumber: String?,
         transferType: TransferType?,
     ): Flow<ResponseBody>
 }

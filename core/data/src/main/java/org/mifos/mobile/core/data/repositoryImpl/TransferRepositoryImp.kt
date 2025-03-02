@@ -35,8 +35,8 @@ class TransferRepositoryImp @Inject constructor(
         transferDescription: String?,
         dateFormat: String,
         locale: String,
-        fromAccountNumber: String?,
-        toAccountNumber: String?,
+//        fromAccountNumber: String?,
+//        toAccountNumber: String?,
         transferType: TransferType?,
     ): Flow<ResponseBody> {
         val transferPayload = TransferPayload().apply {
@@ -53,8 +53,8 @@ class TransferRepositoryImp @Inject constructor(
             this.transferDescription = transferDescription
             this.dateFormat = dateFormat
             this.locale = locale
-            this.fromAccountNumber = fromAccountNumber
-            this.toAccountNumber = toAccountNumber
+//            this.fromAccountNumber = fromAccountNumber
+//            this.toAccountNumber = toAccountNumber
         }
         return flow {
             emit(

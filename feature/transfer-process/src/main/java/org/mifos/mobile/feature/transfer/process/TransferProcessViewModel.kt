@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.transfer.process
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -50,6 +51,7 @@ internal class TransferProcessViewModel @Inject constructor(
 
     val transferPayload: StateFlow<TransferPayload?> = transferPayloadString
         .map { jsonString ->
+            Log.d("Tag-TransferProcessViewModel", "transferPayload: $jsonString")
             jsonString?.let {
                 Gson().fromJson(it, TransferPayload::class.java)
             }
@@ -77,8 +79,8 @@ internal class TransferProcessViewModel @Inject constructor(
                     transferDescription = payload.transferDescription,
                     dateFormat = payload.dateFormat,
                     locale = payload.locale,
-                    fromAccountNumber = payload.fromAccountNumber,
-                    toAccountNumber = payload.toAccountNumber,
+//                    fromAccountNumber = payload.fromAccountNumber,
+//                    toAccountNumber = payload.toAccountNumber,
                     transferType = transferType.value,
                 ).catch { e ->
                     _transferUiState.value = TransferProcessUiState.Error(e.message)
