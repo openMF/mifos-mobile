@@ -59,13 +59,13 @@ internal fun ClientChargeScreen(
     modifier: Modifier = Modifier,
     viewModel: ClientChargeViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.clientChargeUiState.collectAsStateWithLifecycle()
     val topBarTitle by viewModel.topBarTitleResId.collectAsStateWithLifecycle()
+    val chargesUiState by viewModel.charges.collectAsStateWithLifecycle()
     ClientChargeScreen(
         topBarTitleResId = topBarTitle,
-        uiState = uiState,
+        uiState = chargesUiState,
         navigateBack = navigateBack,
-        onRetry = viewModel::loadCharges,
+        onRetry = viewModel::refreshCharges,
         modifier = modifier,
     )
 }
@@ -228,7 +228,7 @@ private fun ClientChargeScreenPreview(
             navigateBack = { },
             uiState = uiState,
             onRetry = { },
-            topBarTitleResId = R.string.default_charges,
+            topBarTitleResId = R.string.charges,
         )
     }
 }

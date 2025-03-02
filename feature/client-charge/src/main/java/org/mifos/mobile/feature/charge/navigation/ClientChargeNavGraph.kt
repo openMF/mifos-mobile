@@ -16,24 +16,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import org.mifos.mobile.core.common.Constants.CHARGE_TYPE
-import org.mifos.mobile.core.common.Constants.LOAN_ID
+import org.mifos.mobile.core.common.Constants.CHARGE_TYPE_ID
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
 
 fun NavController.navigateToClientChargeScreen(
     chargeType: ChargeType,
-    loanId: Long? = null,
+    chargeTypeId: Long? = null,
 ) {
-    val route = ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType, loanId)
-    navigate(route)
+    navigate(ChargeNavigation.ChargeRouteScreen.passArguments(chargeType, chargeTypeId))
 }
 
 fun NavGraphBuilder.clientChargeNavGraph(
     navigateBack: () -> Unit,
 ) {
     navigation(
-        startDestination = ClientChargeNavigation.ClientChargeScreen.route,
-        route = ClientChargeNavigation.ClientChargeBase.route,
+        startDestination = ChargeNavigation.ChargeRouteScreen.route,
+        route = ChargeNavigation.ChargeRouteBase.route,
     ) {
         clientChargeScreenRoute(
             navigateBack = navigateBack,
@@ -45,10 +44,10 @@ fun NavGraphBuilder.clientChargeScreenRoute(
     navigateBack: () -> Unit,
 ) {
     composable(
-        route = ClientChargeNavigation.ClientChargeScreen.route,
+        route = ChargeNavigation.ChargeRouteScreen.route,
         arguments = listOf(
             navArgument(CHARGE_TYPE) { type = NavType.StringType },
-            navArgument(LOAN_ID) { type = NavType.LongType },
+            navArgument(CHARGE_TYPE_ID) { type = NavType.LongType },
         ),
     ) {
         ClientChargeScreen(navigateBack = navigateBack)
