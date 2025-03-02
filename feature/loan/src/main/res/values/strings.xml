@@ -87,6 +87,7 @@
     <string name="no_of_payments">Number of payments</string>
     <string name="date">Date</string>
     <string name="loan_balance">Loan Balance</string>
+    <string name="principal_due">Principal Due</string>
     <string name="repayment">Repayment</string>
     <string name="loan_repayment">Loan Repayment</string>
     <string name="s_no">S.No</string>
