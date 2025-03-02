@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.savings.navigation
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -37,6 +38,10 @@ fun NavController.navigateToSavingsMakeTransfer(
     outstandingBalance: Double? = null,
     transferType: String,
 ) {
+    Log.d(
+        "TAG-SavingsAccountDetailScreen",
+        "navigateToSavingsMakeTransfer: id = $accountId , transferType = $transferType",
+    )
     navigate(
         SavingsNavigation.SavingsMakeTransfer.passArguments(
             accountId,

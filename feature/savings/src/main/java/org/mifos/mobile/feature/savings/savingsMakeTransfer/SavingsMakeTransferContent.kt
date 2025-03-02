@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -55,7 +56,7 @@ import org.mifos.mobile.feature.savings.R
 
 @Composable
 internal fun SavingsMakeTransferContent(
-    uiData: SavingsMakeTransferUiData,
+    uiData: SavingsMakeTransferViewModel.SavingsMakeTransferUiData,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
     modifier: Modifier = Modifier,
     onCancelledClicked: () -> Unit = {},
@@ -108,11 +109,19 @@ internal fun SavingsMakeTransferContent(
                 deactivateColor = DarkGray,
                 isLastStep = step == stepsState.last(),
             ) { processModifier ->
+                Log.d(
+                    "TAG-SavingsMakeTransferViewModel",
+                    "SavingsMakeTransferContent: ToAccountOptions ${uiData.toAccountOptions}",
+                )
+                Log.d(
+                    "TAG-SavingsMakeTransferViewModel",
+                    "SavingsMakeTransferContent: fromAccountOptions ${uiData.fromAccountOptions}",
+                )
                 when (step.second) {
                     R.string.one -> PayToStepContent(
                         modifier = processModifier,
                         processState = payToStepState,
-                        toAccountOptions = uiData.accountOptionsTemplate.fromAccountOptions,
+                        toAccountOptions = uiData.toAccountOptions,
                         prefilledAccount = payToAccount,
                         onContinueClick = {
                             payToAccount = it
@@ -123,7 +132,7 @@ internal fun SavingsMakeTransferContent(
                     R.string.two -> PayFromStep(
                         modifier = processModifier,
                         processState = payFromStepState,
-                        fromAccountOptions = uiData.accountOptionsTemplate.fromAccountOptions,
+                        fromAccountOptions = uiData.fromAccountOptions,
                         prefilledAccount = payFromAccount,
                         onContinueClick = {
                             payFromAccount = it
@@ -145,6 +154,10 @@ internal fun SavingsMakeTransferContent(
                         modifier = processModifier,
                         processState = remarkStepState,
                         onContinueClicked = {
+                            Log.d(
+                                "TAG-After-remark",
+                                "SavingsMakeTransferContent: payTo: $payToAccount, payFrom: $payFromAccount",
+                            )
                             remark = it
                             reviewTransfer(
                                 ReviewTransferPayload(payToAccount, payFromAccount, amount, remark),
@@ -260,7 +273,6 @@ private fun EnterAmountStep(
         showAmountError = false
         amountError = when {
             amount.text.trim() == "" -> R.string.enter_amount
-            amount.text.contains(".") -> R.string.invalid_amount
             amount.text.toDoubleOrNull() == 0.0 -> R.string.amount_greater_than_zero
             else -> null
         }
@@ -363,7 +375,7 @@ private fun RemarkStep(
 private fun SavingsMakeTransferContentPreview() {
     MifosMobileTheme {
         SavingsMakeTransferContent(
-            uiData = SavingsMakeTransferUiData(),
+            uiData = SavingsMakeTransferViewModel.SavingsMakeTransferUiData(),
             reviewTransfer = {},
         )
     }

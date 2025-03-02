@@ -44,10 +44,10 @@ data class TransferPayload(
 
     var locale: String = "en",
 
-    @Transient
+//    @Transient
     var fromAccountNumber: String? = null,
 
-    @Transient
+//    @Transient
     var toAccountNumber: String? = null,
 
 ) : Parcelable

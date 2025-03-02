@@ -21,7 +21,8 @@ class BaseURL {
     }
 
     companion object {
-        const val API_ENDPOINT = "gsoc.mifos.community"
+//        const val API_ENDPOINT = "gsoc.mifos.community"
+        const val API_ENDPOINT = "ttifc.mifos.community"
         const val API_PATH = "/fineract-provider/api/v1/"
         const val PROTOCOL_HTTPS = "https://"
     }
