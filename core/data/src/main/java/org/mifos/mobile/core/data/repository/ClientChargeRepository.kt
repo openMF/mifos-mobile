@@ -11,16 +11,9 @@ package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.Charge
-import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.enums.ChargeType
 
 interface ClientChargeRepository {
-    fun getClientCharges(clientId: Long): Flow<Page<Charge>>
 
-    fun getLoanCharges(loanId: Long): Flow<List<Charge>>
-
-    fun getSavingsCharges(savingsId: Long): Flow<List<Charge>>
-
-    fun clientLocalCharges(): Flow<Page<Charge>>
-
-    suspend fun syncCharges(charges: Page<Charge>?): Page<Charge>?
+    fun getCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<List<Charge>>
 }
