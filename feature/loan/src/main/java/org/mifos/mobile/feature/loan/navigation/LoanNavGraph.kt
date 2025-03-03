@@ -60,7 +60,7 @@ fun NavController.navigateToLoanReview(
 fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
     viewGuarantor: (Long) -> Unit,
-    viewCharges: (ChargeType) -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQr: (String) -> Unit,
     makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
 ) {
@@ -81,7 +81,7 @@ fun NavGraphBuilder.loanNavGraph(
             },
             withdrawLoan = { navController.navigate(LoanNavigation.LoanWithdraw.passArguments(it)) },
             viewLoanSummary = { navController.navigate(LoanNavigation.LoanSummary.passArguments(it)) },
-            viewCharges = { viewCharges(ChargeType.LOAN) },
+            viewCharges = { _, loanId -> viewCharges(ChargeType.LOAN, loanId) },
             viewRepaymentSchedule = {
                 navController.navigate(
                     LoanNavigation.LoanSchedule.passArguments(
@@ -134,7 +134,7 @@ fun NavGraphBuilder.loanDetailRoute(
     updateLoan: (Long) -> Unit,
     withdrawLoan: (Long) -> Unit,
     viewLoanSummary: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,

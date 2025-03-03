@@ -200,7 +200,7 @@ fun handleHomeNavigation(
         }
 
         HomeDestinations.RECENT_TRANSACTIONS -> navController.navigateToRecentTransaction()
-        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT)
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
         HomeDestinations.SETTINGS -> navController.navigateToSettings()
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()

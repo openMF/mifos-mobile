@@ -24,7 +24,7 @@ object ImageUtil {
         decodedBytes: ByteArray,
         maxWidth: Float = DEFAULT_MAX_WIDTH,
         maxHeight: Float = DEFAULT_MAX_HEIGHT,
-    ): Bitmap {
+    ): Bitmap? {
         val options = BitmapFactory.Options().apply {
             inJustDecodeBounds = true
         }
@@ -43,18 +43,20 @@ object ImageUtil {
             BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size, options)
         } catch (e: OutOfMemoryError) {
             Log.e(this::class.java.simpleName, "OutOfMemoryError while decoding bitmap", e)
-            return Bitmap.createBitmap(
-                1,
-                1,
-                Bitmap.Config.ARGB_8888,
-            ) // Return a 1x1 bitmap as fallback
+            null
         }
 
-        return try {
-            createScaledBitmap(bmp, actualWidth, actualHeight, options)
-        } catch (e: OutOfMemoryError) {
-            Log.e(this::class.java.simpleName, "OutOfMemoryError while scaling bitmap", e)
-            bmp // Return the original bitmap if scaling fails
+        if (bmp == null) {
+            Log.e(this::class.java.simpleName, "Bitmap decoding failed")
+        }
+
+        return bmp?.let {
+            try {
+                createScaledBitmap(it, actualWidth, actualHeight, options)
+            } catch (e: OutOfMemoryError) {
+                Log.e(this::class.java.simpleName, "OutOfMemoryError while scaling bitmap", e)
+                it
+            }
         }
     }
 }

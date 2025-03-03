@@ -17,12 +17,22 @@ import retrofit2.http.Path
 
 interface ClientChargeService {
 
+    /**
+     * This service allows to fetch loans and savings charges
+     * 2. Saving Charges // https://DomainName/api/v1/self/savingsaccounts/{savingsId}/charges
+     * 2. Loan Charges // https://DomainName/api/v1/self/loans/{loanId}/charges
+     * @param chargeType is savingsaccounts, loans
+     * @param chargeTypeId is savingsId, loanId
+     */
+    @GET("/{chargeType}/{chargeTypeId}/charges")
+    suspend fun getChargeList(
+        @Path("chargeType") chargeType: String,
+        @Path("chargeTypeId") chargeTypeId: Long?,
+    ): List<Charge>
+
+    /**
+     * This service allows to fetch client charges
+     */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/charges")
     suspend fun getClientChargeList(@Path("clientId") clientId: Long?): Page<Charge>
-
-    @GET(ApiEndPoints.LOANS + "/{loanId}/charges")
-    suspend fun getLoanAccountChargeList(@Path("loanId") loanId: Long?): List<Charge>
-
-    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/charges")
-    suspend fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long?): List<Charge>
 }
