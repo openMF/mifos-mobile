@@ -50,6 +50,7 @@ object Constants {
     const val PERMISSIONS_READ_PHONE_STATE_STATUS = "read_phone_status"
     const val INTIAL_LOGIN = "initial_login"
     const val CHARGE_TYPE = "charge_type"
+    const val CHARGE_TYPE_ID = "charge_type_id"
     const val QR_DATA = "qrcode_data"
     const val TEMPLATE = "template"
     const val RECENT_TRANSACTIONS = "recent_transactions"

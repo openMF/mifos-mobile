@@ -43,6 +43,7 @@ import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTempla
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.core.model.enums.ChargeType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -84,16 +85,19 @@ class DataManager @Inject constructor(
         )
     }
 
-    suspend fun getClientCharges(clientId: Long): Page<Charge> {
-        return baseApiManager.clientChargeApi.getClientChargeList(clientId)
-    }
+    suspend fun getCharges(
+        chargeType: ChargeType,
+        chargeTypeId: Long,
+    ): List<Charge> {
+        return when (chargeType) {
+            ChargeType.CLIENT -> {
+                baseApiManager.clientChargeApi.getClientChargeList(chargeTypeId).pageItems
+            }
 
-    suspend fun getLoanCharges(loanId: Long): List<Charge> {
-        return baseApiManager.clientChargeApi.getLoanAccountChargeList(loanId)
-    }
-
-    suspend fun getSavingsCharges(savingsId: Long): List<Charge> {
-        return baseApiManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
+            ChargeType.LOAN, ChargeType.SAVINGS -> {
+                baseApiManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
+            }
+        }
     }
 
     suspend fun getSavingsWithAssociations(

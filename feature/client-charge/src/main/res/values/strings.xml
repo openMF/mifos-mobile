@@ -11,6 +11,9 @@
 <resources>
 
     <string name="client_charges">Client Charges</string>
+    <string name="loan_charges">Loan Charges</string>
+    <string name="savings_charges">Saving Charges</string>
+    <string name="charges">Charges</string>
     <string name="error_no_charge">No charges found</string>
     <string name="amount_due">Due:</string>
     <string name="string_and_string">%1$s %2$s</string>

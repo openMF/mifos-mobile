@@ -96,14 +96,15 @@ internal class HomeViewModel @Inject constructor(
     }
 
     private fun setUserProfile(image: String?) {
-        if (image == null) {
-            return
+        if (!image.isNullOrEmpty()) {
+            val decodedBytes = runCatching { Base64.decode(image, Base64.DEFAULT) }.getOrNull()
+            val decodedBitmap = decodedBytes?.let { ImageUtil.compressImage(it) }
+            val currentState = (_homeUiState.value as? HomeUiState.Success)?.homeState
+
+            if (decodedBytes != null && decodedBitmap != null && currentState != null) {
+                _homeUiState.value = HomeUiState.Success(currentState.copy(image = decodedBitmap))
+            }
         }
-        val decodedBytes = Base64.decode(image, Base64.DEFAULT)
-        val decodedBitmap = ImageUtil.compressImage(decodedBytes)
-        var currentState = (_homeUiState.value as? HomeUiState.Success)?.homeState ?: HomeState()
-        currentState = currentState.copy(image = decodedBitmap)
-        _homeUiState.value = HomeUiState.Success(currentState)
     }
 
     /**
