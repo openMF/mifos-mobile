@@ -62,7 +62,7 @@ fun NavController.navigateToSavingsApplicationScreen() {
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
-    viewCharges: (ChargeType) -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
     callHelpline: () -> Unit,
 ) {
@@ -93,7 +93,7 @@ fun NavGraphBuilder.savingsNavGraph(
                     ),
                 )
             },
-            viewCharges = { viewCharges(ChargeType.SAVINGS) },
+            viewCharges = { _, savingsId -> viewCharges(ChargeType.SAVINGS, savingsId) },
             viewQrCode = viewQrCode,
             viewTransaction = {
                 navController.navigate(
@@ -132,7 +132,7 @@ fun NavGraphBuilder.savingsDetailRoute(
     withdrawSavingsAccount: (Long) -> Unit,
     makeTransfer: (Long) -> Unit,
     viewTransaction: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQrCode: (String) -> Unit,
     callUs: () -> Unit,
     deposit: (Long) -> Unit,

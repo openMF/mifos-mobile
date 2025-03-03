@@ -25,6 +25,7 @@ import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
@@ -38,7 +39,7 @@ internal fun LoanAccountDetailScreen(
     updateLoan: (Long) -> Unit,
     withdrawLoan: (Long) -> Unit,
     viewLoanSummary: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
@@ -57,7 +58,7 @@ internal fun LoanAccountDetailScreen(
         withdrawLoan = { withdrawLoan(loanId) },
         retryConnection = viewModel::loadLoanAccountDetails,
         viewLoanSummary = { viewLoanSummary(loanId) },
-        viewCharges = viewCharges,
+        viewCharges = { viewCharges(ChargeType.LOAN, loanId) },
         modifier = modifier,
         viewRepaymentSchedule = { viewRepaymentSchedule(loanId) },
         viewTransactions = { viewTransactions(loanId) },
