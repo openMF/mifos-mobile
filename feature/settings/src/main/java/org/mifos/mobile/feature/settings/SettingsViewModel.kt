@@ -53,13 +53,18 @@ internal class SettingsViewModel @Inject constructor(
             flow { emit(MifosAppLanguage.fromCode(preferencesHelper.language)) }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, MifosAppLanguage.SYSTEM_LANGUAGE)
 
-    fun tryUpdatingEndpoint(selectedBaseUrl: String, selectedTenant: String): Boolean {
-        if (!(baseUrl.equals(selectedBaseUrl) && tenant.equals(selectedTenant))) {
-            preferencesHelper.updateConfiguration(selectedBaseUrl, selectedTenant)
+    fun tryUpdatingEndpoint(selectedBaseUrl: String?, selectedTenant: String?): Boolean {
+        val isInvalidInput = selectedBaseUrl.isNullOrEmpty() || selectedTenant.isNullOrEmpty()
+        val isSameAsCurrent = baseUrl.value?.trim().equals(selectedBaseUrl?.trim(), ignoreCase = true) &&
+            tenant.value?.trim().equals(selectedTenant?.trim(), ignoreCase = true)
+
+        return if (!isInvalidInput && !isSameAsCurrent) {
+            preferencesHelper.updateConfiguration(selectedBaseUrl!!, selectedTenant!!)
             preferencesHelper.clear()
-            return true
+            true
+        } else {
+            false
         }
-        return false
     }
 
     fun updateLanguage(language: MifosAppLanguage): Boolean {

@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import org.mifos.library.passcode.navigateToPasscodeScreen
 import org.mifos.mobile.HomeActivity
 import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
@@ -31,6 +32,7 @@ import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.account.navigation.clientAccountsNavGraph
 import org.mifos.mobile.feature.account.navigation.navigateToClientAccountsScreen
+import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
 import org.mifos.mobile.feature.auth.navigation.navigateToLoginScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToAddBeneficiaryScreen
@@ -72,6 +74,7 @@ import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassw
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 import org.mifos.mobile.feature.user.profile.navigation.navigateToUserProfile
 import org.mifos.mobile.feature.user.profile.navigation.userProfileNavGraph
+import org.mifos.mobile.navigation.MifosNavGraph.AUTH_GRAPH
 
 @Composable
 fun MifosNavHost(
@@ -87,6 +90,14 @@ fun MifosNavHost(
         startDestination = HomeNavigation.HomeBase.route,
         modifier = modifier,
     ) {
+        passcodeNavGraph(navController)
+
+        authenticationNavGraph(
+            navController = navController,
+            route = AUTH_GRAPH,
+            navigateToPasscodeScreen = navController::navigateToPasscodeScreen,
+        )
+
         homeNavGraph(
             onNavigate = { handleHomeNavigation(navController, it, onClickLogout, context) },
             callHelpline = { callHelpline(context) },
