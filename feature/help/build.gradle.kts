@@ -9,7 +9,6 @@
  */
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
-//    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -25,7 +24,6 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-
         }
     }
 }
