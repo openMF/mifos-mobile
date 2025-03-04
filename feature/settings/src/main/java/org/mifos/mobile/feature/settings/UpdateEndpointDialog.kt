@@ -97,7 +97,7 @@ internal fun UpdateEndpointDialogScreen(
                             if (url == null || id == null) {
                                 Toast.makeText(
                                     context,
-                                    "Base URL and Tenant ID are required",
+                                    R.string.base_url_tenant_id_required,
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             } else {
