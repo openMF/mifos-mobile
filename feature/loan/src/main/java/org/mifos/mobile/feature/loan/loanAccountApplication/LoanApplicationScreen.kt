@@ -222,7 +222,7 @@ private fun getLoanPayload(
         loanPurpose =
             viewModel.loanApplicationScreenData.value.selectedLoanPurpose ?: "Not provided"
         productName = viewModel.loanApplicationScreenData.value.selectedLoanProduct
-        currency = viewModel.loanApplicationScreenData.value.currencyLabel
+        currency = viewModel.loanTemplate.currency?.name
         if (viewModel.purposeId > 0) loanPurposeId = viewModel.purposeId
         productId = viewModel.productId
         principal =

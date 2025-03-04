@@ -51,7 +51,9 @@ internal fun ReviewLoanApplicationScreen(
         uiState = uiState,
         data = data,
         navigateBack = navigateBack,
-        onSubmit = viewModel::submitLoan,
+        onSubmit = {
+            viewModel.submitLoan()
+        },
         modifier = modifier,
     )
 }
@@ -139,7 +141,7 @@ private fun ErrorComponent(
         LaunchedEffect(errorThrowable) {
             Toast.makeText(
                 context,
-                context.getString(R.string.something_went_wrong),
+                errorThrowable ?: context.getString(R.string.something_went_wrong),
                 Toast.LENGTH_SHORT,
             ).show()
         }

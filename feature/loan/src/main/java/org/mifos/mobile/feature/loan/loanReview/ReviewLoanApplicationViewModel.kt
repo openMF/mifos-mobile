@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +26,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOANS_PAYLOAD
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
+import org.mifos.mobile.core.model.MFErrorParser
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.feature.loan.loanReview.ReviewLoanApplicationUiState.Loading
@@ -38,7 +38,9 @@ internal class ReviewLoanApplicationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val mUiState = MutableStateFlow<ReviewLoanApplicationUiState>(Loading)
+    private val mUiState = MutableStateFlow<ReviewLoanApplicationUiState>(
+        ReviewLoanApplicationUiState.ReviewLoanUiReady,
+    )
     val uiState: StateFlow<ReviewLoanApplicationUiState> = mUiState.asStateFlow()
 
     private val loanId =
@@ -88,17 +90,19 @@ internal class ReviewLoanApplicationViewModel @Inject constructor(
         initialValue = ReviewLoanApplicationUiData(),
     )
 
-    fun submitLoan() = viewModelScope.launch(Dispatchers.IO) {
-        mUiState.value = Loading
-        reviewLoanApplicationRepositoryImpl.submitLoan(
-            loanState = reviewLoanApplicationUiData.value.loanState,
-            loansPayload = loansPayload.value ?: LoansPayload(),
-            loanId = reviewLoanApplicationUiData.value.loanId,
-        ).catch {
-            mUiState.value = ReviewLoanApplicationUiState.Error(it.message)
-        }.collect {
-            mUiState.value =
-                ReviewLoanApplicationUiState.Success(reviewLoanApplicationUiData.value.loanState)
+    fun submitLoan() {
+        viewModelScope.launch {
+            mUiState.value = Loading
+            reviewLoanApplicationRepositoryImpl.submitLoan(
+                loanState = reviewLoanApplicationUiData.value.loanState,
+                loansPayload = loansPayload.value ?: LoansPayload(),
+                loanId = reviewLoanApplicationUiData.value.loanId,
+            ).catch {
+                mUiState.value = ReviewLoanApplicationUiState.Error(MFErrorParser.errorMessage(it))
+            }.collect {
+                mUiState.value =
+                    ReviewLoanApplicationUiState.Success(reviewLoanApplicationUiData.value.loanState)
+            }
         }
     }
 }
