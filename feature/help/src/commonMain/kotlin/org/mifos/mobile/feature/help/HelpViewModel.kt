@@ -59,7 +59,6 @@ internal class HelpViewModel : BaseViewModel<HelpUiState, HelpEvent, HelpAction>
             ?.filter { it.question?.contains(query, ignoreCase = true) ?: false }
             ?: emptyList()
         mutableStateFlow.value = state.copy(searchQuery = query, faqList = ArrayList(filteredList))
-
     }
 
     private fun updateSelectedFaqPosition(position: Int) {
@@ -71,13 +70,12 @@ internal class HelpViewModel : BaseViewModel<HelpUiState, HelpEvent, HelpAction>
 internal data class HelpUiState(
     val faqList: List<FAQ> = emptyList(),
     val searchQuery: String = "",
-    val selectedFaqPosition: Int = -1
+    val selectedFaqPosition: Int = -1,
 ) {
     companion object {
         val Initial: HelpUiState = HelpUiState()
     }
 }
-
 
 sealed interface HelpAction {
     data object LoadFaq : HelpAction
@@ -91,5 +89,5 @@ sealed interface HelpAction {
 sealed interface HelpEvent {
     data object CallHelpLine : HelpEvent
     data object MailHelpLine : HelpEvent
-    data object Location :HelpEvent
+    data object Location : HelpEvent
 }

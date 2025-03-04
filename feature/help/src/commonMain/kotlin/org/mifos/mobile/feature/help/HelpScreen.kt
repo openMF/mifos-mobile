@@ -55,14 +55,12 @@ internal fun HelpScreen(
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    EventsEffect(viewModel.eventFlow)
-    {
-        event ->
-        when(event)
-        {
+    EventsEffect(viewModel.eventFlow) {
+            event ->
+        when (event) {
             HelpEvent.CallHelpLine -> callNow()
             HelpEvent.Location -> findLocations()
-            HelpEvent.MailHelpLine ->leaveEmail()
+            HelpEvent.MailHelpLine -> leaveEmail()
         }
     }
 
@@ -73,13 +71,14 @@ internal fun HelpScreen(
             when (action) {
                 is HelpScreenAction.SearchFaq -> viewModel.trySendAction(HelpAction.SearchFaq(action.query))
                 HelpScreenAction.DismissSearch -> viewModel.trySendAction(HelpAction.LoadFaq)
-                is HelpScreenAction.UpdateFaqPosition -> viewModel.trySendAction(HelpAction.UpdateFaqPosition(action.position))
+                is HelpScreenAction.UpdateFaqPosition ->
+                    viewModel.trySendAction(HelpAction.UpdateFaqPosition(action.position))
                 HelpScreenAction.CallHelpLine -> viewModel.trySendAction(HelpAction.OnCallHelpLine)
                 HelpScreenAction.MailHelpLine -> viewModel.trySendAction(HelpAction.OnMailHelpLine)
                 HelpScreenAction.FindLocations -> viewModel.trySendAction(HelpAction.Location)
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -109,7 +108,7 @@ private fun HelpScreenContent(
                     HelpContent(
                         faqArrayList = uiState.faqList,
                         selectedFaqPosition = uiState.selectedFaqPosition,
-                        onAction = onAction
+                        onAction = onAction,
                     )
                 }
             }
@@ -147,7 +146,7 @@ private fun HelpContent(
                 }
             }
 
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
                     onClick = { onAction(HelpScreenAction.CallHelpLine) },
