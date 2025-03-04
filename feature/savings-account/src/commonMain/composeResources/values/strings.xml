@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_account_active">Active</string>
+    <string name="feature_account_approved">Approved</string>
+    <string name="feature_account_approval_pending">Approval Pending</string>
+    <string name="feature_account_matured">Matured</string>
+    <string name="feature_account_closed">Closed</string>
+    <string name="feature_account_empty_savings_accounts">There is no SavingsAccount associated with you</string>
+    <string name="feature_account_submitted">Submitted</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+</resources>

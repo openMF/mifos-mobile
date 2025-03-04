@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!--    Filter dialog actions-->
+    <string name="feature_account_clear_filters">Clear Filters</string>
+    <string name="feature_account_cancel">Cancel</string>
+    <string name="feature_account_filter">Filter</string>
+    <string name="feature_account_select_you_want">Select all filters you want to apply</string>
+
+
+    <!--    Filter dialog checkbox labels-->
+    <string name="feature_account_active">Active</string>
+    <string name="feature_account_approval_pending">Approval Pending</string>
+    <string name="feature_account_closed">Closed</string>
+    <string name="feature_account_matured">Matured</string>
+    <string name="feature_account_rejected">Rejected</string>
+    <string name="feature_account_disburse">Waiting for Disburse</string>
+    <string name="feature_account_overpaid">Overpaid</string>
+    <string name="feature_account_approved">Approved</string>
+    <string name="feature_account_in_arrears">In Arrears</string>
+    <string name="feature_account_withdrawn">Withdrawn</string>
+
+    <!--    tabs-->
+    <string name="feature_account_savings_account">Savings Account</string>
+    <string name="feature_account_share_account">Share Account</string>
+    <string name="feature_account_loan_account">Loan Account</string>
+</resources>

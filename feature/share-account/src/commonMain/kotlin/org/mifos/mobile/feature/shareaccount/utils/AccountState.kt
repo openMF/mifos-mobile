@@ -14,5 +14,6 @@ import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 sealed class AccountState {
     data object Error : AccountState()
     data object Loading : AccountState()
-    data class Success(val shareAccounts: List<ShareAccount>?) : AccountState()
+    data object Empty : AccountState()
+    data class Success(val filteredShareAccounts: List<ShareAccount>) : AccountState()
 }

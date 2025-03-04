@@ -47,6 +47,6 @@ data class Timeline(
 
     val expectedMaturityDate: List<Int>? = null,
 
-    val withdrawnOnDate: List<Int>,
+    val withdrawnOnDate: List<Int>? = null,
 
 ) : Parcelable

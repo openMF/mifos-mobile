@@ -18,25 +18,43 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.feature.shareaccount.model.CheckboxStatus
 import org.mifos.mobile.feature.shareaccount.utils.AccountState
 import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
-import org.mifos.mobile.feature.shareaccount.utils.StatusUtil
-import org.mifos.mobile.feature.shareaccount.utils.getAccountsFilterLabels
 
+/**
+ * ViewModel responsible for managing share accounts and their states.
+ *
+ * This ViewModel interacts with repositories to fetch, filter, and manage share accounts.
+ * It also monitors network connectivity and manages UI state updates.
+ *
+ * @property accountsRepositoryImpl Repository responsible for fetching share accounts.
+ * @property networkMonitor Monitors the network status.
+ * @property userPreferencesRepository Stores user-related preferences, including client ID.
+ */
 class ShareAccountViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
     networkMonitor: NetworkMonitor,
     userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
+    /** Client ID retrieved from user preferences. */
     private val clientId = requireNotNull(userPreferencesRepository.clientId.value)
 
+    /**
+     * Tracks whether a refresh operation is in progress.
+     *
+     * Used by [PullToRefreshBox] to indicate whether the list is currently refreshing.
+     */
+    private var _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+
+    /** Tracks network availability using [NetworkMonitor]. */
     val isNetworkAvailable = networkMonitor.isOnline
         .stateIn(
             scope = viewModelScope,
@@ -44,10 +62,28 @@ class ShareAccountViewModel(
             initialValue = false,
         )
 
+    /** Holds the current state of share accounts UI. */
     @Suppress("PropertyName")
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountUiState: StateFlow<AccountState> = _accountsUiState.asStateFlow()
 
+    /**
+     * Initializes the ViewModel by loading share accounts with default parameters.
+     */
+    init {
+        loadSavingsAccounts(
+            searchQuery = "",
+            selectedCheckboxLabels = emptyList(),
+        )
+    }
+
+    /**
+     * Filters share accounts based on the search query.
+     *
+     * @param accounts List of share accounts.
+     * @param searchQuery Search query string.
+     * @return Filtered list of share accounts that match the search query.
+     */
     private fun filterAccountsBySearchQuery(
         accounts: List<ShareAccount?>?,
         searchQuery: String?,
@@ -62,80 +98,88 @@ class ShareAccountViewModel(
         }.filterNotNull()
     }
 
+    /**
+     * Filters share accounts based on selected filter labels using [FilterUtil].
+     *
+     * @param accounts List of share accounts.
+     * @param selectedLabels List of selected filter labels.
+     * @return List of share accounts that match the selected filters.
+     */
     private fun filterAccountsByStatus(
-        accountsList: List<ShareAccount?>,
-        filterList: List<CheckboxStatus>,
+        accounts: List<ShareAccount>,
+        selectedLabels: List<StringResource?>,
     ): List<ShareAccount> {
-        val savingsAccountFilterCriteria = getAccountsFilterLabels()
-
-        return filterList
-            .filter { it.isChecked }
-            .flatMap { selectedCheckboxStatus ->
-                getAccountsMatchingStatus(
-                    accounts = accountsList,
-                    checkboxStatus = selectedCheckboxStatus,
-                    statusCriteria = savingsAccountFilterCriteria,
-                )
+        return selectedLabels
+            .mapNotNull { label -> FilterUtil.fromLabel(label) }
+            .flatMap { filterUtil ->
+                accounts.filter(filterUtil.matchCondition)
             }
             .distinct()
     }
 
-    private fun getAccountsMatchingStatus(
-        accounts: List<ShareAccount?>?,
-        checkboxStatus: CheckboxStatus?,
-        statusCriteria: FilterUtil,
-    ): List<ShareAccount> {
-        return accounts.orEmpty().filter { account ->
-            when (checkboxStatus?.status) {
-                statusCriteria.activeString -> account?.status?.active == true
-                statusCriteria.approvedString -> account?.status?.approved == true
-                statusCriteria.approvalPendingString -> account?.status?.submittedAndPendingApproval == true
-                statusCriteria.closedString -> account?.status?.closed == true
-                else -> false
-            }
-        }.filterNotNull()
-    }
-
-    fun getUpdatedFilteredAccountList(
+    /**
+     * Retrieves share accounts based on search query and selected filters.
+     *
+     * This function applies both the search query and status filters, if provided.
+     *
+     * @param searchQuery The search term entered by the user.
+     * @param selectedCheckboxLabels List of selected filter labels.
+     * @param accounts The list of all share accounts.
+     * @return A filtered list of share accounts based on the applied filters.
+     */
+    private fun getFilteredAccounts(
         searchQuery: String,
-        isFiltered: Boolean,
-        isSearchActive: Boolean,
-        accountList: List<ShareAccount>,
+        selectedCheckboxLabels: List<StringResource?>,
+        accounts: List<ShareAccount>,
     ): List<ShareAccount> {
-        return when {
-            isFiltered && isSearchActive -> {
-                val updatedFilterList = filterAccountsByStatus(
-                    accountsList = accountList,
-                    filterList = StatusUtil.getShareAccountsStatusList(),
-                )
+        val filteredByStatus = if (selectedCheckboxLabels.isNotEmpty()) {
+            filterAccountsByStatus(accounts, selectedCheckboxLabels)
+        } else {
+            accounts
+        }
 
-                filterAccountsBySearchQuery(
-                    accounts = updatedFilterList,
-                    searchQuery = searchQuery,
-                )
-            }
-
-            isSearchActive -> {
-                filterAccountsBySearchQuery(
-                    accounts = accountList,
-                    searchQuery = searchQuery,
-                )
-            }
-
-            isFiltered -> {
-                filterAccountsByStatus(
-                    accountsList = accountList,
-                    filterList = StatusUtil.getShareAccountsStatusList(),
-                )
-            }
-
-            else -> {
-                accountList
-            }
+        return if (searchQuery.isNotBlank()) {
+            filterAccountsBySearchQuery(filteredByStatus, searchQuery)
+        } else {
+            filteredByStatus
         }
     }
 
-    fun loadSavingsAccounts() {
+    /**
+     * Triggers a refresh operation when the user pulls down to refresh.
+     *
+     * This function is called by [PullToRefreshBox] to reload share accounts.
+     *
+     * @param searchQuery The current search query input by the user.
+     * @param selectedCheckboxLabels List of currently selected filter labels.
+     */
+    fun refresh(
+        searchQuery: String,
+        selectedCheckboxLabels: List<StringResource?>,
+    ) {
+        _isRefreshing.value = true
+        loadSavingsAccounts(
+            searchQuery = searchQuery,
+            selectedCheckboxLabels = selectedCheckboxLabels,
+        )
+    }
+
+    /**
+     * Loads share accounts for the client and updates the UI state.
+     *
+     * This function fetches share accounts from the repository, applies filtering,
+     * and updates the UI accordingly. If an error occurs during fetching, it updates
+     * the UI state to [AccountState.Error].
+     *
+     * Once accounts are successfully loaded, [_isRefreshing] is reset to false.
+     *
+     * @param searchQuery The search query to filter accounts.
+     * @param selectedCheckboxLabels List of selected filter labels for filtering accounts.
+     */
+    fun loadSavingsAccounts(
+        searchQuery: String,
+        selectedCheckboxLabels: List<StringResource?>,
+    ) {
         viewModelScope.launch {
             _accountsUiState.value = AccountState.Loading
             accountsRepositoryImpl.loadAccounts(
@@ -144,8 +188,18 @@ class ShareAccountViewModel(
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
-                _accountsUiState.value =
-                    AccountState.Success(clientAccounts.data?.shareAccounts)
+                val shareAccounts = clientAccounts.data?.shareAccounts
+                _accountsUiState.value = if (shareAccounts.isNullOrEmpty()) {
+                    AccountState.Empty
+                } else {
+                    val filteredAccounts = getFilteredAccounts(
+                        searchQuery = searchQuery,
+                        selectedCheckboxLabels = selectedCheckboxLabels,
+                        accounts = shareAccounts,
+                    )
+                    AccountState.Success(filteredAccounts)
+                }
+                _isRefreshing.value = false
             }
         }
     }

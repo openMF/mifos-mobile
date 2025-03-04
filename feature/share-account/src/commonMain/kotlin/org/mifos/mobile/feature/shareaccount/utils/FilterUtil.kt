@@ -14,34 +14,78 @@ import mifos_mobile.feature.share_account.generated.resources.feature_account_ac
 import mifos_mobile.feature.share_account.generated.resources.feature_account_approval_pending
 import mifos_mobile.feature.share_account.generated.resources.feature_account_approved
 import mifos_mobile.feature.share_account.generated.resources.feature_account_closed
-import mifos_mobile.feature.share_account.generated.resources.feature_account_disburse
-import mifos_mobile.feature.share_account.generated.resources.feature_account_in_arrears
-import mifos_mobile.feature.share_account.generated.resources.feature_account_matured
-import mifos_mobile.feature.share_account.generated.resources.feature_account_overpaid
-import mifos_mobile.feature.share_account.generated.resources.feature_account_withdrawn
+import mifos_mobile.feature.share_account.generated.resources.feature_account_rejected
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 
-data class FilterUtil(
-    val activeString: StringResource,
-    val approvedString: StringResource,
-    val approvalPendingString: StringResource,
-    val maturedString: StringResource,
-    val closedString: StringResource,
-    val waitingForDisburseString: StringResource,
-    val overpaidString: StringResource,
-    val withdrawnString: StringResource,
-    val inArrearsString: StringResource,
-)
+/**
+ * Enum class representing different filters that can be applied to share accounts.
+ *
+ * Each filter has a corresponding label (for UI representation) and a match condition
+ * that determines whether a given [ShareAccount] meets the criteria for the filter.
+ *
+ * @property label The string resource representing the filter name.
+ * @property matchCondition A lambda function that checks if a [ShareAccount] meets the filter condition.
+ */
+enum class FilterUtil(
+    val label: StringResource,
+    val matchCondition: (ShareAccount) -> Boolean,
+) {
 
-fun getAccountsFilterLabels() =
-    FilterUtil(
-        activeString = Res.string.feature_account_active,
-        approvedString = Res.string.feature_account_approved,
-        approvalPendingString = Res.string.feature_account_approval_pending,
-        maturedString = Res.string.feature_account_matured,
-        closedString = Res.string.feature_account_closed,
-        waitingForDisburseString = Res.string.feature_account_disburse,
-        overpaidString = Res.string.feature_account_overpaid,
-        withdrawnString = Res.string.feature_account_withdrawn,
-        inArrearsString = Res.string.feature_account_in_arrears,
-    )
+    /**
+     * Filter for active share accounts.
+     * Matches if the share account's status is active.
+     */
+    ACTIVE(
+        Res.string.feature_account_active,
+        { it.status?.active == true },
+    ),
+
+    /**
+     * Filter for approved share accounts.
+     * Matches if the share account's status indicates it is approved.
+     */
+    APPROVED(
+        Res.string.feature_account_approved,
+        { it.status?.approved == true },
+    ),
+
+    /**
+     * Filter for share accounts that are pending approval.
+     * Matches if the share account's status indicates it is submitted and pending approval.
+     */
+    APPROVAL_PENDING(
+        Res.string.feature_account_approval_pending,
+        { it.status?.submittedAndPendingApproval == true },
+    ),
+
+    /**
+     * Filter for rejected share accounts.
+     * Matches if the share account's status indicates it has been rejected.
+     */
+    REJECTED(
+        Res.string.feature_account_rejected,
+        { it.status?.rejected == true },
+    ),
+
+    /**
+     * Filter for closed share accounts.
+     * Matches if the share account's status indicates it has been closed.
+     */
+    CLOSED(
+        Res.string.feature_account_closed,
+        { it.status?.closed == true },
+    ),
+    ;
+
+    companion object {
+
+        /**
+         * Retrieves a [FilterUtil] instance based on the provided label.
+         *
+         * @param label The label to match against.
+         * @return The corresponding [FilterUtil] instance if found, otherwise null.
+         */
+        fun fromLabel(label: StringResource?): FilterUtil? = entries.find { it.label == label }
+    }
+}

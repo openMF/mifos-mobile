@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hekmatullahamin.share_account"
+    namespace = "org.mifos.mobile.feature.shareaccount"
 }
 
 kotlin {
@@ -24,7 +24,6 @@ kotlin {
 
             api(projects.core.ui)
             api(projects.core.model)
-            api(projects.core.common)
         }
     }
 }

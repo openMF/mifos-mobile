@@ -18,13 +18,12 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-
-private const val KEY_STATE = "state"
 
 class LoginViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
@@ -32,7 +31,7 @@ class LoginViewModel(
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
-    initialState = savedStateHandle[KEY_STATE] ?: LoginState(dialogState = null),
+    initialState = LoginState(dialogState = null),
 ) {
     init {
         savedStateHandle.get<String>("username")?.let {
@@ -102,11 +101,26 @@ class LoginViewModel(
                 mutableStateFlow.update {
                     it.copy(dialogState = null)
                 }
+                val user = action.loginResult.data
 
-                sendEvent(LoginEvent.ShowToast("Successfully logged in"))
+                val userData = user.toUserData()
+
+                viewModelScope.launch {
+                    userPreferencesRepositoryImpl.updateUser(userData)
+                }
                 sendEvent(LoginEvent.NavigateToPasscodeScreen)
             }
         }
+    }
+
+    private fun User.toUserData(): UserData {
+        return UserData(
+            userId = this.userId,
+            userName = this.username ?: "",
+            clientId = this.userId,
+            isAuthenticated = this.isAuthenticated,
+            base64EncodedAuthenticationKey = this.base64EncodedAuthenticationKey ?: "",
+        )
     }
 
     private fun loginUser(
