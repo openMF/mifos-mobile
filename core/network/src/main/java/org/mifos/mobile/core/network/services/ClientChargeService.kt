@@ -24,7 +24,7 @@ interface ClientChargeService {
      * @param chargeType is savingsaccounts, loans
      * @param chargeTypeId is savingsId, loanId
      */
-    @GET("/{chargeType}/{chargeTypeId}/charges")
+    @GET("/self/{chargeType}/{chargeTypeId}/charges")
     suspend fun getChargeList(
         @Path("chargeType") chargeType: String,
         @Path("chargeTypeId") chargeTypeId: Long?,

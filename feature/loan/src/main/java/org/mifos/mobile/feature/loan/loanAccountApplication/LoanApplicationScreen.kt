@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -28,6 +29,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.designsystem.components.MifosTopBar
@@ -60,13 +63,16 @@ internal fun LoanApplicationScreen(
     viewModel: LoanApplicationViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     val uiState by viewModel.loanUiState.collectAsStateWithLifecycle()
     val uiData by viewModel.loanApplicationScreenData.collectAsStateWithLifecycle()
     val loanState by viewModel.loanState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = loanState) {
-        viewModel.loadLoanApplicationTemplate(loanState)
+        scope.launch {
+            viewModel.fetchLoanTemplate.collect()
+        }
     }
 
     LoanApplicationScreen(
@@ -74,7 +80,7 @@ internal fun LoanApplicationScreen(
         uiData = uiData,
         navigateBack = navigateBack,
         loanState = loanState,
-        onRetry = { viewModel.loadLoanApplicationTemplate(loanState) },
+        onRetry = { viewModel.refreshFetchTemplate() },
         modifier = modifier,
         selectProduct = viewModel::productSelected,
         selectPurpose = viewModel::purposeSelected,
@@ -216,7 +222,7 @@ private fun getLoanPayload(
         loanPurpose =
             viewModel.loanApplicationScreenData.value.selectedLoanPurpose ?: "Not provided"
         productName = viewModel.loanApplicationScreenData.value.selectedLoanProduct
-        currency = viewModel.loanApplicationScreenData.value.currencyLabel
+        currency = viewModel.loanTemplate.currency?.name
         if (viewModel.purposeId > 0) loanPurposeId = viewModel.purposeId
         productId = viewModel.productId
         principal =

@@ -24,7 +24,7 @@
 
     <application
         android:name=".MifosSelfServiceApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/feature_about_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
