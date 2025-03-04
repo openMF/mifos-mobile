@@ -40,6 +40,8 @@ internal class HelpViewModel : BaseViewModel<HelpUiState, HelpEvent, HelpAction>
             HelpAction.OnCallHelpLine -> sendEvent(HelpEvent.CallHelpLine)
             HelpAction.OnMailHelpLine -> sendEvent(HelpEvent.MailHelpLine)
             HelpAction.Location -> sendEvent(HelpEvent.Location)
+            HelpAction.DismissSearch -> filterList("")
+            HelpAction.NavigateBack -> sendEvent(HelpEvent.NavigateBack)
         }
     }
 
@@ -84,10 +86,13 @@ sealed interface HelpAction {
     data object Location : HelpAction
     data class SearchFaq(val query: String) : HelpAction
     data class UpdateFaqPosition(val position: Int) : HelpAction
+    data object DismissSearch : HelpAction
+    data object NavigateBack : HelpAction
 }
 
 sealed interface HelpEvent {
     data object CallHelpLine : HelpEvent
     data object MailHelpLine : HelpEvent
     data object Location : HelpEvent
+    data object NavigateBack : HelpEvent
 }

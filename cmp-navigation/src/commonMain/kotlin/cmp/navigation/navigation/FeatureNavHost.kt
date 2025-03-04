@@ -9,40 +9,23 @@
  */
 package cmp.navigation.navigation
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-
 import androidx.navigation.NavHostController
-
 import androidx.navigation.compose.NavHost
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
-
-import org.mifos.mobile.feature.help.navigation.helpNavGraph
-import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
-
-const val WELCOME_ROUTE = "home_route"
-
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.help.navigation.helpNavGraph
+import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
-
 
 @Composable
 internal fun FeatureNavHost(
@@ -56,33 +39,12 @@ internal fun FeatureNavHost(
         navController = appState.navController,
         modifier = modifier,
     ) {
-        homeScreen(navController = appState.navController)
         helpNavGraph(
             findLocations = {},
-            navigateBack = {},
+            navigateBack = appState.navController::popBackStack,
             callHelpline = {},
             mailHelpline = {},
         )
-    }
-}
-
-fun NavGraphBuilder.homeScreen(navController: NavController) {
-    composable(route = WELCOME_ROUTE) {
-        WelcomeScreen(navController = navController)
-    }
-}
-
-@Composable
-fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(text = "Welcome to Mifos Mobile")
-        Button(onClick = { navController.navigateToHelpScreen() }) {
-            Text("Help Screen")
-        }
         homeNavGraph(
             onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
             callHelpline = { callHelpline() },
@@ -116,7 +78,7 @@ fun handleHomeNavigation(
         HomeDestinations.THIRD_PARTY_TRANSFER -> { }
         HomeDestinations.SETTINGS -> { }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
-        HomeDestinations.HELP -> { }
+        HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> { }
         HomeDestinations.APP_INFO -> { }
         HomeDestinations.TRANSFER -> { }

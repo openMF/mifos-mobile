@@ -47,9 +47,9 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun HelpScreen(
     callNow: () -> Unit,
+    navigateBack: () -> Unit,
     leaveEmail: () -> Unit,
     findLocations: () -> Unit,
-    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HelpViewModel = koinViewModel(),
 ) {
@@ -61,22 +61,14 @@ internal fun HelpScreen(
             HelpEvent.CallHelpLine -> callNow()
             HelpEvent.Location -> findLocations()
             HelpEvent.MailHelpLine -> leaveEmail()
+            HelpEvent.NavigateBack -> navigateBack()
         }
     }
 
     HelpScreenContent(
         uiState = uiState,
-        navigateBack = navigateBack,
         onAction = { action ->
-            when (action) {
-                is HelpScreenAction.SearchFaq -> viewModel.trySendAction(HelpAction.SearchFaq(action.query))
-                HelpScreenAction.DismissSearch -> viewModel.trySendAction(HelpAction.LoadFaq)
-                is HelpScreenAction.UpdateFaqPosition ->
-                    viewModel.trySendAction(HelpAction.UpdateFaqPosition(action.position))
-                HelpScreenAction.CallHelpLine -> viewModel.trySendAction(HelpAction.OnCallHelpLine)
-                HelpScreenAction.MailHelpLine -> viewModel.trySendAction(HelpAction.OnMailHelpLine)
-                HelpScreenAction.FindLocations -> viewModel.trySendAction(HelpAction.Location)
-            }
+            viewModel.trySendAction(action)
         },
         modifier = modifier,
     )
@@ -85,19 +77,18 @@ internal fun HelpScreen(
 @Composable
 private fun HelpScreenContent(
     uiState: HelpUiState,
-    navigateBack: () -> Unit,
-    onAction: (HelpScreenAction) -> Unit,
+    onAction: (HelpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
         topBar = {
             MifosTopBarTitleComposable(
-                navigateBack = navigateBack,
+                navigateBack = { onAction(HelpAction.NavigateBack) },
                 title = {
                     MifosTitleSearchCard(
-                        searchQuery = { query -> onAction(HelpScreenAction.SearchFaq(query)) },
+                        searchQuery = { query -> onAction(HelpAction.SearchFaq(query)) },
                         titleResourceId = Res.string.help,
-                        onSearchDismiss = { onAction(HelpScreenAction.DismissSearch) },
+                        onSearchDismiss = { onAction(HelpAction.DismissSearch) },
                     )
                 },
             )
@@ -121,7 +112,7 @@ private fun HelpScreenContent(
 private fun HelpContent(
     faqArrayList: List<FAQ>,
     selectedFaqPosition: Int,
-    onAction: (HelpScreenAction) -> Unit,
+    onAction: (HelpAction) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -130,7 +121,6 @@ private fun HelpContent(
                 .fillMaxWidth()
                 .padding(16.dp),
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
         )
 
         if (faqArrayList.isNotEmpty()) {
@@ -139,7 +129,7 @@ private fun HelpContent(
                     FaqItemHolder(
                         index = index,
                         isSelected = selectedFaqPosition == index,
-                        onItemSelected = { onAction(HelpScreenAction.UpdateFaqPosition(it)) },
+                        onItemSelected = { onAction(HelpAction.UpdateFaqPosition(it)) },
                         question = faqItem.question,
                         answer = faqItem.answer,
                     )
@@ -149,21 +139,21 @@ private fun HelpContent(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = { onAction(HelpScreenAction.CallHelpLine) },
+                    onClick = { onAction(HelpAction.OnCallHelpLine) },
                     textResourceId = Res.string.call_now,
                     icon = MifosIcons.Phone,
                     contentDescription = "Phone Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = { onAction(HelpScreenAction.MailHelpLine) },
+                    onClick = { onAction(HelpAction.OnMailHelpLine) },
                     textResourceId = Res.string.leave_email,
                     icon = MifosIcons.Mail,
                     contentDescription = "Mail Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = { onAction(HelpScreenAction.FindLocations) },
+                    onClick = { onAction(HelpAction.Location) },
                     textResourceId = Res.string.find_locations,
                     icon = MifosIcons.LocationOn,
                     contentDescription = "Location Icon",
@@ -176,13 +166,4 @@ private fun HelpContent(
             )
         }
     }
-}
-
-sealed interface HelpScreenAction {
-    data class SearchFaq(val query: String) : HelpScreenAction
-    data object DismissSearch : HelpScreenAction
-    data class UpdateFaqPosition(val position: Int) : HelpScreenAction
-    data object CallHelpLine : HelpScreenAction
-    data object MailHelpLine : HelpScreenAction
-    data object FindLocations : HelpScreenAction
 }
