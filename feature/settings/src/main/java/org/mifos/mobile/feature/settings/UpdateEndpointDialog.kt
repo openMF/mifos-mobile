@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.components.MifosTextButton
@@ -42,6 +44,7 @@ internal fun UpdateEndpointDialogScreen(
     handleEndpointUpdate: (baseURL: String, tenant: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     var baseURL by rememberSaveable { mutableStateOf(initialBaseURL) }
     var tenant by rememberSaveable { mutableStateOf(initialTenant) }
 
@@ -88,8 +91,17 @@ internal fun UpdateEndpointDialogScreen(
                     MifosTextButton(
                         text = stringResource(id = R.string.dialog_action_ok),
                         onClick = {
-                            if (baseURL != null && tenant != null) {
-                                handleEndpointUpdate.invoke(baseURL ?: "", tenant ?: "")
+                            val url = baseURL?.takeIf { it.isNotBlank() }
+                            val id = tenant?.takeIf { it.isNotBlank() }
+
+                            if (url == null || id == null) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.base_url_tenant_id_required,
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            } else {
+                                handleEndpointUpdate(url, id)
                             }
                         },
                     )

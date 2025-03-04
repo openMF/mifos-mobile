@@ -70,7 +70,6 @@ internal fun SettingsScreen(
     val passcode by viewModel.passcode.collectAsStateWithLifecycle()
     val theme by viewModel.theme.collectAsStateWithLifecycle()
     val language by viewModel.language.collectAsStateWithLifecycle()
-
     SettingsScreen(
         selectedLanguage = language,
         selectedTheme = theme,

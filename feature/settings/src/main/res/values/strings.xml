@@ -27,6 +27,7 @@
     <string name="enter_tenant">Enter the Tenant</string>
     <string name="cancel">Cancel</string>
     <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">Base URL and Tenant ID are required</string>
 
     <string name="core_common_default_system_language" translatable="false">default_system_language</string>
     <string name="core_common_language_type" translatable="false">language_type</string>

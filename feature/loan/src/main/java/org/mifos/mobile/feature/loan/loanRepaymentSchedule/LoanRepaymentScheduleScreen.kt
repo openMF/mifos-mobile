@@ -166,8 +166,8 @@ private fun RepaymentScheduleTable(
                 Row {
                     TableCell(text = stringResource(id = R.string.s_no), weight = 0.5f)
                     TableCell(text = stringResource(id = R.string.date), weight = 1f)
-                    TableCell(text = stringResource(id = R.string.loan_balance), weight = 1f)
                     TableCell(text = stringResource(id = R.string.repayment), weight = 1f)
+                    TableCell(text = stringResource(id = R.string.principal_due), weight = 1f)
                 }
             }
             items(periods) { period ->
@@ -175,15 +175,15 @@ private fun RepaymentScheduleTable(
                     TableCell(text = "${periods.indexOf(period) + 1}", weight = 0.5f)
                     TableCell(text = DateHelper.getDateAsString(period.dueDate), weight = 1f)
                     TableCell(
+                        text = "$currency ${period.principalLoanBalanceOutstanding}",
+                        weight = 1f,
+                    )
+                    TableCell(
                         text = if (period.principalOriginalDue == null) {
                             "$currency 0.00"
                         } else {
                             "$currency ${period.principalOriginalDue}"
                         },
-                        weight = 1f,
-                    )
-                    TableCell(
-                        text = "$currency ${period.principalLoanBalanceOutstanding}",
                         weight = 1f,
                     )
                 }
