@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.help
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +21,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,6 +42,7 @@ import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FaqItemHolder
 import org.mifos.mobile.core.ui.component.MifosTextButtonWithTopDrawable
 import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun HelpScreen(
@@ -54,33 +55,39 @@ internal fun HelpScreen(
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.trySendAction(HelpAction.LoadFaq)
+    EventsEffect(viewModel.eventFlow)
+    {
+        event ->
+        when(event)
+        {
+            HelpEvent.CallHelpLine -> callNow()
+            HelpEvent.Location -> findLocations()
+            HelpEvent.MailHelpLine ->leaveEmail()
+        }
     }
 
     HelpScreenContent(
         uiState = uiState,
-        callNow = callNow,
-        leaveEmail = leaveEmail,
-        findLocations = findLocations,
         navigateBack = navigateBack,
-        searchQuery = { query -> viewModel.trySendAction(HelpAction.SearchFaq(query)) },
-        modifier = modifier,
-        onSearchDismiss = { viewModel.trySendAction(HelpAction.LoadFaq) },
-        updateFaqPosition = { position -> viewModel.trySendAction(HelpAction.UpdateFaqPosition(position)) },
+        onAction = { action ->
+            when (action) {
+                is HelpScreenAction.SearchFaq -> viewModel.trySendAction(HelpAction.SearchFaq(action.query))
+                HelpScreenAction.DismissSearch -> viewModel.trySendAction(HelpAction.LoadFaq)
+                is HelpScreenAction.UpdateFaqPosition -> viewModel.trySendAction(HelpAction.UpdateFaqPosition(action.position))
+                HelpScreenAction.CallHelpLine -> viewModel.trySendAction(HelpAction.OnCallHelpLine)
+                HelpScreenAction.MailHelpLine -> viewModel.trySendAction(HelpAction.OnMailHelpLine)
+                HelpScreenAction.FindLocations -> viewModel.trySendAction(HelpAction.Location)
+            }
+        },
+        modifier = modifier
     )
 }
 
 @Composable
 private fun HelpScreenContent(
     uiState: HelpUiState,
-    callNow: () -> Unit,
-    leaveEmail: () -> Unit,
-    findLocations: () -> Unit,
     navigateBack: () -> Unit,
-    searchQuery: (String) -> Unit,
-    onSearchDismiss: () -> Unit,
-    updateFaqPosition: (Int) -> Unit,
+    onAction: (HelpScreenAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
@@ -89,27 +96,21 @@ private fun HelpScreenContent(
                 navigateBack = navigateBack,
                 title = {
                     MifosTitleSearchCard(
-                        searchQuery = searchQuery,
+                        searchQuery = { query -> onAction(HelpScreenAction.SearchFaq(query)) },
                         titleResourceId = Res.string.help,
-                        onSearchDismiss = onSearchDismiss,
+                        onSearchDismiss = { onAction(HelpScreenAction.DismissSearch) },
                     )
                 },
             )
         },
         content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
-                when (uiState) {
-                    is HelpUiState.Initial -> Unit
-                    is HelpUiState.ShowFaq -> {
-                        HelpContent(
-                            faqArrayList = uiState.faqArrayList.toList(),
-                            selectedFaqPosition = uiState.selectedFaqPosition,
-                            callNow = callNow,
-                            leaveEmail = leaveEmail,
-                            findLocations = findLocations,
-                            updateFaqPosition = updateFaqPosition,
-                        )
-                    }
+                if (uiState.faqList.isNotEmpty()) {
+                    HelpContent(
+                        faqArrayList = uiState.faqList,
+                        selectedFaqPosition = uiState.selectedFaqPosition,
+                        onAction = onAction
+                    )
                 }
             }
         },
@@ -121,18 +122,14 @@ private fun HelpScreenContent(
 private fun HelpContent(
     faqArrayList: List<FAQ>,
     selectedFaqPosition: Int,
-    callNow: () -> Unit,
-    leaveEmail: () -> Unit,
-    findLocations: () -> Unit,
-    updateFaqPosition: (Int) -> Unit,
-    modifier: Modifier = Modifier,
+    onAction: (HelpScreenAction) -> Unit,
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(Res.string.faq),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 8.dp),
+                .padding(16.dp),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
         )
@@ -143,31 +140,31 @@ private fun HelpContent(
                     FaqItemHolder(
                         index = index,
                         isSelected = selectedFaqPosition == index,
-                        onItemSelected = { updateFaqPosition(it) },
+                        onItemSelected = { onAction(HelpScreenAction.UpdateFaqPosition(it)) },
                         question = faqItem.question,
                         answer = faqItem.answer,
                     )
                 }
             }
 
-            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = callNow,
+                    onClick = { onAction(HelpScreenAction.CallHelpLine) },
                     textResourceId = Res.string.call_now,
                     icon = MifosIcons.Phone,
                     contentDescription = "Phone Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = leaveEmail,
+                    onClick = { onAction(HelpScreenAction.MailHelpLine) },
                     textResourceId = Res.string.leave_email,
                     icon = MifosIcons.Mail,
                     contentDescription = "Mail Icon",
                 )
                 MifosTextButtonWithTopDrawable(
                     modifier = Modifier.fillMaxWidth().weight(1f),
-                    onClick = findLocations,
+                    onClick = { onAction(HelpScreenAction.FindLocations) },
                     textResourceId = Res.string.find_locations,
                     icon = MifosIcons.LocationOn,
                     contentDescription = "Location Icon",
@@ -180,4 +177,13 @@ private fun HelpContent(
             )
         }
     }
+}
+
+sealed interface HelpScreenAction {
+    data class SearchFaq(val query: String) : HelpScreenAction
+    data object DismissSearch : HelpScreenAction
+    data class UpdateFaqPosition(val position: Int) : HelpScreenAction
+    data object CallHelpLine : HelpScreenAction
+    data object MailHelpLine : HelpScreenAction
+    data object FindLocations : HelpScreenAction
 }

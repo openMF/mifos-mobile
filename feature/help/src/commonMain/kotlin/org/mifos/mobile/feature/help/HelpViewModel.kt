@@ -18,9 +18,15 @@ import org.jetbrains.compose.resources.getStringArray
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
-internal class HelpViewModel : BaseViewModel<HelpUiState, Nothing, HelpAction>(HelpUiState.Initial) {
+internal class HelpViewModel : BaseViewModel<HelpUiState, HelpEvent, HelpAction>(HelpUiState.Initial) {
 
     private var allFaqList: List<FAQ>? = null
+
+    init {
+        viewModelScope.launch {
+            loadFaq()
+        }
+    }
 
     override fun handleAction(action: HelpAction) {
         when (action) {
@@ -31,6 +37,9 @@ internal class HelpViewModel : BaseViewModel<HelpUiState, Nothing, HelpAction>(H
             }
             is HelpAction.SearchFaq -> filterList(action.query)
             is HelpAction.UpdateFaqPosition -> updateSelectedFaqPosition(action.position)
+            HelpAction.OnCallHelpLine -> sendEvent(HelpEvent.CallHelpLine)
+            HelpAction.OnMailHelpLine -> sendEvent(HelpEvent.MailHelpLine)
+            HelpAction.Location -> sendEvent(HelpEvent.Location)
         }
     }
 
@@ -42,35 +51,45 @@ internal class HelpViewModel : BaseViewModel<HelpUiState, Nothing, HelpAction>(H
             allFaqList = questions.mapIndexed { index, question -> FAQ(question, answers.getOrNull(index)) }
         }
 
-        mutableStateFlow.value = HelpUiState.ShowFaq(ArrayList(allFaqList!!))
+        mutableStateFlow.value = state.copy(faqList = ArrayList(allFaqList!!))
     }
 
     private fun filterList(query: String) {
         val filteredList = allFaqList
             ?.filter { it.question?.contains(query, ignoreCase = true) ?: false }
             ?: emptyList()
-        mutableStateFlow.value = HelpUiState.ShowFaq(ArrayList(filteredList))
+        mutableStateFlow.value = state.copy(searchQuery = query, faqList = ArrayList(filteredList))
+
     }
 
     private fun updateSelectedFaqPosition(position: Int) {
-        val currentState = state
-        if (currentState is HelpUiState.ShowFaq) {
-            val newPosition = if (currentState.selectedFaqPosition == position) -1 else position
-            mutableStateFlow.value = currentState.copy(selectedFaqPosition = newPosition)
-        }
+        val newPosition = if (state.selectedFaqPosition == position) -1 else position
+        mutableStateFlow.value = state.copy(selectedFaqPosition = newPosition)
     }
 }
 
-internal sealed class HelpUiState {
-    data object Initial : HelpUiState()
-    data class ShowFaq(
-        val faqArrayList: ArrayList<FAQ>,
-        val selectedFaqPosition: Int = -1,
-    ) : HelpUiState()
+internal data class HelpUiState(
+    val faqList: List<FAQ> = emptyList(),
+    val searchQuery: String = "",
+    val selectedFaqPosition: Int = -1
+) {
+    companion object {
+        val Initial: HelpUiState = HelpUiState()
+    }
 }
 
-internal sealed class HelpAction {
-    data object LoadFaq : HelpAction()
-    data class SearchFaq(val query: String) : HelpAction()
-    data class UpdateFaqPosition(val position: Int) : HelpAction()
+
+sealed interface HelpAction {
+    data object LoadFaq : HelpAction
+    data object OnCallHelpLine : HelpAction
+    data object OnMailHelpLine : HelpAction
+    data object Location : HelpAction
+    data class SearchFaq(val query: String) : HelpAction
+    data class UpdateFaqPosition(val position: Int) : HelpAction
+}
+
+sealed interface HelpEvent {
+    data object CallHelpLine : HelpEvent
+    data object MailHelpLine : HelpEvent
+    data object Location :HelpEvent
 }
