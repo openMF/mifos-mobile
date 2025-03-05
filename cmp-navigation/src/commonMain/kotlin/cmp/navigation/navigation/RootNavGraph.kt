@@ -41,6 +41,7 @@ fun RootNavGraph(
 
         )
         passcodeNavGraph(navHostController)
+
         composable(MAIN_GRAPH) {
             App(
                 modifier = modifier,
