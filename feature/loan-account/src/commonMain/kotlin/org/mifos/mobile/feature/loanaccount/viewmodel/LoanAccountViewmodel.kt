@@ -7,8 +7,6 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-@file:Suppress("ktlint:standard:property-naming")
-
 package org.mifos.mobile.feature.loanaccount.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -65,6 +63,7 @@ class LoanAccountViewmodel(
         )
 
     /** Holds the current state of loan accounts UI. */
+    @Suppress("ktlint:standard:property-naming")
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountUiState: StateFlow<AccountState> = _accountsUiState.asStateFlow()
 

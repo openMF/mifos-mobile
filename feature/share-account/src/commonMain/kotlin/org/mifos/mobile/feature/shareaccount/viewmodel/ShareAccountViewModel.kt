@@ -7,8 +7,6 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-@file:Suppress("ktlint:standard:property-naming")
-
 package org.mifos.mobile.feature.shareaccount.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -65,6 +63,7 @@ class ShareAccountViewModel(
         )
 
     /** Holds the current state of share accounts UI. */
+    @Suppress("ktlint:standard:property-naming")
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountUiState: StateFlow<AccountState> = _accountsUiState.asStateFlow()
 
