@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -42,17 +40,17 @@ import mifos_mobile.feature.loan.generated.resources.outstanding_balance
 import mifos_mobile.feature.loan.generated.resources.penalties
 import mifos_mobile.feature.loan.generated.resources.penalties_waived
 import mifos_mobile.feature.loan.generated.resources.principal
-import mifos_mobile.feature.loan.generated.resources.string_and_double
 import mifos_mobile.feature.loan.generated.resources.total_paid
 import mifos_mobile.feature.loan.generated.resources.total_repayment
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
@@ -71,11 +69,6 @@ internal fun LoanAccountSummaryScreen(
             LoanAccountSummaryEvent.NavigateBack -> navigateBack.invoke()
         }
     }
-
-    LoanAccountSummaryDialog(
-        dialogState = state.dialogState,
-        state = state,
-    )
 
     LoanAccountSummaryScreen(
         state = state,
@@ -109,24 +102,28 @@ private fun LoanAccountSummaryScreen(
         backPress = { (onAction(LoanAccountSummaryAction.BackPress)) },
     ) {
         Box(modifier = Modifier.padding(it)) {
-            LoanAccountSummaryContent(
-                loanWithAssociations = state.loanAccountAssociations,
-                modifier = modifier,
-            )
+            if (state.loanAccountAssociations == null) {
+                MifosProgressIndicator()
+            } else {
+                LoanAccountSummaryContent(
+                    state = state,
+                    modifier = modifier,
+                )
+            }
         }
     }
+    LoanAccountSummaryDialog(
+        dialogState = state.dialogState,
+        state = state,
+    )
 }
 
 @Composable
 private fun LoanAccountSummaryContent(
-    loanWithAssociations: LoanWithAssociations?,
+    state: LoanAccountSummaryState,
     modifier: Modifier = Modifier,
 ) {
-    var currencySymbol = loanWithAssociations?.currency?.displaySymbol
-    if (currencySymbol == null) {
-        currencySymbol = loanWithAssociations?.currency?.code ?: ""
-    }
-
+    val currencyCode = state.loanAccountAssociations?.currency?.code
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -136,22 +133,19 @@ private fun LoanAccountSummaryContent(
         MifosTextTitleDescSingleLine(
             modifier = Modifier.padding(horizontal = 14.dp),
             title = stringResource(Res.string.account_short),
-            description = loanWithAssociations?.accountNo ?: "",
+            description = state.loanAccountAssociations?.accountNo ?: "",
         )
 
         MifosTextTitleDescSingleLine(
             modifier = Modifier.padding(horizontal = 14.dp),
             title = stringResource(Res.string.loan_product),
-            description = loanWithAssociations?.loanProductName ?: "",
+            description = state.loanAccountAssociations?.loanProductName ?: "",
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         MifosCard(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.background,
-            ),
         ) {
             Column(
                 modifier = Modifier
@@ -160,37 +154,38 @@ private fun LoanAccountSummaryContent(
             ) {
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.principal),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.principal ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.principal ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.interest),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.interestCharged ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.interestCharged ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.fees),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.feeChargesCharged ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.feeChargesCharged ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
+
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.penalties),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.penaltyChargesCharged ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.penaltyChargesCharged ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
             }
@@ -209,46 +204,46 @@ private fun LoanAccountSummaryContent(
             ) {
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.total_repayment),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.totalExpectedRepayment ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.totalExpectedRepayment ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.total_paid),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.totalRepayment ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.totalRepayment ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.interest_waived),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.interestWaived ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.interestWaived ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.penalties_waived),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.penaltyChargesWaived ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.penaltyChargesWaived ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
 
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.fees_waived),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.feeChargesWaived ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.feeChargesWaived ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
             }
@@ -266,22 +261,22 @@ private fun LoanAccountSummaryContent(
             ) {
                 MifosTextTitleDescSingleLine(
                     title = stringResource(Res.string.outstanding_balance),
-                    description = stringResource(
-                        Res.string.string_and_double,
-                        currencySymbol,
-                        loanWithAssociations?.summary?.totalOutstanding ?: 0.0,
+                    description = CurrencyFormatter.format(
+                        state.loanAccountAssociations?.summary?.totalOutstanding ?: 0.0,
+                        currencyCode,
+                        2,
                     ),
                 )
                 MifosTextTitleDescDrawableSingleLine(
                     title = stringResource(Res.string.account_status),
-                    description = if (loanWithAssociations?.status?.active == true) {
+                    description = if (state.loanAccountAssociations?.status?.active == true) {
                         stringResource(
                             Res.string.active_uc,
                         )
                     } else {
                         stringResource(Res.string.inactive_uc)
                     },
-                    imageResId = if (loanWithAssociations?.status?.active == true) {
+                    imageResId = if (state.loanAccountAssociations?.status?.active == true) {
                         Res.drawable.ic_check_circle_green_24px
                     } else {
                         Res.drawable.ic_report_problem_red_24px

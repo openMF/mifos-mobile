@@ -35,9 +35,9 @@ import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.account_number
 import mifos_mobile.feature.loan.generated.resources.date
 import mifos_mobile.feature.loan.generated.resources.disbursement_date
-import mifos_mobile.feature.loan.generated.resources.loan_balance
 import mifos_mobile.feature.loan.generated.resources.loan_repayment_schedule
 import mifos_mobile.feature.loan.generated.resources.no_of_payments
+import mifos_mobile.feature.loan.generated.resources.principal
 import mifos_mobile.feature.loan.generated.resources.repayment
 import mifos_mobile.feature.loan.generated.resources.repayment_schedule
 import mifos_mobile.feature.loan.generated.resources.s_no
@@ -69,14 +69,6 @@ internal fun LoanRepaymentScheduleScreen(
             LoanRepaymentScheduleEvent.NavigateBack -> navigateBack.invoke()
         }
     }
-
-    LoanRepaymentScheduleDialog(
-        dialogState = state.dialogState,
-        state = state,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
 
     LoanRepaymentScheduleScreen(
         state = state,
@@ -128,13 +120,24 @@ private fun LoanRepaymentScheduleScreen(
                 .fillMaxSize()
                 .padding(contentPadding),
         ) {
-            state.loanWithAssociations?.let { LoanRepaymentScheduleCard(it) }
-            RepaymentScheduleTable(
-                periods = state.loanWithAssociations?.repaymentSchedule?.periods!!,
-                currency = state.loanWithAssociations.currency?.displaySymbol ?: "$",
-            )
+            if (state.loanWithAssociations == null) {
+                MifosProgressIndicator()
+            } else {
+                LoanRepaymentScheduleCard(state.loanWithAssociations)
+                state.loanWithAssociations.repaymentSchedule?.periods?.let {
+                    RepaymentScheduleTable(
+                        periods = it,
+                        currency = state.loanWithAssociations.currency?.displaySymbol ?: "",
+                    )
+                }
+            }
         }
     }
+    LoanRepaymentScheduleDialog(
+        dialogState = state.dialogState,
+        state = state,
+        onAction = onAction,
+    )
 }
 
 @Composable
@@ -186,8 +189,8 @@ private fun RepaymentScheduleTable(
                 Row {
                     TableCell(text = stringResource(Res.string.s_no), weight = 0.5f)
                     TableCell(text = stringResource(Res.string.date), weight = 1f)
-                    TableCell(text = stringResource(Res.string.loan_balance), weight = 1f)
                     TableCell(text = stringResource(Res.string.repayment), weight = 1f)
+                    TableCell(text = stringResource(Res.string.principal), weight = 1f)
                 }
             }
             items(periods) { period ->
@@ -195,15 +198,15 @@ private fun RepaymentScheduleTable(
                     TableCell(text = "${periods.indexOf(period) + 1}", weight = 0.5f)
                     TableCell(text = DateHelper.getDateAsString(period.dueDate), weight = 1f)
                     TableCell(
+                        text = "$currency ${period.principalLoanBalanceOutstanding}",
+                        weight = 1f,
+                    )
+                    TableCell(
                         text = if (period.principalOriginalDue == null) {
                             "$currency 0.00"
                         } else {
                             "$currency ${period.principalOriginalDue}"
                         },
-                        weight = 1f,
-                    )
-                    TableCell(
-                        text = "$currency ${period.principalLoanBalanceOutstanding}",
                         weight = 1f,
                     )
                 }

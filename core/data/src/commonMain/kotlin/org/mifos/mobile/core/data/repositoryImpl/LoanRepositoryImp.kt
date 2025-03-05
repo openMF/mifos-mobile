@@ -11,12 +11,10 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
@@ -29,20 +27,34 @@ class LoanRepositoryImp(
     private val ioDispatcher: CoroutineDispatcher,
 ) : LoanRepository {
 
+//    override fun getLoanWithAssociations(
+//        associationType: String?,
+//        loanId: Long?,
+//    ): Flow<DataState<LoanWithAssociations?>> {
+//        return dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
+//            .map { response ->
+//                logger.d { "success Getting loan details from server repo $response" }
+//                DataState.Success(response)
+//            }.catch { exception ->
+//                logger.e { "Error fetching loan details: ${exception.message}" }
+//                DataState.Error(exception)
+//            }
+//            .flowOn(ioDispatcher)
+//    }
+
     override fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
-    ): Flow<DataState<LoanWithAssociations?>> {
-        return dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
-            .map { response ->
-                logger.d { "success Getting loan details from server repo $response" }
-                DataState.Success(response)
-            }.catch { exception ->
-                logger.e { "Error fetching loan details: ${exception.message}" }
-                DataState.Error(exception, null)
-            }
-            .flowOn(ioDispatcher)
-    }
+    ): Flow<DataState<LoanWithAssociations?>> = flow {
+        try {
+            dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
+                .collect { response ->
+                    emit(DataState.Success(response))
+                }
+        } catch (exception: Exception) {
+            emit(DataState.Error(exception))
+        }
+    }.flowOn(ioDispatcher)
 
     override suspend fun withdrawLoanAccount(
         loanId: Long?,

@@ -63,11 +63,6 @@ internal fun ReviewLoanApplicationScreen(
         }
     }
 
-    LoanReviewDialogs(
-        dialogState = state.dialogState,
-        state = state,
-    )
-
     ReviewLoanApplicationScreen(
         state = state,
         onAction = remember(viewModel) {
@@ -124,6 +119,11 @@ private fun ReviewLoanApplicationScreen(
             )
         }
     }
+
+    LoanReviewDialogs(
+        dialogState = state.dialogState,
+        state = state,
+    )
 }
 
 @Preview

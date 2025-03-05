@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,8 +26,10 @@ import mifos_mobile.feature.loan.generated.resources.update_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -38,14 +40,14 @@ internal fun LoanApplicationScreen(
     navigateBack: () -> Unit,
     reviewNewLoanApplication: (
         loanState: LoanState,
-        loansPayloadString: String,
+        loansPayloadString: LoansPayload,
         loanId: Long?,
         loanName: String,
         accountNo: String,
     ) -> Unit,
     submitUpdateLoanApplication: (
         loanState: LoanState,
-        loansPayloadString: String,
+        loansPayloadString: LoansPayload,
         loanId: Long?,
         loanName: String,
         accountNo: String,
@@ -62,7 +64,7 @@ internal fun LoanApplicationScreen(
                 reviewNewLoanApplication(
                     event.loanState,
                     event.loansPayloadString,
-                    event.loanId,
+                    state.loanId,
                     event.loanName,
                     event.accountNo,
                 )
@@ -71,7 +73,7 @@ internal fun LoanApplicationScreen(
                 submitUpdateLoanApplication(
                     event.loanState,
                     event.loansPayloadString,
-                    event.loanId,
+                    state.loanId,
                     event.loanName,
                     event.accountNo,
                 )
@@ -79,13 +81,9 @@ internal fun LoanApplicationScreen(
         }
     }
 
-    LoanApplicationDialog(
-        dialogState = state.dialogState,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-        state = state,
-    )
+    LaunchedEffect(key1 = state) {
+        viewModel.loadLoanApplicationTemplate(state.loanState)
+    }
 
     LoanApplicationScreen(
         state = state,
@@ -121,7 +119,7 @@ private fun LoanApplicationScreen(
     modifier: Modifier = Modifier,
     onAction: (LoanApplicationAction) -> Unit,
 ) {
-    Scaffold(
+    MifosScaffold(
         modifier = modifier,
         topBar = {
             MifosTopBar(
@@ -167,6 +165,11 @@ private fun LoanApplicationScreen(
                 }
             }
         },
+    )
+    LoanApplicationDialog(
+        dialogState = state.dialogState,
+        state = state,
+        onAction = onAction,
     )
 }
 

@@ -100,7 +100,7 @@ private fun LoanAccountDetailsCard(
     modifier: Modifier = Modifier,
 ) {
     val isActive = loanWithAssociations.status?.active == true
-    val currencySymbol = loanWithAssociations.summary?.currency?.displaySymbol ?: "$"
+    val currencySymbol = loanWithAssociations.summary?.currency?.code ?: "$"
 
     val dueDate = if (isActive) {
         val overdueSinceDate = loanWithAssociations.summary?.getOverdueSinceDate()
@@ -184,7 +184,6 @@ private fun LoanMonitorComponent(
         Text(
             text = stringResource(Res.string.monitor),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.fillMaxWidth(),
         )
 

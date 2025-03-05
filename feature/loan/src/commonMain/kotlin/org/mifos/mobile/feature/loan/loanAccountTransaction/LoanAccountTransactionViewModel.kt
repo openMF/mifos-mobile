@@ -64,6 +64,9 @@ internal class LoanAccountTransactionViewModel(
     }
 
     private fun getLoanTransactionResult() {
+        updateState {
+            it.copy(dialogState = LoanAccountTransactionState.DialogState.Loading)
+        }
         viewModelScope.launch {
             loanRepositoryImp.getLoanWithAssociations(
                 Constants.TRANSACTIONS,

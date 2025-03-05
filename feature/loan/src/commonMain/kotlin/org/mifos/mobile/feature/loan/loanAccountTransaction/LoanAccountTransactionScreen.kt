@@ -35,13 +35,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.atm_icon
 import mifos_mobile.feature.loan.generated.resources.ic_local_atm_black_24dp
-import mifos_mobile.feature.loan.generated.resources.string_and_string
 import mifos_mobile.feature.loan.generated.resources.transactions
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.Utils.formatTransactionType
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -64,11 +64,6 @@ internal fun LoanAccountTransactionScreen(
             LoanAccountTransactionEvent.NavigateBack -> navigateBack.invoke()
         }
     }
-
-    LoanAccountTransactionDialog(
-        dialogState = state.dialogState,
-        state = state,
-    )
 
     LoanAccountTransactionScreen(
         state = state,
@@ -102,7 +97,7 @@ private fun LoanAccountTransactionScreen(
     modifier: Modifier = Modifier,
     onAction: (LoanAccountTransactionAction) -> Unit,
 ) {
-    Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = modifier.fillMaxSize()) {
         MifosTopBar(
             backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
             topBarTitle = stringResource(Res.string.transactions),
@@ -114,6 +109,11 @@ private fun LoanAccountTransactionScreen(
             }
         }
     }
+
+    LoanAccountTransactionDialog(
+        dialogState = state.dialogState,
+        state = state,
+    )
 }
 
 @Composable
@@ -121,10 +121,6 @@ private fun LoanAccountTransactionContent(
     loanWithAssociations: LoanWithAssociations,
     modifier: Modifier = Modifier,
 ) {
-    var currencySymbol = loanWithAssociations.currency?.displaySymbol
-    if (currencySymbol == null) {
-        currencySymbol = loanWithAssociations.currency?.code ?: ""
-    }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -136,7 +132,9 @@ private fun LoanAccountTransactionContent(
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
         )
 
-        LazyColumn {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             items(items = loanWithAssociations.transactions?.toList().orEmpty()) {
                 LoanAccountTransactionListItem(it)
             }
@@ -150,7 +148,7 @@ private fun LoanAccountTransactionListItem(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -161,7 +159,10 @@ private fun LoanAccountTransactionListItem(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center,
+        ) {
             Text(
                 text = formatTransactionType(transaction?.type?.value),
                 style = MaterialTheme.typography.bodyMedium,
@@ -169,14 +170,10 @@ private fun LoanAccountTransactionListItem(
 
             Row {
                 Text(
-                    text = stringResource(
-                        Res.string.string_and_string,
-                        transaction?.currency?.displaySymbol ?: transaction?.currency?.code ?: "",
-                        CurrencyFormatter.format(
-                            transaction?.amount ?: 0.0,
-                            "",
-                            5,
-                        ),
+                    text = CurrencyFormatter.format(
+                        transaction?.amount ?: 0.0,
+                        transaction?.currency?.code,
+                        2,
                     ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
@@ -184,7 +181,7 @@ private fun LoanAccountTransactionListItem(
                         .alpha(0.7f),
                 )
                 Text(
-                    text = transaction?.submittedOnDate.toString(),
+                    text = transaction?.submittedOnDate?.let { DateHelper.getDateAsString(it) } ?: "",
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
                 )

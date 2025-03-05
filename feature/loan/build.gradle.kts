@@ -10,7 +10,7 @@
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
     alias(libs.plugins.kotlin.serialization)
-    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 

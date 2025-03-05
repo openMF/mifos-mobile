@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.loan.loanAccount
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan.generated.resources.Res
@@ -21,6 +20,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.Parcelable
@@ -120,66 +120,58 @@ internal class LoanAccountsDetailViewModel(
             updateState {
                 it.copy(dialogState = LoanAccountsState.DialogState.Loading)
             }
+
             loanRepositoryImp.getLoanWithAssociations(
                 loanId = state.loanId,
                 associationType = Constants.REPAYMENT_SCHEDULE,
-//                associationType = null
-            ).catch {
-                    exception ->
-                updateState {
-                    it.copy(
-                        dialogState = LoanAccountsState.DialogState.Error(
-                            exception.message ?: "An error occurred",
-                        ),
-                    )
-                }
-            }
-                .collect { result ->
-                    updateState { currentState ->
-                        when (result) {
-                            is DataState.Error -> {
-                                currentState.copy(
-                                    dialogState = LoanAccountsState.DialogState.Error(
-                                        result.exception.message ?: "An error occurred",
-                                    ),
+            ).collect { result ->
+
+                updateState { currentState ->
+                    when (result) {
+                        is DataState.Error -> {
+                            logger.e { "KtorClient error in ViewModel: ${result.exception.message}" }
+                            currentState.copy(
+                                dialogState = LoanAccountsState.DialogState.Error(
+                                    result.exception.message ?: "An error occurred",
+                                ),
+                            )
+                        }
+
+                        is DataState.Loading -> {
+                            currentState.copy(dialogState = LoanAccountsState.DialogState.Loading)
+                        }
+
+                        is DataState.Success -> {
+                            val loan = result.data
+                            when {
+                                loan == null -> currentState.copy(
+                                    dialogState = LoanAccountsState.DialogState.Error("Accounts not found"),
                                 )
-                            }
 
-                            is DataState.Loading -> {
-                                currentState.copy(dialogState = LoanAccountsState.DialogState.Loading)
-                            }
-
-                            is DataState.Success -> {
-                                val loan = result.data
-                                when {
-                                    loan == null -> currentState.copy(
-                                        dialogState = LoanAccountsState.DialogState.Error("Accounts not found"),
-                                    )
-
-                                    loan.status?.active == true -> {
-                                        currentState.copy(
-                                            loanAccountAssociations = loan,
-                                            dialogState = null,
-                                        )
-                                    }
-
-                                    loan.status?.pendingApproval == true -> currentState.copy(
-                                        dialogState = LoanAccountsState.DialogState.ApprovalPending,
-                                    )
-
-                                    loan.status?.waitingForDisbursal == true -> currentState.copy(
-                                        dialogState = LoanAccountsState.DialogState.WaitingForDisburse,
-                                    )
-
-                                    else -> currentState.copy(
+                                loan.status?.active == true -> {
+                                    currentState.copy(
                                         loanAccountAssociations = loan,
                                         dialogState = null,
                                     )
                                 }
+
+                                loan.status?.pendingApproval == true -> currentState.copy(
+                                    dialogState = LoanAccountsState.DialogState.ApprovalPending,
+                                )
+
+                                loan.status?.waitingForDisbursal == true -> currentState.copy(
+                                    dialogState = LoanAccountsState.DialogState.WaitingForDisburse,
+                                )
+
+                                else -> currentState.copy(
+                                    loanAccountAssociations = null,
+                                    dialogState = LoanAccountsState.DialogState.Error("Accounts not found"),
+                                )
                             }
                         }
                     }
                 }
+            }
         }
     }
 

@@ -70,10 +70,6 @@ internal fun LoanAccountWithdrawScreen(
         }
     }
 
-    LoanAccountWithDrawDialog(
-        dialogState = state.dialogState,
-    )
-
     LoanAccountWithdrawScreen(
         state = state,
         onAction = remember(viewModel) {
@@ -130,6 +126,9 @@ private fun LoanAccountWithdrawScreen(
             )
         }
     }
+    LoanAccountWithDrawDialog(
+        dialogState = state.dialogState,
+    )
 }
 
 @Composable

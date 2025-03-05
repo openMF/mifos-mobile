@@ -128,7 +128,6 @@ internal fun LoanApplicationContent(
             else -> null
         }
     }
-
     Column(
         modifier = Modifier
             .verticalScroll(scrollState)

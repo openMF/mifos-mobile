@@ -28,6 +28,7 @@ import mifos_mobile.feature.loan.generated.resources.waiting_for_disburse
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -78,14 +79,6 @@ internal fun LoanAccountDetailScreen(
         }
     }
 
-    LoanAccountDetailDialog(
-        dialogState = state.dialogState,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-        state = state,
-    )
-
     LoanAccountDetailScreen(
         state = state,
         modifier = modifier,
@@ -103,6 +96,7 @@ private fun LoanAccountDetailDialog(
 ) {
     when (dialogState) {
         is LoanAccountsState.DialogState.Error -> {
+            logger.e { "Showing error dialog: ${dialogState.message}" }
             ErrorComponent(
                 retryConnection = {
                     onAction(
@@ -114,7 +108,7 @@ private fun LoanAccountDetailDialog(
             )
         }
 
-        is LoanAccountsState.DialogState.Loading -> MifosProgressIndicator(modifier = Modifier.fillMaxSize())
+        is LoanAccountsState.DialogState.Loading -> MifosProgressIndicator()
         LoanAccountsState.DialogState.ApprovalPending -> EmptyDataView(
             modifier = Modifier.fillMaxSize(),
             icon = MifosIcons.Error,
@@ -147,9 +141,9 @@ private fun LoanAccountDetailScreen(
         },
         content = {
             Box(modifier = Modifier.padding(it)) {
-                state.loanAccountAssociations?.let { loan ->
+                if (state.loanAccountAssociations != null) {
                     LoanAccountDetailContent(
-                        loanWithAssociations = loan,
+                        loanWithAssociations = state.loanAccountAssociations,
                         viewLoanSummary = { onAction(LoanAccountAction.ViewLoanSummaryClicked) },
                         viewCharges = { onAction(LoanAccountAction.ViewCharges) },
                         viewRepaymentSchedule = { onAction(LoanAccountAction.ViewRepaymentScheduleClicked) },
@@ -160,6 +154,11 @@ private fun LoanAccountDetailScreen(
                 }
             }
         },
+    )
+    LoanAccountDetailDialog(
+        dialogState = state.dialogState,
+        state = state,
+        onAction = onAction,
     )
 }
 

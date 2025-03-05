@@ -53,7 +53,6 @@ internal class LoanRepaymentScheduleViewModel(
 
     private fun fetchLoanWithAssociations() {
         updateState { it.copy(dialogState = LoanRepaymentScheduleState.DialogState.Loading) }
-
         viewModelScope.launch {
             val errorMessage = getString(Res.string.repayment_schedule)
             state.loanId?.let { loanId ->

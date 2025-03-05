@@ -64,9 +64,8 @@ internal class LoanAccountSummaryViewModel(
     }
 
     private fun loadLoanAccountSummary() {
+        updateState { it.copy(dialogState = LoanAccountSummaryState.DialogState.Loading) }
         viewModelScope.launch {
-            updateState { it.copy(dialogState = LoanAccountSummaryState.DialogState.Loading) }
-
             loanRepositoryImp.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, state.loanId)
                 .catch { exception ->
                     sendAction(

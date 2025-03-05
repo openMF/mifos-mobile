@@ -14,8 +14,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.account_number
 import mifos_mobile.feature.loan.generated.resources.error_fetching_template
@@ -126,7 +124,7 @@ internal class LoanApplicationViewModel(
         }
     }
 
-    private fun loadLoanApplicationTemplate(loanState: LoanState) {
+    fun loadLoanApplicationTemplate(loanState: LoanState) {
         viewModelScope.launch {
             val errorMessage = getString(Res.string.error_fetching_template)
             loanRepositoryImp.template(state.clientId)
@@ -137,7 +135,7 @@ internal class LoanApplicationViewModel(
                         }
                         is DataState.Success -> {
                             val loanTemplate = result.data ?: LoanTemplate()
-                            updateState { it.copy(loanTemplate = loanTemplate) }
+                            updateState { it.copy(loanTemplate = loanTemplate, dialogState = null) }
                             if (loanState == LoanState.CREATE) {
                                 showLoanTemplate(loanTemplate)
                             } else {
@@ -183,12 +181,14 @@ internal class LoanApplicationViewModel(
                 clientName = state.loanWithAssociations?.clientName,
                 currencyLabel = state.loanWithAssociations?.currency?.displayLabel,
                 principalAmount = formatAmount(state.loanWithAssociations?.principal ?: 0.0),
-                submittedDate = state.loanWithAssociations?.timeline?.submittedOnDate
-                    ?.map { date -> date.toLong() }
-                    ?.let { date -> DateHelper.getDateAsString(date, "dd-MM-yyyy") },
-                disbursementDate = state.loanWithAssociations?.timeline?.expectedDisbursementDate
-                    ?.map { date -> date.toLong() }
-                    ?.let { date -> DateHelper.getDateAsString(date, "dd-MM-yyyy") },
+                submittedDate = state.loanWithAssociations?.timeline?.submittedOnDate?.let { date,
+                    ->
+                    DateHelper.getDateAsString(date)
+                },
+                disbursementDate = state.loanWithAssociations?.timeline?.expectedDisbursementDate?.let { date,
+                    ->
+                    DateHelper.getDateAsString(date)
+                },
 
             )
         }
@@ -216,8 +216,7 @@ internal class LoanApplicationViewModel(
             val errorMessage = getString(Res.string.error_fetching_template)
             loanRepositoryImp.getLoanTemplateByProduct(
                 clientId = state.clientId,
-                productId =
-                productId,
+                productId = productId,
             )
                 .collect { result ->
                     when (result) {
@@ -232,6 +231,7 @@ internal class LoanApplicationViewModel(
                                     showUpdateLoanTemplateByProduct(loanTemplate = it)
                                 }
                             }
+                            updateState { it.copy(dialogState = null) }
                         }
                         is DataState.Error -> {
                             updateState {
@@ -307,15 +307,15 @@ internal class LoanApplicationViewModel(
         updateState { it.copy(principalAmount = amount) }
     }
 
-    private fun getLoanPayload(): String {
+    private fun getLoanPayload(): LoansPayload {
         val payload = LoansPayload(
-            clientId = state.loanTemplate?.clientId.takeIf { state.loanState == LoanState.CREATE },
+            clientId = state.loanTemplate?.clientId?.takeIf { state.loanState == LoanState.CREATE },
             loanPurpose = state.selectedLoanPurpose ?: "Not provided",
             productName = state.selectedLoanProduct,
             currency = state.currencyLabel,
-            loanPurposeId = if (state.loanPurposeId!! > 0) state.loanPurposeId else null,
+            loanPurposeId = state.loanPurposeId?.takeIf { it > 0 },
             productId = state.loanWithAssociations?.loanProductId,
-            principal = state.principalAmount?.toDoubleOrNull() ?: 0.0,
+            principal = state.loanWithAssociations?.principal ?: 0.0,
             loanTermFrequency = state.loanTemplate?.termFrequency,
             loanTermFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
             loanType = "individual".takeIf { state.loanState == LoanState.CREATE },
@@ -323,11 +323,11 @@ internal class LoanApplicationViewModel(
             repaymentEvery = state.loanTemplate?.repaymentEvery,
             repaymentFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
             interestRatePerPeriod = state.loanTemplate?.interestRatePerPeriod,
-            expectedDisbursementDate = state.disbursementDate?.let {
-                DateHelper.getSpecificFormat(DateHelper.MONTH_FORMAT, it)
+            expectedDisbursementDate = state.loanWithAssociations?.timeline?.expectedDisbursementDate?.let {
+                DateHelper.getDateAsString(it)
             },
-            submittedOnDate = state.submittedDate?.let {
-                DateHelper.getSpecificFormat(DateHelper.MONTH_FORMAT, it)
+            submittedOnDate = state.loanWithAssociations?.timeline?.submittedOnDate?.let {
+                DateHelper.getDateAsString(it)
                     .takeIf { state.loanState == LoanState.CREATE }
             },
             transactionProcessingStrategyId = state.loanTemplate?.transactionProcessingStrategyId,
@@ -335,9 +335,7 @@ internal class LoanApplicationViewModel(
             interestCalculationPeriodType = state.loanTemplate?.interestCalculationPeriodType?.id,
             interestType = state.loanTemplate?.interestType?.id,
         )
-
-        val loansPayloadString = Json.encodeToString(payload)
-        return loansPayloadString
+        return payload
     }
 
     private fun handleReviewClicked() {
@@ -388,7 +386,6 @@ data class LoanApplicationState(
     val loanId: Long? = null,
     val loanWithAssociations: LoanWithAssociations? = null,
     val loanTemplate: LoanTemplate? = null,
-//    val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val listLoanProducts: List<String?> = listOf(),
     val selectedLoanProduct: String? = null,
@@ -430,7 +427,7 @@ sealed interface LoanApplicationEvent {
     data object NavigateBack : LoanApplicationEvent
     data class ReviewLoanApplication(
         val loanState: LoanState,
-        val loansPayloadString: String,
+        val loansPayloadString: LoansPayload,
         val loanId: Long?,
         val loanName: String,
         val accountNo: String,
@@ -438,7 +435,7 @@ sealed interface LoanApplicationEvent {
 
     data class SubmitUpdateLoanApplication(
         val loanState: LoanState,
-        val loansPayloadString: String,
+        val loansPayloadString: LoansPayload,
         val loanId: Long?,
         val loanName: String,
         val accountNo: String,

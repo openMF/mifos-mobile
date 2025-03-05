@@ -173,14 +173,14 @@ fun NavGraphBuilder.loanApplication(
     navigateBack: () -> Unit,
     reviewNewLoanApplication: (
         loanState: LoanState,
-        loansPayloadString: String,
+        loansPayloadString: LoansPayload,
         loanId: Long?,
         loanName: String,
         accountNo: String,
     ) -> Unit,
     submitUpdateLoanApplication: (
         loanState: LoanState,
-        loansPayloadString: String,
+        loansPayloadString: LoansPayload,
         loanId: Long?,
         loanName: String,
         accountNo: String,
@@ -190,7 +190,6 @@ fun NavGraphBuilder.loanApplication(
         route = LoanNavigation.LoanApplication.route,
         arguments = listOf(
             navArgument(Constants.LOAN_ID) { type = NavType.LongType },
-//            navArgument(Constants.LOAN_STATE) { type = NavType.EnumType(LoanState::class.java) },
             navArgument(Constants.LOAN_STATE) { type = NavType.StringType },
 
         ),

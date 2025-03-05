@@ -71,8 +71,12 @@ internal class LoanAccountWithdrawViewModel(
 
     private fun withdrawLoanAccount() {
         val loanWithdraw = LoanWithdraw(
-            withdrawnOnDate = DateHelper.getDateAsStringFromLong(Clock.System.now().toEpochMilliseconds()),
+            withdrawnOnDate = DateHelper.getDateAsStringFromLong(
+                Clock.System.now().toEpochMilliseconds(),
+            ),
             note = state.loanReason,
+            dateFormat = "dd-MM-yyyy",
+            locale = "en",
         )
         updateState {
             it.copy(dialogState = LoanAccountWithdrawState.DialogState.Loading)
