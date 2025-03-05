@@ -51,7 +51,7 @@ internal fun SavingsMakeTransferScreen(
 
 @Composable
 private fun SavingsMakeTransferScreen(
-    uiState: SavingsMakeTransferViewModel.SavingsMakeTransferUiState,
+    uiState: SavingsMakeTransferUiState,
     navigateBack: () -> Unit,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
     modifier: Modifier = Modifier,
@@ -61,7 +61,7 @@ private fun SavingsMakeTransferScreen(
 
     MifosScaffold(
         topBarTitleResId = when (uiState) {
-            is SavingsMakeTransferViewModel.SavingsMakeTransferUiState.ShowUI -> {
+            is SavingsMakeTransferUiState.ShowUI -> {
                 if (uiState.data.transferType == Constants.TRANSFER_PAY_TO) {
                     R.string.deposit
                 } else {
@@ -80,7 +80,7 @@ private fun SavingsMakeTransferScreen(
                     .fillMaxSize(),
             ) {
                 when (uiState) {
-                    is SavingsMakeTransferViewModel.SavingsMakeTransferUiState.ShowUI -> {
+                    is SavingsMakeTransferUiState.ShowUI -> {
                         SavingsMakeTransferContent(
                             uiData = uiState.data,
                             reviewTransfer = reviewTransfer,
@@ -88,10 +88,10 @@ private fun SavingsMakeTransferScreen(
                         )
                     }
 
-                    is SavingsMakeTransferViewModel.SavingsMakeTransferUiState.Loading ->
+                    is SavingsMakeTransferUiState.Loading ->
                         MifosProgressIndicatorOverlay()
 
-                    is SavingsMakeTransferViewModel.SavingsMakeTransferUiState.Error -> {
+                    is SavingsMakeTransferUiState.Error -> {
                         MifosErrorComponent(
                             isNetworkConnected = Network.isConnected(context),
                             isEmptyData = false,
@@ -105,14 +105,14 @@ private fun SavingsMakeTransferScreen(
 }
 
 internal class SavingsMakeTransferUiStatesPreviews :
-    PreviewParameterProvider<SavingsMakeTransferViewModel.SavingsMakeTransferUiState> {
-    override val values: Sequence<SavingsMakeTransferViewModel.SavingsMakeTransferUiState>
+    PreviewParameterProvider<SavingsMakeTransferUiState> {
+    override val values: Sequence<SavingsMakeTransferUiState>
         get() = sequenceOf(
-            SavingsMakeTransferViewModel.SavingsMakeTransferUiState.ShowUI(
-                data = SavingsMakeTransferViewModel.SavingsMakeTransferUiData(),
+            SavingsMakeTransferUiState.ShowUI(
+                data = SavingsMakeTransferUiData(),
             ),
-            SavingsMakeTransferViewModel.SavingsMakeTransferUiState.Error(""),
-            SavingsMakeTransferViewModel.SavingsMakeTransferUiState.Loading,
+            SavingsMakeTransferUiState.Error(""),
+            SavingsMakeTransferUiState.Loading,
         )
 }
 
@@ -120,7 +120,7 @@ internal class SavingsMakeTransferUiStatesPreviews :
 @Composable
 private fun SavingsMakeTransferContentPreview(
     @PreviewParameter(SavingsMakeTransferUiStatesPreviews::class)
-    savingsMakeTransferUIState: SavingsMakeTransferViewModel.SavingsMakeTransferUiState,
+    savingsMakeTransferUIState: SavingsMakeTransferUiState,
 ) {
     MifosMobileTheme {
         SavingsMakeTransferScreen(

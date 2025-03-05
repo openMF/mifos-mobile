@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -56,7 +55,7 @@ import org.mifos.mobile.feature.savings.R
 
 @Composable
 internal fun SavingsMakeTransferContent(
-    uiData: SavingsMakeTransferViewModel.SavingsMakeTransferUiData,
+    uiData: SavingsMakeTransferUiData,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
     modifier: Modifier = Modifier,
     onCancelledClicked: () -> Unit = {},
@@ -109,14 +108,6 @@ internal fun SavingsMakeTransferContent(
                 deactivateColor = DarkGray,
                 isLastStep = step == stepsState.last(),
             ) { processModifier ->
-                Log.d(
-                    "TAG-SavingsMakeTransferViewModel",
-                    "SavingsMakeTransferContent: ToAccountOptions ${uiData.toAccountOptions}",
-                )
-                Log.d(
-                    "TAG-SavingsMakeTransferViewModel",
-                    "SavingsMakeTransferContent: fromAccountOptions ${uiData.fromAccountOptions}",
-                )
                 when (step.second) {
                     R.string.one -> PayToStepContent(
                         modifier = processModifier,
@@ -154,10 +145,6 @@ internal fun SavingsMakeTransferContent(
                         modifier = processModifier,
                         processState = remarkStepState,
                         onContinueClicked = {
-                            Log.d(
-                                "TAG-After-remark",
-                                "SavingsMakeTransferContent: payTo: $payToAccount, payFrom: $payFromAccount",
-                            )
                             remark = it
                             reviewTransfer(
                                 ReviewTransferPayload(payToAccount, payFromAccount, amount, remark),
@@ -375,7 +362,7 @@ private fun RemarkStep(
 private fun SavingsMakeTransferContentPreview() {
     MifosMobileTheme {
         SavingsMakeTransferContent(
-            uiData = SavingsMakeTransferViewModel.SavingsMakeTransferUiData(),
+            uiData = SavingsMakeTransferUiData(),
             reviewTransfer = {},
         )
     }

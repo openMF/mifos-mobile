@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.savings.navigation
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -22,6 +21,7 @@ import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.common.Constants.TRANSFER_TARGET
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -37,16 +37,14 @@ fun NavController.navigateToSavingsMakeTransfer(
     accountId: Long,
     outstandingBalance: Double? = null,
     transferType: String,
+    transferTarget: TransferType,
 ) {
-    Log.d(
-        "TAG-SavingsAccountDetailScreen",
-        "navigateToSavingsMakeTransfer: id = $accountId , transferType = $transferType",
-    )
     navigate(
         SavingsNavigation.SavingsMakeTransfer.passArguments(
-            accountId,
-            (outstandingBalance ?: 0.0).toString(),
-            transferType,
+            accountId = accountId,
+            outstandingBalance = (outstandingBalance ?: 0.0).toString(),
+            transferType = transferType,
+            transferTarget = transferTarget,
         ),
     )
 }
@@ -81,12 +79,14 @@ fun NavGraphBuilder.savingsNavGraph(
                 navController.navigateToSavingsMakeTransfer(
                     accountId = it,
                     transferType = TRANSFER_PAY_TO,
+                    transferTarget = TransferType.TPT,
                 )
             },
             makeTransfer = {
                 navController.navigateToSavingsMakeTransfer(
                     accountId = it,
                     transferType = TRANSFER_PAY_FROM,
+                    transferTarget = TransferType.TPT,
                 )
             },
             navigateBack = navController::popBackStack,
@@ -220,6 +220,7 @@ fun NavGraphBuilder.savingsMakeTransfer(
                 defaultValue = null
             },
             navArgument(name = TRANSFER_TYPE) { type = NavType.StringType },
+            navArgument(name = TRANSFER_TARGET) { type = NavType.StringType },
         ),
     ) {
         SavingsMakeTransferScreen(

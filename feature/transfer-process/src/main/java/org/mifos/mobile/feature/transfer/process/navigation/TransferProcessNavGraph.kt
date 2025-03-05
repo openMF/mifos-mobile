@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.transfer.process.navigation
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -30,7 +29,6 @@ fun NavController.navigateToTransferProcessScreen(
     transferPayload: ReviewTransferPayload,
     transferType: TransferType,
 ) {
-    Log.d("Tag-navController", "navigateToTransferProcessScreen: $transferPayload")
     navigate(
         TransferProcessNavigation.TransferProcessScreen.passArguments(
             transferType = transferType,
@@ -78,7 +76,6 @@ private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
         fromAccountType = payload.payFromAccount?.accountType?.id
         fromOfficeId = payload.payFromAccount?.officeId
         fromAccountNumber = payload.payFromAccount?.accountNo
-//        toOfficeId = payload.payFromAccount?.officeId
         toOfficeId = payload.payToAccount?.officeId
         toAccountId = payload.payToAccount?.accountId
         toClientId = payload.payToAccount?.clientId

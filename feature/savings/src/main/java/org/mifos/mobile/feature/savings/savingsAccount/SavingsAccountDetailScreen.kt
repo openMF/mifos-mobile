@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccount
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -44,7 +43,6 @@ internal fun SavingsAccountDetailScreen(
 ) {
     val uiState by viewModel.savingAccountsDetailUiState.collectAsStateWithLifecycle()
     val savingsId = viewModel.savingsId.collectAsStateWithLifecycle().value ?: -1L
-    Log.d("Tag-SavingsAccountDetailScreen", "savingsId: $savingsId")
 
     SavingsAccountDetailScreen(
         uiState = uiState,

@@ -9,9 +9,13 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody
+import org.mifos.mobile.core.common.network.Dispatcher
+import org.mifos.mobile.core.common.network.MifosDispatchers
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
@@ -24,6 +28,8 @@ import javax.inject.Inject
 
 class SavingsAccountRepositoryImp @Inject constructor(
     private val dataManager: DataManager,
+    @Dispatcher(MifosDispatchers.IO)
+    private val ioDispatcher: CoroutineDispatcher,
 ) : SavingsAccountRepository {
 
     override suspend fun getSavingsWithAssociations(
@@ -69,17 +75,9 @@ class SavingsAccountRepositoryImp @Inject constructor(
         }
     }
 
-    override fun accountTransferTemplate(
-        accountId: Long?,
-        accountType: Long?,
-    ): Flow<AccountOptionsTemplate> {
+    override fun accountTransferTemplate(): Flow<AccountOptionsTemplate> {
         return flow {
-            emit(
-                dataManager.accountTransferTemplate(
-                    accountId = accountType,
-                    accountType = accountType,
-                ),
-            )
-        }
+            emit(dataManager.accountTransferTemplate())
+        }.flowOn(ioDispatcher)
     }
 }

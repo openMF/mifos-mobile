@@ -39,9 +39,7 @@ import org.mifos.mobile.core.model.entity.payload.LoginPayload
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.model.entity.register.UserVerify
-import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
@@ -112,11 +110,8 @@ class DataManager @Inject constructor(
         )
     }
 
-    suspend fun accountTransferTemplate(
-        accountId: Long?,
-        accountType: Long?,
-    ): AccountOptionsTemplate =
-        baseApiManager.savingAccountsListApi.accountTransferTemplate(accountId, accountType)
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate =
+        baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)
@@ -198,11 +193,6 @@ class DataManager @Inject constructor(
     suspend fun thirdPartyTransferTemplate(): AccountOptionsTemplate =
         baseApiManager.thirdPartyTransferApi.accountTransferTemplate()
 
-//    function that return sample data for third party transfer template
-//    suspend fun thirdPartyTransferTemplate(): AccountOptionsTemplate {
-//        return sampleAccountOptionsTemplate
-//    }
-
     suspend fun makeThirdPartyTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.thirdPartyTransferApi.makeTransfer(transferPayload)
     }
@@ -261,63 +251,3 @@ class DataManager @Inject constructor(
         return baseApiManager.guarantorApi.deleteGuarantor(loanId, guarantorId)
     }
 }
-
-// Sample data
-val sampleAccountOptionsTemplate = AccountOptionsTemplate(
-    fromAccountOptions = listOf(
-        AccountOption(
-            accountId = 1,
-            accountNo = "00000001",
-            accountType = AccountType(
-                id = 2,
-                code = "accountType.savings",
-                value = "Savings Account",
-            ),
-            clientId = 1,
-            clientName = "Sav-ABC",
-            officeId = 1,
-            officeName = "HEAD OFFICE",
-        ),
-        AccountOption(
-            accountId = 5,
-            accountNo = "00000005",
-            accountType = AccountType(
-                id = 1,
-                code = "accountType.loan",
-                value = "Loan Account",
-            ),
-            clientId = 2,
-            clientName = "Lo-XYZ",
-            officeId = 3,
-            officeName = "REGIONAL OFFICE",
-        ),
-    ),
-    toAccountOptions = listOf(
-        AccountOption(
-            accountId = 2,
-            accountNo = "00000002",
-            accountType = AccountType(
-                id = 2,
-                code = "accountType.savings",
-                value = "Savings Account",
-            ),
-            clientId = 2,
-            clientName = "Sav-DEF",
-            officeId = 1,
-            officeName = "HEAD OFFICE",
-        ),
-        AccountOption(
-            accountId = 6,
-            accountNo = "00000006",
-            accountType = AccountType(
-                id = 1,
-                code = "accountType.loan",
-                value = "Loan Account",
-            ),
-            clientId = 3,
-            clientName = "Lo-UVW",
-            officeId = 4,
-            officeName = "REGIONAL OFFICE",
-        ),
-    ),
-)
