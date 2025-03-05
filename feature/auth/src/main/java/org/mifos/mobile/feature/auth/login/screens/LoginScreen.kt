@@ -323,7 +323,7 @@ private fun isFieldEmpty(fieldText: String): Boolean {
 }
 
 private fun isUsernameLengthInadequate(username: String): Boolean {
-    return username.length < 5
+    return username.length < 4
 }
 
 private fun isPasswordLengthInadequate(password: String): Boolean {

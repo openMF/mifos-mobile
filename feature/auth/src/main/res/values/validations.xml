@@ -9,6 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <integer name="username_minimum_length">5</integer>
+    <integer name="username_minimum_length">4</integer>
     <integer name="password_minimum_length">6</integer>
 </resources>
