@@ -46,5 +46,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
     testImplementation(libs.turbine)
+    implementation("androidx.compose.material3:material3:1.3.0-beta04")
     testImplementation(libs.kotlinx.coroutines.test)
 }

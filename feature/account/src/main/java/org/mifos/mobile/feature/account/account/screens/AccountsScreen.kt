@@ -27,6 +27,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mifos.library.pullrefresh.PullRefreshIndicator
 import com.mifos.library.pullrefresh.pullRefresh
 import com.mifos.library.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
@@ -132,12 +142,31 @@ private fun AccountsScreen(
         refreshing = isRefreshing,
         onRefresh = onRefresh,
     )
+    var isRefresh by remember{
+        mutableStateOf(false)
+    }
+
+    val corScope = rememberCoroutineScope()
+    val state = rememberPullToRefreshState()
+
 
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
     ) {
-        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
+        PullToRefreshBox(
+            isRefreshing = isRefresh,
+            onRefresh = {
+                corScope.launch {
+                    isRefresh = true
+                    delay(5000)
+                    isRefresh = false
+                }
+
+            },
+            state = state,
+        ){
+//        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
             when (uiState) {
                 is AccountState.Error -> {
                     MifosErrorComponent(
