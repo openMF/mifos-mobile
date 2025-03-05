@@ -92,9 +92,14 @@ internal fun ReviewLoanApplicationContent(
         )
 
         MifosButton(
-            text = { stringResource(Res.string.submit_loan) },
-            onClick = onSubmit,
             modifier = Modifier.fillMaxWidth(),
+            onClick = onSubmit,
+            content = {
+                Text(
+                    text = stringResource(Res.string.submit_loan),
+                    style = MaterialTheme.typography.titleSmall,
+                )
+            },
         )
     }
 }

@@ -157,9 +157,6 @@ private fun LoanAccountWithdrawContent(
             modifier = Modifier.fillMaxWidth(),
             value = state.loanReason,
             label = stringResource(Res.string.withdraw_loan_reason),
-//            placeholder = {
-//                Text(text = stringResource(Res.string.withdraw_loan_reason))
-//            },
             onValueChange = { onAction(LoanAccountWithdrawAction.LoanReasonChanged(it)) },
             textStyle = MaterialTheme.typography.bodyLarge,
         )

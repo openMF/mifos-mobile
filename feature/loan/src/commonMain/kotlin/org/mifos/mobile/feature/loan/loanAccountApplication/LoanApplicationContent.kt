@@ -225,7 +225,6 @@ internal fun LoanApplicationContent(
         )
 
         MifosButton(
-            text = { stringResource(Res.string.review) },
             modifier = modifier.fillMaxWidth(),
             onClick = {
                 when {
@@ -233,6 +232,12 @@ internal fun LoanApplicationContent(
                     principalAmountError != null -> showPrincipalAmountError = true
                     else -> reviewClicked(principalAmount.text)
                 }
+            },
+            content = {
+                Text(
+                    text = stringResource(Res.string.review),
+                    style = MaterialTheme.typography.titleSmall,
+                )
             },
         )
     }
