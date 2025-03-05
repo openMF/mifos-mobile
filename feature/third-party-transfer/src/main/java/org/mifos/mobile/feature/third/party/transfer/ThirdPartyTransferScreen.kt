@@ -38,11 +38,9 @@ internal fun ThirdPartyTransferScreen(
     viewModel: ThirdPartyTransferViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val uiData by viewModel.thirdPartyTransferUiData.collectAsStateWithLifecycle()
 
     ThirdPartyTransferScreen(
         uiState = uiState,
-        uiData = uiData,
         navigateBack = navigateBack,
         addBeneficiary = addBeneficiary,
         reviewTransfer = { reviewTransfer(it, TransferType.TPT) },
@@ -53,7 +51,6 @@ internal fun ThirdPartyTransferScreen(
 @Composable
 private fun ThirdPartyTransferScreen(
     uiState: ThirdPartyTransferUiState,
-    uiData: ThirdPartyTransferUiData,
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
@@ -69,9 +66,9 @@ private fun ThirdPartyTransferScreen(
                 when (uiState) {
                     is ThirdPartyTransferUiState.ShowUI -> {
                         ThirdPartyTransferContent(
-                            accountOption = uiData.fromAccountDetail,
-                            toAccountOption = uiData.toAccountOption,
-                            beneficiaryList = uiData.beneficiaries,
+                            fromAccountOption = uiState.data.fromAccountDetail,
+                            toAccountOption = uiState.data.toAccountOption,
+                            beneficiaryList = uiState.data.beneficiaries,
                             navigateBack = navigateBack,
                             addBeneficiary = addBeneficiary,
                             reviewTransfer = reviewTransfer,
@@ -99,7 +96,7 @@ internal class SavingsMakeTransferUiStatesPreviews :
     PreviewParameterProvider<ThirdPartyTransferUiState> {
     override val values: Sequence<ThirdPartyTransferUiState>
         get() = sequenceOf(
-            ThirdPartyTransferUiState.ShowUI,
+            ThirdPartyTransferUiState.ShowUI(data = ThirdPartyTransferUiData()),
             ThirdPartyTransferUiState.Error(""),
             ThirdPartyTransferUiState.Loading,
         )
@@ -114,7 +111,6 @@ private fun ThirdPartyTransferScreenPreview(
     MifosMobileTheme {
         ThirdPartyTransferScreen(
             uiState = thirdPartyTransferUiState,
-            uiData = ThirdPartyTransferUiData(),
             navigateBack = {},
             addBeneficiary = {},
             reviewTransfer = {},

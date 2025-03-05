@@ -29,5 +29,5 @@ interface BeneficiaryRepository {
 
     suspend fun deleteBeneficiary(beneficiaryId: Long?): Flow<ResponseBody>
 
-    suspend fun beneficiaryList(): Flow<List<Beneficiary>>
+    fun beneficiaryList(): Flow<List<Beneficiary>>
 }

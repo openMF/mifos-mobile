@@ -77,8 +77,6 @@ internal class TransferProcessViewModel @Inject constructor(
                     transferDescription = payload.transferDescription,
                     dateFormat = payload.dateFormat,
                     locale = payload.locale,
-                    fromAccountNumber = payload.fromAccountNumber,
-                    toAccountNumber = payload.toAccountNumber,
                     transferType = transferType.value,
                 ).catch { e ->
                     _transferUiState.value = TransferProcessUiState.Error(e.message)

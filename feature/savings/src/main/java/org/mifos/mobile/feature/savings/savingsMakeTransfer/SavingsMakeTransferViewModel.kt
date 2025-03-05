@@ -13,7 +13,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -23,82 +22,99 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
-import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SavingsMakeTransferViewModel @Inject constructor(
-    private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    savingsAccountRepositoryImp: SavingsAccountRepository,
+//    thirdPartyTransferRepository: ThirdPartyTransferRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
+    private val accountId =
+        savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
 
     private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
         key = Constants.TRANSFER_TYPE,
         initialValue = TRANSFER_PAY_TO,
     )
 
+    private val transferTarget: StateFlow<String> = savedStateHandle.getStateFlow(
+        key = Constants.TRANSFER_TARGET,
+        initialValue = TransferType.TPT.name,
+    )
+
     private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(
         key = Constants.OUTSTANDING_BALANCE,
         initialValue = null,
     ).map { balanceString ->
-        balanceString?.toDoubleOrNull() ?: 0.0
+        balanceString?.toDoubleOrNull()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = 0.0,
+        initialValue = null,
     )
 
-    private val _savingsMakeTransferUiData = MutableStateFlow(SavingsMakeTransferUiData())
-    val savingsMakeTransferUiData: StateFlow<SavingsMakeTransferUiData> get() = _savingsMakeTransferUiData
-
-    val savingsMakeTransferUiState = accountId
-        .flatMapLatest { id ->
-            savingsAccountRepositoryImp.accountTransferTemplate(accountId = id, accountType = 2L)
+    val savingsMakeTransferUiState: StateFlow<SavingsMakeTransferUiState> =
+        transferTarget.flatMapLatest { target ->
+            savingsAccountRepositoryImp.accountTransferTemplate()
+//            when (target) {
+//                TransferType.TPT.name -> thirdPartyTransferRepository.thirdPartyTransferTemplate()
+//                else -> savingsAccountRepositoryImp.accountTransferTemplate()
+//            }
         }
-        .asResult()
-        .map { result ->
-            when (result) {
-                is Result.Success ->
-                    SavingsMakeTransferUiState.ShowUI
-                        .also {
-                            _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
-                                .copy(
-                                    accountOptionsTemplate = result.data,
-                                    transferType = transferType.value,
-                                    outstandingBalance = if (outstandingBalance.value == 0.0) {
-                                        null
-                                    } else {
-                                        outstandingBalance.value
-                                    },
-                                    accountId = accountId.value,
-                                )
-                        }
+            .asResult()
+            .map { result ->
+                when (result) {
+                    is Result.Success -> {
+                        SavingsMakeTransferUiState.ShowUI(
+                            data = SavingsMakeTransferUiData(
+                                accountId = accountId.value,
+                                transferType = transferType.value,
+                                outstandingBalance = outstandingBalance.value,
+                                fromAccountOptions = result.data.fromAccountOptions,
+                                toAccountOptions = result.data.toAccountOptions,
+//                                fromAccountOptionPrefilled = result.data.fromAccountOptions.find {
+//                                    accountId.value == it.accountId?.toLong()
+//                                },
+                                toAccountOptionPrefilled = result.data.toAccountOptions.find {
+                                    accountId.value == it.accountId?.toLong()
+                                },
+                            ),
+                        )
+                    }
 
-                is Result.Loading -> SavingsMakeTransferUiState.Loading
-                is Result.Error -> SavingsMakeTransferUiState.Error(result.exception.message)
+                    is Result.Loading -> {
+                        SavingsMakeTransferUiState.Loading
+                    }
+
+                    is Result.Error -> {
+                        SavingsMakeTransferUiState.Error(result.exception.message)
+                    }
+                }
             }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SavingsMakeTransferUiState.Loading,
-        )
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = SavingsMakeTransferUiState.Loading,
+            )
 }
 
 internal sealed class SavingsMakeTransferUiState {
     data object Loading : SavingsMakeTransferUiState()
     data class Error(val errorMessage: String?) : SavingsMakeTransferUiState()
-    data object ShowUI : SavingsMakeTransferUiState()
+    data class ShowUI(val data: SavingsMakeTransferUiData) : SavingsMakeTransferUiState()
 }
 
 internal data class SavingsMakeTransferUiData(
     var accountId: Long? = null,
     var transferType: String? = null,
     var outstandingBalance: Double? = null,
-    var accountOptionsTemplate: AccountOptionsTemplate = AccountOptionsTemplate(),
+    var fromAccountOptions: List<AccountOption> = ArrayList(),
+    var toAccountOptions: List<AccountOption> = ArrayList(),
     var toAccountOptionPrefilled: AccountOption? = null,
     var fromAccountOptionPrefilled: AccountOption? = null,
 )

@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.loan.loanAccount.LoanAccountDetailScreen
 import org.mifos.mobile.feature.loan.loanAccountApplication.LoanApplicationScreen
 import org.mifos.mobile.feature.loan.loanAccountSummary.LoanAccountSummaryScreen
@@ -62,7 +63,12 @@ fun NavGraphBuilder.loanNavGraph(
     viewGuarantor: (Long) -> Unit,
     viewCharges: (ChargeType, Long) -> Unit,
     viewQr: (String) -> Unit,
-    makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
+    makePayment: (
+        accountId: Long,
+        outstandingBalance: Double?,
+        transferType: String,
+        transferTarget: TransferType,
+    ) -> Unit,
 ) {
     navigation(
         startDestination = LoanNavigation.LoanDetail.route,
@@ -138,7 +144,12 @@ fun NavGraphBuilder.loanDetailRoute(
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
-    makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
+    makePayment: (
+        accountId: Long,
+        outstandingBalance: Double?,
+        transferType: String,
+        transferTarget: TransferType,
+    ) -> Unit,
 ) {
     composable(
         route = LoanNavigation.LoanDetail.route,

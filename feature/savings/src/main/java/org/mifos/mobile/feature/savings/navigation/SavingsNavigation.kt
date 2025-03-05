@@ -13,8 +13,10 @@ import org.mifos.mobile.core.common.Constants.ACCOUNT_ID
 import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNT_STATE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
+import org.mifos.mobile.core.common.Constants.TRANSFER_TARGET
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.model.enums.SavingsAccountState
+import org.mifos.mobile.core.model.enums.TransferType
 
 const val SAVINGS_NAVIGATION_ROUTE_BASE = "savings_route"
 const val SAVINGS_DETAIL_SCREEN_ROUTE = "savings_detail_screen_route"
@@ -60,14 +62,23 @@ sealed class SavingsNavigation(val route: String) {
     }
 
     data object SavingsMakeTransfer : SavingsNavigation(
-        route = "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/{$ACCOUNT_ID}/{$OUTSTANDING_BALANCE}/{$TRANSFER_TYPE}",
+        route = "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/" +
+            "{$ACCOUNT_ID}/" +
+            "{$OUTSTANDING_BALANCE}/" +
+            "{$TRANSFER_TYPE}/" +
+            "{$TRANSFER_TARGET}",
     ) {
         fun passArguments(
             accountId: Long,
             outstandingBalance: String? = null,
             transferType: String,
+            transferTarget: TransferType,
         ): String {
-            return "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/$accountId/$outstandingBalance/$transferType"
+            return "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/" +
+                "$accountId/" +
+                "$outstandingBalance/" +
+                "$transferType/" +
+                transferTarget.name
         }
     }
 }

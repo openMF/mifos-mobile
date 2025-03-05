@@ -14,5 +14,5 @@ import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTempla
 
 interface ThirdPartyTransferRepository {
 
-    suspend fun thirdPartyTransferTemplate(): Flow<AccountOptionsTemplate>
+    fun thirdPartyTransferTemplate(): Flow<AccountOptionsTemplate>
 }

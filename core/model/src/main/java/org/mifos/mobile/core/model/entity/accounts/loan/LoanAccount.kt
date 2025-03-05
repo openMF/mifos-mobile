@@ -80,7 +80,6 @@ data class LoanAccount(
         parcel.readString(),
         parcel.readParcelable(Timeline::class.java.classLoader),
     )
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(loanProductId)
         parcel.writeString(externalId)

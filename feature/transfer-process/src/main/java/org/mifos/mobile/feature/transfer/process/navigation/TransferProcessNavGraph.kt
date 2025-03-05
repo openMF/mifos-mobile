@@ -75,10 +75,12 @@ private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
         fromClientId = payload.payFromAccount?.clientId
         fromAccountType = payload.payFromAccount?.accountType?.id
         fromOfficeId = payload.payFromAccount?.officeId
-        toOfficeId = payload.payFromAccount?.officeId
+        fromAccountNumber = payload.payFromAccount?.accountNo
+        toOfficeId = payload.payToAccount?.officeId
         toAccountId = payload.payToAccount?.accountId
         toClientId = payload.payToAccount?.clientId
         toAccountType = payload.payToAccount?.accountType?.id
+        toAccountNumber = payload.payToAccount?.accountNo
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, getTodayFormatted())
         transferAmount = payload.amount.toDoubleOrNull()
         transferDescription = payload.review

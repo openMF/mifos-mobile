@@ -26,6 +26,7 @@ import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
@@ -43,7 +44,12 @@ internal fun LoanAccountDetailScreen(
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
-    makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
+    makePayment: (
+        accountId: Long,
+        outstandingBalance: Double?,
+        transferType: String,
+        transferTarget: TransferType,
+    ) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoanAccountsDetailViewModel = hiltViewModel(),
 ) {
@@ -68,6 +74,7 @@ internal fun LoanAccountDetailScreen(
                 loanId,
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
                 TRANSFER_PAY_TO,
+                TransferType.SELF,
             )
         },
     )
