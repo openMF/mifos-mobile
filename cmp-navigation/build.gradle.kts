@@ -19,6 +19,7 @@ kotlin {
         commonMain.dependencies {
 
             implementation(projects.feature.auth)
+            implementation(projects.feature.help)
             implementation(projects.feature.home)
             implementation(projects.feature.accounts)
             implementation(projects.feature.loanAccount)

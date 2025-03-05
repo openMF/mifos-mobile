@@ -21,6 +21,8 @@ import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.help.navigation.helpNavGraph
+import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
@@ -37,6 +39,12 @@ internal fun FeatureNavHost(
         navController = appState.navController,
         modifier = modifier,
     ) {
+        helpNavGraph(
+            findLocations = {},
+            navigateBack = appState.navController::popBackStack,
+            callHelpline = {},
+            mailHelpline = {},
+        )
         homeNavGraph(
             onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
             callHelpline = { callHelpline() },
@@ -70,7 +78,7 @@ fun handleHomeNavigation(
         HomeDestinations.THIRD_PARTY_TRANSFER -> { }
         HomeDestinations.SETTINGS -> { }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
-        HomeDestinations.HELP -> { }
+        HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> { }
         HomeDestinations.APP_INFO -> { }
         HomeDestinations.TRANSFER -> { }
