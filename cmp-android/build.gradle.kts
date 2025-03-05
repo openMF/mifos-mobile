@@ -121,7 +121,7 @@ dependencies {
 //    implementation(projects.feature.clientCharge)
 //    implementation(projects.feature.recentTransaction)
 //    implementation(projects.feature.thirdPartyTransfer)
-//    implementation(projects.feature.help)
+    implementation(projects.feature.help)
 //    implementation(projects.feature.notification)
 //    implementation(projects.feature.location)
 //    implementation(projects.feature.about)

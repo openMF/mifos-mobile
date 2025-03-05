@@ -16,10 +16,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,5 +55,56 @@ fun MifosTopBar(
         ),
         actions = actions,
         modifier = modifier,
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun MifosTopBarTitleComposable(
+    navigateBack: () -> Unit,
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
+    TopAppBar(
+        modifier = modifier,
+        title = title,
+        navigationIcon = {
+            IconButton(
+                onClick = navigateBack,
+            ) {
+                Icon(
+                    imageVector = MifosIcons.ArrowBack,
+                    contentDescription = "Back Arrow",
+                )
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.Transparent,
+        ),
+        actions = actions,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MifosTopBarTitle(
+    topBarTitleResId: StringResource,
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    TopAppBar(
+        modifier = modifier,
+        title = { Text(stringResource(topBarTitleResId)) },
+        navigationIcon = {
+            IconButton(
+                onClick = navigateBack,
+            ) {
+                Icon(
+                    imageVector = MifosIcons.ArrowBack,
+                    contentDescription = "Back Arrow",
+                )
+            }
+        },
     )
 }
