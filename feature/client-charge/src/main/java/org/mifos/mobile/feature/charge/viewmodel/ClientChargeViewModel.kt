@@ -48,7 +48,9 @@ internal class ClientChargeViewModel @Inject constructor(
     private val chargeTypeId = savedStateHandle.getStateFlow(
         key = Constants.CHARGE_TYPE_ID,
         initialValue = preferencesHelper.clientId ?: -1,
-    )
+    ).map {
+        if (it == -1L) preferencesHelper.clientId ?: -1L else it
+    }
 
     private val chargeType: StateFlow<ChargeType> = chargeTypeString
         .map { it?.let { ChargeType.valueOf(it) } ?: ChargeType.CLIENT }
