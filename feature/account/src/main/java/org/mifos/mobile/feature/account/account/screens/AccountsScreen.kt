@@ -10,12 +10,17 @@
 package org.mifos.mobile.feature.account.account.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,16 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mifos.library.pullrefresh.PullRefreshIndicator
-import com.mifos.library.pullrefresh.pullRefresh
 import com.mifos.library.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Network
@@ -142,13 +138,12 @@ private fun AccountsScreen(
         refreshing = isRefreshing,
         onRefresh = onRefresh,
     )
-    var isRefresh by remember{
+    var isRefresh by remember {
         mutableStateOf(false)
     }
 
     val corScope = rememberCoroutineScope()
     val state = rememberPullToRefreshState()
-
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -162,10 +157,9 @@ private fun AccountsScreen(
                     delay(5000)
                     isRefresh = false
                 }
-
             },
             state = state,
-        ){
+        ) {
 //        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
             when (uiState) {
                 is AccountState.Error -> {
