@@ -30,6 +30,8 @@ internal class ThirdPartyTransferViewModel @Inject constructor(
     beneficiaryRepository: BeneficiaryRepository,
 ) : ViewModel() {
 
+    //    in third part transfer is possible from savings to savings/loan
+    //    cause of that we filter fromAccount only have saings.
     val uiState: StateFlow<ThirdPartyTransferUiState> =
         combine(
             transferRepository.thirdPartyTransferTemplate(),
@@ -37,7 +39,8 @@ internal class ThirdPartyTransferViewModel @Inject constructor(
         ) { templateResult, beneficiariesResult ->
             ThirdPartyTransferUiState.ShowUI(
                 ThirdPartyTransferUiData(
-                    fromAccountDetail = templateResult.fromAccountOptions,
+                    fromAccountDetail = templateResult.fromAccountOptions
+                        .filter { it.accountType?.value == "Savings Account" },
                     toAccountOption = templateResult.toAccountOptions,
                     beneficiaries = beneficiariesResult,
                 ),

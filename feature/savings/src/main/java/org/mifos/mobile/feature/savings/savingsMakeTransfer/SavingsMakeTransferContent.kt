@@ -112,7 +112,9 @@ internal fun SavingsMakeTransferContent(
                     R.string.one -> PayToStepContent(
                         modifier = processModifier,
                         processState = payToStepState,
-                        toAccountOptions = uiData.toAccountOptions,
+                        toAccountOptions = uiData.toAccountOptions
+                            .filter { it.accountType?.value == "Loan Account" }
+                            .distinctBy { it.accountId },
                         prefilledAccount = payToAccount,
                         onContinueClick = {
                             payToAccount = it
@@ -123,7 +125,8 @@ internal fun SavingsMakeTransferContent(
                     R.string.two -> PayFromStep(
                         modifier = processModifier,
                         processState = payFromStepState,
-                        fromAccountOptions = uiData.fromAccountOptions,
+                        fromAccountOptions = uiData.fromAccountOptions.distinctBy { it.accountNo }
+                            .filter { it.accountNo != payToAccount?.accountNo },
                         prefilledAccount = payFromAccount,
                         onContinueClick = {
                             payFromAccount = it

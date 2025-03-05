@@ -105,7 +105,7 @@ private fun TransferProcessScreen(
                     }
 
                     is TransferProcessUiState.Error -> {
-                        Toast.makeText(context, "Transfer failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
                     }
 
                     is TransferProcessUiState.Initial -> Unit

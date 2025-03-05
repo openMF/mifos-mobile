@@ -66,7 +66,7 @@ private fun ThirdPartyTransferScreen(
                 when (uiState) {
                     is ThirdPartyTransferUiState.ShowUI -> {
                         ThirdPartyTransferContent(
-                            accountOption = uiState.data.fromAccountDetail,
+                            fromAccountOption = uiState.data.fromAccountDetail,
                             toAccountOption = uiState.data.toAccountOption,
                             beneficiaryList = uiState.data.beneficiaries,
                             navigateBack = navigateBack,

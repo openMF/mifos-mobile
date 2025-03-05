@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.network.Result
@@ -31,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SavingsMakeTransferViewModel @Inject constructor(
     savingsAccountRepositoryImp: SavingsAccountRepository,
-    thirdPartyTransferRepository: ThirdPartyTransferRepository,
+//    thirdPartyTransferRepository: ThirdPartyTransferRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -61,10 +60,11 @@ internal class SavingsMakeTransferViewModel @Inject constructor(
 
     val savingsMakeTransferUiState: StateFlow<SavingsMakeTransferUiState> =
         transferTarget.flatMapLatest { target ->
-            when (target) {
-                TransferType.TPT.name -> thirdPartyTransferRepository.thirdPartyTransferTemplate()
-                else -> savingsAccountRepositoryImp.accountTransferTemplate()
-            }
+            savingsAccountRepositoryImp.accountTransferTemplate()
+//            when (target) {
+//                TransferType.TPT.name -> thirdPartyTransferRepository.thirdPartyTransferTemplate()
+//                else -> savingsAccountRepositoryImp.accountTransferTemplate()
+//            }
         }
             .asResult()
             .map { result ->
@@ -77,6 +77,9 @@ internal class SavingsMakeTransferViewModel @Inject constructor(
                                 outstandingBalance = outstandingBalance.value,
                                 fromAccountOptions = result.data.fromAccountOptions,
                                 toAccountOptions = result.data.toAccountOptions,
+//                                fromAccountOptionPrefilled = result.data.fromAccountOptions.find {
+//                                    accountId.value == it.accountId?.toLong()
+//                                },
                                 toAccountOptionPrefilled = result.data.toAccountOptions.find {
                                     accountId.value == it.accountId?.toLong()
                                 },
