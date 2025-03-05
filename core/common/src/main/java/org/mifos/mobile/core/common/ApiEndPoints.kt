@@ -11,15 +11,15 @@ package org.mifos.mobile.core.common
 
 object ApiEndPoints {
     // This class contains all the Constants for API End Points
-    const val AUTHENTICATION = "authentication"
-    const val CLIENTS = "clients"
-    const val SAVINGS_ACCOUNTS = "savingsaccounts"
-    const val LOAN_ACCOUNTS = "loanAccounts"
-    const val RECURRING_ACCOUNTS = "recurringdepositaccounts"
-    const val LOANS = "loans"
-    const val ACCOUNT_TRANSFER = "accounttransfers"
-    const val BENEFICIARIES = "beneficiaries"
-    const val REGISTRATION = "registration"
+    const val AUTHENTICATION = "self/authentication"
+    const val CLIENTS = "self/clients"
+    const val SAVINGS_ACCOUNTS = "self/savingsaccounts"
+    const val LOAN_ACCOUNTS = "self/loanAccounts"
+    const val RECURRING_ACCOUNTS = "self/recurringdepositaccounts"
+    const val LOANS = "self/loans"
+    const val ACCOUNT_TRANSFER = "self/accounttransfers"
+    const val BENEFICIARIES = "self/beneficiaries"
+    const val REGISTRATION = "self/registration"
     const val DEVICE = "device"
     const val USER = "user"
 }

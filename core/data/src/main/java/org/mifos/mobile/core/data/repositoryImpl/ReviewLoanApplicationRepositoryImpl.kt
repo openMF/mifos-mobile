@@ -9,9 +9,13 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody
+import org.mifos.mobile.core.common.network.Dispatcher
+import org.mifos.mobile.core.common.network.MifosDispatchers
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
@@ -20,6 +24,7 @@ import javax.inject.Inject
 
 class ReviewLoanApplicationRepositoryImpl @Inject constructor(
     private val dataManager: DataManager,
+    @Dispatcher(MifosDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : ReviewLoanApplicationRepository {
 
     override suspend fun submitLoan(
@@ -35,6 +40,6 @@ class ReviewLoanApplicationRepositoryImpl @Inject constructor(
                     dataManager.updateLoanAccount(loanId, loansPayload)
                 },
             )
-        }
+        }.flowOn(ioDispatcher)
     }
 }

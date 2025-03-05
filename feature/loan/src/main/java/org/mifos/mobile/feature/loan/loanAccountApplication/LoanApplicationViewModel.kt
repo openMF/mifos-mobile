@@ -16,10 +16,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.getTodayFormatted
@@ -41,7 +44,11 @@ internal class LoanApplicationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    var loanUiState: StateFlow<LoanApplicationUiState> = MutableStateFlow(Loading)
+    // Trigger for refreshing charges
+    private val refreshTemplateTrigger = MutableStateFlow(false)
+
+    private val _loanUiState = MutableStateFlow<LoanApplicationUiState>(LoanApplicationUiState.Loading)
+    var loanUiState: StateFlow<LoanApplicationUiState> = _loanUiState.asStateFlow()
 
     val loanId = savedStateHandle.getStateFlow<Long?>(key = Constants.LOAN_ID, initialValue = null)
     val loanState = savedStateHandle.getStateFlow(
@@ -60,7 +67,7 @@ internal class LoanApplicationViewModel @Inject constructor(
         )
 
     private val _loanApplicationScreenData = MutableStateFlow(LoanApplicationScreenData())
-    val loanApplicationScreenData: StateFlow<LoanApplicationScreenData> = _loanApplicationScreenData
+    val loanApplicationScreenData: StateFlow<LoanApplicationScreenData> = _loanApplicationScreenData.asStateFlow()
 
     var loanTemplate: LoanTemplate = LoanTemplate()
     var productId: Int = 0
@@ -76,31 +83,45 @@ internal class LoanApplicationViewModel @Inject constructor(
         }
     }
 
-    fun loadLoanApplicationTemplate(loanState: LoanState) {
-        loanUiState = loanRepositoryImp.template()
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is Result.Success -> {
-                        loanTemplate = result.data ?: LoanTemplate()
-                        if (loanState == LoanState.CREATE) {
-                            showLoanTemplate(loanTemplate = loanTemplate)
-                        } else {
-                            showUpdateLoanTemplate(loanTemplate = loanTemplate)
-                        }
-                        LoanApplicationUiState.Success
-                    }
+    fun refreshFetchTemplate() {
+        viewModelScope.launch {
+            refreshTemplateTrigger.tryEmit(!refreshTemplateTrigger.value) // Triggers re-computation
+        }
+    }
 
-                    is Result.Loading -> Loading
-                    is Result.Error -> LoanApplicationUiState.Error(R.string.error_fetching_template)
+    val fetchLoanTemplate = combine(
+        loanRepositoryImp.template(),
+        loanState,
+        refreshTemplateTrigger,
+    ) { template, loanState, _ ->
+        Pair(template, loanState)
+    }
+        .asResult()
+        .map { result ->
+            return@map when (result) {
+                is Result.Success -> {
+                    loanTemplate = result.data.first ?: LoanTemplate()
+                    if (result.data.second == LoanState.CREATE) {
+                        showLoanTemplate(loanTemplate = loanTemplate)
+                    } else {
+                        showUpdateLoanTemplate(loanTemplate = loanTemplate)
+                    }
+                    _loanUiState.update { LoanApplicationUiState.Success }
+                }
+
+                is Result.Loading -> {
+                    _loanUiState.update { LoanApplicationUiState.Success }
+                }
+                is Result.Error -> {
+                    _loanUiState.update { LoanApplicationUiState.Error(R.string.error_fetching_template) }
                 }
             }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = Loading,
-            )
-    }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = Loading,
+        )
 
     private fun loadLoanApplicationTemplateByProduct(productId: Int?, loanState: LoanState) {
         loanUiState = loanRepositoryImp.getLoanTemplateByProduct(productId)
