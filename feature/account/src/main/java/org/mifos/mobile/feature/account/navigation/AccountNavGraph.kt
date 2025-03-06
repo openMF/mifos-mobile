@@ -19,8 +19,17 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.account.clientAccount.screens.ClientAccountsScreen
 
-fun NavController.navigateToClientAccountsScreen(accountType: AccountType = AccountType.SAVINGS) {
-    navigate(ClientAccountsNavigation.ClientAccountsScreen.passArguments(accountType = accountType))
+fun NavController.navigateToClientAccountsScreen(
+    accountType: AccountType = AccountType.SAVINGS,
+    popUpToDestination: String? = null,
+) {
+    navigate(ClientAccountsNavigation.ClientAccountsScreen.passArguments(accountType = accountType)) {
+        if (popUpToDestination != null) {
+            popUpTo(
+                popUpToDestination,
+            )
+        }
+    }
 }
 
 fun NavGraphBuilder.clientAccountsNavGraph(

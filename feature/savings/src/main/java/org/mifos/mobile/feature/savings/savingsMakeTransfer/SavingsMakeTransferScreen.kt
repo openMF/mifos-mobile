@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -23,6 +24,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -34,18 +36,26 @@ import org.mifos.mobile.feature.savings.R
 internal fun SavingsMakeTransferScreen(
     onCancelledClicked: () -> Unit,
     navigateBack: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SavingsMakeTransferViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.savingsMakeTransferUiState.collectAsStateWithLifecycle()
+    val transferSuccessDestination by
+        viewModel.transferSuccessDestination.collectAsStateWithLifecycle()
 
     SavingsMakeTransferScreen(
         navigateBack = navigateBack,
         onCancelledClicked = onCancelledClicked,
         uiState = uiState.value,
         modifier = modifier,
-        reviewTransfer = { reviewTransfer(it, TransferType.SELF) },
+        reviewTransfer = {
+            reviewTransfer(
+                it,
+                TransferType.SELF,
+                transferSuccessDestination,
+            )
+        },
     )
 }
 

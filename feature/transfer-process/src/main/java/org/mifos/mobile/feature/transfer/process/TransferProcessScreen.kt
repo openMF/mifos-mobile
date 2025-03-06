@@ -44,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.DevicePreviews
@@ -51,17 +52,20 @@ import org.mifos.mobile.core.ui.utils.DevicePreviews
 @Composable
 internal fun TransferProcessScreen(
     navigateBack: () -> Unit,
+    onTransferSuccessNavigate: (TransferSuccessDestination) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TransferProcessViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.transferUiState.collectAsStateWithLifecycle()
     val payload by viewModel.transferPayload.collectAsStateWithLifecycle()
+    val transferSuccessDestination by viewModel.transferSuccessDestination.collectAsStateWithLifecycle()
 
     TransferProcessScreen(
         uiState = uiState,
         transfer = viewModel::makeTransfer,
         payload = payload,
         navigateBack = navigateBack,
+        onTransferSuccess = { onTransferSuccessNavigate(transferSuccessDestination) },
         modifier = modifier,
     )
 }
@@ -72,6 +76,7 @@ private fun TransferProcessScreen(
     payload: TransferPayload?,
     transfer: () -> Unit,
     navigateBack: () -> Unit,
+    onTransferSuccess: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -101,7 +106,7 @@ private fun TransferProcessScreen(
                             R.string.transferred_successfully,
                             Toast.LENGTH_SHORT,
                         ).show()
-                        navigateBack()
+                        onTransferSuccess()
                     }
 
                     is TransferProcessUiState.Error -> {
@@ -246,7 +251,7 @@ private fun TransferProcessContent(
 internal class UiStatesParameterProvider : PreviewParameterProvider<TransferProcessUiState> {
     override val values: Sequence<TransferProcessUiState>
         get() = sequenceOf(
-//            TransferProcessUiState.Initial,
+            TransferProcessUiState.Initial,
             TransferProcessUiState.Loading,
             TransferProcessUiState.Error(null),
             TransferProcessUiState.Success,
@@ -271,6 +276,7 @@ private fun TransferProcessScreenPreview(
             ),
             transfer = {},
             navigateBack = {},
+            onTransferSuccess = {},
         )
     }
 }
