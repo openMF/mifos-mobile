@@ -43,7 +43,6 @@ class ClientChargeRepositoryImp(
             .flowOn(ioDispatcher)
     }
 
-
     override fun clientLocalCharges(): Flow<DataState<Page<Charge>>> {
 //        return chargeDao.getAllLocalCharges().map { chargeList ->
 //            Page(chargeList.size, chargeList.map { it.toCharge() })
