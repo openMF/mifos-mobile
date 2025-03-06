@@ -21,9 +21,9 @@ interface ClientChargeService {
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/charges")
     fun getClientChargeList(@Path("clientId") clientId: Long): Flow<Page<Charge>>
 
-    @GET(ApiEndPoints.LOANS + "/{loanId}/charges")
-    fun getLoanAccountChargeList(@Path("loanId") loanId: Long): Flow<List<Charge>>
-
-    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/charges")
-    fun getSavingsAccountChargeList(@Path("savingsId") savingsId: Long): Flow<List<Charge>>
+    @GET("{chargeType}/{chargeTypeId}/charges")
+    fun getChargeList(
+        @Path("chargeType") chargeType: String,
+        @Path("chargeTypeId") chargeTypeId: Long,
+    ): Flow<List<Charge>>
 }

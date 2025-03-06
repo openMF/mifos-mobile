@@ -17,10 +17,13 @@ import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
 import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
+import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
@@ -74,8 +77,14 @@ internal fun FeatureNavHost(
             navController = appState.navController,
             viewQr = { },
             viewGuarantor = { },
-            viewCharges = { },
+            viewCharges = { chargeType, chargeTypeId ->
+                appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
+            },
             makePayment = { _, _, _ -> },
+        )
+
+        clientChargeNavGraph(
+            navigateBack = { appState.navController.popBackStack() },
         )
     }
 }
@@ -92,7 +101,7 @@ fun handleHomeNavigation(
         HomeDestinations.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.LOAN)
         HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
         HomeDestinations.RECENT_TRANSACTIONS -> { }
-        HomeDestinations.CHARGES -> { }
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
         HomeDestinations.THIRD_PARTY_TRANSFER -> { }
         HomeDestinations.SETTINGS -> { }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()

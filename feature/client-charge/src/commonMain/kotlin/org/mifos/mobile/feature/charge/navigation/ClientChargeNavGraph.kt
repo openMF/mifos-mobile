@@ -24,15 +24,15 @@ fun NavController.navigateToClientChargeScreen(
     chargeType: ChargeType,
     chargeTypeId: Long? = null,
 ) {
-    navigate(ChargeNavigation.ChargeRouteScreen.passArguments(chargeType, chargeTypeId))
+    navigate(ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType, chargeTypeId))
 }
 
 fun NavGraphBuilder.clientChargeNavGraph(
     navigateBack: () -> Unit,
 ) {
     navigation(
-        startDestination = ChargeNavigation.ChargeRouteScreen.route,
-        route = ChargeNavigation.ChargeRouteBase.route,
+        startDestination = ClientChargeNavigation.ClientChargeScreen.route,
+        route = ClientChargeNavigation.ClientChargeBase.route,
     ) {
         clientChargeScreenRoute(
             navigateBack = navigateBack,
@@ -44,12 +44,14 @@ fun NavGraphBuilder.clientChargeScreenRoute(
     navigateBack: () -> Unit,
 ) {
     composable(
-        route = ChargeNavigation.ChargeRouteScreen.route,
+        route = ClientChargeNavigation.ClientChargeScreen.route,
         arguments = listOf(
             navArgument(CHARGE_TYPE) { type = NavType.StringType },
             navArgument(CHARGE_TYPE_ID) { type = NavType.LongType },
         ),
     ) {
-        ClientChargeScreen(navigateBack = navigateBack)
+        ClientChargeScreen(
+            navigateBack = navigateBack,
+        )
     }
 }

@@ -13,14 +13,13 @@ import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.enums.ChargeType
 
 interface ClientChargeRepository {
 
-    fun getClientCharges(clientId: Long): Flow<DataState<Page<Charge>>>
+    fun getCharges(chargeTypeId: Long): Flow<DataState<Page<Charge>>>
 
-    fun getLoanCharges(loanId: Long): Flow<DataState<List<Charge>>>
-
-    fun getSavingsCharges(savingsId: Long): Flow<DataState<List<Charge>>>
+    fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>>
 
     fun clientLocalCharges(): Flow<DataState<Page<Charge>>>
 

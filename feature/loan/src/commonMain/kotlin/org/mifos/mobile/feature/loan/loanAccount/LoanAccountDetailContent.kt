@@ -162,7 +162,7 @@ private fun LoanAccountDetailsCard(
             )
 
             MifosButton(
-                text = { stringResource(Res.string.make_payment) },
+                text = { Text(text = stringResource(Res.string.make_payment)) },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = isActive,
                 onClick = makePayment,

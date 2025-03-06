@@ -11,14 +11,16 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.network.DataManager
 
 class ClientChargeRepositoryImp(
@@ -27,19 +29,18 @@ class ClientChargeRepositoryImp(
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientChargeRepository {
 
-    override fun getClientCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
-        return dataManager.clientChargeApi.getClientChargeList(clientId)
-            .asDataStateFlow().flowOn(ioDispatcher)
+    override fun getCharges(chargeTypeId: Long): Flow<DataState<Page<Charge>>> {
+        return dataManager.clientChargeApi.getClientChargeList(chargeTypeId)
+            .map { response -> DataState.Success(response) }
+            .catch { exception -> DataState.Error(exception, exception.message) }
+            .flowOn(ioDispatcher)
     }
 
-    override fun getLoanCharges(loanId: Long): Flow<DataState<List<Charge>>> {
-        return dataManager.clientChargeApi.getLoanAccountChargeList(loanId)
-            .asDataStateFlow().flowOn(ioDispatcher)
-    }
-
-    override fun getSavingsCharges(savingsId: Long): Flow<DataState<List<Charge>>> {
-        return dataManager.clientChargeApi.getSavingsAccountChargeList(savingsId)
-            .asDataStateFlow().flowOn(ioDispatcher)
+    override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
+        return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
+            .map { response -> DataState.Success(response) }
+            .catch { exception -> DataState.Error(exception, exception.message) }
+            .flowOn(ioDispatcher)
     }
 
     override fun clientLocalCharges(): Flow<DataState<Page<Charge>>> {
