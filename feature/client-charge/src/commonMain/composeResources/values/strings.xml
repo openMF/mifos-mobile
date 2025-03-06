@@ -9,8 +9,11 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
     <string name="client_charges">Client Charges</string>
+    <string name="loan_charges">Loan Charges</string>
+    <string name="savings_charges">Saving Charges</string>
+    <string name="charges">Charges</string>
     <string name="error_no_charge">No charges found</string>
     <string name="amount_due">Due:</string>
     <string name="string_and_string">%1$s %2$s</string>

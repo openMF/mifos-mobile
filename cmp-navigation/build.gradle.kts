@@ -26,6 +26,7 @@ kotlin {
             implementation(projects.feature.shareAccount)
             implementation(projects.feature.savingsAccount)
             implementation(projects.feature.about)
+            implementation(projects.feature.clientCharge)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

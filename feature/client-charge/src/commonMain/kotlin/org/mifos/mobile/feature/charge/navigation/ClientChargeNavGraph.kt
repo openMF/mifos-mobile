@@ -16,13 +16,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import org.mifos.mobile.core.common.Constants.CHARGE_TYPE
+import org.mifos.mobile.core.common.Constants.CHARGE_TYPE_ID
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
 
 fun NavController.navigateToClientChargeScreen(
     chargeType: ChargeType,
+    chargeTypeId: Long? = null,
 ) {
-    navigate(ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType))
+    navigate(ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType, chargeTypeId))
 }
 
 fun NavGraphBuilder.clientChargeNavGraph(
@@ -43,7 +45,10 @@ fun NavGraphBuilder.clientChargeScreenRoute(
 ) {
     composable(
         route = ClientChargeNavigation.ClientChargeScreen.route,
-        arguments = listOf(navArgument(CHARGE_TYPE) { type = NavType.StringType }),
+        arguments = listOf(
+            navArgument(CHARGE_TYPE) { type = NavType.StringType },
+            navArgument(CHARGE_TYPE_ID) { type = NavType.LongType },
+        ),
     ) {
         ClientChargeScreen(
             navigateBack = navigateBack,

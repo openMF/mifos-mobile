@@ -162,6 +162,7 @@ private fun HelpContent(
         } else {
             EmptyDataView(
                 modifier = Modifier.fillMaxSize(),
+                icon = MifosIcons.Error,
                 error = Res.string.no_questions_found,
             )
         }
