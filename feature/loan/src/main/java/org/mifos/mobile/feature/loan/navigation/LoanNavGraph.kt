@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.model.enums.TransferType
@@ -68,6 +69,7 @@ fun NavGraphBuilder.loanNavGraph(
         outstandingBalance: Double?,
         transferType: String,
         transferTarget: TransferType,
+        transferSuccessDestination: TransferSuccessDestination,
     ) -> Unit,
 ) {
     navigation(
@@ -149,6 +151,7 @@ fun NavGraphBuilder.loanDetailRoute(
         outstandingBalance: Double?,
         transferType: String,
         transferTarget: TransferType,
+        transferSuccessDestination: TransferSuccessDestination,
     ) -> Unit,
 ) {
     composable(

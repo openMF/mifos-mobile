@@ -24,6 +24,7 @@ import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.TransferType
@@ -49,6 +50,7 @@ internal fun LoanAccountDetailScreen(
         outstandingBalance: Double?,
         transferType: String,
         transferTarget: TransferType,
+        transferSuccessDestination: TransferSuccessDestination,
     ) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoanAccountsDetailViewModel = hiltViewModel(),
@@ -75,6 +77,7 @@ internal fun LoanAccountDetailScreen(
                 viewModel.loanWithAssociations?.summary?.totalOutstanding,
                 TRANSFER_PAY_TO,
                 TransferType.SELF,
+                TransferSuccessDestination.LOAN_ACCOUNT,
             )
         },
     )

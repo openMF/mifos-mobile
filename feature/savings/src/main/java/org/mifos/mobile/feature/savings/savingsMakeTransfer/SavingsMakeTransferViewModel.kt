@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.network.Result
@@ -45,6 +46,11 @@ internal class SavingsMakeTransferViewModel @Inject constructor(
     private val transferTarget: StateFlow<String> = savedStateHandle.getStateFlow(
         key = Constants.TRANSFER_TARGET,
         initialValue = TransferType.TPT.name,
+    )
+
+    val transferSuccessDestination: StateFlow<TransferSuccessDestination> = savedStateHandle.getStateFlow(
+        key = Constants.TRANSFER_SUCCESS_DESTINATION,
+        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
     )
 
     private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(

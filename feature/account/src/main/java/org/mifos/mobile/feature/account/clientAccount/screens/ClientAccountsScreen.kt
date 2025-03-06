@@ -55,9 +55,10 @@ internal fun ClientAccountsScreen(
     val context = LocalContext.current
 
     var isDialogActive by rememberSaveable { mutableStateOf(false) }
-    var currentPage by rememberSaveable { mutableIntStateOf(0) }
 
     val accountType by viewModel.accountType.collectAsStateWithLifecycle()
+
+    var currentPage by rememberSaveable { mutableIntStateOf(accountType?.ordinal ?: 0) }
     val filterList by viewModel.filterList.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = accountType) {

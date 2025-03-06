@@ -26,11 +26,13 @@ import org.mifos.library.passcode.navigateToPasscodeScreen
 import org.mifos.mobile.HomeActivity
 import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
+import org.mifos.mobile.feature.account.navigation.ClientAccountsNavigation
 import org.mifos.mobile.feature.account.navigation.clientAccountsNavGraph
 import org.mifos.mobile.feature.account.navigation.navigateToClientAccountsScreen
 import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
@@ -48,6 +50,7 @@ import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
+import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
@@ -158,7 +161,23 @@ fun MifosNavHost(
             },
         )
 
-        transferProcessNavGraph(navigateBack = navController::popBackStack)
+        transferProcessNavGraph(
+            navigateBack = navController::popBackStack,
+            onTransferSuccessNavigate = { destination ->
+                when (destination) {
+                    TransferSuccessDestination.HOME -> navController.navigateToHomeScreen()
+                    TransferSuccessDestination.LOAN_ACCOUNT -> navController.navigateToClientAccountsScreen(
+                        AccountType.LOAN,
+                        ClientAccountsNavigation.ClientAccountsBase.route,
+                    )
+
+                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToClientAccountsScreen(
+                        AccountType.SAVINGS,
+                        ClientAccountsNavigation.ClientAccountsBase.route,
+                    )
+                }
+            },
+        )
 
         beneficiaryNavGraph(
             navController = navController,
@@ -212,7 +231,11 @@ fun handleHomeNavigation(
         }
 
         HomeDestinations.RECENT_TRANSACTIONS -> navController.navigateToRecentTransaction()
-        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(
+            ChargeType.CLIENT,
+            -1L,
+        )
+
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
         HomeDestinations.SETTINGS -> navController.navigateToSettings()
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
@@ -230,6 +253,7 @@ fun handleHomeNavigation(
             accountId = 1,
             transferType = TRANSFER_PAY_TO,
             transferTarget = TransferType.SELF,
+            transferSuccessDestination = TransferSuccessDestination.HOME,
         )
 
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()

@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -33,7 +34,7 @@ import org.mifos.mobile.core.ui.utils.DevicePreviews
 internal fun ThirdPartyTransferScreen(
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ThirdPartyTransferViewModel = hiltViewModel(),
 ) {
@@ -43,7 +44,7 @@ internal fun ThirdPartyTransferScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         addBeneficiary = addBeneficiary,
-        reviewTransfer = { reviewTransfer(it, TransferType.TPT) },
+        reviewTransfer = { reviewTransfer(it, TransferType.TPT, TransferSuccessDestination.HOME) },
         modifier = modifier,
     )
 }
