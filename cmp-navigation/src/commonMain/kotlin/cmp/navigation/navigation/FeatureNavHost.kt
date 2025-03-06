@@ -26,6 +26,9 @@ import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
+import org.mifos.mobile.feature.loan.navigation.loanNavGraph
+import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
+import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
 
 @Composable
 internal fun FeatureNavHost(
@@ -53,12 +56,27 @@ internal fun FeatureNavHost(
 
         accountsNavGraph(
             navController = appState.navController,
-            navigateToLoanApplicationScreen = { },
+            navigateToLoanApplicationScreen = appState.navController::navigateToLoanApplication,
             navigateToSavingsApplicationScreen = { },
-            navigateToAccountDetail = { _, _ -> },
+            navigateToAccountDetail = { accountType, id ->
+                when (accountType) {
+                    AccountType.SAVINGS -> { }
+                    AccountType.LOAN ->
+                        appState.navController.navigateToLoanDetailScreen(loanId = id)
+                    AccountType.SHARE -> { }
+                }
+            },
         )
 
         aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })
+
+        loanNavGraph(
+            navController = appState.navController,
+            viewQr = { },
+            viewGuarantor = { },
+            viewCharges = { },
+            makePayment = { _, _, _ -> },
+        )
     }
 }
 

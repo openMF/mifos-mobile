@@ -19,6 +19,7 @@ import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 object DateHelper {
@@ -51,6 +52,7 @@ object DateHelper {
      * @return date in the format day month year (ex 14 Apr 2016)
      */
     fun getDateAsString(integersOfDate: List<Int>): String {
+        logger.d { "ktorClient $integersOfDate" }
         val stringBuilder = StringBuilder()
         stringBuilder.append(integersOfDate[2])
             .append(' ')
@@ -66,6 +68,27 @@ object DateHelper {
             requiredFormat = pattern,
             dateString = getDateAsString(integersOfDate.map { it.toInt() }),
         )
+    }
+
+    private val monthMap = mapOf(
+        "Jan" to 1, "Feb" to 2, "Mar" to 3, "Apr" to 4,
+        "May" to 5, "Jun" to 6, "Jul" to 7, "Aug" to 8,
+        "Sep" to 9, "Oct" to 10, "Nov" to 11, "Dec" to 12,
+    )
+
+    fun getMonthNumber(monthName: String): Int {
+        return monthMap[monthName]
+            ?: throw IllegalArgumentException("Invalid month name: $monthName")
+    }
+
+    fun getDateAsList(date: String): List<Int> {
+        val dateList = date.split(" ")
+
+        val day = dateList[0].toInt()
+        val month = getMonthNumber(dateList[1])
+        val year = dateList[2].toInt()
+
+        return listOf(year, month, day)
     }
 
     /**

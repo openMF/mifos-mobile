@@ -50,9 +50,9 @@ data class CalendarData(
 
     val humanReadable: String? = null,
 
-    val createdDate: List<Int> = emptyList(),
+    val createdDate: String? = null,
 
-    val lastUpdatedDate: List<Int> = emptyList(),
+    val lastUpdatedDate: String? = null,
 
     val createdByUserId: Int? = null,
 

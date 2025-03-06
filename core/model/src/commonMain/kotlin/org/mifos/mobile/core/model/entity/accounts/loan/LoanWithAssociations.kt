@@ -61,7 +61,7 @@ data class LoanWithAssociations(
 
     val repaymentFrequencyType: RepaymentFrequencyType? = null,
 
-    val interestRatePerPeriod: Int? = null,
+    val interestRatePerPeriod: Double? = null,
 
     val interestRateFrequencyType: InterestRateFrequencyType? = null,
 

@@ -19,11 +19,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.savingsaccount.utils.AccountState
 import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
 
@@ -184,7 +184,7 @@ class SavingsAccountViewmodel(
             _accountsUiState.value = AccountState.Loading
             accountsRepositoryImpl.loadAccounts(
                 clientId = clientId,
-                accountType = AccountType.SAVINGS.name,
+                accountType = Constants.SAVINGS_ACCOUNTS,
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
