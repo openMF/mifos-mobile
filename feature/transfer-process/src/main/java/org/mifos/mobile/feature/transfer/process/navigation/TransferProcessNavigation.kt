@@ -10,7 +10,9 @@
 package org.mifos.mobile.feature.transfer.process.navigation
 
 import org.mifos.mobile.core.common.Constants.PAYLOAD
+import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
 
 // Constants for Routes
@@ -24,11 +26,12 @@ internal sealed class TransferProcessNavigation(val route: String) {
     )
 
     data object TransferProcessScreen : TransferProcessNavigation(
-        route = "$TRANSFER_PROCESS_SCREEN_ROUTE/{$PAYLOAD}/{$TRANSFER_TYPE}",
+        route = "$TRANSFER_PROCESS_SCREEN_ROUTE/{$PAYLOAD}/{$TRANSFER_TYPE}/{$TRANSFER_SUCCESS_DESTINATION}",
     ) {
         fun passArguments(
             payload: String,
             transferType: TransferType,
-        ) = "$TRANSFER_PROCESS_SCREEN_ROUTE/$payload/$transferType"
+            transferSuccessDestination: TransferSuccessDestination,
+        ) = "$TRANSFER_PROCESS_SCREEN_ROUTE/$payload/$transferType/$transferSuccessDestination"
     }
 }

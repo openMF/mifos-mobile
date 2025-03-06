@@ -23,8 +23,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants.PAYLOAD
+import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.data.repository.TransferRepository
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.transfer.process.TransferProcessUiState.Initial
@@ -46,6 +48,11 @@ internal class TransferProcessViewModel @Inject constructor(
     private val transferType = savedStateHandle.getStateFlow<TransferType?>(
         key = TRANSFER_TYPE,
         initialValue = null,
+    )
+
+    val transferSuccessDestination = savedStateHandle.getStateFlow(
+        key = TRANSFER_SUCCESS_DESTINATION,
+        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
     )
 
     val transferPayload: StateFlow<TransferPayload?> = transferPayloadString
