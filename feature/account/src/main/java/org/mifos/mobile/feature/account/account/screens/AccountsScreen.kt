@@ -17,11 +17,8 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,10 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mifos.library.pullrefresh.PullRefreshIndicator
 import com.mifos.library.pullrefresh.rememberPullRefreshState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
@@ -134,15 +128,11 @@ private fun AccountsScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = isRefreshing,
-        onRefresh = onRefresh,
-    )
-    var isRefresh by remember {
-        mutableStateOf(false)
-    }
+//    val pullRefreshState = rememberPullRefreshState(
+//        refreshing = isRefreshing,
+//        onRefresh = onRefresh,
+//    )
 
-    val corScope = rememberCoroutineScope()
     val state = rememberPullToRefreshState()
 
     Column(
@@ -150,14 +140,8 @@ private fun AccountsScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         PullToRefreshBox(
-            isRefreshing = isRefresh,
-            onRefresh = {
-                corScope.launch {
-                    isRefresh = true
-                    delay(5000)
-                    isRefresh = false
-                }
-            },
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
             state = state,
         ) {
 //        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
@@ -230,12 +214,6 @@ private fun AccountsScreen(
                     }
                 }
             }
-
-            PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter),
-            )
         }
     }
 }
