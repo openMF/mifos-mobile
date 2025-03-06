@@ -19,11 +19,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
-import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.feature.shareaccount.utils.AccountState
 import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
 
@@ -63,7 +63,7 @@ class ShareAccountViewModel(
         )
 
     /** Holds the current state of share accounts UI. */
-    @Suppress("PropertyName")
+    @Suppress("ktlint:standard:property-naming")
     private val _accountsUiState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountUiState: StateFlow<AccountState> = _accountsUiState.asStateFlow()
 
@@ -184,7 +184,7 @@ class ShareAccountViewModel(
             _accountsUiState.value = AccountState.Loading
             accountsRepositoryImpl.loadAccounts(
                 clientId = clientId,
-                accountType = AccountType.SHARE.name,
+                accountType = Constants.SHARE_ACCOUNTS,
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
