@@ -9,7 +9,7 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
     <string name="client_charges">Client Charges</string>
     <string name="loan_charges">Loan Charges</string>
     <string name="savings_charges">Saving Charges</string>

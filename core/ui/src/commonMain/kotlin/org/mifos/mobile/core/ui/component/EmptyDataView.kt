@@ -25,7 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.no_internet
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -62,6 +64,37 @@ fun EmptyDataView(
     }
 }
 
+@Composable
+fun EmptyDataView(
+    error: StringResource,
+    modifier: Modifier = Modifier.fillMaxSize(),
+    image: DrawableResource? = null,
+    errorString: String? = null,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        image?.let {
+            Icon(
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(bottom = 12.dp),
+                painter = painterResource(it),
+                contentDescription = null,
+            )
+        }
+
+        Text(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            text = errorString ?: stringResource(error),
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
 @DevicePreview
 @Composable
 fun EmptyDataViewPreview(
@@ -71,6 +104,7 @@ fun EmptyDataViewPreview(
         EmptyDataView(
             error = Res.string.no_internet,
             modifier = modifier,
+            image = null,
         )
     }
 }

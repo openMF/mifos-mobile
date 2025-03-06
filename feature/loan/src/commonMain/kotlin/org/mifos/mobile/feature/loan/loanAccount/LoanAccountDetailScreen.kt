@@ -32,6 +32,7 @@ import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
@@ -44,7 +45,7 @@ internal fun LoanAccountDetailScreen(
     updateLoan: (Long) -> Unit,
     withdrawLoan: (Long) -> Unit,
     viewLoanSummary: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
@@ -63,7 +64,12 @@ internal fun LoanAccountDetailScreen(
             is LoanAccountsEvent.ViewGuarantor -> state.loanId?.let { viewGuarantor(it) }
             is LoanAccountsEvent.MakePayment -> state.loanId?.let { makePayment(it, outStanding, TRANSFER_PAY_TO) }
             is LoanAccountsEvent.UpdateLoan -> state.loanId?.let { updateLoan(it) }
-            is LoanAccountsEvent.ViewCharges -> viewCharges()
+            is LoanAccountsEvent.ViewCharges -> {
+                viewCharges(
+                    ChargeType.LOAN,
+                    state.loanId ?: -1L,
+                )
+            }
             is LoanAccountsEvent.ViewLoanSummary -> state.loanId?.let { viewLoanSummary(it) }
             is LoanAccountsEvent.ViewQr -> viewQr(state.loanId.toString())
             is LoanAccountsEvent.ViewRepaymentSchedule -> state.loanId?.let {

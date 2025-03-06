@@ -9,9 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity
 
+import kotlinx.serialization.Serializable
+
 /**
  * @author Rajan Maurya
  */
+@Serializable
 data class Page<T>(
 
     val totalFilteredRecords: Int = 0,
