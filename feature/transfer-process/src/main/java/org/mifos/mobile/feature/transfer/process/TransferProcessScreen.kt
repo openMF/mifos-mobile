@@ -41,12 +41,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.components.MifosButton
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.DevicePreviews
 
@@ -107,7 +105,7 @@ private fun TransferProcessScreen(
                     }
 
                     is TransferProcessUiState.Error -> {
-                        MifosErrorComponent(isNetworkConnected = Network.isConnected(context))
+                        Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
                     }
 
                     is TransferProcessUiState.Initial -> Unit
@@ -172,7 +170,7 @@ private fun TransferProcessContent(
                 )
 
                 Text(
-                    text = payload?.fromAccountNumber.toString(),
+                    text = payload?.toAccountNumber.toString(),
                     modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
                 )
 
@@ -248,7 +246,7 @@ private fun TransferProcessContent(
 internal class UiStatesParameterProvider : PreviewParameterProvider<TransferProcessUiState> {
     override val values: Sequence<TransferProcessUiState>
         get() = sequenceOf(
-            TransferProcessUiState.Initial,
+//            TransferProcessUiState.Initial,
             TransferProcessUiState.Loading,
             TransferProcessUiState.Error(null),
             TransferProcessUiState.Success,

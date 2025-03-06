@@ -28,6 +28,7 @@ import org.mifos.mobile.R
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.account.navigation.clientAccountsNavGraph
@@ -228,6 +229,7 @@ fun handleHomeNavigation(
         HomeDestinations.TRANSFER -> navController.navigateToSavingsMakeTransfer(
             accountId = 1,
             transferType = TRANSFER_PAY_TO,
+            transferTarget = TransferType.SELF,
         )
 
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()

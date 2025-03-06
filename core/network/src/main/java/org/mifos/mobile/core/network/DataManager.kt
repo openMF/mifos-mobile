@@ -110,11 +110,8 @@ class DataManager @Inject constructor(
         )
     }
 
-    suspend fun accountTransferTemplate(
-        accountId: Long?,
-        accountType: Long?,
-    ): AccountOptionsTemplate =
-        baseApiManager.savingAccountsListApi.accountTransferTemplate(accountId, accountType)
+    suspend fun accountTransferTemplate(): AccountOptionsTemplate =
+        baseApiManager.savingAccountsListApi.accountTransferTemplate()
 
     suspend fun makeTransfer(transferPayload: TransferPayload?): ResponseBody {
         return baseApiManager.savingAccountsListApi.makeTransfer(transferPayload)

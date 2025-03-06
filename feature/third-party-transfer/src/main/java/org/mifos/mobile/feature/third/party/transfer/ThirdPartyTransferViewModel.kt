@@ -12,12 +12,11 @@ package org.mifos.mobile.feature.third.party.transfer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -27,51 +26,42 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ThirdPartyTransferViewModel @Inject constructor(
-    private val transferRepository: ThirdPartyTransferRepository,
-    private val beneficiaryRepository: BeneficiaryRepository,
+    transferRepository: ThirdPartyTransferRepository,
+    beneficiaryRepository: BeneficiaryRepository,
 ) : ViewModel() {
 
-    private val mUiState = MutableStateFlow<ThirdPartyTransferUiState>(Loading)
-    val uiState = mUiState.asStateFlow()
-
-    private val _thirdPartyTransferUiData = MutableStateFlow(ThirdPartyTransferUiData())
-    val thirdPartyTransferUiData = _thirdPartyTransferUiData.asStateFlow()
-
-    init {
-        fetchTemplate()
-    }
-
-    private fun fetchTemplate() {
-        viewModelScope.launch {
-            combine(
-                transferRepository.thirdPartyTransferTemplate(),
-                beneficiaryRepository.beneficiaryList(),
-            ) { templateResult, beneficiariesResult ->
-                _thirdPartyTransferUiData.update {
-                    it.copy(
-                        fromAccountDetail = templateResult.fromAccountOptions,
-                        toAccountOption = templateResult.toAccountOptions,
-                        beneficiaries = beneficiariesResult,
-                    )
-                }
-            }.catch {
-                mUiState.value =
-                    ThirdPartyTransferUiState.Error(errorMessage = it.message)
-            }.collect {
-                mUiState.value = ThirdPartyTransferUiState.ShowUI
-            }
-        }
-    }
+    //    in third part transfer is possible from savings to savings/loan
+    //    cause of that we filter fromAccount only have saings.
+    val uiState: StateFlow<ThirdPartyTransferUiState> =
+        combine(
+            transferRepository.thirdPartyTransferTemplate(),
+            beneficiaryRepository.beneficiaryList(),
+        ) { templateResult, beneficiariesResult ->
+            ThirdPartyTransferUiState.ShowUI(
+                ThirdPartyTransferUiData(
+                    fromAccountDetail = templateResult.fromAccountOptions
+                        .filter { it.accountType?.value == "Savings Account" },
+                    toAccountOption = templateResult.toAccountOptions,
+                    beneficiaries = beneficiariesResult,
+                ),
+            )
+        }.catch {
+            ThirdPartyTransferUiState.Error(errorMessage = it.message)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = Loading,
+        )
 }
 
 internal sealed class ThirdPartyTransferUiState {
     data object Loading : ThirdPartyTransferUiState()
     data class Error(val errorMessage: String?) : ThirdPartyTransferUiState()
-    data object ShowUI : ThirdPartyTransferUiState()
+    data class ShowUI(val data: ThirdPartyTransferUiData) : ThirdPartyTransferUiState()
 }
 
 internal data class ThirdPartyTransferUiData(
-    val fromAccountDetail: List<AccountOption> = listOf(),
-    val toAccountOption: List<AccountOption> = listOf(),
-    val beneficiaries: List<Beneficiary> = listOf(),
+    val fromAccountDetail: List<AccountOption> = emptyList(),
+    val toAccountOption: List<AccountOption> = emptyList(),
+    val beneficiaries: List<Beneficiary> = emptyList(),
 )

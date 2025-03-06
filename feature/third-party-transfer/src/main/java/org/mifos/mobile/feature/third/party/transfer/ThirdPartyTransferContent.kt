@@ -56,7 +56,7 @@ import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
 internal fun ThirdPartyTransferContent(
-    accountOption: List<AccountOption>,
+    fromAccountOption: List<AccountOption>,
     toAccountOption: List<AccountOption>,
     beneficiaryList: List<Beneficiary>,
     navigateBack: () -> Unit,
@@ -112,7 +112,7 @@ internal fun ThirdPartyTransferContent(
             ) { stepModifier ->
                 when (step.second) {
                     R.string.one -> PayFromStep(
-                        fromAccountOptions = accountOption,
+                        fromAccountOptions = fromAccountOption,
                         processState = payFromStepState,
                         onContinueClick = {
                             payFromAccount = it
@@ -399,7 +399,7 @@ private fun RemarkStep(
 private fun ThirdPartyTransferContentPreview() {
     MifosMobileTheme {
         ThirdPartyTransferContent(
-            accountOption = listOf(),
+            fromAccountOption = listOf(),
             toAccountOption = listOf(),
             beneficiaryList = listOf(),
             navigateBack = {},

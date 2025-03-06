@@ -39,13 +39,11 @@ internal fun SavingsMakeTransferScreen(
     viewModel: SavingsMakeTransferViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.savingsMakeTransferUiState.collectAsStateWithLifecycle()
-    val uiData = viewModel.savingsMakeTransferUiData.collectAsStateWithLifecycle()
 
     SavingsMakeTransferScreen(
         navigateBack = navigateBack,
         onCancelledClicked = onCancelledClicked,
         uiState = uiState.value,
-        uiData = uiData.value,
         modifier = modifier,
         reviewTransfer = { reviewTransfer(it, TransferType.SELF) },
     )
@@ -54,7 +52,6 @@ internal fun SavingsMakeTransferScreen(
 @Composable
 private fun SavingsMakeTransferScreen(
     uiState: SavingsMakeTransferUiState,
-    uiData: SavingsMakeTransferUiData,
     navigateBack: () -> Unit,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
     modifier: Modifier = Modifier,
@@ -63,10 +60,16 @@ private fun SavingsMakeTransferScreen(
     val context = LocalContext.current
 
     MifosScaffold(
-        topBarTitleResId = if (uiData.transferType == Constants.TRANSFER_PAY_TO) {
-            R.string.deposit
-        } else {
-            R.string.transfer
+        topBarTitleResId = when (uiState) {
+            is SavingsMakeTransferUiState.ShowUI -> {
+                if (uiState.data.transferType == Constants.TRANSFER_PAY_TO) {
+                    R.string.deposit
+                } else {
+                    R.string.transfer
+                }
+            }
+
+            else -> R.string.transfer
         },
         navigateBack = navigateBack,
         modifier = modifier,
@@ -76,16 +79,17 @@ private fun SavingsMakeTransferScreen(
                     .padding(it)
                     .fillMaxSize(),
             ) {
-                SavingsMakeTransferContent(
-                    uiData = uiData,
-                    reviewTransfer = reviewTransfer,
-                    onCancelledClicked = onCancelledClicked,
-                )
-
                 when (uiState) {
-                    is SavingsMakeTransferUiState.ShowUI -> Unit
+                    is SavingsMakeTransferUiState.ShowUI -> {
+                        SavingsMakeTransferContent(
+                            uiData = uiState.data,
+                            reviewTransfer = reviewTransfer,
+                            onCancelledClicked = onCancelledClicked,
+                        )
+                    }
 
-                    is SavingsMakeTransferUiState.Loading -> MifosProgressIndicatorOverlay()
+                    is SavingsMakeTransferUiState.Loading ->
+                        MifosProgressIndicatorOverlay()
 
                     is SavingsMakeTransferUiState.Error -> {
                         MifosErrorComponent(
@@ -104,7 +108,9 @@ internal class SavingsMakeTransferUiStatesPreviews :
     PreviewParameterProvider<SavingsMakeTransferUiState> {
     override val values: Sequence<SavingsMakeTransferUiState>
         get() = sequenceOf(
-            SavingsMakeTransferUiState.ShowUI,
+            SavingsMakeTransferUiState.ShowUI(
+                data = SavingsMakeTransferUiData(),
+            ),
             SavingsMakeTransferUiState.Error(""),
             SavingsMakeTransferUiState.Loading,
         )
@@ -122,7 +128,6 @@ private fun SavingsMakeTransferContentPreview(
             onCancelledClicked = { },
             reviewTransfer = { },
             uiState = savingsMakeTransferUIState,
-            uiData = SavingsMakeTransferUiData(),
         )
     }
 }
