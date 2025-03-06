@@ -9,8 +9,12 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import org.mifos.mobile.core.common.network.Dispatcher
+import org.mifos.mobile.core.common.network.MifosDispatchers
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.network.DataManager
@@ -18,11 +22,13 @@ import javax.inject.Inject
 
 class ThirdPartyTransferRepositoryImp @Inject constructor(
     private val dataManager: DataManager,
+    @Dispatcher(MifosDispatchers.IO)
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ThirdPartyTransferRepository {
 
-    override suspend fun thirdPartyTransferTemplate(): Flow<AccountOptionsTemplate> {
+    override fun thirdPartyTransferTemplate(): Flow<AccountOptionsTemplate> {
         return flow {
             emit(dataManager.thirdPartyTransferTemplate())
-        }
+        }.flowOn(ioDispatcher)
     }
 }

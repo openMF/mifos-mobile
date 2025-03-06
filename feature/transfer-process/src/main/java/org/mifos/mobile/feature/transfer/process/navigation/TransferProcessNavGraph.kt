@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.utils.DateHelper
 import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -28,17 +29,20 @@ import org.mifos.mobile.feature.transfer.process.TransferProcessScreen
 fun NavController.navigateToTransferProcessScreen(
     transferPayload: ReviewTransferPayload,
     transferType: TransferType,
+    transferSuccessDestination: TransferSuccessDestination,
 ) {
     navigate(
         TransferProcessNavigation.TransferProcessScreen.passArguments(
             transferType = transferType,
             payload = transferPayload.convertToTransferPayloadString(),
+            transferSuccessDestination = transferSuccessDestination,
         ),
     )
 }
 
 fun NavGraphBuilder.transferProcessNavGraph(
     navigateBack: () -> Unit,
+    onTransferSuccessNavigate: (TransferSuccessDestination) -> Unit = {},
 ) {
     navigation(
         startDestination = TransferProcessNavigation.TransferProcessScreen.route,
@@ -46,12 +50,14 @@ fun NavGraphBuilder.transferProcessNavGraph(
     ) {
         transferProcessScreenRoute(
             navigateBack = navigateBack,
+            onTransferSuccessNavigate = onTransferSuccessNavigate,
         )
     }
 }
 
 private fun NavGraphBuilder.transferProcessScreenRoute(
     navigateBack: () -> Unit,
+    onTransferSuccessNavigate: (TransferSuccessDestination) -> Unit = {},
 ) {
     composable(
         route = TransferProcessNavigation.TransferProcessScreen.route,
@@ -60,10 +66,14 @@ private fun NavGraphBuilder.transferProcessScreenRoute(
             navArgument(name = Constants.TRANSFER_TYPE) {
                 type = NavType.EnumType(TransferType::class.java)
             },
+            navArgument(name = Constants.TRANSFER_SUCCESS_DESTINATION) {
+                type = NavType.EnumType(TransferSuccessDestination::class.java)
+            },
         ),
     ) {
         TransferProcessScreen(
             navigateBack = navigateBack,
+            onTransferSuccessNavigate = onTransferSuccessNavigate,
         )
     }
 }
@@ -75,10 +85,12 @@ private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
         fromClientId = payload.payFromAccount?.clientId
         fromAccountType = payload.payFromAccount?.accountType?.id
         fromOfficeId = payload.payFromAccount?.officeId
-        toOfficeId = payload.payFromAccount?.officeId
+        fromAccountNumber = payload.payFromAccount?.accountNo
+        toOfficeId = payload.payToAccount?.officeId
         toAccountId = payload.payToAccount?.accountId
         toClientId = payload.payToAccount?.clientId
         toAccountType = payload.payToAccount?.accountType?.id
+        toAccountNumber = payload.payToAccount?.accountNo
         transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, getTodayFormatted())
         transferAmount = payload.amount.toDoubleOrNull()
         transferDescription = payload.review
