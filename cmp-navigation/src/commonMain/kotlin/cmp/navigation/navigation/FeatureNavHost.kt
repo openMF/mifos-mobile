@@ -32,6 +32,8 @@ import org.mifos.mobile.feature.home.navigation.homeNavGraph
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
+import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -86,6 +88,12 @@ internal fun FeatureNavHost(
         clientChargeNavGraph(
             navigateBack = { appState.navController.popBackStack() },
         )
+
+        thirdPartyTransferNavGraph(
+            navigateBack = appState.navController::popBackStack,
+            addBeneficiary = { },
+            reviewTransfer = { _, _ -> },
+        )
     }
 }
 
@@ -102,7 +110,7 @@ fun handleHomeNavigation(
         HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
         HomeDestinations.RECENT_TRANSACTIONS -> { }
         HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
-        HomeDestinations.THIRD_PARTY_TRANSFER -> { }
+        HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
         HomeDestinations.SETTINGS -> { }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
