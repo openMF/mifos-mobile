@@ -21,7 +21,4 @@ data class AccountOptionsTemplate(
 
     val toAccountOptions: List<AccountOption> = emptyList(),
 
-    val fromAccountTypeOptions: List<AccountType> = emptyList(),
-
-    val toAccountTypeOptions: List<AccountType> = emptyList(),
 ) : Parcelable

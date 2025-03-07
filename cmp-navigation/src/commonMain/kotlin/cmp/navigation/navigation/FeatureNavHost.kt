@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.navigation
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
@@ -32,6 +33,8 @@ import org.mifos.mobile.feature.home.navigation.homeNavGraph
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
+import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
@@ -64,11 +67,10 @@ internal fun FeatureNavHost(
             navigateToSavingsApplicationScreen = { },
             navigateToAccountDetail = { accountType, id ->
                 when (accountType) {
-                    AccountType.SAVINGS -> {}
+                    AccountType.SAVINGS -> { }
                     AccountType.LOAN ->
                         appState.navController.navigateToLoanDetailScreen(loanId = id)
-
-                    AccountType.SHARE -> {}
+                    AccountType.SHARE -> { }
                 }
             },
         )
@@ -89,8 +91,14 @@ internal fun FeatureNavHost(
             navigateBack = { appState.navController.popBackStack() },
         )
 
-        updatePasswordNavGraph(
-            navigateBack = { appState.navController.popBackStack() },
+        updatePasswordNavGraph {
+            appState.navController.popBackStack()
+        }
+
+        thirdPartyTransferNavGraph(
+            navigateBack = appState.navController::popBackStack,
+            addBeneficiary = { },
+            reviewTransfer = { _, _ -> },
         )
     }
 }
@@ -106,22 +114,18 @@ fun handleHomeNavigation(
         HomeDestinations.ACCOUNTS -> navController.navigateToAccountsScreen()
         HomeDestinations.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.LOAN)
         HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
-        HomeDestinations.RECENT_TRANSACTIONS -> {}
-        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(
-            ChargeType.CLIENT,
-            -1L,
-        )
-
-        HomeDestinations.THIRD_PARTY_TRANSFER -> {}
-        HomeDestinations.SETTINGS -> {}
+        HomeDestinations.RECENT_TRANSACTIONS -> { }
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
+        HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
+        HomeDestinations.SETTINGS -> { }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
-        HomeDestinations.SHARE -> {}
-        HomeDestinations.APP_INFO -> {}
-        HomeDestinations.TRANSFER -> {}
-        HomeDestinations.BENEFICIARIES -> {}
-        HomeDestinations.SURVEY -> {}
-        HomeDestinations.NOTIFICATIONS -> {}
-        HomeDestinations.PROFILE -> {}
+        HomeDestinations.SHARE -> { }
+        HomeDestinations.APP_INFO -> { }
+        HomeDestinations.TRANSFER -> { }
+        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.SURVEY -> { }
+        HomeDestinations.NOTIFICATIONS -> { }
+        HomeDestinations.PROFILE -> { }
     }
 }

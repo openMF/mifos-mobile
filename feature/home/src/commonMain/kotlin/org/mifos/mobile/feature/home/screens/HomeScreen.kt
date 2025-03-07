@@ -62,13 +62,15 @@ internal fun HomeScreen(
             { viewModel.trySendAction(it) }
         },
     )
-    HomeContent(
-        state = state,
-        modifier = modifier,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
+    if (state.clientAccounts != null) {
+        HomeContent(
+            state = state,
+            modifier = modifier,
+            onAction = remember(viewModel) {
+                { viewModel.trySendAction(it) }
+            },
+        )
+    }
 }
 
 @Composable

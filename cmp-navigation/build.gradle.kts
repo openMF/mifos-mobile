@@ -28,6 +28,7 @@ kotlin {
             implementation(projects.feature.about)
             implementation(projects.feature.clientCharge)
             implementation(projects.feature.updatePassword)
+            implementation(projects.feature.thirdPartyTransfer)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

@@ -17,11 +17,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -32,36 +31,57 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.designsystem.components.MifosButton
-import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextButton
-import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
-import org.mifos.mobile.core.designsystem.theme.DarkGray
+import mifos_mobile.feature.third_party_transfer.generated.resources.Res
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_beneficiary
+import mifos_mobile.feature.third_party_transfer.generated.resources.amount
+import mifos_mobile.feature.third_party_transfer.generated.resources.amount_greater_than_zero
+import mifos_mobile.feature.third_party_transfer.generated.resources.beneficiary
+import mifos_mobile.feature.third_party_transfer.generated.resources.cancel
+import mifos_mobile.feature.third_party_transfer.generated.resources.continue_str
+import mifos_mobile.feature.third_party_transfer.generated.resources.enter_amount
+import mifos_mobile.feature.third_party_transfer.generated.resources.enter_remarks
+import mifos_mobile.feature.third_party_transfer.generated.resources.four
+import mifos_mobile.feature.third_party_transfer.generated.resources.invalid_amount
+import mifos_mobile.feature.third_party_transfer.generated.resources.loan_type
+import mifos_mobile.feature.third_party_transfer.generated.resources.no_beneficiary_found_please_add
+import mifos_mobile.feature.third_party_transfer.generated.resources.one
+import mifos_mobile.feature.third_party_transfer.generated.resources.pay_from
+import mifos_mobile.feature.third_party_transfer.generated.resources.remark
+import mifos_mobile.feature.third_party_transfer.generated.resources.remark_is_mandatory
+import mifos_mobile.feature.third_party_transfer.generated.resources.required
+import mifos_mobile.feature.third_party_transfer.generated.resources.review
+import mifos_mobile.feature.third_party_transfer.generated.resources.select_beneficiary
+import mifos_mobile.feature.third_party_transfer.generated.resources.select_pay_from
+import mifos_mobile.feature.third_party_transfer.generated.resources.three
+import mifos_mobile.feature.third_party_transfer.generated.resources.two
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosButton
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.component.MifosTextField
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.designsystem.theme.Primary
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MFStepProcess
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.StepProcessState
 import org.mifos.mobile.core.ui.component.getStepState
-import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
 internal fun ThirdPartyTransferContent(
-    accountOption: List<AccountOption>,
-    toAccountOption: List<AccountOption>,
-    beneficiaryList: List<Beneficiary>,
-    navigateBack: () -> Unit,
-    addBeneficiary: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload) -> Unit,
+    state: ThirdPartyTransferState,
+    onAction: (ThirdPartyTransferAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
@@ -90,10 +110,10 @@ internal fun ThirdPartyTransferContent(
     }
 
     val stepsState = listOf(
-        Pair(payFromStepState, R.string.one),
-        Pair(beneficiaryStepState, R.string.two),
-        Pair(amountStepState, R.string.three),
-        Pair(remarkStepState, R.string.four),
+        Pair(payFromStepState, Res.string.one),
+        Pair(beneficiaryStepState, Res.string.two),
+        Pair(amountStepState, Res.string.three),
+        Pair(remarkStepState, Res.string.four),
     )
 
     Column(
@@ -104,35 +124,39 @@ internal fun ThirdPartyTransferContent(
     ) {
         for (step in stepsState) {
             MFStepProcess(
-                stepNumber = stringResource(id = step.second),
-                activateColor = Primary,
+                stepNumber = stringResource(step.second),
+                activateColor = MaterialTheme.colorScheme.primary,
                 processState = step.first,
                 deactivateColor = DarkGray,
                 isLastStep = step == stepsState.last(),
             ) { stepModifier ->
                 when (step.second) {
-                    R.string.one -> PayFromStep(
-                        fromAccountOptions = accountOption,
-                        processState = payFromStepState,
-                        onContinueClick = {
-                            payFromAccount = it
-                            currentStep += 1
-                        },
-                        modifier = stepModifier,
-                    )
+                    Res.string.one -> state.fromAccountDetail?.let {
+                        PayFromStep(
+                            fromAccountOptions = it,
+                            processState = payFromStepState,
+                            onContinueClick = {
+                                payFromAccount = it
+                                currentStep += 1
+                            },
+                            modifier = stepModifier,
+                        )
+                    }
 
-                    R.string.two -> BeneficiaryStep(
-                        beneficiaryList = beneficiaryList,
-                        processState = beneficiaryStepState,
-                        addBeneficiary = addBeneficiary,
-                        onContinueClick = {
-                            beneficiary = it
-                            currentStep += 1
-                        },
-                        modifier = stepModifier,
-                    )
+                    Res.string.two -> state.beneficiaries?.let {
+                        BeneficiaryStep(
+                            beneficiaryList = it,
+                            processState = beneficiaryStepState,
+                            addBeneficiary = { onAction(ThirdPartyTransferAction.OnAddBeneficiary) },
+                            onContinueClick = {
+                                beneficiary = it
+                                currentStep += 1
+                            },
+                            modifier = stepModifier,
+                        )
+                    }
 
-                    R.string.three -> EnterAmountStep(
+                    Res.string.three -> EnterAmountStep(
                         processState = amountStepState,
                         onContinueClick = {
                             amount = it
@@ -141,24 +165,27 @@ internal fun ThirdPartyTransferContent(
                         modifier = stepModifier,
                     )
 
-                    R.string.four -> RemarkStep(
+                    Res.string.four -> RemarkStep(
                         processState = remarkStepState,
                         onContinueClicked = {
                             remark = it
-                            reviewTransfer(
-                                ReviewTransferPayload(
-                                    payFromAccount = payFromAccount!!,
-                                    payToAccount = toAccountOption
-                                        .firstOrNull { account ->
-                                            account.accountNo == beneficiary?.accountNumber
-                                        } ?: AccountOption(),
-                                    amount = amount,
-                                    review = remark,
+                            onAction(
+                                ThirdPartyTransferAction.OnReviewTransfer(
+                                    ReviewTransferPayload(
+                                        payFromAccount = payFromAccount!!,
+                                        payToAccount = state.toAccountOption
+                                            ?.firstOrNull { account ->
+                                                account.accountNo == beneficiary?.accountNumber
+                                            } ?: AccountOption(),
+                                        amount = amount,
+                                        review = remark,
+                                    ),
+                                    TransferType.TPT,
                                 ),
                             )
                         },
                         modifier = stepModifier,
-                        onCancelledClicked = navigateBack,
+                        onCancelledClicked = { onAction(ThirdPartyTransferAction.OnNavigate) },
                     )
                 }
             }
@@ -173,33 +200,31 @@ private fun PayFromStep(
     onContinueClick: (AccountOption) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     var payFromAccount by rememberSaveable { mutableStateOf<AccountOption?>(null) }
     var payFromError by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.pay_from),
+            text = stringResource(Res.string.pay_from),
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
             MifosDropDownDoubleTextField(
                 optionsList = fromAccountOptions
-                    .filter { it.accountType?.value != context.getString(R.string.loan_type) }
+                    .filter { it.accountType?.value != stringResource(Res.string.loan_type) }
                     .map { Pair(it.accountNo ?: "", it.accountType?.value ?: "") },
                 selectedOption = payFromAccount?.accountNo ?: "",
-                labelResId = R.string.select_pay_from,
+                labelResId = Res.string.select_pay_from,
                 error = payFromError,
-                supportingText = stringResource(id = R.string.required),
+                supportingText = stringResource(Res.string.required),
                 onClick = { index, _ ->
                     payFromAccount = fromAccountOptions[index]
                     payFromError = false
                 },
             )
             MifosButton(
-                textResId = R.string.continue_str,
+                text = { Text(text = stringResource(Res.string.continue_str)) },
                 onClick = {
                     if (payFromAccount == null) {
                         payFromError = true
@@ -225,30 +250,30 @@ private fun BeneficiaryStep(
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.beneficiary),
+            text = stringResource(Res.string.beneficiary),
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
             if (beneficiaryList.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.no_beneficiary_found_please_add),
+                    text = stringResource(Res.string.no_beneficiary_found_please_add),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.labelMedium,
                 )
                 MifosButton(
                     onClick = { addBeneficiary() },
-                    textResId = R.string.add_beneficiary,
+                    text = { Text(text = stringResource(Res.string.add_beneficiary)) },
                 )
             } else {
                 MifosDropDownDoubleTextField(
                     optionsList = beneficiaryList
                         .map { Pair(it.accountNumber ?: "", it.name ?: "") },
                     selectedOption = beneficiary?.accountNumber ?: "",
-                    labelResId = R.string.select_pay_from,
+                    labelResId = Res.string.select_pay_from,
                     error = beneficiaryError,
-                    supportingText = stringResource(id = R.string.required),
+                    supportingText = stringResource(Res.string.required),
                     onClick = { index, _ ->
                         beneficiary = beneficiaryList[index]
                         beneficiaryError = false
@@ -262,12 +287,12 @@ private fun BeneficiaryStep(
                             onContinueClick(beneficiary!!)
                         }
                     },
-                    textResId = R.string.continue_str,
+                    text = { Text(text = stringResource(Res.string.continue_str)) },
                 )
             }
         } else {
             Text(
-                text = stringResource(id = R.string.select_beneficiary),
+                text = stringResource(Res.string.select_beneficiary),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelMedium,
@@ -283,34 +308,39 @@ private fun EnterAmountStep(
     modifier: Modifier = Modifier,
 ) {
     var amount by remember { mutableStateOf(TextFieldValue("")) }
-    var amountError by rememberSaveable { mutableStateOf<Int?>(null) }
+    var amountError by remember { mutableStateOf<StringResource?>(null) }
     var showAmountError by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = amount) {
         showAmountError = false
         amountError = when {
-            amount.text.trim() == "" -> R.string.enter_amount
-            amount.text.toDoubleOrNull() == null -> R.string.invalid_amount
-            amount.text.toDoubleOrNull() == 0.0 -> R.string.amount_greater_than_zero
+            amount.text.trim().isEmpty() -> Res.string.enter_amount
+            amount.text.toDoubleOrNull() == null -> Res.string.invalid_amount
+            amount.text.toDoubleOrNull() == 0.0 -> Res.string.amount_greater_than_zero
             else -> null
         }
     }
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.amount),
+            text = stringResource(Res.string.amount),
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
             MifosOutlinedTextField(
                 modifier = Modifier,
-                value = amount,
-                keyboardType = KeyboardType.Number,
-                onValueChange = { amount = it },
-                error = showAmountError,
-                supportingText = amountError?.let { stringResource(id = it) },
-                label = R.string.enter_amount,
+                value = amount.text,
+                onValueChange = { amount = TextFieldValue(it) },
+                label = stringResource(Res.string.enter_amount),
+                config = MifosTextFieldConfig(
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done,
+                    ),
+                    isError = showAmountError,
+                    errorText = amountError?.let { stringResource(it) },
+                ),
             )
             MifosButton(
                 onClick = {
@@ -320,11 +350,11 @@ private fun EnterAmountStep(
                         showAmountError = true
                     }
                 },
-                textResId = R.string.continue_str,
+                text = { Text(text = stringResource(Res.string.continue_str)) },
             )
         } else {
             Text(
-                text = stringResource(id = R.string.enter_amount),
+                text = stringResource(Res.string.enter_amount),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelMedium,
@@ -341,32 +371,36 @@ private fun RemarkStep(
     onCancelledClicked: () -> Unit = {},
 ) {
     var remark by remember { mutableStateOf(TextFieldValue("")) }
-    var remarkError by rememberSaveable { mutableStateOf<Int?>(null) }
+    var remarkError by remember { mutableStateOf<StringResource?>(null) }
     var showRemarkError by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = remark) {
         showRemarkError = false
         remarkError = when {
-            remark.text.trim().isBlank() -> R.string.remark_is_mandatory
+            remark.text.trim().isBlank() -> Res.string.remark_is_mandatory
             else -> null
         }
     }
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.remark),
+            text = stringResource(Res.string.remark),
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
             Spacer(modifier = Modifier.height(12.dp))
-            TextField(
-                colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent),
-                value = remark,
-                isError = showRemarkError,
-                supportingText = { remarkError?.let { stringResource(id = it) } },
-                onValueChange = { remark = it },
-                label = { Text(text = stringResource(id = R.string.remark)) },
+            MifosTextField(
+                value = remark.text,
+                config = MifosTextFieldConfig(
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                    ),
+                    isError = showRemarkError,
+                    errorText = remarkError?.let { stringResource(it) },
+                ),
+                onValueChange = { remark = TextFieldValue(it) },
+                label = stringResource(Res.string.remark),
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row {
@@ -375,17 +409,18 @@ private fun RemarkStep(
                         remarkError?.let { showRemarkError = true }
                             ?: onContinueClicked(remark.text)
                     },
-                    textResId = R.string.review,
+                    text = { Text(text = stringResource(Res.string.review)) },
                 )
                 Spacer(modifier = Modifier.width(12.dp))
-                MifosOutlinedTextButton(
+                MifosOutlinedButton(
                     onClick = { onCancelledClicked() },
-                    textResId = R.string.cancel,
+                    content = { Text(text = stringResource(Res.string.cancel)) },
+
                 )
             }
         } else {
             Text(
-                text = stringResource(id = R.string.enter_remarks),
+                text = stringResource(Res.string.enter_remarks),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelMedium,
@@ -394,17 +429,14 @@ private fun RemarkStep(
     }
 }
 
-@DevicePreviews
+@Preview
 @Composable
 private fun ThirdPartyTransferContentPreview() {
     MifosMobileTheme {
         ThirdPartyTransferContent(
-            accountOption = listOf(),
-            toAccountOption = listOf(),
-            beneficiaryList = listOf(),
-            navigateBack = {},
-            addBeneficiary = {},
-            reviewTransfer = {},
+            state = ThirdPartyTransferState(dialogState = null),
+            onAction = { },
+            modifier = Modifier,
         )
     }
 }
