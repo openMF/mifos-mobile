@@ -28,6 +28,7 @@ import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
+import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -41,6 +42,7 @@ internal class ThirdPartyTransferViewModel(
 
     init {
         viewModelScope.launch {
+            fetchAndUpdateTemplateState()
             val message = getString(Res.string.internet_not_connected)
             networkMonitor.isOnline.collect { isConnected ->
                 updateState { it.copy(isOnline = isConnected) }
@@ -53,7 +55,6 @@ internal class ThirdPartyTransferViewModel(
                 }
             }
         }
-        fetchTemplate()
     }
 
     private fun updateState(update: (ThirdPartyTransferState) -> ThirdPartyTransferState) {
@@ -75,57 +76,49 @@ internal class ThirdPartyTransferViewModel(
         }
     }
 
-    private fun fetchTemplate() {
-        viewModelScope.launch {
-            combine(
-                transferRepository.thirdPartyTransferTemplate(),
-                beneficiaryRepository.beneficiaryList(),
-            ) { templateResult, beneficiariesResult ->
-                logger.d {
-                    "KtorClient getting in ViewModel ${templateResult.data} and ben ${beneficiariesResult.data}"
-                }
+    private suspend fun fetchAndUpdateTemplateState() {
+        combine(
+            transferRepository.thirdPartyTransferTemplate(),
+            beneficiaryRepository.beneficiaryList(),
+        ) { templateResult, beneficiariesResult ->
+            logger.d {
+                "KtorClient getting in function ${templateResult.data} and ben " +
+                    "${beneficiariesResult.data}"
+            }
+            updateStateFromResults(templateResult, beneficiariesResult)
+        }.catch { error ->
+            updateState {
+                it.copy(dialogState = ThirdPartyTransferState.DialogState.Error(error.message ?: "An error occurred"))
+            }
+        }.collect { }
+    }
 
-                when {
-                    templateResult is DataState.Loading || beneficiariesResult is DataState.Loading -> {
-                        updateState {
-                            it.copy(dialogState = ThirdPartyTransferState.DialogState.Loading)
-                        }
-                    }
-
-                    templateResult is DataState.Error || beneficiariesResult is DataState.Error -> {
-//                        val errorMessage = (templateResult as? DataState.Error)?.exception?.message
-//                            ?: (beneficiariesResult as? DataState.Error)?.exception?.message
-//                            ?: "An error occurred"
-                        val errorMessage = "An error occurred"
-                        val data = templateResult.data
-                        logger.d { "KtorClient getting data $data" }
-
-                        logger.d { "KtorClient in error $errorMessage" }
-                        updateState {
-                            it.copy(dialogState = ThirdPartyTransferState.DialogState.Error(errorMessage))
-                        }
-                    }
-
-                    templateResult is DataState.Success && beneficiariesResult is DataState.Success -> {
-                        updateState {
-                            it.copy(
-                                fromAccountDetail = templateResult.data.fromAccountOptions,
-                                toAccountOption = templateResult.data.toAccountOptions,
-                                beneficiaries = beneficiariesResult.data,
-                                dialogState = null,
-                            )
-                        }
-                    }
-                }
-            }.catch { error ->
+    private fun updateStateFromResults(
+        templateResult: DataState<AccountOptionsTemplate>,
+        beneficiariesResult: DataState<List<Beneficiary>>,
+    ) {
+        when {
+            templateResult is DataState.Loading || beneficiariesResult is DataState.Loading -> {
+                updateState { it.copy(dialogState = ThirdPartyTransferState.DialogState.Loading) }
+            }
+            templateResult is DataState.Error || beneficiariesResult is DataState.Error -> {
+                val error = (templateResult as? DataState.Error)?.exception?.message
+                    ?: (beneficiariesResult as? DataState.Error)?.exception?.message
+                    ?: "An error occurred"
+                logger.d { "KtorClient error $error" }
+                val errorMessage = "An error occurred"
+                updateState { it.copy(dialogState = ThirdPartyTransferState.DialogState.Error(errorMessage)) }
+            }
+            templateResult is DataState.Success && beneficiariesResult is DataState.Success -> {
                 updateState {
                     it.copy(
-                        dialogState = ThirdPartyTransferState.DialogState.Error(
-                            error.message ?: "An error occurred",
-                        ),
+                        fromAccountDetail = templateResult.data.fromAccountOptions,
+                        toAccountOption = templateResult.data.toAccountOptions,
+                        beneficiaries = beneficiariesResult.data,
+                        dialogState = null,
                     )
                 }
-            }.collect { }
+            }
         }
     }
 }
