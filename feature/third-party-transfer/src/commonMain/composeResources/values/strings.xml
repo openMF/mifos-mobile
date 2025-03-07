@@ -9,6 +9,7 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
     <string name="third_party_transfer">Third Party Transfer</string>
     <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfertemplate</string>
     <string name="one">1</string>
