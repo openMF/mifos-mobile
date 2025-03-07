@@ -25,6 +25,7 @@ import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
+import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
@@ -114,7 +115,7 @@ fun handleHomeNavigation(
         HomeDestinations.THIRD_PARTY_TRANSFER -> {}
         HomeDestinations.SETTINGS -> {}
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
-        HomeDestinations.HELP -> {}
+        HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> {}
         HomeDestinations.APP_INFO -> {}
         HomeDestinations.TRANSFER -> {}
