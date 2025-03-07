@@ -25,14 +25,12 @@ import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
-import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
-import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassword
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
@@ -116,7 +114,7 @@ fun handleHomeNavigation(
         HomeDestinations.THIRD_PARTY_TRANSFER -> {}
         HomeDestinations.SETTINGS -> {}
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
-        HomeDestinations.HELP -> navController.navigateToUpdatePassword()
+        HomeDestinations.HELP -> {}
         HomeDestinations.SHARE -> {}
         HomeDestinations.APP_INFO -> {}
         HomeDestinations.TRANSFER -> {}

@@ -19,23 +19,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.update_password.generated.resources.Res
-import mifos_mobile.feature.update_password.generated.resources.confirm_password
+import mifos_mobile.feature.update_password.generated.resources.confirm_password_error_validation_blank
+import mifos_mobile.feature.update_password.generated.resources.confirm_password_error_validation_minimum_chars
 import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
 import mifos_mobile.feature.update_password.generated.resources.dialog_action_ok
-import mifos_mobile.feature.update_password.generated.resources.error_validation_blank
-import mifos_mobile.feature.update_password.generated.resources.error_validation_minimum_chars
-import mifos_mobile.feature.update_password.generated.resources.new_password
-import mifos_mobile.feature.update_password.generated.resources.no_internet_connection
+import mifos_mobile.feature.update_password.generated.resources.error_password_not_match
+import mifos_mobile.feature.update_password.generated.resources.new_password_error_validation_blank
+import mifos_mobile.feature.update_password.generated.resources.new_password_error_validation_minimum_chars
 import mifos_mobile.feature.update_password.generated.resources.password_changed_successfully
 import mifos_mobile.feature.update_password.generated.resources.update_password
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
@@ -49,7 +46,6 @@ internal fun UpdatePasswordScreen(
     viewModel: UpdatePasswordViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.updatePasswordUiState.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     UpdatePasswordScreen(
@@ -61,15 +57,6 @@ internal fun UpdatePasswordScreen(
             validateAndUpdatePassword(
                 params = params,
                 updateAccountPassword = viewModel::updateAccountPassword,
-                showSnackBar = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            it,
-                            Res.string.dialog_action_ok.toString(),
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                },
             )
         },
     )
@@ -157,32 +144,28 @@ private fun HandleUpdatePasswordState(
 private fun validateAndUpdatePassword(
     params: PasswordValidationParams,
     updateAccountPassword: (newPassword: String, confirmPassword: String) -> Unit,
-    showSnackBar: (message: String) -> Unit,
 ) {
     with(params) {
-        val newPasswordErrorContent =
-            getPasswordError(newPassword, Res.string.new_password.toString())
-        val confirmPasswordErrorContent =
-            getPasswordError(confirmPassword, Res.string.confirm_password.toString())
+        var newPasswordErrorContent = getPasswordError(newPassword, PasswordType.NEW)
+        var confirmPasswordErrorContent = getPasswordError(confirmPassword, PasswordType.CONFIRM)
 
         setNewPasswordErrorContent(newPasswordErrorContent)
         setConfirmPasswordErrorContent(confirmPasswordErrorContent)
 
         when {
-            newPasswordErrorContent.isEmpty() && confirmPasswordErrorContent.isEmpty() -> {
+            newPasswordErrorContent == null && confirmPasswordErrorContent == null -> {
                 if (newPassword == confirmPassword) {
                     updateAccountPassword(newPassword, confirmPassword)
                 } else {
-                    showSnackBar.invoke("Test password does not match")
-//                    Res.string.error_password_not_match.toString()
+                    setPasswordDoesNotMatchOnBothError(Res.string.error_password_not_match)
                 }
             }
 
-            newPasswordErrorContent.isEmpty() && confirmPasswordErrorContent.isNotEmpty() -> {
+            newPasswordErrorContent == null && confirmPasswordErrorContent != null -> {
                 setConfirmPasswordError(true)
             }
 
-            newPasswordErrorContent.isNotEmpty() && confirmPasswordErrorContent.isEmpty() -> {
+            newPasswordErrorContent != null && confirmPasswordErrorContent == null -> {
                 setNewPasswordError(true)
             }
 
@@ -194,15 +177,26 @@ private fun validateAndUpdatePassword(
     }
 }
 
-private fun getPasswordError(
-    password: String,
-): String = when {
-    password.isEmpty() -> password + Res.string.error_validation_blank
-    password.length < 6 -> password +  Res.string.error_validation_minimum_chars
-    else -> ""
+private enum class PasswordType {
+    NEW,
+    CONFIRM,
 }
 
-object ResourceManager {
-    val ERROR_VALIDATION_BLANK = stringResource(Res.string.error_validation_minimum_chars)
-    const val ERROR_VALIDATION_MINIMUM_CHARS = "Password must be at least 6 characters"
+private fun getPasswordError(
+    password: String,
+    type: PasswordType,
+): StringResource? {
+    return when {
+        password.isEmpty() -> when (type) {
+            PasswordType.NEW -> Res.string.new_password_error_validation_blank
+            PasswordType.CONFIRM -> Res.string.confirm_password_error_validation_blank
+        }
+
+        password.length < 6 -> when (type) {
+            PasswordType.NEW -> Res.string.new_password_error_validation_minimum_chars
+            PasswordType.CONFIRM -> Res.string.confirm_password_error_validation_minimum_chars
+        }
+
+        else -> null
+    }
 }

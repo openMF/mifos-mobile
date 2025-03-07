@@ -12,21 +12,17 @@ package org.mifos.mobile.feature.update.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.update_password.generated.resources.Res
 import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
-import org.mifos.mobile.core.data.util.NetworkMonitor
 
 internal class UpdatePasswordViewModel(
     private val userAuthRepositoryImp: UserAuthRepository,
-    private val clientRepositoryImp: ClientRepository,
+//    private val clientRepositoryImp: ClientRepository,
 ) : ViewModel() {
 
     private val _updatePasswordUiState =
@@ -36,24 +32,18 @@ internal class UpdatePasswordViewModel(
     fun updateAccountPassword(newPassword: String, confirmPassword: String) {
         viewModelScope.launch {
             when (userAuthRepositoryImp.updateAccountPassword(newPassword, confirmPassword)) {
-                is DataState.Error<*> -> _updatePasswordUiState.value =
-                    UpdatePasswordUiState.Error(Res.string.could_not_update_password_error)
+                is DataState.Error<*> ->
+                    _updatePasswordUiState.value =
+                        UpdatePasswordUiState.Error(Res.string.could_not_update_password_error)
 
                 DataState.Loading -> _updatePasswordUiState.value = UpdatePasswordUiState.Loading
 
                 is DataState.Success<*> -> {
-                    UpdatePasswordUiState.Success
+                    _updatePasswordUiState.value = UpdatePasswordUiState.Success
                     // TODO missing method in clientRepositoryImp
 //                    clientRepositoryImp.updateAuthenticationToken(newPassword)}
                 }
             }
-        }
-    }
-
-    fun getString(id : StringResource) : String {
-        when(id) {
-
-            else -> ""
         }
     }
 }

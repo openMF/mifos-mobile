@@ -36,12 +36,12 @@ import mifos_mobile.feature.update_password.generated.resources.Res
 import mifos_mobile.feature.update_password.generated.resources.change_password
 import mifos_mobile.feature.update_password.generated.resources.confirm_password
 import mifos_mobile.feature.update_password.generated.resources.new_password
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-
 
 @Composable
 internal fun UpdatePasswordContent(
@@ -58,8 +58,8 @@ internal fun UpdatePasswordContent(
     var newPasswordError by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
 
-    var newPasswordErrorContent by rememberSaveable { mutableStateOf("") }
-    var confirmPasswordErrorContent by rememberSaveable { mutableStateOf("") }
+    var newPasswordErrorContent: StringResource? by rememberSaveable { mutableStateOf(null) }
+    var confirmPasswordErrorContent: StringResource? by rememberSaveable { mutableStateOf(null) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -72,9 +72,11 @@ internal fun UpdatePasswordContent(
             onValueChange = {
                 newPassword = it
                 newPasswordError = false
+                newPasswordErrorContent = null
+                confirmPasswordErrorContent = null
             },
             label = stringResource(Res.string.new_password),
-            errorContent = newPasswordErrorContent,
+            errorContent = newPasswordErrorContent?.let { stringResource(it) } ?: "",
             isError = newPasswordError,
             isVisible = newPasswordVisible,
             onVisibilityChange = { newPasswordVisible = it },
@@ -85,9 +87,11 @@ internal fun UpdatePasswordContent(
             onValueChange = {
                 confirmPassword = it
                 confirmPasswordError = false
+                confirmPasswordErrorContent = null
+                newPasswordErrorContent = null
             },
             label = stringResource(Res.string.confirm_password),
-            errorContent = confirmPasswordErrorContent,
+            errorContent = confirmPasswordErrorContent?.let { stringResource(it) } ?: "",
             isError = confirmPasswordError,
             isVisible = confirmPasswordVisible,
             onVisibilityChange = { confirmPasswordVisible = it },
@@ -105,6 +109,10 @@ internal fun UpdatePasswordContent(
                         setConfirmPasswordError = { confirmPasswordError = it },
                         setNewPasswordErrorContent = { newPasswordErrorContent = it },
                         setConfirmPasswordErrorContent = { confirmPasswordErrorContent = it },
+                        setPasswordDoesNotMatchOnBothError = {
+                            newPasswordErrorContent = it
+                            confirmPasswordErrorContent = it
+                        },
                     ),
                 )
             },
@@ -176,6 +184,7 @@ data class PasswordValidationParams(
     val confirmPassword: String,
     val setNewPasswordError: (Boolean) -> Unit,
     val setConfirmPasswordError: (Boolean) -> Unit,
-    val setNewPasswordErrorContent: (String) -> Unit,
-    val setConfirmPasswordErrorContent: (String) -> Unit,
+    val setNewPasswordErrorContent: (StringResource?) -> Unit,
+    val setConfirmPasswordErrorContent: (StringResource?) -> Unit,
+    val setPasswordDoesNotMatchOnBothError: (StringResource?) -> Unit,
 )
