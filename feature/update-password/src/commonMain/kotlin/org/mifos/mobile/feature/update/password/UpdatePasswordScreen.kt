@@ -9,55 +9,67 @@
  */
 package org.mifos.mobile.feature.update.password
 
-import android.content.Context
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.designsystem.components.MifosTopBar
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import kotlinx.coroutines.launch
+import mifos_mobile.feature.update_password.generated.resources.Res
+import mifos_mobile.feature.update_password.generated.resources.confirm_password
+import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
+import mifos_mobile.feature.update_password.generated.resources.dialog_action_ok
+import mifos_mobile.feature.update_password.generated.resources.error_validation_blank
+import mifos_mobile.feature.update_password.generated.resources.error_validation_minimum_chars
+import mifos_mobile.feature.update_password.generated.resources.new_password
+import mifos_mobile.feature.update_password.generated.resources.no_internet_connection
+import mifos_mobile.feature.update_password.generated.resources.password_changed_successfully
+import mifos_mobile.feature.update_password.generated.resources.update_password
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
 internal fun UpdatePasswordScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: UpdatePasswordViewModel = hiltViewModel(),
+    viewModel: UpdatePasswordViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.updatePasswordUiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     UpdatePasswordScreen(
         uiState = uiState,
+        snackbarHostState = snackbarHostState,
         navigateBack = navigateBack,
         modifier = modifier,
         validateAndUpdatePassword = { params ->
             validateAndUpdatePassword(
-                context = context,
                 params = params,
                 updateAccountPassword = viewModel::updateAccountPassword,
+                showSnackBar = {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            it,
+                            Res.string.dialog_action_ok.toString(),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                },
             )
         },
     )
@@ -66,20 +78,20 @@ internal fun UpdatePasswordScreen(
 @Composable
 private fun UpdatePasswordScreen(
     uiState: UpdatePasswordUiState,
+    snackbarHostState: SnackbarHostState,
     navigateBack: () -> Unit,
     validateAndUpdatePassword: (PasswordValidationParams) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
     var updatePasswordButtonClicked by remember { mutableStateOf(false) }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    MifosScaffold(
+        snackbarHostState = snackbarHostState,
         modifier = modifier,
         topBar = {
             MifosTopBar(
-                title = { Text(stringResource(R.string.change_password)) },
-                navigateBack = navigateBack,
+                topBarTitle = stringResource(Res.string.update_password),
+                backPress = navigateBack,
             )
         },
     ) { paddingValues ->
@@ -107,14 +119,11 @@ private fun HandleUpdatePasswordState(
     snackbarHostState: SnackbarHostState,
     navigateBack: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     when (uiState) {
         is UpdatePasswordUiState.Loading -> {
             MifosProgressIndicator(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f)),
+                    .fillMaxSize(),
             )
         }
 
@@ -122,8 +131,8 @@ private fun HandleUpdatePasswordState(
             if (updatePasswordButtonClicked) {
                 LaunchedEffect(snackbarHostState) {
                     snackbarHostState.showSnackbar(
-                        message = context.getString(R.string.could_not_update_password_error),
-                        actionLabel = context.getString(R.string.dialog_action_ok),
+                        message = Res.string.could_not_update_password_error.toString(),
+                        actionLabel = Res.string.dialog_action_ok.toString(),
                         duration = SnackbarDuration.Short,
                     )
                 }
@@ -133,8 +142,8 @@ private fun HandleUpdatePasswordState(
         is UpdatePasswordUiState.Success -> {
             LaunchedEffect(snackbarHostState) {
                 snackbarHostState.showSnackbar(
-                    message = context.getString(R.string.password_changed_successfully),
-                    actionLabel = context.getString(R.string.dialog_action_ok),
+                    message = Res.string.password_changed_successfully.toString(),
+                    actionLabel = Res.string.dialog_action_ok.toString(),
                     duration = SnackbarDuration.Short,
                 )
                 navigateBack()
@@ -146,27 +155,26 @@ private fun HandleUpdatePasswordState(
 }
 
 private fun validateAndUpdatePassword(
-    context: Context,
     params: PasswordValidationParams,
     updateAccountPassword: (newPassword: String, confirmPassword: String) -> Unit,
+    showSnackBar: (message: String) -> Unit,
 ) {
     with(params) {
         val newPasswordErrorContent =
-            getPasswordError(newPassword, context.getString(R.string.new_password), context)
+            getPasswordError(newPassword, Res.string.new_password.toString())
         val confirmPasswordErrorContent =
-            getPasswordError(confirmPassword, context.getString(R.string.confirm_password), context)
+            getPasswordError(confirmPassword, Res.string.confirm_password.toString())
 
         setNewPasswordErrorContent(newPasswordErrorContent)
         setConfirmPasswordErrorContent(confirmPasswordErrorContent)
 
         when {
             newPasswordErrorContent.isEmpty() && confirmPasswordErrorContent.isEmpty() -> {
-                if (validatePasswordMatch(newPassword, confirmPassword) &&
-                    Network.isConnected(context)
-                ) {
+                if (newPassword == confirmPassword) {
                     updateAccountPassword(newPassword, confirmPassword)
                 } else {
-                    showErrorToast(context)
+                    showSnackBar.invoke("Test password does not match")
+//                    Res.string.error_password_not_match.toString()
                 }
             }
 
@@ -188,63 +196,13 @@ private fun validateAndUpdatePassword(
 
 private fun getPasswordError(
     password: String,
-    passwordType: String,
-    context: Context,
 ): String = when {
-    password.isEmpty() -> context.getString(R.string.error_validation_blank, passwordType)
-    password.length < context.resources.getInteger(R.integer.password_minimum_length) ->
-        context.getString(
-            R.string.error_validation_minimum_chars,
-            passwordType,
-            context.resources.getInteger(R.integer.password_minimum_length),
-        )
-
+    password.isEmpty() -> password + Res.string.error_validation_blank
+    password.length < 6 -> password +  Res.string.error_validation_minimum_chars
     else -> ""
 }
 
-private fun showErrorToast(context: Context) {
-    val errorMessage = if (!Network.isConnected(context)) {
-        context.getString(R.string.no_internet_connection)
-    } else {
-        context.getString(R.string.error_password_not_match)
-    }
-    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-}
-
-private fun validatePasswordMatch(newPassword: String, confirmPassword: String): Boolean {
-    return newPassword == confirmPassword
-}
-
-internal class UiStatesParameterProvider : PreviewParameterProvider<UpdatePasswordUiState> {
-    override val values: Sequence<UpdatePasswordUiState>
-        get() = sequenceOf(
-            UpdatePasswordUiState.Initial,
-            UpdatePasswordUiState.Error(1),
-            UpdatePasswordUiState.Loading,
-            UpdatePasswordUiState.Success,
-        )
-}
-
-@Composable
-@DevicePreviews
-private fun UpdatePasswordScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class)
-    updatePasswordUiState: UpdatePasswordUiState,
-) {
-    MifosMobileTheme {
-        UpdatePasswordScreen(
-            uiState = updatePasswordUiState,
-            navigateBack = {},
-            validateAndUpdatePassword = {
-                PasswordValidationParams(
-                    newPassword = "",
-                    confirmPassword = "",
-                    setNewPasswordError = {},
-                    setConfirmPasswordError = {},
-                    setNewPasswordErrorContent = {},
-                    setConfirmPasswordErrorContent = {},
-                )
-            },
-        )
-    }
+object ResourceManager {
+    val ERROR_VALIDATION_BLANK = stringResource(Res.string.error_validation_minimum_chars)
+    const val ERROR_VALIDATION_MINIMUM_CHARS = "Password must be at least 6 characters"
 }

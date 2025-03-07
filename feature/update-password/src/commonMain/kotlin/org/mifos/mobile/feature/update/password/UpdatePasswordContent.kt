@@ -9,13 +9,13 @@
  */
 package org.mifos.mobile.feature.update.password
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,15 +28,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation.Companion.None
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.designsystem.components.MifosButton
-import org.mifos.mobile.core.designsystem.components.MifosOutlinedTextField
-import org.mifos.mobile.core.designsystem.icons.MifosIcons
+import mifos_mobile.feature.update_password.generated.resources.Res
+import mifos_mobile.feature.update_password.generated.resources.change_password
+import mifos_mobile.feature.update_password.generated.resources.confirm_password
+import mifos_mobile.feature.update_password.generated.resources.new_password
+import org.jetbrains.compose.resources.stringResource
+import org.mifos.mobile.core.designsystem.component.MifosButton
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+
 
 @Composable
 internal fun UpdatePasswordContent(
@@ -44,12 +49,8 @@ internal fun UpdatePasswordContent(
     validateAndUpdatePassword: (PasswordValidationParams) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var newPassword by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
-    }
-    var confirmPassword by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
-    }
+    var newPassword by rememberSaveable { mutableStateOf("") }
+    var confirmPassword by rememberSaveable { mutableStateOf("") }
 
     var newPasswordVisible by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
@@ -72,7 +73,7 @@ internal fun UpdatePasswordContent(
                 newPassword = it
                 newPasswordError = false
             },
-            label = R.string.new_password,
+            label = stringResource(Res.string.new_password),
             errorContent = newPasswordErrorContent,
             isError = newPasswordError,
             isVisible = newPasswordVisible,
@@ -85,7 +86,7 @@ internal fun UpdatePasswordContent(
                 confirmPassword = it
                 confirmPasswordError = false
             },
-            label = R.string.confirm_password,
+            label = stringResource(Res.string.confirm_password),
             errorContent = confirmPasswordErrorContent,
             isError = confirmPasswordError,
             isVisible = confirmPasswordVisible,
@@ -98,8 +99,8 @@ internal fun UpdatePasswordContent(
                 updatePasswordButtonClicked()
                 validateAndUpdatePassword(
                     PasswordValidationParams(
-                        newPassword = newPassword.text,
-                        confirmPassword = confirmPassword.text,
+                        newPassword = newPassword,
+                        confirmPassword = confirmPassword,
                         setNewPasswordError = { newPasswordError = it },
                         setConfirmPasswordError = { confirmPasswordError = it },
                         setNewPasswordErrorContent = { newPasswordErrorContent = it },
@@ -113,23 +114,19 @@ internal fun UpdatePasswordContent(
 
 @Composable
 private fun PasswordTextField(
-    value: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit,
-    @StringRes label: Int,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
     errorContent: String,
     isError: Boolean,
     isVisible: Boolean,
     onVisibilityChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosOutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = label,
-        supportingText = errorContent,
-        icon = R.drawable.feature_update_password_lock,
+    val mifosTextFieldConfig = MifosTextFieldConfig(
         trailingIcon = {
             val image = if (isVisible) MifosIcons.Visibility else MifosIcons.VisibilityOff
+
             if (!isError) {
                 IconButton(onClick = { onVisibilityChange(!isVisible) }) {
                     Icon(imageVector = image, contentDescription = "password visibility button")
@@ -138,9 +135,17 @@ private fun PasswordTextField(
                 Icon(imageVector = MifosIcons.Error, contentDescription = null)
             }
         },
-        error = isError,
+        isError = isError,
         visualTransformation = if (isVisible) None else PasswordVisualTransformation(),
-        keyboardType = KeyboardType.Password,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        errorText = errorContent,
+    )
+
+    MifosOutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = label,
+        config = mifosTextFieldConfig,
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
@@ -162,7 +167,7 @@ private fun UpdatePasswordButton(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
     ) {
-        Text(text = stringResource(id = R.string.change_password))
+        Text(text = stringResource(Res.string.change_password))
     }
 }
 
