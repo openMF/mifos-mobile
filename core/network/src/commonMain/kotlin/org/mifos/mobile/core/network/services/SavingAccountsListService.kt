@@ -17,6 +17,7 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
@@ -40,7 +41,7 @@ interface SavingAccountsListService {
     ): Flow<AccountOptionsTemplate>
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
-    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): HttpResponse
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): TransferResponse
 
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
     fun getSavingsAccountApplicationTemplate(

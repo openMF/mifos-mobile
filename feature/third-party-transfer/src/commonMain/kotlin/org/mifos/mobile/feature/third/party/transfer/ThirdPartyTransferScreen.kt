@@ -24,6 +24,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -34,7 +35,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 internal fun ThirdPartyTransferScreen(
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ThirdPartyTransferViewModel = koinViewModel(),
 ) {
@@ -45,7 +46,11 @@ internal fun ThirdPartyTransferScreen(
             ThirdPartyTransferEvent.AddBeneficiary -> addBeneficiary.invoke()
             ThirdPartyTransferEvent.Navigate -> navigateBack.invoke()
             is ThirdPartyTransferEvent.ReviewTransfer -> {
-                reviewTransfer(event.reviewTransferPayload, TransferType.TPT)
+                reviewTransfer(
+                    event.reviewTransferPayload,
+                    TransferType.TPT,
+                    TransferSuccessDestination.HOME,
+                )
             }
         }
     }

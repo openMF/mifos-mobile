@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.TransferRepository
+import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.network.DataManager
@@ -22,50 +23,20 @@ class TransferRepositoryImp(
     private val ioDispatcher: CoroutineDispatcher,
 ) : TransferRepository {
     override suspend fun makeTransfer(
-        fromOfficeId: Int?,
-        fromClientId: Long?,
-        fromAccountType: Int?,
-        fromAccountId: Int?,
-        toOfficeId: Int?,
-        toClientId: Long?,
-        toAccountType: Int?,
-        toAccountId: Int?,
-        transferDate: String?,
-        transferAmount: Double?,
-        transferDescription: String?,
-        dateFormat: String,
-        locale: String,
-        fromAccountNumber: String?,
-        toAccountNumber: String?,
+        payload: TransferPayload,
         transferType: TransferType?,
-    ): DataState<String> {
-        val transferPayload = TransferPayload(
-            fromOfficeId = fromOfficeId,
-            fromClientId = fromClientId,
-            fromAccountType = fromAccountType,
-            fromAccountId = fromAccountId,
-            toOfficeId = toOfficeId,
-            toClientId = toClientId,
-            toAccountType = toAccountType,
-            toAccountId = toAccountId,
-            transferDate = transferDate,
-            transferAmount = transferAmount,
-            transferDescription = transferDescription,
-            dateFormat = dateFormat,
-            locale = locale,
-            fromAccountNumber = fromAccountNumber,
-            toAccountNumber = toAccountNumber,
-        )
+    ): DataState<TransferResponse> {
         return try {
-            withContext(ioDispatcher) {
+            val response = withContext(ioDispatcher) {
                 when (transferType) {
-                    TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(transferPayload)
-                    else -> dataManager.thirdPartyTransferApi.makeTransfer(transferPayload)
+                    TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(payload)
+                    else -> dataManager.thirdPartyTransferApi.makeTransfer(payload)
                 }
             }
-            DataState.Success("Submitted successfully")
+
+            DataState.Success(response)
         } catch (e: Exception) {
-            DataState.Error(e, null)
+            DataState.Error(e)
         }
     }
 }
