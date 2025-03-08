@@ -16,10 +16,12 @@ import androidx.navigation.compose.NavHost
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
+import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
@@ -29,11 +31,14 @@ import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.HomeNavigation
 import org.mifos.mobile.feature.home.navigation.homeNavGraph
+import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
+import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -82,7 +87,7 @@ internal fun FeatureNavHost(
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
             },
-            makePayment = { _, _, _ -> },
+            makePayment = { _, _, _, _ -> },
         )
 
         clientChargeNavGraph(
@@ -90,9 +95,34 @@ internal fun FeatureNavHost(
         )
 
         thirdPartyTransferNavGraph(
-            navigateBack = appState.navController::popBackStack,
+            navigateBack = { appState.navController.popBackStack() },
             addBeneficiary = { },
-            reviewTransfer = { _, _ -> },
+            reviewTransfer = { transferPayload, transferType, transferDestination ->
+                appState.navController.navigateToTransferProcessScreen(
+                    transferPayload,
+                    transferType,
+                    transferDestination,
+                )
+            },
+        )
+
+        transferProcessNavGraph(
+            navigateBack = { appState.navController.popBackStack() },
+            onTransferSuccessNavigate = { destination ->
+                when (destination) {
+                    TransferSuccessDestination.HOME -> appState.navController.navigateToHomeScreen()
+                    TransferSuccessDestination.LOAN_ACCOUNT ->
+                        appState.navController.navigateToAccountsScreen(
+                            AccountType.LOAN,
+                            AccountsNavigation.AccountsBase.route,
+                        )
+
+                    TransferSuccessDestination.SAVINGS_ACCOUNT -> appState.navController.navigateToAccountsScreen(
+                        AccountType.SAVINGS,
+                        AccountsNavigation.AccountsBase.route,
+                    )
+                }
+            },
         )
     }
 }

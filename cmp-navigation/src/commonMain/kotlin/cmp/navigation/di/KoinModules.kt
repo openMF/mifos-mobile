@@ -27,6 +27,7 @@ import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
+import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
 
 object KoinModules {
     private val commonModules = module {
@@ -56,6 +57,7 @@ object KoinModules {
             LoanModule,
             ChargeModule,
             ThirdPartyTransferModule,
+            TransferProcessModule,
         )
     }
     private val LibraryModule = module {
