@@ -32,6 +32,9 @@ import org.mifos.mobile.feature.home.navigation.homeNavGraph
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
+import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 
@@ -50,8 +53,8 @@ internal fun FeatureNavHost(
         helpNavGraph(
             findLocations = {},
             navigateBack = appState.navController::popBackStack,
-            callHelpline = {},
-            mailHelpline = {},
+            callHelpline = { callHelpline() },
+            mailHelpline = { mailHelpline() },
         )
         homeNavGraph(
             onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
@@ -62,15 +65,26 @@ internal fun FeatureNavHost(
         accountsNavGraph(
             navController = appState.navController,
             navigateToLoanApplicationScreen = appState.navController::navigateToLoanApplication,
-            navigateToSavingsApplicationScreen = { },
+            navigateToSavingsApplicationScreen = { appState.navController::navigateToSavingsApplicationScreen },
             navigateToAccountDetail = { accountType, id ->
                 when (accountType) {
-                    AccountType.SAVINGS -> { }
-                    AccountType.LOAN ->
+                    AccountType.SAVINGS -> {
+                        appState.navController.navigateToSavingsDetailScreen(savingsId = id)
+                    }
+                    AccountType.LOAN -> {
                         appState.navController.navigateToLoanDetailScreen(loanId = id)
+                    }
                     AccountType.SHARE -> { }
                 }
             },
+        )
+
+        savingsNavGraph(
+            navController = appState.navController,
+            viewCharges = appState.navController::navigateToClientChargeScreen,
+            viewQrCode = {},
+            callHelpline = { callHelpline() },
+            reviewTransfer = { payload, type -> },
         )
 
         aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })

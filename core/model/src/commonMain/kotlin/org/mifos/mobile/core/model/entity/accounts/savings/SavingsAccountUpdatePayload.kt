@@ -15,8 +15,8 @@ import org.mifos.mobile.core.model.Parcelize
 @Parcelize
 data class SavingsAccountUpdatePayload(
 
-    val clientId: Long? = 0,
+    var clientId: Long? = 0,
 
-    val productId: Long? = 0,
+    var productId: Long? = 0,
 
 ) : Parcelable

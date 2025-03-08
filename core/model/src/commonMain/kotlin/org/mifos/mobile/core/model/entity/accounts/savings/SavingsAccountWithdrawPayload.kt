@@ -9,13 +9,15 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
+@Serializable
 @Parcelize
 data class SavingsAccountWithdrawPayload(
     val locale: String = "en",
     val dateFormat: String = "dd MMMM yyyy",
-    val withdrawnOnDate: String? = null,
-    val note: String? = null,
+    var withdrawnOnDate: String? = null,
+    var note: String? = null,
 ) : Parcelable

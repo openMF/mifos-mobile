@@ -20,6 +20,7 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
+import kotlin.time.Duration.Companion.days
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 object DateHelper {
@@ -89,6 +90,16 @@ object DateHelper {
         val year = dateList[2].toInt()
 
         return listOf(year, month, day)
+    }
+
+    fun subtractWeeks(number: Int): Long {
+        val now: Instant = Clock.System.now()
+        return now.plus((-7 * number).days).toEpochMilliseconds()
+    }
+
+    fun subtractMonths(number: Int): Long {
+        val now: Instant = Clock.System.now()
+        return now.plus((-30 * number).days).toEpochMilliseconds()
     }
 
     /**
