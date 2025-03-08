@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,13 +28,10 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreview
-
 
 @Composable
 internal fun SavingsAccountApplicationScreen(
@@ -57,12 +53,11 @@ internal fun SavingsAccountApplicationScreen(
 private fun SavingsAccountApplicationScreen(
     uiState: SavingsAccountApplicationUiState,
     navigateBack: () -> Unit,
-    submit: (Int, Int,showToast: (Int) -> Unit) -> Unit,
+    submit: (Int, Int, showToast: (Int) -> Unit) -> Unit,
     modifier: Modifier = Modifier,
     savingsWithAssociations: SavingsWithAssociations? = null,
 ) {
     var topBarTitleText by rememberSaveable { mutableStateOf("") }
-
 
     MifosScaffold(
         topBar = {
@@ -114,9 +109,9 @@ private fun SavingsAccountApplicationScreen(
     )
 }
 //
-//@DevicePreview
-//@Composable
-//private fun SavingsAccountApplicationScreenPreview() {
+// @DevicePreview
+// @Composable
+// private fun SavingsAccountApplicationScreenPreview() {
 //    MifosMobileTheme {
 //        SavingsAccountApplicationScreen(
 //            SavingsAccountApplicationUiState.Success(requestType = SavingsAccountState.UPDATE),
@@ -125,4 +120,4 @@ private fun SavingsAccountApplicationScreen(
 //            savingsWithAssociations = null,
 //        )
 //    }
-//}
+// }

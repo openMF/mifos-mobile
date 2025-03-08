@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccountWithdraw
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -78,7 +77,6 @@ private fun SavingsAccountWithdrawScreen(
     withdraw: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -89,7 +87,7 @@ private fun SavingsAccountWithdrawScreen(
     ) {
         MifosTopBar(
             backPress = { navigateBack(false) },
-            topBarTitle =  stringResource(Res.string.withdraw_savings_account)
+            topBarTitle = stringResource(Res.string.withdraw_savings_account),
         )
 
         Box(modifier = Modifier.weight(1f)) {
@@ -127,13 +125,10 @@ private fun SavingsAccountWithdrawScreen(
                 }
 
                 is SavingsAccountWithdrawUiState.WithdrawUiReady -> {}
-
             }
         }
     }
 }
-
-
 
 @Composable
 private fun SavingsAccountWithdrawContent(
@@ -166,11 +161,13 @@ private fun SavingsAccountWithdrawContent(
         Spacer(modifier = Modifier.height(16.dp))
         MifosOutlinedTextField(
             value = remark,
-            label = stringResource( Res.string.remark),
+            label = stringResource(Res.string.remark),
             config = MifosTextFieldConfig(
-                errorText = stringResource(Res.string.error_validation_blank,
-                    stringResource(Res.string.remark)),
-                isError = remarkFieldError
+                errorText = stringResource(
+                    Res.string.error_validation_blank,
+                    stringResource(Res.string.remark),
+                ),
+                isError = remarkFieldError,
             ),
             modifier = Modifier.fillMaxWidth(),
             onValueChange = {
@@ -193,7 +190,7 @@ private fun SavingsAccountWithdrawContent(
     }
 }
 
-//internal class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
+// internal class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
 //    override val values: Sequence<SavingsAccountWithdrawUiState>
 //        get() = sequenceOf(
 //            SavingsAccountWithdrawUiState.WithdrawUiReady,
@@ -201,14 +198,13 @@ private fun SavingsAccountWithdrawContent(
 //            SavingsAccountWithdrawUiState.Loading,
 //            SavingsAccountWithdrawUiState.Success,
 //        )
-//}
+// }
 
-
-//@Composable
-//private fun SavingsAccountWithdrawScreenPreview(
+// @Composable
+// private fun SavingsAccountWithdrawScreenPreview(
 //    @PreviewParameter(UiStatesParameterProvider::class)
 //    savingsAccountWithdrawUiState: SavingsAccountWithdrawUiState,
-//) {
+// ) {
 //    MifosMobileTheme {
 //        SavingsAccountWithdrawScreen(
 //            uiState = savingsAccountWithdrawUiState,
@@ -220,4 +216,4 @@ private fun SavingsAccountWithdrawContent(
 //            withdraw = {},
 //        )
 //    }
-//}
+// }

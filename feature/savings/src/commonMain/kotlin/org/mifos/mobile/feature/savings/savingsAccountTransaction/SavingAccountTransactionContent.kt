@@ -34,15 +34,11 @@ import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.help_line_number
 import mifos_mobile.feature.savings.generated.resources.need_help
 import mifos_mobile.feature.savings.generated.resources.savings_account_transaction
-import mifos_mobile.feature.savings.generated.resources.string_and_string
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.accounts.savings.Currency
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 internal fun SavingsAccountTransactionContent(
@@ -56,7 +52,7 @@ internal fun SavingsAccountTransactionContent(
     ) {
         LazyColumn {
             items(items = transactionList) {
-                SavingsAccountTransactionListItem(currencyCode,it)
+                SavingsAccountTransactionListItem(currencyCode, it)
                 HorizontalDivider(
                     thickness = 1.dp,
                     color = Color.Gray,
@@ -86,12 +82,10 @@ internal fun SavingsAccountTransactionContent(
 
 @Composable
 private fun SavingsAccountTransactionListItem(
-    currencyCode:String,
+    currencyCode: String,
     transaction: Transactions,
     modifier: Modifier = Modifier,
 ) {
-
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -120,9 +114,11 @@ private fun SavingsAccountTransactionListItem(
                 )
                 Text(
                     text = CurrencyFormatter
-                            .format(balance = transaction.amount,
-                                currencyCode = currencyCode, maximumFractionDigits = 3)
-                    ,
+                        .format(
+                            balance = transaction.amount,
+                            currencyCode = currencyCode,
+                            maximumFractionDigits = 3,
+                        ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -139,11 +135,11 @@ private fun SavingsAccountTransactionListItem(
                 )
                 Text(
                     text = CurrencyFormatter
-                            .format(
-                                balance = transaction.runningBalance,
-                                currencyCode =currencyCode ,
-                                maximumFractionDigits = 5)
-                    ,
+                        .format(
+                            balance = transaction.runningBalance,
+                            currencyCode = currencyCode,
+                            maximumFractionDigits = 5,
+                        ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
                     color = MaterialTheme.colorScheme.onSurface,
@@ -163,10 +159,10 @@ private fun SavingsAccountTransactionListItem(
     }
 }
 
-@DevicePreview
-@Composable
-private fun SavingsAccountTransactionContentPreview() {
-    MifosMobileTheme {
-        SavingsAccountTransactionContent(currencyCode = "USD",transactionList = listOf())
-    }
-}
+// @DevicePreview
+// @Composable
+// private fun SavingsAccountTransactionContentPreview() {
+//    MifosMobileTheme {
+//        SavingsAccountTransactionContent(currencyCode = "USD", transactionList = listOf())
+//    }
+// }

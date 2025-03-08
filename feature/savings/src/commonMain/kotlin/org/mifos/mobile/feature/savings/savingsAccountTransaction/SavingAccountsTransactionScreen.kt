@@ -37,11 +37,8 @@ import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 
-
-
 @Composable
 internal fun SavingsAccountTransactionScreen(
-
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SavingAccountsTransactionViewModel = koinViewModel(),
@@ -59,14 +56,12 @@ internal fun SavingsAccountTransactionScreen(
 
 @Composable
 internal fun SavingsAccountTransactionScreen(
-
     uiState: SavingsAccountTransactionUiState,
     navigateBack: () -> Unit,
     retryConnection: () -> Unit,
     filterList: (SavingsTransactionFilterDataModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     var transactionList by remember { mutableStateOf(listOf<Transactions>()) }
     var isDialogOpen by rememberSaveable { mutableStateOf(false) }
 
@@ -76,17 +71,16 @@ internal fun SavingsAccountTransactionScreen(
                 startDate = Clock.System.now().toEpochMilliseconds(),
                 endDate = Clock.System.now().toEpochMilliseconds(),
                 radioFilter = null,
-                checkBoxFilters = mutableListOf()
-            )
+                checkBoxFilters = mutableListOf(),
+            ),
         )
     }
-
 
     MifosScaffold(
         modifier = modifier,
         topBar = {
             MifosTopBar(
-                 backPress = navigateBack,
+                backPress = navigateBack,
                 topBarTitle = stringResource(Res.string.savings_account_transaction),
                 actions = {
                     IconButton(onClick = { isDialogOpen = true }) {
@@ -124,7 +118,10 @@ internal fun SavingsAccountTransactionScreen(
                             )
                         } else {
                             transactionList = uiState.savingAccountsTransactionList
-                            SavingsAccountTransactionContent(currencyCode =uiState.savingAccountsTransactionList[0].currency?.code ?:"USD",transactionList = transactionList)
+                            SavingsAccountTransactionContent(
+                                currencyCode = uiState.savingAccountsTransactionList[0].currency?.code ?: "USD",
+                                transactionList = transactionList,
+                            )
                         }
                     }
                 }
@@ -144,11 +141,7 @@ internal fun SavingsAccountTransactionScreen(
     }
 }
 
-
-
-
-
-//internal class SavingsAccountTransactionUiStatesParameterProvider :
+// internal class SavingsAccountTransactionUiStatesParameterProvider :
 //    PreviewParameterProvider<SavingsAccountTransactionUiState> {
 //    override val values: Sequence<SavingsAccountTransactionUiState>
 //        get() = sequenceOf(
@@ -156,15 +149,14 @@ internal fun SavingsAccountTransactionScreen(
 //            SavingsAccountTransactionUiState.Error(""),
 //            SavingsAccountTransactionUiState.Loading,
 //        )
-//}
+// }
 
-
-//@DevicePreviews
-//@Composable
-//private fun SavingsAccountTransactionScreenPreview(
+// @DevicePreviews
+// @Composable
+// private fun SavingsAccountTransactionScreenPreview(
 //    @PreviewParameter(SavingsAccountTransactionUiStatesParameterProvider::class)
 //    savingsAccountUiState: SavingsAccountTransactionUiState,
-//) {
+// ) {
 //    MifosMobileTheme {
 //        SavingsAccountTransactionScreen(
 //            uiState = savingsAccountUiState,
@@ -173,4 +165,4 @@ internal fun SavingsAccountTransactionScreen(
 //            filterList = { },
 //        )
 //    }
-//}
+// }

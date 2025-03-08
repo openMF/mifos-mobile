@@ -61,7 +61,6 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.DarkGray
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.Primary
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
@@ -69,8 +68,6 @@ import org.mifos.mobile.core.ui.component.MFStepProcess
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.StepProcessState
 import org.mifos.mobile.core.ui.component.getStepState
-import org.mifos.mobile.core.ui.utils.DevicePreview
-
 
 @Composable
 internal fun SavingsMakeTransferContent(
@@ -303,7 +300,7 @@ private fun EnterAmountStep(
                 config = MifosTextFieldConfig(
                     errorText = amountError?.let { stringResource(it) },
                     enabled = outstandingBalance == null,
-                    isError = showAmountError
+                    isError = showAmountError,
                 ),
                 label = stringResource(Res.string.enter_amount),
             )
@@ -382,13 +379,13 @@ private fun RemarkStep(
     }
 }
 
-//@DevicePreview
-//@Composable
-//private fun SavingsMakeTransferContentPreview() {
+// @DevicePreview
+// @Composable
+// private fun SavingsMakeTransferContentPreview() {
 //    MifosMobileTheme {
 //        SavingsMakeTransferContent(
 //            uiData = SavingsMakeTransferUiData(),
 //            reviewTransfer = {},
 //        )
 //    }
-//}
+// }

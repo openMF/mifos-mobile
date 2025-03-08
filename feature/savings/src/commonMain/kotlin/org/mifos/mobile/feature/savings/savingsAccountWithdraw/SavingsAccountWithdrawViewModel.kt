@@ -17,25 +17,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
-import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWithdrawUiState.WithdrawUiReady
 
 internal class SavingsAccountWithdrawViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
     private val networkMonitor: NetworkMonitor,
-) :ViewModel() {
+) : ViewModel() {
 
     init {
         viewModelScope.launch {
@@ -82,8 +79,7 @@ internal class SavingsAccountWithdrawViewModel(
                 savingsWithAssociations.value?.data?.accountNo,
                 payload,
             )
-            when(response){
-
+            when (response) {
                 is DataState.Error -> {
                     mUiState.value =
                         SavingsAccountWithdrawUiState.Error(response.message)
@@ -96,8 +92,6 @@ internal class SavingsAccountWithdrawViewModel(
             }
         }
     }
-
-
 }
 
 internal sealed interface SavingsAccountWithdrawUiState {

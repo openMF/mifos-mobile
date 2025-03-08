@@ -23,8 +23,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import mifos_mobile.feature.savings.generated.resources.Res
-import mifos_mobile.feature.savings.generated.resources.select_product_id
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -36,7 +34,6 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.feature.savings.savingsAccountApplication.SavingsAccountApplicationUiState.Loading
-
 
 internal class SavingsAccountApplicationViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
@@ -76,7 +73,6 @@ internal class SavingsAccountApplicationViewModel(
             initialValue = null,
         )
 
-
     private fun loadSavingsAccountApplicationTemplate() {
         viewModelScope.launch {
             _savingsAccountApplicationUiState.value = Loading
@@ -103,39 +99,37 @@ internal class SavingsAccountApplicationViewModel(
     private fun submitSavingsAccountApplication(payload: SavingsAccountApplicationPayload?) {
         viewModelScope.launch {
             _savingsAccountApplicationUiState.value = Loading
-            val response= savingsAccountRepositoryImp.submitSavingAccountApplication(payload)
-                when(response)
-                {
-                    is DataState.Error -> {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.Error(response.message)
-                    }
-                    DataState.Loading -> TODO()
-                    is DataState.Success -> {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.Success(savingsAccountState)
-                    }
+            val response = savingsAccountRepositoryImp.submitSavingAccountApplication(payload)
+            when (response) {
+                is DataState.Error -> {
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountApplicationUiState.Error(response.message)
                 }
+                DataState.Loading -> TODO()
+                is DataState.Success -> {
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountApplicationUiState.Success(savingsAccountState)
+                }
+            }
         }
     }
 
     private fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
         viewModelScope.launch {
             _savingsAccountApplicationUiState.value = Loading
-            val response=savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload)
+            val response = savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload)
 
-                when(response)
-                {
-                    is DataState.Error -> {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.Error(response.message)
-                    }
-                    DataState.Loading -> TODO()
-                    is DataState.Success -> {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.Success(savingsAccountState)
-                    }
+            when (response) {
+                is DataState.Error -> {
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountApplicationUiState.Error(response.message)
                 }
+                DataState.Loading -> TODO()
+                is DataState.Success -> {
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountApplicationUiState.Success(savingsAccountState)
+                }
+            }
         }
     }
 
@@ -143,9 +137,9 @@ internal class SavingsAccountApplicationViewModel(
         loadSavingsAccountApplicationTemplate()
     }
 
-    fun onSubmit(productId: Int, clientId: Int,showToast: (Int) -> Unit) {
+    fun onSubmit(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
         if (savingsAccountState == SavingsAccountState.CREATE) {
-            submitSavingsAccount(productId = productId, clientId = clientId,showToast)
+            submitSavingsAccount(productId = productId, clientId = clientId, showToast)
         } else {
             updateSavingAccount(productId = productId, clientId = clientId)
         }
@@ -158,7 +152,7 @@ internal class SavingsAccountApplicationViewModel(
         updateSavingsAccount(savingsWithAssociations.value?.id, payload)
     }
 
-    private fun submitSavingsAccount(productId: Int, clientId: Int,showToast: (Int) -> Unit) {
+    private fun submitSavingsAccount(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
         val payload = SavingsAccountApplicationPayload()
         payload.clientId = clientId
         if (productId != -1) {
@@ -168,7 +162,7 @@ internal class SavingsAccountApplicationViewModel(
             return
         }
         payload.submittedOnDate =
-            DateHelper.getSpecificFormat(DateHelper.FULL_MONTH,DateHelper.formattedFullDate )
+            DateHelper.getSpecificFormat(DateHelper.FULL_MONTH, DateHelper.formattedFullDate)
         submitSavingsAccountApplication(payload)
     }
 }

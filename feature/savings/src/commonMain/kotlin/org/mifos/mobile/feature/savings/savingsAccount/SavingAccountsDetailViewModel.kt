@@ -28,14 +28,12 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.datastore.UserPreferencesDataSource
 import org.mifos.mobile.core.designsystem.theme.Blue
 import org.mifos.mobile.core.designsystem.theme.DepositGreen
 import org.mifos.mobile.core.designsystem.theme.LightYellow
 import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
-
 
 internal class SavingAccountsDetailViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,

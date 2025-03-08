@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,7 +8,6 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 package org.mifos.mobile.feature.savings.savingsAccountApplication
-
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -48,12 +47,9 @@ import mifos_mobile.feature.savings.generated.resources.submission_date
 import mifos_mobile.feature.savings.generated.resources.submit
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
-//import org.mifos.mobile.core.common.utils.getTodayFormatted
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 internal fun SavingsAccountApplicationContent(
@@ -80,7 +76,7 @@ internal fun SavingsAccountApplicationContent(
                 Spacer(modifier = Modifier.height(16.dp))
                 TitleBodyRow(
                     titleText = stringResource(Res.string.submission_date),
-                    bodyText = DateHelper.formattedFullDate
+                    bodyText = DateHelper.formattedFullDate,
                 )
             }
         }
@@ -96,7 +92,7 @@ internal fun SavingsAccountApplicationContent(
         Spacer(modifier = Modifier.height(20.dp))
 
         MifosButton(
-            content = { Text(stringResource( Res.string.submit)) },
+            content = { Text(stringResource(Res.string.submit)) },
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 submit(selectProductId, savingsAccountTemplate?.clientId ?: -1) {
@@ -109,15 +105,12 @@ internal fun SavingsAccountApplicationContent(
     }
 }
 
-
-
 @Composable
 private fun SelectProductIdDropDown(
     existingProduct: String?,
     selectProductId: (Int) -> Unit,
     modifier: Modifier = Modifier,
     savingsAccountTemplate: SavingsAccountTemplate? = null,
-
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedProduct by remember { mutableStateOf(existingProduct ?: "") }
@@ -199,9 +192,9 @@ private fun TitleBodyRow(
     }
 }
 //
-//@DevicePreview
-//@Composable
-//private fun SavingsAccountApplicationContentPreview() {
+// @DevicePreview
+// @Composable
+// private fun SavingsAccountApplicationContentPreview() {
 //    MifosMobileTheme {
 //        SavingsAccountApplicationContent(
 //            submit = { _, _, _ -> },
@@ -209,4 +202,4 @@ private fun TitleBodyRow(
 //            savingsAccountTemplate = null,
 //        )
 //    }
-//}
+// }

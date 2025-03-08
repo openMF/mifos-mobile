@@ -31,8 +31,6 @@ import mifos_mobile.feature.savings.generated.resources.update_savings_account
 import mifos_mobile.feature.savings.generated.resources.withdraw_savings_account
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,10 +44,12 @@ internal fun SavingsAccountDetailTopBar(
 
     TopAppBar(
         modifier = modifier,
-        title = { Text(
-            text = stringResource(Res.string.saving_account_details),
-            fontSize = 20.sp
-        ) },
+        title = {
+            Text(
+                text = stringResource(Res.string.saving_account_details),
+                fontSize = 20.sp,
+            )
+        },
         navigationIcon = {
             IconButton(
                 onClick = { navigateBack.invoke() },
@@ -94,9 +94,9 @@ internal fun SavingsAccountDetailTopBar(
     )
 }
 
-//@DevicePreview
-//@Composable
-//private fun SavingsAccountDetailTopBarPreview() {
+// @DevicePreview
+// @Composable
+// private fun SavingsAccountDetailTopBarPreview() {
 //    MifosMobileTheme {
 //        SavingsAccountDetailTopBar(
 //            navigateBack = {},
@@ -104,4 +104,4 @@ internal fun SavingsAccountDetailTopBar(
 //            withdrawSavingsAccount = {},
 //        )
 //    }
-//}
+// }

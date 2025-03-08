@@ -12,15 +12,10 @@ package org.mifos.mobile.feature.savings.savingsMakeTransfer
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.deposit
 import mifos_mobile.feature.savings.generated.resources.transfer
@@ -32,8 +27,6 @@ import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.EventsEffect
-
 
 @Composable
 internal fun SavingsMakeTransferScreen(
@@ -65,14 +58,14 @@ private fun SavingsMakeTransferScreen(
     modifier: Modifier = Modifier,
     onCancelledClicked: () -> Unit = {},
 ) {
-
-
     MifosScaffold(
-        topBarTitle= stringResource(if (uiData.transferType == Constants.TRANSFER_PAY_TO) {
-            Res.string.deposit
-        } else {
-            Res.string.transfer
-        }),
+        topBarTitle = stringResource(
+            if (uiData.transferType == Constants.TRANSFER_PAY_TO) {
+                Res.string.deposit
+            } else {
+                Res.string.transfer
+            },
+        ),
         backPress = navigateBack,
         modifier = modifier,
         content = {
@@ -106,7 +99,7 @@ private fun SavingsMakeTransferScreen(
 }
 
 //
-//internal class SavingsMakeTransferUiStatesPreviews :
+// internal class SavingsMakeTransferUiStatesPreviews :
 //    PreviewParameterProvider<SavingsMakeTransferUiState> {
 //    override val values: Sequence<SavingsMakeTransferUiState>
 //        get() = sequenceOf(
@@ -114,14 +107,14 @@ private fun SavingsMakeTransferScreen(
 //            SavingsMakeTransferUiState.Error(""),
 //            SavingsMakeTransferUiState.Loading,
 //        )
-//}
+// }
 //
-//@DevicePreview
-//@Composable
-//private fun SavingsMakeTransferContentPreview(
+// @DevicePreview
+// @Composable
+// private fun SavingsMakeTransferContentPreview(
 //    @PreviewParameter(SavingsMakeTransferUiStatesPreviews::class)
 //    savingsMakeTransferUIState: SavingsMakeTransferUiState,
-//) {
+// ) {
 //    MifosMobileTheme {
 //        SavingsMakeTransferScreen(
 //            navigateBack = { },
@@ -131,4 +124,4 @@ private fun SavingsMakeTransferScreen(
 //            uiData = SavingsMakeTransferUiData(),
 //        )
 //    }
-//}
+// }

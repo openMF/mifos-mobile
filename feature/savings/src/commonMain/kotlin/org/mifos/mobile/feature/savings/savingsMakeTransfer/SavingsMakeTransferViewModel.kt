@@ -11,9 +11,9 @@ package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -25,7 +25,6 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-
 
 internal class SavingsMakeTransferViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
@@ -63,20 +62,21 @@ internal class SavingsMakeTransferViewModel(
 
                 is DataState.Error -> SavingsMakeTransferUiState.Error(result.exception.message)
                 DataState.Loading -> SavingsMakeTransferUiState.Loading
-                is DataState.Success -> SavingsMakeTransferUiState.ShowUI
-                    .also {
-                        _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
-                            .copy(
-                                accountOptionsTemplate = result.data,
-                                transferType = transferType.value,
-                                outstandingBalance = if (outstandingBalance.value == 0.0) {
-                                    null
-                                } else {
-                                    outstandingBalance.value
-                                },
-                                accountId = accountId.value,
-                            )
-                    }
+                is DataState.Success ->
+                    SavingsMakeTransferUiState.ShowUI
+                        .also {
+                            _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
+                                .copy(
+                                    accountOptionsTemplate = result.data,
+                                    transferType = transferType.value,
+                                    outstandingBalance = if (outstandingBalance.value == 0.0) {
+                                        null
+                                    } else {
+                                        outstandingBalance.value
+                                    },
+                                    accountId = accountId.value,
+                                )
+                        }
             }
         }.stateIn(
             scope = viewModelScope,

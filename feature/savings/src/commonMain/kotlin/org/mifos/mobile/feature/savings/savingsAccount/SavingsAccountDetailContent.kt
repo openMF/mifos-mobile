@@ -38,7 +38,6 @@ import mifos_mobile.feature.savings.generated.resources.account_balance
 import mifos_mobile.feature.savings.generated.resources.account_number
 import mifos_mobile.feature.savings.generated.resources.account_status
 import mifos_mobile.feature.savings.generated.resources.deposit
-import mifos_mobile.feature.savings.generated.resources.double_and_string
 import mifos_mobile.feature.savings.generated.resources.help_line_number
 import mifos_mobile.feature.savings.generated.resources.ic_charges
 import mifos_mobile.feature.savings.generated.resources.ic_compare_arrows_black_24dp
@@ -55,8 +54,6 @@ import mifos_mobile.feature.savings.generated.resources.nominal_interest_rate
 import mifos_mobile.feature.savings.generated.resources.not_available
 import mifos_mobile.feature.savings.generated.resources.qr_code
 import mifos_mobile.feature.savings.generated.resources.savings_charges
-import mifos_mobile.feature.savings.generated.resources.string_and_double
-import mifos_mobile.feature.savings.generated.resources.string_and_string
 import mifos_mobile.feature.savings.generated.resources.total_deposits
 import mifos_mobile.feature.savings.generated.resources.total_withdrawal
 import mifos_mobile.feature.savings.generated.resources.transactions
@@ -66,8 +63,6 @@ import mifos_mobile.feature.savings.generated.resources.view_transactions
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
-import org.mifos.mobile.core.common.SymbolsUtils
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
@@ -138,7 +133,6 @@ private fun AccountDetailsCard(
     makeTransfer: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     OutlinedCard(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -147,10 +141,12 @@ private fun AccountDetailsCard(
             MifosTextTitleDescDoubleLine(
                 title = stringResource(Res.string.account_balance),
                 description =
-                    CurrencyFormatter
-                        .format(savingsAccount.summary?.accountBalance ?: 0.0,
-                            currencyCode = savingsAccount.transactions[0].currency?.code?: "USD",
-                            maximumFractionDigits = 5),
+                CurrencyFormatter
+                    .format(
+                        savingsAccount.summary?.accountBalance ?: 0.0,
+                        currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                        maximumFractionDigits = 5,
+                    ),
                 descriptionStyle = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
                 ),
@@ -178,7 +174,7 @@ private fun AccountDetailsCard(
                 description = CurrencyFormatter.format(
                     savingsAccount.getNominalAnnualInterestRate(),
                     savingsAccount.currency?.code,
-                    2
+                    2,
                 ),
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
             )
@@ -188,10 +184,12 @@ private fun AccountDetailsCard(
             MifosTextTitleDescDoubleLine(
                 title = stringResource(Res.string.total_deposits),
                 description = if (savingsAccount.summary?.totalDeposits != null) {
-                        CurrencyFormatter
-                            .format(savingsAccount.summary?.totalDeposits ?: 0.0,
-                                currencyCode = savingsAccount.transactions[0].currency?.code?: "USD",
-                                maximumFractionDigits = 3)
+                    CurrencyFormatter
+                        .format(
+                            savingsAccount.summary?.totalDeposits ?: 0.0,
+                            currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                            maximumFractionDigits = 3,
+                        )
                 } else {
                     stringResource(Res.string.not_available)
                 },
@@ -204,12 +202,12 @@ private fun AccountDetailsCard(
                 title = stringResource(Res.string.total_withdrawal),
                 descriptionStyle = MaterialTheme.typography.bodyLarge,
                 description = if (savingsAccount.summary?.totalDeposits != null) {
-
-                        CurrencyFormatter
-                            .format(savingsAccount.summary?.totalWithdrawals ?: 0.0,
-                                currencyCode = savingsAccount.transactions[0].currency?.code?: "USD",
-                                maximumFractionDigits = 3)
-
+                    CurrencyFormatter
+                        .format(
+                            savingsAccount.summary?.totalWithdrawals ?: 0.0,
+                            currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                            maximumFractionDigits = 3,
+                        )
                 } else {
                     stringResource(Res.string.no_withdrawals)
                 },
@@ -222,7 +220,7 @@ private fun AccountDetailsCard(
                 horizontalArrangement = Arrangement.End,
             ) {
                 MifosOutlinedButton(
-                    content = {Text(text = stringResource(Res.string.deposit))},
+                    content = { Text(text = stringResource(Res.string.deposit)) },
                     onClick = {
                         if (savingsAccount.status?.active == true) {
                             deposit()
@@ -233,7 +231,7 @@ private fun AccountDetailsCard(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 MifosOutlinedButton(
-                    content = {Text(text = stringResource(Res.string.make_transfer))},
+                    content = { Text(text = stringResource(Res.string.make_transfer)) },
                     onClick = {
                         if (savingsAccount.status?.active == true) {
                             makeTransfer()
@@ -250,7 +248,6 @@ private fun LastTransactionCard(
     savingsWithAssociations: SavingsWithAssociations,
     modifier: Modifier = Modifier,
 ) {
-
     val isTransactionEmpty = savingsWithAssociations.transactions.isEmpty()
 
     Column(modifier = modifier.fillMaxWidth()) {
@@ -272,10 +269,11 @@ private fun LastTransactionCard(
                         stringResource(Res.string.no_transaction)
                     } else {
                         CurrencyFormatter
-                            .format(savingsWithAssociations.transactions[0].amount ?: 0.0,
-                                currencyCode = savingsWithAssociations.transactions[0].currency?.code?: "USD",
-                                maximumFractionDigits = 5)
-
+                            .format(
+                                savingsWithAssociations.transactions[0].amount ?: 0.0,
+                                currencyCode = savingsWithAssociations.transactions[0].currency?.code ?: "USD",
+                                maximumFractionDigits = 5,
+                            )
                     },
                 )
 
@@ -296,10 +294,12 @@ private fun LastTransactionCard(
                         title = stringResource(Res.string.min_required_balance),
                         descriptionStyle = MaterialTheme.typography.bodyLarge,
                         description =
-                            CurrencyFormatter
-                                .format(savingsWithAssociations.minRequiredOpeningBalance ?: 0.0,
-                                    currencyCode = savingsWithAssociations.transactions[0].currency?.code?: "USD",
-                                    maximumFractionDigits = 3)
+                        CurrencyFormatter
+                            .format(
+                                savingsWithAssociations.minRequiredOpeningBalance ?: 0.0,
+                                currencyCode = savingsWithAssociations.transactions[0].currency?.code ?: "USD",
+                                maximumFractionDigits = 3,
+                            ),
                     )
                 }
             }

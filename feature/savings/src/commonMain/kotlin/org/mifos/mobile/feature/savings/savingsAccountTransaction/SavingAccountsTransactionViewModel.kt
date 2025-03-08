@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
-
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.graphics.Color
@@ -44,7 +43,6 @@ import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.savings.savingsAccountTransaction.SavingsAccountTransactionUiState.Loading
-import androidx.compose.runtime.saveable.listSaver
 
 internal class SavingAccountsTransactionViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
@@ -222,7 +220,6 @@ internal fun getTransactionTriangleResId(transactionType: TransactionType?): Dra
     } ?: Res.drawable.triangular_red_view
 }
 
-
 data class SavingsTransactionFilterDataModel(
     val startDate: Long,
     val endDate: Long,
@@ -237,7 +234,7 @@ val SavingsTransactionFilterDataModelSaver: Saver<SavingsTransactionFilterDataMo
                 it.startDate,
                 it.endDate,
                 it.radioFilter?.name,
-                it.checkBoxFilters.map { filter -> filter.name }
+                it.checkBoxFilters.map { filter -> filter.name },
             )
         },
         restore = {
@@ -245,12 +242,15 @@ val SavingsTransactionFilterDataModelSaver: Saver<SavingsTransactionFilterDataMo
                 startDate = it[0] as Long,
                 endDate = it[1] as Long,
                 radioFilter = (it[2] as? String)?.let { name -> SavingsTransactionRadioFilter.valueOf(name) },
-                checkBoxFilters = (it[3] as List<String>).map { name -> SavingsTransactionCheckBoxFilter.valueOf(name) }.toMutableList()
+                checkBoxFilters =
+                (it[3] as List<String>).map
+                    { name -> SavingsTransactionCheckBoxFilter.valueOf(name) }
+                    .toMutableList(),
             )
-        }
+        },
     )
 
-enum class SavingsTransactionRadioFilter(val textResId:StringResource) {
+enum class SavingsTransactionRadioFilter(val textResId: StringResource) {
     DATE(textResId = Res.string.date),
     FOUR_WEEKS(textResId = Res.string.four_weeks),
     THREE_MONTHS(textResId = Res.string.three_months),

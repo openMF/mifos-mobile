@@ -22,13 +22,10 @@ import mifos_mobile.feature.savings.generated.resources.ic_assignment_turned_in_
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreview
-
 
 @Composable
 internal fun SavingsAccountDetailScreen(
@@ -42,7 +39,7 @@ internal fun SavingsAccountDetailScreen(
     callUs: () -> Unit,
     deposit: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SavingAccountsDetailViewModel= koinViewModel(),
+    viewModel: SavingAccountsDetailViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.savingAccountsDetailUiState.collectAsStateWithLifecycle()
     val savingsId = viewModel.savingsId.collectAsStateWithLifecycle().value ?: -1L
@@ -57,13 +54,11 @@ internal fun SavingsAccountDetailScreen(
         viewTransaction = { viewTransaction(savingsId) },
         viewCharges = viewCharges,
 //        viewQrCode = { viewQrCode(viewModel.getQrString(null)) },
-        viewQrCode={viewQrCode("")},
+        viewQrCode = { viewQrCode("") },
         callUs = callUs,
         deposit = { deposit(savingsId) },
     )
 }
-
-
 
 @Composable
 private fun SavingsAccountDetailScreen(
@@ -120,9 +115,9 @@ private fun SavingsAccountDetailScreen(
     }
 }
 //
-//@DevicePreview
-//@Composable
-//private fun SavingsAccountDetailScreenPreview() {
+// @DevicePreview
+// @Composable
+// private fun SavingsAccountDetailScreenPreview() {
 //    MifosMobileTheme {
 //        SavingsAccountDetailScreen(
 //            uiState = SavingsAccountDetailUiState.Loading,
@@ -137,4 +132,4 @@ private fun SavingsAccountDetailScreen(
 //            deposit = {},
 //        )
 //    }
-//}
+// }
