@@ -19,9 +19,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.update_password.generated.resources.Res
 import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
 import mifos_mobile.feature.update_password.generated.resources.dialog_action_ok
@@ -29,9 +31,14 @@ import mifos_mobile.feature.update_password.generated.resources.password_changed
 import mifos_mobile.feature.update_password.generated.resources.update_password
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun UpdatePasswordScreen(
@@ -39,93 +46,84 @@ internal fun UpdatePasswordScreen(
     modifier: Modifier = Modifier,
     viewModel: UpdatePasswordViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.updatePasswordUiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    UpdatePasswordScreen(
-        uiState = uiState,
-        snackbarHostState = snackbarHostState,
-        navigateBack = navigateBack,
-        modifier = modifier,
-        validateAndUpdatePassword = viewModel::validateAndUpdatePassword,
-    )
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            EditPasswordEvent.NavigateBack -> navigateBack()
+            is EditPasswordEvent.ShowToast -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+            }
+        }
+    }
+
+    Box(modifier) {
+        EditPasswordDialogs(
+            dialogState = state.dialogState,
+            onDismissRequest = remember(viewModel) {
+                { viewModel.trySendAction(EditPasswordAction.ErrorDialogDismiss) }
+            },
+        )
+
+        UpdatePasswordScreen(
+            state = state,
+            snackbarHostState = snackbarHostState,
+            onAction = remember(viewModel) {
+                { viewModel.trySendAction(it) }
+            },
+        )
+    }
 }
 
 @Composable
 private fun UpdatePasswordScreen(
-    uiState: UpdatePasswordUiState,
-    snackbarHostState: SnackbarHostState,
-    navigateBack: () -> Unit,
-    validateAndUpdatePassword: (PasswordValidationParams) -> Unit,
     modifier: Modifier = Modifier,
+    state: EditPasswordState,
+    snackbarHostState: SnackbarHostState,
+    onAction: (EditPasswordAction) -> Unit,
 ) {
-    var updatePasswordButtonClicked by remember { mutableStateOf(false) }
-
     MifosScaffold(
         snackbarHostState = snackbarHostState,
         modifier = modifier,
         topBar = {
             MifosTopBar(
                 topBarTitle = stringResource(Res.string.update_password),
-                backPress = navigateBack,
+                backPress = {
+                    onAction(EditPasswordAction.NavigateBackClick)
+                },
             )
         },
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             UpdatePasswordContent(
-                updatePasswordButtonClicked = { updatePasswordButtonClicked = true },
-                validateAndUpdatePassword = validateAndUpdatePassword,
-            )
-
-            HandleUpdatePasswordState(
-                uiState = uiState,
-                updatePasswordButtonClicked = updatePasswordButtonClicked,
-                snackbarHostState = snackbarHostState,
-                navigateBack = navigateBack,
+                onAction = onAction,
+                state = state,
             )
         }
     }
 }
 
 @Composable
-@Suppress("ModifierMissing")
-private fun HandleUpdatePasswordState(
-    uiState: UpdatePasswordUiState,
-    updatePasswordButtonClicked: Boolean,
-    snackbarHostState: SnackbarHostState,
-    navigateBack: () -> Unit,
+private fun EditPasswordDialogs(
+    dialogState: EditPasswordDialog?,
+    onDismissRequest: () -> Unit,
 ) {
-    when (uiState) {
-        is UpdatePasswordUiState.Loading -> {
-            MifosProgressIndicator(
-                modifier = Modifier
-                    .fillMaxSize(),
-            )
-        }
+    when (dialogState) {
+        is EditPasswordDialog.Error -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = onDismissRequest,
+        )
 
-        is UpdatePasswordUiState.Error -> {
-            if (updatePasswordButtonClicked) {
-                LaunchedEffect(snackbarHostState) {
-                    snackbarHostState.showSnackbar(
-                        message = Res.string.could_not_update_password_error.toString(),
-                        actionLabel = Res.string.dialog_action_ok.toString(),
-                        duration = SnackbarDuration.Short,
-                    )
-                }
-            }
-        }
+        is EditPasswordDialog.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
 
-        is UpdatePasswordUiState.Success -> {
-            LaunchedEffect(snackbarHostState) {
-                snackbarHostState.showSnackbar(
-                    message = Res.string.password_changed_successfully.toString(),
-                    actionLabel = Res.string.dialog_action_ok.toString(),
-                    duration = SnackbarDuration.Short,
-                )
-                navigateBack()
-            }
-        }
-
-        is UpdatePasswordUiState.Initial -> Unit
+        null -> Unit
     }
 }

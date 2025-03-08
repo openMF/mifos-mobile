@@ -45,15 +45,11 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 @Composable
 internal fun UpdatePasswordContent(
-    updatePasswordButtonClicked: () -> Unit,
-    validateAndUpdatePassword: (PasswordValidationParams) -> Unit,
+    state: EditPasswordState,
     modifier: Modifier = Modifier,
+    onAction: (EditPasswordAction) -> Unit,
 ) {
-    var newPassword by rememberSaveable { mutableStateOf("") }
-    var confirmPassword by rememberSaveable { mutableStateOf("") }
 
-    var newPasswordVisible by rememberSaveable { mutableStateOf(false) }
-    var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
     var newPasswordError by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
@@ -67,13 +63,13 @@ internal fun UpdatePasswordContent(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        var newPasswordVisible by rememberSaveable { mutableStateOf(false) }
+        var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
+
         PasswordTextField(
-            value = newPassword,
+            value = state.newPasswordInput,
             onValueChange = {
-                newPassword = it
-                newPasswordError = false
-                newPasswordErrorContent = null
-                confirmPasswordErrorContent = null
+                onAction(EditPasswordAction.NewPasswordChange(it))
             },
             label = stringResource(Res.string.new_password),
             errorContent = newPasswordErrorContent?.let { stringResource(it) } ?: "",
@@ -83,12 +79,9 @@ internal fun UpdatePasswordContent(
         )
 
         PasswordTextField(
-            value = confirmPassword,
+            value = state.confirmPasswordInput,
             onValueChange = {
-                confirmPassword = it
-                confirmPasswordError = false
-                confirmPasswordErrorContent = null
-                newPasswordErrorContent = null
+                onAction(EditPasswordAction.ConfirmPasswordChange(it))
             },
             label = stringResource(Res.string.confirm_password),
             errorContent = confirmPasswordErrorContent?.let { stringResource(it) } ?: "",
@@ -100,21 +93,7 @@ internal fun UpdatePasswordContent(
         UpdatePasswordButton(
             onClick = {
                 keyboardController?.hide()
-                updatePasswordButtonClicked()
-                validateAndUpdatePassword(
-                    PasswordValidationParams(
-                        newPassword = newPassword,
-                        confirmPassword = confirmPassword,
-                        setNewPasswordError = { newPasswordError = it },
-                        setConfirmPasswordError = { confirmPasswordError = it },
-                        setNewPasswordErrorContent = { newPasswordErrorContent = it },
-                        setConfirmPasswordErrorContent = { confirmPasswordErrorContent = it },
-                        setPasswordDoesNotMatchOnBothError = {
-                            newPasswordErrorContent = it
-                            confirmPasswordErrorContent = it
-                        },
-                    ),
-                )
+                onAction(EditPasswordAction.SubmitClick)
             },
         )
     }
