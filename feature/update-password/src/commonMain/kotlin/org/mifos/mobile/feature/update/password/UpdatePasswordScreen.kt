@@ -23,16 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.update_password.generated.resources.Res
-import mifos_mobile.feature.update_password.generated.resources.confirm_password_error_validation_blank
-import mifos_mobile.feature.update_password.generated.resources.confirm_password_error_validation_minimum_chars
 import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
 import mifos_mobile.feature.update_password.generated.resources.dialog_action_ok
-import mifos_mobile.feature.update_password.generated.resources.error_password_not_match
-import mifos_mobile.feature.update_password.generated.resources.new_password_error_validation_blank
-import mifos_mobile.feature.update_password.generated.resources.new_password_error_validation_minimum_chars
 import mifos_mobile.feature.update_password.generated.resources.password_changed_successfully
 import mifos_mobile.feature.update_password.generated.resources.update_password
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
@@ -53,12 +47,7 @@ internal fun UpdatePasswordScreen(
         snackbarHostState = snackbarHostState,
         navigateBack = navigateBack,
         modifier = modifier,
-        validateAndUpdatePassword = { params ->
-            validateAndUpdatePassword(
-                params = params,
-                updateAccountPassword = viewModel::updateAccountPassword,
-            )
-        },
+        validateAndUpdatePassword = viewModel::validateAndUpdatePassword,
     )
 }
 
@@ -138,65 +127,5 @@ private fun HandleUpdatePasswordState(
         }
 
         is UpdatePasswordUiState.Initial -> Unit
-    }
-}
-
-private fun validateAndUpdatePassword(
-    params: PasswordValidationParams,
-    updateAccountPassword: (newPassword: String, confirmPassword: String) -> Unit,
-) {
-    with(params) {
-        var newPasswordErrorContent = getPasswordError(newPassword, PasswordType.NEW)
-        var confirmPasswordErrorContent = getPasswordError(confirmPassword, PasswordType.CONFIRM)
-
-        setNewPasswordErrorContent(newPasswordErrorContent)
-        setConfirmPasswordErrorContent(confirmPasswordErrorContent)
-
-        when {
-            newPasswordErrorContent == null && confirmPasswordErrorContent == null -> {
-                if (newPassword == confirmPassword) {
-                    updateAccountPassword(newPassword, confirmPassword)
-                } else {
-                    setPasswordDoesNotMatchOnBothError(Res.string.error_password_not_match)
-                }
-            }
-
-            newPasswordErrorContent == null && confirmPasswordErrorContent != null -> {
-                setConfirmPasswordError(true)
-            }
-
-            newPasswordErrorContent != null && confirmPasswordErrorContent == null -> {
-                setNewPasswordError(true)
-            }
-
-            else -> {
-                setNewPasswordError(true)
-                setConfirmPasswordError(true)
-            }
-        }
-    }
-}
-
-private enum class PasswordType {
-    NEW,
-    CONFIRM,
-}
-
-private fun getPasswordError(
-    password: String,
-    type: PasswordType,
-): StringResource? {
-    return when {
-        password.isEmpty() -> when (type) {
-            PasswordType.NEW -> Res.string.new_password_error_validation_blank
-            PasswordType.CONFIRM -> Res.string.confirm_password_error_validation_blank
-        }
-
-        password.length < 6 -> when (type) {
-            PasswordType.NEW -> Res.string.new_password_error_validation_minimum_chars
-            PasswordType.CONFIRM -> Res.string.confirm_password_error_validation_minimum_chars
-        }
-
-        else -> null
     }
 }
