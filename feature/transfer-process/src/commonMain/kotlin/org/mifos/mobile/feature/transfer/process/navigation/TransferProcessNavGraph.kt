@@ -15,10 +15,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.google.gson.Gson
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.utils.getTodayFormatted
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.DateHelper.currentDate
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
@@ -63,41 +64,39 @@ private fun NavGraphBuilder.transferProcessScreenRoute(
         route = TransferProcessNavigation.TransferProcessScreen.route,
         arguments = listOf(
             navArgument(name = Constants.PAYLOAD) { type = NavType.StringType },
-            navArgument(name = Constants.TRANSFER_TYPE) {
-                type = NavType.EnumType(TransferType::class.java)
-            },
-            navArgument(name = Constants.TRANSFER_SUCCESS_DESTINATION) {
-                type = NavType.EnumType(TransferSuccessDestination::class.java)
-            },
+            navArgument(name = Constants.TRANSFER_TYPE) { type = NavType.StringType },
+            navArgument(name = Constants.TRANSFER_SUCCESS_DESTINATION) { type = NavType.StringType },
         ),
     ) {
         TransferProcessScreen(
             navigateBack = navigateBack,
             onTransferSuccessNavigate = onTransferSuccessNavigate,
+
         )
     }
 }
 
 private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
-    val payload = this
-    val transferPayload = TransferPayload().apply {
-        fromAccountId = payload.payFromAccount?.accountId
-        fromClientId = payload.payFromAccount?.clientId
-        fromAccountType = payload.payFromAccount?.accountType?.id
-        fromOfficeId = payload.payFromAccount?.officeId
-        fromAccountNumber = payload.payFromAccount?.accountNo
-        toOfficeId = payload.payToAccount?.officeId
-        toAccountId = payload.payToAccount?.accountId
-        toClientId = payload.payToAccount?.clientId
-        toAccountType = payload.payToAccount?.accountType?.id
-        toAccountNumber = payload.payToAccount?.accountNo
-        transferDate = DateHelper.getSpecificFormat(DateHelper.FORMAT_MMMM, getTodayFormatted())
-        transferAmount = payload.amount.toDoubleOrNull()
-        transferDescription = payload.review
-        fromAccountNumber = payload.payFromAccount?.accountNo
-        toAccountNumber = payload.payToAccount?.accountNo
-    }
+    val transferDate = listOf(
+        currentDate.dayOfMonth,
+        currentDate.monthNumber,
+        currentDate.year,
+    )
+    val transferPayload = TransferPayload(
+        fromAccountId = this.payFromAccount?.accountNo,
+        fromClientId = this.payFromAccount?.clientId,
+        fromAccountType = this.payFromAccount?.accountType?.id,
+        fromOfficeId = this.payFromAccount?.officeId,
+        toOfficeId = this.payFromAccount?.officeId,
+        toAccountId = this.payToAccount?.accountNo,
+        toClientId = this.payToAccount?.clientId,
+        toAccountType = this.payToAccount?.accountType?.id,
+        transferDate = DateHelper.getDateMonthYearString(transferDate),
+        transferAmount = this.amount.toDoubleOrNull(),
+        transferDescription = this.review,
+        dateFormat = "dd MMMM yyyy",
+        locale = "en",
+    )
 
-    val gson = Gson()
-    return gson.toJson(transferPayload)
+    return Json.encodeToString(transferPayload)
 }
