@@ -19,6 +19,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.LoanState
@@ -52,7 +53,12 @@ fun NavGraphBuilder.loanNavGraph(
     viewGuarantor: (Long) -> Unit,
     viewCharges: (ChargeType, Long) -> Unit,
     viewQr: (String) -> Unit,
-    makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
+    makePayment: (
+        accountId: Long,
+        outstandingBalance: Double?,
+        transferType: String,
+        transferSuccessDestination: TransferSuccessDestination,
+    ) -> Unit,
 ) {
     navigation(
         startDestination = LoanNavigation.LoanDetail.route,
@@ -148,7 +154,12 @@ fun NavGraphBuilder.loanDetailRoute(
     viewRepaymentSchedule: (Long) -> Unit,
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
-    makePayment: (accountId: Long, outstandingBalance: Double?, transferType: String) -> Unit,
+    makePayment: (
+        accountId: Long,
+        outstandingBalance: Double?,
+        transferType: String,
+        transferSuccessDestination: TransferSuccessDestination,
+    ) -> Unit,
 ) {
     composable(
         route = LoanNavigation.LoanDetail.route,

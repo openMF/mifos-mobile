@@ -30,6 +30,7 @@ object Constants {
     const val TRANSFER_TYPE = "transfer_type"
     const val TRANSFER_QUICK = "transfer_quick"
     const val TRANSFER_PAY_TO = "transfer_pay_to"
+    const val TRANSFER_SUCCESS_DESTINATION = "transfer_success_destination"
     const val TRANSFER_PAY_FROM = "transfer_pay_from"
     const val ACCOUNT_POSITION = "account_position"
     const val BENEFICIARY = "beneficiary"

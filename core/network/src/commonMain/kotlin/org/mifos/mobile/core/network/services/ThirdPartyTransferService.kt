@@ -12,8 +12,8 @@ package org.mifos.mobile.core.network.services
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.POST
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.network.utils.ApiEndPoints
@@ -23,5 +23,5 @@ interface ThirdPartyTransferService {
     fun accountTransferTemplate(): Flow<AccountOptionsTemplate>
 
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
-    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): HttpResponse
+    suspend fun makeTransfer(@Body transferPayload: TransferPayload?): TransferResponse
 }
