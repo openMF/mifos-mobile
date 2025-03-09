@@ -39,6 +39,7 @@ import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdP
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -105,6 +106,10 @@ internal fun FeatureNavHost(
                 )
             },
         )
+
+        updatePasswordNavGraph {
+            appState.navController.popBackStack()
+        }
 
         transferProcessNavGraph(
             navigateBack = { appState.navController.popBackStack() },
