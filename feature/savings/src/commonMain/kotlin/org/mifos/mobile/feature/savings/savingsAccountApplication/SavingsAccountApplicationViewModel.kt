@@ -90,7 +90,10 @@ internal class SavingsAccountApplicationViewModel(
 
             savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientIdValue)
                 .catch { e ->
-                    _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Error(e.message ?: "Unknown error")
+                    _savingsAccountApplicationUiState.value =
+                        SavingsAccountApplicationUiState.Error(
+                            e.message ?: "Unknown error",
+                        )
                 }
                 .collect { response ->
                     if (response.data != null) {

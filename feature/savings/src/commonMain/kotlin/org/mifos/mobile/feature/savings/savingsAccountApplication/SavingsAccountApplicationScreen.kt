@@ -97,8 +97,10 @@ private fun SavingsAccountApplicationScreen(
 
                     is SavingsAccountApplicationUiState.Success -> {
                         val message = when (uiState.requestType) {
-                            SavingsAccountState.CREATE -> stringResource(Res.string.new_saving_account_created_successfully)
-                            else -> stringResource(Res.string.saving_account_updated_successfully)
+                            SavingsAccountState.CREATE ->
+                                stringResource(Res.string.new_saving_account_created_successfully)
+                            else ->
+                                stringResource(Res.string.saving_account_updated_successfully)
                         }
 
                         scope.launch {
