@@ -123,8 +123,6 @@ androidPackageNamespace = "org.mifos.mobile"
 androidPackageVersion = "1.0.0"
 materialVersion = "1.12.0"
 uiAndroidVersion = "1.7.8"
-material3AndroidVersion = "1.3.1"
-uiAndroid = "1.7.8"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
@@ -326,8 +324,6 @@ moko-permission-compose = { group = "dev.icerock.moko", name = "permissions-comp
 window-size = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "windowsSizeClass" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommonVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
-androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3AndroidVersion" }
-androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 
 [bundles]
 androidx-compose-ui-test = [

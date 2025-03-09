@@ -16,10 +16,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,7 +34,6 @@ import mifos_mobile.feature.update_password.generated.resources.Res
 import mifos_mobile.feature.update_password.generated.resources.change_password
 import mifos_mobile.feature.update_password.generated.resources.confirm_password
 import mifos_mobile.feature.update_password.generated.resources.new_password
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
@@ -49,31 +46,20 @@ internal fun UpdatePasswordContent(
     modifier: Modifier = Modifier,
     onAction: (EditPasswordAction) -> Unit,
 ) {
-
-
-    var newPasswordError by rememberSaveable { mutableStateOf(false) }
-    var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
-
-    var newPasswordErrorContent: StringResource? by rememberSaveable { mutableStateOf(null) }
-    var confirmPasswordErrorContent: StringResource? by rememberSaveable { mutableStateOf(null) }
-
     val keyboardController = LocalSoftwareKeyboardController.current
+    var newPasswordVisible by rememberSaveable { mutableStateOf(false) }
+    var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        var newPasswordVisible by rememberSaveable { mutableStateOf(false) }
-        var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
-
         PasswordTextField(
             value = state.newPasswordInput,
             onValueChange = {
                 onAction(EditPasswordAction.NewPasswordChange(it))
             },
             label = stringResource(Res.string.new_password),
-            errorContent = newPasswordErrorContent?.let { stringResource(it) } ?: "",
-            isError = newPasswordError,
             isVisible = newPasswordVisible,
             onVisibilityChange = { newPasswordVisible = it },
         )
@@ -84,8 +70,6 @@ internal fun UpdatePasswordContent(
                 onAction(EditPasswordAction.ConfirmPasswordChange(it))
             },
             label = stringResource(Res.string.confirm_password),
-            errorContent = confirmPasswordErrorContent?.let { stringResource(it) } ?: "",
-            isError = confirmPasswordError,
             isVisible = confirmPasswordVisible,
             onVisibilityChange = { confirmPasswordVisible = it },
         )
@@ -104,8 +88,6 @@ private fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    errorContent: String,
-    isError: Boolean,
     isVisible: Boolean,
     onVisibilityChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -113,19 +95,12 @@ private fun PasswordTextField(
     val mifosTextFieldConfig = MifosTextFieldConfig(
         trailingIcon = {
             val image = if (isVisible) MifosIcons.Visibility else MifosIcons.VisibilityOff
-
-            if (!isError) {
-                IconButton(onClick = { onVisibilityChange(!isVisible) }) {
-                    Icon(imageVector = image, contentDescription = "password visibility button")
-                }
-            } else {
-                Icon(imageVector = MifosIcons.Error, contentDescription = null)
+            IconButton(onClick = { onVisibilityChange(!isVisible) }) {
+                Icon(imageVector = image, contentDescription = "password visibility button")
             }
         },
-        isError = isError,
         visualTransformation = if (isVisible) None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        errorText = errorContent,
     )
 
     MifosOutlinedTextField(
@@ -150,20 +125,7 @@ private fun UpdatePasswordButton(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),
         contentPadding = PaddingValues(12.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-        ),
     ) {
         Text(text = stringResource(Res.string.change_password))
     }
 }
-
-data class PasswordValidationParams(
-    val newPassword: String,
-    val confirmPassword: String,
-    val setNewPasswordError: (Boolean) -> Unit,
-    val setConfirmPasswordError: (Boolean) -> Unit,
-    val setNewPasswordErrorContent: (StringResource?) -> Unit,
-    val setConfirmPasswordErrorContent: (StringResource?) -> Unit,
-    val setPasswordDoesNotMatchOnBothError: (StringResource?) -> Unit,
-)

@@ -116,7 +116,6 @@ internal class UpdatePasswordViewModel(
     }
 
     private fun handleSubmitClick() = when {
-
         state.newPasswordInput.length < MIN_PASSWORD_LENGTH -> {
             mutableStateFlow.update {
                 it.copy(
@@ -192,12 +191,12 @@ internal data class EditPasswordState(
             PasswordStrengthState.WEAK_1,
             PasswordStrengthState.WEAK_2,
             PasswordStrengthState.WEAK_3,
-                -> false
+            -> false
 
             PasswordStrengthState.GOOD,
             PasswordStrengthState.STRONG,
             PasswordStrengthState.VERY_STRONG,
-                -> true
+            -> true
         }
 
     val isPasswordMatch: Boolean

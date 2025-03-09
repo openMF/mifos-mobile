@@ -10,24 +10,16 @@
 package org.mifos.mobile.feature.update.password
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.update_password.generated.resources.Res
-import mifos_mobile.feature.update_password.generated.resources.could_not_update_password_error
-import mifos_mobile.feature.update_password.generated.resources.dialog_action_ok
-import mifos_mobile.feature.update_password.generated.resources.password_changed_successfully
 import mifos_mobile.feature.update_password.generated.resources.update_password
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -37,7 +29,6 @@ import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -81,9 +72,9 @@ internal fun UpdatePasswordScreen(
 
 @Composable
 private fun UpdatePasswordScreen(
-    modifier: Modifier = Modifier,
     state: EditPasswordState,
     snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
     onAction: (EditPasswordAction) -> Unit,
 ) {
     MifosScaffold(
