@@ -9,9 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity
 
+import kotlinx.serialization.Serializable
+
 /*
 * Created by saksham on 13/July/2018
 */
+@Serializable
 data class UpdatePasswordPayload(
     val password: String? = null,
     val repeatPassword: String? = null,
