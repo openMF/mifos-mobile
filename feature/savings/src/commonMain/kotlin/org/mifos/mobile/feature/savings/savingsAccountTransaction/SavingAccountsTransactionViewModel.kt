@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -51,7 +50,7 @@ import org.mifos.mobile.feature.savings.savingsAccountTransaction.SavingsAccount
 internal class SavingAccountsTransactionViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    networkMonitor: NetworkMonitor
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     val isNetworkAvailable = networkMonitor.isOnline
@@ -99,7 +98,11 @@ internal class SavingAccountsTransactionViewModel(
                         logger.e(dataState.data.toString())
                         val savingsWithAssociations = dataState.data
                         _transactionsList = savingsWithAssociations.transactions
-                        mUiState.value = SavingsAccountTransactionUiState.Success(savingsWithAssociations.transactions)
+                        mUiState.value = if (savingsWithAssociations.transactions.isEmpty()) {
+                            SavingsAccountTransactionUiState.Empty
+                        } else {
+                            SavingsAccountTransactionUiState.Success(savingsWithAssociations.transactions)
+                        }
                     }
                 }
             }
@@ -209,6 +212,7 @@ internal class SavingAccountsTransactionViewModel(
 
 internal sealed class SavingsAccountTransactionUiState {
     data object Loading : SavingsAccountTransactionUiState()
+    data object Empty : SavingsAccountTransactionUiState()
     data class Error(val errorMessage: String?) : SavingsAccountTransactionUiState()
     data class Success(val savingAccountsTransactionList: List<Transactions>?) :
         SavingsAccountTransactionUiState()

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.UserPreferencesDataSource
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
@@ -41,9 +42,6 @@ internal class SavingsAccountApplicationViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    init{
-        loadSavingsAccountApplicationTemplate()
-    }
     private val clientId get() = preferencesHelper.clientId
 
     private val savingsId =
@@ -57,6 +55,10 @@ internal class SavingsAccountApplicationViewModel(
     private val _savingsAccountApplicationUiState =
         MutableStateFlow<SavingsAccountApplicationUiState>(Loading)
     val savingsAccountApplicationUiState = _savingsAccountApplicationUiState.asStateFlow()
+
+    init {
+        loadSavingsAccountApplicationTemplate()
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val savingsWithAssociations: StateFlow<SavingsWithAssociations?> = savingsId
@@ -77,11 +79,18 @@ internal class SavingsAccountApplicationViewModel(
 
     private fun loadSavingsAccountApplicationTemplate() {
         viewModelScope.launch {
+            logger.d("_savingsAccountApplicationUiState: $_savingsAccountApplicationUiState")
             _savingsAccountApplicationUiState.value = Loading
+            val clientIdValue = clientId.firstOrNull()
+            if (clientIdValue == null) {
+                _savingsAccountApplicationUiState.value =
+                    SavingsAccountApplicationUiState.Error("Client ID is null")
+                return@launch
+            }
 
-            savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientId.first())
+            savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(clientIdValue)
                 .catch { e ->
-                    _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Error(e.message)
+                    _savingsAccountApplicationUiState.value = SavingsAccountApplicationUiState.Error(e.message ?: "Unknown error")
                 }
                 .collect { response ->
                     if (response.data != null) {

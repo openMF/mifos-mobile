@@ -25,4 +25,4 @@ data class SavingsAccountApplicationPayload(
 
     val dateFormat: String = "dd MMMM yyyy",
 
-    ) : Parcelable
+) : Parcelable

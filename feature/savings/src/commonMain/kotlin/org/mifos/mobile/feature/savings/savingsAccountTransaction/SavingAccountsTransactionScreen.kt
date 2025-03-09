@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,10 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.Clock
 import mifos_mobile.feature.savings.generated.resources.Res
+import mifos_mobile.feature.savings.generated.resources.feature_account_error_black
 import mifos_mobile.feature.savings.generated.resources.ic_compare_arrows_black_24dp
 import mifos_mobile.feature.savings.generated.resources.no_transaction_found
 import mifos_mobile.feature.savings.generated.resources.savings_account_transaction
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
@@ -48,7 +51,7 @@ internal fun SavingsAccountTransactionScreen(
 
     SavingsAccountTransactionScreen(
         uiState = uiState,
-        isNetworkConnected=isNetworkAvailable,
+        isNetworkConnected = isNetworkAvailable,
         navigateBack = navigateBack,
         retryConnection = viewModel::loadSavingsWithAssociations,
         filterList = viewModel::filterList,
@@ -59,7 +62,7 @@ internal fun SavingsAccountTransactionScreen(
 @Composable
 internal fun SavingsAccountTransactionScreen(
     uiState: SavingsAccountTransactionUiState,
-    isNetworkConnected:Boolean,
+    isNetworkConnected: Boolean,
     navigateBack: () -> Unit,
     retryConnection: () -> Unit,
     filterList: (SavingsTransactionFilterDataModel) -> Unit,
@@ -126,6 +129,14 @@ internal fun SavingsAccountTransactionScreen(
                             )
                         }
                     }
+
+                    SavingsAccountTransactionUiState.Empty -> {
+                        EmptyDataView(
+                            icon = vectorResource(resource = Res.drawable.feature_account_error_black),
+                            error = Res.string.no_transaction_found,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                 }
             }
         },
@@ -142,4 +153,3 @@ internal fun SavingsAccountTransactionScreen(
         )
     }
 }
-

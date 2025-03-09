@@ -75,13 +75,10 @@ internal sealed class SavingsAccountDetailUiState {
     data class Success(val savingAccount: SavingsWithAssociations) : SavingsAccountDetailUiState()
 }
 
-
 val DepositGreen = Color(0xff14c416)
 val Blue = Color(0xFF003FFF)
 val RedLight = Color(0xFFFF4444)
 val LightYellow = Color(0xFFF9AC06)
-
-
 
 internal fun Status.getStatusColorAndText(): Pair<Color, StringResource> {
     return when {

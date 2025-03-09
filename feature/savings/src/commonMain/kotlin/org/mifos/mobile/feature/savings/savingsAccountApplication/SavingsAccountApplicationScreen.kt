@@ -11,13 +11,17 @@ package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.apply_savings_account
 import mifos_mobile.feature.savings.generated.resources.new_saving_account_created_successfully
@@ -25,7 +29,6 @@ import mifos_mobile.feature.savings.generated.resources.saving_account_updated_s
 import mifos_mobile.feature.savings.generated.resources.update_savings_account
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
@@ -58,6 +61,8 @@ private fun SavingsAccountApplicationScreen(
     savingsWithAssociations: SavingsWithAssociations? = null,
 ) {
     var topBarTitleText by rememberSaveable { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     MifosScaffold(
         topBar = {
@@ -91,16 +96,14 @@ private fun SavingsAccountApplicationScreen(
                     }
 
                     is SavingsAccountApplicationUiState.Success -> {
-                        val messageResourceId = when (uiState.requestType) {
-                            SavingsAccountState.CREATE -> Res.string.new_saving_account_created_successfully
-                            else -> Res.string.saving_account_updated_successfully
+                        val message = when (uiState.requestType) {
+                            SavingsAccountState.CREATE -> stringResource(Res.string.new_saving_account_created_successfully)
+                            else -> stringResource(Res.string.saving_account_updated_successfully)
                         }
-                        logger.e(messageResourceId.toString())
-//                        Toast.makeText(
-//                            context,
-//                            stringResource(id = messageResourceId),
-//                            Toast.LENGTH_SHORT,
-//                        ).show()
+
+                        scope.launch {
+                            snackbarHostState.showSnackbar(message)
+                        }
                         navigateBack.invoke()
                     }
                 }
@@ -108,4 +111,3 @@ private fun SavingsAccountApplicationScreen(
         },
     )
 }
-
