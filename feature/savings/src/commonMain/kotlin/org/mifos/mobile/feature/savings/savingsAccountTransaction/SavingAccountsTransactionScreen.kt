@@ -44,9 +44,11 @@ internal fun SavingsAccountTransactionScreen(
     viewModel: SavingAccountsTransactionViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
 
     SavingsAccountTransactionScreen(
         uiState = uiState,
+        isNetworkConnected=isNetworkAvailable,
         navigateBack = navigateBack,
         retryConnection = viewModel::loadSavingsWithAssociations,
         filterList = viewModel::filterList,
@@ -57,6 +59,7 @@ internal fun SavingsAccountTransactionScreen(
 @Composable
 internal fun SavingsAccountTransactionScreen(
     uiState: SavingsAccountTransactionUiState,
+    isNetworkConnected:Boolean,
     navigateBack: () -> Unit,
     retryConnection: () -> Unit,
     filterList: (SavingsTransactionFilterDataModel) -> Unit,
@@ -102,8 +105,7 @@ internal fun SavingsAccountTransactionScreen(
 
                     is SavingsAccountTransactionUiState.Error -> {
                         MifosErrorComponent(
-//                            isNetworkConnected = Network.isConnected(),
-                            isNetworkConnected = true,
+                            isNetworkConnected = isNetworkConnected,
                             isEmptyData = false,
                             isRetryEnabled = true,
                             onRetry = retryConnection,
@@ -141,28 +143,3 @@ internal fun SavingsAccountTransactionScreen(
     }
 }
 
-// internal class SavingsAccountTransactionUiStatesParameterProvider :
-//    PreviewParameterProvider<SavingsAccountTransactionUiState> {
-//    override val values: Sequence<SavingsAccountTransactionUiState>
-//        get() = sequenceOf(
-//            SavingsAccountTransactionUiState.Success(listOf()),
-//            SavingsAccountTransactionUiState.Error(""),
-//            SavingsAccountTransactionUiState.Loading,
-//        )
-// }
-
-// @DevicePreviews
-// @Composable
-// private fun SavingsAccountTransactionScreenPreview(
-//    @PreviewParameter(SavingsAccountTransactionUiStatesParameterProvider::class)
-//    savingsAccountUiState: SavingsAccountTransactionUiState,
-// ) {
-//    MifosMobileTheme {
-//        SavingsAccountTransactionScreen(
-//            uiState = savingsAccountUiState,
-//            navigateBack = { },
-//            retryConnection = { },
-//            filterList = { },
-//        )
-//    }
-// }

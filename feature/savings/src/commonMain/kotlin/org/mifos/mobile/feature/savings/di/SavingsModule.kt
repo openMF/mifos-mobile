@@ -18,7 +18,6 @@ import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWit
 import org.mifos.mobile.feature.savings.savingsMakeTransfer.SavingsMakeTransferViewModel
 
 val SavingsModule = module {
-
     viewModelOf(::SavingsMakeTransferViewModel)
     viewModelOf(::SavingAccountsDetailViewModel)
     viewModelOf(::SavingsAccountApplicationViewModel)

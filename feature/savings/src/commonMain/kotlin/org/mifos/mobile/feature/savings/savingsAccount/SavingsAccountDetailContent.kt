@@ -254,7 +254,6 @@ private fun LastTransactionCard(
         Text(
             text = stringResource(Res.string.last_trans),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.fillMaxWidth(),
         )
 

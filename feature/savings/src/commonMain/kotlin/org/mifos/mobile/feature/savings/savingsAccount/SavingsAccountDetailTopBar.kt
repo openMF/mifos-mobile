@@ -93,15 +93,3 @@ internal fun SavingsAccountDetailTopBar(
         },
     )
 }
-
-// @DevicePreview
-// @Composable
-// private fun SavingsAccountDetailTopBarPreview() {
-//    MifosMobileTheme {
-//        SavingsAccountDetailTopBar(
-//            navigateBack = {},
-//            updateSavingsAccount = {},
-//            withdrawSavingsAccount = {},
-//        )
-//    }
-// }

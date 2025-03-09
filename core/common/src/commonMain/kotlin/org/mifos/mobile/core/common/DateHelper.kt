@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.common
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -18,6 +19,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import kotlin.time.Duration.Companion.days
@@ -92,14 +94,14 @@ object DateHelper {
         return listOf(year, month, day)
     }
 
-    fun subtractWeeks(number: Int): Long {
+    fun subtractTime(number: Int, unit: String): Long {
         val now: Instant = Clock.System.now()
-        return now.plus((-7 * number).days).toEpochMilliseconds()
-    }
-
-    fun subtractMonths(number: Int): Long {
-        val now: Instant = Clock.System.now()
-        return now.plus((-30 * number).days).toEpochMilliseconds()
+        val daysToSubtract = when (unit.lowercase()) {
+            "week", "weeks" -> now.minus((number * 7).days).toEpochMilliseconds()
+            "month", "months" -> now.minus(DateTimePeriod(months = number), TimeZone.UTC).toEpochMilliseconds()
+            else -> 0
+        }
+        return daysToSubtract
     }
 
     /**

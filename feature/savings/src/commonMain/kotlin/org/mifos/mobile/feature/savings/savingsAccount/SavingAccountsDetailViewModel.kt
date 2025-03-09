@@ -28,10 +28,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.designsystem.theme.Blue
-import org.mifos.mobile.core.designsystem.theme.DepositGreen
-import org.mifos.mobile.core.designsystem.theme.LightYellow
-import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
 
@@ -78,6 +74,14 @@ internal sealed class SavingsAccountDetailUiState {
     data object Error : SavingsAccountDetailUiState()
     data class Success(val savingAccount: SavingsWithAssociations) : SavingsAccountDetailUiState()
 }
+
+
+val DepositGreen = Color(0xff14c416)
+val Blue = Color(0xFF003FFF)
+val RedLight = Color(0xFFFF4444)
+val LightYellow = Color(0xFFF9AC06)
+
+
 
 internal fun Status.getStatusColorAndText(): Pair<Color, StringResource> {
     return when {

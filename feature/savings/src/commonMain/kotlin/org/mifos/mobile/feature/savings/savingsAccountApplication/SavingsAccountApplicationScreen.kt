@@ -108,16 +108,4 @@ private fun SavingsAccountApplicationScreen(
         },
     )
 }
-//
-// @DevicePreview
-// @Composable
-// private fun SavingsAccountApplicationScreenPreview() {
-//    MifosMobileTheme {
-//        SavingsAccountApplicationScreen(
-//            SavingsAccountApplicationUiState.Success(requestType = SavingsAccountState.UPDATE),
-//            navigateBack = {},
-//            submit = { _, _, _ -> },
-//            savingsWithAssociations = null,
-//        )
-//    }
-// }
+

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings.generated.resources.Res
@@ -97,31 +96,3 @@ private fun SavingsMakeTransferScreen(
         },
     )
 }
-
-//
-// internal class SavingsMakeTransferUiStatesPreviews :
-//    PreviewParameterProvider<SavingsMakeTransferUiState> {
-//    override val values: Sequence<SavingsMakeTransferUiState>
-//        get() = sequenceOf(
-//            SavingsMakeTransferUiState.ShowUI,
-//            SavingsMakeTransferUiState.Error(""),
-//            SavingsMakeTransferUiState.Loading,
-//        )
-// }
-//
-// @DevicePreview
-// @Composable
-// private fun SavingsMakeTransferContentPreview(
-//    @PreviewParameter(SavingsMakeTransferUiStatesPreviews::class)
-//    savingsMakeTransferUIState: SavingsMakeTransferUiState,
-// ) {
-//    MifosMobileTheme {
-//        SavingsMakeTransferScreen(
-//            navigateBack = { },
-//            onCancelledClicked = { },
-//            reviewTransfer = { },
-//            uiState = savingsMakeTransferUIState,
-//            uiData = SavingsMakeTransferUiData(),
-//        )
-//    }
-// }

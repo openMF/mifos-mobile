@@ -41,6 +41,9 @@ internal class SavingsAccountApplicationViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    init{
+        loadSavingsAccountApplicationTemplate()
+    }
     private val clientId get() = preferencesHelper.clientId
 
     private val savingsId =
@@ -66,7 +69,6 @@ internal class SavingsAccountApplicationViewModel(
                     }
                 }
         }
-        .also { loadSavingsAccountApplicationTemplate() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

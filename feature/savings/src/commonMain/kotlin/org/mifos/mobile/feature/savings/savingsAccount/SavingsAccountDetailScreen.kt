@@ -53,7 +53,7 @@ internal fun SavingsAccountDetailScreen(
         makeTransfer = { makeTransfer(savingsId) },
         viewTransaction = { viewTransaction(savingsId) },
         viewCharges = viewCharges,
-//        viewQrCode = { viewQrCode(viewModel.getQrString(null)) },
+//        viewQrCode = { viewQrCode(viewModel.getQrString(null)) },  should be used once QR migration is done
         viewQrCode = { viewQrCode("") },
         callUs = callUs,
         deposit = { deposit(savingsId) },
@@ -114,22 +114,3 @@ private fun SavingsAccountDetailScreen(
         }
     }
 }
-//
-// @DevicePreview
-// @Composable
-// private fun SavingsAccountDetailScreenPreview() {
-//    MifosMobileTheme {
-//        SavingsAccountDetailScreen(
-//            uiState = SavingsAccountDetailUiState.Loading,
-//            navigateBack = {},
-//            updateSavingsAccount = {},
-//            withdrawSavingsAccount = {},
-//            makeTransfer = {},
-//            viewTransaction = {},
-//            viewCharges = {},
-//            viewQrCode = {},
-//            callUs = {},
-//            deposit = {},
-//        )
-//    }
-// }

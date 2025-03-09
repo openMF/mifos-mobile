@@ -31,20 +31,15 @@ import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWit
 internal class SavingsAccountWithdrawViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    private val networkMonitor: NetworkMonitor,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            networkMonitor.isOnline.collect { isConnected ->
-
-                if (!isConnected) {
-                    mUiState.value =
-                        SavingsAccountWithdrawUiState.Error("Network issue")
-                }
-            }
-        }
-    }
+    val isNetworkAvailable = networkMonitor.isOnline
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     private val mUiState = MutableStateFlow<SavingsAccountWithdrawUiState>(WithdrawUiReady)
     val uiState = mUiState.asStateFlow()

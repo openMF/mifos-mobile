@@ -55,7 +55,6 @@ internal fun SavingsAccountTransactionContent(
                 SavingsAccountTransactionListItem(currencyCode, it)
                 HorizontalDivider(
                     thickness = 1.dp,
-                    color = Color.Gray,
                     modifier = Modifier.padding(vertical = 4.dp),
                 )
             }
@@ -69,12 +68,10 @@ internal fun SavingsAccountTransactionContent(
         ) {
             Text(
                 text = stringResource(Res.string.need_help),
-                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = stringResource(Res.string.help_line_number),
-                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
@@ -110,7 +107,6 @@ private fun SavingsAccountTransactionListItem(
                 Text(
                     text = DateHelper.getDateAsString(transaction.date),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = CurrencyFormatter
@@ -120,7 +116,6 @@ private fun SavingsAccountTransactionListItem(
                             maximumFractionDigits = 3,
                         ),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
             Row(
@@ -131,7 +126,6 @@ private fun SavingsAccountTransactionListItem(
                     text = transaction.transactionType?.value ?: "",
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = CurrencyFormatter
@@ -142,7 +136,6 @@ private fun SavingsAccountTransactionListItem(
                         ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
             Row(
@@ -152,17 +145,8 @@ private fun SavingsAccountTransactionListItem(
                     text = transaction.paymentDetailData?.paymentType?.name.toString(),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
     }
 }
-
-// @DevicePreview
-// @Composable
-// private fun SavingsAccountTransactionContentPreview() {
-//    MifosMobileTheme {
-//        SavingsAccountTransactionContent(currencyCode = "USD", transactionList = listOf())
-//    }
-// }

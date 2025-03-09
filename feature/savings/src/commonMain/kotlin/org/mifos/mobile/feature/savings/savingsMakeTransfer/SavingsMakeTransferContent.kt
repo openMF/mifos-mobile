@@ -231,7 +231,6 @@ private fun PayFromStep(
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.pay_from),
-            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
@@ -289,7 +288,6 @@ private fun EnterAmountStep(
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.amount),
-            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
@@ -340,7 +338,6 @@ private fun RemarkStep(
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.remark),
-            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
@@ -371,21 +368,9 @@ private fun RemarkStep(
         } else {
             Text(
                 text = stringResource(Res.string.enter_remarks),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelMedium,
             )
         }
     }
 }
-
-// @DevicePreview
-// @Composable
-// private fun SavingsMakeTransferContentPreview() {
-//    MifosMobileTheme {
-//        SavingsMakeTransferContent(
-//            uiData = SavingsMakeTransferUiData(),
-//            reviewTransfer = {},
-//        )
-//    }
-// }

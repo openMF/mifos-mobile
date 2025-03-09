@@ -189,31 +189,3 @@ private fun SavingsAccountWithdrawContent(
         )
     }
 }
-
-// internal class UiStatesParameterProvider : PreviewParameterProvider<SavingsAccountWithdrawUiState> {
-//    override val values: Sequence<SavingsAccountWithdrawUiState>
-//        get() = sequenceOf(
-//            SavingsAccountWithdrawUiState.WithdrawUiReady,
-//            SavingsAccountWithdrawUiState.Error(message = ""),
-//            SavingsAccountWithdrawUiState.Loading,
-//            SavingsAccountWithdrawUiState.Success,
-//        )
-// }
-
-// @Composable
-// private fun SavingsAccountWithdrawScreenPreview(
-//    @PreviewParameter(UiStatesParameterProvider::class)
-//    savingsAccountWithdrawUiState: SavingsAccountWithdrawUiState,
-// ) {
-//    MifosMobileTheme {
-//        SavingsAccountWithdrawScreen(
-//            uiState = savingsAccountWithdrawUiState,
-//            savingsWithAssociations = SavingsWithAssociations(
-//                clientName = "Mifos Mobile",
-//                accountNo = "0001",
-//            ),
-//            navigateBack = {},
-//            withdraw = {},
-//        )
-//    }
-// }

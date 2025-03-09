@@ -185,21 +185,9 @@ private fun TitleBodyRow(
         Text(
             text = bodyText,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(3f),
             textAlign = TextAlign.Center,
         )
     }
 }
-//
-// @DevicePreview
-// @Composable
-// private fun SavingsAccountApplicationContentPreview() {
-//    MifosMobileTheme {
-//        SavingsAccountApplicationContent(
-//            submit = { _, _, _ -> },
-//            existingProduct = null,
-//            savingsAccountTemplate = null,
-//        )
-//    }
-// }
+

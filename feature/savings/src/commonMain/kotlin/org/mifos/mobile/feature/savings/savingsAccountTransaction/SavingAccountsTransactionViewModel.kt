@@ -15,10 +15,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.date
@@ -37,6 +40,7 @@ import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.designsystem.theme.DepositGreen
 import org.mifos.mobile.core.designsystem.theme.GreenSuccess
 import org.mifos.mobile.core.designsystem.theme.RedLight
@@ -47,7 +51,15 @@ import org.mifos.mobile.feature.savings.savingsAccountTransaction.SavingsAccount
 internal class SavingAccountsTransactionViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
+    networkMonitor: NetworkMonitor
 ) : ViewModel() {
+
+    val isNetworkAvailable = networkMonitor.isOnline
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     private val mUiState = MutableStateFlow<SavingsAccountTransactionUiState>(Loading)
     val uiState = mUiState.asStateFlow()

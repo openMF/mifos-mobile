@@ -195,17 +195,17 @@ private fun SavingsTransactionFilterDialogContent(
 
         when (radioFilter) {
             SavingsTransactionRadioFilter.FOUR_WEEKS -> {
-                setStartDate(DateHelper.subtractWeeks(4))
+                setStartDate(DateHelper.subtractTime(4, "week"))
                 setEndDate(Clock.System.now().toEpochMilliseconds())
             }
 
             SavingsTransactionRadioFilter.THREE_MONTHS -> {
-                setStartDate(DateHelper.subtractMonths(3))
+                setStartDate(DateHelper.subtractTime(3, "month"))
                 setEndDate(Clock.System.now().toEpochMilliseconds())
             }
 
             SavingsTransactionRadioFilter.SIX_MONTHS -> {
-                setStartDate(DateHelper.subtractMonths(6))
+                setStartDate(DateHelper.subtractTime(6, "month"))
                 setEndDate(Clock.System.now().toEpochMilliseconds())
             }
 
@@ -291,20 +291,3 @@ private fun SavingsTransactionFilterDialogContent(
         ) { DatePicker(state = endDatePickerState) }
     }
 }
-
-// @DevicePreview
-// @Composable
-// private fun SavingsTransactionFilterDialogPreview() {
-//    MifosMobileTheme {
-//        SavingsTransactionFilterDialog(
-//            savingsTransactionFilterDataModel = SavingsTransactionFilterDataModel(
-//                radioFilter = null,
-//                checkBoxFilters = mutableListOf(),
-//                startDate = Instant.now().toEpochMilli(),
-//                endDate = Instant.now().toEpochMilli(),
-//            ),
-//            filter = {},
-//            onDismiss = {},
-//        )
-//    }
-// }
