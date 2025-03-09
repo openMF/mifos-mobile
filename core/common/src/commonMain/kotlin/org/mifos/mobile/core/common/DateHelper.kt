@@ -220,6 +220,37 @@ object DateHelper {
     }
 
     /**
+     * Gets the date string in the format "dd MMMM yyyy" from a list of integers representing [day, month, year].
+     *
+     * @param integersOfDate A list of three integers representing [day, month, year], e.g. [8, 3, 2025]
+     * @return The date string in the format "08 March 2025"
+     */
+    fun getDateMonthYearString(integersOfDate: List<Int>): String {
+        require(integersOfDate.size == 3) { "integersOfDate must have exactly 3 elements" }
+        val (day, month, year) = integersOfDate
+
+        val monthName = when (month) {
+            1 -> "January"
+            2 -> "February"
+            3 -> "March"
+            4 -> "April"
+            5 -> "May"
+            6 -> "June"
+            7 -> "July"
+            8 -> "August"
+            9 -> "September"
+            10 -> "October"
+            11 -> "November"
+            12 -> "December"
+            else -> throw IllegalArgumentException("Invalid month value: $month")
+        }
+
+        val formattedDay = if (day < 10) "0$day" else "$day"
+
+        return "$formattedDay $monthName $year"
+    }
+
+    /**
      * Handles the specific format "yyyy-MM-dd HH:mm:ss.SSSSSS"
      * For example "2024-09-19 05:41:18.558995"
      * Possible outputs depending on current date:

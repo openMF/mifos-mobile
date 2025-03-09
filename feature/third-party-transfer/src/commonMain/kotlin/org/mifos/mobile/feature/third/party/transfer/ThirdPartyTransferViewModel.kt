@@ -112,7 +112,10 @@ internal class ThirdPartyTransferViewModel(
             templateResult is DataState.Success && beneficiariesResult is DataState.Success -> {
                 updateState {
                     it.copy(
-                        fromAccountDetail = templateResult.data.fromAccountOptions,
+                        fromAccountDetail = templateResult.data.fromAccountOptions
+                            .filter { savingsAccount ->
+                                savingsAccount.accountType?.value == "Savings Account"
+                            },
                         toAccountOption = templateResult.data.toAccountOptions,
                         beneficiaries = beneficiariesResult.data,
                         dialogState = null,

@@ -54,10 +54,10 @@ object KoinModules {
             savingsAccountModule,
             loanAccountModule,
             shareAccountModule,
-            updatePasswordModule,
             LoanModule,
             ChargeModule,
             ThirdPartyTransferModule,
+            updatePasswordModule,
         )
     }
     private val LibraryModule = module {
