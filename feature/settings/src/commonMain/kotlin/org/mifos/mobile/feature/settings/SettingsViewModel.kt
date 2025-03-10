@@ -68,7 +68,7 @@ internal class SettingsViewModel(
                 allLanguages = allLanguageList.value,
             )
         }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsUiState())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsUiState.DEFAULT)
 
     fun tryUpdatingEndpoint(selectedBaseUrl: String, selectedTenant: String): Boolean {
         if (uiState.value.baseUrl != selectedBaseUrl || uiState.value.tenant != selectedTenant) {
@@ -101,13 +101,21 @@ internal class SettingsViewModel(
 }
 
 data class SettingsUiState(
-    val tenant: String = "",
-    val baseUrl: String = "",
-    val passcode: String = "",
+    val tenant: String,
+    val baseUrl: String,
+    val passcode: String,
     val theme: AppTheme = AppTheme.SYSTEM,
     val language: MifosAppLanguage = MifosAppLanguage.SYSTEM_LANGUAGE,
     val allLanguages: List<String> = emptyList(),
-)
+) {
+    companion object {
+        val DEFAULT = SettingsUiState(
+            tenant = "",
+            baseUrl = "",
+            passcode = "",
+        )
+    }
+}
 
 internal enum class SettingsCardItem(
     val title: StringResource,
