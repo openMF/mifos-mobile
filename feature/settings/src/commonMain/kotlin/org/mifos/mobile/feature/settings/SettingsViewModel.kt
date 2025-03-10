@@ -62,7 +62,7 @@ internal class SettingsViewModel(
             SettingsUiState(
                 tenant = settings.tenant,
                 baseUrl = settings.baseUrl,
-                passcode = settings.passcode,
+                passcode = settings.passcode ?: "",
                 theme = settings.appTheme,
                 language = settings.language,
                 allLanguages = allLanguageList.value,
@@ -101,14 +101,12 @@ internal class SettingsViewModel(
 }
 
 data class SettingsUiState(
-    val tenant: String? = null,
-    val baseUrl: String? = null,
-    val passcode: String? = null,
+    val tenant: String = "",
+    val baseUrl: String = "",
+    val passcode: String = "",
     val theme: AppTheme = AppTheme.SYSTEM,
-    val language: MifosAppLanguage = MifosAppLanguage.ENGLISH,
+    val language: MifosAppLanguage = MifosAppLanguage.SYSTEM_LANGUAGE,
     val allLanguages: List<String> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null,
 )
 
 internal enum class SettingsCardItem(
