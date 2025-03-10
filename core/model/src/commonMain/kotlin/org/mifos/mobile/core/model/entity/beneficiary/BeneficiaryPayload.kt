@@ -16,7 +16,7 @@ import org.mifos.mobile.core.model.Parcelize
 @Serializable
 @Parcelize
 data class BeneficiaryPayload(
-    internal val locale: String = "en_GB",
+    val locale: String? = null,
 
     val name: String? = null,
 

@@ -29,6 +29,7 @@ kotlin {
             implementation(projects.feature.clientCharge)
             implementation(projects.feature.thirdPartyTransfer)
             implementation(projects.feature.transferProcess)
+            implementation(projects.feature.beneficiary)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

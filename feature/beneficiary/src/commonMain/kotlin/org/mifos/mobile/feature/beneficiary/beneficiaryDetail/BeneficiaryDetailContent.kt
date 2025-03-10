@@ -9,28 +9,32 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.account_number
+import mifos_mobile.feature.beneficiary.generated.resources.account_type
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name
+import mifos_mobile.feature.beneficiary.generated.resources.client_name
+import mifos_mobile.feature.beneficiary.generated.resources.office_name
+import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
 internal fun BeneficiaryDetailContent(
-    beneficiary: Beneficiary?,
+    state: BeneficiaryDetailState?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,66 +46,62 @@ internal fun BeneficiaryDetailContent(
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .padding(4.dp),
-            title = stringResource(id = R.string.beneficiary_name),
-            description = beneficiary?.name.toString(),
+            title = stringResource(Res.string.beneficiary_name),
+            description = state?.beneficiary?.name.toString(),
         )
 
         MifosTitleDescSingleLineEqual(
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .padding(4.dp),
-            title = stringResource(id = R.string.account_number),
-            description = beneficiary?.accountNumber.toString(),
+            title = stringResource(Res.string.account_number),
+            description = state?.beneficiary?.accountNumber.toString(),
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedCard(
+        MifosCard(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.background,
-            ),
         ) {
             Column(
                 modifier = Modifier.padding(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 MifosTitleDescSingleLineEqual(
                     modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(id = R.string.client_name),
-                    description = beneficiary?.clientName.toString(),
+                    title = stringResource(Res.string.client_name),
+                    description = state?.beneficiary?.clientName.toString(),
                 )
 
                 MifosTitleDescSingleLineEqual(
                     modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(id = R.string.account_type),
-                    description = beneficiary?.accountType.toString(),
+                    title = stringResource(Res.string.account_type),
+                    description = state?.beneficiary?.accountType?.value ?: "",
                 )
 
                 MifosTitleDescSingleLineEqual(
                     modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(id = R.string.transfer_limit),
-                    description = beneficiary?.transferLimit.toString(),
+                    title = stringResource(Res.string.transfer_limit),
+                    description = state?.beneficiary?.transferLimit.toString(),
                 )
 
                 MifosTitleDescSingleLineEqual(
                     modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(id = R.string.office_name),
-                    description = beneficiary?.officeName.toString(),
+                    title = stringResource(Res.string.office_name),
+                    description = state?.beneficiary?.officeName.toString(),
                 )
             }
         }
     }
 }
 
-@DevicePreviews
+@Preview
 @Composable
-private fun PreviewBeneficiaryDetailContent(
-    modifier: Modifier = Modifier,
-) {
+private fun PreviewBeneficiaryDetailContent() {
     MifosMobileTheme {
         BeneficiaryDetailContent(
-            beneficiary = Beneficiary(),
-            modifier = modifier,
+            state = BeneficiaryDetailState(beneficiaryDialog = null),
+            modifier = Modifier,
         )
     }
 }

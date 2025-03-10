@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -68,8 +67,7 @@ fun NoInternetComponent(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -85,7 +83,6 @@ fun NoInternetComponent(
         Text(
             text = stringResource(Res.string.no_internet),
             style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -117,7 +114,6 @@ fun EmptyDataComponent(
                 .padding(bottom = 12.dp),
             imageVector = MifosIcons.Info,
             contentDescription = "Info Icon",
-            tint = MaterialTheme.colorScheme.onSecondary,
         )
 
         Text(
@@ -128,7 +124,6 @@ fun EmptyDataComponent(
                 stringResource(Res.string.something_went_wrong)
             },
             style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center,
         )
 

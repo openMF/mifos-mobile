@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.beneficiary.presentation
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -21,17 +20,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.ic_qrcode_scan_gray_dark
+import mifos_mobile.feature.beneficiary.generated.resources.scan
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.beneficiary.R
 
 /**
  * this is a reusable composable function that is made up of a text and icon composable
  * some of the intake parameters are
- * @param[icon]
+ * @param[image]
  * @param[iconDescription]
  * @param[text]
  * @param[iconClick]
@@ -39,7 +41,7 @@ import org.mifos.mobile.feature.beneficiary.R
  * */
 @Composable
 internal fun RenderIconAndText(
-    @DrawableRes icon: Int,
+    image: DrawableResource,
     text: String,
     iconDescription: String,
     iconClick: () -> Unit,
@@ -51,7 +53,7 @@ internal fun RenderIconAndText(
     ) {
         Icon(
             tint = MaterialTheme.colorScheme.onSurface,
-            painter = painterResource(id = icon),
+            painter = painterResource(image),
             contentDescription = iconDescription,
             modifier = Modifier
                 .height(85.dp)
@@ -61,23 +63,20 @@ internal fun RenderIconAndText(
                 ),
         )
 
-        Text(
-            text,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
+        Text(text)
     }
 }
 
-@DevicePreviews
+@Preview
 @Composable
 private fun IconsAndTextPreview() {
     MifosMobileTheme {
         Surface {
             RenderIconAndText(
-                icon = R.drawable.ic_qrcode_scan_gray_dark,
-                text = stringResource(id = R.string.scan),
-                iconDescription = stringResource(id = R.string.scan),
-                iconClick = {},
+                image = Res.drawable.ic_qrcode_scan_gray_dark,
+                text = stringResource(Res.string.scan),
+                iconDescription = stringResource(Res.string.scan),
+                iconClick = { },
             )
         }
     }
