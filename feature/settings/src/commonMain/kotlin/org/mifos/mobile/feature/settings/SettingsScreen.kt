@@ -9,9 +9,6 @@
  */
 package org.mifos.mobile.feature.settings
 
-import android.content.Context
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,23 +32,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.utils.LanguageHelper
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
-import org.mifos.mobile.core.designsystem.components.MifosTopBarTitle
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.enums.AppTheme
-import org.mifos.mobile.core.model.enums.MifosAppLanguage
+import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.change_app_theme
+import mifos_mobile.feature.settings.generated.resources.choose_language
+import mifos_mobile.feature.settings.generated.resources.settings
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.datastore.model.AppTheme
+import org.mifos.mobile.core.datastore.model.MifosAppLanguage
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopBarTitle
 import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import java.util.Locale
 
 @Composable
 internal fun SettingsScreen(
@@ -61,10 +58,8 @@ internal fun SettingsScreen(
     changePasscode: (String) -> Unit,
     languageChanged: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SettingsViewModel = hiltViewModel(),
+    viewModel: SettingsViewModel = koinViewModel(),
 ) {
-    val context = LocalContext.current
-
     val baseURL by viewModel.baseUrl.collectAsStateWithLifecycle()
     val tenant by viewModel.tenant.collectAsStateWithLifecycle()
     val passcode by viewModel.passcode.collectAsStateWithLifecycle()
@@ -76,6 +71,7 @@ internal fun SettingsScreen(
         selectedTheme = theme,
         baseURL = baseURL ?: "",
         tenant = tenant ?: "",
+        listOfLanguages = viewModel.allLanguageList ?: arrayOf(""),
         navigateBack = navigateBack,
         changePassword = changePassword,
         changePasscode = { changePasscode(passcode ?: "") },
@@ -90,11 +86,10 @@ internal fun SettingsScreen(
         },
         updateTheme = viewModel::updateTheme,
         updateLanguage = {
-            val isSystemLanguage = viewModel.updateLanguage(it)
+//            val isSystemLanguage = viewModel.updateLanguage(it)
             updateLanguageLocale(
-                context = context,
-                language = language,
-                isSystemLanguage = isSystemLanguage,
+//                language = language,
+//                isSystemLanguage = isSystemLanguage,
             )
             languageChanged()
         },
@@ -108,6 +103,7 @@ private fun SettingsScreen(
     selectedTheme: AppTheme,
     baseURL: String,
     tenant: String,
+    listOfLanguages: Array<String>,
     navigateBack: () -> Unit,
     changePassword: () -> Unit,
     changePasscode: () -> Unit,
@@ -124,7 +120,7 @@ private fun SettingsScreen(
         topBar = {
             MifosTopBarTitle(
                 navigateBack = navigateBack,
-                topBarTitleResId = R.string.settings,
+                topBarTitleResId = Res.string.settings,
             )
         },
         modifier = modifier,
@@ -148,8 +144,8 @@ private fun SettingsScreen(
 
     if (showLanguageUpdateDialog) {
         MifosRadioButtonDialog(
-            titleResId = R.string.choose_language,
-            items = stringArrayResource(R.array.languages),
+            titleResId = Res.string.choose_language,
+            items = listOfLanguages,
             selectItem = { _, index -> updateLanguage(MifosAppLanguage.entries[index]) },
             onDismissRequest = { showLanguageUpdateDialog = false },
             selectedItem = selectedLanguage.displayName,
@@ -158,7 +154,7 @@ private fun SettingsScreen(
 
     if (showThemeUpdateDialog) {
         MifosRadioButtonDialog(
-            titleResId = R.string.change_app_theme,
+            titleResId = Res.string.change_app_theme,
             items = AppTheme.entries.map { it.themeName }.toTypedArray(),
             selectItem = { _, index -> updateTheme(AppTheme.entries[index]) },
             onDismissRequest = { showThemeUpdateDialog = false },
@@ -210,9 +206,9 @@ private fun SettingsCards(
 
 @Composable
 private fun SettingsCardItem(
-    @StringRes title: Int,
-    @StringRes details: Int,
-    @DrawableRes icon: Int,
+    title: StringResource,
+    details: StringResource,
+    icon: DrawableResource,
     onclick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -227,7 +223,7 @@ private fun SettingsCardItem(
             modifier = Modifier.padding(vertical = 16.dp),
         ) {
             Icon(
-                painter = painterResource(id = icon),
+                painter = painterResource(icon),
                 contentDescription = null,
                 modifier = Modifier.weight(0.2f),
             )
@@ -235,12 +231,12 @@ private fun SettingsCardItem(
                 modifier = Modifier.weight(0.8f),
             ) {
                 Text(
-                    text = stringResource(id = title),
+                    text = stringResource(title),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
                     modifier = Modifier.padding(end = 16.dp),
-                    text = stringResource(id = details),
+                    text = stringResource(details),
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -251,13 +247,13 @@ private fun SettingsCardItem(
 
 @Composable
 private fun TitleCard(
-    @StringRes title: Int,
+    title: StringResource,
     modifier: Modifier = Modifier,
 ) {
     Row(modifier = modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.2f))
         Text(
-            text = stringResource(id = title),
+            text = stringResource(title),
             modifier = Modifier.weight(0.8f),
             fontSize = 14.sp,
         )
@@ -265,37 +261,17 @@ private fun TitleCard(
 }
 
 private fun updateLanguageLocale(
-    context: Context,
-    language: MifosAppLanguage,
-    isSystemLanguage: Boolean,
+//    language: MifosAppLanguage,
+//    isSystemLanguage: Boolean,
 ) {
-    if (!isSystemLanguage) {
-        LanguageHelper.setLocale(context, language.code)
-    } else {
-        val systemLanguageCode = Locale.getDefault().language
-        if (MifosAppLanguage.entries.find { it.code == systemLanguageCode } == null) {
-            LanguageHelper.setLocale(context, MifosAppLanguage.ENGLISH.code)
-        } else {
-            LanguageHelper.setLocale(context, systemLanguageCode)
-        }
-    }
-}
-
-@Composable
-@DevicePreviews
-private fun PreviewSettingsScreen() {
-    MifosMobileTheme {
-        SettingsScreen(
-            selectedLanguage = MifosAppLanguage.SYSTEM_LANGUAGE,
-            selectedTheme = AppTheme.SYSTEM,
-            baseURL = "",
-            tenant = "",
-            navigateBack = {},
-            changePassword = {},
-            changePasscode = {},
-            handleEndpointUpdate = { _, _ -> },
-            updateTheme = {},
-            updateLanguage = {},
-        )
-    }
+//    if (!isSystemLanguage) {
+//        LanguageHelper.setLocale(context, language.code)
+//    } else {
+//        val systemLanguageCode = Locale.getDefault().language
+//        if (MifosAppLanguage.entries.find { it.code == systemLanguageCode } == null) {
+//            LanguageHelper.setLocale(context, MifosAppLanguage.ENGLISH.code)
+//        } else {
+//            LanguageHelper.setLocale(context, systemLanguageCode)
+//        }
+//    }
 }
