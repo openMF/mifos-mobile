@@ -9,7 +9,6 @@
  */
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
-//    alias(libs.plugins.mifos.android.library.compose)
 }
 
 android {
