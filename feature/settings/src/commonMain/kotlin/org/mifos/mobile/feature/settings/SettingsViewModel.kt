@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -47,40 +48,30 @@ internal class SettingsViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
-    var allLanguageList: Array<String>? = null
+    private val allLanguageList = MutableStateFlow<List<String>>(emptyList())
 
     init {
         viewModelScope.launch {
-            allLanguageList = getStringArray(Res.array.languages).toTypedArray()
+            allLanguageList.value = getStringArray(Res.array.languages).toList()
         }
     }
 
-    val tenant: StateFlow<String?> = userPreferencesRepository
+    val uiState: StateFlow<SettingsUiState> = userPreferencesRepository
         .settingsInfo
-        .map { it.tenant }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
-
-    val baseUrl: StateFlow<String?> = userPreferencesRepository
-        .settingsInfo
-        .map { it.baseUrl }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
-
-    val passcode: StateFlow<String?> = userPreferencesRepository
-        .settingsInfo
-        .map { it.passcode }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
-
-    val theme: StateFlow<AppTheme> = userPreferencesRepository
-        .appTheme
-        .stateIn(viewModelScope, SharingStarted.Eagerly, AppTheme.SYSTEM)
-
-    val language: StateFlow<MifosAppLanguage> = userPreferencesRepository
-        .settingsInfo
-        .map { it.language }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, MifosAppLanguage.ENGLISH)
+        .map { settings ->
+            SettingsUiState(
+                tenant = settings.tenant,
+                baseUrl = settings.baseUrl,
+                passcode = settings.passcode,
+                theme = settings.appTheme,
+                language = settings.language,
+                allLanguages = allLanguageList.value,
+            )
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsUiState())
 
     fun tryUpdatingEndpoint(selectedBaseUrl: String, selectedTenant: String): Boolean {
-        if (baseUrl.value != selectedBaseUrl || tenant.value != selectedTenant) {
+        if (uiState.value.baseUrl != selectedBaseUrl || uiState.value.tenant != selectedTenant) {
             viewModelScope.launch {
                 userPreferencesRepository.updateSettings(
                     userPreferencesRepository.settingsInfo.first().copy(
@@ -108,6 +99,17 @@ internal class SettingsViewModel(
         }
     }
 }
+
+data class SettingsUiState(
+    val tenant: String? = null,
+    val baseUrl: String? = null,
+    val passcode: String? = null,
+    val theme: AppTheme = AppTheme.SYSTEM,
+    val language: MifosAppLanguage = MifosAppLanguage.ENGLISH,
+    val allLanguages: List<String> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+)
 
 internal enum class SettingsCardItem(
     val title: StringResource,

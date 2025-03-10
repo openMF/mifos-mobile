@@ -24,7 +24,7 @@ data class AppSettings(
             tenant = "default",
             baseUrl = "https://gsoc.mifos.community/",
             appTheme = AppTheme.SYSTEM,
-            language = MifosAppLanguage.ENGLISH,
+            language = MifosAppLanguage.SYSTEM_LANGUAGE,
         )
     }
 }

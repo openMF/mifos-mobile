@@ -62,21 +62,13 @@ internal fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
-    val baseURL by viewModel.baseUrl.collectAsStateWithLifecycle()
-    val tenant by viewModel.tenant.collectAsStateWithLifecycle()
-    val passcode by viewModel.passcode.collectAsStateWithLifecycle()
-    val theme by viewModel.theme.collectAsStateWithLifecycle()
-    val language by viewModel.language.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     SettingsScreen(
-        selectedLanguage = language,
-        selectedTheme = theme,
-        baseURL = baseURL ?: "",
-        tenant = tenant ?: "",
-        listOfLanguages = viewModel.allLanguageList ?: arrayOf(""),
+        uiState = uiState,
         navigateBack = navigateBack,
         changePassword = changePassword,
-        changePasscode = { changePasscode(passcode ?: "") },
+        changePasscode = { changePasscode(uiState.passcode ?: "") },
         handleEndpointUpdate = { url, selectedTenant ->
             if (viewModel.tryUpdatingEndpoint(
                     selectedBaseUrl = url,
@@ -101,11 +93,7 @@ internal fun SettingsScreen(
 
 @Composable
 private fun SettingsScreen(
-    selectedLanguage: MifosAppLanguage,
-    selectedTheme: AppTheme,
-    baseURL: String,
-    tenant: String,
-    listOfLanguages: Array<String>,
+    uiState: SettingsUiState,
     navigateBack: () -> Unit,
     changePassword: () -> Unit,
     changePasscode: () -> Unit,
@@ -148,10 +136,10 @@ private fun SettingsScreen(
     if (showLanguageUpdateDialog) {
         MifosRadioButtonDialog(
             titleResId = Res.string.choose_language,
-            items = listOfLanguages,
+            items = uiState.allLanguages.toTypedArray(),
             selectItem = { _, index -> updateLanguage(MifosAppLanguage.entries[index]) },
             onDismissRequest = { showLanguageUpdateDialog = false },
-            selectedItem = selectedLanguage.displayName,
+            selectedItem = uiState.language.displayName,
         )
     }
 
@@ -161,14 +149,14 @@ private fun SettingsScreen(
             items = AppTheme.entries.map { it.themeName }.toTypedArray(),
             selectItem = { _, index -> updateTheme(AppTheme.entries[index]) },
             onDismissRequest = { showThemeUpdateDialog = false },
-            selectedItem = selectedTheme.themeName,
+            selectedItem = uiState.theme.themeName,
         )
     }
 
     if (showEndpointUpdateDialog) {
         UpdateEndpointDialogScreen(
-            initialBaseURL = baseURL,
-            initialTenant = tenant,
+            initialBaseURL = uiState.baseUrl ?: "",
+            initialTenant = uiState.tenant,
             onDismissRequest = { showEndpointUpdateDialog = false },
             handleEndpointUpdate = handleEndpointUpdate,
             snackbarHostState = snackbarHostState,
