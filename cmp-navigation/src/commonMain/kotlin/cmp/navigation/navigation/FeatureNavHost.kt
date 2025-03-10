@@ -41,6 +41,7 @@ import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdP
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassword
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
@@ -135,7 +136,7 @@ internal fun FeatureNavHost(
         settingsNavGraph(
             navigateBack = { appState.navController.popBackStack() },
             navigateToLoginScreen = {},
-            changePasscode = {},
+            changePasscode = { appState.navController::navigateToUpdatePassword },
             changePassword = {},
             languageChanged = {},
         )

@@ -20,14 +20,17 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.cancel
 import mifos_mobile.feature.settings.generated.resources.dialog_action_ok
@@ -44,10 +47,13 @@ internal fun UpdateEndpointDialogScreen(
     initialTenant: String?,
     onDismissRequest: () -> Unit,
     handleEndpointUpdate: (baseURL: String, tenant: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
     var baseURL by rememberSaveable { mutableStateOf(initialBaseURL) }
     var tenant by rememberSaveable { mutableStateOf(initialTenant) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     BasicAlertDialog(
         onDismissRequest = onDismissRequest,
@@ -92,8 +98,15 @@ internal fun UpdateEndpointDialogScreen(
                     MifosTextButton(
                         content = { Text(stringResource(Res.string.dialog_action_ok)) },
                         onClick = {
-                            if (baseURL != null && tenant != null) {
-                                handleEndpointUpdate.invoke(baseURL ?: "", tenant ?: "")
+                            val url = baseURL?.takeIf { it.isNotBlank() }
+                            val id = tenant?.takeIf { it.isNotBlank() }
+
+                            if (url == null || id == null) {
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar("Base URL and Tenant ID are required")
+                                }
+                            } else {
+                                handleEndpointUpdate(url, id)
                             }
                         },
                     )
