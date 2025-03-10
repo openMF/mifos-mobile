@@ -63,7 +63,7 @@ internal fun SavingsAccountWithdrawScreen(
     SavingsAccountWithdrawScreen(
         uiState = uiState,
         savingsWithAssociations = savingsWithAssociations?.data,
-        navigateBack = navigateBack,
+        onBackPress = navigateBack,
         withdraw = viewModel::submitWithdrawSavingsAccount,
         modifier = modifier,
     )
@@ -73,7 +73,7 @@ internal fun SavingsAccountWithdrawScreen(
 private fun SavingsAccountWithdrawScreen(
     uiState: SavingsAccountWithdrawUiState,
     savingsWithAssociations: SavingsWithAssociations?,
-    navigateBack: (withdrawSuccess: Boolean) -> Unit,
+    onBackPress: (withdrawSuccess: Boolean) -> Unit,
     withdraw: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -86,7 +86,7 @@ private fun SavingsAccountWithdrawScreen(
             .background(MaterialTheme.colorScheme.background),
     ) {
         MifosTopBar(
-            backPress = { navigateBack(false) },
+            backPress = { onBackPress(false) },
             topBarTitle = stringResource(Res.string.withdraw_savings_account),
         )
 
@@ -112,7 +112,7 @@ private fun SavingsAccountWithdrawScreen(
                             snackbarHostState.showSnackbar(Res.string.savings_account_withdraw_successful.toString())
                         }
                     }
-                    navigateBack(true)
+                    onBackPress(true)
                 }
 
                 is SavingsAccountWithdrawUiState.Error -> {

@@ -20,7 +20,6 @@ import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.approval_pending
 import mifos_mobile.feature.savings.generated.resources.ic_assignment_turned_in_black_24dp
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.ui.component.EmptyDataView
@@ -91,24 +90,23 @@ private fun SavingsAccountDetailScreen(
                 is SavingsAccountDetailUiState.Loading -> MifosProgressIndicatorOverlay()
 
                 is SavingsAccountDetailUiState.Success -> {
-                    logger.e { "SavingsAccountDetail Content: ${uiState.savingAccount.getNominalAnnualInterestRate()}" }
-                    if (uiState.savingAccount.status?.submittedAndPendingApproval == true) {
-                        EmptyDataView(
-                            modifier = Modifier.fillMaxSize(),
-                            image = Res.drawable.ic_assignment_turned_in_black_24dp,
-                            error = Res.string.approval_pending,
-                        )
-                    } else {
-                        SavingsAccountDetailContent(
-                            savingsAccount = uiState.savingAccount,
-                            makeTransfer = makeTransfer,
-                            viewCharges = viewCharges,
-                            viewTransaction = viewTransaction,
-                            viewQrCode = viewQrCode,
-                            callUs = callUs,
-                            deposit = deposit,
-                        )
-                    }
+                    SavingsAccountDetailContent(
+                        savingsAccount = uiState.savingAccount,
+                        makeTransfer = makeTransfer,
+                        viewCharges = viewCharges,
+                        viewTransaction = viewTransaction,
+                        viewQrCode = viewQrCode,
+                        callUs = callUs,
+                        deposit = deposit,
+                    )
+                }
+
+                SavingsAccountDetailUiState.Empty -> {
+                    EmptyDataView(
+                        modifier = Modifier.fillMaxSize(),
+                        image = Res.drawable.ic_assignment_turned_in_black_24dp,
+                        error = Res.string.approval_pending,
+                    )
                 }
             }
         }

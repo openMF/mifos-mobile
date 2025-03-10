@@ -19,7 +19,7 @@ data class SavingsAccountApplicationPayload(
 
     var clientId: Int? = null,
 
-    var productId: Int? = null,
+    val productId: Int? = null,
 
     val locale: String = "en",
 

@@ -167,11 +167,11 @@ internal class SavingsAccountApplicationViewModel(
     }
 
     private fun submitSavingsAccount(productId: Int, clientId: Int, showToast: (Int) -> Unit) {
-        val payload = SavingsAccountApplicationPayload()
-        payload.clientId = clientId
-        if (productId != -1) {
-            payload.productId = productId
-        } else {
+        val payload = SavingsAccountApplicationPayload(
+            clientId = clientId,
+            productId = if (productId != -1) productId else null,
+        )
+        if (productId == -1) {
             showToast(789)
             return
         }

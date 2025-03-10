@@ -72,6 +72,7 @@ private fun SavingsAccountApplicationScreen(
             )
         },
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {

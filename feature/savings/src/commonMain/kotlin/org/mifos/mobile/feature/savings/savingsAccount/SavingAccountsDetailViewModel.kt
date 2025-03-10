@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccount
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -52,7 +54,14 @@ internal class SavingAccountsDetailViewModel(
             when (result) {
                 is DataState.Error -> SavingsAccountDetailUiState.Error
                 DataState.Loading -> SavingsAccountDetailUiState.Loading
-                is DataState.Success -> SavingsAccountDetailUiState.Success(result.data)
+                is DataState.Success -> {
+                    val account = result.data
+                    if (account.status?.submittedAndPendingApproval == true) {
+                        SavingsAccountDetailUiState.Empty
+                    } else {
+                        SavingsAccountDetailUiState.Success(account)
+                    }
+                }
             }
         }.stateIn(
             scope = viewModelScope,
@@ -72,20 +81,22 @@ internal class SavingAccountsDetailViewModel(
 internal sealed class SavingsAccountDetailUiState {
     data object Loading : SavingsAccountDetailUiState()
     data object Error : SavingsAccountDetailUiState()
+    data object Empty : SavingsAccountDetailUiState()
     data class Success(val savingAccount: SavingsWithAssociations) : SavingsAccountDetailUiState()
 }
 
-val DepositGreen = Color(0xff14c416)
-val Blue = Color(0xFF003FFF)
-val RedLight = Color(0xFFFF4444)
-val LightYellow = Color(0xFFF9AC06)
-
+@Composable
 internal fun Status.getStatusColorAndText(): Pair<Color, StringResource> {
     return when {
-        this.active == true -> Pair(DepositGreen, Res.string.active)
-        this.approved == true -> Pair(Blue, Res.string.need_approval)
-        this.submittedAndPendingApproval == true -> Pair(LightYellow, Res.string.pending)
-        this.matured == true -> Pair(RedLight, Res.string.matured)
-        else -> Pair(Color.Black, Res.string.closed)
+        this.active == true ->
+            Pair(MaterialTheme.colorScheme.primary, Res.string.active)
+        this.approved == true ->
+            Pair(MaterialTheme.colorScheme.secondaryContainer, Res.string.need_approval)
+        this.submittedAndPendingApproval == true ->
+            Pair(MaterialTheme.colorScheme.tertiaryContainer, Res.string.pending)
+        this.matured == true ->
+            Pair(MaterialTheme.colorScheme.errorContainer, Res.string.matured)
+        else ->
+            Pair(MaterialTheme.colorScheme.surfaceVariant, Res.string.closed)
     }
 }
