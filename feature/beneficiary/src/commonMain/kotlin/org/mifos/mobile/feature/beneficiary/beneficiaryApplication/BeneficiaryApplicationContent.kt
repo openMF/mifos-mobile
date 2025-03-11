@@ -73,7 +73,9 @@ internal fun BeneficiaryApplicationContent(
 
     var transferLimit by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(
-            TextFieldValue(state.beneficiary?.transferLimit?.toString() ?: ""),
+            TextFieldValue(
+                state.beneficiary?.transferLimit?.toInt()?.toString() ?: "",
+            ),
         )
     }
 
@@ -182,7 +184,7 @@ internal fun BeneficiaryApplicationContent(
                         BeneficiaryPayload(
                             name = beneficiaryName.text,
                             accountNumber = accountNumber.text,
-                            transferLimit = transferLimit.text.toFloatOrNull() ?: 0f,
+                            transferLimit = transferLimit.text.toIntOrNull() ?: 0,
                             officeName = officeName.text,
                             accountType = accountType,
                             locale = "en",

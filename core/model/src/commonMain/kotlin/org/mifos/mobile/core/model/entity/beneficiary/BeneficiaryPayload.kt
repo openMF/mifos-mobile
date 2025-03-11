@@ -24,7 +24,7 @@ data class BeneficiaryPayload(
 
     val accountType: Int? = 0,
 
-    val transferLimit: Float? = 0f,
+    val transferLimit: Int? = 0,
 
     val officeName: String? = null,
 ) : Parcelable

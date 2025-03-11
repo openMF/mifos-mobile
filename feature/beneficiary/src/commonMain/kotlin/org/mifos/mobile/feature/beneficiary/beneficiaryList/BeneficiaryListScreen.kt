@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -53,6 +54,10 @@ internal fun BeneficiaryListScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.trySendAction(BeneficiaryListAction.LoadBeneficiaries)
+    }
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {

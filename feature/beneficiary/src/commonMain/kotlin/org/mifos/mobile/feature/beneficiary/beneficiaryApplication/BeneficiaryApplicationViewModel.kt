@@ -17,13 +17,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
 import mifos_mobile.feature.beneficiary.generated.resources.enter_account_number
 import mifos_mobile.feature.beneficiary.generated.resources.enter_beneficiary_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_office_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_transfer_limit
-import mifos_mobile.feature.beneficiary.generated.resources.error_creating_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiary_template
-import mifos_mobile.feature.beneficiary.generated.resources.error_updating_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.invalid_amount
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
@@ -189,7 +189,7 @@ internal class BeneficiaryApplicationViewModel(
                     state.beneficiaryId?.toLong(),
                     payload = BeneficiaryUpdatePayload(
                         name = beneficiaryPayload.name,
-                        transferLimit = beneficiaryPayload.transferLimit ?: 0F,
+                        transferLimit = beneficiaryPayload.transferLimit ?: 0,
                     ),
                 )
                 else -> createBeneficiary(beneficiaryPayload)
@@ -200,20 +200,18 @@ internal class BeneficiaryApplicationViewModel(
     private fun createBeneficiary(payload: BeneficiaryPayload?) {
         setDialogState(BeneficiaryApplicationState.DialogState.Loading)
         viewModelScope.launch {
-            val errorMsg = getString(Res.string.error_creating_beneficiary)
+            val successMsg = getString(Res.string.beneficiary_created_successfully)
             val response = beneficiaryRepositoryImp.createBeneficiary(payload)
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(errorMsg))
-                    delay(1500)
-                    sendEvent(BeneficiaryApplicationEvent.Navigate)
+                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
                 }
                 DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
 
                 is DataState.Success -> {
                     setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.data))
+                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
                     delay(1500)
                     sendEvent(BeneficiaryApplicationEvent.Navigate)
                 }
@@ -224,19 +222,17 @@ internal class BeneficiaryApplicationViewModel(
     private fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
         setDialogState(BeneficiaryApplicationState.DialogState.Loading)
         viewModelScope.launch {
-            val errorMsg = getString(Res.string.error_updating_beneficiary)
+            val successMsg = getString(Res.string.beneficiary_updated_successfully)
             val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(errorMsg))
-                    delay(1500)
-                    sendEvent(BeneficiaryApplicationEvent.Navigate)
+                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
                 }
                 DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
                 is DataState.Success -> {
                     setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.data))
+                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
                     delay(1500)
                     sendEvent(BeneficiaryApplicationEvent.Navigate)
                 }
@@ -274,11 +270,11 @@ internal class BeneficiaryApplicationViewModel(
             },
 
             transferLimitError = when {
-                payload.transferLimit == 0f -> {
+                payload.transferLimit == 0 -> {
                     hasError = true
                     Res.string.enter_transfer_limit
                 }
-                payload.transferLimit?.rem(1) != 0f -> {
+                payload.transferLimit?.rem(1) != 0 -> {
                     hasError = true
                     Res.string.invalid_amount
                 }

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
@@ -26,7 +27,6 @@ class BeneficiaryRepositoryImp(
     private val dataManager: DataManager,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
-
     override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> = flow {
         try {
             dataManager.beneficiaryApi.beneficiaryTemplate()
@@ -42,13 +42,14 @@ class BeneficiaryRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+
                 if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
                     return@withContext DataState.Error(
-                        Exception("API Error: ${response.status.value}"),
-                        response.status.description,
+                        Exception(errorMessage),
+                        null,
                     )
                 }
-
                 DataState.Success("Created successfully")
             } catch (e: Exception) {
                 DataState.Error(e, null)
@@ -62,14 +63,15 @@ class BeneficiaryRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload)
-                if (response.status.value != 200) {
+                val response =
+                    beneficiaryId?.let { dataManager.beneficiaryApi.updateBeneficiary(it, payload) }
+                if (response?.status?.value != 200) {
+                    val errorMessage = response?.let { extractErrorMessage(it) }
                     return@withContext DataState.Error(
-                        Exception("API Error: ${response.status.value}"),
-                        response.status.description,
+                        Exception(errorMessage ?: "Something went wrong"),
+                        null,
                     )
                 }
-
                 DataState.Success("Updated successfully")
             } catch (e: Exception) {
                 DataState.Error(e, null)
@@ -78,13 +80,21 @@ class BeneficiaryRepositoryImp(
     }
 
     override suspend fun deleteBeneficiary(beneficiaryId: Long?): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    beneficiaryId?.let { dataManager.beneficiaryApi.deleteBeneficiary(it) }
+                if (response?.status?.value != 200) {
+                    val errorMessage = response?.let { extractErrorMessage(it) }
+                    return@withContext DataState.Error(
+                        Exception(errorMessage ?: "Something went wrong"),
+                        null,
+                    )
+                }
+                DataState.Success("Deleted successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Deleted successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 

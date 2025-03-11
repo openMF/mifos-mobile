@@ -97,7 +97,7 @@ internal class BeneficiaryDetailViewModel(
 
     private fun deleteBeneficiary(beneficiaryId: Int?) {
         viewModelScope.launch {
-            val errorMsg = getString(Res.string.error_deleting_beneficiary)
+//            val errorMsg = getString(Res.string.error_deleting_beneficiary)
             setDialogState(BeneficiaryDetailState.DialogState.Loading)
             val response = beneficiaryRepositoryImp.deleteBeneficiary(beneficiaryId?.toLong())
             when (response) {
@@ -107,11 +107,12 @@ internal class BeneficiaryDetailViewModel(
                 is DataState.Error -> {
                     setDialogState(
                         BeneficiaryDetailState.DialogState.Error(
-                            errorMsg,
+                            response.message,
                         ),
                     )
                 }
                 is DataState.Success -> {
+                    setDialogState(null)
                     sendEvent(BeneficiaryDetailEvent.ShowToast(response.data))
                     delay(1500)
                     sendEvent(BeneficiaryDetailEvent.Navigate)
@@ -129,6 +130,7 @@ internal class BeneficiaryDetailViewModel(
             BeneficiaryDetailAction.OnNavigate -> sendEvent(BeneficiaryDetailEvent.Navigate)
             is BeneficiaryDetailAction.ErrorDialogDismiss -> updateState { it.copy(beneficiaryDialog = null) }
             BeneficiaryDetailAction.ShowDeleteConfirmation -> showDeleteConfirmation()
+            BeneficiaryDetailAction.OnRefresh -> loadBeneficiary()
         }
     }
 
@@ -169,6 +171,7 @@ sealed interface BeneficiaryDetailEvent {
 }
 
 sealed interface BeneficiaryDetailAction {
+    data object OnRefresh : BeneficiaryDetailAction
     data class OnUpdateBeneficiary(val beneficiary: Beneficiary?) : BeneficiaryDetailAction
     data class DeleteBeneficiary(val beneficiaryId: Int?) : BeneficiaryDetailAction
     data object OnNavigate : BeneficiaryDetailAction
