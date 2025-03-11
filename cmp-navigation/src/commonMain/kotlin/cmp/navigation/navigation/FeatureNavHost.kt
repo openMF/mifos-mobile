@@ -37,10 +37,13 @@ import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.settings.navigation.navigateToSettings
+import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassword
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
@@ -137,6 +140,14 @@ internal fun FeatureNavHost(
             openQrImportScreen = { },
             openQrReaderScreen = { },
         )
+
+        settingsNavGraph(
+            navigateBack = { appState.navController.popBackStack() },
+            navigateToLoginScreen = {},
+            changePasscode = { appState.navController::navigateToUpdatePassword },
+            changePassword = {},
+            languageChanged = {},
+        )
     }
 }
 
@@ -154,7 +165,9 @@ fun handleHomeNavigation(
         HomeDestinations.RECENT_TRANSACTIONS -> { }
         HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
-        HomeDestinations.SETTINGS -> { }
+        HomeDestinations.SETTINGS -> {
+            navController.navigateToSettings()
+        }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> { }

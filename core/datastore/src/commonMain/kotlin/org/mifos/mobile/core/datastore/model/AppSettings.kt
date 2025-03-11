@@ -17,12 +17,14 @@ data class AppSettings(
     val baseUrl: String,
     val passcode: String? = null,
     val appTheme: AppTheme = AppTheme.SYSTEM,
+    val language: MifosAppLanguage,
 ) {
     companion object {
         val DEFAULT = AppSettings(
             tenant = "default",
             baseUrl = "https://gsoc.mifos.community/",
             appTheme = AppTheme.SYSTEM,
+            language = MifosAppLanguage.SYSTEM_LANGUAGE,
         )
     }
 }

@@ -33,10 +33,10 @@ class UserPreferencesRepositoryImpl(
     override val settingsInfo: Flow<AppSettings>
         get() = preferenceManager.settingsInfo
 
-    override val appTheme: StateFlow<AppTheme?>
+    override val appTheme: StateFlow<AppTheme>
         get() = preferenceManager.appTheme.stateIn(
             scope = unconfinedScope,
-            initialValue = null,
+            initialValue = AppTheme.SYSTEM,
             started = SharingStarted.Eagerly,
         )
     override val token: StateFlow<String?>
