@@ -9,6 +9,7 @@
  */
 package cmp.navigation
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import cmp.navigation.navigation.RootNavGraph
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
 @Composable
@@ -43,7 +45,16 @@ fun ComposeApp(
         else -> AUTH_GRAPH
     }
 
-    MifosMobileTheme {
+    val isDarkMode = when (uiState) {
+        is MainUiState.Success -> when ((uiState as MainUiState.Success).appTheme) {
+            AppTheme.SYSTEM -> isSystemInDarkTheme()
+            AppTheme.LIGHT -> false
+            AppTheme.DARK -> true
+        }
+        else -> true
+    }
+
+    MifosMobileTheme(isDarkMode) {
         RootNavGraph(
             modifier = modifier.fillMaxSize(),
             networkMonitor = networkMonitor,
