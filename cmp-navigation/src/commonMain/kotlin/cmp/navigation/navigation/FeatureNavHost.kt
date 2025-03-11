@@ -24,6 +24,8 @@ import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
@@ -38,10 +40,14 @@ import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
+import org.mifos.mobile.feature.settings.navigation.navigateToSettings
+import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassword
+import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -120,6 +126,10 @@ internal fun FeatureNavHost(
             },
         )
 
+        updatePasswordNavGraph {
+            appState.navController.popBackStack()
+        }
+
         transferProcessNavGraph(
             navigateBack = { appState.navController.popBackStack() },
             onTransferSuccessNavigate = { destination ->
@@ -138,6 +148,20 @@ internal fun FeatureNavHost(
                 }
             },
         )
+
+        beneficiaryNavGraph(
+            navController = appState.navController,
+            openQrImportScreen = { },
+            openQrReaderScreen = { },
+        )
+
+        settingsNavGraph(
+            navigateBack = { appState.navController.popBackStack() },
+            navigateToLoginScreen = {},
+            changePasscode = { appState.navController::navigateToUpdatePassword },
+            changePassword = {},
+            languageChanged = {},
+        )
     }
 }
 
@@ -155,13 +179,15 @@ fun handleHomeNavigation(
         HomeDestinations.RECENT_TRANSACTIONS -> { }
         HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
-        HomeDestinations.SETTINGS -> { }
+        HomeDestinations.SETTINGS -> {
+            navController.navigateToSettings()
+        }
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> { }
         HomeDestinations.APP_INFO -> { }
         HomeDestinations.TRANSFER -> { }
-        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> { }
         HomeDestinations.NOTIFICATIONS -> { }
         HomeDestinations.PROFILE -> { }

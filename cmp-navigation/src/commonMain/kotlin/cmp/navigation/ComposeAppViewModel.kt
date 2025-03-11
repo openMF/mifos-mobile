@@ -13,22 +13,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.library.passcode.data.PasscodeManager
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserDataRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.model.UserData
 
 class ComposeAppViewModel(
     private val userDataRepository: UserDataRepository,
     private val passcodeManager: PasscodeManager,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
-    val uiState: StateFlow<MainUiState> = userDataRepository.userData.map { dataState ->
+    private val userDataFlow = userDataRepository.userData
+    private val appThemeFlow = userPreferencesRepository.appTheme
+
+    val uiState: StateFlow<MainUiState> = combine(userDataFlow, appThemeFlow) { dataState, appTheme ->
         when (dataState) {
-            is DataState.Success -> MainUiState.Success(dataState.data)
+            is DataState.Success -> MainUiState.Success(dataState.data, appTheme)
             is DataState.Error -> MainUiState.Error(dataState.exception.message ?: "Unknown error")
             DataState.Loading -> MainUiState.Loading
         }
@@ -49,5 +55,5 @@ class ComposeAppViewModel(
 sealed interface MainUiState {
     data object Loading : MainUiState
     data class Error(val error: String) : MainUiState
-    data class Success(val userData: UserData) : MainUiState
+    data class Success(val userData: UserData, val appTheme: AppTheme) : MainUiState
 }
