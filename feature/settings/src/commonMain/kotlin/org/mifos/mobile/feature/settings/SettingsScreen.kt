@@ -68,7 +68,7 @@ internal fun SettingsScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         changePassword = changePassword,
-        changePasscode = { changePasscode(uiState.passcode ?: "") },
+        changePasscode = { changePasscode(uiState.passcode) },
         handleEndpointUpdate = { url, selectedTenant ->
             if (viewModel.tryUpdatingEndpoint(
                     selectedBaseUrl = url,
@@ -155,7 +155,7 @@ private fun SettingsScreen(
 
     if (showEndpointUpdateDialog) {
         UpdateEndpointDialogScreen(
-            initialBaseURL = uiState.baseUrl ?: "",
+            initialBaseURL = uiState.baseUrl,
             initialTenant = uiState.tenant,
             onDismissRequest = { showEndpointUpdateDialog = false },
             handleEndpointUpdate = handleEndpointUpdate,
