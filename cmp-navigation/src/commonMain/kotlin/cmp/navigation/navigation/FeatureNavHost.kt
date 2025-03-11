@@ -24,6 +24,8 @@ import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
@@ -133,6 +135,12 @@ internal fun FeatureNavHost(
             },
         )
 
+        beneficiaryNavGraph(
+            navController = appState.navController,
+            openQrImportScreen = { },
+            openQrReaderScreen = { },
+        )
+
         settingsNavGraph(
             navigateBack = { appState.navController.popBackStack() },
             navigateToLoginScreen = {},
@@ -165,7 +173,7 @@ fun handleHomeNavigation(
         HomeDestinations.SHARE -> { }
         HomeDestinations.APP_INFO -> { }
         HomeDestinations.TRANSFER -> { }
-        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> { }
         HomeDestinations.NOTIFICATIONS -> { }
         HomeDestinations.PROFILE -> { }

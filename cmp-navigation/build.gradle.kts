@@ -30,6 +30,7 @@ kotlin {
             implementation(projects.feature.updatePassword)
             implementation(projects.feature.thirdPartyTransfer)
             implementation(projects.feature.transferProcess)
+            implementation(projects.feature.beneficiary)
             implementation(projects.feature.settings)
             // Core Modules
             implementation(projects.core.data)

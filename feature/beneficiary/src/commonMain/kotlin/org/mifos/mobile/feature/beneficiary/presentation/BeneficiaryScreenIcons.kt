@@ -18,11 +18,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.add
+import mifos_mobile.feature.beneficiary.generated.resources.ic_beneficiary_add_48px
+import mifos_mobile.feature.beneficiary.generated.resources.ic_file_upload_black_24dp
+import mifos_mobile.feature.beneficiary.generated.resources.ic_qrcode_scan_gray_dark
+import mifos_mobile.feature.beneficiary.generated.resources.scan
+import mifos_mobile.feature.beneficiary.generated.resources.upload_qr_code
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
 internal fun BeneficiaryScreenIcons(
@@ -37,17 +43,17 @@ internal fun BeneficiaryScreenIcons(
             modifier = Modifier.fillMaxWidth(),
         ) {
             RenderIconAndText(
-                icon = R.drawable.ic_beneficiary_add_48px,
-                text = stringResource(id = R.string.add),
-                iconDescription = stringResource(id = R.string.add),
-                iconClick = addIconClicked,
+                image = Res.drawable.ic_beneficiary_add_48px,
+                text = stringResource(Res.string.add),
+                iconDescription = stringResource(Res.string.add),
+                iconClick = { addIconClicked() },
             )
 
             RenderIconAndText(
-                icon = R.drawable.ic_qrcode_scan_gray_dark,
-                text = stringResource(id = R.string.scan),
-                iconDescription = stringResource(id = R.string.scan),
-                iconClick = scanIconClicked,
+                image = Res.drawable.ic_qrcode_scan_gray_dark,
+                text = stringResource(Res.string.scan),
+                iconDescription = stringResource(Res.string.scan),
+                iconClick = { scanIconClicked() },
             )
         }
 
@@ -56,16 +62,16 @@ internal fun BeneficiaryScreenIcons(
             modifier = Modifier.fillMaxWidth(),
         ) {
             RenderIconAndText(
-                icon = R.drawable.ic_file_upload_black_24dp,
-                text = stringResource(id = R.string.upload_qr_code),
-                iconDescription = stringResource(id = R.string.upload_qr_code),
-                iconClick = uploadIconClicked,
+                image = Res.drawable.ic_file_upload_black_24dp,
+                text = stringResource(Res.string.upload_qr_code),
+                iconDescription = stringResource(Res.string.upload_qr_code),
+                iconClick = { uploadIconClicked() },
             )
         }
     }
 }
 
-@DevicePreviews
+@Preview
 @Composable
 private fun IconsScreenPreview() {
     MifosMobileTheme {

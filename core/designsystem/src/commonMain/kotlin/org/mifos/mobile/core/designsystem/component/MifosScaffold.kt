@@ -60,13 +60,13 @@ fun MifosScaffold(
             floatingActionButtonContent?.let { content ->
                 FloatingActionButton(
                     onClick = content.onClick,
-                    contentColor = content.contentColor,
+//                    contentColor = content.contentColor,
                     content = content.content,
                 )
             }
         },
         snackbarHost = snackbarHost,
-        containerColor = MaterialTheme.colorScheme.background,
+//        containerColor = MaterialTheme.colorScheme.background,
         content = { paddingValues ->
             val internalPullToRefreshState = rememberPullToRefreshState()
             Box(

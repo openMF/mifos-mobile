@@ -20,18 +20,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
-import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
 fun ShowBeneficiary(
@@ -41,7 +39,8 @@ fun ShowBeneficiary(
 ) {
     Box(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
         LazyColumn {
             items(beneficiaryList) { beneficiary ->
@@ -60,18 +59,16 @@ fun BeneficiaryItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    MifosCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(0.dp),
         onClick = onClick,
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent,
-        ),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 16.dp),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
                 text = "${beneficiary.name}",
@@ -85,13 +82,11 @@ fun BeneficiaryItem(
                 Text(
                     text = "${beneficiary.id}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f),
                 )
 
                 Text(
                     text = "${beneficiary.officeName}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f),
                 )
             }
         }
@@ -99,13 +94,12 @@ fun BeneficiaryItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(0.2.dp),
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = .3f),
         )
     }
 }
 
+@Preview
 @Composable
-@DevicePreviews
 fun PreviewBeneficiaryListEmpty(modifier: Modifier = Modifier) {
     val beneficiary = Beneficiary(name = "Victor", id = 242344343, officeName = "Main office")
     MifosMobileTheme {
