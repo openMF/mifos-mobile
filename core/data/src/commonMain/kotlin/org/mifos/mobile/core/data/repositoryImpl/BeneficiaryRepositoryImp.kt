@@ -11,11 +11,12 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
@@ -26,20 +27,33 @@ class BeneficiaryRepositoryImp(
     private val dataManager: DataManager,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
-
-    override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> {
-        return dataManager.beneficiaryApi.beneficiaryTemplate()
-            .asDataStateFlow().flowOn(ioDispatcher)
-    }
+    override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> = flow {
+        try {
+            dataManager.beneficiaryApi.beneficiaryTemplate()
+                .collect { response ->
+                    emit(DataState.Success(response))
+                }
+        } catch (exception: Exception) {
+            emit(DataState.Error(exception))
+        }
+    }.flowOn(ioDispatcher)
 
     override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
+                DataState.Success("Created successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Created successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
@@ -47,29 +61,51 @@ class BeneficiaryRepositoryImp(
         beneficiaryId: Long?,
         payload: BeneficiaryUpdatePayload?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    beneficiaryId?.let { dataManager.beneficiaryApi.updateBeneficiary(it, payload) }
+                if (response?.status?.value != 200) {
+                    val errorMessage = response?.let { extractErrorMessage(it) }
+                    return@withContext DataState.Error(
+                        Exception(errorMessage ?: "Something went wrong"),
+                        null,
+                    )
+                }
+                DataState.Success("Updated successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Updated successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
     override suspend fun deleteBeneficiary(beneficiaryId: Long?): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    beneficiaryId?.let { dataManager.beneficiaryApi.deleteBeneficiary(it) }
+                if (response?.status?.value != 200) {
+                    val errorMessage = response?.let { extractErrorMessage(it) }
+                    return@withContext DataState.Error(
+                        Exception(errorMessage ?: "Something went wrong"),
+                        null,
+                    )
+                }
+                DataState.Success("Deleted successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Deleted successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
-    override suspend fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> {
-        return dataManager.beneficiaryApi.beneficiaryList()
-            .asDataStateFlow().flowOn(ioDispatcher)
-    }
+    override fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> = flow {
+        try {
+            dataManager.beneficiaryApi.beneficiaryList()
+                .collect { response ->
+                    emit(DataState.Success(response))
+                }
+        } catch (e: Exception) {
+            emit(DataState.Error(e, null))
+        }
+    }.flowOn(ioDispatcher)
 }

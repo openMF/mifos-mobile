@@ -9,20 +9,23 @@
  */
 package org.mifos.mobile.feature.beneficiary.presentation
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import org.mifos.mobile.core.designsystem.components.MifosTopBar
+import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
+import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary_option
+import mifos_mobile.feature.beneficiary.generated.resources.select_mode
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.beneficiary.R
 
 @Composable
 internal fun BeneficiaryScreen(
@@ -32,13 +35,11 @@ internal fun BeneficiaryScreen(
     uploadIconClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
+    MifosScaffold(
         topBar = {
             MifosTopBar(
-                navigateBack = topAppbarNavigateBack,
-                title = {
-                    Text(text = stringResource(id = R.string.add_beneficiary))
-                },
+                backPress = topAppbarNavigateBack,
+                topBarTitle = stringResource(Res.string.add_beneficiary),
             )
         },
         modifier = modifier,
@@ -46,32 +47,31 @@ internal fun BeneficiaryScreen(
         Column(
             modifier = Modifier
                 .padding(it)
-                .padding(10.dp),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                stringResource(id = R.string.select_mode),
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface,
+                stringResource(Res.string.select_mode),
+                style = MaterialTheme.typography.labelMedium,
             )
 
             Text(
                 modifier = Modifier.padding(top = 16.dp),
-                text = stringResource(R.string.add_beneficiary_option),
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface,
+                text = stringResource(Res.string.add_beneficiary_option),
+                style = MaterialTheme.typography.labelMedium,
             )
 
             BeneficiaryScreenIcons(
-                addIconClicked = addIconClicked,
-                scanIconClicked = scanIconClicked,
-                uploadIconClicked = uploadIconClicked,
+                addIconClicked = { addIconClicked() },
+                scanIconClicked = { scanIconClicked() },
+                uploadIconClicked = { uploadIconClicked() },
                 modifier = Modifier.padding(top = 20.dp),
             )
         }
     }
 }
 
-@DevicePreviews
+@Preview
 @Composable
 private fun BeneficiaryScreenPreview() {
     MifosMobileTheme {
