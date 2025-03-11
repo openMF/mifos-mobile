@@ -12,7 +12,7 @@ package org.mifos.mobile.feature.guarantor.screens.guarantorAdd
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,26 +22,31 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.guarantor_created_successfully
+import mifos_mobile.feature.guarantor.generated.resources.guarantor_updated_successfully
+import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.GuarantorRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.Parcelable
+import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
-import org.mifos.mobile.core.network.Result
-import org.mifos.mobile.core.network.asResult
-import org.mifos.mobile.feature.guarantor.R
-import javax.inject.Inject
+import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 /**
  * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
-@HiltViewModel
-internal class AddGuarantorViewModel @Inject constructor(
+internal class AddGuarantorViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
+    networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : BaseViewModel<> {
 
     private val index = savedStateHandle.getStateFlow(key = Constants.INDEX, initialValue = -1)
     private val loanId = savedStateHandle.getStateFlow<Long>(
@@ -81,17 +86,19 @@ internal class AddGuarantorViewModel @Inject constructor(
 
     fun createGuarantor(payload: GuarantorApplicationPayload) {
         viewModelScope.launch {
-            mGuarantorState.value = GuarantorAddUiState.Loading
-            guarantorRepositoryImp.createGuarantor(payload = payload, loanId = loanId.value)
-                .catch { e ->
-                    mGuarantorState.value = GuarantorAddUiState.Error(e.message)
-                }.collect {
-                    mGuarantorState.value =
-                        GuarantorAddUiState.Success(R.string.guarantor_created_successfully)
-                }
+            when (val result = guarantorRepositoryImp.createGuarantor(loanId.value, payload)) {
+                is DataState.Error -> mGuarantorState.value =
+                    GuarantorAddUiState.Error(result.message)
+
+                DataState.Loading -> mGuarantorState.value = GuarantorAddUiState.Loading
+
+                is DataState.Success -> mGuarantorState.value =
+                    GuarantorAddUiState.Success(Res.string.guarantor_created_successfully)
+            }
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun fetchGuarantorItem() {
         if (index.value > -1) {
             guarantorItem = loanId
@@ -114,23 +121,58 @@ internal class AddGuarantorViewModel @Inject constructor(
 
     fun updateGuarantor(payload: GuarantorApplicationPayload) {
         viewModelScope.launch {
-            mGuarantorState.value = GuarantorAddUiState.Loading
-            guarantorRepositoryImp.updateGuarantor(payload, loanId.value, guarantorItem.value?.id)
-                .catch { e ->
-                    mGuarantorState.value = GuarantorAddUiState.Error(e.message)
-                }.collect {
-                    mGuarantorState.value =
-                        GuarantorAddUiState.Success(R.string.guarantor_updated_successfully)
-                }
+
+            when (val result = guarantorRepositoryImp.updateGuarantor(
+                payload,
+                loanId.value,
+                guarantorItem.value?.id,
+            )) {
+                is DataState.Error -> mGuarantorState.value =
+                    GuarantorAddUiState.Error(result.exception.message)
+
+                is DataState.Success -> mGuarantorState.value =
+                    GuarantorAddUiState.Success(Res.string.guarantor_updated_successfully)
+
+                DataState.Loading -> mGuarantorState.value = GuarantorAddUiState.Loading
+            }
         }
     }
+
 }
 
+@Parcelize
+data class AddGuarrantorState (
+    val index : Int = -1,
+    val loanId : Long? = -1L,
+    val dialogState : DialogState?,
+    val isOnline : Boolean = false,
+) : Parcelable {
+
+    sealed interface DialogState : Parcelable {
+
+        @Parcelize
+        data object Loading : DialogState
+
+        @Parcelize
+        data class Error(val message : String) : DialogState
+    }
+}
 internal sealed class GuarantorAddUiState {
     data object Loading : GuarantorAddUiState()
     data class Error(val message: String?) : GuarantorAddUiState()
     data class Template(val guarantorTemplatePayload: GuarantorTemplatePayload?) :
         GuarantorAddUiState()
 
-    data class Success(val messageResId: Int) : GuarantorAddUiState()
+    data class Success(val messageStringRes: StringResource) : GuarantorAddUiState()
+}
+
+sealed interface AddGuarantorEvent {
+    data object NavigateBack : AddGuarantorEvent
+    data class Submit(val payload: GuarantorApplicationPayload) : AddGuarantorEvent
+    data class ShowToast(val message: String?) : AddGuarantorEvent
+}
+
+sealed interface AddGuarantorAction {
+    data object NavigateBack : AddGuarantorAction
+    data object OnSubmitClick : AddGuarantorAction
 }

@@ -12,37 +12,46 @@ package org.mifos.mobile.feature.guarantor.screens.guarantorList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.network.Result
-import org.mifos.mobile.core.network.asResult
-import javax.inject.Inject
+
 
 /**
  * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
-@HiltViewModel
-internal class GuarantorListViewModel @Inject constructor(
+internal class GuarantorListViewModel (
     private val guarantorRepositoryImp: GuarantorRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _loanId = savedStateHandle.getStateFlow<String?>(key = LOAN_ID, initialValue = null)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val loanId: StateFlow<Long> = _loanId
         .flatMapLatest { flowOf(it?.toLongOrNull() ?: -1L) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, -1L)
 
+    fun getGuarantorList( ) {
+        viewModelScope.launch {
+            val message = getString(Res.string.delete_guarantor)
+
+        }
+    }
+    @OptIn(ExperimentalCoroutinesApi::class)
     val guarantorUiState = loanId
         .flatMapLatest { loanId ->
             guarantorRepositoryImp.getGuarantorList(loanId = loanId)

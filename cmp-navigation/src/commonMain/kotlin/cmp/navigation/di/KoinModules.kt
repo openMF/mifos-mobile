@@ -19,6 +19,7 @@ import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
 import org.mifos.mobile.feature.accounts.di.accountsModule
 import org.mifos.mobile.feature.auth.di.AuthModule
+import org.mifos.mobile.feature.guarantor.di.AuthModule
 import org.mifos.mobile.feature.charge.di.ChargeModule
 import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
@@ -55,6 +56,7 @@ object KoinModules {
             shareAccountModule,
             LoanModule,
             ChargeModule,
+            GuarantorModule,
             ThirdPartyTransferModule,
         )
     }

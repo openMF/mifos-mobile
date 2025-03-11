@@ -22,24 +22,30 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.guarantor_deleted_successfully
+import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.GuarantorRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.network.Result
 import org.mifos.mobile.core.network.asResult
 import org.mifos.mobile.feature.guarantor.R
 import org.mifos.mobile.feature.guarantor.screens.guarantorDetails.GuarantorDetailUiState.Loading
 import javax.inject.Inject
+import kotlin.text.Typography.dagger
 
 /**
  * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
-@HiltViewModel
-internal class GuarantorDetailViewModel @Inject constructor(
+internal class GuarantorDetailViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
     savedStateHandle: SavedStateHandle,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     val index = savedStateHandle.getStateFlow(key = Constants.INDEX, initialValue = -1)
@@ -78,22 +84,26 @@ internal class GuarantorDetailViewModel @Inject constructor(
 
     fun deleteGuarantor(guarantorId: Long) {
         viewModelScope.launch {
-            _guarantorDeleteState.value = Loading
-            guarantorRepositoryImp.deleteGuarantor(
+            when (val result = guarantorRepositoryImp.deleteGuarantor(
                 loanId = loanId.value,
                 guarantorId = guarantorId,
-            ).catch { e ->
-                _guarantorDeleteState.value = GuarantorDetailUiState.Error(e.message)
-            }.collect { response ->
-                _guarantorDeleteState.value =
-                    GuarantorDetailUiState.GuarantorDeletedSuccessfully(R.string.guarantor_deleted_successfully)
+            )) {
+                is DataState.Error -> _guarantorDeleteState.value =
+                    GuarantorDetailUiState.Error(result.message)
+
+                DataState.Loading -> _guarantorDeleteState.value = Loading
+
+                is DataState.Success -> _guarantorDeleteState.value =
+                    GuarantorDetailUiState.GuarantorDeletedSuccessfully(Res.string.guarantor_deleted_successfully)
             }
         }
     }
 }
 
 internal sealed class GuarantorDetailUiState {
-    data class GuarantorDeletedSuccessfully(val messageResId: Int) : GuarantorDetailUiState()
+    data class GuarantorDeletedSuccessfully(val messageStrRes: StringResource) :
+        GuarantorDetailUiState()
+
     data class Error(val message: String?) : GuarantorDetailUiState()
     data class ShowDetail(val guarantorItem: GuarantorPayload?) : GuarantorDetailUiState()
     data object Loading : GuarantorDetailUiState()

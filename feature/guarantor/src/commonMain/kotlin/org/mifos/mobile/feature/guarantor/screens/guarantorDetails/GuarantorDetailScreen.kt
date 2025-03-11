@@ -9,37 +9,41 @@
  */
 package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.ktor.util.pipeline.StackWalkingFailedFrame.context
+import kotlinx.coroutines.launch
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
+import mifos_mobile.feature.guarantor.generated.resources.dialog_are_you_sure_that_you_want_to_string
+import mifos_mobile.feature.guarantor.generated.resources.dismiss
+import mifos_mobile.feature.guarantor.generated.resources.yes
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.guarantor.R
 
 @Composable
 internal fun GuarantorDetailScreen(
     navigateBack: () -> Unit,
     updateGuarantor: (index: Int, loanId: Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: GuarantorDetailViewModel = hiltViewModel(),
+    viewModel: GuarantorDetailViewModel = koinViewModel(),
 ) {
     val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
 
@@ -60,9 +64,10 @@ private fun GuarantorDetailScreen(
     updateGuarantor: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     var openAlertDialog by rememberSaveable { mutableStateOf(false) }
     val guarantorItem = rememberSaveable { mutableStateOf(GuarantorPayload()) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     MifosScaffold(
         topBar = {
@@ -72,6 +77,7 @@ private fun GuarantorDetailScreen(
                 updateGuarantor = updateGuarantor,
             )
         },
+        snackbarHostState = snackbarHostState,
         content = {
             Box(modifier = Modifier.padding(it)) {
                 GuarantorDetailContent(data = guarantorItem.value)
@@ -97,11 +103,9 @@ private fun GuarantorDetailScreen(
                     }
 
                     is GuarantorDetailUiState.GuarantorDeletedSuccessfully -> {
-                        Toast.makeText(
-                            context,
-                            stringResource(id = uiState.messageResId),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        scope.launch {
+                            snackbarHostState.showSnackbar(getString(uiState.messageStrRes))
+                        }
                         navigateBack()
                     }
                 }
@@ -109,45 +113,20 @@ private fun GuarantorDetailScreen(
             if (openAlertDialog) {
                 MifosAlertDialog(
                     onDismissRequest = { openAlertDialog = false },
-                    dismissText = stringResource(id = R.string.dismiss),
-                    confirmationText = stringResource(id = R.string.yes),
-                    dialogTitle = stringResource(id = R.string.delete_guarantor),
+                    dismissText = stringResource(Res.string.dismiss),
+                    confirmationText = stringResource(Res.string.yes),
+                    dialogTitle = stringResource(Res.string.delete_guarantor),
                     onConfirmation = {
                         deleteGuarantor.invoke(guarantorItem.value.id ?: -1)
                         openAlertDialog = false
                     },
                     dialogText = stringResource(
-                        R.string.dialog_are_you_sure_that_you_want_to_string,
-                        stringResource(R.string.delete_guarantor),
+                        Res.string.dialog_are_you_sure_that_you_want_to_string,
+                        stringResource(Res.string.delete_guarantor),
                     ),
                 )
             }
         },
         modifier = modifier,
     )
-}
-
-internal class UiStatesParameterProvider : PreviewParameterProvider<GuarantorDetailUiState> {
-    override val values: Sequence<GuarantorDetailUiState>
-        get() = sequenceOf(
-            GuarantorDetailUiState.ShowDetail(GuarantorPayload()),
-            GuarantorDetailUiState.Loading,
-            GuarantorDetailUiState.Error(message = null),
-        )
-}
-
-@DevicePreviews
-@Composable
-private fun GuarantorDetailScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class)
-    guarantorDetailUiState: GuarantorDetailUiState,
-) {
-    MifosMobileTheme {
-        GuarantorDetailScreen(
-            uiState = guarantorDetailUiState,
-            navigateBack = {},
-            deleteGuarantor = {},
-            updateGuarantor = {},
-        )
-    }
 }

@@ -33,9 +33,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.ktor.util.pipeline.StackWalkingFailedFrame.context
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.view_guarantor
+import org.jetbrains.compose.resources.stringResource
+import org.koin.android.annotation.KoinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Network
+import org.mifos.mobile.core.designsystem.component.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
 import org.mifos.mobile.core.designsystem.components.MifosScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.icons.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
@@ -50,7 +59,7 @@ internal fun GuarantorListScreen(
     addGuarantor: (Long) -> Unit,
     onGuarantorClicked: (Int, Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: GuarantorListViewModel = hiltViewModel(),
+    viewModel: GuarantorListViewModel = koinViewModel(),
 ) {
     val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
 
@@ -72,8 +81,8 @@ private fun GuarantorListScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBarTitleResId = R.string.view_guarantor,
-        navigateBack = navigateBack,
+        topBarTitle = stringResource(Res.string.view_guarantor),
+        backPress = navigateBack,
         modifier = modifier,
         floatingActionButtonContent = FloatingActionButtonContent(
             onClick = addGuarantor,
@@ -102,7 +111,6 @@ private fun GuarantorListContent(
     onGuarantorClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     var guarantorList by rememberSaveable { mutableStateOf(listOf<GuarantorPayload?>()) }
 
     Box(modifier = modifier) {
@@ -176,29 +184,4 @@ private fun GuarantorListItem(
             }
         },
     )
-}
-
-internal class UiStatesParameterProvider : PreviewParameterProvider<GuarantorListUiState> {
-    override val values: Sequence<GuarantorListUiState>
-        get() = sequenceOf(
-            GuarantorListUiState.Loading,
-            GuarantorListUiState.Error,
-            GuarantorListUiState.Success(listOf()),
-        )
-}
-
-@DevicePreviews
-@Composable
-private fun GuarantorListScreenPreview(
-    @PreviewParameter(UiStatesParameterProvider::class)
-    guarantorListUiState: GuarantorListUiState,
-) {
-    MifosMobileTheme {
-        GuarantorListScreen(
-            uiState = guarantorListUiState,
-            navigateBack = { },
-            addGuarantor = { },
-            onGuarantorClicked = { },
-        )
-    }
 }

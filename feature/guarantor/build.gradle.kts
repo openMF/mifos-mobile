@@ -8,14 +8,19 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.feature)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.cmp.feature)
 }
 
 android {
     namespace = "org.mifos.mobile.feature.guarantor"
 }
 
-dependencies {
-    implementation(libs.squareup.okhttp)
+kotlin{
+    sourceSets{
+        commonMain.dependencies {
+            implementation(compose.components.resources)
+            implementation(compose.material3)
+            implementation(projects.core.model)
+        }
+    }
 }
