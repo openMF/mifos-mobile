@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.guarantor.screens.guarantorList
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,39 +18,30 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.ktor.util.pipeline.StackWalkingFailedFrame.context
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.view_guarantor
 import org.jetbrains.compose.resources.stringResource
-import org.koin.android.annotation.KoinViewModel
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.component.FloatingActionButtonContent
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.components.FloatingActionButtonContent
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.icons.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.guarantor.R
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun GuarantorListScreen(
@@ -61,31 +51,49 @@ internal fun GuarantorListScreen(
     modifier: Modifier = Modifier,
     viewModel: GuarantorListViewModel = koinViewModel(),
 ) {
-    val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is GuarantorListEvent.AddGuarantor -> addGuarantor(event.value)
+
+            is GuarantorListEvent.GuarantorClicked -> {
+                onGuarantorClicked.invoke(event.index, event.loanId)
+            }
+
+            GuarantorListEvent.NavigateBack -> navigateBack.invoke()
+
+            is GuarantorListEvent.ShowToast -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+            }
+        }
+    }
 
     GuarantorListScreen(
-        uiState = uiState.value,
-        navigateBack = navigateBack,
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
         modifier = modifier,
-        addGuarantor = { addGuarantor(viewModel.loanId.value) },
-        onGuarantorClicked = { onGuarantorClicked(it, viewModel.loanId.value) },
     )
 }
 
 @Composable
 private fun GuarantorListScreen(
-    uiState: GuarantorListUiState,
-    navigateBack: () -> Unit,
-    addGuarantor: () -> Unit,
-    onGuarantorClicked: (Int) -> Unit,
+    state: GuarantorListState,
     modifier: Modifier = Modifier,
+    onAction: (GuarantorListAction) -> Unit,
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.view_guarantor),
-        backPress = navigateBack,
+        backPress = { (onAction(GuarantorListAction.OnNavigateBackClick)) },
         modifier = modifier,
         floatingActionButtonContent = FloatingActionButtonContent(
-            onClick = addGuarantor,
+            onClick = { onAction(GuarantorListAction.OnAddGuarantor) },
             content = {
                 Icon(
                     imageVector = MifosIcons.Add,
@@ -96,53 +104,29 @@ private fun GuarantorListScreen(
             contentColor = MaterialTheme.colorScheme.primary,
         ),
         content = {
-            GuarantorListContent(
-                modifier = Modifier.padding(it),
-                uiState = uiState,
-                onGuarantorClicked = onGuarantorClicked,
-            )
-        },
-    )
-}
-
-@Composable
-private fun GuarantorListContent(
-    uiState: GuarantorListUiState,
-    onGuarantorClicked: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var guarantorList by rememberSaveable { mutableStateOf(listOf<GuarantorPayload?>()) }
-
-    Box(modifier = modifier) {
-        GuarantorList(guarantorList = guarantorList, onGuarantorClicked = onGuarantorClicked)
-        when (uiState) {
-            is GuarantorListUiState.Loading -> {
-                MifosProgressIndicatorOverlay()
-            }
-
-            is GuarantorListUiState.Error -> {
-                MifosErrorComponent(
-                    isNetworkConnected = Network.isConnected(context),
-                    isEmptyData = false,
-                    isRetryEnabled = false,
+            if (state.guarantorList == null) {
+                MifosProgressIndicator()
+            } else if (state.guarantorList.isEmpty()) {
+                MifosErrorComponent(isEmptyData = true)
+            } else {
+                GuarantorList(
+                    modifier = Modifier.padding(it),
+                    guarantorList = state.guarantorList,
+                    onAction = onAction,
                 )
             }
-
-            is GuarantorListUiState.Success -> {
-                if (uiState.list.isNullOrEmpty()) {
-                    MifosErrorComponent(isEmptyData = true)
-                } else {
-                    guarantorList = uiState.list
-                }
-            }
-        }
-    }
+        },
+    )
+    GuarantorListDialog(
+        dialogState = state.dialogState,
+        state = state,
+    )
 }
 
 @Composable
 private fun GuarantorList(
     guarantorList: List<GuarantorPayload?>,
-    onGuarantorClicked: (Int) -> Unit,
+    onAction: (GuarantorListAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier) {
@@ -150,7 +134,7 @@ private fun GuarantorList(
             guarantor?.let {
                 GuarantorListItem(
                     guarantor = it,
-                    onGuarantorClicked = { onGuarantorClicked.invoke(index) },
+                    onGuarantorClicked = { onAction(GuarantorListAction.OnGuarantorClicked(index)) },
                 )
             }
         }
@@ -184,4 +168,16 @@ private fun GuarantorListItem(
             }
         },
     )
+}
+
+@Composable
+private fun GuarantorListDialog(
+    dialogState: GuarantorListState.DialogState?,
+    state: GuarantorListState,
+) {
+    when (dialogState) {
+        GuarantorListState.DialogState.Loading -> MifosErrorComponent(isNetworkConnected = state.isOnline)
+        is GuarantorListState.DialogState.ShowToast -> MifosProgressIndicatorOverlay()
+        null -> Unit
+    }
 }

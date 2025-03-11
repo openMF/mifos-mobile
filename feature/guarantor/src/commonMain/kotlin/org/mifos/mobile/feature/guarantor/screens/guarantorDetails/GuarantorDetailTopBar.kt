@@ -24,11 +24,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import org.mifos.mobile.core.designsystem.icons.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.guarantor.R
+import mifos_mobile.feature.guarantor.generated.resources.Res
+import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
+import mifos_mobile.feature.guarantor.generated.resources.guarantor_details
+import mifos_mobile.feature.guarantor.generated.resources.update_guarantor
+import org.jetbrains.compose.resources.stringResource
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +43,7 @@ internal fun GuarantorDetailTopBar(
 
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(id = R.string.guarantor_details)) },
+        title = { Text(text = stringResource(Res.string.guarantor_details)) },
         navigationIcon = {
             IconButton(
                 onClick = { navigateBack.invoke() },
@@ -71,14 +72,14 @@ internal fun GuarantorDetailTopBar(
                 onDismissRequest = { showMenu = false },
             ) {
                 DropdownMenuItem(
-                    text = { Text(text = stringResource(id = R.string.update_guarantor)) },
+                    text = { Text(text = stringResource(Res.string.update_guarantor)) },
                     onClick = {
                         showMenu = false
                         updateGuarantor.invoke()
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(text = stringResource(id = R.string.delete_guarantor)) },
+                    text = { Text(text = stringResource(Res.string.delete_guarantor)) },
                     onClick = {
                         showMenu = false
                         deleteGuarantor.invoke()
@@ -87,12 +88,4 @@ internal fun GuarantorDetailTopBar(
             }
         },
     )
-}
-
-@DevicePreviews
-@Composable
-private fun GuarantorDetailTopBarPreview() {
-    MifosMobileTheme {
-        GuarantorDetailTopBar({}, {}, {})
-    }
 }

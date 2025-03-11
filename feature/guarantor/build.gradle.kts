@@ -9,6 +9,8 @@
  */
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
+//    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -20,7 +22,6 @@ kotlin{
         commonMain.dependencies {
             implementation(compose.components.resources)
             implementation(compose.material3)
-            implementation(projects.core.model)
         }
     }
 }

@@ -26,6 +26,8 @@ import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
+import org.mifos.mobile.feature.guarantor.navigation.guarantorNavGraph
+import org.mifos.mobile.feature.guarantor.navigation.navigateToGuarantorListScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
@@ -82,12 +84,16 @@ internal fun FeatureNavHost(
             },
         )
 
+        guarantorNavGraph(
+            navController = appState.navController,
+        )
+
         aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })
 
         loanNavGraph(
             navController = appState.navController,
             viewQr = { },
-            viewGuarantor = { },
+            viewGuarantor = { appState.navController.navigateToGuarantorListScreen(it) },
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
             },

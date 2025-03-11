@@ -10,32 +10,22 @@
 package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.guarantor_deleted_successfully
-import org.jetbrains.compose.resources.StringResource
-import org.mifos.mobile.core.common.Constants
+import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.common.Constants.INDEX
+import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.IgnoredOnParcel
+import org.mifos.mobile.core.model.Parcelable
+import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.network.Result
-import org.mifos.mobile.core.network.asResult
-import org.mifos.mobile.feature.guarantor.R
-import org.mifos.mobile.feature.guarantor.screens.guarantorDetails.GuarantorDetailUiState.Loading
-import javax.inject.Inject
-import kotlin.text.Typography.dagger
+import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 /**
  * Currently we do not get back any response from the guarantorApi, hence we are using FakeRemoteDataSource
@@ -46,65 +36,142 @@ internal class GuarantorDetailViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
     savedStateHandle: SavedStateHandle,
     networkMonitor: NetworkMonitor,
-) : ViewModel() {
+) : BaseViewModel<GuarantorDetailState, GuarantorDetailEvent, GuarantorDetailAction>(
+    initialState = GuarantorDetailState(
+        dialogState = null,
+        loanId = savedStateHandle.getStateFlow<Long?>(LOAN_ID, null).value,
+        index = savedStateHandle.getStateFlow<Int?>(INDEX, null).value,
+    ),
+) {
 
-    val index = savedStateHandle.getStateFlow(key = Constants.INDEX, initialValue = -1)
-    val loanId = savedStateHandle.getStateFlow<Long>(key = Constants.LOAN_ID, initialValue = -1)
-
-    private val _guarantorDeleteState = MutableStateFlow<GuarantorDetailUiState>(Loading)
-    private val guarantorDeleteState: StateFlow<GuarantorDetailUiState> = _guarantorDeleteState
-
-    private var guarantorItem = loanId
-        .flatMapLatest { loanId ->
-            guarantorRepositoryImp.getGuarantorList(loanId = loanId)
-        }.asResult().map { result ->
-            when (result) {
-                is Result.Success -> GuarantorDetailUiState.ShowDetail(
-                    guarantorItem = result.data?.filter { it?.status == true }
-                        ?.get(index = index.value),
-                )
-
-                is Result.Loading -> Loading
-                is Result.Error -> GuarantorDetailUiState.Error(result.exception.message)
-            }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(300),
-            initialValue = Loading,
-        )
-
-    val guarantorUiState: StateFlow<GuarantorDetailUiState> = merge(
-        guarantorItem,
-        guarantorDeleteState,
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(300),
-        initialValue = Loading,
-    )
-
-    fun deleteGuarantor(guarantorId: Long) {
+    init {
         viewModelScope.launch {
-            when (val result = guarantorRepositoryImp.deleteGuarantor(
-                loanId = loanId.value,
-                guarantorId = guarantorId,
-            )) {
-                is DataState.Error -> _guarantorDeleteState.value =
-                    GuarantorDetailUiState.Error(result.message)
-
-                DataState.Loading -> _guarantorDeleteState.value = Loading
-
-                is DataState.Success -> _guarantorDeleteState.value =
-                    GuarantorDetailUiState.GuarantorDeletedSuccessfully(Res.string.guarantor_deleted_successfully)
+            networkMonitor.isOnline.collect { isConnected ->
+                updateState { it.copy(isOnline = isConnected) }
             }
+        }
+        getGuarantorItem()
+    }
+
+    private fun updateState(update: (GuarantorDetailState) -> GuarantorDetailState) {
+        mutableStateFlow.update(update)
+    }
+
+    private fun getGuarantorItem() {
+        viewModelScope.launch {
+            updateState { it.copy(dialogState = GuarantorDetailState.DialogState.Loading) }
+
+            state.loanId?.let {
+                guarantorRepositoryImp.getGuarantorList(loanId = it)
+                    .collect { result ->
+
+                        updateState { currentState ->
+                            when (result) {
+                                is DataState.Error -> {
+                                    currentState.copy(
+                                        dialogState = GuarantorDetailState.DialogState.ShowToast(
+                                            result.message,
+                                        ),
+                                    )
+                                }
+
+                                DataState.Loading -> {
+                                    currentState.copy(dialogState = GuarantorDetailState.DialogState.Loading)
+                                }
+
+                                is DataState.Success -> {
+                                    currentState.copy(
+                                        dialogState = null,
+                                        guarantor = result.data?.filter { it?.status == true }
+                                            ?.get(index = state.index ?: -1),
+                                    )
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun deleteGuarantor(guarantorId: Long) {
+        viewModelScope.launch {
+            when (
+                val result = guarantorRepositoryImp.deleteGuarantor(
+                    loanId = state.loanId,
+                    guarantorId = guarantorId,
+                )
+            ) {
+                is DataState.Error -> {
+                    updateState {
+                        it.copy(dialogState = GuarantorDetailState.DialogState.ShowToast(result.message))
+                    }
+                }
+
+                DataState.Loading -> {
+                    updateState { it.copy(dialogState = GuarantorDetailState.DialogState.Loading) }
+                }
+
+                is DataState.Success -> {
+                    val msg = getString(Res.string.guarantor_deleted_successfully)
+                    updateState {
+                        it.copy(dialogState = GuarantorDetailState.DialogState.ShowToast(msg))
+                    }
+                }
+            }
+        }
+    }
+
+    override fun handleAction(action: GuarantorDetailAction) {
+        when (action) {
+            is GuarantorDetailAction.DeleteGuarantor -> state.guarantor?.id?.let {
+                deleteGuarantor(
+                    it,
+                )
+            }
+
+            GuarantorDetailAction.NavigateBack -> sendEvent(GuarantorDetailEvent.NavigateBack)
+
+            GuarantorDetailAction.UpdateDialogValue -> updateState { it.copy(showDialog = !state.showDialog) }
+
+            is GuarantorDetailAction.UpdateGuarantor -> sendEvent(
+                GuarantorDetailEvent.UpdateGuarantor(
+                    state.index ?: -1,
+                    state.loanId ?: -1,
+                ),
+            )
         }
     }
 }
 
-internal sealed class GuarantorDetailUiState {
-    data class GuarantorDeletedSuccessfully(val messageStrRes: StringResource) :
-        GuarantorDetailUiState()
+@Parcelize
+data class GuarantorDetailState(
+    val loanId: Long? = null,
+    val index: Int? = null,
+    val dialogState: DialogState?,
+    @IgnoredOnParcel
+    val guarantor: GuarantorPayload? = null,
+    val isOnline: Boolean = false,
+    val showDialog: Boolean = false,
+) : Parcelable {
+    sealed interface DialogState : Parcelable {
 
-    data class Error(val message: String?) : GuarantorDetailUiState()
-    data class ShowDetail(val guarantorItem: GuarantorPayload?) : GuarantorDetailUiState()
-    data object Loading : GuarantorDetailUiState()
+        @Parcelize
+        data object Loading : DialogState
+
+        @Parcelize
+        data class ShowToast(val message: String) : DialogState
+    }
+}
+
+sealed interface GuarantorDetailEvent {
+    data object NavigateBack : GuarantorDetailEvent
+    data class ShowToast(val message: String) : GuarantorDetailEvent
+    data class UpdateGuarantor(val index: Int, val loanId: Long) : GuarantorDetailEvent
+}
+
+sealed interface GuarantorDetailAction {
+    data object NavigateBack : GuarantorDetailAction
+    data object DeleteGuarantor : GuarantorDetailAction
+    data object UpdateGuarantor : GuarantorDetailAction
+    data object UpdateDialogValue : GuarantorDetailAction
 }

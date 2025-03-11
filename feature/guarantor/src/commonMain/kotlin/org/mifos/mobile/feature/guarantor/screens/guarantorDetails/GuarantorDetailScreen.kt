@@ -14,29 +14,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.ktor.util.pipeline.StackWalkingFailedFrame.context
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
 import mifos_mobile.feature.guarantor.generated.resources.dialog_are_you_sure_that_you_want_to_string
 import mifos_mobile.feature.guarantor.generated.resources.dismiss
 import mifos_mobile.feature.guarantor.generated.resources.yes
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.Network
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun GuarantorDetailScreen(
@@ -45,80 +40,65 @@ internal fun GuarantorDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: GuarantorDetailViewModel = koinViewModel(),
 ) {
-    val uiState = viewModel.guarantorUiState.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            GuarantorDetailEvent.NavigateBack -> navigateBack()
+            is GuarantorDetailEvent.ShowToast -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+            }
+
+            is GuarantorDetailEvent.UpdateGuarantor -> {
+                updateGuarantor.invoke(event.index, event.loanId)
+            }
+        }
+    }
 
     GuarantorDetailScreen(
-        uiState = uiState.value,
-        navigateBack = navigateBack,
+        state = state,
         modifier = modifier,
-        deleteGuarantor = viewModel::deleteGuarantor,
-        updateGuarantor = { updateGuarantor(viewModel.index.value, viewModel.loanId.value) },
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+        snackbarHostState = snackbarHostState,
     )
 }
 
 @Composable
 private fun GuarantorDetailScreen(
-    uiState: GuarantorDetailUiState,
-    navigateBack: () -> Unit,
-    deleteGuarantor: (Long) -> Unit,
-    updateGuarantor: () -> Unit,
+    state: GuarantorDetailState,
+    onAction: (GuarantorDetailAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    var openAlertDialog by rememberSaveable { mutableStateOf(false) }
-    val guarantorItem = rememberSaveable { mutableStateOf(GuarantorPayload()) }
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
     MifosScaffold(
         topBar = {
             GuarantorDetailTopBar(
-                navigateBack = navigateBack,
-                deleteGuarantor = { openAlertDialog = true },
-                updateGuarantor = updateGuarantor,
+                navigateBack = { onAction(GuarantorDetailAction.NavigateBack) },
+                deleteGuarantor = { onAction(GuarantorDetailAction.UpdateDialogValue) },
+                updateGuarantor = { onAction(GuarantorDetailAction.UpdateGuarantor) },
             )
         },
         snackbarHostState = snackbarHostState,
         content = {
             Box(modifier = Modifier.padding(it)) {
-                GuarantorDetailContent(data = guarantorItem.value)
-                when (uiState) {
-                    is GuarantorDetailUiState.Loading -> {
-                        MifosProgressIndicatorOverlay()
-                    }
-
-                    is GuarantorDetailUiState.Error -> {
-                        MifosErrorComponent(
-                            isNetworkConnected = Network.isConnected(context),
-                            isEmptyData = false,
-                            isRetryEnabled = false,
-                        )
-                    }
-
-                    is GuarantorDetailUiState.ShowDetail -> {
-                        if (uiState.guarantorItem != null) {
-                            guarantorItem.value = uiState.guarantorItem
-                        } else {
-                            MifosErrorComponent(isEmptyData = true)
-                        }
-                    }
-
-                    is GuarantorDetailUiState.GuarantorDeletedSuccessfully -> {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(getString(uiState.messageStrRes))
-                        }
-                        navigateBack()
-                    }
-                }
+                state.guarantor?.let { it1 -> GuarantorDetailContent(data = it1) }
             }
-            if (openAlertDialog) {
+
+            if (state.showDialog) {
                 MifosAlertDialog(
-                    onDismissRequest = { openAlertDialog = false },
+                    onDismissRequest = { onAction.invoke(GuarantorDetailAction.UpdateDialogValue) },
                     dismissText = stringResource(Res.string.dismiss),
                     confirmationText = stringResource(Res.string.yes),
                     dialogTitle = stringResource(Res.string.delete_guarantor),
                     onConfirmation = {
-                        deleteGuarantor.invoke(guarantorItem.value.id ?: -1)
-                        openAlertDialog = false
+                        onAction.invoke(GuarantorDetailAction.DeleteGuarantor)
+                        onAction.invoke(GuarantorDetailAction.UpdateDialogValue)
                     },
                     dialogText = stringResource(
                         Res.string.dialog_are_you_sure_that_you_want_to_string,
@@ -129,4 +109,21 @@ private fun GuarantorDetailScreen(
         },
         modifier = modifier,
     )
+
+    GuarantorDetailsDialog(
+        dialogState = state.dialogState,
+        state = state,
+    )
+}
+
+@Composable
+private fun GuarantorDetailsDialog(
+    dialogState: GuarantorDetailState.DialogState?,
+    state: GuarantorDetailState,
+) {
+    when (dialogState) {
+        GuarantorDetailState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        is GuarantorDetailState.DialogState.ShowToast -> MifosErrorComponent(isNetworkConnected = state.isOnline)
+        null -> Unit
+    }
 }
