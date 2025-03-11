@@ -25,7 +25,7 @@ interface UserPreferencesRepository {
 
     val clientId: StateFlow<Long?>
 
-    val appTheme: StateFlow<AppTheme?>
+    val appTheme: StateFlow<AppTheme>
 
     val profileImage: String?
 
