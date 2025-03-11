@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.third.party.transfer.ThirdPartyTransferScreen
@@ -24,7 +25,7 @@ fun NavController.navigateToThirdPartyTransfer() {
 fun NavGraphBuilder.thirdPartyTransferNavGraph(
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
 ) {
     navigation(
         startDestination = ThirdPartyTransferNavigation.ThirdPartyTransferScreen.route,
@@ -41,7 +42,7 @@ fun NavGraphBuilder.thirdPartyTransferNavGraph(
 fun NavGraphBuilder.thirdPartyTransferRoute(
     navigateBack: () -> Unit,
     addBeneficiary: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
 ) {
     composable(
         route = ThirdPartyTransferNavigation.ThirdPartyTransferScreen.route,

@@ -28,7 +28,10 @@ kotlin {
             implementation(projects.feature.savingsAccount)
             implementation(projects.feature.about)
             implementation(projects.feature.clientCharge)
+            implementation(projects.feature.updatePassword)
             implementation(projects.feature.thirdPartyTransfer)
+            implementation(projects.feature.transferProcess)
+            implementation(projects.feature.settings)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

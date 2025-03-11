@@ -9,7 +9,7 @@
  */
 package org.mifos.mobile.core.model.entity.payload
 
-import kotlinx.serialization.Transient
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
@@ -17,6 +17,7 @@ import org.mifos.mobile.core.model.Parcelize
  * Created by Rajan Maurya on 10/03/17.
  */
 
+@Serializable
 @Parcelize
 data class TransferPayload(
     val fromOfficeId: Int? = null,
@@ -25,7 +26,7 @@ data class TransferPayload(
 
     val fromAccountType: Int? = null,
 
-    val fromAccountId: Int? = null,
+    val fromAccountId: String? = null,
 
     val toOfficeId: Int? = null,
 
@@ -33,7 +34,7 @@ data class TransferPayload(
 
     val toAccountType: Int? = null,
 
-    val toAccountId: Int? = null,
+    val toAccountId: String? = null,
 
     val transferDate: String? = null,
 
@@ -41,14 +42,8 @@ data class TransferPayload(
 
     val transferDescription: String? = null,
 
-    val dateFormat: String = "dd MMMM yyyy",
+    val dateFormat: String? = null,
 
-    val locale: String = "en",
-
-    @Transient
-    val fromAccountNumber: String? = null,
-
-    @Transient
-    val toAccountNumber: String? = null,
+    val locale: String? = null,
 
 ) : Parcelable

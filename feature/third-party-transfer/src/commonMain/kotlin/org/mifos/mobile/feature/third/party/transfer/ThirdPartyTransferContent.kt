@@ -58,6 +58,7 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.required
 import mifos_mobile.feature.third_party_transfer.generated.resources.review
 import mifos_mobile.feature.third_party_transfer.generated.resources.select_beneficiary
 import mifos_mobile.feature.third_party_transfer.generated.resources.select_pay_from
+import mifos_mobile.feature.third_party_transfer.generated.resources.select_pay_to
 import mifos_mobile.feature.third_party_transfer.generated.resources.three
 import mifos_mobile.feature.third_party_transfer.generated.resources.two
 import org.jetbrains.compose.resources.StringResource
@@ -271,7 +272,7 @@ private fun BeneficiaryStep(
                     optionsList = beneficiaryList
                         .map { Pair(it.accountNumber ?: "", it.name ?: "") },
                     selectedOption = beneficiary?.accountNumber ?: "",
-                    labelResId = Res.string.select_pay_from,
+                    labelResId = Res.string.select_pay_to,
                     error = beneficiaryError,
                     supportingText = stringResource(Res.string.required),
                     onClick = { index, _ ->
