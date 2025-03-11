@@ -26,7 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.Clock
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.feature_account_error_black
-import mifos_mobile.feature.savings.generated.resources.ic_compare_arrows_black_24dp
 import mifos_mobile.feature.savings.generated.resources.no_transaction_found
 import mifos_mobile.feature.savings.generated.resources.savings_account_transaction
 import org.jetbrains.compose.resources.stringResource
@@ -116,18 +115,11 @@ internal fun SavingsAccountTransactionScreen(
                     }
 
                     is SavingsAccountTransactionUiState.Success -> {
-                        if (uiState.savingAccountsTransactionList.isNullOrEmpty()) {
-                            EmptyDataView(
-                                image = Res.drawable.ic_compare_arrows_black_24dp,
-                                error = Res.string.no_transaction_found,
-                            )
-                        } else {
-                            transactionList = uiState.savingAccountsTransactionList
-                            SavingsAccountTransactionContent(
-                                currencyCode = uiState.savingAccountsTransactionList[0].currency?.code ?: "USD",
-                                transactionList = transactionList,
-                            )
-                        }
+                        transactionList = uiState.savingAccountsTransactionList
+                        SavingsAccountTransactionContent(
+                            currencyCode = uiState.savingAccountsTransactionList[0].currency?.code ?: "USD",
+                            transactionList = transactionList,
+                        )
                     }
 
                     SavingsAccountTransactionUiState.Empty -> {

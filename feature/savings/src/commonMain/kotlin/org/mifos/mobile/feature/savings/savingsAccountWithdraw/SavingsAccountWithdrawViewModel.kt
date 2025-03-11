@@ -24,22 +24,13 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
 import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWithdrawUiState.WithdrawUiReady
 
 internal class SavingsAccountWithdrawViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
-
-    val isNetworkAvailable = networkMonitor.isOnline
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false,
-        )
 
     private val mUiState = MutableStateFlow<SavingsAccountWithdrawUiState>(WithdrawUiReady)
     val uiState = mUiState.asStateFlow()
@@ -80,6 +71,7 @@ internal class SavingsAccountWithdrawViewModel(
                         SavingsAccountWithdrawUiState.Error(response.message)
                 }
                 DataState.Loading -> {
+                    SavingsAccountWithdrawUiState.Loading
                 }
                 is DataState.Success -> {
                     mUiState.value = SavingsAccountWithdrawUiState.Success

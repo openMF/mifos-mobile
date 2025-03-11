@@ -39,6 +39,7 @@ import kotlinx.datetime.Clock
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.cancel
 import mifos_mobile.feature.savings.generated.resources.clear_filters
+import mifos_mobile.feature.savings.generated.resources.filter
 import mifos_mobile.feature.savings.generated.resources.select_you_want
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
@@ -146,7 +147,7 @@ internal fun SavingsTransactionFilterDialog(
                     )
 
                     MifosTextButton(
-                        text = { Text(stringResource(Res.string.cancel)) },
+                        text = { Text(stringResource(Res.string.filter)) },
                         onClick = {
                             onDismiss()
                             filter(

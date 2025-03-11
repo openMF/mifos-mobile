@@ -98,10 +98,10 @@ internal class SavingAccountsTransactionViewModel(
                         logger.e(dataState.data.toString())
                         val savingsWithAssociations = dataState.data
                         _transactionsList = savingsWithAssociations.transactions
-                        mUiState.value = if (savingsWithAssociations.transactions.isEmpty()) {
-                            SavingsAccountTransactionUiState.Empty
-                        } else {
-                            SavingsAccountTransactionUiState.Success(savingsWithAssociations.transactions)
+
+                        mUiState.value = when {
+                            savingsWithAssociations.transactions.isEmpty() -> SavingsAccountTransactionUiState.Empty
+                            else -> SavingsAccountTransactionUiState.Success(savingsWithAssociations.transactions)
                         }
                     }
                 }
@@ -214,7 +214,7 @@ internal sealed class SavingsAccountTransactionUiState {
     data object Loading : SavingsAccountTransactionUiState()
     data object Empty : SavingsAccountTransactionUiState()
     data class Error(val errorMessage: String?) : SavingsAccountTransactionUiState()
-    data class Success(val savingAccountsTransactionList: List<Transactions>?) :
+    data class Success(val savingAccountsTransactionList: List<Transactions>) :
         SavingsAccountTransactionUiState()
 }
 
@@ -250,18 +250,21 @@ val SavingsTransactionFilterDataModelSaver: Saver<SavingsTransactionFilterDataMo
                 it.startDate,
                 it.endDate,
                 it.radioFilter?.name,
-                it.checkBoxFilters.map { filter -> filter.name },
+                it.checkBoxFilters.map { filter -> filter.name }.toList(),
             )
         },
         restore = {
             SavingsTransactionFilterDataModel(
                 startDate = it[0] as Long,
                 endDate = it[1] as Long,
-                radioFilter = (it[2] as? String)?.let { name -> SavingsTransactionRadioFilter.valueOf(name) },
-                checkBoxFilters =
-                (it[3] as List<String>).map
-                    { name -> SavingsTransactionCheckBoxFilter.valueOf(name) }
-                    .toMutableList(),
+                radioFilter = (it[2] as? String)?.let { name ->
+                    runCatching { SavingsTransactionRadioFilter.valueOf(name) }.getOrNull()
+                },
+                checkBoxFilters = (it[3] as? List<*>)?.mapNotNull { name ->
+                    (name as? String)?.let { n ->
+                        runCatching { SavingsTransactionCheckBoxFilter.valueOf(n) }.getOrNull()
+                    }
+                }?.toMutableList() ?: mutableListOf(),
             )
         },
     )

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,6 +46,7 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
@@ -80,51 +82,59 @@ private fun SavingsAccountWithdrawScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-    ) {
-        MifosTopBar(
-            backPress = { onBackPress(false) },
-            topBarTitle = stringResource(Res.string.withdraw_savings_account),
-        )
-
-        Box(modifier = Modifier.weight(1f)) {
-            SavingsAccountWithdrawContent(
-                savingsWithAssociations = savingsWithAssociations,
-                withdraw = withdraw,
+    MifosScaffold(
+        topBar = {
+            MifosTopBar(
+                backPress = { onBackPress(false) },
+                topBarTitle = stringResource(Res.string.withdraw_savings_account),
             )
+        },
+        snackbarHostState = snackbarHostState,
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+        ) {
+            Box(modifier = Modifier.weight(1f)) {
+                SavingsAccountWithdrawContent(
+                    savingsWithAssociations = savingsWithAssociations,
+                    withdraw = withdraw,
+                )
 
-            when (uiState) {
-                is SavingsAccountWithdrawUiState.Loading -> {
-                    MifosProgressIndicator(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
-                    )
-                }
+                when (uiState) {
+                    is SavingsAccountWithdrawUiState.Loading -> {
+                        MifosProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
+                        )
+                    }
 
-                is SavingsAccountWithdrawUiState.Success -> {
-                    logger.e { "Savings Account WithDraw Success" }
-                    LaunchedEffect(true) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(Res.string.savings_account_withdraw_successful.toString())
+                    is SavingsAccountWithdrawUiState.Success -> {
+                        logger.e { "Savings Account WithDraw Success" }
+                        LaunchedEffect(true) {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = Res.string.savings_account_withdraw_successful.toString(),
+                                    duration = SnackbarDuration.Short,
+                                )
+                                onBackPress(true)
+                            }
                         }
                     }
-                    onBackPress(true)
-                }
 
-                is SavingsAccountWithdrawUiState.Error -> {
-                    logger.e { "Savings Account WithDraw ${uiState.message}" }
-                    LaunchedEffect(true) {
-                        scope.launch {
-                            uiState.message?.let { snackbarHostState.showSnackbar(it) }
+                    is SavingsAccountWithdrawUiState.Error -> {
+                        logger.e { "Savings Account WithDraw ${uiState.message}" }
+                        LaunchedEffect(true) {
+                            scope.launch {
+                                uiState.message?.let { snackbarHostState.showSnackbar(it) }
+                            }
                         }
                     }
-                }
 
-                is SavingsAccountWithdrawUiState.WithdrawUiReady -> {}
+                    is SavingsAccountWithdrawUiState.WithdrawUiReady -> {}
+                }
             }
         }
     }
