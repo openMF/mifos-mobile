@@ -78,6 +78,7 @@ private fun GuarantorDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
+        modifier = modifier,
         topBar = {
             GuarantorDetailTopBar(
                 navigateBack = { onAction(GuarantorDetailAction.NavigateBack) },
@@ -108,7 +109,6 @@ private fun GuarantorDetailScreen(
                 )
             }
         },
-        modifier = modifier,
     )
 
     GuarantorDetailsDialog(
