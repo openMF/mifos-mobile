@@ -14,5 +14,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BeneficiaryUpdatePayload(
     val name: String? = null,
-    val transferLimit: Float = 0f,
+    val transferLimit: Int = 0,
 )

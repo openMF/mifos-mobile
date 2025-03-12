@@ -154,7 +154,7 @@ fun NavGraphBuilder.beneficiaryApplicationRoute(
         arguments = listOf(
             navArgument(name = BENEFICIARY_ID) { type = NavType.IntType },
             navArgument(name = Constants.BENEFICIARY_STATE) {
-                type = NavType.EnumType(BeneficiaryState::class.java)
+                type = NavType.StringType
             },
         ),
     ) {

@@ -29,5 +29,5 @@ interface BeneficiaryRepository {
 
     suspend fun deleteBeneficiary(beneficiaryId: Long?): DataState<String>
 
-    suspend fun beneficiaryList(): Flow<DataState<List<Beneficiary>>>
+    fun beneficiaryList(): Flow<DataState<List<Beneficiary>>>
 }
