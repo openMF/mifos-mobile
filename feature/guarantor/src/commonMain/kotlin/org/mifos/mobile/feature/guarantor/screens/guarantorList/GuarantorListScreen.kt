@@ -34,13 +34,14 @@ import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.view_guarantor
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.FloatingActionButtonContent
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -120,6 +121,7 @@ private fun GuarantorListScreen(
     GuarantorListDialog(
         dialogState = state.dialogState,
         state = state,
+        onDismissRequest = { onAction.invoke(GuarantorListAction.DismissDialog) },
     )
 }
 
@@ -174,10 +176,18 @@ private fun GuarantorListItem(
 private fun GuarantorListDialog(
     dialogState: GuarantorListState.DialogState?,
     state: GuarantorListState,
+    onDismissRequest: () -> Unit = {},
 ) {
     when (dialogState) {
         GuarantorListState.DialogState.Loading -> MifosErrorComponent(isNetworkConnected = state.isOnline)
-        is GuarantorListState.DialogState.ShowToast -> MifosProgressIndicatorOverlay()
+
+        is GuarantorListState.DialogState.ShowToast -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = onDismissRequest,
+        )
+
         null -> Unit
     }
 }

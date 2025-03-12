@@ -38,7 +38,10 @@ internal class GuarantorListViewModel(
 ) : BaseViewModel<GuarantorListState, GuarantorListEvent, GuarantorListAction>(
     initialState = GuarantorListState(
         dialogState = null,
-        loanId = savedStateHandle.getStateFlow<Long?>(key = LOAN_ID, initialValue = null).value?.toLong(),
+        loanId = savedStateHandle.getStateFlow<Long?>(
+            key = LOAN_ID,
+            initialValue = null,
+        ).value?.toLong(),
     ),
 ) {
 
@@ -81,6 +84,7 @@ internal class GuarantorListViewModel(
 
                                 is DataState.Success -> {
                                     currentState.copy(
+                                        dialogState = null,
                                         guarantorList = result.data?.filter { it?.status == true },
                                     )
                                 }
@@ -101,7 +105,11 @@ internal class GuarantorListViewModel(
                 GuarantorListEvent.GuarantorClicked(action.index, state.loanId!!),
             )
 
-            GuarantorListAction.OnNavigateBackClick -> sendEvent(GuarantorListEvent.NavigateBack)
+            is GuarantorListAction.OnNavigateBackClick -> sendEvent(GuarantorListEvent.NavigateBack)
+
+            is GuarantorListAction.DismissDialog -> {
+                updateState { it.copy(dialogState = null) }
+            }
         }
     }
 }
@@ -135,4 +143,5 @@ sealed interface GuarantorListAction {
     data object OnNavigateBackClick : GuarantorListAction
     data class OnGuarantorClicked(val index: Int) : GuarantorListAction
     data object OnAddGuarantor : GuarantorListAction
+    data object DismissDialog : GuarantorListAction
 }

@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
@@ -27,9 +26,10 @@ import mifos_mobile.feature.guarantor.generated.resources.dismiss
 import mifos_mobile.feature.guarantor.generated.resources.yes
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -47,6 +47,7 @@ internal fun GuarantorDetailScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             GuarantorDetailEvent.NavigateBack -> navigateBack()
+
             is GuarantorDetailEvent.ShowToast -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(event.message)
@@ -80,7 +81,7 @@ private fun GuarantorDetailScreen(
         topBar = {
             GuarantorDetailTopBar(
                 navigateBack = { onAction(GuarantorDetailAction.NavigateBack) },
-                deleteGuarantor = { onAction(GuarantorDetailAction.UpdateDialogValue) },
+                deleteGuarantor = { onAction(GuarantorDetailAction.UpdateMenuDialogValue) },
                 updateGuarantor = { onAction(GuarantorDetailAction.UpdateGuarantor) },
             )
         },
@@ -92,13 +93,13 @@ private fun GuarantorDetailScreen(
 
             if (state.showDialog) {
                 MifosAlertDialog(
-                    onDismissRequest = { onAction.invoke(GuarantorDetailAction.UpdateDialogValue) },
+                    onDismissRequest = { onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue) },
                     dismissText = stringResource(Res.string.dismiss),
                     confirmationText = stringResource(Res.string.yes),
                     dialogTitle = stringResource(Res.string.delete_guarantor),
                     onConfirmation = {
                         onAction.invoke(GuarantorDetailAction.DeleteGuarantor)
-                        onAction.invoke(GuarantorDetailAction.UpdateDialogValue)
+                        onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue)
                     },
                     dialogText = stringResource(
                         Res.string.dialog_are_you_sure_that_you_want_to_string,
@@ -112,18 +113,23 @@ private fun GuarantorDetailScreen(
 
     GuarantorDetailsDialog(
         dialogState = state.dialogState,
-        state = state,
+        onDismissRequest = { onAction.invoke(GuarantorDetailAction.DismissDialog) },
     )
 }
 
 @Composable
 private fun GuarantorDetailsDialog(
     dialogState: GuarantorDetailState.DialogState?,
-    state: GuarantorDetailState,
+    onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
         GuarantorDetailState.DialogState.Loading -> MifosProgressIndicatorOverlay()
-        is GuarantorDetailState.DialogState.ShowToast -> MifosErrorComponent(isNetworkConnected = state.isOnline)
+        is GuarantorDetailState.DialogState.ShowToast -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = onDismissRequest,
+        )
         null -> Unit
     }
 }

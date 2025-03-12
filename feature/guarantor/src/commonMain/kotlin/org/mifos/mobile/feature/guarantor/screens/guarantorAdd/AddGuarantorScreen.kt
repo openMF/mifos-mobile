@@ -32,11 +32,9 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.add_guarantor
 import mifos_mobile.feature.guarantor.generated.resources.city
-import mifos_mobile.feature.guarantor.generated.resources.error_validation_blank
 import mifos_mobile.feature.guarantor.generated.resources.first_name
 import mifos_mobile.feature.guarantor.generated.resources.guarantor_type
 import mifos_mobile.feature.guarantor.generated.resources.last_name
-import mifos_mobile.feature.guarantor.generated.resources.office_name
 import mifos_mobile.feature.guarantor.generated.resources.submit
 import mifos_mobile.feature.guarantor.generated.resources.update_guarantor
 import org.jetbrains.compose.resources.stringResource
@@ -46,9 +44,8 @@ import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
-import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.component.MifosTextField
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorType
@@ -127,7 +124,7 @@ private fun AddGuarantorScreen(
 
     AddGuarantorDialog(
         dialogState = state.dialogState,
-        onDismissRequest = { onAction(AddGuarantorAction.NavigateBack) },
+        onDismissRequest = { onAction(AddGuarantorAction.DismissDialog) },
     )
 }
 
@@ -148,10 +145,6 @@ private fun AddGuarantorContent(
         state.guarantorType = state.guarantorItem?.guarantorType ?: GuarantorType()
     }
 
-    LaunchedEffect(key1 = state.firstName) { state.firstNameError = false }
-    LaunchedEffect(key1 = state.lastName) { state.lastNameError = false }
-    LaunchedEffect(key1 = state.guarantorType.value) { state.guarantorTypeError = false }
-
     Column(
         modifier = modifier
             .verticalScroll(state = scrollState)
@@ -162,63 +155,35 @@ private fun AddGuarantorContent(
             optionsList = guarantorTypeOptions.filter { it.id == 3L }.mapNotNull { it.value },
             selectedOption = state.guarantorType.value,
             labelResId = Res.string.guarantor_type,
-            error = state.guarantorTypeError,
             onClick = { _, item ->
-                state.guarantorTypeError = false
-                state.guarantorType =
-                    guarantorTypeOptions.find { it.value == item } ?: GuarantorType()
+                onAction.invoke(
+                    AddGuarantorAction.SetGuarantortype(
+                        guarantorTypeOptions.find { it.value == item }
+                            ?: GuarantorType(),
+                    ),
+                )
             },
-            supportingText = stringResource(
-                Res.string.error_validation_blank,
-                stringResource(Res.string.guarantor_type),
-            ),
         )
 
-        MifosOutlinedTextField(
+        MifosTextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.firstName,
-            onValueChange = {
-                state.firstName = it
-                state.lastNameError = false
-            },
+            onValueChange = { onAction.invoke(AddGuarantorAction.OnFirstNameChange(it)) },
             label = stringResource(Res.string.first_name),
-            config = MifosTextFieldConfig(
-                isError = state.firstNameError,
-                errorText = stringResource(
-                    Res.string.error_validation_blank,
-                    stringResource(Res.string.first_name),
-                ),
-            ),
         )
 
-        MifosOutlinedTextField(
+        MifosTextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.lastName,
-            onValueChange = {
-                state.lastName = it
-                state.lastNameError = false
-            },
+            onValueChange = { onAction.invoke(AddGuarantorAction.OnLastnameChange(it)) },
             label = stringResource(Res.string.last_name),
-            config = MifosTextFieldConfig(
-                isError = state.lastNameError,
-                errorText = stringResource(
-                    Res.string.error_validation_blank,
-                    stringResource(Res.string.last_name),
-                ),
-            ),
         )
 
-        MifosOutlinedTextField(
+        MifosTextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.city,
-            onValueChange = { state.city = it },
+            onValueChange = { onAction.invoke(AddGuarantorAction.OnCityChange(it)) },
             label = stringResource(Res.string.city),
-            config = MifosTextFieldConfig(
-                errorText = stringResource(
-                    Res.string.error_validation_blank,
-                    stringResource(Res.string.office_name),
-                ),
-            ),
         )
 
         Spacer(modifier = Modifier.height(10.dp))

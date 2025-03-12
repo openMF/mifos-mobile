@@ -100,7 +100,6 @@ internal class AddGuarantorViewModel(
     private fun validateFields(): Boolean {
         return when {
             state.firstName.isEmpty() -> {
-                state.firstNameError = true
                 updateState {
                     it.copy(
                         dialogState = AddGuarantorState.DialogState.Error
@@ -111,7 +110,6 @@ internal class AddGuarantorViewModel(
             }
 
             state.lastName.isEmpty() -> {
-                state.lastNameError = true
                 updateState {
                     it.copy(
                         dialogState = AddGuarantorState.DialogState.Error
@@ -122,7 +120,6 @@ internal class AddGuarantorViewModel(
             }
 
             state.guarantorType.value.isNullOrEmpty() -> {
-                state.guarantorTypeError = true
                 updateState {
                     it.copy(
                         dialogState = AddGuarantorState.DialogState.Error(
@@ -212,10 +209,11 @@ internal class AddGuarantorViewModel(
                 }
 
                 is DataState.Success -> {
+                    updateState { it.copy(dialogState = null) }
                     sendEvent(AddGuarantorEvent.Success(getString(Res.string.guarantor_updated_successfully)))
                 }
 
-                DataState.Loading -> {
+                is DataState.Loading -> {
                     updateState { it.copy(dialogState = AddGuarantorState.DialogState.Loading) }
                 }
             }
@@ -224,7 +222,7 @@ internal class AddGuarantorViewModel(
 
     override fun handleAction(action: AddGuarantorAction) {
         when (action) {
-            AddGuarantorAction.NavigateBack -> sendEvent(AddGuarantorEvent.NavigateBack)
+            is AddGuarantorAction.NavigateBack -> sendEvent(AddGuarantorEvent.NavigateBack)
 
             is AddGuarantorAction.ValidateFields -> {
                 val isValidated = validateFields()
@@ -236,8 +234,32 @@ internal class AddGuarantorViewModel(
                 }
             }
 
-            AddGuarantorAction.DismissDialog -> {
+            is AddGuarantorAction.DismissDialog -> {
                 updateState { it.copy(dialogState = null) }
+            }
+
+            is AddGuarantorAction.OnCityChange -> {
+                mutableStateFlow.update {
+                    it.copy(city = action.city)
+                }
+            }
+
+            is AddGuarantorAction.OnFirstNameChange -> {
+                mutableStateFlow.update {
+                    it.copy(firstName = action.firstName)
+                }
+            }
+
+            is AddGuarantorAction.OnLastnameChange -> {
+                mutableStateFlow.update {
+                    it.copy(lastName = action.lastname)
+                }
+            }
+
+            is AddGuarantorAction.SetGuarantortype -> {
+                mutableStateFlow.update {
+                    it.copy(guarantorType = action.type)
+                }
             }
         }
     }
@@ -252,9 +274,6 @@ data class AddGuarantorState(
     var firstName: String = "",
     var lastName: String = "",
     var city: String = "",
-    var firstNameError: Boolean = false,
-    var lastNameError: Boolean = false,
-    var guarantorTypeError: Boolean = false,
     @IgnoredOnParcel
     val guarantorItem: GuarantorPayload? = null,
     @IgnoredOnParcel
@@ -280,6 +299,11 @@ sealed interface AddGuarantorEvent {
 }
 
 sealed interface AddGuarantorAction {
+    data class OnFirstNameChange(val firstName: String) : AddGuarantorAction
+    data class OnLastnameChange(val lastname: String) : AddGuarantorAction
+    data class OnCityChange(val city: String) : AddGuarantorAction
+    data class SetGuarantortype(val type: GuarantorType) : AddGuarantorAction
+
     data object NavigateBack : AddGuarantorAction
     data class ValidateFields(val payload: GuarantorApplicationPayload?) : AddGuarantorAction
     data object DismissDialog : AddGuarantorAction

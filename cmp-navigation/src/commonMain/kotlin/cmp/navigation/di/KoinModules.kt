@@ -19,8 +19,8 @@ import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
 import org.mifos.mobile.feature.accounts.di.accountsModule
 import org.mifos.mobile.feature.auth.di.AuthModule
+import org.mifos.mobile.feature.beneficiary.di.BeneficiaryModule
 import org.mifos.mobile.feature.charge.di.ChargeModule
-import org.mifos.mobile.feature.guarantor.di.GuarantorModule
 import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.di.LoanModule
@@ -63,7 +63,7 @@ object KoinModules {
             SettingsModule,
             ThirdPartyTransferModule,
             updatePasswordModule,
-            GuarantorModule,
+            BeneficiaryModule,
         )
     }
     private val LibraryModule = module {

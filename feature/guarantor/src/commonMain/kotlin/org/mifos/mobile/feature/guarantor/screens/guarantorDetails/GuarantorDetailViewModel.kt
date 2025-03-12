@@ -129,9 +129,9 @@ internal class GuarantorDetailViewModel(
                 )
             }
 
-            GuarantorDetailAction.NavigateBack -> sendEvent(GuarantorDetailEvent.NavigateBack)
+            is GuarantorDetailAction.NavigateBack -> sendEvent(GuarantorDetailEvent.NavigateBack)
 
-            GuarantorDetailAction.UpdateDialogValue -> updateState { it.copy(showDialog = !state.showDialog) }
+            is GuarantorDetailAction.UpdateMenuDialogValue -> updateState { it.copy(showDialog = !state.showDialog) }
 
             is GuarantorDetailAction.UpdateGuarantor -> sendEvent(
                 GuarantorDetailEvent.UpdateGuarantor(
@@ -139,6 +139,10 @@ internal class GuarantorDetailViewModel(
                     state.loanId ?: -1,
                 ),
             )
+
+            is GuarantorDetailAction.DismissDialog -> {
+                updateState { it.copy(dialogState = null) }
+            }
         }
     }
 }
@@ -173,5 +177,6 @@ sealed interface GuarantorDetailAction {
     data object NavigateBack : GuarantorDetailAction
     data object DeleteGuarantor : GuarantorDetailAction
     data object UpdateGuarantor : GuarantorDetailAction
-    data object UpdateDialogValue : GuarantorDetailAction
+    data object UpdateMenuDialogValue : GuarantorDetailAction
+    data object DismissDialog : GuarantorDetailAction
 }
