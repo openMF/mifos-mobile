@@ -45,20 +45,16 @@ import mifos_mobile.feature.recent_transaction.generated.resources.string_and_st
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.Utils
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionState
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
 
@@ -176,7 +172,7 @@ private fun RecentTransactionsContent(
         val lastVisibleItemIndex = visibleItems.lastOrNull()?.index ?: 0
         val isNearBottom = lastVisibleItemIndex >= transactions.size - 5
 
-        if (!isPaginating && canPaginate && isNearBottom) {
+        if (!isPaginating && canPaginate && isNearBottom && transactions.size > visibleItems.size) {
             loadMore(transactions.size - 1)
         }
 
@@ -237,34 +233,5 @@ private fun RecentTransactionListItem(
                 )
             }
         }
-    }
-}
-
-internal class RecentTransactionScreenPreviewProvider :
-    PreviewParameterProvider<RecentTransactionState> {
-    override val values: Sequence<RecentTransactionState>
-        get() = sequenceOf(
-            RecentTransactionState.Loading,
-            RecentTransactionState.Error,
-            RecentTransactionState.Success(listOf(), canPaginate = true),
-        )
-}
-
-@DevicePreview
-@Composable
-internal fun RecentTransactionScreenPreview(
-    @PreviewParameter(RecentTransactionScreenPreviewProvider::class)
-    recentTransactionUiState: RecentTransactionState,
-) {
-    MifosMobileTheme {
-        RecentTransactionScreen(
-            uiState = recentTransactionUiState,
-            isRefreshing = false,
-            isPaginating = false,
-            navigateBack = {},
-            onRetry = {},
-            onRefresh = {},
-            loadMore = {},
-        )
     }
 }
