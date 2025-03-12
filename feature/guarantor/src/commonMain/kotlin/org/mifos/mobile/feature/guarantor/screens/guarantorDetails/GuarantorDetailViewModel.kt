@@ -75,7 +75,7 @@ internal class GuarantorDetailViewModel(
                                     )
                                 }
 
-                                DataState.Loading -> {
+                                is DataState.Loading -> {
                                     currentState.copy(dialogState = GuarantorDetailState.DialogState.Loading)
                                 }
 
@@ -107,7 +107,7 @@ internal class GuarantorDetailViewModel(
                     }
                 }
 
-                DataState.Loading -> {
+                is DataState.Loading -> {
                     updateState { it.copy(dialogState = GuarantorDetailState.DialogState.Loading) }
                 }
 

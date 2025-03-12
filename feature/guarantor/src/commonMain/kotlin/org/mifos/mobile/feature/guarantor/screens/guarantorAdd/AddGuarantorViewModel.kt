@@ -83,7 +83,7 @@ internal class AddGuarantorViewModel(
                             )
                         }
 
-                        DataState.Loading -> {
+                        is DataState.Loading -> {
                             currentState.copy(dialogState = AddGuarantorState.DialogState.Loading)
                         }
 
@@ -141,7 +141,7 @@ internal class AddGuarantorViewModel(
                     updateState { it.copy(dialogState = AddGuarantorState.DialogState.Error(result.message)) }
                 }
 
-                DataState.Loading -> {
+                is DataState.Loading -> {
                     updateState {
                         it.copy(dialogState = AddGuarantorState.DialogState.Loading)
                     }
@@ -170,7 +170,7 @@ internal class AddGuarantorViewModel(
                                     )
                                 }
 
-                                DataState.Loading -> {
+                                is DataState.Loading -> {
                                     currentState.copy(dialogState = AddGuarantorState.DialogState.Loading)
                                 }
 
