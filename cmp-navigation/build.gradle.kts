@@ -32,6 +32,7 @@ kotlin {
             implementation(projects.feature.transferProcess)
             implementation(projects.feature.beneficiary)
             implementation(projects.feature.settings)
+            implementation(projects.feature.qr)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

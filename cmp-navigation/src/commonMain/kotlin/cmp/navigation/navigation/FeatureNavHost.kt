@@ -25,6 +25,7 @@ import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
@@ -37,6 +38,10 @@ import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
+import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
@@ -88,7 +93,9 @@ internal fun FeatureNavHost(
 
         loanNavGraph(
             navController = appState.navController,
-            viewQr = { },
+            viewQr = {
+                appState.navController.navigateToQrDisplayScreen(it)
+            },
             viewGuarantor = { },
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
@@ -137,8 +144,8 @@ internal fun FeatureNavHost(
 
         beneficiaryNavGraph(
             navController = appState.navController,
-            openQrImportScreen = { },
-            openQrReaderScreen = { },
+            openQrImportScreen = { appState.navController.navigateToQrImportScreen() },
+            openQrReaderScreen = { appState.navController.navigateToQrReaderScreen() },
         )
 
         settingsNavGraph(
@@ -147,6 +154,14 @@ internal fun FeatureNavHost(
             changePasscode = { appState.navController::navigateToUpdatePassword },
             changePassword = {},
             languageChanged = {},
+        )
+
+        qrNavGraph(
+            navController = appState.navController,
+            openBeneficiaryApplication = { beneficiary, beneficiaryState ->
+                appState.navController
+                    .navigateToBeneficiaryApplicationScreen(beneficiary, beneficiaryState)
+            },
         )
     }
 }
