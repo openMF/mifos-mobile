@@ -59,9 +59,9 @@ internal class GuarantorDetailViewModel(
 
     private fun getGuarantorItem() {
         viewModelScope.launch {
-            updateState { it.copy(dialogState = GuarantorDetailState.DialogState.Loading) }
-
             state.loanId?.let {
+                updateState { state -> state.copy(dialogState = GuarantorDetailState.DialogState.Loading) }
+
                 guarantorRepositoryImp.getGuarantorList(loanId = it)
                     .collect { result ->
 
