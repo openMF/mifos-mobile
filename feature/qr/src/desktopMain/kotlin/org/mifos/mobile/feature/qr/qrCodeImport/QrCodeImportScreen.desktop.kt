@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 @Composable
 actual fun QrCodeImagePicker(
     onProceed: (bitmap: ImageBitmap) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     TODO("Not yet implemented")
 }

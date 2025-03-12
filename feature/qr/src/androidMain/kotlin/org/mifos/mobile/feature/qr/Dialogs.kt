@@ -50,7 +50,7 @@ fun CropError.getMessage(): String = remember(this) {
 @Composable
 fun LoadingDialog(
     status: CropperLoading,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var dismissed by remember(status) { mutableStateOf(false) }
     if (!dismissed) {

@@ -52,7 +52,7 @@ fun CropContent(
     if (cropState == null && loadingStatus != null) {
         LoadingDialog(
             status = loadingStatus,
-            modifier = modifier
+            modifier = modifier,
         )
     }
     Box(

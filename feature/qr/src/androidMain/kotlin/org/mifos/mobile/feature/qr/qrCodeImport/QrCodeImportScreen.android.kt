@@ -29,7 +29,7 @@ import org.mifos.mobile.feature.qr.rememberImagePicker
 @Composable
 actual fun QrCodeImagePicker(
     onProceed: (bitmap: ImageBitmap) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val imageCropper = rememberImageCropper()
     val scope = rememberCoroutineScope()

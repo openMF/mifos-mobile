@@ -131,19 +131,19 @@ private fun QrCodeImportScreen(
 @Composable
 expect fun QrCodeImagePicker(
     onProceed: (bitmap: ImageBitmap) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 )
 
 @Composable
 private fun QrCodeImportContent(
     proceedClicked: (bitmap: ImageBitmap) -> Unit,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     QrCodeImagePicker(
         onProceed = { bitmap ->
             proceedClicked.invoke(bitmap)
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
