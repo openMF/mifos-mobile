@@ -27,6 +27,7 @@ import mifos_mobile.feature.savings.generated.resources.apply_savings_account
 import mifos_mobile.feature.savings.generated.resources.new_saving_account_created_successfully
 import mifos_mobile.feature.savings.generated.resources.saving_account_updated_successfully
 import mifos_mobile.feature.savings.generated.resources.update_savings_account
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
@@ -56,7 +57,7 @@ internal fun SavingsAccountApplicationScreen(
 private fun SavingsAccountApplicationScreen(
     uiState: SavingsAccountApplicationUiState,
     navigateBack: () -> Unit,
-    submit: (Int, Int, showToast: (Int) -> Unit) -> Unit,
+    submit: (Int, Int, showToast: (StringResource) -> Unit) -> Unit,
     modifier: Modifier = Modifier,
     savingsWithAssociations: SavingsWithAssociations? = null,
 ) {
@@ -76,7 +77,9 @@ private fun SavingsAccountApplicationScreen(
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
-                    is SavingsAccountApplicationUiState.Error -> MifosErrorComponent()
+                    is SavingsAccountApplicationUiState.Error -> {
+                        MifosErrorComponent()
+                    }
 
                     is SavingsAccountApplicationUiState.Loading -> {
                         MifosProgressIndicatorOverlay()

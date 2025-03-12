@@ -95,7 +95,13 @@ internal fun FeatureNavHost(
             viewCharges = appState.navController::navigateToClientChargeScreen,
             viewQrCode = {},
             callHelpline = { callHelpline() },
-            reviewTransfer = { payload, type -> },
+            reviewTransfer = { transferPayload, transferType, transferDestination ->
+                appState.navController.navigateToTransferProcessScreen(
+                    transferPayload,
+                    transferType,
+                    transferDestination,
+                )
+            },
         )
 
         aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })

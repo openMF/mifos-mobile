@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
+import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.graphics.Color
@@ -37,12 +39,9 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.designsystem.theme.DepositGreen
-import org.mifos.mobile.core.designsystem.theme.GreenSuccess
-import org.mifos.mobile.core.designsystem.theme.RedLight
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.savings.savingsAccountTransaction.SavingsAccountTransactionUiState.Loading
@@ -88,14 +87,12 @@ internal class SavingAccountsTransactionViewModel(
                     dataState ->
                 when (dataState) {
                     is DataState.Error -> {
-                        logger.e(dataState.message)
                         mUiState.value = SavingsAccountTransactionUiState.Error(dataState.message)
                     }
                     DataState.Loading -> {
                         mUiState.value = Loading
                     }
                     is DataState.Success -> {
-                        logger.e(dataState.data.toString())
                         val savingsWithAssociations = dataState.data
                         _transactionsList = savingsWithAssociations.transactions
 
@@ -177,8 +174,7 @@ internal class SavingAccountsTransactionViewModel(
         endDate: Long,
     ): List<Transactions> {
         return transactions.filter {
-//            (DateHelper.getDateAsLongFromList(it.date) in startDate..endDate)
-            (6 in startDate..endDate)
+            (DateHelper.getDateAsLongFromList(it.date) in startDate..endDate)
         }
     }
 
@@ -278,22 +274,22 @@ enum class SavingsTransactionRadioFilter(val textResId: StringResource) {
 
 enum class SavingsTransactionCheckBoxFilter(
     val textResId: StringResource,
-    val checkBoxColor: Color,
+    val checkBoxColor: @Composable (ColorScheme) -> Color,
 ) {
     DEPOSIT(
         textResId = Res.string.deposit,
-        checkBoxColor = DepositGreen,
+        checkBoxColor = { it.primary },
     ),
     DIVIDEND_PAYOUT(
         textResId = Res.string.dividend_payout,
-        checkBoxColor = RedLight,
+        checkBoxColor = { it.errorContainer },
     ),
     WITHDRAWAL(
         textResId = Res.string.withdrawal,
-        checkBoxColor = RedLight,
+        checkBoxColor = { it.errorContainer },
     ),
     INTEREST_POSTING(
         textResId = Res.string.interest_posting,
-        checkBoxColor = GreenSuccess,
+        checkBoxColor = { it.secondaryContainer },
     ),
 }

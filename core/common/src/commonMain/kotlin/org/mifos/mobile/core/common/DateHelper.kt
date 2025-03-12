@@ -16,6 +16,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
@@ -116,6 +117,19 @@ object DateHelper {
         val finalFormat = LocalDateTime.Format { byUnicodePattern(format) }
 
         return finalFormat.format(pickerFormat.parse(dateString))
+    }
+
+    fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
+        if (integersOfDate == null) return null
+        val dateStr = getDateAsString(integersOfDate)
+        return try {
+            val dateList = getDateAsList(dateStr)
+            val localDate = LocalDate(dateList[0], dateList[1], dateList[2])
+            localDate.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
+        } catch (e: Exception) {
+            logger.d { "Error parsing date: ${e.message}" }
+            null
+        }
     }
 
     private fun getFormatConverter(

@@ -15,9 +15,9 @@ import org.mifos.mobile.core.model.Parcelize
 @Parcelize
 data class SavingsAccountApplicationPayload(
 
-    var submittedOnDate: String? = null,
+    val submittedOnDate: String? = null,
 
-    var clientId: Int? = null,
+    val clientId: Int? = null,
 
     val productId: Int? = null,
 

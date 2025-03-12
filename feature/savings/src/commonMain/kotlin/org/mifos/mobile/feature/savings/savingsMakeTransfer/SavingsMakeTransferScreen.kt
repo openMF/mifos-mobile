@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings.generated.resources.Res
@@ -22,6 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -31,20 +33,23 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 internal fun SavingsMakeTransferScreen(
     onCancelledClicked: () -> Unit,
     navigateBack: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SavingsMakeTransferViewModel = koinViewModel(),
 ) {
     val uiState = viewModel.savingsMakeTransferUiState.collectAsStateWithLifecycle()
     val uiData = viewModel.savingsMakeTransferUiData.collectAsStateWithLifecycle()
-
+    val transferSuccessDestination by
+        viewModel.transferSuccessDestination.collectAsStateWithLifecycle()
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
     SavingsMakeTransferScreen(
         navigateBack = navigateBack,
         onCancelledClicked = onCancelledClicked,
         uiState = uiState.value,
         uiData = uiData.value,
+        isNetworkAvailable = isNetworkAvailable,
         modifier = modifier,
-        reviewTransfer = { reviewTransfer(it, TransferType.SELF) },
+        reviewTransfer = { reviewTransfer(it, TransferType.SELF, transferSuccessDestination) },
     )
 }
 
@@ -52,6 +57,7 @@ internal fun SavingsMakeTransferScreen(
 private fun SavingsMakeTransferScreen(
     uiState: SavingsMakeTransferUiState,
     uiData: SavingsMakeTransferUiData,
+    isNetworkAvailable: Boolean,
     navigateBack: () -> Unit,
     reviewTransfer: (ReviewTransferPayload) -> Unit,
     modifier: Modifier = Modifier,
@@ -86,7 +92,7 @@ private fun SavingsMakeTransferScreen(
 
                     is SavingsMakeTransferUiState.Error -> {
                         MifosErrorComponent(
-                            isNetworkConnected = true,
+                            isNetworkConnected = isNetworkAvailable,
                             isEmptyData = false,
                             isRetryEnabled = false,
                         )

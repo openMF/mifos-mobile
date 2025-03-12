@@ -45,6 +45,7 @@ import mifos_mobile.feature.savings.generated.resources.client_name
 import mifos_mobile.feature.savings.generated.resources.select_product_id
 import mifos_mobile.feature.savings.generated.resources.submission_date
 import mifos_mobile.feature.savings.generated.resources.submit
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -53,7 +54,7 @@ import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTempla
 
 @Composable
 internal fun SavingsAccountApplicationContent(
-    submit: (Int, Int, showToast: (Int) -> Unit) -> Unit,
+    submit: (Int, Int, showToast: (StringResource) -> Unit) -> Unit,
     modifier: Modifier = Modifier,
     existingProduct: String? = null,
     savingsAccountTemplate: SavingsAccountTemplate? = null,

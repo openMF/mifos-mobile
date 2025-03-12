@@ -25,6 +25,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -266,9 +267,9 @@ private fun SavingsTransactionFilterDialogContent(
                 },
                 text = stringResource(filter.textResId),
                 checkboxColors = CheckboxDefaults.colors().copy(
-                    checkedBorderColor = filter.checkBoxColor,
-                    uncheckedBorderColor = filter.checkBoxColor,
-                    checkedBoxColor = filter.checkBoxColor,
+                    checkedBorderColor = filter.checkBoxColor(MaterialTheme.colorScheme),
+                    uncheckedBorderColor = filter.checkBoxColor(MaterialTheme.colorScheme),
+                    checkedBoxColor = filter.checkBoxColor(MaterialTheme.colorScheme),
                 ),
             )
         }

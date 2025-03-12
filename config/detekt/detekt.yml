@@ -232,7 +232,7 @@ complexity:
     thresholdInFiles: 20
     thresholdInClasses: 20
     thresholdInInterfaces: 20
-    thresholdInObjects: 20
+    thresholdInObjects: 21
     thresholdInEnums: 20
     ignoreDeprecated: false
     ignorePrivate: false

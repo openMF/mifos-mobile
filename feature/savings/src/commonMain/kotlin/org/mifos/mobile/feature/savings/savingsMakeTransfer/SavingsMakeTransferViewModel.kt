@@ -23,19 +23,34 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 
 internal class SavingsMakeTransferViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
+
+    val isNetworkAvailable = networkMonitor.isOnline
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
 
     private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
         key = Constants.TRANSFER_TYPE,
         initialValue = TRANSFER_PAY_TO,
+    )
+
+    val transferSuccessDestination: StateFlow<TransferSuccessDestination> = savedStateHandle.getStateFlow(
+        key = Constants.TRANSFER_SUCCESS_DESTINATION,
+        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
     )
 
     private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(

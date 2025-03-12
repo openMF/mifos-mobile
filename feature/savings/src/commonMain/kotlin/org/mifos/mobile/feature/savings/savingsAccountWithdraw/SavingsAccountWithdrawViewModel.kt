@@ -55,9 +55,10 @@ internal class SavingsAccountWithdrawViewModel(
         )
 
     fun submitWithdrawSavingsAccount(remark: String) {
-        val payload = SavingsAccountWithdrawPayload()
-        payload.note = remark
-        payload.withdrawnOnDate = DateHelper.formattedFullDate
+        val payload = SavingsAccountWithdrawPayload(
+            note = remark,
+            withdrawnOnDate = DateHelper.formattedFullDate,
+        )
 
         viewModelScope.launch {
             mUiState.value = SavingsAccountWithdrawUiState.Loading

@@ -22,6 +22,7 @@ import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.SavingsAccountState
@@ -63,7 +64,7 @@ fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
     viewCharges: (ChargeType) -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     callHelpline: () -> Unit,
 ) {
     navigation(
@@ -122,6 +123,7 @@ fun NavGraphBuilder.savingsNavGraph(
         savingsMakeTransfer(
             navigateBack = navController::popBackStack,
             reviewTransfer = reviewTransfer,
+
         )
     }
 }
@@ -203,7 +205,7 @@ fun NavGraphBuilder.savingsWithdraw(
 
 fun NavGraphBuilder.savingsMakeTransfer(
     navigateBack: () -> Unit,
-    reviewTransfer: (ReviewTransferPayload, TransferType) -> Unit,
+    reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
 ) {
     composable(
         route = SavingsNavigation.SavingsMakeTransfer.route,

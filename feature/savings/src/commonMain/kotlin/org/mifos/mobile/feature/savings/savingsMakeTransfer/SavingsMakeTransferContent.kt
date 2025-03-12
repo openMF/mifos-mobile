@@ -60,8 +60,6 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
-import org.mifos.mobile.core.designsystem.theme.DarkGray
-import org.mifos.mobile.core.designsystem.theme.Primary
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.ui.component.MFStepProcess
@@ -119,37 +117,33 @@ internal fun SavingsMakeTransferContent(
         for (step in stepsState) {
             MFStepProcess(
                 stepNumber = stringResource(step.second),
-                activateColor = Primary,
+                activateColor = MaterialTheme.colorScheme.primary,
                 processState = step.first,
-                deactivateColor = DarkGray,
+                deactivateColor = Color.Gray,
                 isLastStep = step == stepsState.last(),
             ) { processModifier ->
                 when (step.second) {
-                    Res.string.one -> uiData.accountOptionsTemplate?.let {
-                        PayToStepContent(
-                            modifier = processModifier,
-                            processState = payToStepState,
-                            toAccountOptions = it.fromAccountOptions,
-                            prefilledAccount = payToAccount,
-                            onContinueClick = {
-                                payToAccount = it
-                                currentStep += 1
-                            },
-                        )
-                    }
+                    Res.string.one -> PayToStepContent(
+                        modifier = processModifier,
+                        processState = payToStepState,
+                        toAccountOptions = uiData.accountOptionsTemplate.fromAccountOptions,
+                        prefilledAccount = payToAccount,
+                        onContinueClick = {
+                            payToAccount = it
+                            currentStep += 1
+                        },
+                    )
 
-                    Res.string.two -> uiData.accountOptionsTemplate?.let {
-                        PayFromStep(
-                            modifier = processModifier,
-                            processState = payFromStepState,
-                            fromAccountOptions = it.fromAccountOptions,
-                            prefilledAccount = payFromAccount,
-                            onContinueClick = {
-                                payFromAccount = it
-                                currentStep += 1
-                            },
-                        )
-                    }
+                    Res.string.two -> PayFromStep(
+                        modifier = processModifier,
+                        processState = payFromStepState,
+                        fromAccountOptions = uiData.accountOptionsTemplate.fromAccountOptions,
+                        prefilledAccount = payFromAccount,
+                        onContinueClick = {
+                            payFromAccount = it
+                            currentStep += 1
+                        },
+                    )
 
                     Res.string.three -> EnterAmountStep(
                         processState = amountStepState,

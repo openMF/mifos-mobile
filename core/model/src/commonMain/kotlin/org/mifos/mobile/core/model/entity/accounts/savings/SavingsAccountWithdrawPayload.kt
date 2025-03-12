@@ -18,6 +18,6 @@ import org.mifos.mobile.core.model.Parcelize
 data class SavingsAccountWithdrawPayload(
     val locale: String = "en",
     val dateFormat: String = "dd MMMM yyyy",
-    var withdrawnOnDate: String? = null,
-    var note: String? = null,
+    val withdrawnOnDate: String? = null,
+    val note: String? = null,
 ) : Parcelable

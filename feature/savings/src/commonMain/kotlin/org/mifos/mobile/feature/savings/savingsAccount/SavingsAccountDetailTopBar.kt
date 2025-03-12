@@ -24,7 +24,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.saving_account_details
 import mifos_mobile.feature.savings.generated.resources.update_savings_account
@@ -47,7 +46,7 @@ internal fun SavingsAccountDetailTopBar(
         title = {
             Text(
                 text = stringResource(Res.string.saving_account_details),
-                fontSize = 20.sp,
+                style = MaterialTheme.typography.titleMedium,
             )
         },
         navigationIcon = {
