@@ -48,6 +48,8 @@ import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
+import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
+import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
@@ -114,6 +116,8 @@ internal fun FeatureNavHost(
         )
 
         aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })
+
+        recentTransactionNavGraph(appState.navController)
 
         loanNavGraph(
             navController = appState.navController,
@@ -203,12 +207,8 @@ fun handleHomeNavigation(
         HomeDestinations.ACCOUNTS -> navController.navigateToAccountsScreen()
         HomeDestinations.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.LOAN)
         HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
-        HomeDestinations.RECENT_TRANSACTIONS -> {}
-        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(
-            ChargeType.CLIENT,
-            -1L,
-        )
-
+        HomeDestinations.RECENT_TRANSACTIONS -> navController.navigateToRecentTransactionScreen()
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
         HomeDestinations.SETTINGS -> {
             navController.navigateToSettings()

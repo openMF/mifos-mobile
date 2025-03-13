@@ -22,7 +22,7 @@ data class AppSettings(
     companion object {
         val DEFAULT = AppSettings(
             tenant = "default",
-            baseUrl = "https://gsoc.mifos.community/",
+            baseUrl = "https://tt.mifos.community/",
             appTheme = AppTheme.SYSTEM,
             language = MifosAppLanguage.SYSTEM_LANGUAGE,
         )
