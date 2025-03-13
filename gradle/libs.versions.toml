@@ -26,7 +26,7 @@ cameraCoreVersion = "1.3.4"
 mlkit="17.3.0"
 guavaVersion = "33.3.1-android"
 cameraxVersion = "1.4.1"
-compose-material = "1.7.6"
+compose-material = "1.7.8"
 coreKtx = "1.15.0"
 dependencyGuard = "0.5.0"
 detekt = "1.23.7"
@@ -67,6 +67,7 @@ spotlessVersion = "6.25.0"
 truth = "1.4.4"
 turbineVersion = "1.1.0"
 twitter-detekt-compose = "0.0.26"
+uiVersion = "0.1.6"
 versionCatalogLinterVersion = "1.0.3"
 zxingVersion = "3.5.3"
 moduleGraph = "2.7.1"
@@ -225,6 +226,7 @@ squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", vers
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
 twitter-detekt-compose = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "twitter-detekt-compose" }
+ui = { module = "com.attafitamim.krop:ui", version.ref = "uiVersion" }
 work-testing = { group = "androidx.work", name = "work-testing", version = "2.8.1" }
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
 

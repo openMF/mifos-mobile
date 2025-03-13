@@ -16,6 +16,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!--
     Firebase automatically adds the AD_ID permission, even though we don't use it. If you use this
@@ -49,7 +51,7 @@
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="barcode_ui" />
+            android:value="barcode" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
