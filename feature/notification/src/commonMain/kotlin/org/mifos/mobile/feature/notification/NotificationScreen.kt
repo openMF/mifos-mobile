@@ -28,7 +28,6 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,7 +76,6 @@ private fun NotificationScreen(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     MifosScaffold(
         topBarTitle = stringResource(Res.string.notification),
         backPress = navigateBack,

@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 
