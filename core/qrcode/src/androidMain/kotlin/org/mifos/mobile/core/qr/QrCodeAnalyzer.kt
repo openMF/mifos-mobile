@@ -38,7 +38,8 @@ class QrCodeAnalyzer(
                         ?.mapNotNull { it.rawValue }
                         ?.joinToString(",")
                         ?.let { rawValue ->
-                            if (onScanned(rawValue)) {
+                            val isHandled = onScanned(rawValue)
+                            if (isHandled) {
                                 scanner.close()
                             }
                         }

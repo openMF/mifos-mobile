@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -102,9 +103,9 @@ class LoginViewModel(
                     it.copy(dialogState = null)
                 }
                 val user = action.loginResult.data
-
+                logger.d { "KtorClient getting before mapping $user" }
                 val userData = user.toUserData()
-
+                logger.d { "KtorClient getting after mapping $userData" }
                 viewModelScope.launch {
                     userPreferencesRepositoryImpl.updateUser(userData)
                 }

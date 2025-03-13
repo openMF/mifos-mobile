@@ -24,6 +24,9 @@ import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
@@ -37,6 +40,10 @@ import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
+import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
@@ -90,7 +97,9 @@ internal fun FeatureNavHost(
 
         loanNavGraph(
             navController = appState.navController,
-            viewQr = { },
+            viewQr = {
+                appState.navController.navigateToQrDisplayScreen(it)
+            },
             viewGuarantor = { },
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
@@ -137,12 +146,26 @@ internal fun FeatureNavHost(
             },
         )
 
+        beneficiaryNavGraph(
+            navController = appState.navController,
+            openQrImportScreen = { appState.navController.navigateToQrImportScreen() },
+            openQrReaderScreen = { appState.navController.navigateToQrReaderScreen() },
+        )
+
         settingsNavGraph(
             navigateBack = { appState.navController.popBackStack() },
             navigateToLoginScreen = {},
             changePasscode = { appState.navController::navigateToUpdatePassword },
             changePassword = {},
             languageChanged = {},
+        )
+
+        qrNavGraph(
+            navController = appState.navController,
+            openBeneficiaryApplication = { beneficiary, beneficiaryState ->
+                appState.navController
+                    .navigateToBeneficiaryApplicationScreen(beneficiary, beneficiaryState)
+            },
         )
     }
 }
@@ -169,7 +192,7 @@ fun handleHomeNavigation(
         HomeDestinations.SHARE -> { }
         HomeDestinations.APP_INFO -> { }
         HomeDestinations.TRANSFER -> { }
-        HomeDestinations.BENEFICIARIES -> { }
+        HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> { }
         HomeDestinations.NOTIFICATIONS -> { }
         HomeDestinations.PROFILE -> { }
