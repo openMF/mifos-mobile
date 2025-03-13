@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -37,6 +38,7 @@ import mifos_mobile.feature.notification.generated.resources.Res
 import mifos_mobile.feature.notification.generated.resources.dialog_action_ok
 import mifos_mobile.feature.notification.generated.resources.no_notification
 import mifos_mobile.feature.notification.generated.resources.notification
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper

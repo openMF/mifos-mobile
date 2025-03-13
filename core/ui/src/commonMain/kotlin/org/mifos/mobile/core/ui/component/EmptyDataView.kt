@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.no_internet
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
@@ -36,7 +35,7 @@ import org.mifos.mobile.core.ui.utils.DevicePreview
 fun EmptyDataView(
     error: StringResource,
     modifier: Modifier = Modifier.fillMaxSize(),
-   // image: DrawableResource? = null,
+    // image: DrawableResource? = null,
     icon: ImageVector = MifosIcons.Error,
     errorString: String? = null,
 ) {
