@@ -21,6 +21,7 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.core.qrcode)
             api(libs.kermit.logging)
             implementation(compose.material3)
             implementation(compose.foundation)

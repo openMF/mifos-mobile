@@ -23,6 +23,7 @@ kotlin {
             implementation(projects.feature.help)
             implementation(projects.feature.home)
             implementation(projects.feature.accounts)
+            implementation(projects.feature.guarantor)
             implementation(projects.feature.loanAccount)
             implementation(projects.feature.shareAccount)
             implementation(projects.feature.savingsAccount)
@@ -33,6 +34,7 @@ kotlin {
             implementation(projects.feature.transferProcess)
             implementation(projects.feature.beneficiary)
             implementation(projects.feature.settings)
+            implementation(projects.feature.qr)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

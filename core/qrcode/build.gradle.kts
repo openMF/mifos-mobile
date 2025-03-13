@@ -11,6 +11,7 @@
 plugins {
     alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -24,30 +25,31 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            commonMain.dependencies {
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-                implementation(libs.coil.kt.compose)
-                implementation(libs.filekit.core)
-                implementation(libs.filekit.compose)
-                api(libs.kermit.logging)
-            }
+            implementation(projects.core.model)
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.coil.kt.compose)
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
+            api(libs.kermit.logging)
+            implementation(libs.kotlinx.serialization.json)
+        }
 
-            androidMain.dependencies {
-                implementation(libs.androidx.camera.view)
-                implementation(libs.androidx.camera.camera2)
-                implementation(libs.androidx.camera.lifecycle)
-                implementation(libs.accompanist.permissions)
-                implementation(libs.mlkit.barcode.scanning)
-                implementation(libs.guava)
-            }
+        androidMain.dependencies {
+            implementation(libs.androidx.camera.view)
+            implementation(libs.androidx.camera.camera2)
+            implementation(libs.androidx.camera.lifecycle)
+            implementation(libs.accompanist.permissions)
+            implementation(libs.mlkit.barcode.scanning)
+            implementation(libs.guava)
+            implementation(libs.zxing.core)
+        }
 
-            nativeMain.dependencies {
-                implementation(libs.moko.permission.compose)
-            }
+        nativeMain.dependencies {
+            implementation(libs.moko.permission.compose)
         }
     }
 }
