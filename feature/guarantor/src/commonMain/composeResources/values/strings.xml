@@ -28,6 +28,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="phone_number">Phone Number</string>
+    <string name="internet_not_connected">Please turn on your wifi or mobile data</string>
     <string name="office_name">Office Name</string>
     <string name="submit">Submit</string>
     <string name="dialog_are_you_sure_that_you_want_to_string">Are you sure that you want to %1$s?</string>

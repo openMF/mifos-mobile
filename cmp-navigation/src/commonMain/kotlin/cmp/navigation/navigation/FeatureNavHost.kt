@@ -29,6 +29,8 @@ import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryAppl
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
+import org.mifos.mobile.feature.guarantor.navigation.guarantorNavGraph
+import org.mifos.mobile.feature.guarantor.navigation.navigateToGuarantorListScreen
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
@@ -81,10 +83,11 @@ internal fun FeatureNavHost(
             navigateToSavingsApplicationScreen = { },
             navigateToAccountDetail = { accountType, id ->
                 when (accountType) {
-                    AccountType.SAVINGS -> { }
+                    AccountType.SAVINGS -> {}
                     AccountType.LOAN ->
                         appState.navController.navigateToLoanDetailScreen(loanId = id)
-                    AccountType.SHARE -> { }
+
+                    AccountType.SHARE -> {}
                 }
             },
         )
@@ -93,10 +96,8 @@ internal fun FeatureNavHost(
 
         loanNavGraph(
             navController = appState.navController,
-            viewQr = {
-                appState.navController.navigateToQrDisplayScreen(it)
-            },
-            viewGuarantor = { },
+            viewQr = { appState.navController.navigateToQrDisplayScreen(it) },
+            viewGuarantor = { appState.navController.navigateToGuarantorListScreen(it) },
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
             },
@@ -156,6 +157,10 @@ internal fun FeatureNavHost(
             languageChanged = {},
         )
 
+        guarantorNavGraph(
+            navController = appState.navController,
+        )
+
         qrNavGraph(
             navController = appState.navController,
             openBeneficiaryApplication = { beneficiary, beneficiaryState ->
@@ -177,20 +182,25 @@ fun handleHomeNavigation(
         HomeDestinations.ACCOUNTS -> navController.navigateToAccountsScreen()
         HomeDestinations.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.LOAN)
         HomeDestinations.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(accountType = AccountType.SAVINGS)
-        HomeDestinations.RECENT_TRANSACTIONS -> { }
-        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(ChargeType.CLIENT, -1L)
+        HomeDestinations.RECENT_TRANSACTIONS -> {}
+        HomeDestinations.CHARGES -> navController.navigateToClientChargeScreen(
+            ChargeType.CLIENT,
+            -1L,
+        )
+
         HomeDestinations.THIRD_PARTY_TRANSFER -> navController.navigateToThirdPartyTransfer()
         HomeDestinations.SETTINGS -> {
             navController.navigateToSettings()
         }
+
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
-        HomeDestinations.SHARE -> { }
-        HomeDestinations.APP_INFO -> { }
-        HomeDestinations.TRANSFER -> { }
+        HomeDestinations.SHARE -> {}
+        HomeDestinations.APP_INFO -> {}
+        HomeDestinations.TRANSFER -> {}
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
-        HomeDestinations.SURVEY -> { }
-        HomeDestinations.NOTIFICATIONS -> { }
-        HomeDestinations.PROFILE -> { }
+        HomeDestinations.SURVEY -> {}
+        HomeDestinations.NOTIFICATIONS -> {}
+        HomeDestinations.PROFILE -> {}
     }
 }
