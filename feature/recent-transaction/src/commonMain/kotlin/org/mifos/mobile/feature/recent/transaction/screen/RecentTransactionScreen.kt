@@ -67,6 +67,7 @@ internal fun RecentTransactionScreen(
     val uiState by viewModel.recentTransactionUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val isPaginating by viewModel.isPaginating.collectAsStateWithLifecycle()
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
 
     RecentTransactionScreen(
         uiState = uiState,
@@ -77,6 +78,7 @@ internal fun RecentTransactionScreen(
         onRefresh = viewModel::refresh,
         loadMore = viewModel::loadPaginatedTransactions,
         modifier = modifier,
+        isNetworkAvailable = isNetworkAvailable,
     )
 }
 
@@ -91,10 +93,8 @@ private fun RecentTransactionScreen(
     onRefresh: () -> Unit,
     loadMore: (offset: Int) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RecentTransactionViewModel = koinViewModel(),
+    isNetworkAvailable: Boolean,
 ) {
-    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
-
     val pullRefreshState = rememberPullToRefreshState()
 
     MifosScaffold(
