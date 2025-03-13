@@ -58,8 +58,9 @@ include(":core:qrcode")
 
 // Feature Modules
 include(":feature:loan")
+include(":feature:savings")
 include(":feature:beneficiary")
-//include(":feature:savings")
+include(":feature:savings")
 include(":feature:guarantor")
 include(":feature:qr")
 include(":feature:transfer-process")

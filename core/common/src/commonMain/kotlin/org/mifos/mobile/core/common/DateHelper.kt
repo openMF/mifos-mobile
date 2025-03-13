@@ -10,16 +10,20 @@
 package org.mifos.mobile.core.common
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
+import kotlin.time.Duration.Companion.days
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 object DateHelper {
@@ -91,6 +95,16 @@ object DateHelper {
         return listOf(year, month, day)
     }
 
+    fun subtractTime(number: Int, unit: String): Long {
+        val now: Instant = Clock.System.now()
+        val daysToSubtract = when (unit.lowercase()) {
+            "week", "weeks" -> now.minus((number * 7).days).toEpochMilliseconds()
+            "month", "months" -> now.minus(DateTimePeriod(months = number), TimeZone.UTC).toEpochMilliseconds()
+            else -> 0
+        }
+        return daysToSubtract
+    }
+
     /**
      * This Method converting the dd-MM-yyyy format type date string into dd MMMM yyyy
      *
@@ -103,6 +117,19 @@ object DateHelper {
         val finalFormat = LocalDateTime.Format { byUnicodePattern(format) }
 
         return finalFormat.format(pickerFormat.parse(dateString))
+    }
+
+    fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
+        if (integersOfDate == null) return null
+        val dateStr = getDateAsString(integersOfDate)
+        return try {
+            val dateList = getDateAsList(dateStr)
+            val localDate = LocalDate(dateList[0], dateList[1], dateList[2])
+            localDate.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
+        } catch (e: Exception) {
+            logger.d { "Error parsing date: ${e.message}" }
+            null
+        }
     }
 
     private fun getFormatConverter(

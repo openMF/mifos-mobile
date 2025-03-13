@@ -147,7 +147,6 @@ internal class ClientChargeViewModel(
                 }
             }
                 .catch { exception ->
-                    logger.e { "Error fetching charges: ${exception.message}" }
                     updateState {
                         it.copy(
                             chargeDialog = ClientChargeState.ChargeDialogState.Error(
@@ -167,7 +166,6 @@ internal class ClientChargeViewModel(
     }
 
     private fun processClientCharges(result: DataState<Page<Charge>>) {
-        logger.d { "KtorClient $result" }
         updateState {
             when (result) {
                 DataState.Loading -> it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)

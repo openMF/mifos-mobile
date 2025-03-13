@@ -28,7 +28,6 @@ import mifos_mobile.feature.loan.generated.resources.waiting_for_disburse
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -115,7 +114,6 @@ private fun LoanAccountDetailDialog(
 ) {
     when (dialogState) {
         is LoanAccountsState.DialogState.Error -> {
-            logger.e { "Showing error dialog: ${dialogState.message}" }
             ErrorComponent(
                 retryConnection = {
                     onAction(
