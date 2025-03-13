@@ -13,20 +13,28 @@ package org.mifos.mobile.feature.notification
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.NotificationRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 
-// @HiltViewModel
-// internal class NotificationViewModel @Inject constructor(
 class NotificationViewModel(
     private val notificationRepositoryImp: NotificationRepository,
-//    private val networkMonitor: NetworkMonitor,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
+
+    val isNetworkAvailable = networkMonitor.isOnline
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     private val _notificationUiState = MutableStateFlow<NotificationUiState>(Loading)
     val notificationUiState: StateFlow<NotificationUiState> get() = _notificationUiState
@@ -53,7 +61,6 @@ class NotificationViewModel(
                     logger.d { "Notification ,$notifications" }
                     val sortedNotifications = notifications.data?.let { sortNotifications(it) } ?: emptyList()
 
-                    // val sortedNotifications = notifications.data?.let { sortNotifications(it) ?: emptyList() }
                     _isRefreshing.emit(false)
                     _notificationUiState.value =
                         NotificationUiState.Success(notifications = sortedNotifications)

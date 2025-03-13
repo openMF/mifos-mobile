@@ -9,14 +9,13 @@
  */
 package org.mifos.mobile.feature.notification
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.notification.generated.resources.Res
 import mifos_mobile.feature.notification.generated.resources.dialog_action_ok
+import mifos_mobile.feature.notification.generated.resources.no_notification
 import mifos_mobile.feature.notification.generated.resources.notification
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -43,6 +43,7 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.model.entity.MifosNotification
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 
@@ -54,6 +55,7 @@ internal fun NotificationScreen(
 ) {
     val uiState by viewModel.notificationUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
 
     NotificationScreen(
         uiState = uiState,
@@ -62,7 +64,9 @@ internal fun NotificationScreen(
         dismissNotification = viewModel::dismissNotification,
         onRefresh = viewModel::refreshNotifications,
         isRefreshing = isRefreshing,
+        isNetworkAvailable = isNetworkAvailable,
         modifier = modifier,
+
     )
 }
 
@@ -74,6 +78,7 @@ private fun NotificationScreen(
     dismissNotification: (MifosNotification) -> Unit,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    isNetworkAvailable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
@@ -89,7 +94,7 @@ private fun NotificationScreen(
                     is NotificationUiState.Error -> {
                         MifosErrorComponent(
                             message = uiState.errorMessage,
-                            isNetworkConnected = true,
+                            isNetworkConnected = isNetworkAvailable,
                             isRetryEnabled = true,
                             onRetry = onRetry,
                         )
@@ -97,12 +102,11 @@ private fun NotificationScreen(
 
                     is NotificationUiState.Success -> {
                         if (uiState.notifications.isEmpty()) {
-//                            EmptyDataView(
-//                                //icon = ImageVector.vectorResource(Res.drawable.ic_error_black_24dp),
-//                                icon = ImageVector.vectorResource(Res.drawable.ic_error_black_24dp),
-//                                error = Res.string.no_notification,
-//                                modifier = Modifier.fillMaxSize(),
-//                            )
+                            EmptyDataView(
+                                // image = painterResource(Res.drawable.ic_error_black_24dp),
+                                error = Res.string.no_notification,
+                                modifier = Modifier.fillMaxSize(),
+                            )
                         } else {
                             NotificationContent(
                                 isRefreshing = isRefreshing,
@@ -159,6 +163,7 @@ private fun NotificationItem(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier.padding(8.dp),
     ) {
 //        Icon(
@@ -170,7 +175,6 @@ private fun NotificationItem(
 //                MaterialTheme.colorScheme.primary
 //            },
 //        )
-        Spacer(modifier = Modifier.width(8.dp))
         Column(
             horizontalAlignment = Alignment.End,
         ) {

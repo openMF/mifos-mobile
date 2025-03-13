@@ -31,7 +31,7 @@ kotlin {
         }
     }
 }
-dependencies {
-    implementation(libs.androidx.ui.android)
-    implementation(libs.androidx.media3.common.ktx)
-}
+//dependencies {
+//   // implementation(libs.androidx.ui.android)
+//    implementation(libs.androidx.media3.common.ktx)
+//}
