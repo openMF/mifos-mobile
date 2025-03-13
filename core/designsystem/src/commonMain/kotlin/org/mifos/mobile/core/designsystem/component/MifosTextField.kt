@@ -141,11 +141,11 @@ fun MifosTextField(
                 }
             }
         },
-        supportingText = config.errorText?.let {
+        supportingText = config.errorText.let {
             {
                 Text(
                     modifier = Modifier.testTag("errorTag"),
-                    text = it,
+                    text = it ?: "",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                 )

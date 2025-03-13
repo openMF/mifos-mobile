@@ -34,8 +34,8 @@ fun NavGraphBuilder.guarantorNavGraph(
     navController: NavHostController,
 ) {
     navigation(
-        startDestination = GuarantorNavigation.GuarantorList.route,
         route = GuarantorNavigation.GuarantorScreenBase.route,
+        startDestination = GuarantorNavigation.GuarantorList.route,
     ) {
         addGuarantorRoute(
             navigateBack = navController::popBackStack,
@@ -83,7 +83,7 @@ fun NavGraphBuilder.listGuarantorRoute(
     composable(
         route = GuarantorNavigation.GuarantorList.route,
         arguments = listOf(
-            navArgument(name = LOAN_ID) { type = NavType.StringType },
+            navArgument(name = LOAN_ID) { type = NavType.LongType },
         ),
     ) {
         GuarantorListScreen(
