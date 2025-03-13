@@ -7,32 +7,32 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transaction.navigation
+package org.mifos.mobile.feature.recent.transaction.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import org.mifos.mobile.feature.transaction.screens.RecentTransactionScreen
+import org.mifos.mobile.feature.recent.transaction.screen.RecentTransactionScreen
 
-fun NavController.navigateToRecentTransaction() {
+fun NavController.navigateToRecentTransactionScreen() {
     navigate(RecentTransactionNavigation.RecentTransactionBase.route)
 }
 
 fun NavGraphBuilder.recentTransactionNavGraph(
-    navigateBack: () -> Unit,
+    navController: NavController,
 ) {
     navigation(
         startDestination = RecentTransactionNavigation.RecentTransactionScreen.route,
         route = RecentTransactionNavigation.RecentTransactionBase.route,
     ) {
-        settingsScreenRoute(
-            navigateBack = navigateBack,
+        recentTransactionScreenRoute(
+            navigateBack = navController::popBackStack,
         )
     }
 }
 
-fun NavGraphBuilder.settingsScreenRoute(
+fun NavGraphBuilder.recentTransactionScreenRoute(
     navigateBack: () -> Unit,
 ) {
     composable(

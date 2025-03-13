@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transaction.navigation
+package org.mifos.mobile.feature.recent.transaction.navigation
 
 const val RECENT_TRANSACTION_NAVIGATION_ROUTE_BASE = "recent_transaction_base_route"
 const val RECENT_TRANSACTION_SCREEN_ROUTE = "recent_transaction_screen_route"
