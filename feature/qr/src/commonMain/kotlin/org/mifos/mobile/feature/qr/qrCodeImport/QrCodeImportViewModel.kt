@@ -54,7 +54,7 @@ internal class QrCodeImportViewModel :
             val invalidQr = getString(Res.string.invalid_qr)
             val result = decodeQrCode(bitmap)
             if (result != null) {
-                val trimmedResult = result.trim()
+                val trimmedResult = result.trim().removeSurrounding("{", "}").trim()
                 try {
                     if (trimmedResult.startsWith("{") && trimmedResult.endsWith("}")) {
                         val beneficiary = Json.decodeFromString<Beneficiary>(trimmedResult)

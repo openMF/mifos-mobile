@@ -18,16 +18,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.alexzhirkevich.qrose.ImageFormat
+import io.github.alexzhirkevich.qrose.rememberQrCodePainter
+import io.github.alexzhirkevich.qrose.toByteArray
 import mifos_mobile.feature.qr.generated.resources.Res
+import mifos_mobile.feature.qr.generated.resources.choose_option
 import mifos_mobile.feature.qr.generated.resources.qr_code
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -90,8 +91,14 @@ private fun QrCodeDisplayScreen(
     modifier: Modifier = Modifier,
     onAction: (QrCodeDisplayAction) -> Unit,
 ) {
-    var qrBitmap by rememberSaveable { mutableStateOf<ImageBitmap?>(null) }
+    val painter = rememberQrCodePainter(
+        data = state.qrArgs ?: "",
+    )
 
+    val bytes: ByteArray = remember(painter) {
+        painter.toByteArray(512, 512, ImageFormat.PNG)
+    }
+    val option = stringResource(Res.string.choose_option)
     MifosScaffold(
         modifier = modifier,
         topBar = {
@@ -101,7 +108,12 @@ private fun QrCodeDisplayScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            onAction(QrCodeDisplayAction.ShareQrCode)
+                            onAction(
+                                QrCodeDisplayAction.ShareQrCode(
+                                    bytes,
+                                    option,
+                                ),
+                            )
                         },
                         content = {
                             Icon(
@@ -119,10 +131,7 @@ private fun QrCodeDisplayScreen(
                     .padding(paddingValues = paddingValues)
                     .fillMaxSize(),
             ) {
-                if (state.qrBitmap != null) {
-                    qrBitmap = state.qrBitmap
-                    QrCodeDisplayContent(qrBitmap = state.qrBitmap)
-                }
+                QrCodeDisplayContent(qrBitmap = painter)
             }
         },
     )
@@ -134,7 +143,7 @@ private fun QrCodeDisplayScreen(
 
 @Composable
 private fun QrCodeDisplayContent(
-    qrBitmap: ImageBitmap,
+    qrBitmap: Painter,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -142,7 +151,7 @@ private fun QrCodeDisplayContent(
         contentAlignment = Alignment.Center,
     ) {
         Image(
-            bitmap = qrBitmap,
+            painter = qrBitmap,
             contentDescription = stringResource(Res.string.qr_code),
             modifier = Modifier
                 .padding(20.dp)
@@ -150,8 +159,6 @@ private fun QrCodeDisplayContent(
         )
     }
 }
-
-expect fun share(qrBitmap: ImageBitmap, string: String)
 
 @Preview
 @Composable
