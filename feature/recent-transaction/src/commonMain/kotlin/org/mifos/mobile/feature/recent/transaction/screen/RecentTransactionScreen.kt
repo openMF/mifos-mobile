@@ -201,7 +201,7 @@ private fun RecentTransactionListItem(
             painter = painterResource(Res.drawable.ic_local_atm_black_24dp),
             contentDescription = stringResource(Res.string.atm_icon),
             modifier = Modifier.size(40.dp),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
         )
 
         Spacer(modifier = Modifier.width(8.dp))
