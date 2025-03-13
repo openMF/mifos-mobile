@@ -92,8 +92,8 @@ private fun RecentTransactionScreen(
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
     loadMore: (offset: Int) -> Unit,
-    modifier: Modifier = Modifier,
     isNetworkAvailable: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
 
