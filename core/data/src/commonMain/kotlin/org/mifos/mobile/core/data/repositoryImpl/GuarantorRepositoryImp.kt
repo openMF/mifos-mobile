@@ -11,6 +11,7 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
@@ -72,7 +73,47 @@ class GuarantorRepositoryImp(
     }
 
     override fun getGuarantorList(loanId: Long): Flow<DataState<List<GuarantorPayload?>?>> {
-        return dataManager.guarantorApi.getGuarantorList(loanId)
-            .asDataStateFlow().flowOn(ioDispatcher)
+        return flow { emit(getDemoGuarantorPayloads()) }.asDataStateFlow().flowOn(ioDispatcher)
+//        return dataManager.guarantorApi.getGuarantorList(loanId)
+//            .asDataStateFlow().flowOn(ioDispatcher)
     }
+}
+
+fun getDemoGuarantorPayloads(): List<GuarantorPayload> {
+    return listOf(
+        GuarantorPayload(
+            id = 1L,
+            city = "New York",
+            lastname = "Doe",
+            firstname = "John",
+            loanId = 101L,
+            status = true,
+        ),
+        GuarantorPayload(
+            id = 2L,
+            city = "Los Angeles",
+            lastname = "Smith",
+            firstname = "Emma",
+            loanId = 102L,
+            status = false,
+        ),
+        GuarantorPayload(
+            id = 3L,
+            city = "Chicago",
+            lastname = "Brown",
+            firstname = "Michael",
+            joinedDate = listOf(2022, 12, 5),
+            loanId = 103L,
+            status = true,
+        ),
+        GuarantorPayload(
+            id = 4L,
+            city = "San Francisco",
+            lastname = "Johnson",
+            firstname = "Sophia",
+            joinedDate = listOf(2021, 8, 15),
+            loanId = 104L,
+            status = false,
+        ),
+    )
 }

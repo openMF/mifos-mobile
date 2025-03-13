@@ -22,6 +22,7 @@ kotlin {
             implementation(projects.feature.help)
             implementation(projects.feature.home)
             implementation(projects.feature.accounts)
+            implementation(projects.feature.guarantor)
             implementation(projects.feature.loanAccount)
             implementation(projects.feature.shareAccount)
             implementation(projects.feature.savingsAccount)

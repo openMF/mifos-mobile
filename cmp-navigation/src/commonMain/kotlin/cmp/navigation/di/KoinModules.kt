@@ -21,6 +21,7 @@ import org.mifos.mobile.feature.accounts.di.accountsModule
 import org.mifos.mobile.feature.auth.di.AuthModule
 import org.mifos.mobile.feature.beneficiary.di.BeneficiaryModule
 import org.mifos.mobile.feature.charge.di.ChargeModule
+import org.mifos.mobile.feature.guarantor.di.GuarantorModule
 import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.di.LoanModule
@@ -66,6 +67,7 @@ object KoinModules {
             updatePasswordModule,
             BeneficiaryModule,
             QrModule,
+            GuarantorModule,
         )
     }
     private val LibraryModule = module {
