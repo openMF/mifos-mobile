@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -29,34 +28,30 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
-import org.mifos.mobile.core.designsystem.components.MifosTextButton
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import mifos_mobile.feature.notification.generated.resources.Res
+import mifos_mobile.feature.notification.generated.resources.dialog_action_ok
+import mifos_mobile.feature.notification.generated.resources.notification
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.model.entity.MifosNotification
-import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
 
 @Composable
 internal fun NotificationScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: NotificationViewModel = hiltViewModel(),
+    viewModel: NotificationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.notificationUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
@@ -82,12 +77,12 @@ private fun NotificationScreen(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
 
     MifosScaffold(
-        topBarTitleResId = R.string.notification,
-        navigateBack = navigateBack,
+        topBarTitle = stringResource(Res.string.notification),
+        backPress = navigateBack,
         modifier = modifier,
+
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
@@ -96,7 +91,7 @@ private fun NotificationScreen(
                     is NotificationUiState.Error -> {
                         MifosErrorComponent(
                             message = uiState.errorMessage,
-                            isNetworkConnected = Network.isConnected(context),
+                            isNetworkConnected = true,
                             isRetryEnabled = true,
                             onRetry = onRetry,
                         )
@@ -104,11 +99,12 @@ private fun NotificationScreen(
 
                     is NotificationUiState.Success -> {
                         if (uiState.notifications.isEmpty()) {
-                            EmptyDataView(
-                                icon = R.drawable.ic_notifications,
-                                error = R.string.no_notification,
-                                modifier = Modifier.fillMaxSize(),
-                            )
+//                            EmptyDataView(
+//                                //icon = ImageVector.vectorResource(Res.drawable.ic_error_black_24dp),
+//                                icon = ImageVector.vectorResource(Res.drawable.ic_error_black_24dp),
+//                                error = Res.string.no_notification,
+//                                modifier = Modifier.fillMaxSize(),
+//                            )
                         } else {
                             NotificationContent(
                                 isRefreshing = isRefreshing,
@@ -167,15 +163,15 @@ private fun NotificationItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.padding(8.dp),
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_notifications),
-            contentDescription = null,
-            tint = if (isRead.value) {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            } else {
-                MaterialTheme.colorScheme.primary
-            },
-        )
+//        Icon(
+//            painter = painterResource(Res.drawable.ic_local_atm_black_24dp),
+//            contentDescription = null,
+//            tint = if (isRead.value) {
+//                MaterialTheme.colorScheme.onSurfaceVariant
+//            } else {
+//                MaterialTheme.colorScheme.primary
+//            },
+//        )
         Spacer(modifier = Modifier.width(8.dp))
         Column(
             horizontalAlignment = Alignment.End,
@@ -187,12 +183,14 @@ private fun NotificationItem(
             )
             Text(
                 modifier = Modifier.alpha(0.7f),
-                text = DateHelper.getDateAndTimeAsStringFromLong(notification.timeStamp),
+                text = DateHelper.getDateAsStringFromLong(notification.timeStamp),
                 style = MaterialTheme.typography.labelMedium,
             )
             if (!isRead.value) {
                 MifosTextButton(
-                    text = stringResource(id = R.string.dialog_action_ok),
+                    content = {
+                        Text(stringResource(Res.string.dialog_action_ok))
+                    },
                     onClick = {
                         isRead.value = true
                         dismissNotification(notification)
@@ -200,45 +198,5 @@ private fun NotificationItem(
                 )
             }
         }
-    }
-}
-
-internal class NotificationUiStatePreviews : PreviewParameterProvider<NotificationUiState> {
-    override val values: Sequence<NotificationUiState>
-        get() = sequenceOf(
-            NotificationUiState.Success(
-                notifications = listOf(
-                    MifosNotification(
-                        timeStamp = 13231331L,
-                        msg = "Your payment is successful",
-                        read = false,
-                    ),
-                    MifosNotification(
-                        timeStamp = 13231331L,
-                        msg = "Your payment is successful",
-                        read = true,
-                    ),
-                ),
-            ),
-            NotificationUiState.Error(errorMessage = ""),
-            NotificationUiState.Loading,
-        )
-}
-
-@DevicePreviews
-@Composable
-private fun NotificationScreenPreview(
-    @PreviewParameter(NotificationUiStatePreviews::class)
-    notificationUiState: NotificationUiState,
-) {
-    MifosMobileTheme {
-        NotificationScreen(
-            navigateBack = {},
-            uiState = notificationUiState,
-            onRetry = {},
-            dismissNotification = {},
-            onRefresh = {},
-            isRefreshing = false,
-        )
     }
 }
