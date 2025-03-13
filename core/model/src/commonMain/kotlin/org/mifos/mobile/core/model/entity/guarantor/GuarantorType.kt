@@ -17,6 +17,6 @@ import org.mifos.mobile.core.model.Parcelize
 @Parcelize
 class GuarantorType(
     val id: Long? = null,
-    var value: String? = null,
+    val value: String? = null,
     val code: String? = null,
 ) : Parcelable

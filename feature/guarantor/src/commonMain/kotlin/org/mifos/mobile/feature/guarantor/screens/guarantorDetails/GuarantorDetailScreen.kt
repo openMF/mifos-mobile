@@ -91,36 +91,23 @@ private fun GuarantorDetailScreen(
             Box(modifier = Modifier.padding(it)) {
                 state.guarantor?.let { it1 -> GuarantorDetailContent(data = it1) }
             }
-
-            if (state.showDialog) {
-                MifosAlertDialog(
-                    onDismissRequest = { onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue) },
-                    dismissText = stringResource(Res.string.dismiss),
-                    confirmationText = stringResource(Res.string.yes),
-                    dialogTitle = stringResource(Res.string.delete_guarantor),
-                    onConfirmation = {
-                        onAction.invoke(GuarantorDetailAction.DeleteGuarantor)
-                        onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue)
-                    },
-                    dialogText = stringResource(
-                        Res.string.dialog_are_you_sure_that_you_want_to_string,
-                        stringResource(Res.string.delete_guarantor),
-                    ),
-                )
-            }
         },
     )
 
     GuarantorDetailsDialog(
+        alertDialogState = state.showDialog,
         dialogState = state.dialogState,
         onDismissRequest = { onAction.invoke(GuarantorDetailAction.DismissDialog) },
+        onAction = onAction,
     )
 }
 
 @Composable
 private fun GuarantorDetailsDialog(
+    alertDialogState: Boolean,
     dialogState: GuarantorDetailState.DialogState?,
     onDismissRequest: () -> Unit,
+    onAction: (GuarantorDetailAction) -> Unit,
 ) {
     when (dialogState) {
         GuarantorDetailState.DialogState.Loading -> MifosProgressIndicatorOverlay()
@@ -130,6 +117,24 @@ private fun GuarantorDetailsDialog(
             ),
             onDismissRequest = onDismissRequest,
         )
+
         null -> Unit
+    }
+
+    if (alertDialogState) {
+        MifosAlertDialog(
+            onDismissRequest = { onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue) },
+            dismissText = stringResource(Res.string.dismiss),
+            confirmationText = stringResource(Res.string.yes),
+            dialogTitle = stringResource(Res.string.delete_guarantor),
+            onConfirmation = {
+                onAction.invoke(GuarantorDetailAction.DeleteGuarantor)
+                onAction.invoke(GuarantorDetailAction.UpdateMenuDialogValue)
+            },
+            dialogText = stringResource(
+                Res.string.dialog_are_you_sure_that_you_want_to_string,
+                stringResource(Res.string.delete_guarantor),
+            ),
+        )
     }
 }
