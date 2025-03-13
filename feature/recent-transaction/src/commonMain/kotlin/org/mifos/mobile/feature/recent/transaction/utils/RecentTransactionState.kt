@@ -7,13 +7,14 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transaction.utils
+package org.mifos.mobile.feature.recent.transaction.utils
 
 import org.mifos.mobile.core.model.entity.Transaction
 
-internal sealed class RecentTransactionState {
+sealed class RecentTransactionState {
     data object Loading : RecentTransactionState()
-    data class Error(val message: String?) : RecentTransactionState()
+    data object Error : RecentTransactionState()
+    data object Empty : RecentTransactionState()
     data class Success(
         val transactions: List<Transaction>,
         val canPaginate: Boolean,
