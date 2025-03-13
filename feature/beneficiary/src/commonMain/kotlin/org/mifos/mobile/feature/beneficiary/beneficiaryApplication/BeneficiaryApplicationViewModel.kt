@@ -139,8 +139,8 @@ internal class BeneficiaryApplicationViewModel(
                 it.copy(
                     dialogState =
                     BeneficiaryApplicationState.DialogState.Error(
-                        error.message ?: "An error occurred"
-                    )
+                        error.message ?: "An error occurred",
+                    ),
                 )
             }
         }.collect { }
