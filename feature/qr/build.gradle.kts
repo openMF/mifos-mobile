@@ -8,18 +8,45 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.feature)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
     namespace = "org.mifos.mobile.feature.qr"
 }
 
-dependencies {
-    implementation(projects.core.qrcode)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.core.qrcode)
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.coil.kt.compose)
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
+            implementation(libs.kotlinx.serialization.json)
+        }
 
-    implementation(libs.easycrop.compose)
-    implementation (libs.accompanist.permissions)
-    implementation(libs.androidx.camera.core)
+        androidMain.dependencies {
+            implementation(libs.androidx.camera.view)
+            implementation(libs.androidx.camera.camera2)
+            implementation(libs.androidx.camera.lifecycle)
+            implementation(libs.accompanist.permissions)
+            implementation(libs.mlkit.barcode.scanning)
+            implementation(libs.guava)
+
+            implementation(libs.ui)
+        }
+
+        nativeMain.dependencies {
+            implementation(libs.moko.permission.compose)
+            implementation(libs.ui)
+        }
+
+    }
 }
