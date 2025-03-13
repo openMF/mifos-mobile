@@ -11,10 +11,9 @@ package org.mifos.mobile.feature.savings.savingsAccountTransaction
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -86,10 +85,9 @@ internal fun SavingsTransactionFilterDialog(
         Card(shape = RoundedCornerShape(20.dp)) {
             Column(
                 modifier = Modifier.padding(vertical = 20.dp, horizontal = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Text(text = stringResource(Res.string.select_you_want))
-
-                Spacer(modifier = Modifier.height(20.dp))
 
                 SavingsTransactionFilterDialogContent(
                     selectedStartDate = startDate,
@@ -125,9 +123,9 @@ internal fun SavingsTransactionFilterDialog(
                     setEndDate = { endDate = it },
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Row {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
                     MifosTextButton(
                         text = { Text(stringResource(Res.string.clear_filters)) },
                         onClick = {
@@ -139,8 +137,6 @@ internal fun SavingsTransactionFilterDialog(
                             checkBoxFilters.clear()
                         },
                     )
-
-                    Spacer(modifier = Modifier.weight(1f))
 
                     MifosTextButton(
                         onClick = onDismiss,

@@ -9,13 +9,11 @@
  */
 package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -119,7 +117,7 @@ internal fun SavingsMakeTransferContent(
                 stepNumber = stringResource(step.second),
                 activateColor = MaterialTheme.colorScheme.primary,
                 processState = step.first,
-                deactivateColor = Color.Gray,
+                deactivateColor = MaterialTheme.colorScheme.surfaceVariant,
                 isLastStep = step == stepsState.last(),
             ) { processModifier ->
                 when (step.second) {
@@ -266,7 +264,7 @@ private fun EnterAmountStep(
     outstandingBalance: Double? = null,
 ) {
     var amount by remember { mutableStateOf(outstandingBalance?.toString() ?: "") }
-    var amountError by rememberSaveable { mutableStateOf<StringResource?>(null) }
+    var amountError by remember { mutableStateOf<StringResource?>(null) }
     var showAmountError by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = amount) {
@@ -318,7 +316,7 @@ private fun RemarkStep(
     onCancelledClicked: () -> Unit = {},
 ) {
     var remark by remember { mutableStateOf(TextFieldValue("")) }
-    var remarkError by rememberSaveable { mutableStateOf<StringResource?>(null) }
+    var remarkError by remember { mutableStateOf<StringResource?>(null) }
     var showRemarkError by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = remark) {
@@ -329,13 +327,12 @@ private fun RemarkStep(
         }
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(Res.string.remark),
             fontWeight = FontWeight.Bold,
         )
         if (processState == StepProcessState.ACTIVE) {
-            Spacer(modifier = Modifier.height(12.dp))
             TextField(
                 colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent),
                 value = remark,
@@ -344,8 +341,10 @@ private fun RemarkStep(
                 onValueChange = { remark = it },
                 label = { Text(text = stringResource(Res.string.remark)) },
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row {
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
                 MifosButton(
                     content = { Text(stringResource(Res.string.review)) },
                     onClick = {
@@ -353,7 +352,7 @@ private fun RemarkStep(
                             ?: onContinueClicked(remark.text)
                     },
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+
                 MifosOutlinedButton(
                     content = { Text(stringResource(Res.string.cancel)) },
                     onClick = onCancelledClicked,

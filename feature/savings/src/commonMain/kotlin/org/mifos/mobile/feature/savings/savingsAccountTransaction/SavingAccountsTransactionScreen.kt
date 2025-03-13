@@ -116,10 +116,12 @@ internal fun SavingsAccountTransactionScreen(
 
                     is SavingsAccountTransactionUiState.Success -> {
                         transactionList = uiState.savingAccountsTransactionList
-                        SavingsAccountTransactionContent(
-                            currencyCode = uiState.savingAccountsTransactionList[0].currency?.code ?: "USD",
-                            transactionList = transactionList,
-                        )
+                        if (uiState.savingAccountsTransactionList.isNotEmpty()) {
+                            SavingsAccountTransactionContent(
+                                currencyCode = uiState.savingAccountsTransactionList.first().currency?.code ?: "USD",
+                                transactionList = transactionList,
+                            )
+                        }
                     }
 
                     SavingsAccountTransactionUiState.Empty -> {

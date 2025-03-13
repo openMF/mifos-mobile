@@ -10,11 +10,10 @@
 package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -63,18 +62,23 @@ internal fun SavingsAccountApplicationContent(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(
+        modifier = modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         OutlinedCard(
             colors = CardDefaults.outlinedCardColors(
                 containerColor = MaterialTheme.colorScheme.background,
             ),
         ) {
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(
+                modifier = Modifier.padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
                 TitleBodyRow(
                     titleText = stringResource(Res.string.client_name),
                     bodyText = savingsAccountTemplate?.clientName ?: "",
                 )
-                Spacer(modifier = Modifier.height(16.dp))
                 TitleBodyRow(
                     titleText = stringResource(Res.string.submission_date),
                     bodyText = DateHelper.formattedFullDate,
@@ -82,15 +86,11 @@ internal fun SavingsAccountApplicationContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
         SelectProductIdDropDown(
             existingProduct = existingProduct,
             selectProductId = { selectProductId = it },
             savingsAccountTemplate = savingsAccountTemplate,
         )
-
-        Spacer(modifier = Modifier.height(20.dp))
 
         MifosButton(
             content = { Text(stringResource(Res.string.submit)) },

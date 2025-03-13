@@ -9,12 +9,11 @@
  */
 package org.mifos.mobile.feature.savings.savingsAccountWithdraw
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -60,8 +59,31 @@ internal fun SavingsAccountWithdrawScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val savingsWithAssociations by viewModel.savingsWithAssociations.collectAsStateWithLifecycle()
 
+    val message = stringResource(Res.string.savings_account_withdraw_successful)
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(uiState) {
+        if (uiState is SavingsAccountWithdrawUiState.Success) {
+            scope.launch {
+                val result = snackbarHostState.showSnackbar(
+                    message = message,
+                    duration = SnackbarDuration.Short,
+                )
+                if (result == SnackbarResult.Dismissed || result == SnackbarResult.ActionPerformed) {
+                    navigateBack(true)
+                }
+            }
+        } else if (uiState is SavingsAccountWithdrawUiState.Error) {
+            scope.launch {
+                (uiState as SavingsAccountWithdrawUiState.Error).message?.let { snackbarHostState.showSnackbar(it) }
+            }
+        }
+    }
+
     SavingsAccountWithdrawScreen(
         uiState = uiState,
+        snackbarHostState = snackbarHostState,
         savingsWithAssociations = savingsWithAssociations?.data,
         onBackPress = navigateBack,
         withdraw = viewModel::submitWithdrawSavingsAccount,
@@ -72,14 +94,12 @@ internal fun SavingsAccountWithdrawScreen(
 @Composable
 private fun SavingsAccountWithdrawScreen(
     uiState: SavingsAccountWithdrawUiState,
+    snackbarHostState: SnackbarHostState,
     savingsWithAssociations: SavingsWithAssociations?,
     onBackPress: (withdrawSuccess: Boolean) -> Unit,
     withdraw: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
     MifosScaffold(
         modifier = modifier,
         topBar = {
@@ -98,35 +118,8 @@ private fun SavingsAccountWithdrawScreen(
                     withdraw = withdraw,
                 )
 
-                when (uiState) {
-                    is SavingsAccountWithdrawUiState.Loading -> {
-                        MifosProgressIndicatorOverlay()
-                    }
-
-                    is SavingsAccountWithdrawUiState.Success -> {
-                        val message = stringResource(Res.string.savings_account_withdraw_successful)
-                        LaunchedEffect(true) {
-                            scope.launch {
-                                val result = snackbarHostState.showSnackbar(
-                                    message = message,
-                                    duration = SnackbarDuration.Short,
-                                )
-                                if (result == SnackbarResult.Dismissed || result == SnackbarResult.ActionPerformed) {
-                                    onBackPress(true)
-                                }
-                            }
-                        }
-                    }
-
-                    is SavingsAccountWithdrawUiState.Error -> {
-                        LaunchedEffect(true) {
-                            scope.launch {
-                                uiState.message?.let { snackbarHostState.showSnackbar(it) }
-                            }
-                        }
-                    }
-
-                    SavingsAccountWithdrawUiState.WithdrawUiReady -> {}
+                if (uiState is SavingsAccountWithdrawUiState.Loading) {
+                    MifosProgressIndicatorOverlay()
                 }
             }
         },
@@ -146,22 +139,23 @@ private fun SavingsAccountWithdrawContent(
         modifier = modifier
             .padding(16.dp)
             .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         MifosTitleDescSingleLineEqual(
             title = stringResource(Res.string.client_name),
             description = savingsWithAssociations?.clientName ?: "",
         )
-        Spacer(modifier = Modifier.height(8.dp))
+
         MifosTitleDescSingleLineEqual(
             title = stringResource(Res.string.account_number),
             description = savingsWithAssociations?.accountNo ?: "",
         )
-        Spacer(modifier = Modifier.height(8.dp))
+
         MifosTitleDescSingleLineEqual(
             title = stringResource(Res.string.withdrawal_date),
             description = DateHelper.formattedFullDate,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+
         MifosOutlinedTextField(
             value = remark,
             label = stringResource(Res.string.remark),
@@ -178,7 +172,7 @@ private fun SavingsAccountWithdrawContent(
                 remarkFieldError = false
             },
         )
-        Spacer(modifier = Modifier.height(16.dp))
+
         MifosButton(
             content = { Text(stringResource(Res.string.withdraw_savings_account)) },
             onClick = {

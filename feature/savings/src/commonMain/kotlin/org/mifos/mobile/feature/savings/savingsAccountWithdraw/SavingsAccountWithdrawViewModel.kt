@@ -35,6 +35,9 @@ internal class SavingsAccountWithdrawViewModel(
     private val mUiState = MutableStateFlow<SavingsAccountWithdrawUiState>(WithdrawUiReady)
     val uiState = mUiState.asStateFlow()
 
+    private val mSnackbar = MutableStateFlow<String>("")
+    val snackbarMessage = mSnackbar.asStateFlow()
+
     private val savingsId: StateFlow<Long> = savedStateHandle.getStateFlow(
         key = Constants.SAVINGS_ID,
         initialValue = -1L,
