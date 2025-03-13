@@ -202,6 +202,7 @@ com.google.mlkit:barcode-scanning:17.3.0
 com.google.mlkit:common:18.11.0
 com.google.mlkit:vision-common:17.3.0
 com.google.mlkit:vision-interfaces:16.3.0
+com.google.zxing:core:3.5.3
 com.russhwolf:multiplatform-settings-android-debug:1.2.0
 com.russhwolf:multiplatform-settings-coroutines-android-debug:1.2.0
 com.russhwolf:multiplatform-settings-coroutines:1.2.0
