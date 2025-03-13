@@ -32,7 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.recent_transaction.generated.resources.Res
@@ -201,6 +201,7 @@ private fun RecentTransactionListItem(
             painter = painterResource(Res.drawable.ic_local_atm_black_24dp),
             contentDescription = stringResource(Res.string.atm_icon),
             modifier = Modifier.size(40.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -223,13 +224,12 @@ private fun RecentTransactionListItem(
                     ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
-                        .weight(1f)
-                        .alpha(0.7f),
+                        .weight(1f),
                 )
                 Text(
                     text = DateHelper.getDateAsString(transaction!!.submittedOnDate),
                     style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.alpha(0.7f),
+                    modifier = Modifier,
                 )
             }
         }
