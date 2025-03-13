@@ -27,6 +27,7 @@ kotlin {
             implementation(projects.feature.shareAccount)
             implementation(projects.feature.savingsAccount)
             implementation(projects.feature.about)
+            implementation(projects.feature.recentTransaction)
             implementation(projects.feature.clientCharge)
             implementation(projects.feature.updatePassword)
             implementation(projects.feature.thirdPartyTransfer)
@@ -60,7 +61,6 @@ kotlin {
 android {
     namespace = "cmp.navigation"
 }
-
 
 compose.resources {
     publicResClass = true

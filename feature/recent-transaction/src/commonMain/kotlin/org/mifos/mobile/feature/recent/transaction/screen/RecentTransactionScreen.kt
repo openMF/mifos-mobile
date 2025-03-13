@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transaction.screens
+package org.mifos.mobile.feature.recent.transaction.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,40 +32,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.mifos.mobile.core.common.Network
-import org.mifos.mobile.core.common.utils.CurrencyUtil
-import org.mifos.mobile.core.common.utils.DateHelper
-import org.mifos.mobile.core.common.utils.Utils
-import org.mifos.mobile.core.designsystem.components.MifosScaffold
-import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import mifos_mobile.feature.recent_transaction.generated.resources.Res
+import mifos_mobile.feature.recent_transaction.generated.resources.atm_icon
+import mifos_mobile.feature.recent_transaction.generated.resources.ic_error_black_24dp
+import mifos_mobile.feature.recent_transaction.generated.resources.ic_local_atm_black_24dp
+import mifos_mobile.feature.recent_transaction.generated.resources.no_transaction
+import mifos_mobile.feature.recent_transaction.generated.resources.recent_transactions
+import mifos_mobile.feature.recent_transaction.generated.resources.string_and_string
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.CurrencyFormatter
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.Utils
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
-import org.mifos.mobile.core.ui.utils.DevicePreviews
-import org.mifos.mobile.feature.recent_transaction.R
-import org.mifos.mobile.feature.transaction.utils.RecentTransactionState
-import org.mifos.mobile.feature.transaction.viewmodel.RecentTransactionViewModel
+import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionState
+import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
 
 @Composable
 internal fun RecentTransactionScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RecentTransactionViewModel = hiltViewModel(),
+    viewModel: RecentTransactionViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.recentTransactionUiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val isPaginating by viewModel.isPaginating.collectAsStateWithLifecycle()
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
 
     RecentTransactionScreen(
         uiState = uiState,
@@ -76,6 +78,7 @@ internal fun RecentTransactionScreen(
         onRefresh = viewModel::refresh,
         loadMore = viewModel::loadPaginatedTransactions,
         modifier = modifier,
+        isNetworkAvailable = isNetworkAvailable,
     )
 }
 
@@ -89,14 +92,14 @@ private fun RecentTransactionScreen(
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
     loadMore: (offset: Int) -> Unit,
+    isNetworkAvailable: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val pullRefreshState = rememberPullToRefreshState()
 
     MifosScaffold(
-        topBarTitleResId = R.string.recent_transactions,
-        navigateBack = navigateBack,
+        topBarTitle = stringResource(Res.string.recent_transactions),
+        backPress = navigateBack,
         modifier = modifier,
         content = { paddingValues ->
             Box(
@@ -117,7 +120,7 @@ private fun RecentTransactionScreen(
                         when (uiState) {
                             is RecentTransactionState.Error -> {
                                 MifosErrorComponent(
-                                    isNetworkConnected = Network.isConnected(context),
+                                    isNetworkConnected = isNetworkAvailable,
                                     isRetryEnabled = true,
                                     onRetry = onRetry,
                                 )
@@ -127,21 +130,21 @@ private fun RecentTransactionScreen(
                                 MifosProgressIndicatorOverlay()
                             }
 
+                            is RecentTransactionState.Empty -> {
+                                EmptyDataView(
+                                    icon = vectorResource(resource = Res.drawable.ic_error_black_24dp),
+                                    error = Res.string.no_transaction,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            }
+
                             is RecentTransactionState.Success -> {
-                                if (uiState.transactions.isEmpty()) {
-                                    EmptyDataView(
-                                        icon = R.drawable.ic_error_black_24dp,
-                                        error = R.string.no_transaction,
-                                        modifier = Modifier.fillMaxSize(),
-                                    )
-                                } else {
-                                    RecentTransactionsContent(
-                                        transactions = uiState.transactions,
-                                        isPaginating = isPaginating,
-                                        loadMore = loadMore,
-                                        canPaginate = uiState.canPaginate,
-                                    )
-                                }
+                                RecentTransactionsContent(
+                                    transactions = uiState.transactions,
+                                    isPaginating = isPaginating,
+                                    loadMore = loadMore,
+                                    canPaginate = uiState.canPaginate,
+                                )
                             }
                         }
                     }
@@ -169,7 +172,7 @@ private fun RecentTransactionsContent(
         val lastVisibleItemIndex = visibleItems.lastOrNull()?.index ?: 0
         val isNearBottom = lastVisibleItemIndex >= transactions.size - 5
 
-        if (!isPaginating && canPaginate && isNearBottom) {
+        if (!isPaginating && canPaginate && isNearBottom && transactions.size > visibleItems.size) {
             loadMore(transactions.size - 1)
         }
 
@@ -190,16 +193,15 @@ private fun RecentTransactionListItem(
     transaction: Transaction?,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     Row(
         modifier = modifier.padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_local_atm_black_24dp),
-            contentDescription = stringResource(id = R.string.atm_icon),
+            painter = painterResource(Res.drawable.ic_local_atm_black_24dp),
+            contentDescription = stringResource(Res.string.atm_icon),
             modifier = Modifier.size(40.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -208,60 +210,28 @@ private fun RecentTransactionListItem(
             Text(
                 text = Utils.formatTransactionType(transaction?.type?.value),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
             )
             Row {
                 Text(
                     text = stringResource(
-                        id = R.string.string_and_string,
+                        Res.string.string_and_string,
                         transaction?.currency?.displaySymbol ?: transaction?.currency?.code ?: "",
-                        CurrencyUtil.formatCurrency(
-                            context,
-                            transaction?.amount ?: 0.0,
+                        CurrencyFormatter.format(
+                            transaction?.amount,
+                            transaction?.currency?.code,
+                            2,
                         ),
                     ),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier
-                        .weight(1f)
-                        .alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface,
+                        .weight(1f),
                 )
                 Text(
-                    text = DateHelper.getDateAsString(transaction?.submittedOnDate),
+                    text = DateHelper.getDateAsString(transaction!!.submittedOnDate),
                     style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.alpha(0.7f),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier,
                 )
             }
         }
-    }
-}
-
-internal class RecentTransactionScreenPreviewProvider :
-    PreviewParameterProvider<RecentTransactionState> {
-    override val values: Sequence<RecentTransactionState>
-        get() = sequenceOf(
-            RecentTransactionState.Loading,
-            RecentTransactionState.Error(""),
-            RecentTransactionState.Success(listOf(), canPaginate = true),
-        )
-}
-
-@DevicePreviews
-@Composable
-private fun RecentTransactionScreenPreview(
-    @PreviewParameter(RecentTransactionScreenPreviewProvider::class)
-    recentTransactionUiState: RecentTransactionState,
-) {
-    MifosMobileTheme {
-        RecentTransactionScreen(
-            uiState = recentTransactionUiState,
-            isRefreshing = false,
-            isPaginating = false,
-            navigateBack = {},
-            onRetry = {},
-            onRefresh = {},
-            loadMore = {},
-        )
     }
 }
