@@ -31,68 +31,77 @@ import mifos_mobile.feature.user_profile.generated.resources.user_details
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.feature.user.profile.utils.UserDetails
+import org.mifos.mobile.core.model.entity.client.Client
 
 @Composable
 internal fun UserProfileDetails(
-    userDetails: UserDetails,
+    userDetails: Client,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = stringResource(Res.string.user_details),
-            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold),
-        )
+    val hasUserDetails = userDetails.mobileNo != null ||
+        userDetails.dobDate.isNotEmpty() ||
+        userDetails.gender?.name != null
 
-        Row(
-            verticalAlignment = Alignment.Bottom,
+    if (hasUserDetails) {
+        Column(
+            modifier = modifier
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Icon(
-                modifier = Modifier.padding(top = 8.dp),
-                painter = painterResource(Res.drawable.ic_phone_24dp),
-                contentDescription = null,
+            Text(
+                modifier = Modifier.padding(top = 16.dp),
+                text = stringResource(Res.string.user_details),
+                style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold),
             )
-            userDetails.phoneNumber?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+
+            userDetails.mobileNo?.let { mobileNumber ->
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(top = 8.dp),
+                        painter = painterResource(Res.drawable.ic_phone_24dp),
+                        contentDescription = null,
+                    )
+                    Text(
+                        text = mobileNumber,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
-        }
-        Row(
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Icon(
-                modifier = Modifier.padding(top = 8.dp),
-                painter = painterResource(Res.drawable.ic_cake_24dp),
-                contentDescription = null,
-            )
-            userDetails.dob?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+
+            userDetails.dobDate.takeIf { it.isNotEmpty() }?.let { dob ->
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(top = 8.dp),
+                        painter = painterResource(Res.drawable.ic_cake_24dp),
+                        contentDescription = null,
+                    )
+                    Text(
+                        text = DateHelper.getDateAsString(dob),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
-        }
-        Row(
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Icon(
-                modifier = Modifier.padding(top = 8.dp),
-                painter = painterResource(Res.drawable.ic_gender_24dp),
-                contentDescription = null,
-            )
-            userDetails.gender?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+
+            userDetails.gender?.name?.let { genderName ->
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(top = 8.dp),
+                        painter = painterResource(Res.drawable.ic_gender_24dp),
+                        contentDescription = null,
+                    )
+                    Text(
+                        text = genderName,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
         }
     }
@@ -105,18 +114,7 @@ private fun UserProfileDetailsPreview(
 ) {
     MifosMobileTheme {
         UserProfileDetails(
-            userDetails = UserDetails(
-                userName = "John Doe",
-                accountNumber = "123456",
-                activationDate = "01/01/2021",
-                officeName = "Office Name",
-                clientType = "Client Type",
-                groups = "Groups",
-                clientClassification = "Client Classification",
-                phoneNumber = "1234567890",
-                dob = "01/01/1990",
-                gender = "Male",
-            ),
+            userDetails = Client(),
             modifier = modifier,
         )
     }

@@ -198,7 +198,7 @@ internal fun FeatureNavHost(
 
         userProfileNavGraph(
             navigateBack = { appState.navController.popBackStack() },
-            navigateToChangePassword = { appState.navController.navigateToUpdatePassword() },
+            navigateToChangePassword = { appState.navController::navigateToUpdatePassword.invoke() },
         )
     }
 }

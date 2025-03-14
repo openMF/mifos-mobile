@@ -33,7 +33,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 fun UserProfileTopBar(
     text: StringResource,
     home: () -> Unit,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = {

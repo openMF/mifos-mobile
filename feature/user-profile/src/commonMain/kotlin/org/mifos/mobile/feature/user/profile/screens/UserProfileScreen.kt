@@ -37,7 +37,6 @@ import mifos_mobile.feature.user_profile.generated.resources.gender
 import mifos_mobile.feature.user_profile.generated.resources.groups
 import mifos_mobile.feature.user_profile.generated.resources.ic_keyboard_arrow_right_black_24dp
 import mifos_mobile.feature.user_profile.generated.resources.internet_not_connected
-import mifos_mobile.feature.user_profile.generated.resources.no_dob_found
 import mifos_mobile.feature.user_profile.generated.resources.office_name
 import mifos_mobile.feature.user_profile.generated.resources.phone_number
 import mifos_mobile.feature.user_profile.generated.resources.user_details
@@ -55,7 +54,6 @@ import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.component.UserProfileField
 import org.mifos.mobile.core.ui.component.UserProfileTopBar
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.user.profile.utils.UserDetails
 import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailAction
 import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailEvent
 import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailState
@@ -151,24 +149,6 @@ private fun UserProfileContent(
     onAction: (UserDetailAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val client = state.client
-
-    val userDetails = UserDetails(
-        userName = client?.displayName ?: "-",
-        accountNumber = client?.accountNo ?: "-",
-        activationDate = client?.activationDate?.let { DateHelper.getDateAsString(it) } ?: "-",
-        officeName = client?.officeName ?: "-",
-        clientType = client?.clientType?.name ?: "-",
-        groups = client?.groups?.let { getGroups(it) } ?: "-",
-        clientClassification = client?.clientClassification?.name ?: "-",
-        phoneNumber = client?.mobileNo ?: "-",
-        dob = if (client?.dobDate?.size == 3) {
-            DateHelper.getDateAsString(client.dobDate)
-        } else {
-            stringResource(Res.string.no_dob_found)
-        },
-        gender = client?.gender?.name ?: "-",
-    )
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
@@ -186,23 +166,49 @@ private fun UserProfileContent(
         }
         HorizontalDivider()
 
-        userDetails.userName?.let { UserProfileField(label = Res.string.username, value = it) }
-        userDetails.accountNumber?.let { UserProfileField(label = Res.string.account_number, value = it) }
-        userDetails.activationDate?.let { UserProfileField(label = Res.string.activation_date, value = it) }
-        userDetails.officeName?.let { UserProfileField(label = Res.string.office_name, value = it) }
-        userDetails.clientType?.let { UserProfileField(label = Res.string.client_type, value = it) }
-        userDetails.groups?.let { UserProfileField(label = Res.string.groups, value = it) }
-        userDetails.clientClassification?.let { UserProfileField(label = Res.string.client_classification, value = it) }
-        userDetails.phoneNumber?.let { UserProfileField(label = Res.string.phone_number, value = it) }
-        userDetails.gender?.let { UserProfileField(label = Res.string.gender, value = it) }
+        state.client?.let {
+            it.displayName?.let { displayName ->
+                UserProfileField(label = Res.string.username, value = displayName)
+            }
+            it.accountNo?.let { accountNo ->
+                UserProfileField(label = Res.string.account_number, value = accountNo)
+            }
+            it.activationDate.takeIf { it.isNotEmpty() }?.let { dateList ->
+                UserProfileField(
+                    label = Res.string.activation_date,
+                    value = DateHelper.getDateAsString(dateList),
+                )
+            }
 
-        UserProfileField(
-            text = Res.string.change_password,
-            icon = Res.drawable.ic_keyboard_arrow_right_black_24dp,
-            onClick = { onAction(UserDetailAction.OnChangePassword) },
-        )
+            it.officeName?.let { officeName ->
+                UserProfileField(label = Res.string.office_name, value = officeName)
+            }
+            it.clientType?.name?.let { clientType ->
+                UserProfileField(label = Res.string.client_type, value = clientType)
+            }
+            it.groups.takeIf { groupList ->
+                groupList.isNotEmpty()
+            }?.let { groups ->
+                UserProfileField(label = Res.string.groups, value = getGroups(groups))
+            }
+            it.clientClassification?.name?.let { client ->
+                UserProfileField(label = Res.string.client_classification, value = client)
+            }
+            it.mobileNo?.let { mobileNo ->
+                UserProfileField(label = Res.string.phone_number, value = mobileNo)
+            }
+            it.gender?.name?.let { gender ->
+                UserProfileField(label = Res.string.gender, value = gender)
+            }
 
-        UserProfileDetails(userDetails = userDetails)
+            UserProfileField(
+                text = Res.string.change_password,
+                icon = Res.drawable.ic_keyboard_arrow_right_black_24dp,
+                onClick = { onAction(UserDetailAction.OnChangePassword) },
+            )
+
+            UserProfileDetails(userDetails = state.client)
+        }
     }
 }
 
