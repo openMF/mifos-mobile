@@ -58,6 +58,8 @@ import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferPr
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
 import org.mifos.mobile.feature.update.password.navigation.navigateToUpdatePassword
 import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
+import org.mifos.mobile.feature.user.profile.navigation.navigateToUserProfile
+import org.mifos.mobile.feature.user.profile.navigation.userProfileNavGraph
 
 @Composable
 internal fun FeatureNavHost(
@@ -193,6 +195,11 @@ internal fun FeatureNavHost(
                     .navigateToBeneficiaryApplicationScreen(beneficiary, beneficiaryState)
             },
         )
+
+        userProfileNavGraph(
+            navigateBack = { appState.navController.popBackStack() },
+            navigateToChangePassword = { appState.navController::navigateToUpdatePassword.invoke() },
+        )
     }
 }
 
@@ -222,6 +229,6 @@ fun handleHomeNavigation(
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> {}
         HomeDestinations.NOTIFICATIONS -> {}
-        HomeDestinations.PROFILE -> {}
+        HomeDestinations.PROFILE -> navController.navigateToUserProfile()
     }
 }
