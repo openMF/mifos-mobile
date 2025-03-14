@@ -18,6 +18,8 @@ data class AppSettings(
     val passcode: String? = null,
     val appTheme: AppTheme = AppTheme.SYSTEM,
     val language: MifosAppLanguage,
+    val sentTokenToServer: Boolean = false,
+    val gcmToken: String? = null,
 ) {
     companion object {
         val DEFAULT = AppSettings(
@@ -25,6 +27,8 @@ data class AppSettings(
             baseUrl = "https://tt.mifos.community/",
             appTheme = AppTheme.SYSTEM,
             language = MifosAppLanguage.SYSTEM_LANGUAGE,
+            sentTokenToServer = false,
+            gcmToken = null,
         )
     }
 }

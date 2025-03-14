@@ -8,8 +8,8 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.feature)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
 }
 
@@ -18,6 +18,14 @@ android {
     namespace = "org.mifos.mobile.feature.user.profile"
 }
 
-dependencies {
-    implementation(libs.squareup.okhttp)
+kotlin {
+    sourceSets{
+        commonMain.dependencies {
+            implementation(compose.components.resources)
+            implementation(compose.material3)
+            implementation(projects.core.ui)
+            implementation(projects.core.model)
+            implementation(compose.components.uiToolingPreview)
+        }
+    }
 }

@@ -29,6 +29,9 @@ interface UserPreferencesRepository {
 
     val profileImage: String?
 
+    val sentTokenToServer: StateFlow<Boolean>
+    val gcmToken: StateFlow<String?>
+
     suspend fun updateToken(password: String): DataState<Unit>
 
     suspend fun updateTheme(theme: AppTheme): DataState<Unit>
@@ -40,6 +43,10 @@ interface UserPreferencesRepository {
     suspend fun updateProfileImage(image: String): DataState<Unit>
 
     suspend fun updateClientId(clientId: Long?): DataState<Unit>
+
+    suspend fun setSentTokenToServer(sent: Boolean): DataState<Unit>
+
+    suspend fun saveGcmToken(token: String?): DataState<Unit>
 
     suspend fun logOut(): Unit
 }

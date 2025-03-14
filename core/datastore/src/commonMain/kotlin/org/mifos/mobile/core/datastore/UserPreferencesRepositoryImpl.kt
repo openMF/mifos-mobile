@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
@@ -55,6 +56,14 @@ class UserPreferencesRepositoryImpl(
 
     override val profileImage: String?
         get() = preferenceManager.getProfileImage()
+
+    override val sentTokenToServer: StateFlow<Boolean>
+        get() = preferenceManager.settingsInfo.map { it.sentTokenToServer }
+            .stateIn(unconfinedScope, SharingStarted.Eagerly, false)
+
+    override val gcmToken: StateFlow<String?>
+        get() = preferenceManager.settingsInfo.map { it.gcmToken }
+            .stateIn(unconfinedScope, SharingStarted.Eagerly, null)
 
     override suspend fun updateToken(password: String): DataState<Unit> {
         return try {
@@ -105,6 +114,24 @@ class UserPreferencesRepositoryImpl(
         return try {
             val result = preferenceManager.updateClientId(clientId!!)
             DataState.Success(result)
+        } catch (e: Exception) {
+            DataState.Error(e)
+        }
+    }
+
+    override suspend fun setSentTokenToServer(sent: Boolean): DataState<Unit> {
+        return try {
+            preferenceManager.setSentTokenToServer(sent)
+            DataState.Success(Unit)
+        } catch (e: Exception) {
+            DataState.Error(e)
+        }
+    }
+
+    override suspend fun saveGcmToken(token: String?): DataState<Unit> {
+        return try {
+            preferenceManager.saveGcmToken(token)
+            DataState.Success(Unit)
         } catch (e: Exception) {
             DataState.Error(e)
         }
