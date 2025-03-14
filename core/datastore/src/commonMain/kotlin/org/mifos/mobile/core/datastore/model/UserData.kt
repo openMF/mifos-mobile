@@ -15,7 +15,6 @@ import kotlinx.serialization.Serializable
 data class UserData(
     val userId: Long,
     val userName: String,
-    val officeName: String,
     val clientId: Long,
     val isAuthenticated: Boolean,
     val base64EncodedAuthenticationKey: String,
@@ -26,7 +25,6 @@ data class UserData(
             userId = -1,
             userName = "",
             clientId = -1,
-            officeName = "",
             isAuthenticated = false,
             base64EncodedAuthenticationKey = "",
             officeName = "",
