@@ -16,6 +16,17 @@ android {
     namespace = "org.mifos.mobile.feature.notification"
 }
 
-dependencies {
-
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.material3)
+            implementation(compose.foundation)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.jb.kotlin.stdlib)
+            implementation(libs.kotlin.reflect)
+            implementation(projects.core.common)
+        }
+    }
 }

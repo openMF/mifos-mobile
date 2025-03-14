@@ -26,6 +26,7 @@ import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
+import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
 import org.mifos.mobile.feature.savings.di.SavingsModule
@@ -72,6 +73,7 @@ object KoinModules {
             BeneficiaryModule,
             QrModule,
             GuarantorModule,
+            NotificationModule,
         )
     }
     private val LibraryModule = module {
