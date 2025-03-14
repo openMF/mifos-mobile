@@ -68,6 +68,8 @@ class UserPreferencesDataSource(
 
     val appTheme = _settingsInfo.map { it.appTheme }
 
+    val officeName = _userInfo.map { it.officeName }
+
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
             settings.putSettingsPreference(appSettings)
@@ -89,6 +91,7 @@ class UserPreferencesDataSource(
             val updatedClient = userInfo.value.copy(
                 userId = _userInfo.value.userId,
                 userName = _userInfo.value.userName,
+                officeName = _userInfo.value.officeName,
                 clientId = userInfo.value.clientId,
                 isAuthenticated = _userInfo.value.isAuthenticated,
                 base64EncodedAuthenticationKey = authenticationToken,
@@ -104,6 +107,7 @@ class UserPreferencesDataSource(
                 userId = _userInfo.value.userId,
                 userName = _userInfo.value.userName,
                 clientId = clientId,
+                officeName = _userInfo.value.officeName,
                 isAuthenticated = _userInfo.value.isAuthenticated,
                 base64EncodedAuthenticationKey = _userInfo.value.base64EncodedAuthenticationKey,
             )
@@ -137,6 +141,30 @@ class UserPreferencesDataSource(
         withContext(dispatcher) {
             settings.clear()
         }
+    }
+
+    suspend fun setSentTokenToServer(sent: Boolean) {
+        withContext(dispatcher) {
+            val updatedSettings = _settingsInfo.value.copy(sentTokenToServer = sent)
+            settings.putSettingsPreference(updatedSettings)
+            _settingsInfo.value = updatedSettings
+        }
+    }
+
+    fun isSentTokenToServer(): Boolean {
+        return _settingsInfo.value.sentTokenToServer
+    }
+
+    suspend fun saveGcmToken(token: String?) {
+        withContext(dispatcher) {
+            val updatedSettings = _settingsInfo.value.copy(gcmToken = token)
+            settings.putSettingsPreference(updatedSettings)
+            _settingsInfo.value = updatedSettings
+        }
+    }
+
+    fun getGcmToken(): String? {
+        return _settingsInfo.value.gcmToken
     }
 
     companion object {

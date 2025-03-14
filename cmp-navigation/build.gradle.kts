@@ -36,6 +36,7 @@ kotlin {
             implementation(projects.feature.beneficiary)
             implementation(projects.feature.settings)
             implementation(projects.feature.qr)
+            implementation(projects.feature.userProfile)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
