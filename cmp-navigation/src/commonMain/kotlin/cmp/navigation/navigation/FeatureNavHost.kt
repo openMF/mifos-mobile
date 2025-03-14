@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -46,6 +47,9 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
+import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToThirdPartyTransfer
@@ -70,8 +74,8 @@ internal fun FeatureNavHost(
         helpNavGraph(
             findLocations = {},
             navigateBack = appState.navController::popBackStack,
-            callHelpline = {},
-            mailHelpline = {},
+            callHelpline = { callHelpline() },
+            mailHelpline = { mailHelpline() },
         )
         homeNavGraph(
             onNavigate = { handleHomeNavigation(appState.navController, it, onClickLogout) },
@@ -82,15 +86,32 @@ internal fun FeatureNavHost(
         accountsNavGraph(
             navController = appState.navController,
             navigateToLoanApplicationScreen = appState.navController::navigateToLoanApplication,
-            navigateToSavingsApplicationScreen = { },
+            navigateToSavingsApplicationScreen = { appState.navController::navigateToSavingsApplicationScreen },
             navigateToAccountDetail = { accountType, id ->
                 when (accountType) {
-                    AccountType.SAVINGS -> {}
-                    AccountType.LOAN ->
+                    AccountType.SAVINGS -> {
+                        appState.navController.navigateToSavingsDetailScreen(savingsId = id)
+                    }
+                    AccountType.LOAN -> {
                         appState.navController.navigateToLoanDetailScreen(loanId = id)
-
-                    AccountType.SHARE -> {}
+                    }
+                    AccountType.SHARE -> { }
                 }
+            },
+        )
+
+        savingsNavGraph(
+            navController = appState.navController,
+            viewCharges = appState.navController::navigateToClientChargeScreen,
+            viewQrCode = {},
+            callHelpline = { callHelpline() },
+            reviewTransfer = { transferPayload, transferType, transferDestination ->
+                logger.e("$transferPayload $transferType")
+                appState.navController.navigateToTransferProcessScreen(
+                    transferPayload,
+                    transferType,
+                    transferDestination,
+                )
             },
         )
 
