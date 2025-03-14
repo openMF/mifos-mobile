@@ -9,7 +9,7 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
     <string name="user_details">User Details</string>
     <string name="error_fetching_user_profile">Failed to fetch User Profile</string>
     <string name="username">Username</string>

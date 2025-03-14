@@ -18,6 +18,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,8 +45,9 @@ fun UserProfileField(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(top = 16.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
+            .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = stringResource(text),
@@ -68,7 +70,7 @@ fun UserProfileField(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
+            .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
