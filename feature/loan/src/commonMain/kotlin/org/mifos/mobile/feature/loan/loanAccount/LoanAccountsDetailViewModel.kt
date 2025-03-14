@@ -192,8 +192,6 @@ internal class LoanAccountsDetailViewModel(
         }
     }
 
-    // TODO After migrating QR code module to CMP, implement this function and use
-
     private fun getQrString(): String {
         return getAccountDetailsInString(
             accountNumber = state.loanAccountAssociations?.accountNo?.toIntOrNull(),

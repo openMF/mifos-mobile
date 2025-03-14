@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -143,7 +144,7 @@ internal class BeneficiaryApplicationViewModel(
                     ),
                 )
             }
-        }.collect { }
+        }.launchIn(viewModelScope)
     }
 
     private fun updateStateFromResults(
