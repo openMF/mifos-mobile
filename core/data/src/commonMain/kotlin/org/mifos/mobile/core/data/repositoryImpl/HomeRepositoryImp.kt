@@ -39,8 +39,6 @@ class HomeRepositoryImp(
     }
 
     override fun clientImage(clientId: Long): Flow<DataState<String>> {
-//        return dataManager.clientsApi.getClientImage(clientId)
-//            .asDataStateFlow().flowOn(ioDispatcher)
         return dataManager.clientsApi.getClientImage(clientId)
             .asDataStateFlow()
             .map { response ->
