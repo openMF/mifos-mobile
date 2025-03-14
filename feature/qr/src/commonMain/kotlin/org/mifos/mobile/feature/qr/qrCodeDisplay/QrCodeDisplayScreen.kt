@@ -10,17 +10,24 @@
 package org.mifos.mobile.feature.qr.qrCodeDisplay
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -93,10 +100,11 @@ private fun QrCodeDisplayScreen(
 ) {
     val painter = rememberQrCodePainter(
         data = state.qrArgs ?: "",
+        options = QrCodeDisplayState.QrViewState.Content(data = state.qrArgs ?: "").options,
     )
 
     val bytes: ByteArray = remember(painter) {
-        painter.toByteArray(512, 512, ImageFormat.PNG)
+        painter.toByteArray(1024, 1024, ImageFormat.PNG)
     }
     val option = stringResource(Res.string.choose_option)
     MifosScaffold(
@@ -131,7 +139,7 @@ private fun QrCodeDisplayScreen(
                     .padding(paddingValues = paddingValues)
                     .fillMaxSize(),
             ) {
-                QrCodeDisplayContent(qrBitmap = painter)
+                QrCodeDisplayContent(painter = painter)
             }
         },
     )
@@ -143,20 +151,35 @@ private fun QrCodeDisplayScreen(
 
 @Composable
 private fun QrCodeDisplayContent(
-    qrBitmap: Painter,
+    painter: Painter,
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Image(
-            painter = qrBitmap,
-            contentDescription = stringResource(Res.string.qr_code),
-            modifier = Modifier
-                .padding(20.dp)
-                .aspectRatio(1f),
-        )
+        Column(
+            modifier = modifier
+                .size(350.dp, 390.dp)
+                .background(Color.White, shape = RoundedCornerShape(15.dp))
+                .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
+        ) {
+            Text(
+                text = "Mifos Mobile",
+                style = MaterialTheme.typography.titleLarge,
+            )
+
+            Image(
+                painter = painter,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 45.dp)
+                    .size(260.dp),
+            )
+        }
     }
 }
 
