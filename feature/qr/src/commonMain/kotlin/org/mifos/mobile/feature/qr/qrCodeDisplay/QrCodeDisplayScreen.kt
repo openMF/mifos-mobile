@@ -170,7 +170,7 @@ private fun QrCodeDisplayContent(
             Text(
                 text = "Mifos Mobile",
                 style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
+                color = Color.Black,
             )
 
             Image(
