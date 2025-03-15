@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.qr
 
+import android.util.Log
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -38,6 +39,7 @@ class QrCodeAnalyzer(
                         ?.mapNotNull { it.rawValue }
                         ?.joinToString(",")
                         ?.let { rawValue ->
+                            Log.d("Barcode result", rawValue)
                             val isHandled = onScanned(rawValue)
                             if (isHandled) {
                                 scanner.close()

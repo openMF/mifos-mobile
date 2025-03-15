@@ -23,15 +23,19 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 internal class LoanAccountsDetailViewModel(
     private val loanRepositoryImp: LoanRepository,
-    // TODO() this repository injection is for generating QR code by taking user details from datastore
-//    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoanAccountsState, LoanAccountsEvent, LoanAccountAction>(
@@ -51,6 +55,18 @@ internal class LoanAccountsDetailViewModel(
             }
         }
         loadLoanAccountDetails()
+        getUserDetails()
+    }
+
+    private fun getUserDetails() {
+        viewModelScope.launch {
+            userPreferencesRepositoryImpl.userInfo
+                .collect { user ->
+                    updateState {
+                        it.copy(userData = user)
+                    }
+                }
+        }
     }
 
     private fun updateState(update: (LoanAccountsState) -> LoanAccountsState) {
@@ -94,7 +110,8 @@ internal class LoanAccountsDetailViewModel(
             }
 
             LoanAccountAction.ViewQRClicked -> {
-                sendEvent(LoanAccountsEvent.ViewQr(state.loanId))
+                val qrArgs = getQrString()
+                sendEvent(LoanAccountsEvent.ViewQr(qrArgs))
             }
 
             LoanAccountAction.ViewRepaymentScheduleClicked -> {
@@ -175,21 +192,22 @@ internal class LoanAccountsDetailViewModel(
         }
     }
 
-    // TODO After migrating QR code module to CMP, implement this function and use
-
-//    fun getQrString(): String {
-//        return QrCodeGenerator.getAccountDetailsInString(
-//            loanWithAssociations?.accountNo,
-//            preferencesHelper.officeName,
-//            AccountType.LOAN,
-//        )
-//    }
+    private fun getQrString(): String {
+        return getAccountDetailsInString(
+            accountNumber = state.loanAccountAssociations?.accountNo?.toIntOrNull(),
+            officeName = state.userData?.officeName,
+            accountType = AccountType.LOAN.name,
+        )
+    }
 }
 
 @Parcelize
 data class LoanAccountsState(
+    @IgnoredOnParcel
+    val userData: UserData? = null,
     val loanId: Long? = -1L,
     val dialogState: DialogState?,
+    @IgnoredOnParcel
     val loanAccountAssociations: LoanWithAssociations? = null,
     val isOnline: Boolean = false,
 ) : Parcelable {
@@ -218,7 +236,7 @@ sealed interface LoanAccountsEvent {
     data object ViewCharges : LoanAccountsEvent
     data class ViewRepaymentSchedule(val loanId: Long?) : LoanAccountsEvent
     data class ViewTransactions(val loanId: Long?) : LoanAccountsEvent
-    data class ViewQr(val loanId: Long?) : LoanAccountsEvent
+    data class ViewQr(val qrArgs: String) : LoanAccountsEvent
     data class MakePayment(val loanId: Long?, val outStanding: Double, val transferTo: String) :
         LoanAccountsEvent
     data class ShowToast(val message: String) : LoanAccountsEvent

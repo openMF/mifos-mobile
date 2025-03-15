@@ -13,6 +13,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -23,7 +25,6 @@ import mifos_mobile.feature.beneficiary.generated.resources.enter_account_number
 import mifos_mobile.feature.beneficiary.generated.resources.enter_beneficiary_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_office_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_transfer_limit
-import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiary_template
 import mifos_mobile.feature.beneficiary.generated.resources.invalid_amount
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
@@ -65,13 +66,12 @@ internal class BeneficiaryApplicationViewModel(
 
     init {
         viewModelScope.launch {
+            loadBeneficiaryAndTemplate()
             networkMonitor.isOnline.collect { isConnected ->
                 updateState { it.copy(isOnline = isConnected) }
             }
         }
         getTopBarTitle()
-        loadBeneficiary()
-        loadBeneficiaryTemplate()
     }
 
     private fun getTopBarTitle() {
@@ -99,13 +99,21 @@ internal class BeneficiaryApplicationViewModel(
 
     override fun handleAction(action: BeneficiaryApplicationAction) {
         when (action) {
-            BeneficiaryApplicationAction.LoadBeneficiaryTemplate -> loadBeneficiaryTemplate()
+            BeneficiaryApplicationAction.LoadBeneficiaryTemplate -> {
+                viewModelScope.launch {
+                    loadBeneficiaryAndTemplate()
+                }
+            }
             is BeneficiaryApplicationAction.SubmitBeneficiary -> submitBeneficiary(action.payload)
             BeneficiaryApplicationAction.OnNavigate -> sendEvent(
                 BeneficiaryApplicationEvent.Navigate,
             )
 
-            BeneficiaryApplicationAction.OnRetry -> loadBeneficiaryTemplate()
+            BeneficiaryApplicationAction.OnRetry -> {
+                viewModelScope.launch {
+                    loadBeneficiaryAndTemplate()
+                }
+            }
 
             is BeneficiaryApplicationAction.OnFieldChange -> onFieldChange(
                 accountType = action.accountType,
@@ -117,64 +125,50 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
-    private fun loadBeneficiary() {
-        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-        viewModelScope.launch {
-            beneficiaryRepositoryImp.beneficiaryList().catch { e ->
-                updateState {
-                    it.copy(
-                        dialogState = BeneficiaryApplicationState.DialogState.Error(
-                            e.message.toString(),
-                        ),
-                    )
-                }
-            }.collect { beneficiaryList ->
-                processBeneficiaryList(beneficiaryList)
+    private suspend fun loadBeneficiaryAndTemplate() {
+        combine(
+            beneficiaryRepositoryImp.beneficiaryList(),
+            beneficiaryRepositoryImp.beneficiaryTemplate(),
+        ) { beneficiaryList, beneficiaryTemplate ->
+            logger.d {
+                "KtorClient getting in function ${beneficiaryList.data} and beneficiary " +
+                    "${beneficiaryTemplate.data}"
             }
-        }
+            updateStateFromResults(beneficiaryList, beneficiaryTemplate)
+        }.catch { error ->
+            updateState {
+                it.copy(
+                    dialogState =
+                    BeneficiaryApplicationState.DialogState.Error(
+                        error.message ?: "An error occurred",
+                    ),
+                )
+            }
+        }.launchIn(viewModelScope)
     }
-    private fun processBeneficiaryList(response: DataState<List<Beneficiary>>) {
-        when (response) {
-            DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-            is DataState.Success -> {
+
+    private fun updateStateFromResults(
+        beneficiaryList: DataState<List<Beneficiary>>,
+        beneficiaryTemplate: DataState<BeneficiaryTemplate>,
+    ) {
+        when {
+            beneficiaryList is DataState.Loading || beneficiaryTemplate is DataState.Loading -> {
+                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Loading) }
+            }
+            beneficiaryList is DataState.Error || beneficiaryTemplate is DataState.Error -> {
+                val error = (beneficiaryList as? DataState.Error)?.exception?.message
+                    ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
+                    ?: "An error occurred"
+                logger.d { "KtorClient error $error" }
+                val errorMessage = "An error occurred"
+                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Error(errorMessage)) }
+            }
+            beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
                 updateState { currentState ->
                     currentState.copy(
                         dialogState = null,
-                        beneficiary = response.data.find { it.id == currentState.beneficiaryId },
-                    )
-                }
-            }
-            is DataState.Error -> {
-                setDialogState(BeneficiaryApplicationState.DialogState.Error(response.message))
-            }
-        }
-    }
-
-    private fun loadBeneficiaryTemplate() {
-        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-        viewModelScope.launch {
-            val errorMsg = getString(Res.string.error_fetching_beneficiary_template)
-            beneficiaryRepositoryImp.beneficiaryTemplate()
-                .catch { e ->
-                    logger.d { "KtorClient in loading template ${e.message}" }
-                    setDialogState(BeneficiaryApplicationState.DialogState.Error(errorMsg))
-                }
-                .collect { template ->
-                    logger.d { "KtorClient in success loading template $template" }
-                    processBeneficiaryTemplate(template)
-                }
-        }
-    }
-
-    private fun processBeneficiaryTemplate(response: DataState<BeneficiaryTemplate>) {
-        when (response) {
-            DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-            is DataState.Error -> setDialogState(BeneficiaryApplicationState.DialogState.Error(response.message))
-            is DataState.Success -> {
-                updateState {
-                    it.copy(
-                        dialogState = null,
-                        template = response.data,
+                        beneficiary = beneficiaryList.data.find { it.id == currentState.beneficiaryId },
+                        template = beneficiaryTemplate.data,
                     )
                 }
             }

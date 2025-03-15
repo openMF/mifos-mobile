@@ -100,7 +100,7 @@ private fun BeneficiaryApplicationScreen(
                 modifier = Modifier
                     .padding(paddingValues = paddingValues),
             ) {
-                if (state.template != null) {
+                if (state.template != null && state.beneficiary != null) {
                     BeneficiaryApplicationContent(
                         state = state,
                         onAction = onAction,

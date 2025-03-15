@@ -36,6 +36,7 @@ kotlin {
             implementation(libs.filekit.compose)
             api(libs.kermit.logging)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.qrose)
         }
 
         androidMain.dependencies {
