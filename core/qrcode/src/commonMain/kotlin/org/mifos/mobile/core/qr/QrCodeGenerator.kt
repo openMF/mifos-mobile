@@ -14,13 +14,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 
-/**
- * Generate a QR Code and return platform-specific representation.
- * @param str Data to be stored in QR Code.
- * @return Platform-specific QR Code representation.
- */
-expect fun generateQrCode(str: String): ImageBitmap?
-
 expect fun decodeQrCode(bitmap: ImageBitmap): String?
 
 fun getAccountDetailsInString(

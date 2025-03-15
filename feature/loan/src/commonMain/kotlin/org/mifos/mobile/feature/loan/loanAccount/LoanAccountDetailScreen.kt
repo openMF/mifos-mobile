@@ -83,7 +83,9 @@ internal fun LoanAccountDetailScreen(
                 )
             }
             is LoanAccountsEvent.ViewLoanSummary -> state.loanId?.let { viewLoanSummary(it) }
-            is LoanAccountsEvent.ViewQr -> viewQr(state.loanId.toString())
+            is LoanAccountsEvent.ViewQr -> {
+                viewQr(event.qrArgs)
+            }
             is LoanAccountsEvent.ViewRepaymentSchedule -> state.loanId?.let {
                 viewRepaymentSchedule(it)
             }
