@@ -30,3 +30,6 @@ kotlin {
         }
     }
 }
+dependencies {
+    implementation(project(":feature:savings-account"))
+}

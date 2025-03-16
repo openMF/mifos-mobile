@@ -64,10 +64,16 @@ internal class NotificationViewModel(
                             NotificationUiState.Loading
                         }
                         is DataState.Success -> {
-                            val sortedNotifications = sortNotifications(notifications.data)
-                            _isRefreshing.emit(false)
-                            _notificationUiState.value =
-                                NotificationUiState.Success(notifications = sortedNotifications)
+                            if (notifications.data.isEmpty()){
+                                NotificationUiState.Empty
+                            }
+                            else{
+                                val sortedNotifications = sortNotifications(notifications.data)
+                                _isRefreshing.emit(false)
+                                _notificationUiState.value =
+                                    NotificationUiState.Success(notifications = sortedNotifications)
+                            }
+
                         }
                     }
                 }
@@ -94,8 +100,9 @@ internal class NotificationViewModel(
     }
 }
 
-internal sealed class NotificationUiState {
-    data object Loading : NotificationUiState()
-    data class Success(val notifications: List<MifosNotification>) : NotificationUiState()
-    data class Error(val errorMessage: String?) : NotificationUiState()
+internal sealed interface NotificationUiState {
+    data object Loading : NotificationUiState
+    data class Success(val notifications: List<MifosNotification>) : NotificationUiState
+    data class Error(val errorMessage: String?) : NotificationUiState
+    data object Empty : NotificationUiState
 }
