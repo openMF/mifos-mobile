@@ -102,26 +102,25 @@ private fun NotificationScreen(
                     }
 
                     is NotificationUiState.Success -> {
-                            NotificationContent(
-                                isRefreshing = isRefreshing,
-                                notifications = uiState.notifications,
-                                dismissNotification = dismissNotification,
-                                onRefresh = onRefresh,
-                            )
+                        NotificationContent(
+                            isRefreshing = isRefreshing,
+                            notifications = uiState.notifications,
+                            dismissNotification = dismissNotification,
+                            onRefresh = onRefresh,
+                        )
                     }
 
-
-                   is NotificationUiState.Empty->{
-                       EmptyDataView(
-                           image = mifos_mobile.feature.notification.generated.resources
-                               .Res.drawable.ic_notifications,
-                           error = Res.string.no_notification,
-                           modifier = Modifier.fillMaxSize(),
-                       )
-                   }
+                    is NotificationUiState.Empty -> {
+                        EmptyDataView(
+                            image = mifos_mobile.feature.notification.generated.resources
+                                .Res.drawable.ic_notifications,
+                            error = Res.string.no_notification,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                 }
             }
-        }
+        },
     )
 }
 

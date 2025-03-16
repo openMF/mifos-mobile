@@ -64,16 +64,14 @@ internal class NotificationViewModel(
                             NotificationUiState.Loading
                         }
                         is DataState.Success -> {
-                            if (notifications.data.isEmpty()){
+                            if (notifications.data.isEmpty()) {
                                 NotificationUiState.Empty
-                            }
-                            else{
+                            } else {
                                 val sortedNotifications = sortNotifications(notifications.data)
                                 _isRefreshing.emit(false)
                                 _notificationUiState.value =
                                     NotificationUiState.Success(notifications = sortedNotifications)
                             }
-
                         }
                     }
                 }
