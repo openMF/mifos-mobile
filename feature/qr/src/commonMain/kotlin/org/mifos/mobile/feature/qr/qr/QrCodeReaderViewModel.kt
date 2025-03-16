@@ -45,7 +45,7 @@ class QrCodeReaderViewModel : BaseViewModel<QrCodeReaderState, QrCodeReaderEvent
         val errorMsg = "Error reading QR code"
         val invalidQr = "Invalid QR code"
         return try {
-            val trimmedData = data.trim()
+            val trimmedData = data.trim().removeSurrounding("{", "}")
 
             if (trimmedData.startsWith("{") && trimmedData.endsWith("}")) {
                 val beneficiary = parseBeneficiaryFromJson(trimmedData)

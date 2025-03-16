@@ -118,10 +118,10 @@ class LoginViewModel(
         return UserData(
             userId = this.userId,
             userName = this.username ?: "",
-            officeName = this.officeName ?: "",
             clientId = this.userId,
             isAuthenticated = this.isAuthenticated,
             base64EncodedAuthenticationKey = this.base64EncodedAuthenticationKey ?: "",
+            officeName = this.officeName ?: "",
         )
     }
 

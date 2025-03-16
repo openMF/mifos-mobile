@@ -7,10 +7,15 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.qr.qrCodeDisplay
+package org.mifos.mobile.core.ui.utils
 
 import androidx.compose.ui.graphics.ImageBitmap
 
-actual fun share(qrBitmap: ImageBitmap, string: String) {
-    TODO("Not yet implemented")
+expect object ShareUtils {
+
+    fun shareText(text: String)
+
+    suspend fun shareImage(title: String, image: ImageBitmap)
+
+    suspend fun shareImage(title: String, byte: ByteArray)
 }
