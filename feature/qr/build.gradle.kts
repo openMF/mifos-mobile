@@ -30,6 +30,7 @@ kotlin {
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.qrose)
         }
 
         androidMain.dependencies {
