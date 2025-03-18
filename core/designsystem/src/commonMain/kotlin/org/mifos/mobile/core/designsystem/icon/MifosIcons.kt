@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
-import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
@@ -93,7 +92,6 @@ object MifosIcons {
     val NavigationDrawer = Icons.Default.Menu
 
     // Recently added
-    val ArrowBack2 = Icons.Filled.ChevronLeft
     val Back = Icons.AutoMirrored.Outlined.ArrowBack
     val Home = Icons.Outlined.Home
     val HomeBoarder = Icons.Rounded.Home
