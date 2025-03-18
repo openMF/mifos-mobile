@@ -48,7 +48,7 @@ fun MifosTopBar(
                 onClick = backPress,
             ) {
                 Icon(
-                    imageVector = MifosIcons.ArrowBack2,
+                    imageVector = MifosIcons.ArrowBack,
                     contentDescription = "Back",
                 )
             }
