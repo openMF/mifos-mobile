@@ -41,6 +41,8 @@ import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
+import org.mifos.mobile.feature.notification.navigation.notificationNavGraph
 import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
@@ -195,7 +197,7 @@ internal fun FeatureNavHost(
                     .navigateToBeneficiaryApplicationScreen(beneficiary, beneficiaryState)
             },
         )
-
+        notificationNavGraph(navigateBack = appState.navController::popBackStack)
         userProfileNavGraph(
             navigateBack = { appState.navController.popBackStack() },
             navigateToChangePassword = { appState.navController::navigateToUpdatePassword.invoke() },
@@ -228,7 +230,7 @@ fun handleHomeNavigation(
         HomeDestinations.TRANSFER -> {}
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> {}
-        HomeDestinations.NOTIFICATIONS -> {}
+        HomeDestinations.NOTIFICATIONS -> navController.navigateToNotificationScreen()
         HomeDestinations.PROFILE -> navController.navigateToUserProfile()
     }
 }
