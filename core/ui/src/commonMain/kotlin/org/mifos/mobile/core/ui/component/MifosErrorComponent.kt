@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -161,6 +162,8 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
             text = if (isEmptyData) message else stringResource(Res.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.error
+
         )
     }
 }
