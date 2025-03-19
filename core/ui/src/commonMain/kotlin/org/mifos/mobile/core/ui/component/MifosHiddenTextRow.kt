@@ -82,7 +82,6 @@ fun MifosHiddenTextRow(
                     painterResource(visibilityOffIconId)
                 },
                 contentDescription = "Show or hide total amount",
-                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }

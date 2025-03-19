@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
@@ -99,7 +98,6 @@ private fun GuarantorListScreen(
                 Icon(
                     imageVector = MifosIcons.Add,
                     contentDescription = null,
-                    tint = Color.White,
                 )
             },
             contentColor = MaterialTheme.colorScheme.primary,
@@ -160,12 +158,10 @@ private fun GuarantorListItem(
                 Text(
                     text = guarantor.firstname + " " + guarantor.lastname,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = guarantor.guarantorType?.value ?: "",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         },

@@ -206,7 +206,6 @@ private fun LoginScreenContent(
             Text(
                 text = stringResource(Res.string.login).uppercase(),
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
             )
         }
 
@@ -226,7 +225,6 @@ private fun LoginScreenContent(
                 modifier = Modifier.padding(8.dp),
                 text = "or",
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface,
             )
             HorizontalDivider(
                 modifier = Modifier

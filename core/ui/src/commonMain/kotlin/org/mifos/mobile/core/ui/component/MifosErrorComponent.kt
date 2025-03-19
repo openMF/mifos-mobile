@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -155,14 +154,12 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
                 .padding(bottom = 12.dp),
             imageVector = if (isEmptyData) icon else MifosIcons.Info,
             contentDescription = "Info Icon",
-            tint = MaterialTheme.colorScheme.onSecondary,
         )
 
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = if (isEmptyData) message else stringResource(Res.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center,
         )
     }

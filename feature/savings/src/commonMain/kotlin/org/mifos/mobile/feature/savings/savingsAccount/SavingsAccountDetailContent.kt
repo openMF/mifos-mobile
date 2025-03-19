@@ -113,7 +113,6 @@ internal fun SavingsAccountDetailContent(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
                 text = stringResource(Res.string.need_help),
             )
             Spacer(modifier = Modifier.width(5.dp))

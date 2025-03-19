@@ -50,7 +50,6 @@ import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDrawableSingleLine
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
@@ -102,9 +101,7 @@ private fun LoanAccountSummaryScreen(
         backPress = { (onAction(LoanAccountSummaryAction.BackPress)) },
     ) {
         Box(modifier = Modifier.padding(it)) {
-            if (state.loanAccountAssociations == null) {
-                MifosProgressIndicator()
-            } else {
+            state.loanAccountAssociations?.let {
                 LoanAccountSummaryContent(
                     state = state,
                     modifier = modifier,

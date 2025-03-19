@@ -49,13 +49,11 @@ internal fun ReviewLoanApplicationContent(
         Text(
             text = data.loanName ?: "",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Text(
             text = data.accountNo ?: "",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
         )
 
         MifosTextTitleDescDoubleLine(

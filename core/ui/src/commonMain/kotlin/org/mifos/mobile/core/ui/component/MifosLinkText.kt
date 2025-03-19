@@ -30,7 +30,6 @@ fun MifosLinkText(
     Text(
         text = text,
         style = MaterialTheme.typography.bodyMedium.copy(
-            color = MaterialTheme.colorScheme.primary,
             textDecoration = if (isUnderlined) TextDecoration.Underline else null,
         ),
         modifier = modifier

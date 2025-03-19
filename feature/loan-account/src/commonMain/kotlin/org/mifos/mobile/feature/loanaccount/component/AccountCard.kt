@@ -61,14 +61,12 @@ fun AccountCard(
                         Text(
                             text = it,
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                     if (accountStatus != null) {
                         Text(
                             text = accountStatus,
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }

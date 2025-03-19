@@ -51,14 +51,12 @@ fun EmptyDataView(
                 .padding(bottom = 12.dp),
             imageVector = icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSecondary,
         )
 
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = errorString ?: stringResource(error),
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center,
         )
     }
