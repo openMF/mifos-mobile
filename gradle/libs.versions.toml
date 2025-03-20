@@ -23,6 +23,7 @@ androidxUiAutomator = "2.3.0"
 annotation = "1.9.1"
 appcompatVersion = "1.7.0"
 cameraCoreVersion = "1.3.4"
+maplibreGlVersion = "9.6.1"
 mlkit="17.3.0"
 guavaVersion = "33.3.1-android"
 cameraxVersion = "1.4.1"
@@ -139,6 +140,7 @@ androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", 
 androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraxVersion" }
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraxVersion" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraxVersion" }
+maplibre-gl = { module = "org.maplibre.gl:maplibre-gl", version.ref = "maplibreGlVersion" }
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit" }
 guava = { module = "com.google.guava:guava", version.ref = "guavaVersion" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }

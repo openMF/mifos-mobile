@@ -30,5 +30,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.google.map.compose)
         }
+        desktopMain.dependencies {
+
+        }
     }
 }
