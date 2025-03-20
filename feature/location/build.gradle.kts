@@ -8,15 +8,27 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.mifos.android.feature)
-    alias(libs.plugins.mifos.android.library.compose)
+    alias(libs.plugins.mifos.cmp.feature)
 }
 
 android {
     namespace = "org.mifos.mobile.feature.location"
 }
 
-dependencies {
-    // google maps
-    implementation(libs.google.map.compose)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            api(libs.kermit.logging)
+            implementation(compose.material3)
+            implementation(compose.foundation)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.jb.kotlin.stdlib)
+            implementation(libs.kotlin.reflect)
+        }
+        androidMain.dependencies {
+            implementation(libs.google.map.compose)
+        }
+    }
 }

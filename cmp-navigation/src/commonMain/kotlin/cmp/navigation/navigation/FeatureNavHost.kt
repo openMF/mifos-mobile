@@ -41,6 +41,8 @@ import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loan.navigation.loanNavGraph
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanApplication
 import org.mifos.mobile.feature.loan.navigation.navigateToLoanDetailScreen
+import org.mifos.mobile.feature.location.navigation.locationsNavGraph
+import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationNavGraph
 import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
@@ -76,7 +78,7 @@ internal fun FeatureNavHost(
         modifier = modifier,
     ) {
         helpNavGraph(
-            findLocations = {},
+            findLocations = appState.navController::navigateToLocationsScreen,
             navigateBack = appState.navController::popBackStack,
             callHelpline = { callHelpline() },
             mailHelpline = { mailHelpline() },
@@ -185,6 +187,8 @@ internal fun FeatureNavHost(
             changePassword = {},
             languageChanged = {},
         )
+
+        locationsNavGraph()
 
         guarantorNavGraph(
             navController = appState.navController,
