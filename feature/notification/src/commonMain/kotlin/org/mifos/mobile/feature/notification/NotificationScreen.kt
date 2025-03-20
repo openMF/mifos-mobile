@@ -112,8 +112,7 @@ private fun NotificationScreen(
 
                     is NotificationUiState.Empty -> {
                         EmptyDataView(
-                            image = mifos_mobile.feature.notification.generated.resources
-                                .Res.drawable.ic_notifications,
+                            image = Res.drawable.ic_notifications,
                             error = Res.string.no_notification,
                             modifier = Modifier.fillMaxSize(),
                         )
