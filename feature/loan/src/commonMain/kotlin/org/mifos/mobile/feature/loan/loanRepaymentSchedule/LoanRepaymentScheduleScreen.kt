@@ -120,13 +120,11 @@ private fun LoanRepaymentScheduleScreen(
                 .fillMaxSize()
                 .padding(contentPadding),
         ) {
-            if (state.loanWithAssociations == null) {
-                MifosProgressIndicator()
-            } else {
-                LoanRepaymentScheduleCard(state.loanWithAssociations)
-                state.loanWithAssociations.repaymentSchedule?.periods?.let {
+            state.loanWithAssociations?.let {
+                LoanRepaymentScheduleCard(it)
+                it.repaymentSchedule?.periods?.let { periodsList ->
                     RepaymentScheduleTable(
-                        periods = it,
+                        periods = periodsList,
                         currency = state.loanWithAssociations.currency?.displaySymbol ?: "",
                     )
                 }

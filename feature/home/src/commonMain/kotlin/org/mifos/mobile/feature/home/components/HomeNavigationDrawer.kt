@@ -83,7 +83,6 @@ internal fun HomeNavigationDrawer(
                                         Icon(
                                             imageVector = item.imageVector,
                                             contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.primary,
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Text(text = stringResource(item.nameResId))

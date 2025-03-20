@@ -40,7 +40,7 @@ fun MifosTabPager(
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[currentPage])
-                        .padding(start = 36.dp, end = 36.dp),
+                        .padding(start = 16.dp, end = 16.dp),
                 )
             },
         ) {

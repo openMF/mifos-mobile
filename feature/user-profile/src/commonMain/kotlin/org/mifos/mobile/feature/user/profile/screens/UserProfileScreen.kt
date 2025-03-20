@@ -162,6 +162,7 @@ private fun UserProfileContent(
             MifosUserImage(
                 bitmap = state.profileImage,
                 modifier = Modifier.size(100.dp),
+                username = state.client?.displayName,
             )
         }
         HorizontalDivider()

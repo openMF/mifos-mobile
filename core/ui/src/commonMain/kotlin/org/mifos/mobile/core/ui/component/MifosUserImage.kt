@@ -10,9 +10,7 @@
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,8 +45,7 @@ fun MifosUserImage(
     } else {
         Image(
             modifier = modifier
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary),
+                .clip(CircleShape),
             painter = painter,
             contentDescription = "Profile Image",
             contentScale = ContentScale.Crop,

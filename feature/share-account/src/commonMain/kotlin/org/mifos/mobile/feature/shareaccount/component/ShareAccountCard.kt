@@ -61,7 +61,6 @@ fun ShareAccountCard(
                     Text(
                         text = it,
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
 
@@ -73,12 +72,10 @@ fun ShareAccountCard(
                         Text(
                             text = statusDescription,
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(
                             text = " ${shareAccount.totalPendingForApprovalShares}",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
                         )
                     }
 
@@ -87,13 +84,11 @@ fun ShareAccountCard(
                             Text(
                                 text = stringResource(resource = Res.string.feature_account_approved),
                                 style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                             Text(
                                 modifier = Modifier.padding(end = 12.dp),
                                 text = " ${shareAccount.totalApprovedShares}",
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
                             )
                         }
                     }

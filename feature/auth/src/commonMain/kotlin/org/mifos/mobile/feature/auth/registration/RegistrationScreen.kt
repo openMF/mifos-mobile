@@ -26,7 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -314,7 +313,6 @@ private fun RegistrationScreenContent(
         ) {
             Text(
                 text = stringResource(Res.string.verification_mode),
-                color = MaterialTheme.colorScheme.onSurface,
             )
             radioOptions.forEach { authMode ->
                 RadioButton(
@@ -323,7 +321,6 @@ private fun RegistrationScreenContent(
                 )
                 Text(
                     text = authMode,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }

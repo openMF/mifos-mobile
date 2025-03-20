@@ -44,7 +44,6 @@ fun MifosSearchTextField(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = Color.DarkGray,
             )
         },
         onValueChange = onValueChange,

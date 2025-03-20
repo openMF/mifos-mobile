@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.accounts.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -120,8 +119,7 @@ internal fun AccountsScreenTopBar(
                     modifier = Modifier
                         .padding(end = 40.dp)
                         .height(52.dp)
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.background),
+                        .fillMaxWidth(),
                     onSearchDismiss = {
                         query = TextFieldValue("")
                         closeSearch.invoke()

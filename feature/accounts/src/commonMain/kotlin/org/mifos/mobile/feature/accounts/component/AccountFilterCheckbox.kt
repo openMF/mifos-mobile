@@ -89,7 +89,6 @@ private fun AccountCheckBoxItem(
         Text(
             text = checkboxStatus.statusLabel?.let { stringResource(it) } ?: "",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }
