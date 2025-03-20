@@ -46,4 +46,4 @@ internal fun LocationsScreen(
 }
 
 @Composable
-expect fun RenderMap(modifier: Modifier= Modifier)
+expect fun RenderMap(modifier: Modifier = Modifier)
