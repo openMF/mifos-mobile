@@ -38,6 +38,7 @@ kotlin {
             implementation(projects.feature.qr)
             implementation(projects.feature.notification)
             implementation(projects.feature.userProfile)
+            implementation(projects.feature.location)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

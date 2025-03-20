@@ -53,24 +53,24 @@ internal class NotificationViewModel(
         viewModelScope.launch {
             notificationRepositoryImp.loadNotifications()
                 .catch {
+                    _isRefreshing.emit(false)
                     _notificationUiState.value =
                         NotificationUiState.Error(errorMessage = it.message)
                 }.collect { notifications ->
                     when (notifications) {
                         is DataState.Error -> {
-                            NotificationUiState.Error(notifications.message)
+                            _notificationUiState.value =
+                                NotificationUiState.Error(notifications.message)
                         }
                         DataState.Loading -> {
-                            NotificationUiState.Loading
+                            Loading
                         }
                         is DataState.Success -> {
-                            if (notifications.data.isEmpty()) {
+                            _isRefreshing.emit(false)
+                            _notificationUiState.value = if (notifications.data.isEmpty()) {
                                 NotificationUiState.Empty
                             } else {
-                                val sortedNotifications = sortNotifications(notifications.data)
-                                _isRefreshing.emit(false)
-                                _notificationUiState.value =
-                                    NotificationUiState.Success(notifications = sortedNotifications)
+                                NotificationUiState.Success(notifications = sortNotifications(notifications.data))
                             }
                         }
                     }
