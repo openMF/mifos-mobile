@@ -51,7 +51,6 @@ internal fun GuarantorDetailTopBar(
                 Icon(
                     imageVector = MifosIcons.ArrowBack,
                     contentDescription = "Back Arrow",
-                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
         },
@@ -63,7 +62,6 @@ internal fun GuarantorDetailTopBar(
                 Icon(
                     imageVector = MifosIcons.MoreVert,
                     contentDescription = "Menu",
-                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
 

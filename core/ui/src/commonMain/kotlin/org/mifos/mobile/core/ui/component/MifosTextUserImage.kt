@@ -9,10 +9,8 @@
  */
 package org.mifos.mobile.core.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,7 +36,6 @@ fun MifosTextUserImage(
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .background(color = MaterialTheme.colorScheme.primary)
             .onGloballyPositioned { coordinates ->
                 boxSize = Size(
                     coordinates.size.width.toFloat(),
@@ -49,7 +46,6 @@ fun MifosTextUserImage(
     ) {
         Text(
             text = text,
-            color = MaterialTheme.colorScheme.onPrimary,
             fontSize = with(LocalDensity.current) {
                 (min(boxSize.width, boxSize.height) / 2).toSp()
             },

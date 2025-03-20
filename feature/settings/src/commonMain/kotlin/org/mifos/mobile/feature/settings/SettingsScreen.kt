@@ -189,7 +189,6 @@ private fun SettingsCards(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp),
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f),
                 )
             }
         }
@@ -229,7 +228,6 @@ private fun SettingsCardItem(
                 Text(
                     modifier = Modifier.padding(end = 16.dp),
                     text = stringResource(details),
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }

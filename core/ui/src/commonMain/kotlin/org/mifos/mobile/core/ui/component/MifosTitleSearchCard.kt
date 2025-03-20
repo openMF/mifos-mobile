@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,7 +56,6 @@ fun MifosTitleSearchCard(
         ) {
             Text(
                 text = stringResource(titleResourceId),
-                color = MaterialTheme.colorScheme.onSurface,
                 style = TextStyle(fontSize = 24.sp),
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
@@ -67,7 +65,6 @@ fun MifosTitleSearchCard(
                 Icon(
                     imageVector = MifosIcons.Search,
                     contentDescription = "Search Icon",
-                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }

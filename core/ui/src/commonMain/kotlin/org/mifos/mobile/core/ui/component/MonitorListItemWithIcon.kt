@@ -57,13 +57,11 @@ fun MonitorListItemWithIcon(
             Text(
                 text = stringResource(titleId),
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.fillMaxWidth(),
             )
             Text(
                 text = stringResource(subTitleId),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .alpha(0.7f)
                     .fillMaxWidth(),

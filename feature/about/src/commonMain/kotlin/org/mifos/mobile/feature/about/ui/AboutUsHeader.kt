@@ -47,7 +47,6 @@ internal fun AboutUsHeader(
         Text(
             text = stringResource(resource = Res.string.feature_about_app_name),
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,7 +56,6 @@ internal fun AboutUsHeader(
         Text(
             text = stringResource(resource = Res.string.feature_about_description),
             style = MaterialTheme.typography.titleSmall.copy(),
-            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

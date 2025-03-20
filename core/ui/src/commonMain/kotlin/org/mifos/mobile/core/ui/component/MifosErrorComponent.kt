@@ -155,15 +155,15 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
                 .padding(bottom = 12.dp),
             imageVector = if (isEmptyData) icon else MifosIcons.Info,
             contentDescription = "Info Icon",
-            tint = MaterialTheme.colorScheme.onSecondary,
         )
 
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = if (isEmptyData) message else stringResource(Res.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
-            color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.error,
+
         )
     }
 }

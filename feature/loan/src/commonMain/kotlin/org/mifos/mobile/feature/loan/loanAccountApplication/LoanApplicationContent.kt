@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.loan.loanAccountApplication
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -131,7 +130,6 @@ internal fun LoanApplicationContent(
     Column(
         modifier = Modifier
             .verticalScroll(scrollState)
-            .background(color = MaterialTheme.colorScheme.background)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {

@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -154,14 +152,10 @@ private fun AccountsScreenContent(
                         1 -> navigateToLoanApplicationScreen()
                     }
                 },
-                colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                ),
             ) {
                 Icon(
                     imageVector = MifosIcons.Add,
                     contentDescription = "Create Account",
-                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         },

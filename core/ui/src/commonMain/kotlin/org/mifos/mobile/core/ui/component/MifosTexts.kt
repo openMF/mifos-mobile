@@ -47,7 +47,6 @@ fun MifosTextTitleDescSingleLine(
     ) {
         Text(
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = title,
             modifier = Modifier
                 .alpha(0.7f),
@@ -55,7 +54,6 @@ fun MifosTextTitleDescSingleLine(
 
         Text(
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = description,
         )
     }
@@ -72,7 +70,6 @@ fun MifosTextTitleDescDoubleLine(
         Text(
             text = title,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .alpha(0.7f)
                 .fillMaxWidth(),
@@ -80,7 +77,6 @@ fun MifosTextTitleDescDoubleLine(
         Text(
             text = description,
             style = descriptionStyle,
-            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.fillMaxWidth(),
         )
     }
@@ -102,7 +98,6 @@ fun MifosTextTitleDescDrawableSingleLine(
     ) {
         Text(
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = title,
             modifier = Modifier
                 .weight(1f)
@@ -110,7 +105,6 @@ fun MifosTextTitleDescDrawableSingleLine(
         )
         Text(
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = description,
         )
         Spacer(modifier = Modifier.width(5.dp))
@@ -137,7 +131,6 @@ fun MifosTitleDescSingleLineEqual(
     ) {
         Text(
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = title,
             modifier = Modifier
                 .alpha(0.7f)
@@ -146,7 +139,6 @@ fun MifosTitleDescSingleLineEqual(
 
         Text(
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
             text = description,
             modifier = Modifier.weight(1f),
         )

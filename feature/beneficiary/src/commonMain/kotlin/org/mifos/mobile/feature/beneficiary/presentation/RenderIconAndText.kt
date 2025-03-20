@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +51,6 @@ internal fun RenderIconAndText(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
-            tint = MaterialTheme.colorScheme.onSurface,
             painter = painterResource(image),
             contentDescription = iconDescription,
             modifier = Modifier
