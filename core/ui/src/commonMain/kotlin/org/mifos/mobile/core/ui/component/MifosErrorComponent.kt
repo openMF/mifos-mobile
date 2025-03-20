@@ -162,7 +162,7 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
             text = if (isEmptyData) message else stringResource(Res.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.error
+            color = MaterialTheme.colorScheme.error,
 
         )
     }
