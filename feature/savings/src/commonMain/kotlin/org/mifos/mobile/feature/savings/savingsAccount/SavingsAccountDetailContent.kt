@@ -77,7 +77,7 @@ internal fun SavingsAccountDetailContent(
     makeTransfer: () -> Unit,
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
-    viewQrCode: (SavingsWithAssociations) -> Unit,
+    viewQrCode: () -> Unit,
     callUs: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -105,7 +105,7 @@ internal fun SavingsAccountDetailContent(
         SavingsMonitorComponent(
             viewTransaction = viewTransaction,
             viewCharges = viewCharges,
-            viewQrCode = { viewQrCode.invoke(savingsAccount) },
+            viewQrCode = viewQrCode,
         )
 
         Spacer(modifier = Modifier.height(20.dp))

@@ -21,6 +21,8 @@ import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
+import org.mifos.mobile.core.common.Constants.TRANSFER_TARGET
 import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
@@ -37,12 +39,16 @@ fun NavController.navigateToSavingsMakeTransfer(
     accountId: Long,
     outstandingBalance: Double? = null,
     transferType: String,
+    transferTarget: TransferType,
+    transferSuccessDestination: TransferSuccessDestination,
 ) {
     navigate(
         SavingsNavigation.SavingsMakeTransfer.passArguments(
-            accountId,
-            (outstandingBalance ?: 0.0).toString(),
-            transferType,
+            accountId = accountId,
+            outstandingBalance = (outstandingBalance ?: 0.0).toString(),
+            transferType = transferType,
+            transferTarget = transferTarget,
+            transferSuccessDestination = transferSuccessDestination,
         ),
     )
 }
@@ -63,7 +69,7 @@ fun NavController.navigateToSavingsApplicationScreen() {
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
-    viewCharges: (ChargeType) -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     callHelpline: () -> Unit,
 ) {
@@ -77,12 +83,16 @@ fun NavGraphBuilder.savingsNavGraph(
                 navController.navigateToSavingsMakeTransfer(
                     accountId = it,
                     transferType = TRANSFER_PAY_TO,
+                    transferTarget = TransferType.TPT,
+                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
                 )
             },
             makeTransfer = {
                 navController.navigateToSavingsMakeTransfer(
                     accountId = it,
                     transferType = TRANSFER_PAY_FROM,
+                    transferTarget = TransferType.TPT,
+                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
                 )
             },
             navigateBack = navController::popBackStack,
@@ -94,7 +104,7 @@ fun NavGraphBuilder.savingsNavGraph(
                     ),
                 )
             },
-            viewCharges = { viewCharges(ChargeType.SAVINGS) },
+            viewCharges = { _, chargeTypeId -> viewCharges(ChargeType.SAVINGS, chargeTypeId) },
             viewQrCode = viewQrCode,
             viewTransaction = {
                 navController.navigate(
@@ -134,7 +144,7 @@ fun NavGraphBuilder.savingsDetailRoute(
     withdrawSavingsAccount: (Long) -> Unit,
     makeTransfer: (Long) -> Unit,
     viewTransaction: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQrCode: (String) -> Unit,
     callUs: () -> Unit,
     deposit: (Long) -> Unit,
@@ -217,6 +227,10 @@ fun NavGraphBuilder.savingsMakeTransfer(
                 defaultValue = null
             },
             navArgument(name = TRANSFER_TYPE) { type = NavType.StringType },
+            navArgument(name = TRANSFER_TARGET) { type = NavType.StringType },
+            navArgument(name = TRANSFER_SUCCESS_DESTINATION) {
+                type = NavType.StringType
+            },
         ),
     ) {
         SavingsMakeTransferScreen(

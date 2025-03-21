@@ -20,7 +20,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
+import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -44,17 +47,23 @@ internal class SavingsMakeTransferViewModel(
     val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
 
     private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
-        key = Constants.TRANSFER_TYPE,
+        key = TRANSFER_TYPE,
         initialValue = TRANSFER_PAY_TO,
     )
 
     val transferSuccessDestination: StateFlow<TransferSuccessDestination> = savedStateHandle.getStateFlow(
-        key = Constants.TRANSFER_SUCCESS_DESTINATION,
+        key = TRANSFER_SUCCESS_DESTINATION,
+        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT.name,
+    ).map {
+        TransferSuccessDestination.valueOf(it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
         initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
     )
 
     private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(
-        key = Constants.OUTSTANDING_BALANCE,
+        key = OUTSTANDING_BALANCE,
         initialValue = null,
     ).map { balanceString ->
         balanceString?.toDoubleOrNull() ?: 0.0

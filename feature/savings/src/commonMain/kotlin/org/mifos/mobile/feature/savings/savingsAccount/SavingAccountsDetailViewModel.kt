@@ -16,10 +16,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.active
 import mifos_mobile.feature.savings.generated.resources.closed
@@ -30,18 +33,36 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 
-// TODO: getQrString should be implemented once QR module is finished
 internal class SavingAccountsDetailViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-//    private var preferencesHelper: UserPreferencesDataSource,
+    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : ViewModel() {
 
     val savingsId =
         savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
+
+    private val _userDetailsState = MutableStateFlow<UserData?>(null)
+    val userDetailsState: StateFlow<UserData?> get() = _userDetailsState
+
+    init {
+        getUserDetails()
+    }
+
+    private fun getUserDetails() {
+        viewModelScope.launch {
+            userPreferencesRepositoryImpl.userInfo.collect { user ->
+                _userDetailsState.value = user
+            }
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val savingAccountsDetailUiState = savingsId
@@ -70,13 +91,20 @@ internal class SavingAccountsDetailViewModel(
             initialValue = SavingsAccountDetailUiState.Loading,
         )
 
-//    fun getQrString(savingsWithAssociations: SavingsWithAssociations?): String {
-//        return QrCodeGenerator.getAccountDetailsInString(
-//            savingsWithAssociations?.accountNo,
-//            preferencesHelper.officeName,
-//            AccountType.SAVINGS,
-//        )
-//    }
+    fun getQrString(): String {
+        val state = savingAccountsDetailUiState.value
+        val userDetails = userDetailsState.value
+
+        return if (state is SavingsAccountDetailUiState.Success && userDetails != null) {
+            getAccountDetailsInString(
+                state.savingAccount.id?.toInt(),
+                userDetails.officeName,
+                AccountType.SAVINGS.name,
+            )
+        } else {
+            ""
+        }
+    }
 }
 
 internal sealed class SavingsAccountDetailUiState {

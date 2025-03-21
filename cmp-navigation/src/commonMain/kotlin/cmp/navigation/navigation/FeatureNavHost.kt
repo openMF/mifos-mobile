@@ -16,10 +16,12 @@ import androidx.navigation.compose.NavHost
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
@@ -53,6 +55,7 @@ import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTr
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.savingsNavGraph
 import org.mifos.mobile.feature.settings.navigation.navigateToSettings
 import org.mifos.mobile.feature.settings.navigation.settingsNavGraph
@@ -108,8 +111,10 @@ internal fun FeatureNavHost(
 
         savingsNavGraph(
             navController = appState.navController,
-            viewCharges = appState.navController::navigateToClientChargeScreen,
-            viewQrCode = {},
+            viewCharges = { chargeType, chargeTypeId ->
+                appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
+            },
+            viewQrCode = { appState.navController.navigateToQrDisplayScreen(it) },
             callHelpline = { callHelpline() },
             reviewTransfer = { transferPayload, transferType, transferDestination ->
                 logger.e("$transferPayload $transferType")
@@ -132,7 +137,15 @@ internal fun FeatureNavHost(
             viewCharges = { chargeType, chargeTypeId ->
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
             },
-            makePayment = { _, _, _, _ -> },
+            makePayment = { accountId, outstandingBalance, transferType, transferDestination ->
+                appState.navController.navigateToSavingsMakeTransfer(
+                    accountId,
+                    outstandingBalance,
+                    transferType,
+                    transferSuccessDestination = transferDestination,
+                    transferTarget = TransferType.SELF,
+                )
+            },
         )
 
         clientChargeNavGraph(
@@ -231,7 +244,14 @@ fun handleHomeNavigation(
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
         HomeDestinations.SHARE -> {}
         HomeDestinations.APP_INFO -> {}
-        HomeDestinations.TRANSFER -> {}
+        HomeDestinations.TRANSFER -> {
+            navController.navigateToSavingsMakeTransfer(
+                accountId = 1,
+                transferType = TRANSFER_PAY_TO,
+                transferTarget = TransferType.SELF,
+                transferSuccessDestination = TransferSuccessDestination.HOME,
+            )
+        }
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
         HomeDestinations.SURVEY -> {}
         HomeDestinations.NOTIFICATIONS -> navController.navigateToNotificationScreen()

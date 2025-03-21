@@ -21,7 +21,7 @@ import mifos_mobile.feature.savings.generated.resources.approval_pending
 import mifos_mobile.feature.savings.generated.resources.ic_assignment_turned_in_black_24dp
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -33,7 +33,7 @@ internal fun SavingsAccountDetailScreen(
     withdrawSavingsAccount: (Long) -> Unit,
     makeTransfer: (Long) -> Unit,
     viewTransaction: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQrCode: (String) -> Unit,
     callUs: () -> Unit,
     deposit: (Long) -> Unit,
@@ -51,9 +51,13 @@ internal fun SavingsAccountDetailScreen(
         withdrawSavingsAccount = { withdrawSavingsAccount(savingsId) },
         makeTransfer = { makeTransfer(savingsId) },
         viewTransaction = { viewTransaction(savingsId) },
-        viewCharges = viewCharges,
-//        viewQrCode = { viewQrCode(viewModel.getQrString(null)) },  should be used once QR migration is done
-        viewQrCode = { viewQrCode("") },
+        viewCharges = {
+            viewCharges(
+                ChargeType.SAVINGS,
+                savingsId,
+            )
+        },
+        viewQrCode = { viewQrCode(viewModel.getQrString()) },
         callUs = callUs,
         deposit = { deposit(savingsId) },
     )
@@ -68,7 +72,7 @@ private fun SavingsAccountDetailScreen(
     makeTransfer: () -> Unit,
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
-    viewQrCode: (SavingsWithAssociations) -> Unit,
+    viewQrCode: () -> Unit,
     callUs: () -> Unit,
     deposit: () -> Unit,
     modifier: Modifier = Modifier,
