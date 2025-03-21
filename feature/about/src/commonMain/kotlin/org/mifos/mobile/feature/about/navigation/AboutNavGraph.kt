@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
-import org.mifos.mobile.feature.about.openUrl
+import org.mifos.mobile.core.ui.utils.ShareUtils.openUrl
 import org.mifos.mobile.feature.about.ui.AboutUsScreen
 import org.mifos.mobile.feature.about.ui.PrivacyPolicyScreen
 
