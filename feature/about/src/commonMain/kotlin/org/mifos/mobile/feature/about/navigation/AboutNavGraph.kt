@@ -32,6 +32,7 @@ fun NavGraphBuilder.aboutUsNavGraph(
         route = AboutUsNavigation.AboutUsBase.route,
     ) {
         aboutUsScreenRoute(
+            navigateBack = navController::popBackStack,
             navigateToPrivacyPolicy = {
                 navController.navigate(AboutUsNavigation.PrivacyPolicyScreen.route)
             },
@@ -45,6 +46,7 @@ fun NavGraphBuilder.aboutUsNavGraph(
 }
 
 fun NavGraphBuilder.aboutUsScreenRoute(
+    navigateBack: () -> Unit,
     navigateToPrivacyPolicy: () -> Unit,
     navigateToOssLicense: () -> Unit,
 ) {
@@ -52,6 +54,7 @@ fun NavGraphBuilder.aboutUsScreenRoute(
         route = AboutUsNavigation.AboutUsScreen.route,
     ) {
         AboutUsScreen(
+            navigateBack = navigateBack,
             navigateToItem = {
                 navigateToItem(
                     aboutUsItem = it.itemId,
