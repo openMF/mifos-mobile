@@ -13,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import cmp.navigation.callHelpline
-import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -24,11 +22,17 @@ import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
+import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
+import org.mifos.mobile.core.ui.utils.ShareUtils.openAppInfo
+import org.mifos.mobile.core.ui.utils.ShareUtils.ossLicensesMenuActivity
+import org.mifos.mobile.core.ui.utils.ShareUtils.shareApp
 import org.mifos.mobile.feature.about.navigation.aboutUsNavGraph
 import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
+import org.mifos.mobile.feature.auth.navigation.navigateToLoginScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
@@ -130,7 +134,10 @@ internal fun FeatureNavHost(
             },
         )
 
-        aboutUsNavGraph(navController = appState.navController, navigateToOssLicense = { })
+        aboutUsNavGraph(
+            navController = appState.navController,
+            navigateToOssLicense = { ossLicensesMenuActivity() },
+        )
 
         recentTransactionNavGraph(appState.navController)
 
@@ -206,10 +213,10 @@ internal fun FeatureNavHost(
 
         settingsNavGraph(
             navigateBack = { appState.navController.popBackStack() },
-            navigateToLoginScreen = {},
-            changePasscode = { appState.navController::navigateToUpdatePassword },
-            changePassword = {},
-            languageChanged = {},
+            navigateToLoginScreen = { appState.navController::navigateToLoginScreen.invoke() },
+            changePasscode = { },
+            changePassword = { appState.navController::navigateToUpdatePassword.invoke() },
+            languageChanged = { },
         )
 
         locationsNavGraph()
@@ -253,8 +260,8 @@ fun handleHomeNavigation(
 
         HomeDestinations.ABOUT_US -> navController.navigateToAboutUsScreen()
         HomeDestinations.HELP -> navController.navigateToHelpScreen()
-        HomeDestinations.SHARE -> {}
-        HomeDestinations.APP_INFO -> {}
+        HomeDestinations.SHARE -> shareApp()
+        HomeDestinations.APP_INFO -> openAppInfo()
         HomeDestinations.TRANSFER -> {
             val args = TransferArgs(
                 transferPayloadJson = Json.encodeToString(

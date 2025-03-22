@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+
 }
 
 android {
@@ -26,6 +27,7 @@ kotlin{
             api(libs.androidx.metrics)
             implementation(libs.androidx.compose.runtime)
             implementation(libs.accompanist.pager)
+            implementation(libs.google.oss.licenses)
         }
         commonMain.dependencies {
             api(projects.core.designsystem)
