@@ -16,6 +16,7 @@ import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import org.mifos.mobile.core.ui.utils.ShareUtils.openUrl
 
 @Composable
 actual fun MifosWebView(

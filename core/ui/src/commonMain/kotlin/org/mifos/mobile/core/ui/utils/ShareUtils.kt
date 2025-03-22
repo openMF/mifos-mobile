@@ -18,4 +18,16 @@ expect object ShareUtils {
     suspend fun shareImage(title: String, image: ImageBitmap)
 
     suspend fun shareImage(title: String, byte: ByteArray)
+
+    fun openAppInfo()
+
+    fun shareApp()
+
+    fun callHelpline()
+
+    fun mailHelpline()
+
+    fun openUrl(url: String)
+
+    fun ossLicensesMenuActivity()
 }
