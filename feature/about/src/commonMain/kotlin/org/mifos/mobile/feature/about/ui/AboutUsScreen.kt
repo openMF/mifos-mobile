@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.about.generated.resources.Res
+import mifos_mobile.feature.about.generated.resources.feature_about_about_us
 import mifos_mobile.feature.about.generated.resources.feature_about_app_version
 import mifos_mobile.feature.about.generated.resources.feature_about_copyright_mifos
 import mifos_mobile.feature.about.generated.resources.feature_about_law_icon
@@ -32,6 +35,8 @@ import mifos_mobile.feature.about.generated.resources.feature_about_sources
 import mifos_mobile.feature.about.generated.resources.feature_about_website
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopBarTitleComposable
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
@@ -41,39 +46,56 @@ import org.mifos.mobile.feature.about.AboutUsItem
 
 @Composable
 internal fun AboutUsScreen(
+    navigateBack: () -> Unit,
     navigateToItem: (AboutUsItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val currentYear = remember { DateHelper.currentDate.year }
     val aboutUsItems = remember { getAboutUsItems() }
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-    ) {
-        item {
-            Spacer(modifier = Modifier.height(48.dp))
-            AboutUsHeader()
-        }
-
-        items(items = aboutUsItems, key = { item -> item.itemId }) { item ->
-            MifosItemCard(
-                modifier = Modifier.padding(bottom = 8.dp),
-                onClick = { navigateToItem(item) },
+    MifosScaffold(
+        topBar = {
+            MifosTopBarTitleComposable(
+                navigateBack = navigateBack,
+                title = {
+                    Text(
+                        stringResource(Res.string.feature_about_about_us),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                },
+            )
+        },
+        content = {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
             ) {
-                AboutUsItemCard(
-                    title = if (item.itemId == AboutUsListItemId.LICENSES_STRING_WITH_VALUE) {
-                        stringResource(item.title).replace("%1\$s", currentYear.toString())
-                    } else {
-                        stringResource(item.title)
-                    },
-                    subtitle = item.subtitle,
-                    iconUrl = item.iconUrl,
-                )
+                item {
+                    Spacer(modifier = Modifier.height(48.dp))
+                    AboutUsHeader()
+                }
+
+                items(items = aboutUsItems, key = { item -> item.itemId }) { item ->
+                    MifosItemCard(
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        onClick = { navigateToItem(item) },
+                    ) {
+                        AboutUsItemCard(
+                            title = if (item.itemId == AboutUsListItemId.LICENSES_STRING_WITH_VALUE) {
+                                stringResource(item.title).replace("%1\$s", currentYear.toString())
+                            } else {
+                                stringResource(item.title)
+                            },
+                            subtitle = item.subtitle,
+                            iconUrl = item.iconUrl,
+                        )
+                    }
+                }
             }
-        }
-    }
+        },
+        modifier = modifier,
+    )
 }
 
 private fun getAboutUsItems(): List<AboutUsItem> {
@@ -115,6 +137,7 @@ private fun getAboutUsItems(): List<AboutUsItem> {
 fun AboutScreenPreview() {
     MifosMobileTheme {
         AboutUsScreen(
+            navigateBack = {},
             navigateToItem = {},
         )
     }
