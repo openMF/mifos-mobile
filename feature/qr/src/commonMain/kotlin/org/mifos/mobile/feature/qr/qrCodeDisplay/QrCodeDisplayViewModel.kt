@@ -35,7 +35,7 @@ import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.ui.utils.ShareUtils
+import org.mifos.mobile.core.ui.utils.ShareUtils.shareImage
 import org.mifos.mobile.feature.qr.navigation.QR_ARGS
 
 internal class QrCodeDisplayViewModel(
@@ -77,7 +77,7 @@ internal class QrCodeDisplayViewModel(
             is QrCodeDisplayAction.ShareQrCode -> {
                 viewModelScope.launch {
                     logger.d { "Sharing QR Code: ${action.option}, size: ${action.qrBitmap.size} bytes" }
-                    ShareUtils.shareImage(
+                    shareImage(
                         action.option,
                         action.qrBitmap,
                     )
