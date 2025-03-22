@@ -19,17 +19,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
-import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
-import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.feature.savings.navigation.AccountDetails
+import org.mifos.mobile.feature.savings.navigation.SAVINGS_MAKE_TRANSFER_ARGS
+import org.mifos.mobile.feature.savings.navigation.TransferArgs
 
 internal class SavingsMakeTransferViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
@@ -44,34 +43,58 @@ internal class SavingsMakeTransferViewModel(
             initialValue = false,
         )
 
-    val accountId = savedStateHandle.getStateFlow(key = Constants.ACCOUNT_ID, initialValue = -1L)
-
-    private val transferType: StateFlow<String> = savedStateHandle.getStateFlow(
-        key = TRANSFER_TYPE,
-        initialValue = TRANSFER_PAY_TO,
-    )
-
-    val transferSuccessDestination: StateFlow<TransferSuccessDestination> = savedStateHandle.getStateFlow(
-        key = TRANSFER_SUCCESS_DESTINATION,
-        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT.name,
-    ).map {
-        TransferSuccessDestination.valueOf(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
-    )
-
-    private val outstandingBalance: StateFlow<Double?> = savedStateHandle.getStateFlow<String?>(
-        key = OUTSTANDING_BALANCE,
+    private val transferArgsJson: StateFlow<String?> = savedStateHandle.getStateFlow(
+        key = SAVINGS_MAKE_TRANSFER_ARGS,
         initialValue = null,
-    ).map { balanceString ->
-        balanceString?.toDoubleOrNull() ?: 0.0
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = 0.0,
     )
+
+    private val transferArgs: StateFlow<TransferArgs?> = transferArgsJson
+        .map { json -> json?.let { TransferArgs.fromJson(it) } }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null,
+        )
+
+    private val transferPayload: StateFlow<AccountDetails?> = transferArgs
+        .map { it?.transferPayload }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null,
+        )
+
+    private val accountId: StateFlow<Long> = transferPayload
+        .map { it?.accountId ?: -1L }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = -1L,
+        )
+
+    private val transferType: StateFlow<String> = transferPayload
+        .map { it?.transferType ?: TRANSFER_PAY_TO }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = TRANSFER_PAY_TO,
+        )
+
+    val transferSuccessDestination: StateFlow<TransferSuccessDestination> = transferPayload
+        .map { it?.transferSuccessDestination ?: TransferSuccessDestination.SAVINGS_ACCOUNT }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT,
+        )
+
+    private val outstandingBalance: StateFlow<Double?> = transferPayload
+        .map { it?.outstandingBalance ?: 0.0 }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = 0.0,
+        )
 
     private val _savingsMakeTransferUiData = MutableStateFlow(SavingsMakeTransferUiData())
     val savingsMakeTransferUiData: StateFlow<SavingsMakeTransferUiData> get() = _savingsMakeTransferUiData

@@ -16,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import cmp.navigation.callHelpline
 import cmp.navigation.mailHelpline
 import cmp.navigation.ui.AppState
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
@@ -53,6 +55,8 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.savings.navigation.AccountDetails
+import org.mifos.mobile.feature.savings.navigation.TransferArgs
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsApplicationScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsDetailScreen
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
@@ -138,12 +142,19 @@ internal fun FeatureNavHost(
                 appState.navController.navigateToClientChargeScreen(chargeType, chargeTypeId)
             },
             makePayment = { accountId, outstandingBalance, transferType, transferDestination ->
+                val args = TransferArgs(
+                    transferPayloadJson = Json.encodeToString(
+                        AccountDetails(
+                            accountId = accountId,
+                            outstandingBalance = outstandingBalance,
+                            transferType = transferType,
+                            transferTarget = TransferType.SELF,
+                            transferSuccessDestination = transferDestination,
+                        ),
+                    ),
+                )
                 appState.navController.navigateToSavingsMakeTransfer(
-                    accountId,
-                    outstandingBalance,
-                    transferType,
-                    transferSuccessDestination = transferDestination,
-                    transferTarget = TransferType.SELF,
+                    args,
                 )
             },
         )
@@ -245,11 +256,18 @@ fun handleHomeNavigation(
         HomeDestinations.SHARE -> {}
         HomeDestinations.APP_INFO -> {}
         HomeDestinations.TRANSFER -> {
+            val args = TransferArgs(
+                transferPayloadJson = Json.encodeToString(
+                    AccountDetails(
+                        accountId = 1,
+                        transferType = TRANSFER_PAY_TO,
+                        transferTarget = TransferType.SELF,
+                        transferSuccessDestination = TransferSuccessDestination.HOME,
+                    ),
+                ),
+            )
             navController.navigateToSavingsMakeTransfer(
-                accountId = 1,
-                transferType = TRANSFER_PAY_TO,
-                transferTarget = TransferType.SELF,
-                transferSuccessDestination = TransferSuccessDestination.HOME,
+                args,
             )
         }
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()

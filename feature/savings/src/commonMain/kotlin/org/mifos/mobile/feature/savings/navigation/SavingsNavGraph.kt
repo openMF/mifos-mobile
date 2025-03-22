@@ -15,15 +15,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.Constants.ACCOUNT_ID
-import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
-import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
-import org.mifos.mobile.core.common.Constants.TRANSFER_TARGET
-import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -36,19 +34,11 @@ import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWit
 import org.mifos.mobile.feature.savings.savingsMakeTransfer.SavingsMakeTransferScreen
 
 fun NavController.navigateToSavingsMakeTransfer(
-    accountId: Long,
-    outstandingBalance: Double? = null,
-    transferType: String,
-    transferTarget: TransferType,
-    transferSuccessDestination: TransferSuccessDestination,
+    args: TransferArgs,
 ) {
     navigate(
         SavingsNavigation.SavingsMakeTransfer.passArguments(
-            accountId = accountId,
-            outstandingBalance = (outstandingBalance ?: 0.0).toString(),
-            transferType = transferType,
-            transferTarget = transferTarget,
-            transferSuccessDestination = transferSuccessDestination,
+            args = args,
         ),
     )
 }
@@ -80,19 +70,33 @@ fun NavGraphBuilder.savingsNavGraph(
         savingsDetailRoute(
             callUs = callHelpline,
             deposit = {
+                val args = TransferArgs(
+                    transferPayloadJson = Json.encodeToString(
+                        AccountDetails(
+                            accountId = it,
+                            transferType = TRANSFER_PAY_TO,
+                            transferTarget = TransferType.TPT,
+                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                        ),
+                    ),
+                )
                 navController.navigateToSavingsMakeTransfer(
-                    accountId = it,
-                    transferType = TRANSFER_PAY_TO,
-                    transferTarget = TransferType.TPT,
-                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                    args,
                 )
             },
             makeTransfer = {
+                val args = TransferArgs(
+                    transferPayloadJson = Json.encodeToString(
+                        AccountDetails(
+                            accountId = it,
+                            transferType = TRANSFER_PAY_FROM,
+                            transferTarget = TransferType.TPT,
+                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                        ),
+                    ),
+                )
                 navController.navigateToSavingsMakeTransfer(
-                    accountId = it,
-                    transferType = TRANSFER_PAY_FROM,
-                    transferTarget = TransferType.TPT,
-                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                    args,
                 )
             },
             navigateBack = navController::popBackStack,
@@ -219,24 +223,39 @@ fun NavGraphBuilder.savingsMakeTransfer(
 ) {
     composable(
         route = SavingsNavigation.SavingsMakeTransfer.route,
-        arguments = listOf(
-            navArgument(name = ACCOUNT_ID) { type = NavType.LongType },
-            navArgument(name = OUTSTANDING_BALANCE) {
-                type = NavType.StringType
-                nullable = true
-                defaultValue = null
-            },
-            navArgument(name = TRANSFER_TYPE) { type = NavType.StringType },
-            navArgument(name = TRANSFER_TARGET) { type = NavType.StringType },
-            navArgument(name = TRANSFER_SUCCESS_DESTINATION) {
-                type = NavType.StringType
-            },
-        ),
-    ) {
-        SavingsMakeTransferScreen(
-            navigateBack = navigateBack,
-            onCancelledClicked = navigateBack,
-            reviewTransfer = reviewTransfer,
-        )
+        arguments = listOf(navArgument(SAVINGS_MAKE_TRANSFER_ARGS) { type = NavType.StringType }),
+    ) { backStackEntry ->
+        val jsonArgs = backStackEntry.arguments?.getString(SAVINGS_MAKE_TRANSFER_ARGS)
+        val loanReviewArgs = jsonArgs?.let { TransferArgs.fromJson(it) }
+        loanReviewArgs?.let {
+            SavingsMakeTransferScreen(
+                navigateBack = navigateBack,
+                onCancelledClicked = navigateBack,
+                reviewTransfer = reviewTransfer,
+            )
+        }
+    }
+}
+
+@Serializable
+data class AccountDetails(
+    val accountId: Long,
+    val outstandingBalance: Double? = null,
+    val transferType: String,
+    val transferTarget: TransferType,
+    val transferSuccessDestination: TransferSuccessDestination,
+)
+
+@Serializable
+data class TransferArgs(
+    val transferPayloadJson: String?,
+) {
+    val transferPayload: AccountDetails?
+        get() = transferPayloadJson?.let { Json.decodeFromString<AccountDetails>(it) }
+
+    fun toJson(): String = Json.encodeToString(this)
+
+    companion object {
+        fun fromJson(json: String): TransferArgs = Json.decodeFromString(json)
     }
 }
