@@ -9,10 +9,10 @@
  */
 package org.mifos.mobile.core.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +36,7 @@ fun AboutUsItemCard(
         modifier = modifier.padding(16.dp),
     ) {
         iconUrl?.let { painterResource(it) }?.let {
-            Image(
+            Icon(
                 painter = it,
                 contentDescription = "About Us Icon URL",
                 modifier = Modifier.padding(end = 8.dp),
