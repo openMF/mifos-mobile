@@ -98,7 +98,11 @@ fun MifosTopBarTitle(
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(stringResource(topBarTitleResId)) },
+        title = {
+            Text(stringResource(topBarTitleResId),
+                style = MaterialTheme.typography.titleMedium
+            )
+                },
         navigationIcon = {
             IconButton(
                 onClick = navigateBack,
