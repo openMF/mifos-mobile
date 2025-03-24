@@ -41,12 +41,12 @@ internal fun PrivacyPolicyScreen(
         backPress = navigateBack,
         modifier = modifier,
         content = {
-            padding->
+                padding ->
             WebView(
                 url = stringResource(Res.string.feature_about_policy_url),
                 isLoading = isLoading,
                 onLoadingChange = { isLoading = it },
-                modifier = Modifier.padding(padding)
+                modifier = Modifier.padding(padding),
             )
         },
     )

@@ -41,9 +41,10 @@ internal fun HomeTopBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(Res.string.home),
+            Text(
+                text = stringResource(Res.string.home),
                 style = MaterialTheme.typography.titleMedium,
-                )
+            )
         },
         actions = {
             IconButton(

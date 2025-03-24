@@ -48,9 +48,12 @@ internal fun LoanAccountDetailTopBar(
 
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(Res.string.loan_account_details),
-            style = MaterialTheme.typography.titleMedium,
-            ) },
+        title = {
+            Text(
+                text = stringResource(Res.string.loan_account_details),
+                style = MaterialTheme.typography.titleMedium,
+            )
+        },
         navigationIcon = {
             IconButton(
                 onClick = navigateBack,

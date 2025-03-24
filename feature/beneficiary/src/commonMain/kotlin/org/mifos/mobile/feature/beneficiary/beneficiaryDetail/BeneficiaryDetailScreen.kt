@@ -178,9 +178,11 @@ private fun BeneficiaryDetailTopAppBar(
 
     TopAppBar(
         title = {
-            Text(text = stringResource(Res.string.beneficiary_detail),
-            style = MaterialTheme.typography.titleMedium,)
-                },
+            Text(
+                text = stringResource(Res.string.beneficiary_detail),
+                style = MaterialTheme.typography.titleMedium,
+            )
+        },
         modifier = modifier,
         navigationIcon = {
             IconButton(onClick = { navigateBack.invoke() }) {
