@@ -10,9 +10,7 @@
 package org.mifos.mobile.feature.about.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.about.generated.resources.Res
 import mifos_mobile.feature.about.generated.resources.feature_about_policy_url
 import mifos_mobile.feature.about.generated.resources.feature_about_privacy_policy
@@ -58,7 +55,6 @@ private fun WebView(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(20.dp))
         MifosWebView(
             htmlContent = url,
             onLoadingChange = onLoadingChange,
