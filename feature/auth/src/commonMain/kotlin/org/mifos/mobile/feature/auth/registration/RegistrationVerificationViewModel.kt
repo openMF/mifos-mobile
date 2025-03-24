@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.auth.registration
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
@@ -80,14 +81,17 @@ class RegistrationVerificationViewModel(
         when (val result = action.registerResult) {
             is DataState.Success -> {
                 updateState { it.copy(dialogState = null) }
-                sendEvent(VerificationEvent.NavigateToLogin(result.data))
+                viewModelScope.launch {
+                    delay(1500)
+                    sendEvent(VerificationEvent.NavigateToLogin(result.data))
+                }
             }
 
             is DataState.Error -> {
                 updateState {
                     it.copy(
                         dialogState = VerificationState.VerificationDialog.Error(
-                            result.exception.message ?: "An error occurred.",
+                            result.message,
                         ),
                     )
                 }
@@ -109,21 +113,21 @@ class RegistrationVerificationViewModel(
 
     private fun verifyUser() {
         viewModelScope.launch {
+            val msg = getString(Res.string.verified)
             val errorMessage = validateForm()
             if (errorMessage != null) {
                 sendEvent(VerificationEvent.ShowToast(errorMessage))
             } else {
                 try {
-                    userAuthRepositoryImpl.verifyUser(
+                    val response = userAuthRepositoryImpl.verifyUser(
                         authenticationToken =
                         state.authenticationToken,
                         requestId = state.requestId,
                     )
-
-                    sendEvent(VerificationEvent.ShowToast(Res.string.verified.toString()))
+                    sendEvent(VerificationEvent.ShowToast(msg))
                     sendAction(
                         VerificationAction.Internal.ReceiveRegisterResult(
-                            DataState.Success(Res.string.verified.toString()),
+                            response,
                         ),
                     )
                 } catch (e: Exception) {
