@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.register
 
+import kotlinx.serialization.Serializable
+
 /**
  * Created by dilpreet on 31/7/17.
  */
-
+@Serializable
 data class UserVerify(
     val requestId: String? = null,
     val authenticationToken: String? = null,
