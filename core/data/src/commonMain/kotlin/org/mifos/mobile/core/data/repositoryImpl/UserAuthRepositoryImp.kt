@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.payload.LoginPayload
@@ -46,17 +47,20 @@ class UserAuthRepositoryImp(
             password = password,
             username = username,
         )
-        return try {
-            withContext(ioDispatcher) {
-                val result = dataManager.registrationApi.registerUser(registerPayload)
-                val errorMessage = result.bodyAsText()
-                when (result.status.value) {
-                    200 -> DataState.Success("User registered Successfully")
-                    else -> DataState.Error(Exception("Error in registering user: $errorMessage"), null)
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.registrationApi.registerUser(registerPayload)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
                 }
+                DataState.Success(response.bodyAsText())
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
@@ -87,20 +91,20 @@ class UserAuthRepositoryImp(
             authenticationToken = authenticationToken,
             requestId = requestId,
         )
-        return try {
-            withContext(ioDispatcher) {
-                val result = dataManager.registrationApi.verifyUser(userVerify)
-                val errorMessage = result.bodyAsText()
-                when (result.status.value) {
-                    200 -> DataState.Success("User Verified Successfully")
-                    else -> DataState.Error(
-                        Exception("Error in verifying user: $errorMessage"),
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.registrationApi.verifyUser(userVerify)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
                         null,
                     )
                 }
+                DataState.Success("User Verified Successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 

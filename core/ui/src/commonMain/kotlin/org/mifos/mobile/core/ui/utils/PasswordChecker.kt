@@ -13,7 +13,7 @@ import kotlin.math.log2
 import kotlin.math.pow
 
 object PasswordChecker {
-    private const val MIN_PASSWORD_LENGTH = 8
+    private const val MIN_PASSWORD_LENGTH = 12
     private const val STRONG_PASSWORD_LENGTH = 12
     private const val MIN_ENTROPY_BITS = 60.0
     private const val MAX_PASSWORD_LENGTH = 128
