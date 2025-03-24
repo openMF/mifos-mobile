@@ -13,14 +13,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,6 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -163,7 +160,6 @@ private fun BeneficiaryDetailScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BeneficiaryDetailTopAppBar(
     navigateBack: () -> Unit,
@@ -176,22 +172,9 @@ private fun BeneficiaryDetailTopAppBar(
         mutableStateOf(false)
     }
 
-    TopAppBar(
-        title = {
-            Text(
-                text = stringResource(Res.string.beneficiary_detail),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
-        modifier = modifier,
-        navigationIcon = {
-            IconButton(onClick = { navigateBack.invoke() }) {
-                Icon(
-                    imageVector = MifosIcons.ArrowBack,
-                    contentDescription = "Back Arrow",
-                )
-            }
-        },
+    MifosTopBar(
+        backPress = navigateBack,
+        topBarTitle = stringResource(Res.string.beneficiary_detail),
         actions = {
             IconButton(
                 onClick = { openDropdown = updateDropdownValue.invoke(!openDropdown) },
@@ -201,7 +184,6 @@ private fun BeneficiaryDetailTopAppBar(
                     contentDescription = "More",
                 )
             }
-
             DropdownMenu(
                 expanded = openDropdown,
                 onDismissRequest = {
@@ -224,7 +206,7 @@ private fun BeneficiaryDetailTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(),
+        modifier = modifier,
     )
 }
 

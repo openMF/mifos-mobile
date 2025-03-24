@@ -11,13 +11,9 @@ package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,9 +25,9 @@ import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
 import mifos_mobile.feature.guarantor.generated.resources.guarantor_details
 import mifos_mobile.feature.guarantor.generated.resources.update_guarantor
 import org.jetbrains.compose.resources.stringResource
+import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GuarantorDetailTopBar(
     navigateBack: () -> Unit,
@@ -41,27 +37,10 @@ internal fun GuarantorDetailTopBar(
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
 
-    TopAppBar(
+    MifosTopBar(
         modifier = modifier,
-        title = {
-            Text(
-                text = stringResource(Res.string.guarantor_details),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
-        navigationIcon = {
-            IconButton(
-                onClick = { navigateBack.invoke() },
-            ) {
-                Icon(
-                    imageVector = MifosIcons.ArrowBack,
-                    contentDescription = "Back Arrow",
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-        ),
+        topBarTitle = stringResource(Res.string.guarantor_details),
+        backPress = navigateBack,
         actions = {
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(
@@ -69,7 +48,6 @@ internal fun GuarantorDetailTopBar(
                     contentDescription = "Menu",
                 )
             }
-
             DropdownMenu(
                 expanded = showMenu,
                 onDismissRequest = { showMenu = false },
