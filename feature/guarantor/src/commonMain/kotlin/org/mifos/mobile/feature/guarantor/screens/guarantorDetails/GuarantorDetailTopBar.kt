@@ -43,7 +43,9 @@ internal fun GuarantorDetailTopBar(
 
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(Res.string.guarantor_details)) },
+        title = { Text(text = stringResource(Res.string.guarantor_details),
+            style = MaterialTheme.typography.titleMedium,
+            ) },
         navigationIcon = {
             IconButton(
                 onClick = { navigateBack.invoke() },

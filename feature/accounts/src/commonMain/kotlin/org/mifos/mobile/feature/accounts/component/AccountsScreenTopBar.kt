@@ -31,6 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_account_title
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosSearchTextField
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
@@ -80,8 +83,8 @@ internal fun AccountsScreenTopBar(
             contentAlignment = Alignment.CenterStart,
         ) {
             Text(
-                text = "Accounts",
-                style = MaterialTheme.typography.titleLarge,
+                text = stringResource(Res.string.feature_account_title),
+                style = MaterialTheme.typography.titleMedium,
             )
 
             Row(

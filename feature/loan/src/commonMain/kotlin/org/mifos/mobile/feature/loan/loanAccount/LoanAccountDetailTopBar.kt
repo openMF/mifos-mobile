@@ -15,6 +15,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -47,7 +48,9 @@ internal fun LoanAccountDetailTopBar(
 
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(Res.string.loan_account_details)) },
+        title = { Text(text = stringResource(Res.string.loan_account_details),
+            style = MaterialTheme.typography.titleMedium,
+            ) },
         navigationIcon = {
             IconButton(
                 onClick = navigateBack,

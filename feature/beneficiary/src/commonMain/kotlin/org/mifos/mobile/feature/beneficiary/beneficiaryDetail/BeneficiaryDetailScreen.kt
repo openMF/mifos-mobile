@@ -16,6 +16,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -176,7 +177,10 @@ private fun BeneficiaryDetailTopAppBar(
     }
 
     TopAppBar(
-        title = { Text(text = stringResource(Res.string.beneficiary_detail)) },
+        title = {
+            Text(text = stringResource(Res.string.beneficiary_detail),
+            style = MaterialTheme.typography.titleMedium,)
+                },
         modifier = modifier,
         navigationIcon = {
             IconButton(onClick = { navigateBack.invoke() }) {
