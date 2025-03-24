@@ -91,7 +91,7 @@ class RegistrationVerificationViewModel(
                 updateState {
                     it.copy(
                         dialogState = VerificationState.VerificationDialog.Error(
-                            //result.exception.message ?: "An error occurred.",
+                            // result.exception.message ?: "An error occurred.",
                             result.message,
                         ),
                     )
