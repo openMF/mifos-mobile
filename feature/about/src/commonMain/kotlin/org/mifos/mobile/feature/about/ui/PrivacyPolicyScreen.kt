@@ -40,16 +40,14 @@ internal fun PrivacyPolicyScreen(
         topBarTitle = stringResource(Res.string.feature_about_privacy_policy),
         backPress = navigateBack,
         modifier = modifier,
-        content = {
-                padding ->
-            WebView(
-                url = stringResource(Res.string.feature_about_policy_url),
-                isLoading = isLoading,
-                onLoadingChange = { isLoading = it },
-                modifier = Modifier.padding(padding),
-            )
-        },
-    )
+    ) { paddingValues ->
+        WebView(
+            url = stringResource(Res.string.feature_about_policy_url),
+            isLoading = isLoading,
+            onLoadingChange = { isLoading = it },
+            modifier = Modifier.padding(paddingValues),
+        )
+    }
 }
 
 @Composable
