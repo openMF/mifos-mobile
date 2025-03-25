@@ -9,10 +9,9 @@
  */
 package org.mifos.mobile.core.model.entity.register
 
-/**
- * Created by dilpreet on 31/7/17.
- */
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RegisterPayload(
 
     val username: String? = null,
