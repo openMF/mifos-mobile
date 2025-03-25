@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.savings.navigation
 
 import org.mifos.mobile.core.common.Constants.SAVINGS_ACCOUNT_STATE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 
 const val SAVINGS_NAVIGATION_ROUTE_BASE = "savings_route"

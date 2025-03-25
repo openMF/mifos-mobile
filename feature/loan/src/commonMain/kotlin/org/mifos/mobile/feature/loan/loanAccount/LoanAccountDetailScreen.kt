@@ -27,11 +27,10 @@ import mifos_mobile.feature.loan.generated.resources.no_internet_connection
 import mifos_mobile.feature.loan.generated.resources.waiting_for_disburse
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -50,10 +49,7 @@ internal fun LoanAccountDetailScreen(
     viewTransactions: (Long) -> Unit,
     viewQr: (String) -> Unit,
     makePayment: (
-        accountId: Long,
-        outstandingBalance: Double?,
-        transferType: String,
-        transferSuccessDestination: TransferSuccessDestination,
+        TransferArgs,
     ) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoanAccountsDetailViewModel = koinViewModel(),
@@ -61,7 +57,6 @@ internal fun LoanAccountDetailScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val outStanding = state.loanAccountAssociations?.summary?.totalOutstanding
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
@@ -69,10 +64,7 @@ internal fun LoanAccountDetailScreen(
             is LoanAccountsEvent.ViewGuarantor -> state.loanId?.let { viewGuarantor(it) }
             is LoanAccountsEvent.MakePayment -> state.loanId?.let {
                 makePayment(
-                    it,
-                    outStanding,
-                    TRANSFER_PAY_TO,
-                    TransferSuccessDestination.LOAN_ACCOUNT,
+                    event.transferArgs,
                 )
             }
             is LoanAccountsEvent.UpdateLoan -> state.loanId?.let { updateLoan(it) }

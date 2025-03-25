@@ -15,13 +15,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
+import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -234,28 +235,5 @@ fun NavGraphBuilder.savingsMakeTransfer(
                 reviewTransfer = reviewTransfer,
             )
         }
-    }
-}
-
-@Serializable
-data class AccountDetails(
-    val accountId: Long,
-    val outstandingBalance: Double? = null,
-    val transferType: String,
-    val transferTarget: TransferType,
-    val transferSuccessDestination: TransferSuccessDestination,
-)
-
-@Serializable
-data class TransferArgs(
-    val transferPayloadJson: String?,
-) {
-    val transferPayload: AccountDetails?
-        get() = transferPayloadJson?.let { Json.decodeFromString<AccountDetails>(it) }
-
-    fun toJson(): String = Json.encodeToString(this)
-
-    companion object {
-        fun fromJson(json: String): TransferArgs = Json.decodeFromString(json)
     }
 }

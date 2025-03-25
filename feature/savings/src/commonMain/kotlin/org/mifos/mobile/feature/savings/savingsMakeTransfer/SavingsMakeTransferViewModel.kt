@@ -23,12 +23,12 @@ import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.feature.savings.navigation.AccountDetails
 import org.mifos.mobile.feature.savings.navigation.SAVINGS_MAKE_TRANSFER_ARGS
-import org.mifos.mobile.feature.savings.navigation.TransferArgs
 
 internal class SavingsMakeTransferViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,

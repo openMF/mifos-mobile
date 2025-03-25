@@ -13,6 +13,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.internet_not_connected
 import org.jetbrains.compose.resources.getString
@@ -28,8 +30,12 @@ import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
+import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.model.entity.TransferArgs
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -84,13 +90,20 @@ internal class LoanAccountsDetailViewModel(
             }
 
             LoanAccountAction.MakePaymentClicked -> {
-                sendEvent(
-                    LoanAccountsEvent.MakePayment(
-                        state.loanId,
-                        state.loanAccountAssociations?.summary?.totalOutstanding ?: 1.00,
-                        TRANSFER_PAY_TO,
-                    ),
-                )
+                state.loanId?.let { loanId ->
+                    val transferArgs = TransferArgs(
+                        transferPayloadJson = Json.encodeToString(
+                            AccountDetails(
+                                accountId = loanId,
+                                outstandingBalance = state.loanAccountAssociations?.summary?.totalOutstanding ?: 1.00,
+                                transferType = TRANSFER_PAY_TO,
+                                transferTarget = TransferType.SELF,
+                                transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
+                            ),
+                        ),
+                    )
+                    sendEvent(LoanAccountsEvent.MakePayment(transferArgs))
+                }
             }
 
             LoanAccountAction.UpdateLoanClicked -> {
@@ -237,7 +250,7 @@ sealed interface LoanAccountsEvent {
     data class ViewRepaymentSchedule(val loanId: Long?) : LoanAccountsEvent
     data class ViewTransactions(val loanId: Long?) : LoanAccountsEvent
     data class ViewQr(val qrArgs: String) : LoanAccountsEvent
-    data class MakePayment(val loanId: Long?, val outStanding: Double, val transferTo: String) :
+    data class MakePayment(val transferArgs: TransferArgs) :
         LoanAccountsEvent
     data class ShowToast(val message: String) : LoanAccountsEvent
 }
