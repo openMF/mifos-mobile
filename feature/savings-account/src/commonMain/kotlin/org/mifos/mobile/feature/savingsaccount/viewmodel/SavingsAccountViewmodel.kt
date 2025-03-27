@@ -189,15 +189,18 @@ class SavingsAccountViewmodel(
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 val savingsAccounts = clientAccounts.data?.savingsAccounts
-                _accountsUiState.value = if (savingsAccounts.isNullOrEmpty()) {
-                    AccountState.Empty
+
+                if (savingsAccounts == null) {
+                    _accountsUiState.value = AccountState.Loading
+                } else if (savingsAccounts.isEmpty()) {
+                    _accountsUiState.value = AccountState.Empty
                 } else {
                     val filteredAccounts = getFilteredAccounts(
                         searchQuery = searchQuery,
                         selectedCheckboxLabels = selectedCheckboxLabels,
                         accounts = savingsAccounts,
                     )
-                    AccountState.Success(filteredAccounts)
+                    _accountsUiState.value = AccountState.Success(filteredAccounts)
                 }
                 _isRefreshing.value = false
             }
