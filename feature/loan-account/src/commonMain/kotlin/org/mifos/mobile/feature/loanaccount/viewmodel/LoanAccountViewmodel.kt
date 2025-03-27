@@ -187,18 +187,23 @@ class LoanAccountViewmodel(
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 val loanAccounts = clientAccounts.data?.loanAccounts
-                if (loanAccounts == null) {
-                    _accountsUiState.value = AccountState.Loading
-                } else if (loanAccounts.isEmpty()) {
-                    _accountsUiState.value = AccountState.Empty
-                } else {
-                    val filteredAccounts = getFilteredAccounts(
-                        searchQuery = searchQuery,
-                        selectedCheckboxLabels = selectedCheckboxLabels,
-                        accounts = loanAccounts,
-                    )
-                    _accountsUiState.value = AccountState.Success(filteredAccounts)
+
+                _accountsUiState.value = when{
+                    loanAccounts == null ->AccountState.Loading
+
+                    loanAccounts.isEmpty() ->AccountState.Empty
+
+                    else ->{
+                        val filteredAccounts = getFilteredAccounts(
+                            searchQuery = searchQuery,
+                            selectedCheckboxLabels = selectedCheckboxLabels,
+                            accounts = loanAccounts,
+                        )
+                        AccountState.Success(filteredAccounts)
+
+                    }
                 }
+
                 _isRefreshing.value = false
             }
         }
