@@ -27,16 +27,18 @@ import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_account_loan_account
 import mifos_mobile.feature.accounts.generated.resources.feature_account_savings_account
 import mifos_mobile.feature.accounts.generated.resources.feature_account_share_account
+import mifos_mobile.feature.accounts.generated.resources.feature_account_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTabPager
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.feature.accounts.component.AccountFilterDialog
-import org.mifos.mobile.feature.accounts.component.AccountsScreenTopBar
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
 import org.mifos.mobile.feature.loanaccount.screen.LoanAccountScreen
@@ -137,11 +139,20 @@ private fun AccountsScreenContent(
 
     MifosScaffold(
         topBar = {
-            AccountsScreenTopBar(
+            MifosTopAppBar(
                 navigateBack = navigateBack,
-                onChange = onSearchQueryChange,
-                openFilterDialog = openFilterDialog,
-                closeSearch = closeSearch,
+                title = {
+                    MifosTitleSearchCard(
+                        actions = {
+                            IconButton(onClick = openFilterDialog) {
+                                Icon(imageVector = MifosIcons.FilterList, contentDescription = "Filter")
+                            }
+                        },
+                        titleResourceId = Res.string.feature_account_title,
+                        searchQuery = onSearchQueryChange,
+                        onSearchDismiss = closeSearch,
+                    )
+                },
             )
         },
         floatingActionButton = {

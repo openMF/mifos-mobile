@@ -40,7 +40,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosTextField
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -111,7 +111,7 @@ private fun LoanAccountWithdrawScreen(
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        MifosTopBar(
+        MifosTopAppBar(
             backPress = { onAction(LoanAccountWithdrawAction.BackPress) },
             topBarTitle = stringResource(Res.string.withdraw_loan),
         )

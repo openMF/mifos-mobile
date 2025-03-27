@@ -29,7 +29,7 @@ import mifos_mobile.feature.loan.generated.resources.view_guarantor
 import mifos_mobile.feature.loan.generated.resources.withdraw_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
@@ -43,7 +43,7 @@ internal fun LoanAccountDetailTopBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    MifosTopBar(
+    MifosTopAppBar(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.loan_account_details),
         backPress = navigateBack,

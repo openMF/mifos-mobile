@@ -34,7 +34,6 @@ import mifos_mobile.feature.about.generated.resources.feature_about_website
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBarTitle
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
@@ -52,12 +51,8 @@ internal fun AboutUsScreen(
     val aboutUsItems = remember { getAboutUsItems() }
 
     MifosScaffold(
-        topBar = {
-            MifosTopBarTitle(
-                navigateBack = navigateBack,
-                topBarTitleResId = Res.string.feature_about_about_us,
-            )
-        },
+        backPress = navigateBack,
+        topBarTitle = stringResource(Res.string.feature_about_about_us),
         content = {
             LazyColumn(
                 modifier = Modifier

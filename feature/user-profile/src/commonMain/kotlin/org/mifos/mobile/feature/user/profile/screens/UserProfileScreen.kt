@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,13 +48,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.client.Group
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.component.UserProfileField
-import org.mifos.mobile.core.ui.component.UserProfileTopBar
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailAction
 import org.mifos.mobile.feature.user.profile.viewmodel.UserDetailEvent
@@ -119,24 +121,26 @@ private fun UserProfileScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBar = {
-            UserProfileTopBar(
-                home = { onAction(UserDetailAction.OnNavigate) },
-                text = Res.string.user_details,
+        backPress = { onAction(UserDetailAction.OnNavigate) },
+        topBarTitle = stringResource(Res.string.user_details),
+        actions = {
+            Icon(
+                imageVector = MifosIcons.Edit,
+                contentDescription = "Edit User Profile",
+                modifier = Modifier.padding(end = 16.dp),
             )
         },
-        snackbarHostState = snackbarHostState,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
-        content = { paddingValues ->
-            state.client?.let {
-                UserProfileContent(
-                    state = state,
-                    onAction = onAction,
-                    modifier = Modifier.padding(paddingValues),
-                )
-            }
-        },
-    )
+    ) { paddingValues ->
+        state.client?.let {
+            UserProfileContent(
+                state = state,
+                onAction = onAction,
+                modifier = Modifier.padding(paddingValues),
+            )
+        }
+    }
     UserDetailsDialog(
         state = state,
         onAction = onAction,

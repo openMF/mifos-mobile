@@ -43,7 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.Utils.formatTransactionType
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
@@ -98,7 +98,7 @@ private fun LoanAccountTransactionScreen(
     onAction: (LoanAccountTransactionAction) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        MifosTopBar(
+        MifosTopAppBar(
             backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
             topBarTitle = stringResource(Res.string.transactions),
         )
