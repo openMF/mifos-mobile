@@ -188,19 +188,18 @@ class LoanAccountViewmodel(
             }.collect { clientAccounts ->
                 val loanAccounts = clientAccounts.data?.loanAccounts
 
-                _accountsUiState.value = when{
-                    loanAccounts == null ->AccountState.Loading
+                _accountsUiState.value = when {
+                    loanAccounts == null -> AccountState.Loading
 
-                    loanAccounts.isEmpty() ->AccountState.Empty
+                    loanAccounts.isEmpty() -> AccountState.Empty
 
-                    else ->{
+                    else -> {
                         val filteredAccounts = getFilteredAccounts(
                             searchQuery = searchQuery,
                             selectedCheckboxLabels = selectedCheckboxLabels,
                             accounts = loanAccounts,
                         )
                         AccountState.Success(filteredAccounts)
-
                     }
                 }
 

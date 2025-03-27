@@ -189,19 +189,18 @@ class ShareAccountViewModel(
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
                 val shareAccounts = clientAccounts.data?.shareAccounts
-                _accountsUiState.value = when{
-                    shareAccounts == null ->AccountState.Loading
+                _accountsUiState.value = when {
+                    shareAccounts == null -> AccountState.Loading
 
-                    shareAccounts.isEmpty() ->AccountState.Empty
+                    shareAccounts.isEmpty() -> AccountState.Empty
 
-                    else ->{
+                    else -> {
                         val filteredAccounts = getFilteredAccounts(
                             searchQuery = searchQuery,
                             selectedCheckboxLabels = selectedCheckboxLabels,
                             accounts = shareAccounts,
                         )
                         AccountState.Success(filteredAccounts)
-
                     }
                 }
 
