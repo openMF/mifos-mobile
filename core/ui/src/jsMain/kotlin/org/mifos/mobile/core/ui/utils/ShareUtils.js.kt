@@ -12,6 +12,7 @@ package org.mifos.mobile.core.ui.utils
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asSkiaBitmap
 import io.github.vinceglb.filekit.core.FileKit
+import kotlinx.browser.window
 
 actual object ShareUtils {
     actual fun shareText(text: String) {
@@ -31,5 +32,26 @@ actual object ShareUtils {
             baseName = "MifosQrCode",
             extension = "png",
         )
+    }
+
+    actual fun callHelpline() {
+        window.alert("Calling is not supported on Web. Please contact support at 8000000000.")
+    }
+
+    actual fun mailHelpline() {
+        val url = "mailto:support@example.com?subject=Help%20Request&body=Hello,%20I%20need%20assistance%20with..."
+        window.open(url)
+    }
+
+    actual fun openAppInfo() {
+    }
+
+    actual fun shareApp() {
+    }
+
+    actual fun openUrl(url: String) {
+    }
+
+    actual fun ossLicensesMenuActivity() {
     }
 }

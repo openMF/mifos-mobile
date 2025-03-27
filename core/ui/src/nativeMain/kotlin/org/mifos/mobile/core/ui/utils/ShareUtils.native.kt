@@ -10,6 +10,8 @@
 package org.mifos.mobile.core.ui.utils
 
 import androidx.compose.ui.graphics.ImageBitmap
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
 
 actual object ShareUtils {
     actual fun shareText(text: String) {
@@ -19,5 +21,37 @@ actual object ShareUtils {
     }
 
     actual suspend fun shareImage(title: String, byte: ByteArray) {
+    }
+
+    actual fun callHelpline() {
+        val url = NSURL.URLWithString("tel://8000000000")
+        if (url?.let { UIApplication.sharedApplication.canOpenURL(it) } == true) {
+            UIApplication.sharedApplication.openURL(url)
+        }
+    }
+
+    actual fun mailHelpline() {
+        val url = "mailto:support@example.com?subject=Help%20Request&body=Hello,%20I%20need%20assistance%20with..."
+        val mailUrl = NSURL.URLWithString(url)
+
+        if (mailUrl?.let { UIApplication.sharedApplication.canOpenURL(it) } == true) {
+            UIApplication.sharedApplication.openURL(mailUrl)
+        }
+    }
+
+    actual fun openAppInfo() {
+    }
+
+    actual fun shareApp() {
+    }
+
+    actual fun openUrl(url: String) {
+        val nsUrl = NSURL.URLWithString(url)
+        if (nsUrl != null) {
+            UIApplication.sharedApplication.openURL(nsUrl)
+        }
+    }
+
+    actual fun ossLicensesMenuActivity() {
     }
 }

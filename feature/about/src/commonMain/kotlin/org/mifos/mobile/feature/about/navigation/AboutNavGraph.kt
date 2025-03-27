@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
-import org.mifos.mobile.feature.about.openUrl
+import org.mifos.mobile.core.ui.utils.ShareUtils.openUrl
 import org.mifos.mobile.feature.about.ui.AboutUsScreen
 import org.mifos.mobile.feature.about.ui.PrivacyPolicyScreen
 
@@ -32,6 +32,7 @@ fun NavGraphBuilder.aboutUsNavGraph(
         route = AboutUsNavigation.AboutUsBase.route,
     ) {
         aboutUsScreenRoute(
+            navigateBack = navController::popBackStack,
             navigateToPrivacyPolicy = {
                 navController.navigate(AboutUsNavigation.PrivacyPolicyScreen.route)
             },
@@ -45,6 +46,7 @@ fun NavGraphBuilder.aboutUsNavGraph(
 }
 
 fun NavGraphBuilder.aboutUsScreenRoute(
+    navigateBack: () -> Unit,
     navigateToPrivacyPolicy: () -> Unit,
     navigateToOssLicense: () -> Unit,
 ) {
@@ -52,6 +54,7 @@ fun NavGraphBuilder.aboutUsScreenRoute(
         route = AboutUsNavigation.AboutUsScreen.route,
     ) {
         AboutUsScreen(
+            navigateBack = navigateBack,
             navigateToItem = {
                 navigateToItem(
                     aboutUsItem = it.itemId,

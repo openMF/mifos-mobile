@@ -10,14 +10,18 @@
 package org.mifos.mobile.core.ui.utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.core.content.FileProvider
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -102,5 +106,75 @@ actual object ShareUtils {
                 null
             }
         }
+    }
+
+    actual fun callHelpline() {
+        val context = activityProvider.invoke().application.baseContext
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:8000000000")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        context.startActivity(intent)
+    }
+
+    actual fun mailHelpline() {
+        val context = activityProvider.invoke().application.baseContext
+
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("support@mifos.org"))
+            putExtra(Intent.EXTRA_SUBJECT, "User Query")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                "There is no application that support this action",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
+    actual fun openAppInfo() {
+        val context = activityProvider.invoke().application.baseContext
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.parse("package:${context.packageName}")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+    }
+
+    actual fun shareApp() {
+        val context = activityProvider.invoke().application.baseContext
+        val shareText = "Download Self Service app here: https://play.google" +
+            ".com/store/apps/details?id=${context.packageName}"
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        val shareIntent = Intent.createChooser(intent, "Choose")
+        activityProvider.invoke().startActivity(shareIntent)
+    }
+
+    actual fun openUrl(url: String) {
+        val context = activityProvider.invoke().application.baseContext
+        val uri = url.let { Uri.parse(url) } ?: return
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = uri
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+    }
+
+    actual fun ossLicensesMenuActivity() {
+        val context = activityProvider.invoke().application.baseContext
+        val intent = Intent(context, OssLicensesMenuActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
     }
 }

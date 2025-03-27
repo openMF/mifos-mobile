@@ -150,11 +150,10 @@ class RegistrationViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = SignUpState.SignUpDialog.Error(
-                            result.exception.message ?: "An error occurred.",
-                        ),
+                        dialogState = null,
                     )
                 }
+                sendEvent(SignUpEvent.ShowToast(result.message))
             }
 
             DataState.Loading -> updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
@@ -187,7 +186,7 @@ class RegistrationViewModel(
                 updateState { it.copy(dialogState = null) }
             } else {
                 try {
-                    userAuthRepositoryImpl.registerUser(
+                    val response = userAuthRepositoryImpl.registerUser(
                         accountNumber = state.accountNumber,
                         authenticationMode = state.authenticationMode,
                         email = state.emailInput,
@@ -199,7 +198,7 @@ class RegistrationViewModel(
                     )
                     sendAction(
                         SignUpAction.Internal.ReceiveRegisterResult(
-                            DataState.Success("Registration successful."),
+                            response,
                         ),
                     )
                 } catch (e: Exception) {
