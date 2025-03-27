@@ -115,19 +115,18 @@ private fun TransferProcessScreen(
         backPress = { onAction(TransferProcessAction.OnNavigate) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
-        content = { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize(),
-            ) {
-                TransferProcessContent(
-                    state = state,
-                    onAction = onAction,
-                )
-            }
-        },
-    )
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+        ) {
+            TransferProcessContent(
+                state = state,
+                onAction = onAction,
+            )
+        }
+    }
     TransferProcessDialog(
         state = state,
     )

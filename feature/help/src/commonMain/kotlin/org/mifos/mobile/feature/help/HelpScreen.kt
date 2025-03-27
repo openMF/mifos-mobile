@@ -35,7 +35,7 @@ import mifos_mobile.feature.help.generated.resources.no_questions_found
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBarTitleComposable
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
@@ -82,7 +82,7 @@ private fun HelpScreenContent(
 ) {
     MifosScaffold(
         topBar = {
-            MifosTopBarTitleComposable(
+            MifosTopAppBar(
                 navigateBack = { onAction(HelpAction.NavigateBack) },
                 title = {
                     MifosTitleSearchCard(

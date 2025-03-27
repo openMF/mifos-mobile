@@ -12,11 +12,9 @@ package org.mifos.mobile.feature.loan.loanAccount
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,10 +29,10 @@ import mifos_mobile.feature.loan.generated.resources.view_guarantor
 import mifos_mobile.feature.loan.generated.resources.withdraw_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDetailTopBar(
     navigateBack: () -> Unit,
@@ -45,19 +43,10 @@ internal fun LoanAccountDetailTopBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    TopAppBar(
+    MifosTopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(Res.string.loan_account_details)) },
-        navigationIcon = {
-            IconButton(
-                onClick = navigateBack,
-            ) {
-                Icon(
-                    imageVector = MifosIcons.ArrowBack,
-                    contentDescription = "Back Arrow",
-                )
-            }
-        },
+        topBarTitle = stringResource(Res.string.loan_account_details),
+        backPress = navigateBack,
         actions = {
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(
@@ -65,7 +54,6 @@ internal fun LoanAccountDetailTopBar(
                     contentDescription = "Menu",
                 )
             }
-
             DropdownMenu(
                 expanded = showMenu,
                 modifier = Modifier.padding(start = 16.dp, end = 32.dp),

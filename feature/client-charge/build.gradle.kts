@@ -31,6 +31,3 @@ kotlin {
         }
     }
 }
-dependencies {
-    implementation(project(":feature:home"))
-}

@@ -24,7 +24,6 @@ import mifos_mobile.feature.beneficiary.generated.resources.select_mode
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
 @Composable
@@ -36,12 +35,8 @@ internal fun BeneficiaryScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBar = {
-            MifosTopBar(
-                backPress = topAppbarNavigateBack,
-                topBarTitle = stringResource(Res.string.add_beneficiary),
-            )
-        },
+        topBarTitle = stringResource(Res.string.add_beneficiary),
+        backPress = topAppbarNavigateBack,
         modifier = modifier,
     ) {
         Column(

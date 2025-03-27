@@ -90,20 +90,19 @@ private fun ThirdPartyTransferScreen(
         topBarTitle = stringResource(Res.string.third_party_transfer),
         backPress = { onAction(ThirdPartyTransferAction.OnNavigate) },
         modifier = Modifier,
-        content = { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
-                if (!state.beneficiaries.isNullOrEmpty() && !state.fromAccountDetail.isNullOrEmpty
-                        () && !state.toAccountOption.isNullOrEmpty()
-                ) {
-                    ThirdPartyTransferContent(
-                        state = state,
-                        onAction = onAction,
-                        modifier = modifier,
-                    )
-                }
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
+            if (!state.beneficiaries.isNullOrEmpty() && !state.fromAccountDetail.isNullOrEmpty
+                    () && !state.toAccountOption.isNullOrEmpty()
+            ) {
+                ThirdPartyTransferContent(
+                    state = state,
+                    onAction = onAction,
+                    modifier = modifier,
+                )
             }
-        },
-    )
+        }
+    }
     ThirdPartyTransferDialog(
         state = state,
     )

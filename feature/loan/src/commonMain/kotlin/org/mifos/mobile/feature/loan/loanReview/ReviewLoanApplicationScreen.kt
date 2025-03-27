@@ -31,7 +31,7 @@ import mifos_mobile.feature.loan.generated.resources.update_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -98,7 +98,7 @@ private fun ReviewLoanApplicationScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        MifosTopBar(
+        MifosTopAppBar(
             modifier = Modifier.fillMaxWidth(),
             backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
             topBarTitle = stringResource(Res.string.update_loan),

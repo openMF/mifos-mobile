@@ -176,7 +176,6 @@ private fun NotificationItem(
                 MaterialTheme.colorScheme.primary
             },
         )
-
         Column(
             horizontalAlignment = Alignment.End,
         ) {

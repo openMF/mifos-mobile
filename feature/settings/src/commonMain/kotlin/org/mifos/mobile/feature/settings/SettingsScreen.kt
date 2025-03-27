@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +50,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.MifosAppLanguage
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBarTitle
 import org.mifos.mobile.core.ui.component.MifosRadioButtonDialog
 
 @Composable
@@ -107,13 +107,9 @@ private fun SettingsScreen(
     var showThemeUpdateDialog by rememberSaveable { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     MifosScaffold(
-        topBar = {
-            MifosTopBarTitle(
-                navigateBack = navigateBack,
-                topBarTitleResId = Res.string.settings,
-            )
-        },
-        snackbarHostState = snackbarHostState,
+        topBarTitle = stringResource(Res.string.settings),
+        backPress = navigateBack,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
     ) {
         Column(

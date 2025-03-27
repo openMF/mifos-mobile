@@ -10,6 +10,8 @@
 -->
 <resources>
 
+    <string name="feature_account_title">Accounts</string>
+
     <!--    Filter dialog actions-->
     <string name="feature_account_clear_filters">Clear Filters</string>
     <string name="feature_account_cancel">Cancel</string>
