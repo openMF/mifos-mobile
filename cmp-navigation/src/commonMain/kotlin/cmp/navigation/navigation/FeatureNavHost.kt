@@ -256,7 +256,7 @@ fun handleHomeNavigation(
 
                 transferPayloadJson = Json.encodeToString(
                     AccountDetails(
-                        accountId = 1L,
+                        accountId = -1,
                         transferType = TRANSFER_PAY_TO,
                         transferTarget = TransferType.SELF,
                         transferSuccessDestination = TransferSuccessDestination.HOME,

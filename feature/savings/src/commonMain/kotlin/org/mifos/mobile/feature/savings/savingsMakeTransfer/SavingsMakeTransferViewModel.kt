@@ -72,14 +72,6 @@ internal class SavingsMakeTransferViewModel(
             initialValue = -1L,
         )
 
-    private val transferType: StateFlow<String> = transferPayload
-        .map { it?.transferType ?: TRANSFER_PAY_TO }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = TRANSFER_PAY_TO,
-        )
-
     val transferSuccessDestination: StateFlow<TransferSuccessDestination> = transferPayload
         .map { it?.transferSuccessDestination ?: TransferSuccessDestination.SAVINGS_ACCOUNT }
         .stateIn(
@@ -115,7 +107,7 @@ internal class SavingsMakeTransferViewModel(
                             _savingsMakeTransferUiData.value = _savingsMakeTransferUiData.value
                                 .copy(
                                     accountOptionsTemplate = result.data,
-                                    transferType = transferType.value,
+                                    transferType = transferPayload.value?.transferType ?: TRANSFER_PAY_TO,
                                     outstandingBalance = if (outstandingBalance.value == 0.0) {
                                         null
                                     } else {
