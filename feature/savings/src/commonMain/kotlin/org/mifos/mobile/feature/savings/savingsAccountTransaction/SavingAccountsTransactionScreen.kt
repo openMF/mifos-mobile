@@ -31,7 +31,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.component.EmptyDataView
@@ -82,19 +81,15 @@ internal fun SavingsAccountTransactionScreen(
 
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopBar(
-                backPress = navigateBack,
-                topBarTitle = stringResource(Res.string.savings_account_transaction),
-                actions = {
-                    IconButton(onClick = { isDialogOpen = true }) {
-                        Icon(
-                            imageVector = MifosIcons.FilterList,
-                            contentDescription = null,
-                        )
-                    }
-                },
-            )
+        backPress = navigateBack,
+        topBarTitle = stringResource(Res.string.savings_account_transaction),
+        actions = {
+            IconButton(onClick = { isDialogOpen = true }) {
+                Icon(
+                    imageVector = MifosIcons.FilterList,
+                    contentDescription = null,
+                )
+            }
         },
         content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues = paddingValues)) {

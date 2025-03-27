@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
@@ -122,7 +122,7 @@ private fun LoanApplicationScreen(
     MifosScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            MifosTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 backPress = { onAction(LoanApplicationAction.BackPress) },
                 topBarTitle =

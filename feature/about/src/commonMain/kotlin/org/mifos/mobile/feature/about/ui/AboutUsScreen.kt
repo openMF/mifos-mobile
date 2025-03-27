@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -36,7 +34,6 @@ import mifos_mobile.feature.about.generated.resources.feature_about_website
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBarTitleComposable
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AboutUsListItemId
 import org.mifos.mobile.core.ui.component.AboutUsItemCard
@@ -54,17 +51,8 @@ internal fun AboutUsScreen(
     val aboutUsItems = remember { getAboutUsItems() }
 
     MifosScaffold(
-        topBar = {
-            MifosTopBarTitleComposable(
-                navigateBack = navigateBack,
-                title = {
-                    Text(
-                        stringResource(Res.string.feature_about_about_us),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                },
-            )
-        },
+        backPress = navigateBack,
+        topBarTitle = stringResource(Res.string.feature_about_about_us),
         content = {
             LazyColumn(
                 modifier = Modifier
