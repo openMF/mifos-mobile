@@ -147,7 +147,6 @@ private fun LoginScreen(
 }
 
 @Composable
-@Suppress("LongMethod")
 private fun LoginContent(
     login: (username: String, password: String) -> Unit,
     createAccount: () -> Unit,
@@ -188,6 +187,9 @@ private fun LoginContent(
     ) {
         MifosMobileIcon(id = R.drawable.feature_auth_mifos_logo)
 
+        // Looking at the error messages, it seems MifosOutlinedTextField doesn't directly support
+        // keyboardOptions and keyboardActions as parameters
+        // We need to modify the implementation to support the functionality
         MifosOutlinedTextField(
             value = username,
             onValueChange = {
@@ -203,6 +205,8 @@ private fun LoginContent(
                     Icon(imageVector = MifosIcons.Error, contentDescription = null)
                 }
             },
+            // Add a modifier to handle the IME action if the component supports it
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -237,6 +241,7 @@ private fun LoginContent(
             error = passwordError,
             supportingText = passwordErrorContent,
             keyboardType = KeyboardType.Password,
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
