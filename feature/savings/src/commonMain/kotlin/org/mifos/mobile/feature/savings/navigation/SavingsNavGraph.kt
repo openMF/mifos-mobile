@@ -35,13 +35,13 @@ import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWit
 import org.mifos.mobile.feature.savings.savingsMakeTransfer.SavingsMakeTransferScreen
 
 fun NavController.navigateToSavingsMakeTransfer(
-    args: TransferArgs,
+    args: TransferArgs?,
 ) {
-    navigate(
-        SavingsNavigation.SavingsMakeTransfer.passArguments(
-            args = args,
-        ),
-    )
+    val route = args?.let {
+        SavingsNavigation.SavingsMakeTransfer.passArguments(it)
+    } ?: SavingsNavigation.SavingsMakeTransfer.route
+
+    navigate(route)
 }
 
 fun NavController.navigateToSavingsDetailScreen(savingsId: Long) {
@@ -224,16 +224,29 @@ fun NavGraphBuilder.savingsMakeTransfer(
 ) {
     composable(
         route = SavingsNavigation.SavingsMakeTransfer.route,
-        arguments = listOf(navArgument(SAVINGS_MAKE_TRANSFER_ARGS) { type = NavType.StringType }),
+        arguments = listOf(
+            navArgument(SAVINGS_MAKE_TRANSFER_ARGS) {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            },
+        ),
     ) { backStackEntry ->
         val jsonArgs = backStackEntry.arguments?.getString(SAVINGS_MAKE_TRANSFER_ARGS)
-        val loanReviewArgs = jsonArgs?.let { TransferArgs.fromJson(it) }
-        loanReviewArgs?.let {
-            SavingsMakeTransferScreen(
-                navigateBack = navigateBack,
-                onCancelledClicked = navigateBack,
-                reviewTransfer = reviewTransfer,
-            )
+
+        @Suppress("UnusedPrivateProperty")
+        val loanReviewArgs = jsonArgs?.takeIf { it.isNotBlank() }?.let {
+            try {
+                TransferArgs.fromJson(it)
+            } catch (e: Exception) {
+                null
+            }
         }
+
+        SavingsMakeTransferScreen(
+            navigateBack = navigateBack,
+            onCancelledClicked = navigateBack,
+            reviewTransfer = reviewTransfer,
+        )
     }
 }

@@ -62,9 +62,13 @@ sealed class SavingsNavigation(val route: String) {
         route = "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/{$SAVINGS_MAKE_TRANSFER_ARGS}",
     ) {
         fun passArguments(
-            args: TransferArgs,
+            args: TransferArgs?,
         ): String {
-            return "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/${args.toJson()}"
+            return if (args != null) {
+                "$SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE/${args.toJson()}"
+            } else {
+                SAVINGS_MAKE_TRANSFER_SCREEN_ROUTE
+            }
         }
     }
 }

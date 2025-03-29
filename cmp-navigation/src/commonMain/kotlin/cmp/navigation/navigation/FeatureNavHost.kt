@@ -14,16 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import cmp.navigation.ui.AppState
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.FileUtils.Companion.logger
-import org.mifos.mobile.core.model.entity.AccountDetails
-import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
-import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.openAppInfo
@@ -252,19 +246,8 @@ fun handleHomeNavigation(
         HomeDestinations.SHARE -> shareApp()
         HomeDestinations.APP_INFO -> openAppInfo()
         HomeDestinations.TRANSFER -> {
-            val args = TransferArgs(
-
-                transferPayloadJson = Json.encodeToString(
-                    AccountDetails(
-                        accountId = -1,
-                        transferType = TRANSFER_PAY_TO,
-                        transferTarget = TransferType.SELF,
-                        transferSuccessDestination = TransferSuccessDestination.HOME,
-                    ),
-                ),
-            )
             navController.navigateToSavingsMakeTransfer(
-                args,
+                null,
             )
         }
         HomeDestinations.BENEFICIARIES -> navController.navigateToBeneficiaryListScreen()
