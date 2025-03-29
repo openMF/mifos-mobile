@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +32,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.enums.SavingsAccountState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -66,14 +66,10 @@ private fun SavingsAccountApplicationScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     MifosScaffold(
-        topBar = {
-            MifosTopBar(
-                backPress = navigateBack,
-                topBarTitle = topBarTitleText,
-            )
-        },
+        backPress = navigateBack,
+        topBarTitle = topBarTitleText,
         modifier = modifier,
-        snackbarHostState = snackbarHostState,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {

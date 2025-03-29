@@ -33,7 +33,3 @@ kotlin {
         }
     }
 }
-//dependencies {
-//    implementation(projects.libs.countryCodePicker)
-//    implementation(libs.squareup.okhttp)
-//}

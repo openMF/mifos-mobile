@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
@@ -45,7 +46,6 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
@@ -102,13 +102,9 @@ private fun SavingsAccountWithdrawScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopBar(
-                backPress = { onBackPress(false) },
-                topBarTitle = stringResource(Res.string.withdraw_savings_account),
-            )
-        },
-        snackbarHostState = snackbarHostState,
+        backPress = { onBackPress(false) },
+        topBarTitle = stringResource(Res.string.withdraw_savings_account),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         content = {
                 padding ->
 

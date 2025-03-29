@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.home.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,11 +22,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -38,10 +41,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.accounts_overview
@@ -49,6 +54,7 @@ import mifos_mobile.feature.home.generated.resources.contact_email
 import mifos_mobile.feature.home.generated.resources.hello_client
 import mifos_mobile.feature.home.generated.resources.help_line_number
 import mifos_mobile.feature.home.generated.resources.hidden_amount
+import mifos_mobile.feature.home.generated.resources.home
 import mifos_mobile.feature.home.generated.resources.ic_visibility_24px
 import mifos_mobile.feature.home.generated.resources.ic_visibility_off_24px
 import mifos_mobile.feature.home.generated.resources.need_help
@@ -60,12 +66,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosHiddenTextRow
 import org.mifos.mobile.core.ui.component.MifosLinkText
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.feature.home.components.HomeNavigationDrawer
-import org.mifos.mobile.feature.home.components.HomeTopBar
 import org.mifos.mobile.feature.home.components.TransferDialog
 import org.mifos.mobile.feature.home.navigation.HomeDestinations
 import org.mifos.mobile.feature.home.navigation.toDestination
@@ -98,12 +105,43 @@ internal fun HomeContent(
         content = {
             MifosScaffold(
                 topBar = {
-                    HomeTopBar(
-                        openNavigationDrawer = {
+                    MifosTopAppBar(
+                        topBarTitle = stringResource(Res.string.home),
+                        icon = MifosIcons.NavigationDrawer,
+                        actions = {
+                            IconButton(
+                                onClick = {
+                                    onAction(HomeAction.OnNavigate(HomeDestinations.NOTIFICATIONS))
+                                },
+                            ) {
+                                Box(
+                                    modifier = Modifier,
+                                    contentAlignment = Alignment.TopEnd,
+                                ) {
+                                    Icon(
+                                        imageVector = MifosIcons.Notifications,
+                                        contentDescription = null,
+                                    )
+                                    if (state.notificationCount > 0) {
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(CircleShape)
+                                                .padding(2.dp)
+                                                .size(8.dp),
+                                            contentAlignment = Alignment.Center,
+                                        ) {
+                                            Text(
+                                                text = state.notificationCount.toString(),
+                                                fontSize = 6.sp,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        backPress = {
                             coroutineScope.launch { drawerState.open() }
                         },
-                        notificationCount = state.notificationCount,
-                        openNotifications = { onAction(HomeAction.OnNavigate(HomeDestinations.NOTIFICATIONS)) },
                     )
                 },
             ) {

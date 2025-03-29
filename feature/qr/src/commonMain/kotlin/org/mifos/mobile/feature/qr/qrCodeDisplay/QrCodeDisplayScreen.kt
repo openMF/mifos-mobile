@@ -43,7 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopBar
+import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -110,7 +110,7 @@ private fun QrCodeDisplayScreen(
     MifosScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            MifosTopAppBar(
                 backPress = { onAction(QrCodeDisplayAction.OnNavigate) },
                 topBarTitle = stringResource(Res.string.qr_code),
                 actions = {

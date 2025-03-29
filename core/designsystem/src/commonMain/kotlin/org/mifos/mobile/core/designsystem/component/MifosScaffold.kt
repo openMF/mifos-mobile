@@ -49,7 +49,7 @@ fun MifosScaffold(
     Scaffold(
         topBar = {
             if (topBarTitle != null) {
-                MifosTopBar(
+                MifosTopAppBar(
                     topBarTitle = topBarTitle,
                     backPress = backPress,
                     actions = actions,
