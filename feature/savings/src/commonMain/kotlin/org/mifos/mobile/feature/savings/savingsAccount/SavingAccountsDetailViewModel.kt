@@ -16,13 +16,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.active
 import mifos_mobile.feature.savings.generated.resources.closed
@@ -43,26 +41,18 @@ import org.mifos.mobile.core.qr.getAccountDetailsInString
 internal class SavingAccountsDetailViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : ViewModel() {
 
     val savingsId =
         savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
 
-    private val _userDetailsState = MutableStateFlow<UserData?>(null)
-    val userDetailsState: StateFlow<UserData?> get() = _userDetailsState
-
-    init {
-        getUserDetails()
-    }
-
-    private fun getUserDetails() {
-        viewModelScope.launch {
-            userPreferencesRepositoryImpl.userInfo.collect { user ->
-                _userDetailsState.value = user
-            }
-        }
-    }
+    private val userDetailsState: StateFlow<UserData?> = userPreferencesRepositoryImpl.userInfo
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null,
+        )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val savingAccountsDetailUiState = savingsId

@@ -231,17 +231,17 @@ fun NavGraphBuilder.savingsMakeTransfer(
                 defaultValue = null
             },
         ),
-    ) { backStackEntry ->
-        val jsonArgs = backStackEntry.arguments?.getString(SAVINGS_MAKE_TRANSFER_ARGS)
+    ) {
+//        val jsonArgs = backStackEntry.arguments?.getString(SAVINGS_MAKE_TRANSFER_ARGS)
 
-        @Suppress("UnusedPrivateProperty")
-        val loanReviewArgs = jsonArgs?.takeIf { it.isNotBlank() }?.let {
-            try {
-                TransferArgs.fromJson(it)
-            } catch (e: Exception) {
-                null
-            }
-        }
+//        @Suppress("UnusedPrivateProperty")
+//        val loanReviewArgs = jsonArgs?.takeIf { it.isNotBlank() }?.let {
+//            try {
+//                TransferArgs.fromJson(it)
+//            } catch (e: Exception) {
+//                null
+//            }
+//        }
 
         SavingsMakeTransferScreen(
             navigateBack = navigateBack,
