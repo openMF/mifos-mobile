@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.mifos.kmp.library)
     alias(libs.plugins.mifos.cmp.feature)
     alias(libs.plugins.mifos.kmp.koin)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -53,6 +54,7 @@ kotlin {
             implementation(libs.window.size)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.kotlinx.serialization.json)
         }
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)

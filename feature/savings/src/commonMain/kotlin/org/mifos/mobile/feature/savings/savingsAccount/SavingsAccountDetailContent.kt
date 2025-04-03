@@ -77,7 +77,7 @@ internal fun SavingsAccountDetailContent(
     makeTransfer: () -> Unit,
     viewTransaction: () -> Unit,
     viewCharges: () -> Unit,
-    viewQrCode: (SavingsWithAssociations) -> Unit,
+    viewQrCode: () -> Unit,
     callUs: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -105,7 +105,7 @@ internal fun SavingsAccountDetailContent(
         SavingsMonitorComponent(
             viewTransaction = viewTransaction,
             viewCharges = viewCharges,
-            viewQrCode = { viewQrCode.invoke(savingsAccount) },
+            viewQrCode = viewQrCode,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -143,7 +143,9 @@ private fun AccountDetailsCard(
                 CurrencyFormatter
                     .format(
                         savingsAccount.summary?.accountBalance ?: 0.0,
-                        currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                        currencyCode = savingsAccount.transactions.firstOrNull()?.currency?.code
+                            ?: savingsAccount.currency?.code
+                            ?: "USD",
                         maximumFractionDigits = 5,
                     ),
                 descriptionStyle = MaterialTheme.typography.bodyLarge.copy(
@@ -186,7 +188,9 @@ private fun AccountDetailsCard(
                     CurrencyFormatter
                         .format(
                             savingsAccount.summary?.totalDeposits ?: 0.0,
-                            currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                            currencyCode = savingsAccount.transactions.firstOrNull()?.currency?.code
+                                ?: savingsAccount.currency?.code
+                                ?: "USD",
                             maximumFractionDigits = 3,
                         )
                 } else {
@@ -204,7 +208,9 @@ private fun AccountDetailsCard(
                     CurrencyFormatter
                         .format(
                             savingsAccount.summary?.totalWithdrawals ?: 0.0,
-                            currencyCode = savingsAccount.transactions[0].currency?.code ?: "USD",
+                            currencyCode = savingsAccount.transactions.firstOrNull()?.currency?.code
+                                ?: savingsAccount.currency?.code
+                                ?: "USD",
                             maximumFractionDigits = 3,
                         )
                 } else {
@@ -269,7 +275,9 @@ private fun LastTransactionCard(
                         CurrencyFormatter
                             .format(
                                 savingsWithAssociations.transactions[0].amount ?: 0.0,
-                                currencyCode = savingsWithAssociations.transactions[0].currency?.code ?: "USD",
+                                currencyCode = savingsWithAssociations.transactions.firstOrNull()?.currency?.code
+                                    ?: savingsWithAssociations.currency?.code
+                                    ?: "USD",
                                 maximumFractionDigits = 5,
                             )
                     },
@@ -295,7 +303,9 @@ private fun LastTransactionCard(
                         CurrencyFormatter
                             .format(
                                 savingsWithAssociations.minRequiredOpeningBalance ?: 0.0,
-                                currencyCode = savingsWithAssociations.transactions[0].currency?.code ?: "USD",
+                                currencyCode = savingsWithAssociations.transactions.firstOrNull()?.currency?.code
+                                    ?: savingsWithAssociations.currency?.code
+                                    ?: "USD",
                                 maximumFractionDigits = 3,
                             ),
                     )

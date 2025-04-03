@@ -29,7 +29,6 @@ object Constants {
     const val DFRAG_DATE_PICKER = "Date Picker"
     const val TRANSFER_TYPE = "transfer_type"
     const val TRANSFER_TARGET = "transfer_target"
-    const val TRANSFER_SUCCESS_DESTINATION = "transfer_success_destination"
     const val TRANSFER_QUICK = "transfer_quick"
     const val TRANSFER_PAY_TO = "transfer_pay_to"
     const val TRANSFER_SUCCESS_DESTINATION = "transfer_success_destination"
