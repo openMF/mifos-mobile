@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -30,18 +31,28 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 
-// TODO: getQrString should be implemented once QR module is finished
 internal class SavingAccountsDetailViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-//    private var preferencesHelper: UserPreferencesDataSource,
+    userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : ViewModel() {
 
     val savingsId =
         savedStateHandle.getStateFlow<Long?>(key = Constants.SAVINGS_ID, initialValue = null)
+
+    private val userDetailsState: StateFlow<UserData?> = userPreferencesRepositoryImpl.userInfo
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null,
+        )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val savingAccountsDetailUiState = savingsId
@@ -70,13 +81,20 @@ internal class SavingAccountsDetailViewModel(
             initialValue = SavingsAccountDetailUiState.Loading,
         )
 
-//    fun getQrString(savingsWithAssociations: SavingsWithAssociations?): String {
-//        return QrCodeGenerator.getAccountDetailsInString(
-//            savingsWithAssociations?.accountNo,
-//            preferencesHelper.officeName,
-//            AccountType.SAVINGS,
-//        )
-//    }
+    fun getQrString(): String {
+        val state = savingAccountsDetailUiState.value
+        val userDetails = userDetailsState.value
+
+        return if (state is SavingsAccountDetailUiState.Success && userDetails != null) {
+            getAccountDetailsInString(
+                state.savingAccount.id?.toInt(),
+                userDetails.officeName,
+                AccountType.SAVINGS.name,
+            )
+        } else {
+            ""
+        }
+    }
 }
 
 internal sealed class SavingsAccountDetailUiState {

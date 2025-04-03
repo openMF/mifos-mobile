@@ -15,13 +15,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.common.Constants.ACCOUNT_ID
-import org.mifos.mobile.core.common.Constants.OUTSTANDING_BALANCE
 import org.mifos.mobile.core.common.Constants.SAVINGS_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
-import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
+import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -34,17 +35,13 @@ import org.mifos.mobile.feature.savings.savingsAccountWithdraw.SavingsAccountWit
 import org.mifos.mobile.feature.savings.savingsMakeTransfer.SavingsMakeTransferScreen
 
 fun NavController.navigateToSavingsMakeTransfer(
-    accountId: Long,
-    outstandingBalance: Double? = null,
-    transferType: String,
+    args: TransferArgs?,
 ) {
-    navigate(
-        SavingsNavigation.SavingsMakeTransfer.passArguments(
-            accountId,
-            (outstandingBalance ?: 0.0).toString(),
-            transferType,
-        ),
-    )
+    val route = args?.let {
+        SavingsNavigation.SavingsMakeTransfer.passArguments(it)
+    } ?: SavingsNavigation.SavingsMakeTransfer.route
+
+    navigate(route)
 }
 
 fun NavController.navigateToSavingsDetailScreen(savingsId: Long) {
@@ -63,7 +60,7 @@ fun NavController.navigateToSavingsApplicationScreen() {
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
-    viewCharges: (ChargeType) -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     reviewTransfer: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     callHelpline: () -> Unit,
 ) {
@@ -74,15 +71,33 @@ fun NavGraphBuilder.savingsNavGraph(
         savingsDetailRoute(
             callUs = callHelpline,
             deposit = {
+                val args = TransferArgs(
+                    transferPayloadJson = Json.encodeToString(
+                        AccountDetails(
+                            accountId = it,
+                            transferType = TRANSFER_PAY_TO,
+                            transferTarget = TransferType.TPT,
+                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                        ),
+                    ),
+                )
                 navController.navigateToSavingsMakeTransfer(
-                    accountId = it,
-                    transferType = TRANSFER_PAY_TO,
+                    args,
                 )
             },
             makeTransfer = {
+                val args = TransferArgs(
+                    transferPayloadJson = Json.encodeToString(
+                        AccountDetails(
+                            accountId = it,
+                            transferType = TRANSFER_PAY_FROM,
+                            transferTarget = TransferType.TPT,
+                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                        ),
+                    ),
+                )
                 navController.navigateToSavingsMakeTransfer(
-                    accountId = it,
-                    transferType = TRANSFER_PAY_FROM,
+                    args,
                 )
             },
             navigateBack = navController::popBackStack,
@@ -94,7 +109,7 @@ fun NavGraphBuilder.savingsNavGraph(
                     ),
                 )
             },
-            viewCharges = { viewCharges(ChargeType.SAVINGS) },
+            viewCharges = { _, chargeTypeId -> viewCharges(ChargeType.SAVINGS, chargeTypeId) },
             viewQrCode = viewQrCode,
             viewTransaction = {
                 navController.navigate(
@@ -134,7 +149,7 @@ fun NavGraphBuilder.savingsDetailRoute(
     withdrawSavingsAccount: (Long) -> Unit,
     makeTransfer: (Long) -> Unit,
     viewTransaction: (Long) -> Unit,
-    viewCharges: () -> Unit,
+    viewCharges: (ChargeType, Long) -> Unit,
     viewQrCode: (String) -> Unit,
     callUs: () -> Unit,
     deposit: (Long) -> Unit,
@@ -210,15 +225,24 @@ fun NavGraphBuilder.savingsMakeTransfer(
     composable(
         route = SavingsNavigation.SavingsMakeTransfer.route,
         arguments = listOf(
-            navArgument(name = ACCOUNT_ID) { type = NavType.LongType },
-            navArgument(name = OUTSTANDING_BALANCE) {
+            navArgument(SAVINGS_MAKE_TRANSFER_ARGS) {
                 type = NavType.StringType
                 nullable = true
                 defaultValue = null
             },
-            navArgument(name = TRANSFER_TYPE) { type = NavType.StringType },
         ),
     ) {
+//        val jsonArgs = backStackEntry.arguments?.getString(SAVINGS_MAKE_TRANSFER_ARGS)
+
+//        @Suppress("UnusedPrivateProperty")
+//        val loanReviewArgs = jsonArgs?.takeIf { it.isNotBlank() }?.let {
+//            try {
+//                TransferArgs.fromJson(it)
+//            } catch (e: Exception) {
+//                null
+//            }
+//        }
+
         SavingsMakeTransferScreen(
             navigateBack = navigateBack,
             onCancelledClicked = navigateBack,

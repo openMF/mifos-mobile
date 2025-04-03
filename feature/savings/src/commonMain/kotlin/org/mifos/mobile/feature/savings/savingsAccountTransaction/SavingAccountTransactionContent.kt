@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 
 @Composable
@@ -79,6 +80,7 @@ private fun SavingsAccountTransactionListItem(
     transaction: Transactions,
     modifier: Modifier = Modifier,
 ) {
+    logger.d { "ktorClient getting transactions in Ui $transaction" }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -134,14 +136,16 @@ private fun SavingsAccountTransactionListItem(
                     modifier = Modifier.alpha(0.7f),
                 )
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = transaction.paymentDetailData?.paymentType?.name.toString(),
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.alpha(0.7f),
-                )
+            transaction.paymentDetailData?.paymentType?.name?.let {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.alpha(0.7f),
+                    )
+                }
             }
         }
     }

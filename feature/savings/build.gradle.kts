@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.mifos.cmp.feature)
     alias(libs.plugins.mifos.android.library.compose)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
 
 }
 
@@ -27,6 +28,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
