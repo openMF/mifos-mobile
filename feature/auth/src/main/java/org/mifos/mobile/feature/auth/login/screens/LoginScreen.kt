@@ -42,8 +42,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -155,7 +157,7 @@ private fun LoginContent(
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
-
+    val focusManager = LocalFocusManager.current
     var username by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(
             TextFieldValue(""),
@@ -182,6 +184,7 @@ private fun LoginContent(
                 detectTapGestures(
                     onTap = {
                         keyboardController?.hide()
+                        focusManager.clearFocus()
                     },
                 )
             },
@@ -196,6 +199,7 @@ private fun LoginContent(
             },
             label = R.string.username,
             icon = R.drawable.feature_auth_ic_person,
+            singleLine = true,
             error = usernameError,
             supportingText = usernameErrorContent,
             trailingIcon = {
@@ -203,6 +207,8 @@ private fun LoginContent(
                     Icon(imageVector = MifosIcons.Error, contentDescription = null)
                 }
             },
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -215,6 +221,7 @@ private fun LoginContent(
             },
             label = R.string.password,
             icon = R.drawable.feature_auth_lock,
+            singleLine = true,
             visualTransformation = if (passwordVisibility) {
                 VisualTransformation.None
             } else {
@@ -237,6 +244,7 @@ private fun LoginContent(
             error = passwordError,
             supportingText = passwordErrorContent,
             keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
