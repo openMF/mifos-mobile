@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.loan.loanReview
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -66,20 +67,23 @@ internal class ReviewLoanApplicationViewModel(
     private fun collectReviewLoanApplicationUiData() {
         viewModelScope.launch {
             loanReviewArgs.collectLatest { args ->
-                args?.let { loanArgs ->
-                    updateState { currentState ->
-                        currentState.copy(
+                args?.loanApplicationArgs?.let { loanAppArgs ->
+                    val loanDetails = loanAppArgs.loanDetails
+                    val loansPayload = loanAppArgs.loansPayload
+
+                    updateState {
+                        it.copy(
                             reviewLoanApplicationUiData = ReviewLoanApplicationUiData(
-                                loanState = loanArgs.loanState,
-                                loanName = loanArgs.loanName,
-                                accountNo = loanArgs.accountNo,
-                                loanProduct = loanArgs.loansPayload?.productName,
-                                loanPurpose = loanArgs.loansPayload?.loanPurpose,
-                                principal = loanArgs.loansPayload?.principal,
-                                currency = loanArgs.loansPayload?.currency,
-                                submissionDate = loanArgs.loansPayload?.submittedOnDate,
-                                disbursementDate = loanArgs.loansPayload?.expectedDisbursementDate,
-                                loanId = loanArgs.loanId ?: 0,
+                                loanState = loanDetails.loanState,
+                                loanName = loanDetails.loanName,
+                                accountNo = loanDetails.accountNo,
+                                loanProduct = loanDetails.loanProduct,
+                                loanPurpose = loanDetails.loanPurpose,
+                                principal = loansPayload.principal,
+                                currency = loanDetails.currency,
+                                submissionDate = loansPayload.submittedOnDate,
+                                disbursementDate = loansPayload.expectedDisbursementDate,
+                                loanId = loanDetails.loanId ?: 0,
                             ),
                         )
                     }
@@ -102,41 +106,43 @@ internal class ReviewLoanApplicationViewModel(
             try {
                 val result = reviewLoanApplicationRepository.submitLoan(
                     loanState = state.reviewLoanApplicationUiData.loanState,
-                    loansPayload = loanReviewArgs.value?.loansPayload ?: LoansPayload(),
+                    loansPayload = loanReviewArgs.value?.loanApplicationArgs?.loansPayload
+                        ?: LoansPayload(),
                     loanId = state.reviewLoanApplicationUiData.loanId,
                 )
                 when (result) {
-                    DataState.Loading -> updateState {
-                        it.copy(
-                            dialogState =
-                            ReviewLoanApplicationState.DialogState.Loading,
-                        )
-                    }
+                    DataState.Loading -> showLoadingDialog()
                     is DataState.Success -> {
                         sendEvent(
                             ReviewLoanApplicationEvent.ShowToast(result.data),
                         )
+                        delay(1500)
                         sendEvent(ReviewLoanApplicationEvent.NavigateBack(true))
                     }
                     is DataState.Error -> {
-                        updateState {
-                            it.copy(
-                                dialogState = ReviewLoanApplicationState
-                                    .DialogState.Error(result.message),
-                            )
-                        }
+                        sendEvent(
+                            ReviewLoanApplicationEvent.ShowToast(result.message),
+                        )
+                        clearDialog()
                     }
                 }
             } catch (error: Exception) {
-                updateState {
-                    it.copy(
-                        dialogState = ReviewLoanApplicationState
-                            .DialogState.Error(error.message ?: "An error occurred"),
-                    )
-                }
-                updateState { it.copy(dialogState = null) }
+                showErrorDialog(error.message ?: "An error occurred")
+                clearDialog()
             }
         }
+    }
+
+    private fun showLoadingDialog() = updateState {
+        it.copy(dialogState = ReviewLoanApplicationState.DialogState.Loading)
+    }
+
+    private fun showErrorDialog(message: String) = updateState {
+        it.copy(dialogState = ReviewLoanApplicationState.DialogState.Error(message))
+    }
+
+    private fun clearDialog() = updateState {
+        it.copy(dialogState = null)
     }
 }
 

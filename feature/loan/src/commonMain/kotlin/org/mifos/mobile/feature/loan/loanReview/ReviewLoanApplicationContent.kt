@@ -38,6 +38,7 @@ import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
 @Composable
 internal fun ReviewLoanApplicationContent(
     data: ReviewLoanApplicationUiData,
+    isUpdate: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -46,15 +47,17 @@ internal fun ReviewLoanApplicationContent(
         verticalArrangement = Arrangement
             .spacedBy(16.dp),
     ) {
-        Text(
-            text = data.loanName ?: "",
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        if (isUpdate) {
+            Text(
+                text = data.loanName ?: "",
+                style = MaterialTheme.typography.bodyMedium,
+            )
 
-        Text(
-            text = data.accountNo ?: "",
-            style = MaterialTheme.typography.bodyMedium,
-        )
+            Text(
+                text = data.accountNo ?: "",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
 
         MifosTextTitleDescDoubleLine(
             title = stringResource(Res.string.product),
@@ -119,6 +122,7 @@ private fun ReviewLoanApplicationContentPreview(
                 submissionDate = "2021-12-31",
                 disbursementDate = "2022-01-01",
             ),
+            isUpdate = true,
             onSubmit = {},
             modifier = modifier,
         )

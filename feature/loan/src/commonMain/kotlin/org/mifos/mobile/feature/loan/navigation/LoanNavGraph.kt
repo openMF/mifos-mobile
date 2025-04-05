@@ -95,25 +95,17 @@ fun NavGraphBuilder.loanNavGraph(
 
         loanApplication(
             navigateBack = navController::popBackStack,
-            reviewNewLoanApplication = { loanState, loansPayload, loanId, loanName, accountNo ->
+            reviewNewLoanApplication = { args ->
                 navController.navigateToLoanReview(
                     LoanReviewArgs(
-                        loanState = loanState,
-                        loanId = loanId,
-                        loanName = loanName,
-                        accountNo = accountNo,
-                        loansPayloadJson = Json.encodeToString(loansPayload),
+                        loanApplicationArgsJson = Json.encodeToString(args),
                     ),
                 )
             },
-            submitUpdateLoanApplication = { loanState, loansPayload, loanId, loanName, accountNo ->
+            submitUpdateLoanApplication = { args ->
                 navController.navigateToLoanReview(
                     LoanReviewArgs(
-                        loanState = loanState,
-                        loanId = loanId,
-                        loanName = loanName,
-                        accountNo = accountNo,
-                        loansPayloadJson = Json.encodeToString(loansPayload),
+                        loanApplicationArgsJson = Json.encodeToString(args),
                     ),
                 )
             },
@@ -177,18 +169,10 @@ fun NavGraphBuilder.loanDetailRoute(
 fun NavGraphBuilder.loanApplication(
     navigateBack: () -> Unit,
     reviewNewLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: LoansPayload,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
+        LoanApplicationArgs,
     ) -> Unit,
     submitUpdateLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: LoansPayload,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
+        LoanApplicationArgs,
     ) -> Unit,
 ) {
     composable(
@@ -278,15 +262,22 @@ fun NavGraphBuilder.loanReview(
 }
 
 @Serializable
-data class LoanReviewArgs(
+data class LoanDetails(
     val loanState: LoanState,
     val loanId: Long?,
     val loanName: String,
     val accountNo: String,
-    val loansPayloadJson: String?,
+    val loanPurpose: String,
+    val loanProduct: String,
+    val currency: String,
+)
+
+@Serializable
+data class LoanReviewArgs(
+    val loanApplicationArgsJson: String,
 ) {
-    val loansPayload: LoansPayload?
-        get() = loansPayloadJson?.let { Json.decodeFromString<LoansPayload>(it) }
+    val loanApplicationArgs: LoanApplicationArgs
+        get() = Json.decodeFromString(loanApplicationArgsJson)
 
     fun toJson(): String = Json.encodeToString(this)
 
@@ -294,3 +285,9 @@ data class LoanReviewArgs(
         fun fromJson(json: String): LoanReviewArgs = Json.decodeFromString(json)
     }
 }
+
+@Serializable
+data class LoanApplicationArgs(
+    val loanDetails: LoanDetails,
+    val loansPayload: LoansPayload,
+)

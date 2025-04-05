@@ -58,7 +58,6 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.common.DateHelper.format
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
@@ -102,7 +101,7 @@ internal fun LoanApplicationContent(
     var principalAmountError by rememberSaveable { mutableStateOf<String?>(null) }
     var showPrincipalAmountError by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = state) {
+    LaunchedEffect(Unit) {
         state.loanWithAssociations?.timeline?.expectedDisbursementDate?.let {
             expectedDisbursementDate = it
         }
@@ -251,8 +250,8 @@ internal fun LoanApplicationContent(
                             val instant = Instant.fromEpochMilliseconds(millis)
                             val localDate = instant.toLocalDateTime(TimeZone.currentSystemDefault()).date
                             DateHelper.getSpecificFormat(
-                                DateHelper.MONTH_FORMAT,
-                                localDate.format(DateHelper.SHORT_MONTH),
+                                format = DateHelper.SHORT_MONTH,
+                                dateString = localDate.toString(),
                             )
                         }
                         formattedDate?.let {

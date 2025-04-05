@@ -61,7 +61,7 @@ data class LoansPayload(
 
     val currency: String? = null,
 
-    val dateFormat: String = "dd MMMM yyyy",
+    val dateFormat: String? = null,
 
-    val locale: String = "en",
+    val locale: String? = null,
 ) : Parcelable

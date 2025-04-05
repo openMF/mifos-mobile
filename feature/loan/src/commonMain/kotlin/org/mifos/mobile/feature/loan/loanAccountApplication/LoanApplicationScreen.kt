@@ -29,29 +29,17 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.loan.navigation.LoanApplicationArgs
 
 @Composable
 internal fun LoanApplicationScreen(
     navigateBack: () -> Unit,
-    reviewNewLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: LoansPayload,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
-    ) -> Unit,
-    submitUpdateLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: LoansPayload,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
-    ) -> Unit,
+    reviewNewLoanApplication: (LoanApplicationArgs) -> Unit,
+    submitUpdateLoanApplication: (LoanApplicationArgs) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoanApplicationViewModel = koinViewModel(),
 ) {
@@ -62,26 +50,18 @@ internal fun LoanApplicationScreen(
             LoanApplicationEvent.NavigateBack -> navigateBack.invoke()
             is LoanApplicationEvent.ReviewLoanApplication -> {
                 reviewNewLoanApplication(
-                    event.loanState,
-                    event.loansPayloadString,
-                    state.loanId,
-                    event.loanName,
-                    event.accountNo,
+                    event.loanApplicationArgs,
                 )
             }
             is LoanApplicationEvent.SubmitUpdateLoanApplication -> {
                 submitUpdateLoanApplication(
-                    event.loanState,
-                    event.loansPayloadString,
-                    state.loanId,
-                    event.loanName,
-                    event.accountNo,
+                    event.loanApplicationArgs,
                 )
             }
         }
     }
 
-    LaunchedEffect(key1 = state) {
+    LaunchedEffect(Unit) {
         viewModel.loadLoanApplicationTemplate(state.loanState)
     }
 
@@ -141,27 +121,25 @@ private fun LoanApplicationScreen(
                     .padding(it)
                     .fillMaxSize(),
             ) {
-                Box(modifier = Modifier.weight(1f)) {
-                    LoanApplicationContent(
-                        state = state,
-                        selectProduct = { position ->
-                            (onAction(LoanApplicationAction.ProductSelected(position)))
-                        },
-                        selectPurpose = { position ->
-                            onAction(LoanApplicationAction.PurposeSelected(position))
-                        },
-                        reviewClicked = { principalAmount ->
-                            onAction(LoanApplicationAction.SetPrincipalAmount(principalAmount))
-
-                            onAction(
-                                LoanApplicationAction.ReviewClicked
-                                    (state.reviewNewLoanApplication, state.submitUpdateLoanApplication),
-                            )
-                        },
-                        setDisbursementDate = { data ->
-                            onAction(LoanApplicationAction.SetDisburseDate(data))
-                        },
-                    )
+                state.loanWithAssociations?.let {
+                    Box(modifier = Modifier.weight(1f)) {
+                        LoanApplicationContent(
+                            state = state,
+                            selectProduct = { position ->
+                                (onAction(LoanApplicationAction.ProductSelected(position)))
+                            },
+                            selectPurpose = { position ->
+                                onAction(LoanApplicationAction.PurposeSelected(position))
+                            },
+                            reviewClicked = { principalAmount ->
+                                onAction(LoanApplicationAction.SetPrincipalAmount(principalAmount))
+                                onAction(LoanApplicationAction.ReviewClicked)
+                            },
+                            setDisbursementDate = { data ->
+                                onAction(LoanApplicationAction.SetDisburseDate(data))
+                            },
+                        )
+                    }
                 }
             }
         },
