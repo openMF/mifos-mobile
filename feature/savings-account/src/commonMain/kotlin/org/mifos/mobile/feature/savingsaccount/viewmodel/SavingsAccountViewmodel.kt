@@ -39,8 +39,8 @@ import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
  */
 class SavingsAccountViewmodel(
     private val accountsRepositoryImpl: AccountsRepository,
-    networkMonitor: NetworkMonitor,
-    userPreferencesRepository: UserPreferencesRepository,
+    private val networkMonitor: NetworkMonitor,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
     /** Client ID retrieved from user preferences. */
@@ -188,8 +188,8 @@ class SavingsAccountViewmodel(
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
-                val savingsAccounts = clientAccounts.data?.savingsAccounts
-                _accountsUiState.value = if (savingsAccounts.isNullOrEmpty()) {
+                val savingsAccounts = clientAccounts.data?.savingsAccounts ?: return@collect
+                _accountsUiState.value = if (savingsAccounts.isEmpty()) {
                     AccountState.Empty
                 } else {
                     val filteredAccounts = getFilteredAccounts(
