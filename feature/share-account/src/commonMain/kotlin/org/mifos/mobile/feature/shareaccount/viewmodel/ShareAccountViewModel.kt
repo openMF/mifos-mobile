@@ -39,8 +39,8 @@ import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
  */
 class ShareAccountViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
-    networkMonitor: NetworkMonitor,
-    userPreferencesRepository: UserPreferencesRepository,
+    private val networkMonitor: NetworkMonitor,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
     /** Client ID retrieved from user preferences. */
@@ -188,8 +188,8 @@ class ShareAccountViewModel(
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
-                val shareAccounts = clientAccounts.data?.shareAccounts
-                _accountsUiState.value = if (shareAccounts.isNullOrEmpty()) {
+                val shareAccounts = clientAccounts.data?.shareAccounts ?: return@collect
+                _accountsUiState.value = if (shareAccounts.isEmpty()) {
                     AccountState.Empty
                 } else {
                     val filteredAccounts = getFilteredAccounts(

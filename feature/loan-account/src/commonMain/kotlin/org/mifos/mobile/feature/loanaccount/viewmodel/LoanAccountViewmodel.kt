@@ -39,8 +39,8 @@ import org.mifos.mobile.feature.loanaccount.utils.FilterUtil
  */
 class LoanAccountViewmodel(
     private val accountsRepositoryImpl: AccountsRepository,
-    networkMonitor: NetworkMonitor,
-    userPreferencesRepository: UserPreferencesRepository,
+    private val networkMonitor: NetworkMonitor,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
     /** Client ID retrieved from user preferences. */
@@ -186,8 +186,8 @@ class LoanAccountViewmodel(
             ).catch {
                 _accountsUiState.value = AccountState.Error
             }.collect { clientAccounts ->
-                val loanAccounts = clientAccounts.data?.loanAccounts
-                _accountsUiState.value = if (loanAccounts.isNullOrEmpty()) {
+                val loanAccounts = clientAccounts.data?.loanAccounts ?: return@collect
+                _accountsUiState.value = if (loanAccounts.isEmpty()) {
                     AccountState.Empty
                 } else {
                     val filteredAccounts = getFilteredAccounts(
