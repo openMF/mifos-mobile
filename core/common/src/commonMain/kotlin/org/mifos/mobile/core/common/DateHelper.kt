@@ -37,7 +37,7 @@ object DateHelper {
      * This is the short month format for the date picker.
      * "dd-MM-yyyy" is the format of the date picker.
      */
-    const val SHORT_MONTH = "dd-MM-yyyy"
+    const val SHORT_MONTH = "yyyy-MM-dd"
 
     const val MONTH_FORMAT = "dd MMMM"
 
@@ -80,7 +80,7 @@ object DateHelper {
         "Sep" to 9, "Oct" to 10, "Nov" to 11, "Dec" to 12,
     )
 
-    fun getMonthNumber(monthName: String): Int {
+    private fun getMonthNumber(monthName: String): Int {
         return monthMap[monthName]
             ?: throw IllegalArgumentException("Invalid month name: $monthName")
     }
@@ -113,11 +113,17 @@ object DateHelper {
      * @return dd MMMM yyyy format date string.
      */
     fun getSpecificFormat(format: String, dateString: String): String {
-        val pickerFormat = shortMonthFormat
-        val finalFormat = LocalDateTime.Format { byUnicodePattern(format) }
+        val input = LocalDate.Format { byUnicodePattern(format) }
+        val localDate = input.parse(dateString)
 
-        return finalFormat.format(pickerFormat.parse(dateString))
+        val day = localDate.dayOfMonth.toString().padStart(2, '0')
+        val month = monthNumberToAbbreviation[localDate.monthNumber]
+        val year = localDate.year
+
+        return "$day $month $year"
     }
+
+    private val monthNumberToAbbreviation = monthMap.entries.associate { (k, v) -> v to k }
 
     fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
         if (integersOfDate == null) return null

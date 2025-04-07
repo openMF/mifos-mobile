@@ -35,6 +35,8 @@ import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.loan.navigation.LoanApplicationArgs
+import org.mifos.mobile.feature.loan.navigation.LoanDetails
 
 internal class LoanApplicationViewModel(
     private val loanRepositoryImp: LoanRepository,
@@ -92,17 +94,10 @@ internal class LoanApplicationViewModel(
         viewModelScope.launch {
             loanRepositoryImp.getLoanWithAssociations(Constants.TRANSACTIONS, state.loanId)
                 .catch {
-                    updateState {
-                        it.copy(
-                            dialogState = LoanApplicationState.DialogState.Error
-                                ("An error occurred"),
-                        )
-                    }
+                    showError("An error occurred")
                 }.collect { dataState ->
                     when (dataState) {
-                        DataState.Loading -> updateState {
-                            it.copy(dialogState = LoanApplicationState.DialogState.Loading)
-                        }
+                        DataState.Loading -> showLoading()
                         is DataState.Success -> {
                             updateState {
                                 it.copy(
@@ -112,12 +107,7 @@ internal class LoanApplicationViewModel(
                             }
                         }
                         is DataState.Error -> {
-                            updateState {
-                                it.copy(
-                                    dialogState = LoanApplicationState.DialogState
-                                        .Error(dataState.message),
-                                )
-                            }
+                            showError(dataState.message)
                         }
                     }
                 }
@@ -131,7 +121,7 @@ internal class LoanApplicationViewModel(
                 .collect { result ->
                     when (result) {
                         is DataState.Loading -> {
-                            updateState { it.copy(dialogState = LoanApplicationState.DialogState.Loading) }
+                            showLoading()
                         }
                         is DataState.Success -> {
                             val loanTemplate = result.data ?: LoanTemplate()
@@ -143,12 +133,7 @@ internal class LoanApplicationViewModel(
                             }
                         }
                         is DataState.Error -> {
-                            updateState {
-                                it.copy(
-                                    dialogState = LoanApplicationState.DialogState
-                                        .Error(errorMessage),
-                                )
-                            }
+                            showError(errorMessage)
                         }
                     }
                 }
@@ -157,10 +142,11 @@ internal class LoanApplicationViewModel(
 
     private fun showLoanTemplate(loanTemplate: LoanTemplate) {
         val listLoanProducts = refreshLoanProductList(loanTemplate)
+        val selectedLoanProduct = listLoanProducts.firstOrNull()
         updateState {
             it.copy(
                 listLoanProducts = listLoanProducts,
-                selectedLoanProduct = listLoanProducts.firstOrNull(),
+                selectedLoanProduct = selectedLoanProduct,
                 accountNumber = loanTemplate.clientAccountNo,
                 clientName = loanTemplate.clientName,
                 currencyLabel = loanTemplate.currency?.displayLabel,
@@ -168,6 +154,11 @@ internal class LoanApplicationViewModel(
                 disbursementDate = DateHelper.formattedFullDate,
                 submittedDate = DateHelper.formattedFullDate,
             )
+        }
+
+        val selectedPosition = listLoanProducts.indexOf(selectedLoanProduct)
+        if (selectedPosition >= 0) {
+            loadLoanApplicationTemplateByProduct(selectedPosition, LoanState.CREATE)
         }
     }
 
@@ -206,7 +197,13 @@ internal class LoanApplicationViewModel(
 
     private fun productSelected(position: Int) {
         val selectedProduct = state.listLoanProducts.getOrNull(position)
-        updateState { it.copy(selectedLoanProduct = selectedProduct) }
+        val productId = state.loanTemplate?.productOptions?.getOrNull(position)?.id
+        updateState {
+            it.copy(
+                selectedLoanProduct = selectedProduct,
+                selectedProductId = productId,
+            )
+        }
         loadLoanApplicationTemplateByProduct(position, state.loanState)
     }
 
@@ -221,7 +218,7 @@ internal class LoanApplicationViewModel(
                 .collect { result ->
                     when (result) {
                         is DataState.Loading -> {
-                            updateState { it.copy(dialogState = LoanApplicationState.DialogState.Loading) }
+                            showLoading()
                         }
                         is DataState.Success -> {
                             result.data?.let {
@@ -234,12 +231,7 @@ internal class LoanApplicationViewModel(
                             updateState { it.copy(dialogState = null) }
                         }
                         is DataState.Error -> {
-                            updateState {
-                                it.copy(
-                                    dialogState = LoanApplicationState.DialogState
-                                        .Error(errorMessage),
-                                )
-                            }
+                            showError(errorMessage)
                         }
                     }
                 }
@@ -293,9 +285,11 @@ internal class LoanApplicationViewModel(
     }
 
     private fun purposeSelected(position: Int) {
-        val selectedPurposeId = state.listLoanPurpose.getOrNull(position)
-        if (selectedPurposeId != null) {
-            updateState { it.copy(loanPurposeId = selectedPurposeId.toInt()) }
+        val selectedPurpose = state.listLoanPurpose.getOrNull(position)
+        if (selectedPurpose != null) {
+            updateState {
+                it.copy(selectedLoanPurpose = selectedPurpose)
+            }
         }
     }
 
@@ -307,74 +301,87 @@ internal class LoanApplicationViewModel(
         updateState { it.copy(principalAmount = amount) }
     }
 
-    private fun getLoanPayload(): LoansPayload {
-        val payload = LoansPayload(
-            clientId = state.loanTemplate?.clientId?.takeIf { state.loanState == LoanState.CREATE },
-            loanPurpose = state.selectedLoanPurpose ?: "Not provided",
-            productName = state.selectedLoanProduct,
-            currency = state.currencyLabel,
-            loanPurposeId = state.loanPurposeId?.takeIf { it > 0 },
-            productId = state.loanWithAssociations?.loanProductId,
-            principal = state.loanWithAssociations?.principal ?: 0.0,
-            loanTermFrequency = state.loanTemplate?.termFrequency,
-            loanTermFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
-            loanType = "individual".takeIf { state.loanState == LoanState.CREATE },
-            numberOfRepayments = state.loanTemplate?.numberOfRepayments,
-            repaymentEvery = state.loanTemplate?.repaymentEvery,
-            repaymentFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
-            interestRatePerPeriod = state.loanTemplate?.interestRatePerPeriod,
-            expectedDisbursementDate = state.loanWithAssociations?.timeline?.expectedDisbursementDate?.let {
-                DateHelper.getDateAsString(it)
-            },
-            submittedOnDate = state.loanWithAssociations?.timeline?.submittedOnDate?.let {
-                DateHelper.getDateAsString(it)
-                    .takeIf { state.loanState == LoanState.CREATE }
-            },
-            transactionProcessingStrategyId = state.loanTemplate?.transactionProcessingStrategyId,
-            amortizationType = state.loanTemplate?.amortizationType?.id,
-            interestCalculationPeriodType = state.loanTemplate?.interestCalculationPeriodType?.id,
-            interestType = state.loanTemplate?.interestType?.id,
-        )
-        return payload
-    }
+    private fun getLoanPayload() = LoansPayload(
+        locale = "en",
+        dateFormat = "dd MMMM yyyy",
+        productId = when (state.loanState) {
+            LoanState.CREATE -> state.selectedProductId
+            else -> state.loanWithAssociations?.loanProductId
+        },
+        principal = state.principalAmount?.toDoubleOrNull() ?: 0.0,
+        loanTermFrequency = state.loanTemplate?.termFrequency,
+        loanTermFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
+        numberOfRepayments = state.loanTemplate?.numberOfRepayments,
+        repaymentEvery = state.loanTemplate?.repaymentEvery,
+        repaymentFrequencyType = state.loanTemplate?.interestRateFrequencyType?.id,
+        interestRatePerPeriod = state.loanTemplate?.interestRatePerPeriod,
+        interestType = state.loanTemplate?.interestType?.id,
+        interestCalculationPeriodType = state.loanTemplate?.interestCalculationPeriodType?.id,
+        amortizationType = state.loanTemplate?.amortizationType?.id,
+        expectedDisbursementDate = state.disbursementDate,
+        transactionProcessingStrategyId = state.loanTemplate?.transactionProcessingStrategyId,
+        clientId = state.loanTemplate?.clientId?.takeIf { state.loanState == LoanState.CREATE },
+        loanPurposeId = state.loanPurposeId?.takeIf { it > 0 },
+        loanType = "individual".takeIf { state.loanState == LoanState.CREATE },
+        submittedOnDate = state.loanWithAssociations?.timeline?.submittedOnDate?.let {
+            DateHelper.getDateAsString(it)
+        },
+    )
 
     private fun handleReviewClicked() {
         viewModelScope.launch {
             val payload = getLoanPayload()
+
+            val loanName = getString(
+                Res.string.string_and_string,
+                getString(
+                    if (state.loanState == LoanState.CREATE) {
+                        Res.string.new_loan_application
+                    } else {
+                        Res.string.update_loan_application
+                    },
+                ),
+                state.loanWithAssociations?.clientName ?: "",
+            )
+
+            val accountNo = getString(
+                Res.string.string_and_string,
+                getString(Res.string.account_number),
+                state.loanWithAssociations?.accountNo ?: "",
+            )
+
+            val loanDetails = LoanDetails(
+                loanState = state.loanState,
+                loanId = state.loanId,
+                loanName = loanName,
+                accountNo = accountNo,
+                loanPurpose = state.selectedLoanPurpose ?: "Not Provided",
+                loanProduct = state.selectedLoanProduct ?: "",
+                currency = state.loanWithAssociations?.currency?.code
+                    ?: state.loanWithAssociations?.currency?.displaySymbol
+                    ?: "",
+            )
+
+            val args = LoanApplicationArgs(
+                loansPayload = payload,
+                loanDetails = loanDetails,
+            )
+
             val event = when (state.loanState) {
-                LoanState.CREATE -> LoanApplicationEvent.ReviewLoanApplication(
-                    state.loanState,
-                    payload,
-                    state.loanId,
-                    getString(
-                        Res.string.string_and_string,
-                        getString(Res.string.new_loan_application),
-                        state.loanWithAssociations?.clientName ?: "",
-                    ),
-                    getString(
-                        Res.string.string_and_string,
-                        getString(Res.string.account_number),
-                        state.loanWithAssociations?.accountNo ?: "",
-                    ),
-                )
-                LoanState.UPDATE -> LoanApplicationEvent.SubmitUpdateLoanApplication(
-                    state.loanState,
-                    payload,
-                    null,
-                    getString(
-                        Res.string.string_and_string,
-                        getString(Res.string.update_loan_application),
-                        state.loanWithAssociations?.clientName ?: "",
-                    ),
-                    getString(
-                        Res.string.string_and_string,
-                        getString(Res.string.account_number) + " ",
-                        state.loanWithAssociations?.accountNo ?: "",
-                    ),
-                )
+                LoanState.CREATE -> LoanApplicationEvent.ReviewLoanApplication(args)
+                LoanState.UPDATE -> LoanApplicationEvent.SubmitUpdateLoanApplication(args)
             }
+
             sendEvent(event)
         }
+    }
+
+    private fun showLoading() = updateState {
+        it.copy(dialogState = LoanApplicationState.DialogState.Loading)
+    }
+
+    private fun showError(message: String) = updateState {
+        it.copy(dialogState = LoanApplicationState.DialogState.Error(message))
     }
 }
 
@@ -392,26 +399,13 @@ data class LoanApplicationState(
     val listLoanPurpose: List<String?> = listOf(),
     val selectedLoanPurpose: String? = null,
     val loanPurposeId: Int? = null,
+    val selectedProductId: Int? = null,
     val principalAmount: String? = null,
     val currencyLabel: String? = null,
     val accountNumber: String? = null,
     val clientName: String? = null,
     val disbursementDate: String? = null,
     val submittedDate: String? = null,
-    val reviewNewLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: String,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
-    ) -> Unit = { _, _, _, _, _ -> },
-    val submitUpdateLoanApplication: (
-        loanState: LoanState,
-        loansPayloadString: String,
-        loanId: Long?,
-        loanName: String,
-        accountNo: String,
-    ) -> Unit = { _, _, _, _, _ -> },
     val dialogState: DialogState?,
 ) : Parcelable {
     sealed interface DialogState : Parcelable {
@@ -426,19 +420,11 @@ data class LoanApplicationState(
 sealed interface LoanApplicationEvent {
     data object NavigateBack : LoanApplicationEvent
     data class ReviewLoanApplication(
-        val loanState: LoanState,
-        val loansPayloadString: LoansPayload,
-        val loanId: Long?,
-        val loanName: String,
-        val accountNo: String,
+        val loanApplicationArgs: LoanApplicationArgs,
     ) : LoanApplicationEvent
 
     data class SubmitUpdateLoanApplication(
-        val loanState: LoanState,
-        val loansPayloadString: LoansPayload,
-        val loanId: Long?,
-        val loanName: String,
-        val accountNo: String,
+        val loanApplicationArgs: LoanApplicationArgs,
     ) : LoanApplicationEvent
 }
 
@@ -449,20 +435,5 @@ sealed interface LoanApplicationAction {
     data class SetPrincipalAmount(val amount: String) : LoanApplicationAction
     data object BackPress : LoanApplicationAction
     data object Retry : LoanApplicationAction
-    data class ReviewClicked(
-        val reviewNewLoanApplication: (
-            loanState: LoanState,
-            loansPayloadString: String,
-            loanId: Long?,
-            loanName: String,
-            accountNo: String,
-        ) -> Unit,
-        val submitUpdateLoanApplication: (
-            loanState: LoanState,
-            loansPayloadString: String,
-            loanId: Long?,
-            loanName: String,
-            accountNo: String,
-        ) -> Unit,
-    ) : LoanApplicationAction
+    data object ReviewClicked : LoanApplicationAction
 }

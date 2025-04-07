@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.network.DataManager
@@ -30,11 +31,28 @@ class ReviewLoanApplicationRepositoryImpl(
         return try {
             withContext(ioDispatcher) {
                 if (loanState == LoanState.CREATE) {
-                    dataManager.loanAccountsListApi.createLoansAccount(loansPayload)
-                    DataState.Success("Created successfully")
+                    val response = dataManager.loanAccountsListApi.createLoansAccount(loansPayload)
+                    if (response.status.value != 200) {
+                        val errorMessage = extractErrorMessage(response)
+                        return@withContext DataState.Error(
+                            Exception(errorMessage),
+                            null,
+                        )
+                    }
+                    DataState.Success("Loan Created successfully")
                 } else {
-                    dataManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
-                    DataState.Success("Updated successfully")
+                    val response = dataManager.loanAccountsListApi.updateLoanAccount(
+                        loanId,
+                        loansPayload,
+                    )
+                    if (response.status.value != 200) {
+                        val errorMessage = extractErrorMessage(response)
+                        return@withContext DataState.Error(
+                            Exception(errorMessage),
+                            null,
+                        )
+                    }
+                    DataState.Success("Loan Updated Successfully")
                 }
             }
         } catch (e: Exception) {

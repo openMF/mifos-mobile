@@ -42,4 +42,5 @@ data class ProductOptions(
     val holdGuaranteeFunds: Boolean? = null,
 
     val accountMovesOutOfNPAOnlyOnArrearsCompletion: Boolean? = null,
+
 ) : Parcelable

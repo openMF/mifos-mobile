@@ -117,7 +117,7 @@ data class Product(
 
     val maxTrancheCount: Int? = null,
 
-    val principalThresholdForLastInstallment: Int? = null,
+    val principalThresholdForLastInstallment: Double? = null,
 
     val holdGuaranteeFunds: Boolean? = null,
 
