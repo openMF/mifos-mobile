@@ -31,8 +31,10 @@ import mifos_mobile.feature.loan.generated.resources.update_loan
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.NoInternet
@@ -69,6 +71,7 @@ internal fun ReviewLoanApplicationScreen(
             { viewModel.trySendAction(it) }
         },
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -95,31 +98,37 @@ private fun LoanReviewDialogs(
 private fun ReviewLoanApplicationScreen(
     state: ReviewLoanApplicationState,
     onAction: (ReviewLoanApplicationAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        MifosTopAppBar(
-            modifier = Modifier.fillMaxWidth(),
-            backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
-            topBarTitle = stringResource(Res.string.update_loan),
-        )
-        Box(modifier = Modifier.weight(1f)) {
-            ReviewLoanApplicationContent(
-                data = state.reviewLoanApplicationUiData,
-                onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },
-                modifier = Modifier.padding(16.dp),
-            )
-        }
+    MifosScaffold(
+        snackbarHostState = snackbarHostState,
+        content = {
+            Column(modifier = modifier.fillMaxSize()) {
+                MifosTopAppBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
+                    topBarTitle = stringResource(Res.string.update_loan),
+                )
+                Box(modifier = Modifier.weight(1f)) {
+                    ReviewLoanApplicationContent(
+                        data = state.reviewLoanApplicationUiData,
+                        isUpdate = state.reviewLoanApplicationUiData.loanState == LoanState.UPDATE,
+                        onSubmit = { onAction(ReviewLoanApplicationAction.SubmitLoan) },
+                        modifier = Modifier.padding(16.dp),
+                    )
+                }
 
-        if (!state.isOnline) {
-            NoInternet(
-                error = Res.string.no_internet_connection,
-                isRetryEnabled = false,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
-    }
-
+                if (!state.isOnline) {
+                    NoInternet(
+                        error = Res.string.no_internet_connection,
+                        isRetryEnabled = false,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
+        },
+    )
     LoanReviewDialogs(
         dialogState = state.dialogState,
         state = state,
@@ -134,7 +143,7 @@ private fun ReviewLoanApplicationScreenPreview() {
             state = ReviewLoanApplicationState(dialogState = null),
             onAction = {},
             modifier = Modifier,
-
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
