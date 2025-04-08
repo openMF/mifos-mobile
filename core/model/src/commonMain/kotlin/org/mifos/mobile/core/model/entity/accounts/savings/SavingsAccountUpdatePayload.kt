@@ -9,14 +9,13 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.savings
 
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class SavingsAccountUpdatePayload(
 
     val clientId: Long? = 0,
 
     val productId: Long? = 0,
 
-) : Parcelable
+)

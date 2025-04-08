@@ -22,7 +22,6 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.Constants.LOAN_ID
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -159,7 +158,6 @@ internal class LoanAccountsDetailViewModel(
                 updateState { currentState ->
                     when (result) {
                         is DataState.Error -> {
-                            logger.e { "KtorClient error in ViewModel: ${result.exception.message}" }
                             currentState.copy(
                                 dialogState = LoanAccountsState.DialogState.Error(
                                     result.exception.message ?: "An error occurred",

@@ -24,7 +24,6 @@ import mifos_mobile.feature.savings_account.generated.resources.feature_account_
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_approved
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_closed
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_matured
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_string_and_string
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_submitted
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -69,7 +68,7 @@ private fun SavingsAccountListItem(
         savingAccount.status?.active == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.primary,
-                second = stringResource(Res.string.feature_account_active) +
+                second = stringResource(Res.string.feature_account_active) + " " +
                     (
                         savingAccount.lastActiveTransactionDate?.let {
                             DateHelper.getDateAsString(
@@ -84,7 +83,7 @@ private fun SavingsAccountListItem(
         savingAccount.status?.approved == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.secondaryContainer,
-                second = stringResource(Res.string.feature_account_approved) +
+                second = stringResource(Res.string.feature_account_approved) + " " +
                     (
                         savingAccount.timeLine?.approvedOnDate?.let {
                             DateHelper.getDateAsString(
@@ -99,7 +98,7 @@ private fun SavingsAccountListItem(
         savingAccount.status?.submittedAndPendingApproval == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.tertiaryContainer,
-                second = stringResource(Res.string.feature_account_submitted) +
+                second = stringResource(Res.string.feature_account_submitted) + " " +
                     (
                         savingAccount.timeLine?.submittedOnDate?.let {
                             DateHelper.getDateAsString(
@@ -114,7 +113,7 @@ private fun SavingsAccountListItem(
         savingAccount.status?.matured == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.errorContainer,
-                second = stringResource(Res.string.feature_account_matured) +
+                second = stringResource(Res.string.feature_account_matured) + " " +
                     (
                         savingAccount.lastActiveTransactionDate?.let {
                             DateHelper.getDateAsString(
@@ -129,21 +128,18 @@ private fun SavingsAccountListItem(
         else -> {
             Triple(
                 first = MaterialTheme.colorScheme.surfaceVariant,
-                second = stringResource(Res.string.feature_account_closed) + (
-                    savingAccount.timeLine?.closedOnDate?.let {
-                        DateHelper.getDateAsString(
-                            it,
-                        )
-                    }
-                        ?: ""
-                    ),
+                second = stringResource(Res.string.feature_account_closed) + " " +
+                    (
+                        savingAccount.timeLine?.closedOnDate?.let {
+                            DateHelper.getDateAsString(
+                                it,
+                            )
+                        } ?: ""
+                        ),
                 third = null,
             )
         }
     }
-
-    val currencySymbolOrCode =
-        savingAccount.currency?.displaySymbol ?: savingAccount.currency?.code ?: ""
 
     val formattedBalance = CurrencyFormatter.format(
         balance = savingAccount.accountBalance,
@@ -151,16 +147,10 @@ private fun SavingsAccountListItem(
         maximumFractionDigits = 2,
     )
 
-    val amountAndCurrency = stringResource(
-        Res.string.feature_account_string_and_string,
-        formattedBalance,
-        currencySymbolOrCode,
-    )
-
     AccountCard(
         savingAccount = savingAccount,
         statusString = statusDescription,
-        balance = amountAndCurrency,
+        balance = formattedBalance,
         indicatorColor = indicatorColor,
         textColor = balanceTextColor,
         onClick = {

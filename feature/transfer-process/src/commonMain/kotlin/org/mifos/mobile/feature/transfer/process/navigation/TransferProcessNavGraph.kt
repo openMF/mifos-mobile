@@ -87,7 +87,7 @@ private fun ReviewTransferPayload.convertToTransferPayloadString(): String {
         fromClientId = this.payFromAccount?.clientId,
         fromAccountType = this.payFromAccount?.accountType?.id,
         fromOfficeId = this.payFromAccount?.officeId,
-        toOfficeId = this.payFromAccount?.officeId,
+        toOfficeId = this.payToAccount?.officeId,
         toAccountId = this.payToAccount?.accountNo,
         toClientId = this.payToAccount?.clientId,
         toAccountType = this.payToAccount?.accountType?.id,

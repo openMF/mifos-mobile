@@ -104,34 +104,7 @@ dependencyGuard {
 dependencies {
     implementation(projects.cmpShared)
 
-    implementation(projects.core.logs)
-    implementation(projects.core.common)
-    implementation(projects.core.model)
-    implementation(projects.core.data)
-    implementation(projects.core.database)
     implementation(projects.core.ui)
-    implementation(projects.core.designsystem)
-
-//    implementation(projects.feature.loan)
-//    implementation(projects.feature.beneficiary)
-//    implementation(projects.feature.guarantor)
-//    implementation(projects.feature.savings)
-//    implementation(projects.feature.qr)
-//    implementation(projects.feature.transferProcess)
-//    implementation(projects.feature.clientCharge)
-//    implementation(projects.feature.recentTransaction)
-//    implementation(projects.feature.thirdPartyTransfer)
-    implementation(projects.feature.help)
-//    implementation(projects.feature.notification)
-//    implementation(projects.feature.location)
-//    implementation(projects.feature.about)
-//    implementation(projects.feature.settings)
-//    implementation(projects.feature.updatePassword)
-//    implementation(projects.feature.home)
-//    implementation(projects.feature.auth)
-//    implementation(projects.feature.userProfile)
-
-//    implementation(projects.libs.mifosPasscode)
 
     // Compose
     implementation(libs.androidx.core.ktx)

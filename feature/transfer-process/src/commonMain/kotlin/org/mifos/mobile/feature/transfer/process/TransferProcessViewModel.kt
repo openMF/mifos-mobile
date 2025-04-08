@@ -26,7 +26,6 @@ import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
-import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -57,7 +56,9 @@ internal class TransferProcessViewModel(
         updateState {
             it.copy(
                 transferPayload = state.transferPayloadString?.let { jsonString ->
-                    jsonString.let { Json.decodeFromString<TransferPayload>(jsonString) }
+                    jsonString.let {
+                        Json.decodeFromString<TransferPayload>(it)
+                    }
                 },
             )
         }
@@ -97,21 +98,24 @@ internal class TransferProcessViewModel(
     }
 
     private fun processTransferResult(
-        response: DataState<TransferResponse>,
+        response: DataState<String>,
         message: String,
     ) {
         when (response) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(dialogState = TransferProcessState.DialogState.Error(response.message))
-                }
+                updateState { it.copy(dialogState = null) }
+                sendEvent(
+                    TransferProcessEvent.ShowToast(
+                        response.message,
+                    ),
+                )
             }
             DataState.Loading -> TransferProcessState.DialogState.Loading
             is DataState.Success -> {
                 updateState { it.copy(dialogState = null) }
                 sendEvent(
                     TransferProcessEvent.ShowToast(
-                        message + "with ID ${response.data.resourceId}",
+                        message + "with ID ${response.data}",
                     ),
                 )
                 viewModelScope.launch {

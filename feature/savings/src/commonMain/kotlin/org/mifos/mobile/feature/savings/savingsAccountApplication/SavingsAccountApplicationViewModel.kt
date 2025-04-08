@@ -13,23 +13,24 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
+import mifos_mobile.feature.savings.generated.resources.new_saving_account_created_successfully
+import mifos_mobile.feature.savings.generated.resources.saving_account_updated_successfully
 import mifos_mobile.feature.savings.generated.resources.select_product_id
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.UserPreferencesDataSource
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
@@ -59,30 +60,43 @@ internal class SavingsAccountApplicationViewModel(
         MutableStateFlow<SavingsAccountApplicationUiState>(Loading)
     val savingsAccountApplicationUiState = _savingsAccountApplicationUiState.asStateFlow()
 
+    private val _savingsWithAssociations = MutableStateFlow<SavingsWithAssociations?>(null)
+    private val savingsWithAssociations = _savingsWithAssociations.asStateFlow()
+
     init {
+        observeSavingsWithAssociations()
         loadSavingsAccountApplicationTemplate()
     }
 
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val savingsWithAssociations: StateFlow<SavingsWithAssociations?> = savingsId
-        .flatMapLatest { id ->
-            savingsAccountRepositoryImp.getSavingsWithAssociations(id, Constants.TRANSACTIONS)
-                .map { dataState ->
+    private fun observeSavingsWithAssociations() {
+        viewModelScope.launch {
+            savingsId
+                .flatMapLatest { id ->
+                    savingsAccountRepositoryImp.getSavingsWithAssociations(id, Constants.TRANSACTIONS)
+                }
+                .collect { dataState ->
                     when (dataState) {
-                        is DataState.Success -> dataState.data
-                        else -> null
+                        is DataState.Success -> {
+                            _savingsWithAssociations.value = dataState.data
+                        }
+                        is DataState.Loading -> {
+                            _savingsAccountApplicationUiState.value = Loading
+                        }
+                        is DataState.Error -> {
+                            _savingsAccountApplicationUiState.value =
+                                SavingsAccountApplicationUiState.Error(dataState.exception.message)
+                        }
                     }
                 }
         }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null,
-        )
+    }
 
     private fun loadSavingsAccountApplicationTemplate() {
         viewModelScope.launch {
-            logger.d("_savingsAccountApplicationUiState: $_savingsAccountApplicationUiState")
             _savingsAccountApplicationUiState.value = Loading
             val clientIdValue = clientId.firstOrNull()
             if (clientIdValue == null) {
@@ -99,15 +113,21 @@ internal class SavingsAccountApplicationViewModel(
                         )
                 }
                 .collect { response ->
-                    if (response.data != null) {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.ShowUserInterface(
-                                response.data!!,
-                                savingsAccountState,
-                            )
-                    } else {
-                        _savingsAccountApplicationUiState.value =
-                            SavingsAccountApplicationUiState.Error("Failed to load template. Data is null.")
+                    when (response) {
+                        is DataState.Error -> {
+                            _savingsAccountApplicationUiState.value =
+                                SavingsAccountApplicationUiState.Error("Failed to load template. Data is null.")
+                        }
+                        DataState.Loading -> {
+                            Loading
+                        }
+                        is DataState.Success -> {
+                            _savingsAccountApplicationUiState.value =
+                                SavingsAccountApplicationUiState.ShowUserInterface(
+                                    response.data,
+                                    savingsAccountState,
+                                )
+                        }
                     }
                 }
         }
@@ -122,10 +142,16 @@ internal class SavingsAccountApplicationViewModel(
                     _savingsAccountApplicationUiState.value =
                         SavingsAccountApplicationUiState.Error(response.message)
                 }
-                DataState.Loading -> TODO()
+                DataState.Loading -> Loading
                 is DataState.Success -> {
-                    _savingsAccountApplicationUiState.value =
-                        SavingsAccountApplicationUiState.Success(savingsAccountState)
+                    val messageRes = when (savingsAccountState) {
+                        SavingsAccountState.CREATE -> Res.string.new_saving_account_created_successfully
+                        else -> Res.string.saving_account_updated_successfully
+                    }
+
+                    _eventFlow.emit(UiEvent.ShowSnackbar(getString(messageRes)))
+                    delay(1500)
+                    _eventFlow.emit(UiEvent.NavigateBack)
                 }
             }
         }
@@ -133,20 +159,28 @@ internal class SavingsAccountApplicationViewModel(
 
     private fun updateSavingsAccount(accountId: Long?, payload: SavingsAccountUpdatePayload?) {
         viewModelScope.launch {
-            _savingsAccountApplicationUiState.value = Loading
+            if (accountId == -1L) {
+                _eventFlow.emit(UiEvent.ShowSnackbar(getString(Res.string.select_product_id)))
+                return@launch
+            }
             val response = savingsAccountRepositoryImp.updateSavingsAccount(accountId, payload)
 
             when (response) {
                 is DataState.Error -> {
-                    _savingsAccountApplicationUiState.value =
-                        SavingsAccountApplicationUiState.Error(response.message)
+                    _eventFlow.emit(UiEvent.ShowSnackbar(response.exception.message ?: "Unknown error"))
                 }
                 DataState.Loading -> {
                     Loading
                 }
                 is DataState.Success -> {
-                    _savingsAccountApplicationUiState.value =
-                        SavingsAccountApplicationUiState.Success(savingsAccountState)
+                    val messageRes = when (savingsAccountState) {
+                        SavingsAccountState.CREATE -> Res.string.new_saving_account_created_successfully
+                        else -> Res.string.saving_account_updated_successfully
+                    }
+
+                    _eventFlow.emit(UiEvent.ShowSnackbar(getString(messageRes)))
+                    delay(1500)
+                    _eventFlow.emit(UiEvent.NavigateBack)
                 }
             }
         }
@@ -189,10 +223,14 @@ internal class SavingsAccountApplicationViewModel(
 internal sealed class SavingsAccountApplicationUiState {
     data object Loading : SavingsAccountApplicationUiState()
     data class Error(val errorMessage: String?) : SavingsAccountApplicationUiState()
-    data class Success(val requestType: SavingsAccountState) : SavingsAccountApplicationUiState()
     data class ShowUserInterface(
         val template: SavingsAccountTemplate,
         val requestType: SavingsAccountState,
     ) :
         SavingsAccountApplicationUiState()
+}
+
+internal sealed class UiEvent {
+    data class ShowSnackbar(val message: String) : UiEvent()
+    data object NavigateBack : UiEvent()
 }

@@ -10,7 +10,6 @@
 package org.mifos.mobile.core.data.repository
 
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 
@@ -19,5 +18,5 @@ interface TransferRepository {
     suspend fun makeTransfer(
         payload: TransferPayload,
         transferType: TransferType?,
-    ): DataState<TransferResponse>
+    ): DataState<String>
 }

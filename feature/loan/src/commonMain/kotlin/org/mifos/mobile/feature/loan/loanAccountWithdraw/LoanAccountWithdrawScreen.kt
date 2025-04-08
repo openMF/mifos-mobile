@@ -13,12 +13,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,8 +38,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
+import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextField
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -76,6 +75,7 @@ internal fun LoanAccountWithdrawScreen(
             { viewModel.trySendAction(it) }
         },
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -103,29 +103,26 @@ private fun LoanAccountWithDrawDialog(
 private fun LoanAccountWithdrawScreen(
     state: LoanAccountWithdrawState,
     onAction: (LoanAccountWithdrawAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        MifosTopAppBar(
-            backPress = { onAction(LoanAccountWithdrawAction.BackPress) },
-            topBarTitle = stringResource(Res.string.withdraw_loan),
-        )
+    MifosScaffold(
+        backPress = { onAction(LoanAccountWithdrawAction.BackPress) },
+        topBarTitle = stringResource(Res.string.withdraw_loan),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        content = {
+            Box(modifier = Modifier.padding(it)) {
+                Column(modifier = modifier.padding(16.dp)) {
+                    LoanAccountWithdrawContent(
+                        loanWithAssociations = state.loanWithAssociations,
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
+            }
+        },
+    )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Box(modifier = Modifier.weight(1f).padding(16.dp)) {
-            LoanAccountWithdrawContent(
-                loanWithAssociations = state.loanWithAssociations,
-                state = state,
-                onAction = onAction,
-            )
-        }
-    }
     LoanAccountWithDrawDialog(
         dialogState = state.dialogState,
     )
@@ -182,6 +179,7 @@ private fun LoanAccountWithdrawPreview() {
             state = LoanAccountWithdrawState(dialogState = null),
             modifier = Modifier,
             onAction = {},
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }

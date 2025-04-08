@@ -20,6 +20,6 @@ data class LoanWithdraw(
 
     val note: String? = null,
 
-    val dateFormat: String = "dd-MM-yyyy",
-    val locale: String = "en",
+    val dateFormat: String? = null,
+    val locale: String? = null,
 ) : Parcelable

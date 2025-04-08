@@ -9,13 +9,12 @@
  */
 package org.mifos.mobile.core.model.entity.mifoserror
 
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class Errors(
     val developerMessage: String? = null,
     val defaultUserMessage: String? = null,
     val userMessageGlobalisationCode: String? = null,
     val parameterName: String? = null,
-) : Parcelable
+)

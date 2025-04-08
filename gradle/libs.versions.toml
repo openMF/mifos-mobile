@@ -10,7 +10,6 @@ androidxComposeBom = "2024.12.01"
 androidxComposeCompiler = "1.5.15"
 androidxCoreSplashscreen = "1.0.1"
 androidxEspresso = "3.6.1"
-androidxHilt = "1.2.0"
 androidxLifecycle = "2.8.7"
 androidxMetrics = "1.0.0-beta01"
 androidxNavigation = "2.8.5"
@@ -40,9 +39,6 @@ googleAppCodeScanner = "17.3.0"
 googleMaps = "4.4.1"
 googleOss = "17.1.0"
 googleOssPlugin = "0.10.6"
-gsonVersion = "2.10.1"
-hilt = "2.54"
-hiltExt = "1.2.0"
 jacoco = "0.8.7"
 junitVersion = "4.13.2"
 ktlint = "12.1.1"
@@ -56,7 +52,6 @@ multidexVersion = "2.0.1"
 okHttp3Version = "4.12.0"
 playServicesCodeScanner = "16.1.0"
 playServicesVersion = "19.0.0"
-retrofitVersion = "2.11.0"
 roborazzi = "1.26.0"
 room = "2.7.0-alpha12"
 sqliteBundled = "2.5.0-alpha12"
@@ -160,7 +155,6 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHilt" }
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycleExtensionsVersion" }
 androidx-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
@@ -199,13 +193,6 @@ google-map-compose = { group = "com.google.maps.android", name = "maps-compose",
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
 google-play-services-code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "playServicesCodeScanner" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
-hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
-hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
-hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
 jetbrains-kotlin-jdk7 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlint" }
@@ -222,9 +209,6 @@ slack-compose-lint = { group = "com.slack.lint.compose", name = "compose-lint-ch
 spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotlessVersion" }
 squareup-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp3Version" }
 squareup-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp3Version" }
-squareup-retrofit-adapter-rxjava = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofitVersion" }
-squareup-retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitVersion" }
-squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
 twitter-detekt-compose = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "twitter-detekt-compose" }
@@ -343,11 +327,9 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
-# Hilt & Room Plugins
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+# Room Plugins
 room = { id = "androidx.room", version.ref = "room" }
 
-mifos-android-hilt = { id = "mifos.android.hilt", version = "unspecified" }
 mifos-kmp-room = { id = "mifos.kmp.room", version = "unspecified" }
 mifos-android-application = { id = "mifos.android.application", version = "unspecified" }
 mifos-android-application-compose = { id = "mifos.android.application.compose", version = "unspecified" }
