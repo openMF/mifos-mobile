@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
@@ -26,21 +27,6 @@ class LoanRepositoryImp(
     private val dataManager: DataManager,
     private val ioDispatcher: CoroutineDispatcher,
 ) : LoanRepository {
-
-//    override fun getLoanWithAssociations(
-//        associationType: String?,
-//        loanId: Long?,
-//    ): Flow<DataState<LoanWithAssociations?>> {
-//        return dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
-//            .map { response ->
-//                logger.d { "success Getting loan details from server repo $response" }
-//                DataState.Success(response)
-//            }.catch { exception ->
-//                logger.e { "Error fetching loan details: ${exception.message}" }
-//                DataState.Error(exception)
-//            }
-//            .flowOn(ioDispatcher)
-//    }
 
     override fun getLoanWithAssociations(
         associationType: String?,
@@ -60,13 +46,21 @@ class LoanRepositoryImp(
         loanId: Long?,
         loanWithdraw: LoanWithdraw?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
+                DataState.Success("withdraw successful")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("withdraw successful")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 

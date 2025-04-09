@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.IgnoredOnParcel
@@ -51,7 +50,6 @@ internal class BeneficiaryListViewModel(
         }
         viewModelScope.launch {
             beneficiaryRepositoryImp.beneficiaryList().catch { e ->
-                logger.d { "KtorClient in catch block ${e.message}" }
                 updateState {
                     it.copy(
                         dialogState = BeneficiaryListState.DialogState.Error(

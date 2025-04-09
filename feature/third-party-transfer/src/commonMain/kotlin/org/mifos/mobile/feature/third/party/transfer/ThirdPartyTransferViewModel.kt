@@ -18,7 +18,6 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.Res
 import mifos_mobile.feature.third_party_transfer.generated.resources.internet_not_connected
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -81,10 +80,6 @@ internal class ThirdPartyTransferViewModel(
             transferRepository.thirdPartyTransferTemplate(),
             beneficiaryRepository.beneficiaryList(),
         ) { templateResult, beneficiariesResult ->
-            logger.d {
-                "KtorClient getting in function ${templateResult.data} and ben " +
-                    "${beneficiariesResult.data}"
-            }
             updateStateFromResults(templateResult, beneficiariesResult)
         }.catch { error ->
             updateState {
@@ -105,7 +100,6 @@ internal class ThirdPartyTransferViewModel(
                 val error = (templateResult as? DataState.Error)?.exception?.message
                     ?: (beneficiariesResult as? DataState.Error)?.exception?.message
                     ?: "An error occurred"
-                logger.d { "KtorClient error $error" }
                 val errorMessage = "An error occurred"
                 updateState { it.copy(dialogState = ThirdPartyTransferState.DialogState.Error(errorMessage)) }
             }

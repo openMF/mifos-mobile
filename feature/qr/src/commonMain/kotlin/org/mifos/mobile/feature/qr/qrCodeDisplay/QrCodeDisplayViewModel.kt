@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.qr.generated.resources.Res
 import mifos_mobile.feature.qr.generated.resources.choose_option
 import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
@@ -76,7 +75,6 @@ internal class QrCodeDisplayViewModel(
             QrCodeDisplayAction.DismissDialog -> setDialogState(null)
             is QrCodeDisplayAction.ShareQrCode -> {
                 viewModelScope.launch {
-                    logger.d { "Sharing QR Code: ${action.option}, size: ${action.qrBitmap.size} bytes" }
                     shareImage(
                         action.option,
                         action.qrBitmap,

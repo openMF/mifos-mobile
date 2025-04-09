@@ -69,7 +69,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.active == true && loanAccount.inArrears == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.error,
-                second = stringResource(resource = Res.string.feature_account_in_arrears) +
+                second = stringResource(resource = Res.string.feature_account_in_arrears) + " " +
                     (
                         loanAccount.timeline?.actualDisbursementDate?.let {
                             DateHelper.getDateAsString(it)
@@ -82,7 +82,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.active == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.primary,
-                second = stringResource(resource = Res.string.feature_account_active) +
+                second = stringResource(resource = Res.string.feature_account_active) + " " +
                     (
                         loanAccount.timeline?.actualDisbursementDate?.let {
                             DateHelper.getDateAsString(it)
@@ -95,7 +95,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.waitingForDisbursal == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.secondary,
-                second = stringResource(resource = Res.string.feature_account_disburse) +
+                second = stringResource(resource = Res.string.feature_account_disburse) + " " +
                     (
                         loanAccount.timeline?.approvedOnDate?.let {
                             DateHelper.getDateAsString(
@@ -111,7 +111,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.pendingApproval == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.tertiary,
-                second = stringResource(resource = Res.string.feature_account_approval_pending) +
+                second = stringResource(resource = Res.string.feature_account_approval_pending) + " " +
                     (
                         loanAccount.timeline?.submittedOnDate?.let {
                             DateHelper.getDateAsString(
@@ -127,7 +127,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.overpaid == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.tertiaryContainer,
-                second = stringResource(resource = Res.string.feature_account_overpaid) +
+                second = stringResource(resource = Res.string.feature_account_overpaid) + " " +
                     (
                         loanAccount.timeline?.actualDisbursementDate?.let {
                             DateHelper.getDateAsString(it)
@@ -140,7 +140,7 @@ private fun LoanAccountListItem(
         loanAccount.status?.closed == true -> {
             Triple(
                 first = MaterialTheme.colorScheme.onSurface,
-                second = stringResource(resource = Res.string.feature_account_closed) +
+                second = stringResource(resource = Res.string.feature_account_closed) + " " +
                     (
                         loanAccount.timeline?.closedOnDate?.let {
                             DateHelper.getDateAsString(
@@ -156,7 +156,7 @@ private fun LoanAccountListItem(
         else -> {
             Triple(
                 first = MaterialTheme.colorScheme.outline,
-                second = stringResource(resource = Res.string.feature_account_withdrawn) +
+                second = stringResource(resource = Res.string.feature_account_withdrawn) + " " +
                     (
                         loanAccount.timeline?.withdrawnOnDate?.let {
                             DateHelper.getDateAsString(

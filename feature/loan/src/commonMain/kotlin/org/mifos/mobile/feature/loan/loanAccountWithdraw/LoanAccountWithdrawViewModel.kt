@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.loan.loanAccountWithdraw
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -75,7 +76,7 @@ internal class LoanAccountWithdrawViewModel(
                 Clock.System.now().toEpochMilliseconds(),
             ),
             note = state.loanReason,
-            dateFormat = "dd-MM-yyyy",
+            dateFormat = DateHelper.SHORT_MONTH,
             locale = "en",
         )
         updateState {
@@ -100,12 +101,18 @@ internal class LoanAccountWithdrawViewModel(
                         it.copy(dialogState = null)
                     }
                     sendEvent(LoanAccountWithdrawEvent.ShowToast(successMessage))
+                    delay(1500)
                     sendEvent(LoanAccountWithdrawEvent.NavigateBack)
                 }
                 is DataState.Error -> {
                     updateState {
-                        it.copy(dialogState = LoanAccountWithdrawState.DialogState.Error(errorMessage))
+                        it.copy(dialogState = null)
                     }
+                    sendEvent(
+                        LoanAccountWithdrawEvent.ShowToast(
+                            response.exception.message ?: errorMessage,
+                        ),
+                    )
                 }
             }
         }

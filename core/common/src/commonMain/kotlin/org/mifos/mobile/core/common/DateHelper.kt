@@ -22,7 +22,6 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import kotlin.time.Duration.Companion.days
 
 @OptIn(FormatStringsInDatetimeFormats::class)
@@ -56,7 +55,6 @@ object DateHelper {
      * @return date in the format day month year (ex 14 Apr 2016)
      */
     fun getDateAsString(integersOfDate: List<Int>): String {
-        logger.d { "ktorClient $integersOfDate" }
         val stringBuilder = StringBuilder()
         stringBuilder.append(integersOfDate[2])
             .append(' ')
@@ -133,7 +131,6 @@ object DateHelper {
             val localDate = LocalDate(dateList[0], dateList[1], dateList[2])
             localDate.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
         } catch (e: Exception) {
-            logger.d { "Error parsing date: ${e.message}" }
             null
         }
     }
