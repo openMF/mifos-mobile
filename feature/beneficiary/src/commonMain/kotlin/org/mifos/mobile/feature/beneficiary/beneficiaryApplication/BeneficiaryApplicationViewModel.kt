@@ -32,7 +32,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants.BENEFICIARY_STATE
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.IgnoredOnParcel
@@ -130,10 +129,6 @@ internal class BeneficiaryApplicationViewModel(
             beneficiaryRepositoryImp.beneficiaryList(),
             beneficiaryRepositoryImp.beneficiaryTemplate(),
         ) { beneficiaryList, beneficiaryTemplate ->
-            logger.d {
-                "KtorClient getting in function ${beneficiaryList.data} and beneficiary " +
-                    "${beneficiaryTemplate.data}"
-            }
             updateStateFromResults(beneficiaryList, beneficiaryTemplate)
         }.catch { error ->
             updateState {
@@ -159,7 +154,6 @@ internal class BeneficiaryApplicationViewModel(
                 val error = (beneficiaryList as? DataState.Error)?.exception?.message
                     ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
                     ?: "An error occurred"
-                logger.d { "KtorClient error $error" }
                 val errorMessage = "An error occurred"
                 updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Error(errorMessage)) }
             }

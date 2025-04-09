@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.apply_savings_account
-import mifos_mobile.feature.savings.generated.resources.new_saving_account_created_successfully
-import mifos_mobile.feature.savings.generated.resources.saving_account_updated_successfully
 import mifos_mobile.feature.savings.generated.resources.update_savings_account
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -44,13 +43,30 @@ internal fun SavingsAccountApplicationScreen(
     viewModel: SavingsAccountApplicationViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.savingsAccountApplicationUiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     SavingsAccountApplicationScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         submit = viewModel::onSubmit,
+        onRetry = viewModel::onRetry,
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
     )
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
+                }
+                UiEvent.NavigateBack -> navigateBack.invoke()
+            }
+        }
+    }
 }
 
 @Composable
@@ -58,12 +74,13 @@ private fun SavingsAccountApplicationScreen(
     uiState: SavingsAccountApplicationUiState,
     navigateBack: () -> Unit,
     submit: (Int, Int, showToast: (StringResource) -> Unit) -> Unit,
+    onRetry: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     savingsWithAssociations: SavingsWithAssociations? = null,
 ) {
     var topBarTitleText by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     MifosScaffold(
         backPress = navigateBack,
@@ -74,7 +91,9 @@ private fun SavingsAccountApplicationScreen(
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
                     is SavingsAccountApplicationUiState.Error -> {
-                        MifosErrorComponent()
+                        MifosErrorComponent(
+                            onRetry = onRetry,
+                        )
                     }
 
                     is SavingsAccountApplicationUiState.Loading -> {
@@ -93,20 +112,6 @@ private fun SavingsAccountApplicationScreen(
                             existingProduct = existingProduct,
                             savingsAccountTemplate = uiState.template,
                         )
-                    }
-
-                    is SavingsAccountApplicationUiState.Success -> {
-                        val message = when (uiState.requestType) {
-                            SavingsAccountState.CREATE ->
-                                stringResource(Res.string.new_saving_account_created_successfully)
-                            else ->
-                                stringResource(Res.string.saving_account_updated_successfully)
-                        }
-
-                        scope.launch {
-                            snackbarHostState.showSnackbar(message)
-                        }
-                        navigateBack.invoke()
                     }
                 }
             }

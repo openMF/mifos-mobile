@@ -16,8 +16,8 @@ import org.mifos.mobile.core.model.Parcelize
 @Serializable
 @Parcelize
 data class SavingsAccountWithdrawPayload(
-    val locale: String = "en",
-    val dateFormat: String = "dd MMMM yyyy",
+    val locale: String? = null,
+    val dateFormat: String? = null,
     val withdrawnOnDate: String? = null,
     val note: String? = null,
 ) : Parcelable

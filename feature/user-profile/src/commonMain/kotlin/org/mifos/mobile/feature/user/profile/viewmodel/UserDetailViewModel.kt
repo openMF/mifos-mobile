@@ -217,7 +217,6 @@ internal class UserDetailViewModel(
                             e.message ?: "An error occurred",
                         ),
                     )
-                    logger.d { "Notifications@@@ $e" }
                 }.collect { userDetail ->
                     when (userDetail) {
                         is DataState.Error -> {
@@ -248,7 +247,6 @@ internal class UserDetailViewModel(
             val result = userDetailRepositoryImp.updateRegisterNotification(id, payload)
             when (result) {
                 is DataState.Error -> {
-                    logger.d { "Notifications@@@ ${result.message}" }
                     setDialogState(
                         UserDetailState.DialogState.Error(
                             result.message,

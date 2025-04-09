@@ -21,7 +21,6 @@ plugins {
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.gms) apply false
 
-    alias(libs.plugins.hilt) apply false
     alias(libs.plugins.room) apply false
     alias(libs.plugins.ksp) apply false
 

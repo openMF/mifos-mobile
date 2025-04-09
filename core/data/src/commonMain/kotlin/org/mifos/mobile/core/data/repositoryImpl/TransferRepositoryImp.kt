@@ -9,10 +9,13 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.TransferRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -25,18 +28,26 @@ class TransferRepositoryImp(
     override suspend fun makeTransfer(
         payload: TransferPayload,
         transferType: TransferType?,
-    ): DataState<TransferResponse> {
-        return try {
-            val response = withContext(ioDispatcher) {
-                when (transferType) {
+    ): DataState<String> {
+        return withContext(ioDispatcher) {
+            try {
+                val response = when (transferType) {
                     TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(payload)
                     else -> dataManager.thirdPartyTransferApi.makeTransfer(payload)
                 }
-            }
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
 
-            DataState.Success(response)
-        } catch (e: Exception) {
-            DataState.Error(e)
+                val transferResponse = Json.decodeFromString<TransferResponse>(response.bodyAsText())
+                DataState.Success(transferResponse.resourceId.toString())
+            } catch (e: Exception) {
+                DataState.Error(e, null)
+            }
         }
     }
 }

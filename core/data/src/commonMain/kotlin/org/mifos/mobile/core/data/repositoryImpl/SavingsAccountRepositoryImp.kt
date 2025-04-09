@@ -16,6 +16,7 @@ import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
@@ -36,8 +37,7 @@ class SavingsAccountRepositoryImp(
         return dataManager.savingAccountsListApi.getSavingsWithAssociations(
             accountId!!,
             associationType,
-        )
-            .asDataStateFlow().flowOn(ioDispatcher)
+        ).asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override fun getSavingAccountApplicationTemplate(
@@ -50,13 +50,21 @@ class SavingsAccountRepositoryImp(
     override suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.savingAccountsListApi.submitSavingAccountApplication(payload)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    dataManager.savingAccountsListApi.submitSavingAccountApplication(payload)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
+                DataState.Success("Submitted successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Submitted successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
@@ -64,13 +72,21 @@ class SavingsAccountRepositoryImp(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.savingAccountsListApi.updateSavingsAccountUpdate(accountId!!, payload)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    dataManager.savingAccountsListApi.updateSavingsAccountUpdate(accountId!!, payload)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
+                DataState.Success("Updated successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Updated successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
@@ -78,13 +94,21 @@ class SavingsAccountRepositoryImp(
         accountId: String?,
         payload: SavingsAccountWithdrawPayload?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.savingAccountsListApi.submitWithdrawSavingsAccount(accountId!!, payload)
+        return withContext(ioDispatcher) {
+            try {
+                val response =
+                    dataManager.savingAccountsListApi.submitWithdrawSavingsAccount(accountId!!, payload)
+                if (response.status.value != 200) {
+                    val errorMessage = extractErrorMessage(response)
+                    return@withContext DataState.Error(
+                        Exception(errorMessage),
+                        null,
+                    )
+                }
+                DataState.Success("Submitted successfully")
+            } catch (e: Exception) {
+                DataState.Error(e, null)
             }
-            DataState.Success("Submitted successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 

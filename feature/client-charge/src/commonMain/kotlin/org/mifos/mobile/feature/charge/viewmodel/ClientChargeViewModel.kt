@@ -34,7 +34,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -185,7 +184,6 @@ internal class ClientChargeViewModel(
     }
 
     private fun processLoanOrSavingsCharges(result: DataState<List<Charge>>) {
-        logger.d { "KtorClient getting in function ${result.data}" }
         updateState {
             when (result) {
                 DataState.Loading -> it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)

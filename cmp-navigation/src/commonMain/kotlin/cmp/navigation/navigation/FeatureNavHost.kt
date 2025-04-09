@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import cmp.navigation.ui.AppState
-import org.mifos.mobile.core.common.FileUtils.Companion.logger
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -119,7 +118,6 @@ internal fun FeatureNavHost(
             viewQrCode = { appState.navController.navigateToQrDisplayScreen(it) },
             callHelpline = { callHelpline() },
             reviewTransfer = { transferPayload, transferType, transferDestination ->
-                logger.e("$transferPayload $transferType")
                 appState.navController.navigateToTransferProcessScreen(
                     transferPayload,
                     transferType,
