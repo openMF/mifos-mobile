@@ -43,7 +43,7 @@
 # end
 # ```
 
-# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/promote-to-production.yaml
+# https://github.com/openMF/mifos-x-actionhub/blob/main/.github/workflows/promote-to-production.yaml
 
 # ##############################################################################
 #                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
@@ -70,6 +70,6 @@ jobs:
   # Job to promote app from beta to production in Play Store
   play_promote_production:
     name: Promote Beta to Production Play Store
-    uses: openMF/mifos-mobile-github-actions/.github/workflows/promote-to-production.yaml@main
+    uses: openMF/mifos-x-actionhub/.github/workflows/promote-to-production.yaml@v1.0.0
     secrets:
       playstore_creds: ${{ secrets.PLAYSTORECREDS }}
