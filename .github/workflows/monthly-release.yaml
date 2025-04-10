@@ -38,7 +38,7 @@
 # - 2024.02.0 (February 2024 initial release)
 # - 2024.02.1 (Potential patch for February 2024)
 
-# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/monthly-version-tag.yaml
+# https://github.com/openMF/mifos-x-actionhub/blob/main/.github/workflows/monthly-version-tag.yaml
 
 # ##############################################################################
 #                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
@@ -62,5 +62,5 @@ concurrency:
 jobs:
   monthly_release:
     name: Tag Monthly Release
-    uses: openMF/mifos-mobile-github-actions/.github/workflows/monthly-version-tag.yaml@main
+    uses: openMF/mifos-x-actionhub/.github/workflows/monthly-version-tag.yaml@v1.0.0
     secrets: inherit
