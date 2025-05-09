@@ -82,7 +82,7 @@ permissions:
 jobs:
   pr_checks:
     name: PR Checks KMP
-    uses: openMF/mifos-mobile-github-actions/.github/workflows/pr-check.yaml@main
+    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.0
     secrets: inherit
     with:
       android_package_name: 'cmp-android' # <-- Change Your Android Package Name
