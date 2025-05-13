@@ -9,7 +9,7 @@ The [Open Source Guides](https://opensource.guide/) website has a collection of 
 
 ## Code of Conduct
 
-Mifos has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
+- Always follow the [code of conduct](https://mifos.org/resources/community/code-of-conduct/) - this is important to us. We are proud to be open, tolerant and providing a positive environment.
 
 > \[!Note]
 > **We're moving to Jira for issue tracking. Please use [Jira](https://mifosforge.jira.com/jira/software/c/projects/MM/issues/?filter=allissues&jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC) for issue tracking.**
@@ -19,6 +19,8 @@ Mifos has adopted a Code of Conduct that we expect project participants to adher
 
 There are many ways to contribute to Mifos Mobile, and many of them do not involve writing any code. Here's a few ideas to get started:
 
+
+- Sign the [Contribution License Agreement](https://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
 - Simply start using Mifos Mobile. Go through the [Getting Started](https://github.com/openMF/mifos-mobile/wiki) guide. Does everything work as expected? If not, we're always looking for improvements. Let us know by [opening an issue](#issues).
 - Look through the [open issues](https://github.com/openMF/mifos-mobile/issues). Provide workarounds, ask for clarification, or suggest labels. Help [triage issues](#triaging-issues-and-pull-requests).
 - If you find an issue you would like to fix, [open a pull request](#pull-requests). Issues tagged as [_Good first issue_](https://github.com/openMF/mifos-mobile/labels/good%20first%20issue) are a good place to get started.
