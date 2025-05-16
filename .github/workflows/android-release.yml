@@ -78,7 +78,7 @@ jobs:
       release_type: ${{ inputs.release_type }}
       target_branch: ${{ inputs.target_branch }}
       android_package_name: 'androidApp' # <-- Change this to your android package name
-      tester_groups: 'mifos-mobile-testers' # <-- Change this to your Firebase tester group
+      tester_groups: 'mifos-mobile-apps' # <-- Change this to your Firebase tester group
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
       original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
