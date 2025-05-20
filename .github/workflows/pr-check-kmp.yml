@@ -67,9 +67,9 @@ name: PR Checks for KMP
 # Trigger conditions for the workflow
 on:
   push:
-    branches: [ kmp-impl ]  # Runs on pushes to dev branch
+    branches: [ development ]  # Runs on pushes to dev branch
   pull_request:
-    branches: [ kmp-impl ]  # Runs on pushes to dev branch
+    branches: [ development ]  # Runs on pushes to dev branch
 
 # Concurrency settings to prevent multiple simultaneous workflow runs
 concurrency:
