@@ -12,7 +12,7 @@ on:
   pull_request:
     types: [ labeled ]
     branches:
-      - 'kmp-impl'
+      - 'development'
 
 concurrency:
   group: firebase-${{ github.ref }}
@@ -26,7 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: kmp-impl
           fetch-depth: 0
 
       - name: ☁️ Deploy Android App on Firebase
