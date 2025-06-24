@@ -101,6 +101,8 @@ roomCommonVersion = "2.6.1"
 androidPackageNamespace = "org.mifos.mobile"
 materialVersion = "1.12.0"
 
+fluentui-icons = "1.0.0"
+
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistVersion" }
@@ -256,6 +258,8 @@ multiplatform-settings-serialization = { group = "com.russhwolf", name = "multip
 moko-permission-compose = { group = "dev.icerock.moko", name = "permissions-compose", version.ref = "mokoPermission" }
 
 window-size = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "windowsSizeClass" }
+
+fluentui-system-icons = { module = "io.github.niyajali:fluentui-system-icons", version.ref = "fluentui-icons" }
 
 [bundles]
 androidx-compose-ui-test = [
