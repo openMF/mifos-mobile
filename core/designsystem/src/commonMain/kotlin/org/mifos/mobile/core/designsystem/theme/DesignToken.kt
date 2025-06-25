@@ -192,7 +192,7 @@ data class AppShapes(
     val extraExtraLarge: Shape = RoundedCornerShape(48.dp),
     val full: Shape = RoundedCornerShape(1000.dp),
     val circle: Shape = RoundedCornerShape(50),
-    val bottomSheet: Shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    val bottomSheet: Shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
     val topBar: Shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
 )
 
