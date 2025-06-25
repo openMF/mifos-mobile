@@ -53,6 +53,9 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
+import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.regular.CardUi
+import fluent.ui.system.icons.regular.Image
 
 object MifosIcons {
     val Paid: ImageVector = Icons.Default.Paid
@@ -99,4 +102,7 @@ object MifosIcons {
     val Finance = Icons.Outlined.Wallet
     val Profile = Icons.Outlined.AccountCircle
     val ProfileBoarder = Icons.Rounded.AccountCircle
+
+    val UploadId = FluentIcons.Regular.CardUi
+    val Image = FluentIcons.Regular.Image
 }
