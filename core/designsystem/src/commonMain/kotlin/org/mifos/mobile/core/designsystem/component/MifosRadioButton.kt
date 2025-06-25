@@ -95,7 +95,7 @@ fun MifosRadioButton(
 
 @Preview
 @Composable
-fun Radio_Button_Preview() {
+private fun Radio_Button_Preview() {
     MifosMobileTheme {
         Column(
             modifier = Modifier
