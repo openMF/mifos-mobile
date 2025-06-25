@@ -59,7 +59,6 @@ fun MifosRadioButton(
 
     Row(
         modifier
-            .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = borderColor,
@@ -108,14 +107,14 @@ fun Radio_Button_Preview() {
                 label = "Telugu",
                 selected = true,
                 onClick = { },
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
             )
 
             MifosRadioButton(
                 label = "English",
                 selected = false,
                 onClick = { },
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
             )
 
             MifosRadioButton(
@@ -123,7 +122,7 @@ fun Radio_Button_Preview() {
                 selected = true,
                 enabled = false,
                 onClick = { },
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
             )
 
             MifosRadioButton(
@@ -131,7 +130,7 @@ fun Radio_Button_Preview() {
                 selected = false,
                 enabled = false,
                 onClick = { },
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
