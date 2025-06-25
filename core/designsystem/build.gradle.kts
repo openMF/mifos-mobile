@@ -44,6 +44,7 @@ kotlin {
             implementation(compose.uiUtil)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.fluentui.system.icons)
             api(libs.back.handler)
             api(libs.window.size)
         }

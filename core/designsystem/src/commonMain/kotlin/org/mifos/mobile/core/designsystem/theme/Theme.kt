@@ -15,6 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+import org.mifos.mobile.core.designsystem.theme.DesignToken.spacing
 
 val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -244,20 +247,44 @@ val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-// TODO:: Configure more themes for the app like medium contrast, high contrast, etc.
+@Immutable
+data class ColorFamily(
+    val color: Color,
+    val onColor: Color,
+    val colorContainer: Color,
+    val onColorContainer: Color,
+)
+
+val unspecified_scheme = ColorFamily(
+    Color.Unspecified,
+    Color.Unspecified,
+    Color.Unspecified,
+    Color.Unspecified,
+)
 
 @Composable
 fun MifosMobileTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    androidTheme: Boolean = false,
+    shouldDisplayDynamicTheming: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val colorScheme = when {
+        androidTheme -> if (darkTheme) darkScheme else lightScheme
+        else -> colorScheme(darkTheme, shouldDisplayDynamicTheming)
+    }
+
     MaterialTheme(
-        colorScheme = colorScheme(useDarkTheme, dynamicColor),
-        content = content,
-        typography = mifosTypography(),
-    )
+        colorScheme = colorScheme,
+        typography = appTypography(),
+    ) {
+        DesignTokenTheme(
+            spacing = spacing,
+            shapes = AppShapes(),
+            elevation = AppElevation(),
+            content = content,
+        )
+    }
 }
 
 @Composable
