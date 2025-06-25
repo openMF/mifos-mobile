@@ -51,7 +51,7 @@ fun MifosRadioButton(
         AppColors.borderColorOne
     }
 
-    val textStyle = if(selected) {
+    val textStyle = if (selected) {
         MifosTypography.titleSmallEmphasized
     } else {
         MifosTypography.titleSmall
@@ -98,11 +98,11 @@ fun MifosRadioButton(
 @Composable
 fun Radio_Button_Preview() {
     MifosMobileTheme {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(DesignToken.padding.medium),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             MifosRadioButton(
                 label = "Telugu",
