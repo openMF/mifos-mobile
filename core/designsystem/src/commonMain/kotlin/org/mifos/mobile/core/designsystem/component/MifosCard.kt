@@ -214,6 +214,9 @@ fun MifosUploadStateCardContent(
 
 @Composable
 fun MifosUploadedStateCard(
+    removeText: String,
+    selectText: String,
+    viewText: String,
     icon: ImageVector,
     label: String,
     fileName: String,
@@ -243,6 +246,9 @@ fun MifosUploadedStateCard(
                 onRemoveClick = onRemoveClick,
                 onViewClick = onViewClick,
                 onSelectNewClick = onSelectNewClick,
+                removeText = removeText,
+                selectText = selectText,
+                viewText = viewText,
             )
         }
 
@@ -263,6 +269,9 @@ fun MifosUploadedStateCard(
 
 @Composable
 fun MifosUploadedCardContent(
+    removeText: String,
+    selectText: String,
+    viewText: String,
     icon: ImageVector,
     fileName: String,
     fileSize: String,
@@ -320,7 +329,7 @@ fun MifosUploadedCardContent(
                     modifier = Modifier.clickable {
                         onRemoveClick
                     },
-                    text = "Remove File",
+                    text = removeText,
                     color = MaterialTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
@@ -329,7 +338,7 @@ fun MifosUploadedCardContent(
                     modifier = Modifier.clickable {
                         onViewClick
                     },
-                    text = "View File",
+                    text = viewText,
                     color = MaterialTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
@@ -338,7 +347,7 @@ fun MifosUploadedCardContent(
                     modifier = Modifier.clickable {
                         onSelectNewClick
                     },
-                    text = "Select New File",
+                    text = selectText,
                     color = MaterialTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
@@ -435,6 +444,9 @@ fun FloatingTitleCardPreview() {
                 onRemoveClick = {},
                 onViewClick = {},
                 onSelectNewClick = {},
+                removeText = "Remove File",
+                selectText = "Select New File",
+                viewText = "View File",
             )
         }
     }
