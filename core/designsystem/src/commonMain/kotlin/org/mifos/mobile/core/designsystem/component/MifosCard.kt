@@ -87,7 +87,7 @@ fun MifosCard(
  */
 
 @Composable
-fun MifosCustomizedCard(
+fun MifosCustomCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     enabled: Boolean = true,
@@ -148,7 +148,7 @@ fun MifosUploadCard(
     modifier: Modifier = Modifier,
     height: Dp = 112.dp,
 ) {
-    MifosCustomizedCard(
+    MifosCustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(height),
@@ -215,7 +215,7 @@ private fun Upload_Card_Preview() {
                 style = MifosTypography.headlineMedium,
             )
             CardVariant.entries.forEach {
-                MifosCustomizedCard(
+                MifosCustomCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(112.dp),
