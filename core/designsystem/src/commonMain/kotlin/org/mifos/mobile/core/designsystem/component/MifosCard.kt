@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -139,6 +140,68 @@ fun MifosCustomizedCard(
     }
 }
 
+@Composable
+fun MifosUploadCard(
+    text: String,
+    icon: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = 112.dp,
+) {
+    MifosCustomizedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height),
+        onClick = onClick,
+        enabled = true,
+        variant = CardVariant.FILLED,
+        shape = DesignToken.shapes.medium,
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = DesignToken.elevation.none,
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+        ),
+        borderStroke = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.secondaryContainer,
+        ),
+    ) {
+        UploadCardContent(
+            text = text,
+            icon = icon,
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+fun UploadCardContent(
+    text: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(DesignToken.padding.medium),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(DesignToken.sizes.iconMedium),
+        )
+        Spacer(modifier = Modifier.height(DesignToken.spacing.extraSmall))
+        Text(
+            text = text,
+            style = MifosTypography.bodySmall,
+            color = MaterialTheme.colorScheme.secondary,
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun Upload_Card_Preview() {
@@ -147,6 +210,10 @@ private fun Upload_Card_Preview() {
             modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
             verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
         ) {
+            Text(
+                text = "Different variant cards",
+                style = MifosTypography.headlineMedium,
+            )
             CardVariant.entries.forEach {
                 MifosCustomizedCard(
                     modifier = Modifier
@@ -192,6 +259,17 @@ private fun Upload_Card_Preview() {
                     }
                 }
             }
+
+            Text(
+                text = "Upload Card",
+                style = MifosTypography.headlineMedium,
+            )
+
+            MifosUploadCard(
+                text = "Upload Your Id",
+                icon = MifosIcons.UploadId,
+                onClick = {},
+            )
         }
     }
 }
