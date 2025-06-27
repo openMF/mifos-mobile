@@ -51,6 +51,7 @@ import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.filled.Document
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -310,7 +311,7 @@ fun MifosUploadedCardContent(
             Text(
                 text = fileName,
                 style = MifosTypography.titleSmallEmphasized,
-                color = Color(0xFF3A3A3A),
+                color = AppColors.customBlack,
             )
 
             Text(
