@@ -231,4 +231,6 @@ object AppColors {
     val primaryBlue = Color(0xFF33618D)
     val borderColor = Color(0xFF42474E)
     val borderColorOne = Color(0xFFD6E4F7)
+
+    val customBlack = Color(0xFF3A3A3A)
 }

@@ -10,17 +10,25 @@
 package org.mifos.mobile.core.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -35,12 +43,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.filled.Document
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -141,7 +153,7 @@ fun MifosCustomCard(
 }
 
 @Composable
-fun MifosUploadCard(
+fun MifosUploadStateCard(
     text: String,
     icon: ImageVector,
     onClick: () -> Unit,
@@ -167,7 +179,7 @@ fun MifosUploadCard(
             MaterialTheme.colorScheme.secondaryContainer,
         ),
     ) {
-        UploadCardContent(
+        MifosUploadStateCardContent(
             text = text,
             icon = icon,
             modifier = modifier,
@@ -176,7 +188,7 @@ fun MifosUploadCard(
 }
 
 @Composable
-fun UploadCardContent(
+fun MifosUploadStateCardContent(
     text: String,
     icon: ImageVector,
     modifier: Modifier = Modifier,
@@ -199,6 +211,151 @@ fun UploadCardContent(
             style = MifosTypography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
+    }
+}
+
+@Composable
+fun MifosUploadedStateCard(
+    removeText: String,
+    selectText: String,
+    viewText: String,
+    icon: ImageVector,
+    label: String,
+    fileName: String,
+    fileSize: String,
+    onRemoveClick: () -> Unit,
+    onViewClick: () -> Unit,
+    onSelectNewClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = 112.dp,
+) {
+    Box(modifier = modifier.fillMaxWidth()) {
+        MifosCustomCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height),
+            enabled = false,
+            variant = CardVariant.OUTLINED,
+            shape = DesignToken.shapes.medium,
+            elevation = CardDefaults.cardElevation(defaultElevation = DesignToken.elevation.none),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onPrimary),
+            borderStroke = BorderStroke(1.dp, MaterialTheme.colorScheme.secondaryContainer),
+        ) {
+            MifosUploadedCardContent(
+                icon = icon,
+                fileName = fileName,
+                fileSize = fileSize,
+                onRemoveClick = onRemoveClick,
+                onViewClick = onViewClick,
+                onSelectNewClick = onSelectNewClick,
+                removeText = removeText,
+                selectText = selectText,
+                viewText = viewText,
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(start = DesignToken.padding.large)
+                .offset(y = (-7).dp),
+        ) {
+            Text(
+                text = label,
+                style = MifosTypography.bodySmall,
+                modifier = Modifier
+                    .padding(horizontal = DesignToken.padding.extraSmall),
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun MifosUploadedCardContent(
+    removeText: String,
+    selectText: String,
+    viewText: String,
+    icon: ImageVector,
+    fileName: String,
+    fileSize: String,
+    onRemoveClick: () -> Unit,
+    onViewClick: () -> Unit,
+    onSelectNewClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(DesignToken.padding.largeIncreased),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(DesignToken.sizes.avatarSmall + 4.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = DesignToken.shapes.small,
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            Image(
+                imageVector = icon,
+                contentDescription = "file icon",
+                colorFilter = ColorFilter.tint(Color.White),
+                modifier = Modifier
+                    .size(DesignToken.sizes.iconMedium)
+                    .align(Alignment.Center),
+            )
+        }
+
+        Spacer(modifier = Modifier.width(DesignToken.spacing.large))
+
+        Column {
+            Text(
+                text = fileName,
+                style = MifosTypography.titleSmallEmphasized,
+                color = AppColors.customBlack,
+            )
+
+            Text(
+                text = fileSize,
+                style = MifosTypography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            ) {
+                Text(
+                    modifier = Modifier.clickable {
+                        onRemoveClick
+                    },
+                    text = removeText,
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MifosTypography.labelMedium,
+                )
+
+                Text(
+                    modifier = Modifier.clickable {
+                        onViewClick
+                    },
+                    text = viewText,
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MifosTypography.labelMedium,
+                )
+
+                Text(
+                    modifier = Modifier.clickable {
+                        onSelectNewClick
+                    },
+                    text = selectText,
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MifosTypography.labelMedium,
+                )
+            }
+        }
     }
 }
 
@@ -265,10 +422,34 @@ private fun Upload_Card_Preview() {
                 style = MifosTypography.headlineMedium,
             )
 
-            MifosUploadCard(
+            MifosUploadStateCard(
                 text = "Upload Your Id",
                 icon = MifosIcons.UploadId,
                 onClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun FloatingTitleCardPreview() {
+    MifosMobileTheme {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
+            verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
+        ) {
+            MifosUploadedStateCard(
+                label = "Profile Photo",
+                icon = FluentIcons.Filled.Document,
+                fileName = "profile photo 67883.png",
+                fileSize = "346 KB",
+                onRemoveClick = {},
+                onViewClick = {},
+                onSelectNewClick = {},
+                removeText = "Remove File",
+                selectText = "Select New File",
+                viewText = "View File",
             )
         }
     }
