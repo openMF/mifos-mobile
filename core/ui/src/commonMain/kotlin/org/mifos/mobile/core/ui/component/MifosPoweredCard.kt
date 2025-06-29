@@ -39,9 +39,9 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
 fun MifosPoweredCard(
+    modifier: Modifier = Modifier,
     text: String? = stringResource(Res.string.powered_by),
     icon: DrawableResource? = Res.drawable.ic_icon_powered_logo,
-    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
