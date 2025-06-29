@@ -27,8 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_powered_logo
+import mifos_mobile.core.ui.generated.resources.powered_by
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -37,8 +39,8 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
 fun MifosPoweredCard(
-    text: String,
-    icon: DrawableResource,
+    text: String? = stringResource(Res.string.powered_by),
+    icon: DrawableResource? = Res.drawable.ic_icon_powered_logo,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -58,18 +60,19 @@ fun MifosPoweredCard(
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = text,
+                text = text ?: "",
                 style = MifosTypography.tag,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
-
-            Image(
-                painter = painterResource(
-                    icon,
-                ),
-                contentDescription = null,
-            )
+            if(icon != null) {
+                Image(
+                    painter = painterResource(
+                        icon,
+                    ),
+                    contentDescription = null,
+                )
+            }
         }
     }
 }

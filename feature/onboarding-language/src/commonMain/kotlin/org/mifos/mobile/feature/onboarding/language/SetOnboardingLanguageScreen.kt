@@ -152,9 +152,6 @@ internal fun OnboardingLanguageScreenContent(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth(),
-                text = "Powered By",
-                icon = mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_powered_logo,
-
             )
         }
     }
