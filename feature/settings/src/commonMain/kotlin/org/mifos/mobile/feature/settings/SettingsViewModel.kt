@@ -64,7 +64,7 @@ internal class SettingsViewModel(
                 baseUrl = settings.baseUrl,
                 passcode = settings.passcode ?: "",
                 theme = settings.appTheme,
-                language = settings.language,
+//                language = settings.language,
                 allLanguages = allLanguageList.value,
             )
         }
@@ -86,10 +86,10 @@ internal class SettingsViewModel(
     }
 
     fun updateLanguage(language: MifosAppLanguage): Boolean {
-        viewModelScope.launch {
-            val updatedSettings = userPreferencesRepository.settingsInfo.first().copy(language = language)
-            userPreferencesRepository.updateSettings(updatedSettings)
-        }
+//        viewModelScope.launch {
+//            val updatedSettings = userPreferencesRepository.settingsInfo.first().copy(language = language)
+//            userPreferencesRepository.updateSettings(updatedSettings)
+//        }
         return language.code != "system"
     }
 
