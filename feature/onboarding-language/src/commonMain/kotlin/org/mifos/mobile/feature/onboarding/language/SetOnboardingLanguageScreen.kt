@@ -32,9 +32,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
+import mifos_mobile.core.ui.generated.resources.ic_icon_powered_logo
 import mifos_mobile.feature.onboarding_language.generated.resources.Res
 import mifos_mobile.feature.onboarding_language.generated.resources.feature_onboarding_choose_your_app_language
 import mifos_mobile.feature.onboarding_language.generated.resources.feature_onboarding_chosen_language_can_be_changed_later_in_the_settings
