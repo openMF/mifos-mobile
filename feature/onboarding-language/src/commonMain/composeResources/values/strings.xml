@@ -29,5 +29,5 @@
     <string name="feature_onboarding_russian">Russian(русский)</string>
     <string name="feature_onboarding_swahili">Swahili(Kiswahili)</string>
     <string name="feature_onboarding_farsi">Farsi(فارسی)</string>
-    <string name="feature_onboarding_next">Next</string>
+    <string name="feature_onboarding_submit">Submit</string>
 </resources>
