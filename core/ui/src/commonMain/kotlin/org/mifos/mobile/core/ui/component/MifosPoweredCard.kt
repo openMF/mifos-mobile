@@ -65,7 +65,7 @@ fun MifosPoweredCard(
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
-            if(icon != null) {
+            if (icon != null) {
                 Image(
                     painter = painterResource(
                         icon,
