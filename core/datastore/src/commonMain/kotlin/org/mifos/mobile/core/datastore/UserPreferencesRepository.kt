@@ -15,6 +15,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.LanguageConfig
 
 interface UserPreferencesRepository {
     val userInfo: Flow<UserData>
@@ -30,7 +31,10 @@ interface UserPreferencesRepository {
     val profileImage: String?
 
     val sentTokenToServer: StateFlow<Boolean>
+
     val gcmToken: StateFlow<String?>
+
+    val observeLanguage: Flow<LanguageConfig>
 
     suspend fun updateToken(password: String): DataState<Unit>
 
@@ -47,6 +51,12 @@ interface UserPreferencesRepository {
     suspend fun setSentTokenToServer(sent: Boolean): DataState<Unit>
 
     suspend fun saveGcmToken(token: String?): DataState<Unit>
+
+    suspend fun setShowOnboarding(showOnboarding: Boolean)
+
+    suspend fun setFirstTimeState(firstTimeState: Boolean)
+
+    suspend fun setLanguage(language: LanguageConfig)
 
     suspend fun logOut(): Unit
 }

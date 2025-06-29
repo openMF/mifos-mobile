@@ -20,6 +20,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.LanguageConfig
 
 class UserPreferencesRepositoryImpl(
     private val preferenceManager: UserPreferencesDataSource,
@@ -64,6 +65,9 @@ class UserPreferencesRepositoryImpl(
     override val gcmToken: StateFlow<String?>
         get() = preferenceManager.settingsInfo.map { it.gcmToken }
             .stateIn(unconfinedScope, SharingStarted.Eagerly, null)
+
+    override val observeLanguage: Flow<LanguageConfig>
+        get() = preferenceManager.observeLanguage
 
     override suspend fun updateToken(password: String): DataState<Unit> {
         return try {
@@ -135,6 +139,18 @@ class UserPreferencesRepositoryImpl(
         } catch (e: Exception) {
             DataState.Error(e)
         }
+    }
+
+    override suspend fun setFirstTimeState(firstTimeState: Boolean) {
+        preferenceManager.setFirstTimeState(firstTimeState)
+    }
+
+    override suspend fun setShowOnboarding(showOnboarding: Boolean) {
+        preferenceManager.setShowOnboarding(showOnboarding)
+    }
+
+    override suspend fun setLanguage(language: LanguageConfig) {
+        preferenceManager.setLanguage(language)
     }
 
     override suspend fun logOut() {
