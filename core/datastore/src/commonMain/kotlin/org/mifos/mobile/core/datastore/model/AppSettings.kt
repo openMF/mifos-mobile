@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.datastore.model
 
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.LanguageConfig
 
 @Serializable
 data class AppSettings(
@@ -17,18 +18,23 @@ data class AppSettings(
     val baseUrl: String,
     val passcode: String? = null,
     val appTheme: AppTheme = AppTheme.SYSTEM,
-    val language: MifosAppLanguage,
     val sentTokenToServer: Boolean = false,
     val gcmToken: String? = null,
+
+    val language: LanguageConfig,
+    val showOnboarding: Boolean,
+    val firstTimeState: Boolean,
 ) {
     companion object {
         val DEFAULT = AppSettings(
             tenant = "default",
             baseUrl = "https://tt.mifos.community/",
             appTheme = AppTheme.SYSTEM,
-            language = MifosAppLanguage.SYSTEM_LANGUAGE,
             sentTokenToServer = false,
             gcmToken = null,
+            language = LanguageConfig.DEFAULT,
+            showOnboarding = true,
+            firstTimeState = true,
         )
     }
 }

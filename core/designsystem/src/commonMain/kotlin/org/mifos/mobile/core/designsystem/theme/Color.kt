@@ -233,4 +233,5 @@ object AppColors {
     val borderColorOne = Color(0xFFD6E4F7)
 
     val customBlack = Color(0xFF3A3A3A)
+    val customWhite = Color(0xFFFFFFFF)
 }

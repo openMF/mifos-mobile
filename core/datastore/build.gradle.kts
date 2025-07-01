@@ -23,7 +23,6 @@ android {
 }
 
 kotlin{
-
     sourceSets{
         commonMain.dependencies {
             implementation(libs.multiplatform.settings)
@@ -32,6 +31,7 @@ kotlin{
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.core)
             implementation(projects.core.common)
+            implementation(projects.core.model)
         }
     }
 }

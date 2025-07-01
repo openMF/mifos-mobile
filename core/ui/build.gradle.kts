@@ -47,3 +47,9 @@ kotlin{
     }
 }
 
+
+compose.resources {
+    publicResClass = true
+    generateResClass = always
+    packageOfResClass = "mifos_mobile.core.ui.generated.resources"
+}

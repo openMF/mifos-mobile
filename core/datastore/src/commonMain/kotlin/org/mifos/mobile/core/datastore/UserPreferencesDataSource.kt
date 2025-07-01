@@ -17,6 +17,7 @@ import com.russhwolf.settings.serialization.decodeValue
 import com.russhwolf.settings.serialization.decodeValueOrNull
 import com.russhwolf.settings.serialization.encodeValue
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -25,6 +26,7 @@ import okio.ByteString.Companion.encodeUtf8
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.LanguageConfig
 
 private const val USER_DATA = "userData"
 private const val APP_SETTINGS = "appSettings"
@@ -69,6 +71,9 @@ class UserPreferencesDataSource(
     val appTheme = _settingsInfo.map { it.appTheme }
 
     val officeName = _userInfo.map { it.officeName }
+
+    val observeLanguage: Flow<LanguageConfig>
+        get() = _settingsInfo.map { it.language }
 
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
@@ -167,6 +172,27 @@ class UserPreferencesDataSource(
         return _settingsInfo.value.gcmToken
     }
 
+    suspend fun setLanguage(language: LanguageConfig) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(language = language)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    suspend fun setShowOnboarding(showOnboarding: Boolean) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(showOnboarding = showOnboarding)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    suspend fun setFirstTimeState(firstTimeState: Boolean) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(firstTimeState = firstTimeState)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
     companion object {
         private const val PROFILE_IMAGE = "preferences_profile_image"
     }
@@ -182,6 +208,14 @@ private fun Settings.putUserPreference(user: UserData) {
         key = USER_DATA,
         serializer = UserData.serializer(),
         value = user,
+    )
+}
+
+private fun Settings.getSettingsPreference(): AppSettings {
+    return decodeValue(
+        key = APP_SETTINGS,
+        serializer = AppSettings.serializer(),
+        defaultValue = AppSettings.DEFAULT,
     )
 }
 

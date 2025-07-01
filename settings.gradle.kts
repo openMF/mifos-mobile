@@ -80,6 +80,7 @@ include(":feature:accounts")
 include(":feature:share-account")
 include(":feature:loan-account")
 include(":feature:savings-account")
+include(":feature:onboarding-language")
 
 // Lint Modules
 //include(":lint")
