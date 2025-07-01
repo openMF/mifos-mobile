@@ -61,4 +61,16 @@
     <string name="error_enter_user_name">Please enter your user name</string>
     <string name="error_enter_country">Please enter your country</string>
 
+
+    <string name="feature_sign_in_title">Sign in</string>
+    <string name="feature_sign_in_sub_title">Enter your email and password to log in </string>
+    <string name="feature_sign_in_username_label">Username or Email</string>
+    <string name="feature_sign_in_password_label">Password</string>
+    <string name="feature_sign_in_forgot_password">Forgot Password ?</string>
+    <string name="feature_sign_in_Sign_in">Sign in</string>
+    <string name="feature_sign_in_dont_have_an_account">Don’t have an account?</string>
+    <string name="feature_sign_in_sign_up">Sign up!</string>
+    <string name="feature_sign_in_username_error">Email address not found</string>
+    <string name="feature_sign_in_password_error">Your password is not correct!</string>
+
 </resources>

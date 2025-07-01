@@ -13,6 +13,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,6 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.ImeAction
@@ -42,6 +47,9 @@ fun MifosPasswordField(
     showPasswordChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    isError: Boolean = false,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
     hint: String? = null,
@@ -56,6 +64,8 @@ fun MifosPasswordField(
         modifier = modifier
             .tabNavigation()
             .focusRequester(focusRequester),
+        shape = shape,
+        colors = colors,
         label = label,
         value = value,
         onValueChange = onValueChange,
@@ -67,6 +77,7 @@ fun MifosPasswordField(
             },
             singleLine = singleLine,
             readOnly = readOnly,
+            isError = isError,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 imeAction = imeAction,
@@ -74,20 +85,25 @@ fun MifosPasswordField(
             keyboardActions = keyboardActions,
             errorText = hint,
             trailingIcon = {
-                IconButton(
-                    onClick = { showPasswordChange.invoke(!showPassword) },
-                ) {
-                    val imageVector = if (showPassword) {
-                        MifosIcons.OutlinedVisibilityOff
-                    } else {
-                        MifosIcons.OutlinedVisibility
-                    }
-
+                if (isError) {
                     Icon(
-                        modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
-                        imageVector = imageVector,
-                        contentDescription = "togglePassword",
+                        imageVector = MifosIcons.EyeFilled,
+                        contentDescription = "Error",
+                        tint = MaterialTheme.colorScheme.error,
                     )
+                } else {
+                    IconButton(
+                        onClick = { showPasswordChange.invoke(!showPassword) },
+                    ) {
+                        val imageVector = if (showPassword) MifosIcons.EyeOff else MifosIcons.Eye
+
+                        Icon(
+                            modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
+                            imageVector = imageVector,
+                            contentDescription = "togglePassword",
+                            tint = Color.Unspecified,
+                        )
+                    }
                 }
             },
         ),
@@ -103,6 +119,9 @@ fun MifosPasswordField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    isError: Boolean = false,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
     hint: String? = null,
@@ -117,6 +136,9 @@ fun MifosPasswordField(
     MifosPasswordField(
         modifier = modifier,
         label = label,
+        shape = shape,
+        colors = colors,
+        isError = isError,
         value = value,
         showPassword = showPassword,
         showPasswordChange = { showPassword = !showPassword },
