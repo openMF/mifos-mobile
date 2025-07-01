@@ -50,7 +50,7 @@ enum class LanguageConfig(
         languageName = "French (français)",
     ),
     INDONESIAN(
-        localName = "in",
+        localName = "id",
         languageName = "Indonesian (bahasa Indonesia)",
     ),
     KHMER(

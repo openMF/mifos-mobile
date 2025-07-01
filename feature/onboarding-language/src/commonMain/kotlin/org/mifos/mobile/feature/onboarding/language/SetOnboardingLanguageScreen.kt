@@ -32,7 +32,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
@@ -47,6 +46,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosRadioButton
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -101,7 +101,7 @@ internal fun OnboardingLanguageScreenContent(
                 Text(
                     text = stringResource(Res.string.feature_onboarding_choose_your_app_language),
                     style = MifosTypography.headlineMedium,
-                    color = Color(0xFF3A3A3A),
+                    color = AppColors.customBlack,
                 )
 
                 Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
@@ -127,7 +127,7 @@ internal fun OnboardingLanguageScreenContent(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
                 MifosButton(
                     modifier = Modifier
@@ -136,7 +136,7 @@ internal fun OnboardingLanguageScreenContent(
                     shape = DesignToken.shapes.medium,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = Color.White,
+                        contentColor = AppColors.customWhite,
                     ),
                     text = {
                         Text(

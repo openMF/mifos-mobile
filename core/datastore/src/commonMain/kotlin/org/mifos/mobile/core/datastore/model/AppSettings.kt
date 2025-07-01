@@ -18,7 +18,6 @@ data class AppSettings(
     val baseUrl: String,
     val passcode: String? = null,
     val appTheme: AppTheme = AppTheme.SYSTEM,
-//    val language: MifosAppLanguage,
     val sentTokenToServer: Boolean = false,
     val gcmToken: String? = null,
 
@@ -31,7 +30,6 @@ data class AppSettings(
             tenant = "default",
             baseUrl = "https://tt.mifos.community/",
             appTheme = AppTheme.SYSTEM,
-//            language = MifosAppLanguage.SYSTEM_LANGUAGE,
             sentTokenToServer = false,
             gcmToken = null,
             language = LanguageConfig.DEFAULT,
