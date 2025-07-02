@@ -9,18 +9,24 @@
  */
 package org.mifos.mobile.feature.auth.login
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,20 +35,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.auth.generated.resources.Res
-import mifos_mobile.feature.auth.generated.resources.create_an_account
-import mifos_mobile.feature.auth.generated.resources.feature_auth_ic_person
-import mifos_mobile.feature.auth.generated.resources.feature_auth_mifos_logo
-import mifos_mobile.feature.auth.generated.resources.login
-import mifos_mobile.feature.auth.generated.resources.password
-import mifos_mobile.feature.auth.generated.resources.username
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_Sign_in
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_dont_have_an_account
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_forgot_password
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_label
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_sign_up
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_sub_title
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_title
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_label
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -56,8 +63,12 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.component.MifosMobileIcon
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -75,7 +86,9 @@ internal fun LoginScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is LoginEvent.NavigateToSignup -> navigateToRegisterScreen.invoke()
+
             is LoginEvent.NavigateToPasscodeScreen -> navigateToPasscodeScreen.invoke()
+
             is LoginEvent.ShowToast -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(event.message)
@@ -93,7 +106,6 @@ internal fun LoginScreen(
 
     LoginScreen(
         state = state,
-        snackbarHostState = snackbarHostState,
         modifier = modifier.fillMaxSize(),
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
@@ -104,17 +116,12 @@ internal fun LoginScreen(
 @Composable
 private fun LoginScreen(
     state: LoginState,
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     onAction: (LoginAction) -> Unit,
 ) {
-    MifosScaffold(
-        snackbarHostState = snackbarHostState,
-        containerColor = MaterialTheme.colorScheme.background,
-    ) { paddingValues ->
+    MifosScaffold { paddingValues ->
         LoginScreenContent(
-            modifier = modifier
-                .padding(paddingValues),
+            modifier = modifier.padding(paddingValues),
             state = state,
             onAction = onAction,
         )
@@ -150,11 +157,10 @@ private fun LoginScreenContent(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .padding(top = 75.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = {
@@ -162,86 +168,168 @@ private fun LoginScreenContent(
                     },
                 )
             },
-        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        MifosMobileIcon(mobileIcon = Res.drawable.feature_auth_mifos_logo)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large)
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LogoBox()
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+            InputBox(
+                state = state,
+                onAction = onAction,
+            )
+        }
+        MifosPoweredCard(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(),
+        )
+    }
+}
 
+@Composable
+fun LogoBox(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Image(
+            modifier = Modifier.height(48.dp).width(165.dp),
+            painter = painterResource(
+                mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
+            ),
+            contentDescription = null,
+        )
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Text(
+            text = stringResource(Res.string.feature_sign_in_title),
+            style = MifosTypography.headlineMedium,
+            color = AppColors.customBlack,
+        )
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+        Text(
+            text = stringResource(Res.string.feature_sign_in_sub_title),
+            style = MifosTypography.bodySmall,
+            color = MaterialTheme.colorScheme.secondary,
+        )
+    }
+}
+
+@Composable
+fun InputBox(
+    state: LoginState,
+    onAction: (LoginAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+    ) {
         MifosOutlinedTextField(
             value = state.username,
             onValueChange = {
                 onAction(LoginAction.UsernameChanged(it))
             },
-            label = stringResource(Res.string.username),
+            label = stringResource(Res.string.feature_sign_in_username_label),
+            shape = DesignToken.shapes.medium,
+            textStyle = MifosTypography.bodyLarge,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                errorBorderColor = MaterialTheme.colorScheme.error,
+            ),
             config = MifosTextFieldConfig(
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource(Res.drawable.feature_auth_ic_person),
-                        contentDescription = null,
-                    )
+                isError = state.isError,
+                errorText = state.userNameError.takeIf { state.isError }?.let { stringResource(it) },
+                trailingIcon = if (state.isError) {
+                    {
+                        Icon(
+                            imageVector = MifosIcons.ErrorCircle,
+                            contentDescription = "Error",
+                            tint = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                } else {
+                    null
                 },
             ),
         )
 
         MifosPasswordField(
-            label = stringResource(Res.string.password),
+            label = stringResource(Res.string.feature_sign_in_password_label),
             value = state.password,
             onValueChange = {
                 onAction(LoginAction.PasswordChanged(it))
             },
+            shape = DesignToken.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
             showPassword = state.isPasswordVisible,
             showPasswordChange = {
                 onAction(LoginAction.TogglePasswordVisibility)
             },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                errorBorderColor = MaterialTheme.colorScheme.error,
+            ),
+            isError = state.isError,
+            hint = state.passwordError.takeIf { state.isError }?.let { stringResource(it) },
+        )
+
+        Text(
+            modifier = Modifier
+                .align(Alignment.End)
+                .clickable(true) {
+                },
+            text = stringResource(Res.string.feature_sign_in_forgot_password),
+            style = MifosTypography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
         )
 
         MifosButton(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
             enabled = state.isLoginButtonEnabled,
             onClick = {
                 onAction(LoginAction.LoginClicked)
             },
+            shape = DesignToken.shapes.medium,
         ) {
             Text(
-                text = stringResource(Res.string.login).uppercase(),
+                text = stringResource(Res.string.feature_sign_in_Sign_in),
                 style = MaterialTheme.typography.labelLarge,
             )
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                thickness = 1.dp,
-                color = Color.Gray,
-            )
             Text(
-                modifier = Modifier.padding(8.dp),
-                text = "or",
-                fontSize = 18.sp,
+                text = stringResource(Res.string.feature_sign_in_dont_have_an_account),
+                style = MifosTypography.labelMedium,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                thickness = 1.dp,
-                color = Color.Gray,
-            )
-        }
 
-        MifosButton(
-            onClick = { onAction(LoginAction.SignupClicked) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-        ) {
-            Text(text = stringResource(Res.string.create_an_account))
+            Spacer(
+                modifier = Modifier.width(DesignToken.spacing.extraSmall),
+            )
+
+            Text(
+                modifier = Modifier.clickable(true) {
+                    onAction(LoginAction.SignupClicked)
+                },
+                text = stringResource(Res.string.feature_sign_in_sign_up),
+                style = MifosTypography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
         }
     }
 }
@@ -252,7 +340,6 @@ private fun LoanScreenPreview() {
     MifosMobileTheme {
         LoginScreen(
             state = LoginState(dialogState = null),
-            snackbarHostState = remember { SnackbarHostState() },
             onAction = {},
         )
     }

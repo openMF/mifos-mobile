@@ -21,12 +21,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -35,6 +39,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
 fun MifosOutlinedTextField(
@@ -42,6 +47,8 @@ fun MifosOutlinedTextField(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    colors: TextFieldColors = TextFieldDefaults.colors(),
     textStyle: TextStyle = LocalTextStyle.current,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     config: MifosTextFieldConfig = MifosTextFieldConfig(),
@@ -51,6 +58,8 @@ fun MifosOutlinedTextField(
     val showIcon by rememberUpdatedState(value.isNotEmpty())
 
     OutlinedTextField(
+        shape = shape,
+        colors = colors,
         value = value,
         label = { Text(text = label) },
         onValueChange = onValueChange,
@@ -87,7 +96,7 @@ fun MifosOutlinedTextField(
                 Text(
                     modifier = Modifier.testTag("errorTag"),
                     text = it,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -146,7 +155,7 @@ fun MifosTextField(
                 Text(
                     modifier = Modifier.testTag("errorTag"),
                     text = it ?: "",
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.error,
                 )
             }
