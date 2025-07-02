@@ -65,6 +65,7 @@ import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -210,7 +211,7 @@ fun LogoBox(
         Text(
             text = stringResource(Res.string.feature_sign_in_title),
             style = MifosTypography.headlineMedium,
-            color = Color(0xFF3A3A3A),
+            color = AppColors.customBlack,
         )
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
