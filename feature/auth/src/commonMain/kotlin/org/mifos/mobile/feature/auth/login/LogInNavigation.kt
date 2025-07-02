@@ -7,7 +7,6 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-
 @file:Suppress("MatchingDeclarationName")
 
 package org.mifos.mobile.feature.auth.login
@@ -16,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.ui.composableWithStayTransitions
 
 @Serializable
 data object LoginRoute
@@ -30,10 +30,10 @@ fun NavGraphBuilder.loginDestination(
     navigateToRegisterScreen: () -> Unit,
     navigateToPasscodeScreen: () -> Unit,
 ) {
-//    composableWithStayTransitions<LoginRoute> {
-//        LoginScreen(
-//            navigateToRegisterScreen = navigateToRegisterScreen,
-//            navigateToPasscodeScreen = navigateToPasscodeScreen,
-//        )
-//    }
+    composableWithStayTransitions<LoginRoute> {
+        LoginScreen(
+            navigateToRegisterScreen = navigateToRegisterScreen,
+            navigateToPasscodeScreen = navigateToPasscodeScreen,
+        )
+    }
 }
