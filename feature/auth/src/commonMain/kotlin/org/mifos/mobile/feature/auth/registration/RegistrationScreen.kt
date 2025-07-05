@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.auth.registration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -154,7 +154,15 @@ private fun RegistrationScreen(
     onAction: (SignUpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold { paddingValues ->
+    MifosScaffold(
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        },
+    ) { paddingValues ->
         RegistrationScreenContent(
             state = state,
             onAction = onAction,
@@ -177,92 +185,81 @@ private fun RegistrationScreenContent(
         if (scrollState.canScrollForward) scrollState.scrollTo(scrollState.maxValue)
     }
 
-    Box(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures {
                     keyboardController?.hide()
                 }
-            },
+            }
+            .padding(DesignToken.padding.large),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+        contentPadding = PaddingValues(
+            bottom = DesignToken.spacing.extraLarge,
+        ),
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-            contentPadding = PaddingValues(
-                bottom = DesignToken.spacing.extraLarge * 3,
-            ),
-        ) {
-            item {
+        item {
+            Text(
+                text = stringResource(Res.string.feature_signup_title),
+                style = MifosTypography.headlineMedium,
+                color = AppColors.customBlack,
+            )
+        }
+
+        item {
+            Text(
+                text = stringResource(Res.string.feature_signup_sub_title),
+                style = MifosTypography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+        }
+
+        item {
+            FormSection(
+                inputConfigs = getInputConfigs(state, onAction),
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+            MifosButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(DesignToken.sizes.inputHeight),
+                onClick = { onAction(SignUpAction.SubmitClick) },
+                shape = DesignToken.shapes.medium,
+                enabled = state.isSubmitButtonEnabled,
+            ) {
                 Text(
-                    text = stringResource(Res.string.feature_signup_title),
-                    style = MifosTypography.headlineMedium,
-                    color = AppColors.customBlack,
+                    text = stringResource(Res.string.feature_signup_submit),
+                    style = MaterialTheme.typography.labelLarge,
                 )
-            }
-
-            item {
-                Text(
-                    text = stringResource(Res.string.feature_signup_sub_title),
-                    style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
-
-            item {
-                FormSection(
-                    inputConfigs = getInputConfigs(state, onAction),
-                )
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-                MifosButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(DesignToken.sizes.inputHeight),
-                    onClick = { onAction(SignUpAction.SubmitClick) },
-                    shape = DesignToken.shapes.medium,
-                    enabled = state.isSubmitButtonEnabled,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_signup_submit),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_signup_already_have_an_account),
-                        style = MifosTypography.labelMedium,
-                    )
-                    Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
-                    Text(
-                        modifier = Modifier.clickable {
-                            onAction(SignUpAction.OnNavigateToLogin)
-                        },
-                        text = stringResource(Res.string.feature_signup_log_in),
-                        style = MifosTypography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
             }
         }
 
-        MifosPoweredCard(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-        )
+        item {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(Res.string.feature_signup_already_have_an_account),
+                    style = MifosTypography.labelMedium,
+                )
+                Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
+                Text(
+                    modifier = Modifier.clickable {
+                        onAction(SignUpAction.OnNavigateToLogin)
+                    },
+                    text = stringResource(Res.string.feature_signup_log_in),
+                    style = MifosTypography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }
     }
 }
 
