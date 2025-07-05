@@ -28,7 +28,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
