@@ -63,7 +63,7 @@
 
 
     <string name="feature_sign_in_title">Sign in</string>
-    <string name="feature_sign_in_sub_title">Enter your email and password to log in </string>
+    <string name="feature_sign_in_sub_title">Enter your email and password to log in</string>
     <string name="feature_sign_in_username_label">Username or Email</string>
     <string name="feature_sign_in_password_label">Password</string>
     <string name="feature_sign_in_forgot_password">Forgot Password ?</string>
@@ -72,5 +72,37 @@
     <string name="feature_sign_in_sign_up">Sign up!</string>
     <string name="feature_sign_in_username_error">Email address not found</string>
     <string name="feature_sign_in_password_error">Your password is not correct!</string>
+
+    <string name="feature_signup_title">Sign up</string>
+    <string name="feature_signup_sub_title">Create an account to continue!</string>
+    <string name="feature_signup_first_name_label">First Name</string>
+    <string name="feature_signup_middle_name_label">Middle Name</string>
+    <string name="feature_signup_last_name_label">Last Name</string>
+    <string name="feature_signup_email_label">Email</string>
+    <string name="feature_signup_cell_phone_label">Cell Phone</string>
+    <string name="feature_signup_customer_account_label">Customer Account</string>
+    <string name="feature_signup_password_label">Password</string>
+    <string name="feature_signup_confirm_password_label">Confirm Password</string>
+    <string name="feature_signup_submit">Submit</string>
+    <string name="feature_signup_already_have_an_account">Already have an account?</string>
+    <string name="feature_signup_log_in">Log in!</string>
+    <string name="feature_signup_character_rules">Character Rules</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">Name contain invalid character</string>
+    <string name="feature_signup_error_first_name_empty">First name cannot be empty</string>
+    <string name="feature_signup_error_middle_name_empty">Middle name cannot be empty</string>
+    <string name="feature_signup_error_last_name_empty">Last name cannot be empty</string>
+    <string name="feature_signup_error_invalid_email">Invalid email address</string>
+    <string name="feature_signup_error_invalid_mobile_number">Invalid mobile number</string>
+    <string name="feature_signup_error_customer_account_empty">Customer account is required</string>
+    <string name="feature_signup_error_customer_account_not_valid">Provide valid Customer account</string>
+    <string name="feature_signup_error_password_required_error">Password is Required</string>
+    <string name="feature_signup_error_password_short">Password must be at least 6 characters</string>
+    <string name="feature_signup_error_password_mismatch">Passwords do not match</string>
+    <string name="feature_signup_error_name_contains_digits">Name should not contain digits</string>
+    <string name="feature_signup_error_name_contains_symbols">Name should not contain symbols and spaces</string>
+    <string name="feature_signup_error_name_contains_emoji">Text must not contain emoji or invalid characters</string>
+
 
 </resources>
