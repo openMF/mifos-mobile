@@ -22,7 +22,7 @@ import org.mifos.mobile.core.ui.composableWithStayTransitions
 @SerialName("login")
 data object LoginRoute
 
-fun NavController.navigateToLogin(navOptions: NavOptions? = null) {
+fun NavController.navigateToLoginScreen(navOptions: NavOptions? = null) {
     this.navigate(route = LoginRoute, navOptions = navOptions)
 }
 

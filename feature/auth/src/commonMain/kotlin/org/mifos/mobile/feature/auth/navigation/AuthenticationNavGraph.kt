@@ -14,11 +14,13 @@ package org.mifos.mobile.feature.auth.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.auth.login.LoginRoute
 import org.mifos.mobile.feature.auth.login.loginDestination
+import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
 import org.mifos.mobile.feature.auth.uploadId.navigateToUploadIdScreen
@@ -28,10 +30,8 @@ import org.mifos.mobile.feature.auth.uploadId.uploadIdDestination
 @SerialName("auth_graph")
 data object AuthGraphRoute
 
-fun NavController.navigateToLoginScreen() {
-    navigate(LoginRoute) {
-        popUpTo(LoginRoute) { inclusive = true }
-    }
+fun NavController.navigateToAuthGraph(navOptions: NavOptions? = null) {
+    this.navigate(AuthGraphRoute, navOptions)
 }
 
 fun NavGraphBuilder.authenticationNavGraph(
