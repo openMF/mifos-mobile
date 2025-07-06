@@ -105,4 +105,33 @@
     <string name="feature_signup_error_name_contains_emoji">Text must not contain emoji or invalid characters</string>
 
 
+
+
+    <string name="feature_upload_id_title">Upload ID</string>
+    <string name="feature_upload_id_subtitle">Upload your ID and photo for verification!</string>
+    <string name="feature_upload_id_upload_your_id">Upload Your ID</string>
+    <string name="feature_upload_id_upload_your_photo">Upload Your Photo</string>
+    <string name="feature_upload_id_remove_file">Remove File</string>
+    <string name="feature_upload_id_view_file">View File</string>
+    <string name="feature_upload_id_select_new_file">Select New File</string>
+    <string name="feature_upload_id_identification_doc_label">Identification Document</string>
+    <string name="feature_upload_id_profile_photo_label">Profile Photo</string>
+    <string name="feature_upload_id_mobile_label">Cell Phone</string>
+    <string name="feature_upload_id_national_id_label">National ID Number</string>
+    <string name="feature_upload_id_dob_label">Date of Birth</string>
+    <string name="feature_upload_id_edit_prompt">Want to edit your personal details?</string>
+    <string name="feature_upload_id_take_me_back">Take me back</string>
+    <string name="feature_upload_id_ok">OK</string>
+    <string name="feature_upload_id_cancel">Cancel</string>
+    <string name="feature_common_submit">Submit</string>
+
+    <string name="feature_upload_id_error_field_empty">This field cannot be empty</string>
+    <string name="feature_upload_id_error_mobile_not_valid">Enter a valid 10-digit mobile number</string>
+    <string name="feature_upload_id_error_id_required">Please upload your ID</string>
+    <string name="feature_upload_id_error_photo_required">Please upload your photo</string>
+    <string name="feature_upload_id_error_dob_required">Date of birth is required</string>
+    <string name="feature_upload_id_upload_success">File uploaded successfully</string>
+    <string name="feature_upload_id_upload_failed">Failed to upload file. Please try again.</string>
+    <string name="feature_upload_id_generic_error">Something went wrong. Please try again later.</string>
+
 </resources>

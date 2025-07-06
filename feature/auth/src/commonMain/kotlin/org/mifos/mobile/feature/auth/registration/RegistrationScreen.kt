@@ -87,8 +87,8 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun RegistrationScreen(
-    navigateToUploadDocuments: () -> Unit,
-    navigateToLogin: () -> Unit,
+    navigateToUploadIdScreen: () -> Unit,
+    navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = koinViewModel(),
 ) {
@@ -105,9 +105,9 @@ internal fun RegistrationScreen(
                 }
             }
 
-            is SignUpEvent.NavigateToUploadDocuments -> navigateToUploadDocuments.invoke()
+            is SignUpEvent.NavigateToUploadDocuments -> navigateToUploadIdScreen.invoke()
 
-            is SignUpEvent.NavigateToLogin -> navigateToLogin.invoke()
+            is SignUpEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
         }
     }
 
