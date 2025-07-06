@@ -57,9 +57,11 @@ import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.filled.ErrorCircle
 import fluent.ui.system.icons.filled.Eye
 import fluent.ui.system.icons.regular.CardUi
+import fluent.ui.system.icons.regular.CheckmarkCircle
 import fluent.ui.system.icons.regular.Eye
 import fluent.ui.system.icons.regular.EyeOff
 import fluent.ui.system.icons.regular.Image
+import fluent.ui.system.icons.regular.Info
 
 object MifosIcons {
     val Paid: ImageVector = Icons.Default.Paid
@@ -114,4 +116,6 @@ object MifosIcons {
     val EyeOff = FluentIcons.Regular.EyeOff
     val EyeFilled = FluentIcons.Filled.Eye
     val ErrorCircle = FluentIcons.Filled.ErrorCircle
+    val CheckCircle = FluentIcons.Regular.CheckmarkCircle
+    val OutlinedInfo = FluentIcons.Regular.Info
 }

@@ -85,25 +85,18 @@ fun MifosPasswordField(
             keyboardActions = keyboardActions,
             errorText = hint,
             trailingIcon = {
-                if (isError) {
-                    Icon(
-                        imageVector = MifosIcons.EyeFilled,
-                        contentDescription = "Error",
-                        tint = MaterialTheme.colorScheme.error,
-                    )
-                } else {
-                    IconButton(
-                        onClick = { showPasswordChange.invoke(!showPassword) },
-                    ) {
-                        val imageVector = if (showPassword) MifosIcons.EyeOff else MifosIcons.Eye
+                val color = if (isError) MaterialTheme.colorScheme.error else Color.Unspecified
+                IconButton(
+                    onClick = { showPasswordChange.invoke(!showPassword) },
+                ) {
+                    val imageVector = if (showPassword) MifosIcons.EyeOff else MifosIcons.Eye
 
-                        Icon(
-                            modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
-                            imageVector = imageVector,
-                            contentDescription = "togglePassword",
-                            tint = Color.Unspecified,
-                        )
-                    }
+                    Icon(
+                        modifier = Modifier.semantics { showPasswordTestTag?.let { testTag = it } },
+                        imageVector = imageVector,
+                        contentDescription = "togglePassword",
+                        tint = color,
+                    )
                 }
             },
         ),

@@ -9,6 +9,16 @@
  */
 package org.mifos.mobile.core.ui.utils
 
+import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.core.ui.generated.resources.password_checker_digit_feedback
+import mifos_mobile.core.ui.generated.resources.password_checker_empty_error
+import mifos_mobile.core.ui.generated.resources.password_checker_lowercase_feedback
+import mifos_mobile.core.ui.generated.resources.password_checker_min_length_feedback
+import mifos_mobile.core.ui.generated.resources.password_checker_special_char_feedback
+import mifos_mobile.core.ui.generated.resources.password_checker_strong_length_feedback
+import mifos_mobile.core.ui.generated.resources.password_checker_too_long_error
+import mifos_mobile.core.ui.generated.resources.password_checker_uppercase_feedback
+import org.jetbrains.compose.resources.StringResource
 import kotlin.math.log2
 import kotlin.math.pow
 
@@ -20,10 +30,12 @@ object PasswordChecker {
 
     fun getPasswordStrengthResult(password: String): PasswordStrengthResult {
         return when {
-            password.isEmpty() -> PasswordStrengthResult.Error("Password cannot be empty.")
+            password.isEmpty() -> PasswordStrengthResult.Error(
+                Res.string.password_checker_empty_error,
+            )
             password.length > MAX_PASSWORD_LENGTH -> {
                 PasswordStrengthResult.Error(
-                    "Password is too long. Maximum length is $MAX_PASSWORD_LENGTH characters.",
+                    Res.string.password_checker_too_long_error,
                 )
             }
 
@@ -62,26 +74,28 @@ object PasswordChecker {
         return log2(charPool.toDouble().pow(password.length))
     }
 
-    fun getPasswordFeedback(password: String): List<String> {
-        val feedback = mutableListOf<String>()
+    fun getPasswordFeedback(password: String): List<StringResource> {
+        val feedback = mutableListOf<StringResource>()
 
         if (password.length < MIN_PASSWORD_LENGTH) {
-            feedback.add("Password should be at least $MIN_PASSWORD_LENGTH characters long.")
+            feedback.add(
+                Res.string.password_checker_min_length_feedback,
+            )
         }
         if (!password.any { it.isUpperCase() }) {
-            feedback.add("Include at least one uppercase letter.")
+            feedback.add(Res.string.password_checker_uppercase_feedback)
         }
         if (!password.any { it.isLowerCase() }) {
-            feedback.add("Include at least one lowercase letter.")
+            feedback.add(Res.string.password_checker_lowercase_feedback)
         }
         if (!password.any { it.isDigit() }) {
-            feedback.add("Include at least one number.")
+            feedback.add(Res.string.password_checker_digit_feedback)
         }
         if (!password.any { !it.isLetterOrDigit() }) {
-            feedback.add("Include at least one special character.")
+            feedback.add(Res.string.password_checker_special_char_feedback)
         }
         if (password.length < STRONG_PASSWORD_LENGTH) {
-            feedback.add("For a stronger password, use at least $STRONG_PASSWORD_LENGTH characters.")
+            feedback.add(Res.string.password_checker_strong_length_feedback)
         }
 
         return feedback
@@ -91,5 +105,5 @@ object PasswordChecker {
 sealed class PasswordStrengthResult {
     data class Success(val passwordStrength: PasswordStrength) : PasswordStrengthResult()
 
-    data class Error(val message: String) : PasswordStrengthResult()
+    data class Error(val message: StringResource) : PasswordStrengthResult()
 }

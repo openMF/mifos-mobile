@@ -19,6 +19,7 @@ data class Currency(
     val code: String? = null,
     val name: String? = null,
     val decimalPlaces: Int = 0,
+    val inMultiplesOf: Double,
     val displaySymbol: String? = null,
     val nameCode: String? = null,
     val displayLabel: String? = null,

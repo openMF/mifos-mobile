@@ -7,85 +7,47 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.auth.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import org.mifos.mobile.feature.auth.login.LoginScreen
-import org.mifos.mobile.feature.auth.registration.RegistrationScreen
-import org.mifos.mobile.feature.auth.registration.RegistrationVerificationScreen
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.auth.login.LoginRoute
+import org.mifos.mobile.feature.auth.login.loginDestination
+import org.mifos.mobile.feature.auth.login.navigateToLogin
+import org.mifos.mobile.feature.auth.registration.navigateToRegistration
+import org.mifos.mobile.feature.auth.registration.registrationDestination
+
+@Serializable
+@SerialName("auth_graph")
+data object AuthGraphRoute
 
 fun NavController.navigateToLoginScreen() {
-    navigate(AuthenticationNavigation.Login.route) {
-        popUpTo(AuthenticationNavigation.Login.route) { inclusive = true }
+    navigate(LoginRoute) {
+        popUpTo(LoginRoute) { inclusive = true }
     }
 }
 
 fun NavGraphBuilder.authenticationNavGraph(
     navController: NavHostController,
-    route: String,
     navigateToPasscodeScreen: () -> Unit,
 ) {
-    navigation(
-        route = route,
-        startDestination = AuthenticationNavigation.Login.route,
+    navigation<AuthGraphRoute>(
+        startDestination = LoginRoute,
     ) {
-        loginRoute(
-            navigateToRegisterScreen = {
-                navController.navigate(AuthenticationNavigation.Registration.route)
-            },
+        loginDestination(
+            navigateToRegisterScreen = navController::navigateToRegistration,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
         )
 
-        registrationRoute(
-            navigateBack = navController::popBackStack,
-            onRegistered = {
-                navController.navigate(AuthenticationNavigation.RegistrationVerification.route)
-            },
-        )
-
-        registrationVerificationRoute(
-            navigateBack = navController::popBackStack,
-            onRegistrationVerified = navController::navigateToLoginScreen,
-        )
-    }
-}
-
-private fun NavGraphBuilder.loginRoute(
-    navigateToRegisterScreen: () -> Unit,
-    navigateToPasscodeScreen: () -> Unit,
-) {
-    composable(route = AuthenticationNavigation.Login.route) {
-        LoginScreen(
-            navigateToRegisterScreen = navigateToRegisterScreen,
-            navigateToPasscodeScreen = navigateToPasscodeScreen,
-        )
-    }
-}
-
-private fun NavGraphBuilder.registrationRoute(
-    navigateBack: () -> Unit,
-    onRegistered: () -> Unit,
-) {
-    composable(route = AuthenticationNavigation.Registration.route) {
-        RegistrationScreen(
-            navigateToVerification = onRegistered,
-            navigateBack = navigateBack,
-        )
-    }
-}
-
-private fun NavGraphBuilder.registrationVerificationRoute(
-    navigateBack: () -> Unit,
-    onRegistrationVerified: () -> Unit,
-) {
-    composable(route = AuthenticationNavigation.RegistrationVerification.route) {
-        RegistrationVerificationScreen(
-            navigateToLogin = onRegistrationVerified,
-            navigateToRegister = navigateBack,
+        registrationDestination(
+            navigateToLogin = navController::navigateToLogin,
+            navigateToUploadDocuments = { },
         )
     }
 }

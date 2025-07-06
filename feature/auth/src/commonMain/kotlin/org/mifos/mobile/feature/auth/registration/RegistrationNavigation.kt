@@ -9,31 +9,31 @@
  */
 @file:Suppress("MatchingDeclarationName")
 
-package org.mifos.mobile.feature.auth.login
+package org.mifos.mobile.feature.auth.registration
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
 
 @Serializable
-@SerialName("login")
-data object LoginRoute
+data object RegistrationRoute
 
-fun NavController.navigateToLogin(navOptions: NavOptions? = null) {
-    this.navigate(route = LoginRoute, navOptions = navOptions)
+@Suppress("UnusedParameter")
+fun NavController.navigateToRegistration(navOptions: NavOptions? = null) {
+    this.navigate(route = RegistrationRoute, navOptions = navOptions)
 }
 
-fun NavGraphBuilder.loginDestination(
-    navigateToRegisterScreen: () -> Unit,
-    navigateToPasscodeScreen: () -> Unit,
+@Suppress("UnusedParameter")
+fun NavGraphBuilder.registrationDestination(
+    navigateToLogin: () -> Unit,
+    navigateToUploadDocuments: () -> Unit,
 ) {
-    composableWithStayTransitions<LoginRoute> {
-        LoginScreen(
-            navigateToRegisterScreen = navigateToRegisterScreen,
-            navigateToPasscodeScreen = navigateToPasscodeScreen,
+    composableWithStayTransitions<RegistrationRoute> {
+        RegistrationScreen(
+            navigateToLogin = navigateToLogin,
+            navigateToUploadDocuments = { },
         )
     }
 }

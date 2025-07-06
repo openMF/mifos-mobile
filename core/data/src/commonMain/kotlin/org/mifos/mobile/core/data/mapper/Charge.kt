@@ -118,6 +118,7 @@ fun Charge.toModel(): Charge {
                 displaySymbol = it.displaySymbol,
                 nameCode = it.nameCode,
                 displayLabel = it.displayLabel,
+                inMultiplesOf = it.inMultiplesOf,
             )
         },
         amount = amount,
