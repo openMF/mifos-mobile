@@ -27,7 +27,7 @@ import org.mifos.mobile.feature.about.navigation.navigateToAboutUsScreen
 import org.mifos.mobile.feature.accounts.navigation.AccountsNavigation
 import org.mifos.mobile.feature.accounts.navigation.accountsNavGraph
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
-import org.mifos.mobile.feature.auth.navigation.navigateToLoginScreen
+import org.mifos.mobile.feature.auth.navigation.navigateToAuthGraph
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
@@ -194,7 +194,7 @@ internal fun FeatureNavHost(
 
         settingsNavGraph(
             navigateBack = { appState.navController.popBackStack() },
-            navigateToLoginScreen = { appState.navController::navigateToLoginScreen.invoke() },
+            navigateToLoginScreen = { appState.navController::navigateToAuthGraph },
             changePasscode = { },
             changePassword = { appState.navController::navigateToUpdatePassword.invoke() },
             languageChanged = { },

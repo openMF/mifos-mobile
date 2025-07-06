@@ -235,13 +235,13 @@ class RegistrationViewModel(
 //        }
 //    }
 
-    private fun validateMobileNumber(mobileNumber: String): ValidationResult? {
-        return if (!ValidationHelper.isValidPhoneNumber(mobileNumber)) {
-            ValidationResult.Error(Res.string.feature_signup_error_invalid_email)
-        } else {
-            ValidationResult.Success
-        }
-    }
+//    private fun validateMobileNumber(mobileNumber: String): ValidationResult? {
+//        return if (!ValidationHelper.isValidPhoneNumber(mobileNumber)) {
+//            ValidationResult.Error(Res.string.feature_signup_error_invalid_email)
+//        } else {
+//            ValidationResult.Success
+//        }
+//    }
 
 //  Customer Account
 
@@ -417,7 +417,7 @@ class RegistrationViewModel(
         val middleNameError = validateName(state.middleName, "middle")
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
-        val mobileNumberError = validateMobileNumber(state.mobileNumber)
+//        val mobileNumberError = validateMobileNumber(state.mobileNumber)
         val accountError = validateCustomerAccount(state.customerAccount)
         val passwordResult = validatePassword(state.password)
         val confirmPasswordResult = validateConfirmPassword(
@@ -456,12 +456,22 @@ class RegistrationViewModel(
             isSuccess(emailError) &&
             isSuccess(accountError) &&
             isSuccess(passwordResult) &&
-            isSuccess(confirmPasswordResult) &&
-            isSuccess(mobileNumberError)
+            isSuccess(confirmPasswordResult)
 
         if (errorFree) {
+            registerUser()
+        }
+    }
+
+    private fun registerUser() {
+        viewModelScope.launch {
             updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
+
+            delay(3000)
+
             sendEvent(SignUpEvent.NavigateToUploadDocuments)
+        }
+//              TODO make api call
 //            viewModelScope.launch {
 //                val response = userAuthRepositoryImpl.registerUser(
 //                    accountNumber = state.customerAccount,
@@ -479,15 +489,13 @@ class RegistrationViewModel(
 //                    ),
 //                )
 //            }
-        }
     }
 
-    // TODO: Use this in the above [handleSubmit] function when API is available
+    // TODO: Use this in the above [registerUser] function when API is available
     private fun handleRegisterResult(action: SignUpAction.Internal.ReceiveRegisterResult) {
         when (val result = action.registerResult) {
             is DataState.Success -> {
                 updateState { it.copy(dialogState = null) }
-//                sendEvent(SignUpEvent.NavigateToUploadDocuments)
             }
 
             is DataState.Error -> {

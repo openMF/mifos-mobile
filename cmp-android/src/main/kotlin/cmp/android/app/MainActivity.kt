@@ -16,6 +16,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import cmp.shared.SharedApp
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.dialogs.init
 import org.mifos.mobile.core.ui.utils.ShareUtils
 
 /**
@@ -38,6 +40,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
         ShareUtils.setActivityProvider { return@setActivityProvider this }
+        FileKit.init(this)
         /**
          * Set the content view of the activity.
          * @see setContent

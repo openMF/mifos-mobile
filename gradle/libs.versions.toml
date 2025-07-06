@@ -81,6 +81,7 @@ qroseVersion = "1.0.1"
 okioVersion = "3.9.1"
 kermit = "2.0.4"
 fileKit = "0.8.7"
+fileKitDialog = "0.10.0-beta04"
 wire = "5.0.0"
 
 # Jetbrains CMP
@@ -246,6 +247,7 @@ squareup-okio = { group = "com.squareup.okio", name = "okio", version.ref = "oki
 back-handler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "backHandlerVersion" }
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "fileKit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "fileKit" }
+filekit-dialog-compose = { group = "io.github.vinceglb", name = "filekit-dialogs-compose", version.ref = "fileKitDialog" }
 qrose = { group = "io.github.alexzhirkevich", name="qrose", version.ref = "qroseVersion" }
 
 kermit-logging = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }

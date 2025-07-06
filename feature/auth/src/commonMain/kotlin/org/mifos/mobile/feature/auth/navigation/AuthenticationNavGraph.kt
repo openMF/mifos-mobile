@@ -14,23 +14,24 @@ package org.mifos.mobile.feature.auth.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.auth.login.LoginRoute
 import org.mifos.mobile.feature.auth.login.loginDestination
-import org.mifos.mobile.feature.auth.login.navigateToLogin
-import org.mifos.mobile.feature.auth.registration.navigateToRegistration
+import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
+import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
+import org.mifos.mobile.feature.auth.uploadId.navigateToUploadIdScreen
+import org.mifos.mobile.feature.auth.uploadId.uploadIdDestination
 
 @Serializable
 @SerialName("auth_graph")
 data object AuthGraphRoute
 
-fun NavController.navigateToLoginScreen() {
-    navigate(LoginRoute) {
-        popUpTo(LoginRoute) { inclusive = true }
-    }
+fun NavController.navigateToAuthGraph(navOptions: NavOptions? = null) {
+    this.navigate(AuthGraphRoute, navOptions)
 }
 
 fun NavGraphBuilder.authenticationNavGraph(
@@ -41,13 +42,19 @@ fun NavGraphBuilder.authenticationNavGraph(
         startDestination = LoginRoute,
     ) {
         loginDestination(
-            navigateToRegisterScreen = navController::navigateToRegistration,
+            navigateToRegisterScreen = navController::navigateToRegisterScreen,
+//            navigateToRegisterScreen = navController::navigateToUploadIdScreen,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
         )
 
         registrationDestination(
-            navigateToLogin = navController::navigateToLogin,
-            navigateToUploadDocuments = { },
+            navigateToLoginScreen = navController::navigateToLoginScreen,
+            navigateToUploadIdScreen = navController::navigateToUploadIdScreen,
+        )
+
+        uploadIdDestination(
+            navigateToRegisterScreen = navController::navigateToRegisterScreen,
+            navigateToOtpAuthenticationScreen = { },
         )
     }
 }

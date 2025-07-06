@@ -20,20 +20,18 @@ import org.mifos.mobile.core.ui.composableWithStayTransitions
 @Serializable
 data object RegistrationRoute
 
-@Suppress("UnusedParameter")
-fun NavController.navigateToRegistration(navOptions: NavOptions? = null) {
+fun NavController.navigateToRegisterScreen(navOptions: NavOptions? = null) {
     this.navigate(route = RegistrationRoute, navOptions = navOptions)
 }
 
-@Suppress("UnusedParameter")
 fun NavGraphBuilder.registrationDestination(
-    navigateToLogin: () -> Unit,
-    navigateToUploadDocuments: () -> Unit,
+    navigateToLoginScreen: () -> Unit,
+    navigateToUploadIdScreen: () -> Unit,
 ) {
     composableWithStayTransitions<RegistrationRoute> {
         RegistrationScreen(
-            navigateToLogin = navigateToLogin,
-            navigateToUploadDocuments = { },
+            navigateToLoginScreen = navigateToLoginScreen,
+            navigateToUploadIdScreen = navigateToUploadIdScreen,
         )
     }
 }

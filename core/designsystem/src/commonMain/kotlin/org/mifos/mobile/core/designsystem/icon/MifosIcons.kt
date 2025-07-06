@@ -54,8 +54,10 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.filled.Document
 import fluent.ui.system.icons.filled.ErrorCircle
 import fluent.ui.system.icons.filled.Eye
+import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
 import fluent.ui.system.icons.regular.CheckmarkCircle
 import fluent.ui.system.icons.regular.Eye
@@ -118,4 +120,7 @@ object MifosIcons {
     val ErrorCircle = FluentIcons.Filled.ErrorCircle
     val CheckCircle = FluentIcons.Regular.CheckmarkCircle
     val OutlinedInfo = FluentIcons.Regular.Info
+
+    val DocumentFilled = FluentIcons.Filled.Document
+    val Calendar = FluentIcons.Regular.Calendar
 }

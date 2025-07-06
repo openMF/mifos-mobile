@@ -330,7 +330,7 @@ fun MifosUploadedCardContent(
             ) {
                 Text(
                     modifier = Modifier.clickable {
-                        onRemoveClick
+                        onRemoveClick()
                     },
                     text = removeText,
                     color = MaterialTheme.colorScheme.primary,
@@ -339,7 +339,7 @@ fun MifosUploadedCardContent(
 
                 Text(
                     modifier = Modifier.clickable {
-                        onViewClick
+                        onViewClick()
                     },
                     text = viewText,
                     color = MaterialTheme.colorScheme.primary,
@@ -348,7 +348,7 @@ fun MifosUploadedCardContent(
 
                 Text(
                     modifier = Modifier.clickable {
-                        onSelectNewClick
+                        onSelectNewClick()
                     },
                     text = selectText,
                     color = MaterialTheme.colorScheme.primary,
