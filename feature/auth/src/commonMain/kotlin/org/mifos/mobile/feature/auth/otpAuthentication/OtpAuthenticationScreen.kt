@@ -34,6 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_common_cancel
 import mifos_mobile.feature.auth.generated.resources.feature_common_next
@@ -44,6 +46,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_otp_subtitle
 import mifos_mobile.feature.auth.generated.resources.feature_otp_tip
 import mifos_mobile.feature.auth.generated.resources.feature_otp_title
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -56,13 +59,14 @@ import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun OtpAuthenticationScreen(
-    navigateToStatusScreen: (String, String) -> Unit,
+    navigateToStatusScreen: (EventType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OtpAuthenticationViewModel = koinViewModel(),
 ) {
@@ -273,6 +277,30 @@ internal fun OtpInputForm(
                 text = stringResource(Res.string.feature_otp_action_tip),
                 style = MifosTypography.labelMediumEmphasized,
                 color = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
+}
+
+@Serializable
+enum class EventType {
+    @SerialName("success")
+    SUCCESS,
+
+    @SerialName("failure")
+    FAILURE,
+}
+
+@Preview
+@Composable
+internal fun Otp_Auth_Preview() {
+    MifosMobileTheme {
+        Column(
+            modifier = Modifier.padding(DesignToken.padding.large),
+        ) {
+            OptAuthScreenContent(
+                state = OtpAuthState(dialogState = null),
+                onAction = { },
             )
         }
     }

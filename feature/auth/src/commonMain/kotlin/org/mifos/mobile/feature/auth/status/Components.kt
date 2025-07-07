@@ -24,10 +24,11 @@ import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosStatusComponent
+import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun StatusScreen(
-    eventType: String,
+    eventType: EventType,
     eventDestination: String,
     buttonText: String,
     title: String,
@@ -51,7 +52,11 @@ internal fun StatusScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             MifosStatusComponent(
-                icon = if (eventType == "success") Res.drawable.ic_icon_success else Res.drawable.ic_icon_error,
+                icon = if (eventType == EventType.SUCCESS) {
+                    Res.drawable.ic_icon_success
+                } else {
+                    Res.drawable.ic_icon_error
+                },
                 title = title,
                 subTitle = subtitle,
                 buttonText = buttonText,

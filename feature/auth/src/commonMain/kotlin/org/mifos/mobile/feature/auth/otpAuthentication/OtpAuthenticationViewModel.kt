@@ -14,11 +14,16 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.serializer
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_otp_invalid_error
 import mifos_mobile.feature.auth.generated.resources.feature_otp_required_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.auth.login.LoginRoute
+import org.mifos.mobile.feature.auth.status.EventType
 
 internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthEvent, OtpAuthAction>(
     initialState = OtpAuthState(dialogState = null),
@@ -60,8 +65,8 @@ internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthE
 
     private fun validateOtp(otp: String): StringResource? {
         return when {
-            !otp.isNotBlank() -> Res.string.feature_otp_required_error
-            otp.length > 5 -> Res.string.feature_otp_invalid_error
+            otp.isBlank() -> Res.string.feature_otp_required_error
+            otp.length != 6 -> Res.string.feature_otp_invalid_error
             else -> null
         }
     }
@@ -79,6 +84,7 @@ internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthE
         }
     }
 
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private fun registerUser() {
         viewModelScope.launch {
             mutableStateFlow.update {
@@ -90,8 +96,8 @@ internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthE
             dismissDialog()
             sendEvent(
                 OtpAuthEvent.NavigateToStatus(
-                    "success",
-                    "login",
+                    EventType.SUCCESS,
+                    LoginRoute::class.serializer().descriptor.serialName,
                 ),
             )
         }
@@ -147,7 +153,7 @@ internal sealed interface OtpAuthAction {
 
 internal sealed interface OtpAuthEvent {
     data class NavigateToStatus(
-        val eventType: String,
+        val eventType: EventType,
         val eventDestination: String,
     ) : OtpAuthEvent
 }
