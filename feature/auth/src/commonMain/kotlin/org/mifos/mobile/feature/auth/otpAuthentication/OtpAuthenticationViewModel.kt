@@ -23,7 +23,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_otp_required_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.auth.login.LoginRoute
-import org.mifos.mobile.feature.auth.status.EventType
 
 internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthEvent, OtpAuthAction>(
     initialState = OtpAuthState(dialogState = null),

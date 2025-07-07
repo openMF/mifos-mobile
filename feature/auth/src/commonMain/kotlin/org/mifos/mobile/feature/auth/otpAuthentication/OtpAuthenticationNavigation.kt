@@ -16,7 +16,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
-import org.mifos.mobile.feature.auth.status.EventType
 
 @Serializable
 data object OtpAuthenticationRoute
