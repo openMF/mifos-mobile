@@ -82,6 +82,7 @@ fun MifosPasswordField(
                 keyboardType = keyboardType,
                 imeAction = imeAction,
             ),
+            showClearIcon = false,
             keyboardActions = keyboardActions,
             errorText = hint,
             trailingIcon = {

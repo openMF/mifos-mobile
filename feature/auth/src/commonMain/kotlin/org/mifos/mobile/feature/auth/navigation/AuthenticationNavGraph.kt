@@ -21,8 +21,12 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.auth.login.LoginRoute
 import org.mifos.mobile.feature.auth.login.loginDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
+import org.mifos.mobile.feature.auth.otpAuthentication.navigateToOtpAuthScreen
+import org.mifos.mobile.feature.auth.otpAuthentication.otpAuthenticationDestination
 import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
+import org.mifos.mobile.feature.auth.status.navigateToStatusScreen
+import org.mifos.mobile.feature.auth.status.statusDestination
 import org.mifos.mobile.feature.auth.uploadId.navigateToUploadIdScreen
 import org.mifos.mobile.feature.auth.uploadId.uploadIdDestination
 
@@ -42,8 +46,8 @@ fun NavGraphBuilder.authenticationNavGraph(
         startDestination = LoginRoute,
     ) {
         loginDestination(
-            navigateToRegisterScreen = navController::navigateToRegisterScreen,
-//            navigateToRegisterScreen = navController::navigateToUploadIdScreen,
+//            navigateToRegisterScreen = navController::navigateToRegisterScreen,
+            navigateToRegisterScreen = navController::navigateToOtpAuthScreen,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
         )
 
@@ -54,7 +58,17 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         uploadIdDestination(
             navigateToRegisterScreen = navController::navigateToRegisterScreen,
-            navigateToOtpAuthenticationScreen = { },
+            navigateToOtpAuthenticationScreen = navController::navigateToOtpAuthScreen,
+        )
+
+        otpAuthenticationDestination(
+            navigateToStatusScreen = navController::navigateToStatusScreen,
+        )
+
+        statusDestination(
+            navigateToDestination = {
+                navController.navigate(it)
+            },
         )
     }
 }

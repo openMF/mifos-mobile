@@ -327,7 +327,7 @@ fun InputBox(
                     onAction(LoginAction.SignupClicked)
                 },
                 text = stringResource(Res.string.feature_sign_in_sign_up),
-                style = MifosTypography.labelMedium,
+                style = MifosTypography.labelMediumEmphasized,
                 color = MaterialTheme.colorScheme.primary,
             )
         }
