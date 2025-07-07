@@ -134,4 +134,16 @@
     <string name="feature_upload_id_upload_failed">Failed to upload file. Please try again.</string>
     <string name="feature_upload_id_generic_error">Something went wrong. Please try again later.</string>
 
+    <string name="feature_otp_title">OTP Authentication</string>
+    <string name="feature_otp_subtitle">Check Your E-Mail !</string>
+    <string name="feature_otp_message">To complete your registration, check your email. You should have received an authentication code (if you don't receive the email, select the resend option). You must provide it below.</string>
+    <string name="feature_otp_tip">Didn’t receive the code?</string>
+    <string name="feature_otp_action_tip">Resend now</string>
+    <string name="feature_otp_authentication_code_label">Authentication Code</string>
+
+    <string name="feature_common_next">Next</string>
+    <string name="feature_common_cancel">Cancel</string>
+
+    <string name="feature_otp_required_error">OTP is required</string>
+    <string name="feature_otp_invalid_error">Enter valid OTP</string>
 </resources>
