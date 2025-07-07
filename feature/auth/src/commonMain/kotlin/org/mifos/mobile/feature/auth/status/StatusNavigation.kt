@@ -20,7 +20,7 @@ import org.mifos.mobile.feature.auth.otpAuthentication.OtpAuthenticationRoute
 
 @Serializable
 data class StatusNavigationRoute(
-    val eventType: String,
+    val eventType: EventType,
     val eventDestination: String,
     val buttonText: String = "Continue",
     val title: String = "Success",
@@ -28,7 +28,7 @@ data class StatusNavigationRoute(
 )
 
 fun NavController.navigateToStatusScreen(
-    eventType: String,
+    eventType: EventType,
     eventDestination: String,
     buttonText: String = "Continue",
     title: String = "Success",
