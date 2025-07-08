@@ -23,6 +23,8 @@ import org.mifos.mobile.feature.auth.login.loginDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.otpAuthentication.navigateToOtpAuthScreen
 import org.mifos.mobile.feature.auth.otpAuthentication.otpAuthenticationDestination
+import org.mifos.mobile.feature.auth.recoverPassword.navigateToRecoverPasswordScreen
+import org.mifos.mobile.feature.auth.recoverPassword.recoverPasswordDestination
 import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
 import org.mifos.mobile.feature.auth.status.navigateToStatusScreen
@@ -49,6 +51,7 @@ fun NavGraphBuilder.authenticationNavGraph(
 //            navigateToRegisterScreen = navController::navigateToRegisterScreen,
             navigateToRegisterScreen = navController::navigateToOtpAuthScreen,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
+            navigateToForgotPasswordScreen = navController::navigateToRecoverPasswordScreen,
         )
 
         registrationDestination(
@@ -69,6 +72,11 @@ fun NavGraphBuilder.authenticationNavGraph(
             navigateToDestination = {
                 navController.navigate(it)
             },
+        )
+
+        recoverPasswordDestination(
+            navigateToLoginScreen = navController::navigateToLoginScreen,
+            navigateToOtpAuthenticationScreen = navController::navigateToOtpAuthScreen,
         )
     }
 }
