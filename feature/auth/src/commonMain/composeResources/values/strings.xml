@@ -147,6 +147,22 @@
     <string name="feature_otp_required_error">OTP is required</string>
     <string name="feature_otp_invalid_error">Enter valid OTP</string>
 
+
+    <!--Set New Password-->
+
+    <string name="feature_set_new_password_title">Set Password</string>
+    <string name="feature_set_new_password_message">Set your new high security password now!</string>
+    <string name="feature_set_new_password_new_password_label">New Password</string>
+    <string name="feature_set_new_password_confirm_password_label">Confirm New Password</string>
+    <string name="feature_set_new_password_submit">Submit</string>
+    <string name="feature_set_new_password_tip">Remember your password?</string>
+    <string name="feature_set_new_password_action_tip">Log in</string>
+
+    <string name="feature_common_error_password_required_error">Password is Required</string>
+    <string name="feature_common_error_password_short">Password must be at least 6 characters</string>
+    <string name="feature_common_error_password_mismatch">Passwords do not match</string>
+
+
     <!--Recover Password-->
     <string name="feature_recover_now_title">Recover Now</string>
     <string name="feature_recover_now_message">Forgot your password, don’t worry!, we got you covered. Reset your password now!</string>

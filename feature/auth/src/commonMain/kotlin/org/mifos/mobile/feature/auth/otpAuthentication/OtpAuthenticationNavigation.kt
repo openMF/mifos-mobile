@@ -14,22 +14,33 @@ package org.mifos.mobile.feature.auth.otpAuthentication
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
+import org.mifos.mobile.feature.auth.status.StatusNavigationRoute
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
-data object OtpAuthenticationRoute
+data class OtpAuthenticationRoute(
+    val nextRoute: String = StatusNavigationRoute.serializer().descriptor.serialName,
+)
 
-fun NavController.navigateToOtpAuthScreen(navOptions: NavOptions? = null) {
-    this.navigate(route = OtpAuthenticationRoute, navOptions = navOptions)
+@OptIn(ExperimentalSerializationApi::class)
+fun NavController.navigateToOtpAuthScreen(
+    nextRoute: String = StatusNavigationRoute.serializer().descriptor.serialName,
+    navOptions: NavOptions? = null,
+) {
+    this.navigate(OtpAuthenticationRoute(nextRoute), navOptions)
 }
 
 fun NavGraphBuilder.otpAuthenticationDestination(
     navigateToStatusScreen: (EventType, String) -> Unit,
+    navigateToSetPasswordScreen: () -> Unit,
 ) {
     composableWithStayTransitions<OtpAuthenticationRoute> {
         OtpAuthenticationScreen(
             navigateToStatusScreen = navigateToStatusScreen,
+            navigateToSetPasswordScreen = navigateToSetPasswordScreen,
         )
     }
 }

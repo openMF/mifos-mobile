@@ -9,7 +9,9 @@
  */
 package org.mifos.mobile.feature.auth.otpAuthentication
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
@@ -24,9 +26,22 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
-internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthEvent, OtpAuthAction>(
+internal class OtpAuthenticationViewModel(
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<
+    OtpAuthState,
+    OtpAuthEvent,
+    OtpAuthAction,
+    >(
     initialState = OtpAuthState(dialogState = null),
 ) {
+    init {
+        val nextRoute = savedStateHandle.toRoute<OtpAuthenticationRoute>()
+
+        mutableStateFlow.update {
+            it.copy(nextRoute = nextRoute.nextRoute)
+        }
+    }
 
     private var validationJob: Job? = null
 
@@ -79,7 +94,24 @@ internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthE
         }
 
         if (otpError == null) {
-            registerUser()
+            when {
+                state.nextRoute == "set_password" -> handleRecoverPassword()
+                else -> registerUser()
+            }
+        }
+    }
+
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+    private fun handleRecoverPassword() {
+        viewModelScope.launch {
+            mutableStateFlow.update {
+                it.copy(
+                    dialogState = OtpAuthState.DialogState.Loading,
+                )
+            }
+            delay(3000)
+            dismissDialog()
+            sendEvent(OtpAuthEvent.NavigateNext)
         }
     }
 
@@ -124,6 +156,9 @@ internal class OtpAuthenticationViewModel : BaseViewModel<OtpAuthState, OtpAuthE
 }
 
 internal data class OtpAuthState(
+
+    val nextRoute: String = "",
+
     val otp: String = "",
     val otpError: StringResource? = null,
 
@@ -151,6 +186,8 @@ internal sealed interface OtpAuthAction {
 }
 
 internal sealed interface OtpAuthEvent {
+    data object NavigateNext : OtpAuthEvent
+
     data class NavigateToStatus(
         val eventType: EventType,
         val eventDestination: String,
