@@ -70,9 +70,9 @@ internal fun RecoverPasswordScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen()
+            RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
 
-            RecoverPasswordEvent.NavigateToOtpAuth -> navigateToOtpAuthenticationScreen()
+            RecoverPasswordEvent.NavigateToOtpAuth -> navigateToOtpAuthenticationScreen.invoke()
         }
     }
 
