@@ -75,17 +75,13 @@ class LoginViewModel(
                 updateState { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
 
-            is LoginAction.LoginClicked -> {
-                loginUser(state.username, state.password)
-            }
+            is LoginAction.LoginClicked -> loginUser(state.username, state.password)
 
-            is LoginAction.Internal.ReceiveLoginResult -> {
-                handleLoginResult(action)
-            }
+            is LoginAction.Internal.ReceiveLoginResult -> handleLoginResult(action)
 
-            is LoginAction.SignupClicked -> {
-                sendEvent(LoginEvent.NavigateToSignup)
-            }
+            is LoginAction.SignupClicked -> sendEvent(LoginEvent.NavigateToSignup)
+
+            is LoginAction.NavigateToForgotPassword -> sendEvent(LoginEvent.NavigateToForgotPassword)
 
             is LoginAction.ErrorDialogDismiss -> {
                 updateState { it.copy(dialogState = null) }
@@ -126,7 +122,7 @@ class LoginViewModel(
                 viewModelScope.launch {
                     userPreferencesRepositoryImpl.updateUser(userData)
                 }
-                sendEvent(LoginEvent.NavigateToPasscodeScreen)
+                sendEvent(LoginEvent.NavigateToPasscode)
             }
         }
     }
@@ -177,7 +173,8 @@ data class LoginState(
 
 sealed interface LoginEvent {
     data object NavigateToSignup : LoginEvent
-    data object NavigateToPasscodeScreen : LoginEvent
+    data object NavigateToPasscode : LoginEvent
+    data object NavigateToForgotPassword : LoginEvent
     data class ShowToast(val message: String) : LoginEvent
 }
 
@@ -188,6 +185,7 @@ sealed interface LoginAction {
     data object ErrorDialogDismiss : LoginAction
     data object LoginClicked : LoginAction
     data object SignupClicked : LoginAction
+    data object NavigateToForgotPassword : LoginAction
 
     sealed class Internal : LoginAction {
         data class ReceiveLoginResult(

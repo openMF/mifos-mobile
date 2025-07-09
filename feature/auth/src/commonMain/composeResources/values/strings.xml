@@ -146,4 +146,19 @@
 
     <string name="feature_otp_required_error">OTP is required</string>
     <string name="feature_otp_invalid_error">Enter valid OTP</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">Recover Now</string>
+    <string name="feature_recover_now_message">Forgot your password, don’t worry!, we got you covered. Reset your password now!</string>
+    <string name="feature_recover_now_phone_number_label">Phone Number</string>
+    <string name="feature_recover_now_email_label">Email</string>
+    <string name="feature_recover_now_verifying">Verifying</string>
+    <string name="feature_recover_now_email_required">Email is Required</string>
+    <string name="feature_recover_now_phone_number_required">Phone number is Required</string>
+    <string name="feature_recover_now_email_format_error">Invalid Email</string>
+    <string name="feature_recover_now_phone_number_error">Invalid Phone Number</string>
+    <string name="feature_recover_now_invalid_phone_number_error">Phone number can not contain letters or symbols</string>
+    <string name="feature_recover_now_remember_your_password">Remember your password?</string>
+    <string name="feature_recover_now_log_in">Log in!</string>
+
 </resources>

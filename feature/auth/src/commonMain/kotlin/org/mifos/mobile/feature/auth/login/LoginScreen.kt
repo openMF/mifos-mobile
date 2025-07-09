@@ -74,6 +74,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun LoginScreen(
     navigateToRegisterScreen: () -> Unit,
+    navigateToForgotPasswordScreen: () -> Unit,
     navigateToPasscodeScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = koinViewModel(),
@@ -87,7 +88,9 @@ internal fun LoginScreen(
         when (event) {
             is LoginEvent.NavigateToSignup -> navigateToRegisterScreen.invoke()
 
-            is LoginEvent.NavigateToPasscodeScreen -> navigateToPasscodeScreen.invoke()
+            is LoginEvent.NavigateToPasscode -> navigateToPasscodeScreen.invoke()
+
+            is LoginEvent.NavigateToForgotPassword -> navigateToForgotPasswordScreen.invoke()
 
             is LoginEvent.ShowToast -> {
                 scope.launch {
@@ -288,6 +291,7 @@ fun InputBox(
             modifier = Modifier
                 .align(Alignment.End)
                 .clickable(true) {
+                    onAction(LoginAction.NavigateToForgotPassword)
                 },
             text = stringResource(Res.string.feature_sign_in_forgot_password),
             style = MifosTypography.labelMedium,
