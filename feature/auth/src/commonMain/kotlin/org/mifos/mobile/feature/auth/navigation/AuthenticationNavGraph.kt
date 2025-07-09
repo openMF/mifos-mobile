@@ -50,8 +50,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         startDestination = LoginRoute,
     ) {
         loginDestination(
-//            navigateToRegisterScreen = navController::navigateToRegisterScreen,
-            navigateToRegisterScreen = navController::navigateToOtpAuthScreen,
+            navigateToRegisterScreen = navController::navigateToRegisterScreen,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
             navigateToForgotPasswordScreen = navController::navigateToRecoverPasswordScreen,
         )
