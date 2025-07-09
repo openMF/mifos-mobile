@@ -67,6 +67,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun OtpAuthenticationScreen(
     navigateToStatusScreen: (EventType, String) -> Unit,
+    navigateToSetPasswordScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OtpAuthenticationViewModel = koinViewModel(),
 ) {
@@ -79,6 +80,12 @@ internal fun OtpAuthenticationScreen(
                     event.eventType,
                     event.eventDestination,
                 )
+            }
+
+            is OtpAuthEvent.NavigateNext -> {
+                if (uiState.nextRoute == "set_password") {
+                    navigateToSetPasswordScreen.invoke()
+                }
             }
         }
     }

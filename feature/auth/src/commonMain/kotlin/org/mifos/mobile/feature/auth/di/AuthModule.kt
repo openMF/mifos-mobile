@@ -15,6 +15,7 @@ import org.mifos.mobile.feature.auth.login.LoginViewModel
 import org.mifos.mobile.feature.auth.otpAuthentication.OtpAuthenticationViewModel
 import org.mifos.mobile.feature.auth.recoverPassword.RecoverPasswordViewModel
 import org.mifos.mobile.feature.auth.registration.RegistrationViewModel
+import org.mifos.mobile.feature.auth.setNewPassword.SetPasswordViewModel
 import org.mifos.mobile.feature.auth.uploadId.UploadIdViewModel
 
 val AuthModule = module {
@@ -22,5 +23,6 @@ val AuthModule = module {
     viewModelOf(::RegistrationViewModel)
     viewModelOf(::UploadIdViewModel)
     viewModelOf(::OtpAuthenticationViewModel)
+    viewModelOf(::SetPasswordViewModel)
     viewModelOf(::RecoverPasswordViewModel)
 }

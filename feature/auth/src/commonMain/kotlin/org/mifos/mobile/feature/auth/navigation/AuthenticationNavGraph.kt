@@ -27,6 +27,8 @@ import org.mifos.mobile.feature.auth.recoverPassword.navigateToRecoverPasswordSc
 import org.mifos.mobile.feature.auth.recoverPassword.recoverPasswordDestination
 import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
+import org.mifos.mobile.feature.auth.setNewPassword.navigateToSetPasswordScreen
+import org.mifos.mobile.feature.auth.setNewPassword.setPasswordDestination
 import org.mifos.mobile.feature.auth.status.navigateToStatusScreen
 import org.mifos.mobile.feature.auth.status.statusDestination
 import org.mifos.mobile.feature.auth.uploadId.navigateToUploadIdScreen
@@ -48,8 +50,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         startDestination = LoginRoute,
     ) {
         loginDestination(
-//            navigateToRegisterScreen = navController::navigateToRegisterScreen,
-            navigateToRegisterScreen = navController::navigateToOtpAuthScreen,
+            navigateToRegisterScreen = navController::navigateToRegisterScreen,
             navigateToPasscodeScreen = navigateToPasscodeScreen,
             navigateToForgotPasswordScreen = navController::navigateToRecoverPasswordScreen,
         )
@@ -66,6 +67,7 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         otpAuthenticationDestination(
             navigateToStatusScreen = navController::navigateToStatusScreen,
+            navigateToSetPasswordScreen = navController::navigateToSetPasswordScreen,
         )
 
         statusDestination(
@@ -77,6 +79,11 @@ fun NavGraphBuilder.authenticationNavGraph(
         recoverPasswordDestination(
             navigateToLoginScreen = navController::navigateToLoginScreen,
             navigateToOtpAuthenticationScreen = navController::navigateToOtpAuthScreen,
+        )
+
+        setPasswordDestination(
+            navigateToStatusScreen = navController::navigateToStatusScreen,
+            navigateToLoginScreen = navController::navigateToLoginScreen,
         )
     }
 }
