@@ -85,10 +85,10 @@ private fun NotificationScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.notification),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 when (uiState) {
                     is NotificationUiState.Loading -> MifosProgressIndicatorOverlay()
 

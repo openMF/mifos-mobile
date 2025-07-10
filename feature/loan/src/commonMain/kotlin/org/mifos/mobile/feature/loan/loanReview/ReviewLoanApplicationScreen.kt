@@ -105,11 +105,11 @@ private fun ReviewLoanApplicationScreen(
         snackbarHostState = snackbarHostState,
         content = {
             Column(modifier = modifier.fillMaxSize()) {
-                MifosTopAppBar(
-                    modifier = Modifier.fillMaxWidth(),
-                    backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
-                    topBarTitle = stringResource(Res.string.update_loan),
-                )
+//                MifosTopAppBar(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
+//                    topBarTitle = stringResource(Res.string.update_loan),
+//                )
                 Box(modifier = Modifier.weight(1f)) {
                     ReviewLoanApplicationContent(
                         data = state.reviewLoanApplicationUiData,

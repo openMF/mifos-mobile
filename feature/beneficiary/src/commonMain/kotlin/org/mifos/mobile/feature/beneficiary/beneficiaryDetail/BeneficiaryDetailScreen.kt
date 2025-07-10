@@ -144,7 +144,7 @@ private fun BeneficiaryDetailScreen(
         modifier = modifier,
     ) {
         Box(
-            modifier = Modifier.padding(it),
+            modifier = Modifier,
         ) {
             if (state.beneficiary != null) {
                 BeneficiaryDetailContent(
@@ -172,42 +172,41 @@ private fun BeneficiaryDetailTopAppBar(
         mutableStateOf(false)
     }
 
-    MifosTopAppBar(
-        backPress = navigateBack,
-        topBarTitle = stringResource(Res.string.beneficiary_detail),
-        actions = {
-            IconButton(
-                onClick = { openDropdown = updateDropdownValue.invoke(!openDropdown) },
-            ) {
-                Icon(
-                    imageVector = MifosIcons.MoreVert,
-                    contentDescription = "More",
-                )
-            }
-            DropdownMenu(
-                expanded = openDropdown,
-                onDismissRequest = {
-                    openDropdown = updateDropdownValue.invoke(!openDropdown)
-                },
-            ) {
-                DropdownMenuItem(
-                    text = { Text(text = stringResource(Res.string.update_beneficiary)) },
-                    onClick = {
-                        openDropdown = updateDropdownValue.invoke(!openDropdown)
-                        updateBeneficiaryClicked.invoke()
-                    },
-                )
-                DropdownMenuItem(
-                    text = { Text(text = stringResource(Res.string.delete_beneficiary)) },
-                    onClick = {
-                        openDropdown = updateDropdownValue.invoke(!openDropdown)
-                        showAlert.invoke()
-                    },
-                )
-            }
-        },
-        modifier = modifier,
-    )
+//    MifosTopAppBar(
+//        onNavigationIconClick = navigateBack,
+//        title = stringResource(Res.string.beneficiary_detail),
+//        actions = {
+//            IconButton(
+//                onClick = { openDropdown = updateDropdownValue.invoke(!openDropdown) },
+//            ) {
+//                Icon(
+//                    imageVector = MifosIcons.MoreVert,
+//                    contentDescription = "More",
+//                )
+//            }
+//            DropdownMenu(
+//                expanded = openDropdown,
+//                onDismissRequest = {
+//                    openDropdown = updateDropdownValue.invoke(!openDropdown)
+//                },
+//            ) {
+//                DropdownMenuItem(
+//                    text = { Text(text = stringResource(Res.string.update_beneficiary)) },
+//                    onClick = {
+//                        openDropdown = updateDropdownValue.invoke(!openDropdown)
+//                        updateBeneficiaryClicked.invoke()
+//                    },
+//                )
+//                DropdownMenuItem(
+//                    text = { Text(text = stringResource(Res.string.delete_beneficiary)) },
+//                    onClick = {
+//                        openDropdown = updateDropdownValue.invoke(!openDropdown)
+//                        showAlert.invoke()
+//                    },
+//                )
+//            }
+//        },
+//    )
 }
 
 @Composable

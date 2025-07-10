@@ -107,11 +107,11 @@ private fun LoanAccountWithdrawScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        backPress = { onAction(LoanAccountWithdrawAction.BackPress) },
+        onNavigationIconClick = { onAction(LoanAccountWithdrawAction.BackPress) },
         topBarTitle = stringResource(Res.string.withdraw_loan),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 Column(modifier = modifier.padding(16.dp)) {
                     LoanAccountWithdrawContent(
                         loanWithAssociations = state.loanWithAssociations,

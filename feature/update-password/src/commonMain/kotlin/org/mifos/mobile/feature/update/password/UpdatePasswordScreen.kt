@@ -79,13 +79,13 @@ private fun UpdatePasswordScreen(
 ) {
     MifosScaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        backPress = {
+        onNavigationIconClick = {
             onAction(EditPasswordAction.NavigateBackClick)
         },
         topBarTitle = stringResource(Res.string.update_password),
         modifier = modifier,
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
+    ) {
+        Box(modifier = Modifier) {
             UpdatePasswordContent(
                 onAction = onAction,
                 state = state,

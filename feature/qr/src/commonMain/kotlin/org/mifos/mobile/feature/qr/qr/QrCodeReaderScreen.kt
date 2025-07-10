@@ -83,7 +83,7 @@ private fun QrCodeReaderContent(
 ) {
     MifosScaffold(
         topBarTitle = null,
-        backPress = { onAction(QrCodeReaderAction.OnNavigate) },
+        onNavigationIconClick = { onAction(QrCodeReaderAction.OnNavigate) },
         modifier = modifier.fillMaxSize(),
     ) {
         Box(
@@ -92,7 +92,7 @@ private fun QrCodeReaderContent(
         ) {
             QrScannerWithPermissions(
                 types = listOf(CodeType.QR),
-                modifier = Modifier.padding(it),
+                modifier = Modifier,
                 onScanned = {
                     onAction(QrCodeReaderAction.ScanQrCode(it))
                     true

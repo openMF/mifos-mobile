@@ -83,25 +83,25 @@ private fun GuarantorDetailScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopAppBar(
-                topBarTitle = stringResource(Res.string.guarantor_details),
-                backPress = { onAction(GuarantorDetailAction.NavigateBack) },
-                actions = {
-                    MifosDropdownMenu(
-                        menuItems = listOf(
-                            stringResource(Res.string.update_guarantor)
-                                to { onAction(GuarantorDetailAction.UpdateGuarantor) },
-                            stringResource(Res.string.delete_guarantor)
-                                to { onAction(GuarantorDetailAction.UpdateMenuDialogValue) },
-                        ),
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                topBarTitle = stringResource(Res.string.guarantor_details),
+//                backPress = { onAction(GuarantorDetailAction.NavigateBack) },
+//                actions = {
+//                    MifosDropdownMenu(
+//                        menuItems = listOf(
+//                            stringResource(Res.string.update_guarantor)
+//                                to { onAction(GuarantorDetailAction.UpdateGuarantor) },
+//                            stringResource(Res.string.delete_guarantor)
+//                                to { onAction(GuarantorDetailAction.UpdateMenuDialogValue) },
+//                        ),
+//                    )
+//                },
+//            )
+//        },
         snackbarHostState = snackbarHostState,
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 state.guarantor?.let { it1 -> GuarantorDetailContent(data = it1) }
             }
         },

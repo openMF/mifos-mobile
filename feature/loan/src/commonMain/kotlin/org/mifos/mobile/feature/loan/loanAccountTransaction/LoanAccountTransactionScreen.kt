@@ -98,10 +98,10 @@ private fun LoanAccountTransactionScreen(
     onAction: (LoanAccountTransactionAction) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        MifosTopAppBar(
-            backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
-            topBarTitle = stringResource(Res.string.transactions),
-        )
+//        MifosTopAppBar(
+//            backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
+//            topBarTitle = stringResource(Res.string.transactions),
+//        )
 
         Box(modifier = Modifier.weight(1f)) {
             state.loanWithAssociations?.let {

@@ -88,10 +88,10 @@ private fun ThirdPartyTransferScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.third_party_transfer),
-        backPress = { onAction(ThirdPartyTransferAction.OnNavigate) },
+        onNavigationIconClick = { onAction(ThirdPartyTransferAction.OnNavigate) },
         modifier = Modifier,
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
+    ) {
+        Box(modifier = Modifier) {
             if (!state.beneficiaries.isNullOrEmpty() && !state.fromAccountDetail.isNullOrEmpty
                     () && !state.toAccountOption.isNullOrEmpty()
             ) {

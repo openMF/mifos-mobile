@@ -101,24 +101,23 @@ private fun LoanApplicationScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                backPress = { onAction(LoanApplicationAction.BackPress) },
-                topBarTitle =
-                stringResource(
-                    if (state.loanState == LoanState.CREATE) {
-                        Res.string.apply_for_loan
-                    } else {
-                        Res.string.update_loan
-                    },
-                ),
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                modifier = Modifier.fillMaxWidth(),
+//                backPress = { onAction(LoanApplicationAction.BackPress) },
+//                topBarTitle =
+//                stringResource(
+//                    if (state.loanState == LoanState.CREATE) {
+//                        Res.string.apply_for_loan
+//                    } else {
+//                        Res.string.update_loan
+//                    },
+//                ),
+//            )
+//        },
         content = {
             Column(
                 modifier = Modifier
-                    .padding(it)
                     .fillMaxSize(),
             ) {
                 state.loanWithAssociations?.let {

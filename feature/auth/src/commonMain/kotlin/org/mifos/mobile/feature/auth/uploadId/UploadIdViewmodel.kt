@@ -192,13 +192,14 @@ internal class UploadIdViewModel :
 
     private fun uploadDetails() {
         // TODO call api
-//        viewModelScope.launch {
-//            mutableStateFlow.update {
-//                it.copy(dialogState = UploadIdUiState.DialogState.Loading)
-//            }
-//            delay(3000)
-//            sendEvent(UploadIdEvent.NavigateToOtp)
-//        }
+        viewModelScope.launch {
+            mutableStateFlow.update {
+                it.copy(dialogState = UploadIdUiState.DialogState.Loading)
+            }
+            delay(3000)
+            dismissDialog()
+            sendEvent(UploadIdEvent.NavigateToOtp)
+        }
     }
 
     private fun toggleDatePicker() {

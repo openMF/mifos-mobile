@@ -109,34 +109,33 @@ private fun QrCodeDisplayScreen(
     val option = stringResource(Res.string.choose_option)
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopAppBar(
-                backPress = { onAction(QrCodeDisplayAction.OnNavigate) },
-                topBarTitle = stringResource(Res.string.qr_code),
-                actions = {
-                    IconButton(
-                        onClick = {
-                            onAction(
-                                QrCodeDisplayAction.ShareQrCode(
-                                    bytes,
-                                    option,
-                                ),
-                            )
-                        },
-                        content = {
-                            Icon(
-                                imageVector = MifosIcons.Share,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-                },
-            )
-        },
-        content = { paddingValues ->
+//        topBar = {
+//            MifosTopAppBar(
+//                backPress = { onAction(QrCodeDisplayAction.OnNavigate) },
+//                topBarTitle = stringResource(Res.string.qr_code),
+//                actions = {
+//                    IconButton(
+//                        onClick = {
+//                            onAction(
+//                                QrCodeDisplayAction.ShareQrCode(
+//                                    bytes,
+//                                    option,
+//                                ),
+//                            )
+//                        },
+//                        content = {
+//                            Icon(
+//                                imageVector = MifosIcons.Share,
+//                                contentDescription = null,
+//                            )
+//                        },
+//                    )
+//                },
+//            )
+//        },
+        content = {
             Box(
                 modifier = Modifier
-                    .padding(paddingValues = paddingValues)
                     .fillMaxSize(),
             ) {
                 QrCodeDisplayContent(painter = painter)

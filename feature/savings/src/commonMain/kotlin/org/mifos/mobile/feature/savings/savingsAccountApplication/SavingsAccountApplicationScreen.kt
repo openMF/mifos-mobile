@@ -83,12 +83,12 @@ private fun SavingsAccountApplicationScreen(
     val scope = rememberCoroutineScope()
 
     MifosScaffold(
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         topBarTitle = topBarTitleText,
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 when (uiState) {
                     is SavingsAccountApplicationUiState.Error -> {
                         MifosErrorComponent(

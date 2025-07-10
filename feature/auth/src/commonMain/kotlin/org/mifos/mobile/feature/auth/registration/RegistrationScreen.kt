@@ -162,11 +162,11 @@ private fun RegistrationScreen(
                 )
             }
         },
-    ) { paddingValues ->
+    ) {
         RegistrationScreenContent(
             state = state,
             onAction = onAction,
-            modifier = modifier.padding(paddingValues),
+            modifier = modifier,
         )
     }
 }

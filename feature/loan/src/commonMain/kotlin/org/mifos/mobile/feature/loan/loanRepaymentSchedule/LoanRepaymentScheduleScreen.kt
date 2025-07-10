@@ -112,13 +112,12 @@ private fun LoanRepaymentScheduleScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.loan_repayment_schedule),
-        backPress = { (onAction(LoanRepaymentScheduleAction.BackPress)) },
+        onNavigationIconClick = { (onAction(LoanRepaymentScheduleAction.BackPress)) },
         modifier = modifier,
-    ) { contentPadding ->
+    ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
+                .fillMaxSize(),
         ) {
             state.loanWithAssociations?.let {
                 LoanRepaymentScheduleCard(it)

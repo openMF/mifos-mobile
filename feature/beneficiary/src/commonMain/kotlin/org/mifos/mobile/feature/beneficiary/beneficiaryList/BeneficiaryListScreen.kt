@@ -115,7 +115,7 @@ private fun BeneficiaryListScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.beneficiaries),
-        backPress = { onAction(BeneficiaryListAction.OnNavigate) },
+        onNavigationIconClick = { onAction(BeneficiaryListAction.OnNavigate) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = modifier,
         floatingActionButtonContent = FloatingActionButtonContent(
@@ -135,8 +135,7 @@ private fun BeneficiaryListScreen(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+                .fillMaxSize(),
         ) {
             if (state.dialogState == null) {
                 if (state.beneficiaries.isEmpty()) {

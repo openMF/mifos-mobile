@@ -81,7 +81,7 @@ internal fun SavingsAccountTransactionScreen(
 
     MifosScaffold(
         modifier = modifier,
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         topBarTitle = stringResource(Res.string.savings_account_transaction),
         actions = {
             IconButton(onClick = { isDialogOpen = true }) {
@@ -91,8 +91,8 @@ internal fun SavingsAccountTransactionScreen(
                 )
             }
         },
-        content = { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
+        content = {
+            Box(modifier = Modifier) {
                 when (uiState) {
                     is SavingsAccountTransactionUiState.Loading -> {
                         MifosProgressIndicatorOverlay()

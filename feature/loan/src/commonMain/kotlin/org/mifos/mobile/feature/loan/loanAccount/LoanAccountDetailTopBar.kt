@@ -43,43 +43,43 @@ internal fun LoanAccountDetailTopBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    MifosTopAppBar(
-        modifier = modifier,
-        topBarTitle = stringResource(Res.string.loan_account_details),
-        backPress = navigateBack,
-        actions = {
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(
-                    imageVector = MifosIcons.MoreVert,
-                    contentDescription = "Menu",
-                )
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                modifier = Modifier.padding(start = 16.dp, end = 32.dp),
-                onDismissRequest = { showMenu = false },
-            ) {
-                DropdownMenuItem(
-                    text = {
-                        Text(text = stringResource(Res.string.view_guarantor))
-                    },
-                    onClick = viewGuarantor,
-                )
-                DropdownMenuItem(
-                    text = {
-                        Text(text = stringResource(Res.string.update_loan))
-                    },
-                    onClick = updateLoan,
-                )
-                DropdownMenuItem(
-                    text = {
-                        Text(text = stringResource(Res.string.withdraw_loan))
-                    },
-                    onClick = withdrawLoan,
-                )
-            }
-        },
-    )
+//    MifosTopAppBar(
+//        modifier = modifier,
+//        topBarTitle = stringResource(Res.string.loan_account_details),
+//        backPress = navigateBack,
+//        actions = {
+//            IconButton(onClick = { showMenu = !showMenu }) {
+//                Icon(
+//                    imageVector = MifosIcons.MoreVert,
+//                    contentDescription = "Menu",
+//                )
+//            }
+//            DropdownMenu(
+//                expanded = showMenu,
+//                modifier = Modifier.padding(start = 16.dp, end = 32.dp),
+//                onDismissRequest = { showMenu = false },
+//            ) {
+//                DropdownMenuItem(
+//                    text = {
+//                        Text(text = stringResource(Res.string.view_guarantor))
+//                    },
+//                    onClick = viewGuarantor,
+//                )
+//                DropdownMenuItem(
+//                    text = {
+//                        Text(text = stringResource(Res.string.update_loan))
+//                    },
+//                    onClick = updateLoan,
+//                )
+//                DropdownMenuItem(
+//                    text = {
+//                        Text(text = stringResource(Res.string.withdraw_loan))
+//                    },
+//                    onClick = withdrawLoan,
+//                )
+//            }
+//        },
+//    )
 }
 
 @Preview

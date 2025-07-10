@@ -81,20 +81,20 @@ private fun HelpScreenContent(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBar = {
-            MifosTopAppBar(
-                navigateBack = { onAction(HelpAction.NavigateBack) },
-                title = {
-                    MifosTitleSearchCard(
-                        searchQuery = { query -> onAction(HelpAction.SearchFaq(query)) },
-                        titleResourceId = Res.string.help,
-                        onSearchDismiss = { onAction(HelpAction.DismissSearch) },
-                    )
-                },
-            )
-        },
-        content = { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues)) {
+//        topBar = {
+//            MifosTopAppBar(
+//                navigateBack = { onAction(HelpAction.NavigateBack) },
+//                title = {
+//                    MifosTitleSearchCard(
+//                        searchQuery = { query -> onAction(HelpAction.SearchFaq(query)) },
+//                        titleResourceId = Res.string.help,
+//                        onSearchDismiss = { onAction(HelpAction.DismissSearch) },
+//                    )
+//                },
+//            )
+//        },
+        content = {
+            Box(modifier = Modifier) {
                 if (uiState.faqList.isNotEmpty()) {
                     HelpContent(
                         faqArrayList = uiState.faqList,

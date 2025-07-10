@@ -104,49 +104,49 @@ internal fun HomeContent(
         },
         content = {
             MifosScaffold(
-                topBar = {
-                    MifosTopAppBar(
-                        topBarTitle = stringResource(Res.string.home),
-                        icon = MifosIcons.NavigationDrawer,
-                        actions = {
-                            IconButton(
-                                onClick = {
-                                    onAction(HomeAction.OnNavigate(HomeDestinations.NOTIFICATIONS))
-                                },
-                            ) {
-                                Box(
-                                    modifier = Modifier,
-                                    contentAlignment = Alignment.TopEnd,
-                                ) {
-                                    Icon(
-                                        imageVector = MifosIcons.Notifications,
-                                        contentDescription = null,
-                                    )
-                                    if (state.notificationCount > 0) {
-                                        Box(
-                                            modifier = Modifier
-                                                .clip(CircleShape)
-                                                .padding(2.dp)
-                                                .size(8.dp),
-                                            contentAlignment = Alignment.Center,
-                                        ) {
-                                            Text(
-                                                text = state.notificationCount.toString(),
-                                                fontSize = 6.sp,
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        backPress = {
-                            coroutineScope.launch { drawerState.open() }
-                        },
-                    )
-                },
+//                topBar = {
+//                    MifosTopAppBar(
+//                        topBarTitle = stringResource(Res.string.home),
+//                        icon = MifosIcons.NavigationDrawer,
+//                        actions = {
+//                            IconButton(
+//                                onClick = {
+//                                    onAction(HomeAction.OnNavigate(HomeDestinations.NOTIFICATIONS))
+//                                },
+//                            ) {
+//                                Box(
+//                                    modifier = Modifier,
+//                                    contentAlignment = Alignment.TopEnd,
+//                                ) {
+//                                    Icon(
+//                                        imageVector = MifosIcons.Notifications,
+//                                        contentDescription = null,
+//                                    )
+//                                    if (state.notificationCount > 0) {
+//                                        Box(
+//                                            modifier = Modifier
+//                                                .clip(CircleShape)
+//                                                .padding(2.dp)
+//                                                .size(8.dp),
+//                                            contentAlignment = Alignment.Center,
+//                                        ) {
+//                                            Text(
+//                                                text = state.notificationCount.toString(),
+//                                                fontSize = 6.sp,
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        },
+//                        backPress = {
+//                            coroutineScope.launch { drawerState.open() }
+//                        },
+//                    )
+//                },
             ) {
                 HomeScreenContent(
-                    modifier = Modifier.padding(it),
+                    modifier = Modifier,
                     onAction = onAction,
                     state = state,
                 )

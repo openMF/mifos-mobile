@@ -36,12 +36,11 @@ internal fun BeneficiaryScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.add_beneficiary),
-        backPress = topAppbarNavigateBack,
+        onNavigationIconClick = topAppbarNavigateBack,
         modifier = modifier,
     ) {
         Column(
             modifier = Modifier
-                .padding(it)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {

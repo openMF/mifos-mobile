@@ -47,7 +47,6 @@ internal fun StatusScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
                 .padding(DesignToken.padding.large),
             verticalArrangement = Arrangement.Center,
         ) {

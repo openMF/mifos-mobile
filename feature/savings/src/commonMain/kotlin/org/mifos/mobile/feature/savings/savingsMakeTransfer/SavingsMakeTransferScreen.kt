@@ -71,12 +71,11 @@ private fun SavingsMakeTransferScreen(
                 Res.string.transfer
             },
         ),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
         content = {
             Box(
                 modifier = Modifier
-                    .padding(it)
                     .fillMaxSize(),
             ) {
                 SavingsMakeTransferContent(

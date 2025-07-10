@@ -35,14 +35,14 @@ internal fun PrivacyPolicyScreen(
 
     MifosScaffold(
         topBarTitle = stringResource(Res.string.feature_about_privacy_policy),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         WebView(
             url = stringResource(Res.string.feature_about_policy_url),
             isLoading = isLoading,
             onLoadingChange = { isLoading = it },
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier,
         )
     }
 }

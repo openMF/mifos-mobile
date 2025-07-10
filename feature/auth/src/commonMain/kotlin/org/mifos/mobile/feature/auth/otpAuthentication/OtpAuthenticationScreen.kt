@@ -141,10 +141,9 @@ internal fun OptAuthScreenContent(
                 )
             }
         },
-    ) { paddingValues ->
+    ) {
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(paddingValues)
                 .padding(top = DesignToken.padding.large)
                 .padding(DesignToken.padding.large),
 

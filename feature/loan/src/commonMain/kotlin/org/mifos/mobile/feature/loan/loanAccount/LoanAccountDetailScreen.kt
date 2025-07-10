@@ -151,7 +151,7 @@ private fun LoanAccountDetailScreen(
             )
         },
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 if (state.loanAccountAssociations != null) {
                     LoanAccountDetailContent(
                         loanWithAssociations = state.loanAccountAssociations,

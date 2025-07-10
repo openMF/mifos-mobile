@@ -104,14 +104,13 @@ private fun QrCodeImportScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.import_qr),
-        backPress = { onAction(QrCodeImportAction.OnNavigate) },
+        onNavigationIconClick = { onAction(QrCodeImportAction.OnNavigate) },
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+                .fillMaxSize(),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 QrCodeImportContent(proceedClicked = { imageBitmap ->

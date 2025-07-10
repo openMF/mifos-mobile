@@ -98,9 +98,9 @@ private fun LoanAccountSummaryScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.loan_summary),
-        backPress = { (onAction(LoanAccountSummaryAction.BackPress)) },
+        onNavigationIconClick = { (onAction(LoanAccountSummaryAction.BackPress)) },
     ) {
-        Box(modifier = Modifier.padding(it)) {
+        Box(modifier = Modifier) {
             state.loanAccountAssociations?.let {
                 LoanAccountSummaryContent(
                     state = state,

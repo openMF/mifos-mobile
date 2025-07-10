@@ -51,7 +51,7 @@ internal fun AboutUsScreen(
     val aboutUsItems = remember { getAboutUsItems() }
 
     MifosScaffold(
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         topBarTitle = stringResource(Res.string.feature_about_about_us),
         content = {
             LazyColumn(

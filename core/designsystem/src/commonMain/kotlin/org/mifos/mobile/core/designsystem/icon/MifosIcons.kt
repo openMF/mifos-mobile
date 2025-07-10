@@ -63,6 +63,7 @@ import fluent.ui.system.icons.filled.Person
 import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
 import fluent.ui.system.icons.regular.CheckmarkCircle
+import fluent.ui.system.icons.regular.ChevronLeft
 import fluent.ui.system.icons.regular.Eye
 import fluent.ui.system.icons.regular.EyeOff
 import fluent.ui.system.icons.regular.Image
@@ -130,4 +131,6 @@ object MifosIcons {
     val HomeTabFilled = FluentIcons.Filled.Grid
     val TransferTabFilled = FluentIcons.Filled.MoneyHand
     val PersonTabFilled = FluentIcons.Filled.Person
+
+    val Chevron = FluentIcons.Regular.ChevronLeft
 }

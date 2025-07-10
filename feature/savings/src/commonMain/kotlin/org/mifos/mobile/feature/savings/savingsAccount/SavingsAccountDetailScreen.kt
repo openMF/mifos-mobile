@@ -84,23 +84,23 @@ private fun SavingsAccountDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBar = {
-            MifosTopAppBar(
-                topBarTitle = stringResource(Res.string.saving_account_details),
-                backPress = navigateBack,
-                actions = {
-                    MifosDropdownMenu(
-                        menuItems = listOf(
-                            stringResource(Res.string.update_savings_account) to updateSavingsAccount,
-                            stringResource(Res.string.withdraw_savings_account) to withdrawSavingsAccount,
-                        ),
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                topBarTitle = stringResource(Res.string.saving_account_details),
+//                backPress = navigateBack,
+//                actions = {
+//                    MifosDropdownMenu(
+//                        menuItems = listOf(
+//                            stringResource(Res.string.update_savings_account) to updateSavingsAccount,
+//                            stringResource(Res.string.withdraw_savings_account) to withdrawSavingsAccount,
+//                        ),
+//                    )
+//                },
+//            )
+//        },
         modifier = modifier,
     ) {
-        Box(modifier = Modifier.padding(it)) {
+        Box(modifier = Modifier) {
             when (uiState) {
                 is SavingsAccountDetailUiState.Error -> MifosErrorComponent()
 

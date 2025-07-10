@@ -138,23 +138,23 @@ private fun AccountsScreenContent(
     }
 
     MifosScaffold(
-        topBar = {
-            MifosTopAppBar(
-                navigateBack = navigateBack,
-                title = {
-                    MifosTitleSearchCard(
-                        actions = {
-                            IconButton(onClick = openFilterDialog) {
-                                Icon(imageVector = MifosIcons.FilterList, contentDescription = "Filter")
-                            }
-                        },
-                        titleResourceId = Res.string.feature_account_title,
-                        searchQuery = onSearchQueryChange,
-                        onSearchDismiss = closeSearch,
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                navigateBack = navigateBack,
+//                title = {
+//                    MifosTitleSearchCard(
+//                        actions = {
+//                            IconButton(onClick = openFilterDialog) {
+//                                Icon(imageVector = MifosIcons.FilterList, contentDescription = "Filter")
+//                            }
+//                        },
+//                        titleResourceId = Res.string.feature_account_title,
+//                        searchQuery = onSearchQueryChange,
+//                        onSearchDismiss = closeSearch,
+//                    )
+//                },
+//            )
+//        },
         floatingActionButton = {
             IconButton(
                 onClick = {
@@ -171,7 +171,7 @@ private fun AccountsScreenContent(
             }
         },
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         ClientAccountsTabRow(
             tabs = tabs,
             checkboxOptions = checkboxOptions,
@@ -179,7 +179,7 @@ private fun AccountsScreenContent(
             searchQuery = searchQuery,
             onPageChange = onPageChange,
             onAccountClicked = onAccountClicked,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier,
         )
     }
 }
