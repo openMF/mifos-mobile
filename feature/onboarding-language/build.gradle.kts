@@ -14,7 +14,7 @@ plugins {
 }
 
 android {
-    namespace = "org.mifos.mobile"
+    namespace = "org.mifos.mobile.feature.onboarding.language"
 }
 
 kotlin {

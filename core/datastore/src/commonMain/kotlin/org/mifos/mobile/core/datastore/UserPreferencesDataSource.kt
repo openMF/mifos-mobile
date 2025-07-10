@@ -26,6 +26,7 @@ import okio.ByteString.Companion.encodeUtf8
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
 
 private const val USER_DATA = "userData"
@@ -74,6 +75,12 @@ class UserPreferencesDataSource(
 
     val observeLanguage: Flow<LanguageConfig>
         get() = _settingsInfo.map { it.language }
+
+    val observeDynamicColorPreference: Flow<Boolean>
+        get() = _settingsInfo.map { it.useDynamicColor }
+
+    val observeDarkThemeConfig: Flow<DarkThemeConfig>
+        get() = _settingsInfo.map { it.darkThemeConfig }
 
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
@@ -189,6 +196,20 @@ class UserPreferencesDataSource(
     suspend fun setFirstTimeState(firstTimeState: Boolean) =
         withContext(dispatcher) {
             val newPreference = settings.getSettingsPreference().copy(firstTimeState = firstTimeState)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    suspend fun setIsAuthenticated(isAuthenticated: Boolean) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(isAuthenticated = isAuthenticated)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    suspend fun setIsUnlocked(isUnlocked: Boolean) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(isUnlocked = isUnlocked)
             settings.putSettingsPreference(newPreference)
             _settingsInfo.value = newPreference
         }

@@ -16,10 +16,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
 
 class UserPreferencesRepositoryImpl(
@@ -29,10 +31,10 @@ class UserPreferencesRepositoryImpl(
 ) : UserPreferencesRepository {
     private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
 
-    override val userInfo: Flow<UserData>
+    override val userInfo: StateFlow<UserData>
         get() = preferenceManager.userInfo
 
-    override val settingsInfo: Flow<AppSettings>
+    override val settingsInfo: StateFlow<AppSettings>
         get() = preferenceManager.settingsInfo
 
     override val appTheme: StateFlow<AppTheme>
@@ -68,6 +70,12 @@ class UserPreferencesRepositoryImpl(
 
     override val observeLanguage: Flow<LanguageConfig>
         get() = preferenceManager.observeLanguage
+
+    override val observeDarkThemeConfig: Flow<DarkThemeConfig>
+        get() = preferenceManager.observeDarkThemeConfig
+
+    override val observeDynamicColorPreference: Flow<Boolean>
+        get() = preferenceManager.observeDynamicColorPreference
 
     override suspend fun updateToken(password: String): DataState<Unit> {
         return try {
@@ -151,6 +159,14 @@ class UserPreferencesRepositoryImpl(
 
     override suspend fun setLanguage(language: LanguageConfig) {
         preferenceManager.setLanguage(language)
+    }
+
+    override suspend fun setIsAuthenticated(isAuthenticated: Boolean) {
+        preferenceManager.setIsAuthenticated(isAuthenticated)
+    }
+
+    override suspend fun setIsUnlocked(isUnlocked: Boolean) {
+        preferenceManager.setIsUnlocked(isUnlocked)
     }
 
     override suspend fun logOut() {

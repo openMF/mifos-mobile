@@ -16,8 +16,8 @@ data class UserData(
     val userId: Long,
     val userName: String,
     val clientId: Long,
-    val isAuthenticated: Boolean,
-    val base64EncodedAuthenticationKey: String,
+    val isAuthenticated: Boolean = false,
+    val base64EncodedAuthenticationKey: String? = null,
     val officeName: String,
 ) {
     companion object {

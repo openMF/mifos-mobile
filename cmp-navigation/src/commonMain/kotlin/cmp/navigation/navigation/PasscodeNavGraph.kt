@@ -12,6 +12,7 @@ package cmp.navigation.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
+import cmp.navigation.authenticated.AuthenticatedGraphRoute
 import org.mifos.library.passcode.PASSCODE_SCREEN
 import org.mifos.library.passcode.passcodeRoute
 
@@ -23,19 +24,19 @@ internal fun NavGraphBuilder.passcodeNavGraph(navController: NavHostController) 
         passcodeRoute(
             onForgotButton = {
                 navController.popBackStack()
-                navController.navigate(NavGraphRoute.MAIN_GRAPH)
+                navController.navigate(AuthenticatedGraphRoute)
             },
             onSkipButton = {
                 navController.popBackStack()
-                navController.navigate(NavGraphRoute.MAIN_GRAPH)
+                navController.navigate(AuthenticatedGraphRoute)
             },
             onPasscodeConfirm = {
                 navController.popBackStack()
-                navController.navigate(NavGraphRoute.MAIN_GRAPH)
+                navController.navigate(AuthenticatedGraphRoute)
             },
             onPasscodeRejected = {
                 navController.popBackStack()
-                navController.navigate(NavGraphRoute.MAIN_GRAPH)
+                navController.navigate(AuthenticatedGraphRoute)
             },
         )
     }
