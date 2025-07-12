@@ -23,43 +23,6 @@ import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
-//class ComposeAppViewModel(
-//    private val userDataRepository: UserDataRepository,
-//    private val passcodeManager: PasscodeManager,
-//    private val userPreferencesRepository: UserPreferencesRepository,
-//) : ViewModel() {
-//
-//    private val userDataFlow = userDataRepository.userData
-//    private val appThemeFlow = userPreferencesRepository.appTheme
-//
-//    val uiState: StateFlow<MainUiState> = combine(userDataFlow, appThemeFlow) { dataState, appTheme ->
-//        when (dataState) {
-//            is DataState.Success -> MainUiState.Success(dataState.data, appTheme)
-//            is DataState.Error -> MainUiState.Error(dataState.exception.message ?: "Unknown error")
-//            DataState.Loading -> MainUiState.Loading
-//        }
-//    }.stateIn(
-//        scope = viewModelScope,
-//        initialValue = MainUiState.Loading,
-//        started = SharingStarted.WhileSubscribed(5_000),
-//    )
-//
-//    fun logOut() {
-//        viewModelScope.launch {
-//            userDataRepository.logOut()
-//            passcodeManager.clearPasscode()
-//        }
-//    }
-//}
-//
-//sealed interface MainUiState {
-//    data object Loading : MainUiState
-//    data class Error(val error: String) : MainUiState
-//    data class Success(val userData: UserData, val appTheme: AppTheme) : MainUiState
-//}
-
-
-
 class ComposeAppViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,

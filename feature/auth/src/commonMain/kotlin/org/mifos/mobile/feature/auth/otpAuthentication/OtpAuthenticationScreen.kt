@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
@@ -137,15 +139,16 @@ internal fun OptAuthScreenContent(
         bottomBar = {
             Surface {
                 MifosPoweredCard(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = modifier.fillMaxWidth().navigationBarsPadding(),
                 )
             }
         },
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
+                .padding(DesignToken.padding.large)
                 .padding(top = DesignToken.padding.large)
-                .padding(DesignToken.padding.large),
+                .statusBarsPadding(),
 
         ) {
             Text(

@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -158,7 +160,7 @@ private fun RegistrationScreen(
         bottomBar = {
             Surface {
                 MifosPoweredCard(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
                 )
             }
         },
@@ -193,7 +195,9 @@ private fun RegistrationScreenContent(
                     keyboardController?.hide()
                 }
             }
-            .padding(DesignToken.padding.large),
+            .padding(DesignToken.padding.large)
+            .padding(top = DesignToken.padding.large)
+            .statusBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         contentPadding = PaddingValues(
             bottom = DesignToken.spacing.extraLarge,

@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import org.mifos.mobile.core.designsystem.component.MifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.navigation.MifosBottomBar
 import org.mifos.mobile.core.ui.navigation.MifosNavigationRail
@@ -59,8 +60,8 @@ fun MifosScaffold(
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     navigationData: ScaffoldNavigationData? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
-    containerColor: Color = Color.White,
-    contentColor: Color = Color.Black,
+    containerColor: Color = AppColors.customWhite,
+    contentColor: Color = AppColors.customBlack,
     contentWindowInsets: WindowInsets = ScaffoldDefaults
         .contentWindowInsets
 //        .union(WindowInsets.displayCutout)
@@ -106,11 +107,6 @@ fun MifosScaffold(
                 }
                 Box(
                     modifier = Modifier.run {
-//                        if (isNavigationRailVisible) {
-//                            consumeWindowInsets(
-//                                insets = WindowInsets.displayCutout.only(WindowInsetsSides.Start),
-//                            )
-//                        } else
                         if (isNavigationBarVisible) {
                             consumeWindowInsets(
                                 insets = WindowInsets.navigationBars.only(WindowInsetsSides.Bottom),
