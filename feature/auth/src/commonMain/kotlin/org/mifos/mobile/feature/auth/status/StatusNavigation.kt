@@ -16,33 +16,38 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
+import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Serializable
 data class StatusNavigationRoute(
     val eventType: EventType,
     val eventDestination: String,
-    val buttonText: String = "Continue",
-    val title: String = "Success",
-    val subtitle: String = "You have completed the action.",
+    val title: String,
+    val subtitle: String,
+    val buttonText: String,
 )
 
 fun NavController.navigateToStatusScreen(
     eventType: EventType,
     eventDestination: String,
-    buttonText: String = "Continue",
-    title: String = "Success",
-    subtitle: String = "You have completed the action.",
+    title: String,
+    subtitle: String,
+    buttonText: String,
 ) {
     this.navigate(
         StatusNavigationRoute(
             eventType = eventType,
             eventDestination = eventDestination,
-            buttonText = buttonText,
             title = title,
             subtitle = subtitle,
+            buttonText = buttonText,
         ),
-    )
+    ) {
+        popUpTo(AuthGraphRoute) {
+            inclusive = false
+        }
+    }
 }
 
 fun NavGraphBuilder.statusDestination(
@@ -53,9 +58,9 @@ fun NavGraphBuilder.statusDestination(
         StatusScreen(
             eventType = route.eventType,
             eventDestination = route.eventDestination,
-            buttonText = route.buttonText,
             title = route.title,
             subtitle = route.subtitle,
+            buttonText = route.buttonText,
             navigateToDestination = navigateToDestination,
         )
     }

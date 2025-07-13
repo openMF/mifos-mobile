@@ -103,8 +103,10 @@
     <string name="feature_signup_error_name_contains_digits">Name should not contain digits</string>
     <string name="feature_signup_error_name_contains_symbols">Name should not contain symbols and spaces</string>
     <string name="feature_signup_error_name_contains_emoji">Text must not contain emoji or invalid characters</string>
-
-
+    <string name="feature_signup_user_registered_successfully">User Successfully Registered</string>
+    <string name="feature_signup_user_registered_successfully_tip">You can now log in with your username (phone number) and password.</string>
+    <string name="feature_signup_user_registered_failed">Failed To Register The User</string>
+    <string name="feature_signup_user_registered_failed_tip">There is an error to register the user. Please try again.</string>
 
 
     <string name="feature_upload_id_title">Upload ID</string>
@@ -132,6 +134,7 @@
     <string name="feature_upload_id_error_dob_required">Date of birth is required</string>
     <string name="feature_upload_id_upload_success">File uploaded successfully</string>
     <string name="feature_upload_id_upload_failed">Failed to upload file. Please try again.</string>
+    <string name="feature_upload_id_error_invalid_dob">Date of Birth cannot be today or a future date</string>
     <string name="feature_upload_id_generic_error">Something went wrong. Please try again later.</string>
 
     <string name="feature_otp_title">OTP Authentication</string>
@@ -176,5 +179,11 @@
     <string name="feature_recover_now_invalid_phone_number_error">Phone number can not contain letters or symbols</string>
     <string name="feature_recover_now_remember_your_password">Remember your password?</string>
     <string name="feature_recover_now_log_in">Log in!</string>
+
+
+    <string name="feature_recover_now_recovered_successfully">Password Recovery Successful</string>
+    <string name="feature_recover_now_recovered_successfully_tip">You can now log in with your username(phone number) and password.</string>
+    <string name="feature_recover_now_recovered_failed">Password Recovery Failed</string>
+    <string name="feature_recover_now_registered_failed_tip">There is an error to recover the password of the user. Please try again.</string>
 
 </resources>

@@ -109,10 +109,10 @@ fun MifosTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosRoundedTopAppBar(
-    brandIcon: DrawableResource? = null,
     title: String,
-    modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    brandIcon: DrawableResource? = null,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
@@ -125,7 +125,7 @@ fun MifosRoundedTopAppBar(
         },
         actions = actions,
         navigationIcon = {
-            if(brandIcon != null) {
+            if (brandIcon != null) {
                 Box(
                     modifier = Modifier.padding(DesignToken.padding.medium),
                 ) {
@@ -136,7 +136,6 @@ fun MifosRoundedTopAppBar(
                             .size(344.dp, 40.dp),
                     )
                 }
-
             } else {
                 IconButton(
                     onClick = onNavigateBack,

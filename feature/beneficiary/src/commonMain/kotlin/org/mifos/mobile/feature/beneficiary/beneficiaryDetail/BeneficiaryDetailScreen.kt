@@ -10,13 +10,7 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,19 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
-import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_detail
 import mifos_mobile.feature.beneficiary.generated.resources.cancel
 import mifos_mobile.feature.beneficiary.generated.resources.delete
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary
-import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
-import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
@@ -160,6 +150,7 @@ private fun BeneficiaryDetailScreen(
     )
 }
 
+@Suppress("UnusedParameter")
 @Composable
 private fun BeneficiaryDetailTopAppBar(
     navigateBack: () -> Unit,

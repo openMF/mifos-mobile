@@ -101,7 +101,6 @@ private fun SavingsAccountWithdrawScreen(
         topBarTitle = stringResource(Res.string.withdraw_savings_account),
         snackbarHost = { SnackbarHost(snackbarHostState) },
         content = {
-
             Box(modifier = Modifier) {
                 when (uiState) {
                     is SavingsAccountWithdrawUiState.Error -> EmptyDataView(

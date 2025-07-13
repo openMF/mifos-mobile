@@ -18,9 +18,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.serializer
 import mifos_mobile.feature.auth.generated.resources.Res
+import mifos_mobile.feature.auth.generated.resources.feature_common_next
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_recovered_successfully
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_recovered_successfully_tip
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
@@ -182,8 +186,11 @@ internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswor
             dismissDialog()
             sendEvent(
                 SetPasswordEvent.NavigateToStatus(
-                    EventType.SUCCESS,
-                    LoginRoute::class.serializer().descriptor.serialName,
+                    eventType = EventType.SUCCESS,
+                    eventDestination = LoginRoute::class.serializer().descriptor.serialName,
+                    title = getString(Res.string.feature_recover_now_recovered_successfully),
+                    subtitle = getString(Res.string.feature_recover_now_recovered_successfully_tip),
+                    buttonText = getString(Res.string.feature_common_next),
                 ),
             )
         }
@@ -234,7 +241,7 @@ internal data class SetPasswordState(
     }
 
     val isSubmitButtonEnabled: Boolean
-        get() = password.isNotBlank() && password.isNotBlank()
+        get() = password.isNotBlank() && confirmPassword.isNotBlank()
 }
 
 internal sealed interface SetPasswordEvent {
@@ -244,6 +251,9 @@ internal sealed interface SetPasswordEvent {
     data class NavigateToStatus(
         val eventType: EventType,
         val eventDestination: String,
+        val buttonText: String,
+        val title: String,
+        val subtitle: String,
     ) : SetPasswordEvent
 }
 

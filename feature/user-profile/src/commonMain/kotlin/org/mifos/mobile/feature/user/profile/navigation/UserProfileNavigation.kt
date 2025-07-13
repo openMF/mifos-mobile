@@ -46,7 +46,6 @@ private fun NavGraphBuilder.userProfileDestination(
     }
 }
 
-
 @Serializable
 data object ProfileGraphRoute
 

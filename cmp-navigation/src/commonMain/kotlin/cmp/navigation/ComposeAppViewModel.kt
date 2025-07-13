@@ -63,7 +63,6 @@ class ComposeAppViewModel(
         when (action) {
             is AppAction.AppSpecificLanguageUpdate -> handleAppSpecificLanguageUpdate(action)
 
-
             is AppAction.Internal.ThemeUpdate -> handleAppThemeUpdated(action)
 
             is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
@@ -86,7 +85,6 @@ class ComposeAppViewModel(
     private fun handleDynamicColorsUpdate(action: AppAction.Internal.DynamicColorsUpdate) {
         mutableStateFlow.update { it.copy(isDynamicColorsEnabled = action.isDynamicColorsEnabled) }
     }
-
 }
 
 data class AppState(

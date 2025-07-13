@@ -1,4 +1,12 @@
-
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package cmp.navigation.authenticatednavbar
 
 import androidx.lifecycle.viewModelScope
@@ -41,14 +49,12 @@ internal class AuthenticatedNavbarNavigationViewModel(
         sendEvent(AuthenticatedNavBarEvent.NavigateToUserProfileScreen)
     }
 
-
     private fun handleInternalAction(action: AuthenticatedNavBarAction.Internal) {
         when (action) {
             is AuthenticatedNavBarAction.Internal.UserStateUpdateReceive -> {
             }
         }
     }
-
 }
 
 internal sealed class AuthenticatedNavBarAction {
@@ -67,7 +73,6 @@ internal sealed class AuthenticatedNavBarAction {
 internal sealed class AuthenticatedNavBarEvent {
 
     abstract val tab: AuthenticatedNavBarTabItem
-
 
     data object NavigateToHomeScreen : AuthenticatedNavBarEvent() {
         override val tab: AuthenticatedNavBarTabItem = AuthenticatedNavBarTabItem.HomeTab

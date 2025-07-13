@@ -1,4 +1,12 @@
-
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package cmp.navigation.rootnav
 
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -22,6 +30,7 @@ import cmp.navigation.splash.navigateToSplash
 import cmp.navigation.splash.splashDestination
 import cmp.navigation.ui.rememberMifosNavController
 import cmp.navigation.utils.toObjectNavigationRoute
+import kotlinx.atomicfu.atomic
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.library.passcode.navigateToPasscodeScreen
 import org.mifos.mobile.core.ui.NonNullEnterTransitionProvider
@@ -34,7 +43,6 @@ import org.mifos.mobile.feature.onboarding.language.navigation.OnboardingLanguag
 import org.mifos.mobile.feature.onboarding.language.navigation.navigateToOnboardingLanguage
 import org.mifos.mobile.feature.onboarding.language.navigation.onBoardingLanguageDestination
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
-import kotlinx.atomicfu.atomic
 
 @OptIn(ExperimentalAtomicApi::class)
 @Suppress("LongMethod", "CyclomaticComplexMethod")
@@ -91,7 +99,6 @@ fun RootNavScreen(
         return
     }
     previousStateReference.value = state
-
 
     // When state changes, navigate to different root navigation state
     val rootNavOptions = navOptions {

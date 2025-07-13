@@ -66,13 +66,18 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
 
         otpAuthenticationDestination(
+            navigateBack = navController::popBackStack,
             navigateToStatusScreen = navController::navigateToStatusScreen,
             navigateToSetPasswordScreen = navController::navigateToSetPasswordScreen,
         )
 
         statusDestination(
             navigateToDestination = {
-                navController.navigate(it)
+                if (it == "login") {
+                    navController.navigateToLoginScreen()
+                } else {
+                    navController.navigate(it)
+                }
             },
         )
 

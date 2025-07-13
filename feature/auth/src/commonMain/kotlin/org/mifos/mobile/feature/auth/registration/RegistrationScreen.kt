@@ -389,10 +389,16 @@ fun MifosInputField(
                 trailingIcon = trailingIcon,
                 visualTransformation = visualTransformation,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = if (config.fieldType == InputFieldType.PASSWORD) {
-                        KeyboardType.Password
-                    } else {
-                        KeyboardType.Text
+                    keyboardType = when (config.fieldType) {
+                        InputFieldType.PASSWORD -> {
+                            KeyboardType.Password
+                        }
+                        InputFieldType.NUMBER -> {
+                            KeyboardType.Number
+                        }
+                        else -> {
+                            KeyboardType.Text
+                        }
                     },
                     imeAction = ImeAction.Next,
                 ),
@@ -404,6 +410,7 @@ fun MifosInputField(
 enum class InputFieldType {
     TEXT,
     PASSWORD,
+    NUMBER,
 }
 
 data class InputFieldConfig(
@@ -458,6 +465,7 @@ fun getInputConfigs(
             errorText = state.customerAccountError,
             labelRes = Res.string.feature_signup_customer_account_label,
             onValueChange = { onAction(SignUpAction.OnCustomerAccountChange(it)) },
+            fieldType = InputFieldType.NUMBER,
         ),
         InputFieldConfig(
             value = state.password,

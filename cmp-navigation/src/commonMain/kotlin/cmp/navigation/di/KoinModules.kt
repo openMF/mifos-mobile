@@ -58,7 +58,6 @@ object KoinModules {
         viewModelOf(::ComposeAppViewModel)
         viewModelOf(::AuthenticatedNavbarNavigationViewModel)
         viewModelOf(::RootNavViewModel)
-
     }
     private val featureModules = module {
         includes(

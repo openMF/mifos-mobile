@@ -11,12 +11,10 @@ package org.mifos.mobile.core.designsystem.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -209,8 +207,8 @@ fun MifosScaffold(
 fun MifosElevatedScaffold(
     onNavigateBack: () -> Unit,
     topBarTitle: String,
-    brandIcon: DrawableResource? = null,
     modifier: Modifier = Modifier,
+    brandIcon: DrawableResource? = null,
     bottomBar: @Composable () -> Unit = {},
     floatingActionButtonContent: FloatingActionButtonContent? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
@@ -367,7 +365,6 @@ fun rememberMifosPullToRefreshState(
         onRefresh = onRefresh,
     )
 }
-
 
 @Preview
 @Composable

@@ -63,7 +63,7 @@ import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun SetPasswordScreen(
-    navigateToStatusScreen: (EventType, String) -> Unit,
+    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SetPasswordViewModel = koinViewModel(),
@@ -77,6 +77,9 @@ internal fun SetPasswordScreen(
             is SetPasswordEvent.NavigateToStatus -> navigateToStatusScreen(
                 event.eventType,
                 event.eventDestination,
+                event.title,
+                event.subtitle,
+                event.buttonText,
             )
         }
     }
@@ -253,7 +256,6 @@ internal fun SetPasswordInputBox(
             Text(
                 text = stringResource(Res.string.feature_set_new_password_submit),
                 style = MifosTypography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 

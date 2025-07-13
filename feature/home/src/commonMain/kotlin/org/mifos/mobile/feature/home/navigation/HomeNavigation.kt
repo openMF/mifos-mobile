@@ -67,7 +67,6 @@ fun HomeCardItem.toDestination(): HomeDestinations {
     }
 }
 
-
 @Serializable
 data object HomeRoute
 
@@ -87,4 +86,3 @@ fun NavGraphBuilder.homeDestination(
         )
     }
 }
-

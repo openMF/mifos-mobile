@@ -30,6 +30,5 @@ interface UserDataRepository {
 
     val settingsState: StateFlow<AppSettings>
 
-
     suspend fun logOut(): DataState<String>
 }

@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.Dispatcher
@@ -70,7 +69,7 @@ class AuthenticationUserRepository(
         get() = preferencesHelper.userInfo.zip(preferencesHelper.settingsInfo) { account, settings ->
             when {
                 account.isAuthenticated && settings.isAuthenticated &&
-                        account.base64EncodedAuthenticationKey != null ->
+                    account.base64EncodedAuthenticationKey != null ->
                     account.base64EncodedAuthenticationKey
 
                 else -> null

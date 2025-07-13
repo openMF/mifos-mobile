@@ -13,17 +13,21 @@ package org.mifos.mobile.feature.auth.login
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
+import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 
 @Serializable
 @SerialName("login")
 data object LoginRoute
 
-fun NavController.navigateToLoginScreen(navOptions: NavOptions? = null) {
-    this.navigate(route = LoginRoute, navOptions = navOptions)
+fun NavController.navigateToLoginScreen() {
+    this.navigate(LoginRoute) {
+        popUpTo(AuthGraphRoute) {
+            inclusive = true
+        }
+    }
 }
 
 fun NavGraphBuilder.loginDestination(

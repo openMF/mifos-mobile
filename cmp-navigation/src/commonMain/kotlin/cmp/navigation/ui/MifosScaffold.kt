@@ -1,4 +1,12 @@
-
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package cmp.navigation.ui
 
 import androidx.compose.animation.AnimatedVisibility
@@ -9,13 +17,11 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
@@ -155,7 +161,7 @@ private fun ScaffoldBottomAppBar(
     Box(modifier = modifier.fillMaxWidth()) {
         Column {
             MifosPoweredCard(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             MifosBottomBar(
                 navigationItems = navigationData.navigationItems,
@@ -166,7 +172,6 @@ private fun ScaffoldBottomAppBar(
                     .testTag(tag = "NavigationBarContainer"),
             )
         }
-
     }
 }
 
@@ -182,7 +187,7 @@ private fun ScaffoldNavigationRail(
             .fillMaxHeight()
             .zIndex(zIndex = 1f),
     ) {
-        MifosNavigationRail (
+        MifosNavigationRail(
             navigationItems = navigationData.navigationItems,
             selectedItem = navigationData.selectedNavigationItem,
             onClick = navigationData.onNavigationClick,

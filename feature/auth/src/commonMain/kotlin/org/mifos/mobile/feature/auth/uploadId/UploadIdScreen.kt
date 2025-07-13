@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
@@ -42,6 +43,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_common_submit
@@ -146,12 +149,13 @@ internal fun UploadIdScreenContent(
             }
         },
     ) {
-
         Column(
             modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(DesignToken.padding.large),
+                .padding(top = DesignToken.padding.large)
+                .padding(DesignToken.padding.large)
+                .statusBarsPadding(),
         ) {
             Text(
                 text = stringResource(Res.string.feature_upload_id_title),
@@ -189,7 +193,7 @@ internal fun InputForm(
         initialSelectedDateMillis = activateDate,
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= Clock.System.now().toEpochMilliseconds()
+                return utcTimeMillis < Clock.System.now().toEpochMilliseconds()
             }
         },
     )
@@ -210,6 +214,7 @@ internal fun InputForm(
             isError = state.cellPhoneError != null,
             errorText = state.cellPhoneError?.let { stringResource(it) },
             onValueChange = { onAction(UploadIdAction.OnMobileChange(it)) },
+            inputFieldType = InputFieldType.PHONE,
         )
 
         MifosTextFieldWithError(
@@ -218,6 +223,7 @@ internal fun InputForm(
             isError = state.nationalIdError != null,
             errorText = state.nationalIdError?.let { stringResource(it) },
             onValueChange = { onAction(UploadIdAction.OnNationalIdChange(it)) },
+            inputFieldType = InputFieldType.PHONE,
         )
 
         MifosTextFieldWithError(
@@ -309,6 +315,11 @@ internal fun InputForm(
     }
 }
 
+enum class InputFieldType {
+    TEXT,
+    PHONE,
+}
+
 @Composable
 private fun MifosTextFieldWithError(
     value: String,
@@ -318,6 +329,7 @@ private fun MifosTextFieldWithError(
     errorText: String? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     showClearIcon: Boolean = true,
+    inputFieldType: InputFieldType = InputFieldType.TEXT,
 ) {
     MifosOutlinedTextField(
         value = value,
@@ -335,6 +347,14 @@ private fun MifosTextFieldWithError(
             errorText = errorText,
             trailingIcon = trailingIcon,
             showClearIcon = showClearIcon,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = if (inputFieldType == InputFieldType.PHONE) {
+                    KeyboardType.Phone
+                } else {
+                    KeyboardType.Text
+                },
+                imeAction = ImeAction.Next,
+            ),
         ),
     )
 }

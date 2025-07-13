@@ -62,7 +62,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun RecoverPasswordScreen(
-    navigateToOtpAuthenticationScreen: () -> Unit,
+    navigateToOtpAuthenticationScreen: (String) -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecoverPasswordViewModel = koinViewModel(),
@@ -71,9 +71,13 @@ internal fun RecoverPasswordScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
+            is RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
 
-            RecoverPasswordEvent.NavigateToOtpAuth -> navigateToOtpAuthenticationScreen.invoke()
+            is RecoverPasswordEvent.NavigateToOtpAuth -> {
+                navigateToOtpAuthenticationScreen(
+                    event.nextRoute,
+                )
+            }
         }
     }
 
@@ -166,7 +170,7 @@ internal fun ForgotPasswordInputBox(
             ),
             config = MifosTextFieldConfig(
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
+                    keyboardType = KeyboardType.Phone,
                 ),
                 isError = state.phoneNumberError != null,
                 errorText = state.phoneNumberError?.let { stringResource(it) },

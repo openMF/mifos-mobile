@@ -24,6 +24,6 @@ fun SharedApp(
         handleThemeMode = handleThemeMode,
         handleAppLocale = handleAppLocale,
         onSplashScreenRemoved = onSplashScreenRemoved,
-        modifier = modifier
+        modifier = modifier,
     )
 }

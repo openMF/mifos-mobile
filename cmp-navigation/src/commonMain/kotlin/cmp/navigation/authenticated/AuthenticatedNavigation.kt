@@ -1,4 +1,12 @@
-
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 @file:Suppress("MatchingDeclarationName")
 
 package cmp.navigation.authenticated
@@ -18,6 +26,7 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
+@Suppress("UnusedParameter")
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
 ) {
@@ -25,10 +34,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
         startDestination = AuthenticatedNavbarRoute,
     ) {
         authenticatedNavbarGraph()
-
     }
 }
 
+@Suppress("UnusedPrivateMember")
 private fun NavController.navigateUpToAuthenticatedNavbarRoot() {
     this.popBackStack<AuthenticatedNavbarRoute>(inclusive = false)
 }
