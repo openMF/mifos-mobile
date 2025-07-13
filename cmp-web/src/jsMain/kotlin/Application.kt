@@ -20,7 +20,11 @@ fun main() {
 
     onWasmReady {
         ComposeViewport(document.body!!) {
-            SharedApp() // Render the root composable of the application.
+            SharedApp(
+                handleThemeMode = {},
+                handleAppLocale = {},
+                onSplashScreenRemoved = {},
+            )
         }
     }
 }
