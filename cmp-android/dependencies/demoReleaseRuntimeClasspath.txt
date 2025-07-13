@@ -316,6 +316,8 @@ org.jetbrains.kotlin:kotlin-reflect:2.1.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20
 org.jetbrains.kotlin:kotlin-stdlib:2.1.21
+org.jetbrains.kotlinx:atomicfu-jvm:0.29.0
+org.jetbrains.kotlinx:atomicfu:0.29.0
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.8
 org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
