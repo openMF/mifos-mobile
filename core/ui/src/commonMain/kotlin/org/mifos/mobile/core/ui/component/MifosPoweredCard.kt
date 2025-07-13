@@ -47,6 +47,7 @@ fun MifosPoweredCard(
         modifier = modifier
             .shadow(
                 elevation = DesignToken.elevation.elevation,
+                shape = DesignToken.shapes.bottomSheet,
                 ambientColor = AppColors.customBlack,
                 spotColor = AppColors.customBlack,
                 clip = false,

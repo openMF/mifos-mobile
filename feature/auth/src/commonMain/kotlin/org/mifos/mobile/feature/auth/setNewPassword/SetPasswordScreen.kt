@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
@@ -62,7 +63,7 @@ import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun SetPasswordScreen(
-    navigateToStatusScreen: (EventType, String) -> Unit,
+    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SetPasswordViewModel = koinViewModel(),
@@ -76,6 +77,9 @@ internal fun SetPasswordScreen(
             is SetPasswordEvent.NavigateToStatus -> navigateToStatusScreen(
                 event.eventType,
                 event.eventDestination,
+                event.title,
+                event.subtitle,
+                event.buttonText,
             )
         }
     }
@@ -128,7 +132,7 @@ internal fun SetPasswordScreen(
         bottomBar = {
             Surface {
                 MifosPoweredCard(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
                 )
             }
         },
@@ -252,7 +256,6 @@ internal fun SetPasswordInputBox(
             Text(
                 text = stringResource(Res.string.feature_set_new_password_submit),
                 style = MifosTypography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 

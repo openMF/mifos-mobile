@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.loan.loanAccount
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -151,7 +150,7 @@ private fun LoanAccountDetailScreen(
             )
         },
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 if (state.loanAccountAssociations != null) {
                     LoanAccountDetailContent(
                         loanWithAssociations = state.loanAccountAssociations,

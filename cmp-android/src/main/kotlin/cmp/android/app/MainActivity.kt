@@ -12,13 +12,18 @@ package cmp.android.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import cmp.shared.SharedApp
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
+import org.koin.android.ext.android.inject
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.ui.utils.ShareUtils
+import java.util.Locale
+import kotlin.getValue
 
 /**
  * Main activity class.
@@ -32,13 +37,18 @@ class MainActivity : ComponentActivity() {
      * Called when the activity is starting.
      * This is where most initialization should go: calling [setContentView(int)] to inflate the activity's UI,
      */
+
+    private val userPreferencesRepository: UserPreferencesRepository by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var shouldShowSplashScreen = true
+        installSplashScreen().setKeepOnScreenCondition { shouldShowSplashScreen }
 
-        installSplashScreen()
+        val darkThemeConfigFlow = userPreferencesRepository.observeDarkThemeConfig
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        enableEdgeToEdge()
+        setupEdgeToEdge(darkThemeConfigFlow)
         ShareUtils.setActivityProvider { return@setActivityProvider this }
         FileKit.init(this)
         /**
@@ -46,7 +56,22 @@ class MainActivity : ComponentActivity() {
          * @see setContent
          */
         setContent {
-            SharedApp()
+            SharedApp(
+                handleThemeMode = {
+                    AppCompatDelegate.setDefaultNightMode(it)
+                },
+                handleAppLocale = {
+                    it?.let {
+                        AppCompatDelegate.setApplicationLocales(
+                            LocaleListCompat.forLanguageTags(it),
+                        )
+                        Locale.setDefault(Locale(it))
+                    }
+                },
+                onSplashScreenRemoved = {
+                    shouldShowSplashScreen = false
+                },
+            )
         }
     }
 }

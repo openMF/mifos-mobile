@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
@@ -61,7 +62,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun RecoverPasswordScreen(
-    navigateToOtpAuthenticationScreen: () -> Unit,
+    navigateToOtpAuthenticationScreen: (String) -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecoverPasswordViewModel = koinViewModel(),
@@ -70,9 +71,13 @@ internal fun RecoverPasswordScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
+            is RecoverPasswordEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
 
-            RecoverPasswordEvent.NavigateToOtpAuth -> navigateToOtpAuthenticationScreen.invoke()
+            is RecoverPasswordEvent.NavigateToOtpAuth -> {
+                navigateToOtpAuthenticationScreen(
+                    event.nextRoute,
+                )
+            }
         }
     }
 
@@ -104,7 +109,8 @@ internal fun RecoverPasswordScreen(
             Surface {
                 MifosPoweredCard(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
                 )
             }
         },
@@ -164,7 +170,7 @@ internal fun ForgotPasswordInputBox(
             ),
             config = MifosTextFieldConfig(
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
+                    keyboardType = KeyboardType.Phone,
                 ),
                 isError = state.phoneNumberError != null,
                 errorText = state.phoneNumberError?.let { stringResource(it) },

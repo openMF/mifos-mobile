@@ -48,13 +48,14 @@ import org.mifos.mobile.core.data.repositoryImpl.UserDetailRepositoryImp
 import org.mifos.mobile.core.data.util.NetworkMonitor
 
 private val ioDispatcher = named(MifosDispatchers.IO.name)
+private val unconfinedDispatcher = named(MifosDispatchers.Unconfined.name)
 
 val RepositoryModule = module {
 
     single<Json> { Json { ignoreUnknownKeys = true } }
 
     single<AccountsRepository> { AccountsRepositoryImp(get(), get(ioDispatcher)) }
-    single<UserDataRepository> { AuthenticationUserRepository(get(), get(ioDispatcher)) }
+    single<UserDataRepository> { AuthenticationUserRepository(get(), get(ioDispatcher), get(unconfinedDispatcher)) }
     single<BeneficiaryRepository> { BeneficiaryRepositoryImp(get(), get(ioDispatcher)) }
     single<ClientChargeRepository> { ClientChargeRepositoryImp(get(), get(ioDispatcher)) } // TODO
     single<ClientRepository> { ClientRepositoryImp(get(), get(ioDispatcher)) }

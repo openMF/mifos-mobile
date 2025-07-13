@@ -120,12 +120,11 @@ private fun ClientChargeScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(state.topBarTitleResId),
-        backPress = { onAction(ClientChargeAction.OnNavigate) },
+        onNavigationIconClick = { onAction(ClientChargeAction.OnNavigate) },
         modifier = modifier,
-        content = { paddingValues ->
+        content = {
             Box(
                 modifier = Modifier
-                    .padding(paddingValues = paddingValues)
                     .fillMaxSize(),
             ) {
                 when {

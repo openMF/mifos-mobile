@@ -46,7 +46,11 @@ fun main() {
             title = stringResource(Res.string.application_title),
         ) {
             // Sets the content of the window.
-            SharedApp()
+            SharedApp(
+                handleThemeMode = {},
+                handleAppLocale = {},
+                onSplashScreenRemoved = {},
+            )
         }
     }
 }

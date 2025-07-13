@@ -40,6 +40,7 @@ kotlin {
             implementation(projects.feature.notification)
             implementation(projects.feature.userProfile)
             implementation(projects.feature.location)
+            implementation(projects.feature.onboardingLanguage)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
@@ -55,6 +56,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.serialization.json)
+
         }
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)

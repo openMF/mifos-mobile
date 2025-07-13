@@ -97,12 +97,11 @@ private fun SavingsAccountWithdrawScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        backPress = { onBackPress(false) },
+        onNavigationIconClick = { onBackPress(false) },
         topBarTitle = stringResource(Res.string.withdraw_savings_account),
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        content = { padding ->
-
-            Box(modifier = Modifier.padding(padding)) {
+        content = {
+            Box(modifier = Modifier) {
                 when (uiState) {
                     is SavingsAccountWithdrawUiState.Error -> EmptyDataView(
                         icon = MifosIcons.Error,

@@ -9,7 +9,13 @@
  */
 package org.mifos.mobile.core.designsystem.component
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,20 +25,24 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextOverflow
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MifosTopAppBar(
+fun MifosTopBar(
     topBarTitle: String,
-    backPress: () -> Unit,
+    onNavigationIconClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector = MifosIcons.ArrowBack,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
@@ -40,85 +50,133 @@ fun MifosTopAppBar(
             Text(
                 text = topBarTitle,
                 style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
             )
         },
         navigationIcon = {
             IconButton(
-                onClick = backPress,
+                onClick = onNavigationIconClick,
             ) {
                 Icon(
-                    imageVector = icon,
+                    imageVector = MifosIcons.Chevron,
                     contentDescription = "Back",
                 )
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.Transparent,
+            containerColor = AppColors.customWhite,
         ),
         actions = actions,
         modifier = modifier,
     )
 }
 
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MifosTopAppBar(
-    navigateBack: () -> Unit,
-    title: @Composable () -> Unit,
+@Composable
+fun MifosTopBar(
+    topBarTitle: String,
+    showNavigationIcon: Boolean,
     modifier: Modifier = Modifier,
-    icon: ImageVector = MifosIcons.ArrowBack,
+    onNavigationIconClick: () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
-        modifier = modifier,
-        title = title,
-        navigationIcon = {
-            IconButton(
-                onClick = navigateBack,
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Back Arrow",
-                )
-            }
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.Transparent,
-        ),
-        actions = actions,
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MifosTopAppBar(
-    topBarTitleResId: StringResource,
-    navigateBack: () -> Unit,
-    modifier: Modifier = Modifier,
-    actions: @Composable RowScope.() -> Unit = {},
-) {
-    TopAppBar(
-        modifier = modifier,
         title = {
             Text(
-                stringResource(topBarTitleResId),
+                text = topBarTitle,
                 style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
             )
         },
         navigationIcon = {
-            IconButton(
-                onClick = navigateBack,
-            ) {
-                Icon(
-                    imageVector = MifosIcons.ArrowBack,
-                    contentDescription = "Back Arrow",
-                )
+            if (showNavigationIcon) {
+                IconButton(
+                    onClick = onNavigationIconClick,
+                ) {
+                    Icon(
+                        imageVector = MifosIcons.Chevron,
+                        contentDescription = "Back",
+                    )
+                }
             }
         },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = AppColors.customWhite,
+        ),
         actions = actions,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MifosRoundedTopAppBar(
+    title: String,
+    onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    brandIcon: DrawableResource? = null,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                style = MifosTypography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        },
+        actions = actions,
+        navigationIcon = {
+            if (brandIcon != null) {
+                Box(
+                    modifier = Modifier.padding(DesignToken.padding.medium),
+                ) {
+                    Image(
+                        painter = painterResource(brandIcon),
+                        contentDescription = "Brand Icon",
+                        modifier = Modifier
+                            .size(344.dp, 40.dp),
+                    )
+                }
+            } else {
+                IconButton(
+                    onClick = onNavigateBack,
+                ) {
+                    Icon(
+                        imageVector = MifosIcons.Chevron,
+                        contentDescription = null,
+                    )
+                }
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = AppColors.customWhite,
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = DesignToken.elevation.elevation,
+                shape = DesignToken.shapes.topBar,
+                spotColor = Color(0xFF5D5D5D),
+                ambientColor = AppColors.customBlack,
+            )
+            .clip(DesignToken.shapes.topBar)
+            .background(AppColors.customWhite),
+    )
+}
+
+@Preview
+@Composable
+fun PreviewMbsRoundedTopAppBar() {
+    MifosRoundedTopAppBar(
+        title = "TopAppBar",
+        onNavigateBack = {},
+    )
+}
+
+@Preview
+@Composable
+fun MbsTopBarPreview() {
+    MifosTopBar(
+        topBarTitle = "Title",
+        onNavigationIconClick = {},
     )
 }

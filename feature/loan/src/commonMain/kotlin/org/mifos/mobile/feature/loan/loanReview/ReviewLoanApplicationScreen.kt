@@ -27,12 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.no_internet_connection
-import mifos_mobile.feature.loan.generated.resources.update_loan
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -105,11 +102,11 @@ private fun ReviewLoanApplicationScreen(
         snackbarHostState = snackbarHostState,
         content = {
             Column(modifier = modifier.fillMaxSize()) {
-                MifosTopAppBar(
-                    modifier = Modifier.fillMaxWidth(),
-                    backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
-                    topBarTitle = stringResource(Res.string.update_loan),
-                )
+//                MifosTopAppBar(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    backPress = { onAction(ReviewLoanApplicationAction.NavigateBack(false)) },
+//                    topBarTitle = stringResource(Res.string.update_loan),
+//                )
                 Box(modifier = Modifier.weight(1f)) {
                     ReviewLoanApplicationContent(
                         data = state.reviewLoanApplicationUiData,

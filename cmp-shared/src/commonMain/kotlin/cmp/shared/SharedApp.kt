@@ -15,7 +15,15 @@ import cmp.navigation.ComposeApp
 
 @Composable
 fun SharedApp(
+    handleThemeMode: (osValue: Int) -> Unit,
+    handleAppLocale: (locale: String?) -> Unit,
+    onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ComposeApp(modifier = modifier)
+    ComposeApp(
+        handleThemeMode = handleThemeMode,
+        handleAppLocale = handleAppLocale,
+        onSplashScreenRemoved = onSplashScreenRemoved,
+        modifier = modifier,
+    )
 }

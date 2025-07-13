@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.savings.savingsMakeTransfer
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -71,12 +70,11 @@ private fun SavingsMakeTransferScreen(
                 Res.string.transfer
             },
         ),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
         content = {
             Box(
                 modifier = Modifier
-                    .padding(it)
                     .fillMaxSize(),
             ) {
                 SavingsMakeTransferContent(

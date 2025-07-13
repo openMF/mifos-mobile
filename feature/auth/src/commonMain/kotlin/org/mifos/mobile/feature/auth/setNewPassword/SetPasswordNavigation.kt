@@ -28,7 +28,7 @@ fun NavController.navigateToSetPasswordScreen(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.setPasswordDestination(
-    navigateToStatusScreen: (EventType, String) -> Unit,
+    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
     navigateToLoginScreen: () -> Unit,
 ) {
     composableWithSlideTransitions<SetPasswordRoute> {

@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.guarantor.screens.guarantorDetails
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,16 +22,12 @@ import mifos_mobile.feature.guarantor.generated.resources.Res
 import mifos_mobile.feature.guarantor.generated.resources.delete_guarantor
 import mifos_mobile.feature.guarantor.generated.resources.dialog_are_you_sure_that_you_want_to_string
 import mifos_mobile.feature.guarantor.generated.resources.dismiss
-import mifos_mobile.feature.guarantor.generated.resources.guarantor_details
-import mifos_mobile.feature.guarantor.generated.resources.update_guarantor
 import mifos_mobile.feature.guarantor.generated.resources.yes
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosDropdownMenu
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -83,25 +78,25 @@ private fun GuarantorDetailScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopAppBar(
-                topBarTitle = stringResource(Res.string.guarantor_details),
-                backPress = { onAction(GuarantorDetailAction.NavigateBack) },
-                actions = {
-                    MifosDropdownMenu(
-                        menuItems = listOf(
-                            stringResource(Res.string.update_guarantor)
-                                to { onAction(GuarantorDetailAction.UpdateGuarantor) },
-                            stringResource(Res.string.delete_guarantor)
-                                to { onAction(GuarantorDetailAction.UpdateMenuDialogValue) },
-                        ),
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                topBarTitle = stringResource(Res.string.guarantor_details),
+//                backPress = { onAction(GuarantorDetailAction.NavigateBack) },
+//                actions = {
+//                    MifosDropdownMenu(
+//                        menuItems = listOf(
+//                            stringResource(Res.string.update_guarantor)
+//                                to { onAction(GuarantorDetailAction.UpdateGuarantor) },
+//                            stringResource(Res.string.delete_guarantor)
+//                                to { onAction(GuarantorDetailAction.UpdateMenuDialogValue) },
+//                        ),
+//                    )
+//                },
+//            )
+//        },
         snackbarHostState = snackbarHostState,
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 state.guarantor?.let { it1 -> GuarantorDetailContent(data = it1) }
             }
         },

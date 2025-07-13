@@ -10,16 +10,21 @@
 package org.mifos.mobile.core.designsystem.component
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -33,25 +38,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosScaffold(
-    backPress: () -> Unit,
+    onNavigationIconClick: () -> Unit,
     modifier: Modifier = Modifier,
     topBarTitle: String? = null,
+    containerColor: Color = Color.White,
     floatingActionButtonContent: FloatingActionButtonContent? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
+    contentWindowInsets: WindowInsets = ScaffoldDefaults
+        .contentWindowInsets
+        .only(WindowInsetsSides.Horizontal),
     snackbarHost: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
-    content: @Composable (PaddingValues) -> Unit = {},
+    content: @Composable () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
             if (topBarTitle != null) {
-                MifosTopAppBar(
+                MifosTopBar(
                     topBarTitle = topBarTitle,
-                    backPress = backPress,
+                    onNavigationIconClick = onNavigationIconClick,
                     actions = actions,
                 )
             }
@@ -60,38 +74,205 @@ fun MifosScaffold(
             floatingActionButtonContent?.let { content ->
                 FloatingActionButton(
                     onClick = content.onClick,
-//                    contentColor = content.contentColor,
+                    contentColor = content.contentColor,
                     content = content.content,
                 )
             }
         },
         snackbarHost = snackbarHost,
-//        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = containerColor,
+        contentWindowInsets = WindowInsets(0.dp),
         content = { paddingValues ->
             val internalPullToRefreshState = rememberPullToRefreshState()
             Box(
-                modifier = Modifier.pullToRefresh(
-                    state = internalPullToRefreshState,
-                    isRefreshing = pullToRefreshState.isRefreshing,
-                    onRefresh = pullToRefreshState.onRefresh,
-                    enabled = pullToRefreshState.isEnabled,
-                ),
+                modifier = Modifier
+                    .padding(paddingValues = paddingValues)
+                    .consumeWindowInsets(paddingValues = paddingValues)
+                    .imePadding()
+                    .navigationBarsPadding(),
             ) {
-                content(paddingValues)
-
-                PullToRefreshDefaults.Indicator(
+                Box(
                     modifier = Modifier
-                        .padding(paddingValues)
-                        .align(Alignment.TopCenter),
-                    isRefreshing = pullToRefreshState.isRefreshing,
-                    state = internalPullToRefreshState,
+                        .windowInsetsPadding(insets = contentWindowInsets)
+                        .pullToRefresh(
+                            state = internalPullToRefreshState,
+                            isRefreshing = pullToRefreshState.isRefreshing,
+                            onRefresh = pullToRefreshState.onRefresh,
+                            enabled = pullToRefreshState.isEnabled,
+                        ),
+                ) {
+                    Column(modifier = Modifier) {
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppColors.borderColor,
+                        )
+                        content()
+                    }
+
+                    PullToRefreshDefaults.Indicator(
+                        modifier = Modifier
+                            .align(Alignment.TopCenter),
+                        isRefreshing = pullToRefreshState.isRefreshing,
+                        state = internalPullToRefreshState,
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MifosScaffold(
+    showNavigationIcon: Boolean,
+    modifier: Modifier = Modifier,
+    onNavigationIconClick: () -> Unit = {},
+    topBarTitle: String? = null,
+    containerColor: Color = Color.White,
+    floatingActionButtonContent: FloatingActionButtonContent? = null,
+    pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
+    contentWindowInsets: WindowInsets = ScaffoldDefaults
+        .contentWindowInsets
+        .only(WindowInsetsSides.Horizontal),
+    snackbarHost: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable () -> Unit = {},
+) {
+    Scaffold(
+        topBar = {
+            if (topBarTitle != null) {
+                MifosTopBar(
+                    topBarTitle = topBarTitle,
+                    showNavigationIcon = showNavigationIcon,
+                    onNavigationIconClick = onNavigationIconClick,
+                    actions = actions,
                 )
             }
         },
-        modifier = modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .imePadding(),
+        floatingActionButton = {
+            floatingActionButtonContent?.let { content ->
+                FloatingActionButton(
+                    onClick = content.onClick,
+                    contentColor = content.contentColor,
+                    content = content.content,
+                )
+            }
+        },
+        snackbarHost = snackbarHost,
+        containerColor = containerColor,
+        contentWindowInsets = WindowInsets(0.dp),
+        content = { paddingValues ->
+            val internalPullToRefreshState = rememberPullToRefreshState()
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues = paddingValues)
+                    .consumeWindowInsets(paddingValues = paddingValues)
+                    .imePadding()
+                    .navigationBarsPadding(),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .windowInsetsPadding(insets = contentWindowInsets)
+                        .pullToRefresh(
+                            state = internalPullToRefreshState,
+                            isRefreshing = pullToRefreshState.isRefreshing,
+                            onRefresh = pullToRefreshState.onRefresh,
+                            enabled = pullToRefreshState.isEnabled,
+                        ),
+                ) {
+                    Column(modifier = Modifier) {
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppColors.borderColor,
+                        )
+                        content()
+                    }
+
+                    PullToRefreshDefaults.Indicator(
+                        modifier = Modifier
+                            .align(Alignment.TopCenter),
+                        isRefreshing = pullToRefreshState.isRefreshing,
+                        state = internalPullToRefreshState,
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MifosElevatedScaffold(
+    onNavigateBack: () -> Unit,
+    topBarTitle: String,
+    modifier: Modifier = Modifier,
+    brandIcon: DrawableResource? = null,
+    bottomBar: @Composable () -> Unit = {},
+    floatingActionButtonContent: FloatingActionButtonContent? = null,
+    pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
+    contentWindowInsets: WindowInsets = ScaffoldDefaults
+        .contentWindowInsets
+        .only(WindowInsetsSides.Horizontal),
+    snackbarHost: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable () -> Unit = {},
+) {
+    Scaffold(
+        topBar = {
+            MifosRoundedTopAppBar(
+                brandIcon = brandIcon,
+                title = topBarTitle,
+                onNavigateBack = onNavigateBack,
+                actions = actions,
+            )
+        },
+        floatingActionButton = {
+            floatingActionButtonContent?.let { content ->
+                FloatingActionButton(
+                    onClick = content.onClick,
+                    contentColor = content.contentColor,
+                    content = content.content,
+                )
+            }
+        },
+        bottomBar = bottomBar,
+        snackbarHost = snackbarHost,
+        contentWindowInsets = WindowInsets(0.dp),
+        containerColor = MaterialTheme.colorScheme.background,
+        content = { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues = paddingValues)
+                    .consumeWindowInsets(paddingValues = paddingValues)
+                    .imePadding()
+                    .navigationBarsPadding(),
+            ) {
+                val internalPullToRefreshState = rememberPullToRefreshState()
+                Box(
+                    modifier = Modifier
+                        .windowInsetsPadding(insets = contentWindowInsets)
+                        .pullToRefresh(
+                            state = internalPullToRefreshState,
+                            isRefreshing = pullToRefreshState.isRefreshing,
+                            onRefresh = pullToRefreshState.onRefresh,
+                            enabled = pullToRefreshState.isEnabled,
+                        ),
+                ) {
+                    content()
+
+                    PullToRefreshDefaults.Indicator(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        isRefreshing = pullToRefreshState.isRefreshing,
+                        state = internalPullToRefreshState,
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+        },
+        modifier = modifier,
     )
 }
 
@@ -105,16 +286,15 @@ fun MifosScaffold(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    containerColor: Color = MaterialTheme.colorScheme.background,
+    containerColor: Color = Color.White,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    content: @Composable (PaddingValues) -> Unit,
+    contentWindowInsets: WindowInsets = ScaffoldDefaults
+        .contentWindowInsets
+        .only(WindowInsetsSides.Horizontal),
+    content: @Composable () -> Unit,
 ) {
     Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .imePadding(),
+        modifier = modifier,
         topBar = topBar,
         bottomBar = bottomBar,
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -128,24 +308,34 @@ fun MifosScaffold(
         contentColor = contentColor,
         contentWindowInsets = contentWindowInsets,
         content = { paddingValues ->
-            val internalPullToRefreshState = rememberPullToRefreshState()
             Box(
-                modifier = Modifier.pullToRefresh(
-                    state = internalPullToRefreshState,
-                    isRefreshing = pullToRefreshState.isRefreshing,
-                    onRefresh = pullToRefreshState.onRefresh,
-                    enabled = pullToRefreshState.isEnabled,
-                ),
+                modifier = Modifier
+                    .padding(paddingValues = paddingValues)
+                    .consumeWindowInsets(paddingValues = paddingValues)
+                    .imePadding()
+                    .navigationBarsPadding(),
             ) {
-                content(paddingValues)
-
-                PullToRefreshDefaults.Indicator(
+                val internalPullToRefreshState = rememberPullToRefreshState()
+                Box(
                     modifier = Modifier
-                        .padding(paddingValues)
-                        .align(Alignment.TopCenter),
-                    isRefreshing = pullToRefreshState.isRefreshing,
-                    state = internalPullToRefreshState,
-                )
+                        .windowInsetsPadding(insets = contentWindowInsets)
+                        .pullToRefresh(
+                            state = internalPullToRefreshState,
+                            isRefreshing = pullToRefreshState.isRefreshing,
+                            onRefresh = pullToRefreshState.onRefresh,
+                            enabled = pullToRefreshState.isEnabled,
+                        ),
+                ) {
+                    content()
+
+                    PullToRefreshDefaults.Indicator(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        isRefreshing = pullToRefreshState.isRefreshing,
+                        state = internalPullToRefreshState,
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
         },
     )
@@ -174,4 +364,15 @@ fun rememberMifosPullToRefreshState(
         isRefreshing = isRefreshing,
         onRefresh = onRefresh,
     )
+}
+
+@Preview
+@Composable
+private fun MifosElevated_Preview() {
+    MifosMobileTheme {
+        MifosElevatedScaffold(
+            onNavigateBack = { },
+            topBarTitle = "Mifos Mobile",
+        )
+    }
 }

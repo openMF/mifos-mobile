@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.about.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,14 +34,14 @@ internal fun PrivacyPolicyScreen(
 
     MifosScaffold(
         topBarTitle = stringResource(Res.string.feature_about_privacy_policy),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         WebView(
             url = stringResource(Res.string.feature_about_policy_url),
             isLoading = isLoading,
             onLoadingChange = { isLoading = it },
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier,
         )
     }
 }

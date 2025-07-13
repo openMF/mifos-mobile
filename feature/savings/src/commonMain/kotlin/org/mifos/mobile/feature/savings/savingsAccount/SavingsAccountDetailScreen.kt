@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.savings.savingsAccount
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -19,14 +18,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings.generated.resources.Res
 import mifos_mobile.feature.savings.generated.resources.approval_pending
 import mifos_mobile.feature.savings.generated.resources.ic_assignment_turned_in_black_24dp
-import mifos_mobile.feature.savings.generated.resources.saving_account_details
-import mifos_mobile.feature.savings.generated.resources.update_savings_account
-import mifos_mobile.feature.savings.generated.resources.withdraw_savings_account
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.designsystem.component.MifosDropdownMenu
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -69,6 +62,7 @@ internal fun SavingsAccountDetailScreen(
     )
 }
 
+@Suppress("UnusedParameter")
 @Composable
 private fun SavingsAccountDetailScreen(
     uiState: SavingsAccountDetailUiState,
@@ -84,23 +78,23 @@ private fun SavingsAccountDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        topBar = {
-            MifosTopAppBar(
-                topBarTitle = stringResource(Res.string.saving_account_details),
-                backPress = navigateBack,
-                actions = {
-                    MifosDropdownMenu(
-                        menuItems = listOf(
-                            stringResource(Res.string.update_savings_account) to updateSavingsAccount,
-                            stringResource(Res.string.withdraw_savings_account) to withdrawSavingsAccount,
-                        ),
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                topBarTitle = stringResource(Res.string.saving_account_details),
+//                backPress = navigateBack,
+//                actions = {
+//                    MifosDropdownMenu(
+//                        menuItems = listOf(
+//                            stringResource(Res.string.update_savings_account) to updateSavingsAccount,
+//                            stringResource(Res.string.withdraw_savings_account) to withdrawSavingsAccount,
+//                        ),
+//                    )
+//                },
+//            )
+//        },
         modifier = modifier,
     ) {
-        Box(modifier = Modifier.padding(it)) {
+        Box(modifier = Modifier) {
             when (uiState) {
                 is SavingsAccountDetailUiState.Error -> MifosErrorComponent()
 

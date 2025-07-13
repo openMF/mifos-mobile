@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.qr.qr
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -83,7 +82,7 @@ private fun QrCodeReaderContent(
 ) {
     MifosScaffold(
         topBarTitle = null,
-        backPress = { onAction(QrCodeReaderAction.OnNavigate) },
+        onNavigationIconClick = { onAction(QrCodeReaderAction.OnNavigate) },
         modifier = modifier.fillMaxSize(),
     ) {
         Box(
@@ -92,7 +91,7 @@ private fun QrCodeReaderContent(
         ) {
             QrScannerWithPermissions(
                 types = listOf(CodeType.QR),
-                modifier = Modifier.padding(it),
+                modifier = Modifier,
                 onScanned = {
                     onAction(QrCodeReaderAction.ScanQrCode(it))
                     true

@@ -10,14 +10,25 @@
 package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.datastore.model.AppSettings
+import org.mifos.mobile.core.model.AuthState
 import org.mifos.mobile.core.model.UserData
 
 interface UserDataRepository {
+
+    val activeUserId: Long?
+
+    // TODO
     /**
      * Stream of [UserData]
      */
     val userData: Flow<DataState<UserData>>
+
+    val authState: StateFlow<AuthState>
+
+    val settingsState: StateFlow<AppSettings>
 
     suspend fun logOut(): DataState<String>
 }

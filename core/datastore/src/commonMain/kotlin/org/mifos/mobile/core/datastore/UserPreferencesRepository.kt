@@ -15,12 +15,13 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
+import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
 
 interface UserPreferencesRepository {
-    val userInfo: Flow<UserData>
+    val userInfo: StateFlow<UserData>
 
-    val settingsInfo: Flow<AppSettings>
+    val settingsInfo: StateFlow<AppSettings>
 
     val token: StateFlow<String?>
 
@@ -35,6 +36,10 @@ interface UserPreferencesRepository {
     val gcmToken: StateFlow<String?>
 
     val observeLanguage: Flow<LanguageConfig>
+
+    val observeDarkThemeConfig: Flow<DarkThemeConfig>
+
+    val observeDynamicColorPreference: Flow<Boolean>
 
     suspend fun updateToken(password: String): DataState<Unit>
 
@@ -51,6 +56,10 @@ interface UserPreferencesRepository {
     suspend fun setSentTokenToServer(sent: Boolean): DataState<Unit>
 
     suspend fun saveGcmToken(token: String?): DataState<Unit>
+
+    suspend fun setIsAuthenticated(isAuthenticated: Boolean)
+
+    suspend fun setIsUnlocked(isUnlocked: Boolean)
 
     suspend fun setShowOnboarding(showOnboarding: Boolean)
 

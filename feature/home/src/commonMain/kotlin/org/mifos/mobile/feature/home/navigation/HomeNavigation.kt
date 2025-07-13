@@ -9,20 +9,14 @@
  */
 package org.mifos.mobile.feature.home.navigation
 
-import org.mifos.mobile.feature.home.navigation.HomeRoute.HOME_NAVIGATION_ROUTE_BASE
-import org.mifos.mobile.feature.home.navigation.HomeRoute.HOME_SCREEN_ROUTE
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.ui.composableWithStayTransitions
+import org.mifos.mobile.feature.home.screens.HomeScreen
 import org.mifos.mobile.feature.home.viewmodel.HomeCardItem
 import org.mifos.mobile.feature.home.viewmodel.HomeNavigationItems
-
-sealed class HomeNavigation(val route: String) {
-    data object HomeBase : HomeNavigation(route = HOME_NAVIGATION_ROUTE_BASE)
-    data object HomeScreen : HomeNavigation(route = HOME_SCREEN_ROUTE)
-}
-
-object HomeRoute {
-    const val HOME_NAVIGATION_ROUTE_BASE = "home_base_route"
-    const val HOME_SCREEN_ROUTE = "home_screen_route"
-}
 
 enum class HomeDestinations {
     HOME,
@@ -70,5 +64,25 @@ fun HomeCardItem.toDestination(): HomeDestinations {
         HomeCardItem.LoanCard -> HomeDestinations.LOAN_ACCOUNT
         HomeCardItem.SurveyCard -> HomeDestinations.SURVEY
         HomeCardItem.TransferCard -> HomeDestinations.TRANSFER
+    }
+}
+
+@Serializable
+data object HomeRoute
+
+fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
+    navigate(HomeRoute, navOptions)
+
+fun NavGraphBuilder.homeDestination(
+    onNavigate: (HomeDestinations) -> Unit,
+    callHelpline: () -> Unit,
+    mailHelpline: () -> Unit,
+) {
+    composableWithStayTransitions<HomeRoute> {
+        HomeScreen(
+            callHelpline = callHelpline,
+            mailHelpline = mailHelpline,
+            onNavigate = onNavigate,
+        )
     }
 }

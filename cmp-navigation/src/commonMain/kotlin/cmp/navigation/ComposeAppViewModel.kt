@@ -9,51 +9,113 @@
  */
 package cmp.navigation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.mifos.library.passcode.data.PasscodeManager
-import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.data.repository.UserDataRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.datastore.model.AppTheme
-import org.mifos.mobile.core.model.UserData
+import org.mifos.mobile.core.model.DarkThemeConfig
+import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 class ComposeAppViewModel(
-    private val userDataRepository: UserDataRepository,
-    private val passcodeManager: PasscodeManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-) : ViewModel() {
+    private val networkMonitor: NetworkMonitor,
+) : BaseViewModel<AppState, AppEvent, AppAction>(
+    initialState = AppState(
+        darkTheme = false,
+        isAndroidTheme = false,
+        isDynamicColorsEnabled = false,
+    ),
+) {
+    val networkStatus = networkMonitor.isOnline
+        .map(Boolean::not)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
-    private val userDataFlow = userDataRepository.userData
-    private val appThemeFlow = userPreferencesRepository.appTheme
+    init {
+        userPreferencesRepository
+            .observeDarkThemeConfig
+            .onEach { trySendAction(AppAction.Internal.ThemeUpdate(it)) }
+            .launchIn(viewModelScope)
 
-    val uiState: StateFlow<MainUiState> = combine(userDataFlow, appThemeFlow) { dataState, appTheme ->
-        when (dataState) {
-            is DataState.Success -> MainUiState.Success(dataState.data, appTheme)
-            is DataState.Error -> MainUiState.Error(dataState.exception.message ?: "Unknown error")
-            DataState.Loading -> MainUiState.Loading
+        userPreferencesRepository
+            .observeDynamicColorPreference
+            .onEach { trySendAction(AppAction.Internal.DynamicColorsUpdate(it)) }
+            .launchIn(viewModelScope)
+
+        userPreferencesRepository
+            .observeLanguage
+            .map { AppEvent.UpdateAppLocale(it.localName) }
+            .onEach(::sendEvent)
+            .launchIn(viewModelScope)
+    }
+
+    override fun handleAction(action: AppAction) {
+        when (action) {
+            is AppAction.AppSpecificLanguageUpdate -> handleAppSpecificLanguageUpdate(action)
+
+            is AppAction.Internal.ThemeUpdate -> handleAppThemeUpdated(action)
+
+            is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
         }
-    }.stateIn(
-        scope = viewModelScope,
-        initialValue = MainUiState.Loading,
-        started = SharingStarted.WhileSubscribed(5_000),
-    )
+    }
 
-    fun logOut() {
+    private fun handleAppSpecificLanguageUpdate(action: AppAction.AppSpecificLanguageUpdate) {
         viewModelScope.launch {
-            userDataRepository.logOut()
-            passcodeManager.clearPasscode()
+            userPreferencesRepository.setLanguage(action.appLanguage)
         }
+    }
+
+    private fun handleAppThemeUpdated(action: AppAction.Internal.ThemeUpdate) {
+        mutableStateFlow.update {
+            it.copy(darkTheme = action.theme == DarkThemeConfig.DARK)
+        }
+        sendEvent(AppEvent.UpdateAppTheme(osValue = action.theme.osValue))
+    }
+
+    private fun handleDynamicColorsUpdate(action: AppAction.Internal.DynamicColorsUpdate) {
+        mutableStateFlow.update { it.copy(isDynamicColorsEnabled = action.isDynamicColorsEnabled) }
     }
 }
 
-sealed interface MainUiState {
-    data object Loading : MainUiState
-    data class Error(val error: String) : MainUiState
-    data class Success(val userData: UserData, val appTheme: AppTheme) : MainUiState
+data class AppState(
+    val darkTheme: Boolean,
+    val isAndroidTheme: Boolean,
+    val isDynamicColorsEnabled: Boolean,
+)
+
+sealed interface AppEvent {
+    data class ShowToast(val message: String) : AppEvent
+
+    data class UpdateAppLocale(
+        val localeName: String?,
+    ) : AppEvent
+
+    data class UpdateAppTheme(
+        val osValue: Int,
+    ) : AppEvent
+}
+
+sealed interface AppAction {
+    data class AppSpecificLanguageUpdate(val appLanguage: LanguageConfig) : AppAction
+
+    sealed class Internal : AppAction {
+
+        data class ThemeUpdate(
+            val theme: DarkThemeConfig,
+        ) : Internal()
+
+        data class DynamicColorsUpdate(
+            val isDynamicColorsEnabled: Boolean,
+        ) : Internal()
+    }
 }

@@ -14,6 +14,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.serializer
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_email_format_error
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_email_required
@@ -23,6 +26,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_n
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
+import org.mifos.mobile.feature.auth.setNewPassword.SetPasswordRoute
 
 const val PHONE_NUMBER_LENGTH = 10
 
@@ -131,12 +135,17 @@ internal class RecoverPasswordViewModel :
         }
     }
 
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private fun requestRecoveryCode() {
         viewModelScope.launch {
             mutableStateFlow.update { it.copy(dialogState = RecoverPasswordState.DialogState.Loading) }
             delay(3000)
             dismissDialog()
-            sendEvent(RecoverPasswordEvent.NavigateToOtpAuth)
+            sendEvent(
+                RecoverPasswordEvent.NavigateToOtpAuth(
+                    nextRoute = SetPasswordRoute::class.serializer().descriptor.serialName,
+                ),
+            )
         }
     }
 
@@ -169,7 +178,9 @@ data class RecoverPasswordState(
 }
 
 internal sealed interface RecoverPasswordEvent {
-    data object NavigateToOtpAuth : RecoverPasswordEvent
+    data class NavigateToOtpAuth(
+        val nextRoute: String,
+    ) : RecoverPasswordEvent
     data object NavigateToLogin : RecoverPasswordEvent
 }
 

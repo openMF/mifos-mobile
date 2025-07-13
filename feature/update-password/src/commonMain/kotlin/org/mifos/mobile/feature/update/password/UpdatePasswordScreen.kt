@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.update.password
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -79,13 +78,13 @@ private fun UpdatePasswordScreen(
 ) {
     MifosScaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        backPress = {
+        onNavigationIconClick = {
             onAction(EditPasswordAction.NavigateBackClick)
         },
         topBarTitle = stringResource(Res.string.update_password),
         modifier = modifier,
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
+    ) {
+        Box(modifier = Modifier) {
             UpdatePasswordContent(
                 onAction = onAction,
                 state = state,

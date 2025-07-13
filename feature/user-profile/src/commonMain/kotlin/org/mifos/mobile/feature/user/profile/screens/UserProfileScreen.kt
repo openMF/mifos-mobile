@@ -121,7 +121,7 @@ private fun UserProfileScreen(
     modifier: Modifier = Modifier,
 ) {
     MifosScaffold(
-        backPress = { onAction(UserDetailAction.OnNavigate) },
+        onNavigationIconClick = { onAction(UserDetailAction.OnNavigate) },
         topBarTitle = stringResource(Res.string.user_details),
         actions = {
             Icon(
@@ -132,12 +132,12 @@ private fun UserProfileScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         state.client?.let {
             UserProfileContent(
                 state = state,
                 onAction = onAction,
-                modifier = Modifier.padding(paddingValues),
+                modifier = Modifier,
             )
         }
     }

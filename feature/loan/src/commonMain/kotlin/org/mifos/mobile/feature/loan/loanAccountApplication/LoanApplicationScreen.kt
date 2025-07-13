@@ -12,24 +12,16 @@ package org.mifos.mobile.feature.loan.loanAccountApplication
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import mifos_mobile.feature.loan.generated.resources.Res
-import mifos_mobile.feature.loan.generated.resources.apply_for_loan
-import mifos_mobile.feature.loan.generated.resources.update_loan
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -101,24 +93,23 @@ private fun LoanApplicationScreen(
 ) {
     MifosScaffold(
         modifier = modifier,
-        topBar = {
-            MifosTopAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                backPress = { onAction(LoanApplicationAction.BackPress) },
-                topBarTitle =
-                stringResource(
-                    if (state.loanState == LoanState.CREATE) {
-                        Res.string.apply_for_loan
-                    } else {
-                        Res.string.update_loan
-                    },
-                ),
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                modifier = Modifier.fillMaxWidth(),
+//                backPress = { onAction(LoanApplicationAction.BackPress) },
+//                topBarTitle =
+//                stringResource(
+//                    if (state.loanState == LoanState.CREATE) {
+//                        Res.string.apply_for_loan
+//                    } else {
+//                        Res.string.update_loan
+//                    },
+//                ),
+//            )
+//        },
         content = {
             Column(
                 modifier = Modifier
-                    .padding(it)
                     .fillMaxSize(),
             ) {
                 state.loanWithAssociations?.let {

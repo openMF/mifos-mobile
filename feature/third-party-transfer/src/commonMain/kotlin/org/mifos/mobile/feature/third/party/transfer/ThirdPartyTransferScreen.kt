@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.third.party.transfer
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -88,10 +87,10 @@ private fun ThirdPartyTransferScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.third_party_transfer),
-        backPress = { onAction(ThirdPartyTransferAction.OnNavigate) },
+        onNavigationIconClick = { onAction(ThirdPartyTransferAction.OnNavigate) },
         modifier = Modifier,
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
+    ) {
+        Box(modifier = Modifier) {
             if (!state.beneficiaries.isNullOrEmpty() && !state.fromAccountDetail.isNullOrEmpty
                     () && !state.toAccountOption.isNullOrEmpty()
             ) {

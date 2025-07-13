@@ -20,9 +20,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.serializer
 import mifos_mobile.feature.auth.generated.resources.Res
+import mifos_mobile.feature.auth.generated.resources.feature_common_next
 import mifos_mobile.feature.auth.generated.resources.feature_otp_invalid_error
 import mifos_mobile.feature.auth.generated.resources.feature_otp_required_error
+import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_successfully
+import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_successfully_tip
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
@@ -47,7 +51,7 @@ internal class OtpAuthenticationViewModel(
 
     override fun handleAction(action: OtpAuthAction) {
         when (action) {
-            is OtpAuthAction.OnCancelClick -> { }
+            is OtpAuthAction.OnCancelClick -> sendEvent(OtpAuthEvent.NavigateBack)
 
             is OtpAuthAction.OnNextClick -> handleNextClick()
 
@@ -127,8 +131,11 @@ internal class OtpAuthenticationViewModel(
             dismissDialog()
             sendEvent(
                 OtpAuthEvent.NavigateToStatus(
-                    EventType.SUCCESS,
-                    LoginRoute::class.serializer().descriptor.serialName,
+                    eventType = EventType.SUCCESS,
+                    eventDestination = LoginRoute::class.serializer().descriptor.serialName,
+                    title = getString(Res.string.feature_signup_user_registered_successfully),
+                    subtitle = getString(Res.string.feature_signup_user_registered_successfully_tip),
+                    buttonText = getString(Res.string.feature_common_next),
                 ),
             )
         }
@@ -188,8 +195,13 @@ internal sealed interface OtpAuthAction {
 internal sealed interface OtpAuthEvent {
     data object NavigateNext : OtpAuthEvent
 
+    data object NavigateBack : OtpAuthEvent
+
     data class NavigateToStatus(
         val eventType: EventType,
         val eventDestination: String,
+        val title: String,
+        val subtitle: String,
+        val buttonText: String,
     ) : OtpAuthEvent
 }

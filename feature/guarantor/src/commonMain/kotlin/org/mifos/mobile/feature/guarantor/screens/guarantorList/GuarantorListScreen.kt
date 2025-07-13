@@ -90,7 +90,7 @@ private fun GuarantorListScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.view_guarantor),
-        backPress = { (onAction(GuarantorListAction.OnNavigateBackClick)) },
+        onNavigationIconClick = { (onAction(GuarantorListAction.OnNavigateBackClick)) },
         modifier = modifier,
         floatingActionButtonContent = FloatingActionButtonContent(
             onClick = { onAction(GuarantorListAction.OnAddGuarantor) },
@@ -109,7 +109,7 @@ private fun GuarantorListScreen(
                 MifosErrorComponent(isEmptyData = true)
             } else {
                 GuarantorList(
-                    modifier = Modifier.padding(it),
+                    modifier = Modifier,
                     guarantorList = state.guarantorList,
                     onAction = onAction,
                 )

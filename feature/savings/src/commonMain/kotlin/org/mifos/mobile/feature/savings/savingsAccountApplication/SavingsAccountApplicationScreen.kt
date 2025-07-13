@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.savings.savingsAccountApplication
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -83,12 +82,12 @@ private fun SavingsAccountApplicationScreen(
     val scope = rememberCoroutineScope()
 
     MifosScaffold(
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         topBarTitle = topBarTitleText,
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 when (uiState) {
                     is SavingsAccountApplicationUiState.Error -> {
                         MifosErrorComponent(

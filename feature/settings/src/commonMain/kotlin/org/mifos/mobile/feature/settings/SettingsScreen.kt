@@ -108,12 +108,12 @@ private fun SettingsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     MifosScaffold(
         topBarTitle = stringResource(Res.string.settings),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
     ) {
         Column(
-            Modifier.padding(it),
+            Modifier,
         ) {
             SettingsCards(
                 settingsCardClicked = { item ->

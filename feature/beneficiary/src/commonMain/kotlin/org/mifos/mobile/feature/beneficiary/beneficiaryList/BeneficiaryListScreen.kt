@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -115,7 +114,7 @@ private fun BeneficiaryListScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.beneficiaries),
-        backPress = { onAction(BeneficiaryListAction.OnNavigate) },
+        onNavigationIconClick = { onAction(BeneficiaryListAction.OnNavigate) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = modifier,
         floatingActionButtonContent = FloatingActionButtonContent(
@@ -135,8 +134,7 @@ private fun BeneficiaryListScreen(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+                .fillMaxSize(),
         ) {
             if (state.dialogState == null) {
                 if (state.beneficiaries.isEmpty()) {

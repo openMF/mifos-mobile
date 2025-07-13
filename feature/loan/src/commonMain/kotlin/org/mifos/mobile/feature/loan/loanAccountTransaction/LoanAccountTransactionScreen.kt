@@ -43,7 +43,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.Utils.formatTransactionType
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
@@ -91,6 +90,7 @@ private fun LoanAccountTransactionDialog(
     }
 }
 
+@Suppress("UnusedParameter")
 @Composable
 private fun LoanAccountTransactionScreen(
     state: LoanAccountTransactionState,
@@ -98,10 +98,10 @@ private fun LoanAccountTransactionScreen(
     onAction: (LoanAccountTransactionAction) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        MifosTopAppBar(
-            backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
-            topBarTitle = stringResource(Res.string.transactions),
-        )
+//        MifosTopAppBar(
+//            backPress = { (onAction(LoanAccountTransactionAction.BackPress)) },
+//            topBarTitle = stringResource(Res.string.transactions),
+//        )
 
         Box(modifier = Modifier.weight(1f)) {
             state.loanWithAssociations?.let {

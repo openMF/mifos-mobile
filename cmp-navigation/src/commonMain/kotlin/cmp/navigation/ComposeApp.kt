@@ -9,65 +9,41 @@
  */
 package cmp.navigation
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.rememberNavController
-import cmp.navigation.navigation.NavGraphRoute.AUTH_GRAPH
-import cmp.navigation.navigation.NavGraphRoute.PASSCODE_GRAPH
-import cmp.navigation.navigation.RootNavGraph
-import org.koin.compose.koinInject
+import cmp.navigation.rootnav.RootNavScreen
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 fun ComposeApp(
+    handleThemeMode: (osValue: Int) -> Unit,
+    handleAppLocale: (locale: String?) -> Unit,
+    onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
-    networkMonitor: NetworkMonitor = koinInject(),
     viewModel: ComposeAppViewModel = koinViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navController = rememberNavController()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val navDestination = when (uiState) {
-        is MainUiState.Loading -> AUTH_GRAPH
-        is MainUiState.Success -> if ((uiState as MainUiState.Success).userData.isAuthenticated) {
-            PASSCODE_GRAPH
-        } else {
-            AUTH_GRAPH
+    EventsEffect(eventFlow = viewModel.eventFlow) { event ->
+        when (event) {
+            is AppEvent.ShowToast -> {}
+            is AppEvent.UpdateAppLocale -> handleAppLocale(event.localeName)
+            is AppEvent.UpdateAppTheme -> handleThemeMode(event.osValue)
         }
-
-        else -> AUTH_GRAPH
     }
 
-    val isDarkMode = when (uiState) {
-        is MainUiState.Success -> when ((uiState as MainUiState.Success).appTheme) {
-            AppTheme.SYSTEM -> isSystemInDarkTheme()
-            AppTheme.LIGHT -> false
-            AppTheme.DARK -> true
-        }
-        else -> true
-    }
-
-    MifosMobileTheme(isDarkMode) {
-        RootNavGraph(
-            modifier = modifier.fillMaxSize(),
-            networkMonitor = networkMonitor,
-            navHostController = navController,
-            startDestination = navDestination,
-            onClickLogout = {
-                viewModel.logOut()
-                navController.navigate(AUTH_GRAPH) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            },
+    MifosMobileTheme(
+        darkTheme = uiState.darkTheme,
+        androidTheme = uiState.isAndroidTheme,
+        shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
+    ) {
+        RootNavScreen(
+            modifier = modifier,
+            onSplashScreenRemoved = onSplashScreenRemoved,
         )
     }
 }

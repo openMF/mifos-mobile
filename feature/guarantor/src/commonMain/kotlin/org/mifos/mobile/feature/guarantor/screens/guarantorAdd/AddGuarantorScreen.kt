@@ -107,10 +107,10 @@ private fun AddGuarantorScreen(
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        backPress = { onAction(AddGuarantorAction.NavigateBack) },
+        onNavigationIconClick = { onAction(AddGuarantorAction.NavigateBack) },
         modifier = modifier,
         content = {
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier) {
                 AddGuarantorContent(
                     state = state,
                     guarantorItem = state.guarantorItem,

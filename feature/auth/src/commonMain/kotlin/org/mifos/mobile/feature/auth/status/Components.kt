@@ -30,9 +30,9 @@ import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 internal fun StatusScreen(
     eventType: EventType,
     eventDestination: String,
-    buttonText: String,
     title: String,
     subtitle: String,
+    buttonText: String,
     navigateToDestination: (String) -> Unit,
 ) {
     MifosScaffold(
@@ -47,7 +47,6 @@ internal fun StatusScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
                 .padding(DesignToken.padding.large),
             verticalArrangement = Arrangement.Center,
         ) {

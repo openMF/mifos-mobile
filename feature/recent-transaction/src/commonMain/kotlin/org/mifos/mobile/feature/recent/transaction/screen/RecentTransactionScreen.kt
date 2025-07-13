@@ -99,13 +99,12 @@ private fun RecentTransactionScreen(
 
     MifosScaffold(
         topBarTitle = stringResource(Res.string.recent_transactions),
-        backPress = navigateBack,
+        onNavigationIconClick = navigateBack,
         modifier = modifier,
-        content = { paddingValues ->
+        content = {
             Box(
                 Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+                    .fillMaxSize(),
             ) {
                 PullToRefreshBox(
                     state = pullRefreshState,

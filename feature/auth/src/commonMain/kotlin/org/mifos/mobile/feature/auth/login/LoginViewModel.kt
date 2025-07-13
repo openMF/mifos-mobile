@@ -121,6 +121,8 @@ class LoginViewModel(
                 )
                 viewModelScope.launch {
                     userPreferencesRepositoryImpl.updateUser(userData)
+                    userPreferencesRepositoryImpl.setIsAuthenticated(true)
+                    userPreferencesRepositoryImpl.setIsUnlocked(true)
                 }
                 sendEvent(LoginEvent.NavigateToPasscode)
             }

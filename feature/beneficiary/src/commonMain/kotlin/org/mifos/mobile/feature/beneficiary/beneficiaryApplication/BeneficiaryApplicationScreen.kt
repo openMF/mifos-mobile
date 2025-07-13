@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -93,12 +92,11 @@ private fun BeneficiaryApplicationScreen(
     MifosScaffold(
         topBarTitle = state.topBarTitle,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        backPress = { onAction(BeneficiaryApplicationAction.OnNavigate) },
+        onNavigationIconClick = { onAction(BeneficiaryApplicationAction.OnNavigate) },
         modifier = modifier,
-        content = { paddingValues ->
+        content = {
             Box(
-                modifier = Modifier
-                    .padding(paddingValues = paddingValues),
+                modifier = Modifier,
             ) {
                 if (state.template != null && state.beneficiary != null) {
                     BeneficiaryApplicationContent(

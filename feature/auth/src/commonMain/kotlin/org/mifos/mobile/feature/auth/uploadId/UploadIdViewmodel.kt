@@ -21,6 +21,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_invalid_phone_number_error
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_required
 import mifos_mobile.feature.auth.generated.resources.feature_upload_id_error_dob_required
 import mifos_mobile.feature.auth.generated.resources.feature_upload_id_error_field_empty
 import mifos_mobile.feature.auth.generated.resources.feature_upload_id_error_id_required
@@ -30,6 +33,8 @@ import mifos_mobile.feature.auth.generated.resources.feature_upload_id_upload_fa
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.toBase64DataUri
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ValidationHelper
+import org.mifos.mobile.feature.auth.recoverPassword.PHONE_NUMBER_LENGTH
 
 internal class UploadIdViewModel :
     BaseViewModel<UploadIdUiState, UploadIdEvent, UploadIdAction>(
@@ -142,9 +147,18 @@ internal class UploadIdViewModel :
 
     private fun validateCellPhone(cellPhone: String): StringResource? {
         return when {
-            cellPhone.isBlank() -> Res.string.feature_upload_id_error_field_empty
-//            !ValidationHelper.isValidPhoneNumber(cellPhone) -> Res.string.feature_upload_id_error_mobile_not_valid
-            cellPhone.length > 10 -> Res.string.feature_upload_id_error_mobile_not_valid
+            cellPhone.isEmpty() -> Res.string.feature_recover_now_phone_number_required
+
+            cellPhone.any { it.isLetter() || !it.isDigit() } ->
+                Res.string.feature_recover_now_invalid_phone_number_error
+
+            cellPhone.length <= PHONE_NUMBER_LENGTH ->
+                Res.string.feature_recover_now_phone_number_error
+
+            !ValidationHelper.isValidPhoneNumber(cellPhone) ->
+                Res.string
+                    .feature_upload_id_error_mobile_not_valid
+
             else -> null
         }
     }
@@ -192,13 +206,14 @@ internal class UploadIdViewModel :
 
     private fun uploadDetails() {
         // TODO call api
-//        viewModelScope.launch {
-//            mutableStateFlow.update {
-//                it.copy(dialogState = UploadIdUiState.DialogState.Loading)
-//            }
-//            delay(3000)
-//            sendEvent(UploadIdEvent.NavigateToOtp)
-//        }
+        viewModelScope.launch {
+            mutableStateFlow.update {
+                it.copy(dialogState = UploadIdUiState.DialogState.Loading)
+            }
+            delay(3000)
+            dismissDialog()
+            sendEvent(UploadIdEvent.NavigateToOtp)
+        }
     }
 
     private fun toggleDatePicker() {

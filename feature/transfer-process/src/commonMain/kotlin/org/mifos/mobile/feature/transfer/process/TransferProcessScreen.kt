@@ -112,13 +112,12 @@ private fun TransferProcessScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.transfer),
-        backPress = { onAction(TransferProcessAction.OnNavigate) },
+        onNavigationIconClick = { onAction(TransferProcessAction.OnNavigate) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         Box(
             modifier = Modifier
-                .padding(paddingValues)
                 .fillMaxSize(),
         ) {
             TransferProcessContent(

@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.accounts.screen
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,16 +26,13 @@ import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_account_loan_account
 import mifos_mobile.feature.accounts.generated.resources.feature_account_savings_account
 import mifos_mobile.feature.accounts.generated.resources.feature_account_share_account
-import mifos_mobile.feature.accounts.generated.resources.feature_account_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTabPager
-import org.mifos.mobile.core.designsystem.component.MifosTopAppBar
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.core.ui.component.MifosTitleSearchCard
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.feature.accounts.component.AccountFilterDialog
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
@@ -102,6 +98,7 @@ fun AccountsScreen(
     )
 }
 
+@Suppress("UnusedParameter")
 @Composable
 private fun AccountsScreenContent(
     currentPage: Int,
@@ -138,23 +135,23 @@ private fun AccountsScreenContent(
     }
 
     MifosScaffold(
-        topBar = {
-            MifosTopAppBar(
-                navigateBack = navigateBack,
-                title = {
-                    MifosTitleSearchCard(
-                        actions = {
-                            IconButton(onClick = openFilterDialog) {
-                                Icon(imageVector = MifosIcons.FilterList, contentDescription = "Filter")
-                            }
-                        },
-                        titleResourceId = Res.string.feature_account_title,
-                        searchQuery = onSearchQueryChange,
-                        onSearchDismiss = closeSearch,
-                    )
-                },
-            )
-        },
+//        topBar = {
+//            MifosTopAppBar(
+//                navigateBack = navigateBack,
+//                title = {
+//                    MifosTitleSearchCard(
+//                        actions = {
+//                            IconButton(onClick = openFilterDialog) {
+//                                Icon(imageVector = MifosIcons.FilterList, contentDescription = "Filter")
+//                            }
+//                        },
+//                        titleResourceId = Res.string.feature_account_title,
+//                        searchQuery = onSearchQueryChange,
+//                        onSearchDismiss = closeSearch,
+//                    )
+//                },
+//            )
+//        },
         floatingActionButton = {
             IconButton(
                 onClick = {
@@ -171,7 +168,7 @@ private fun AccountsScreenContent(
             }
         },
         modifier = modifier,
-    ) { paddingValues ->
+    ) {
         ClientAccountsTabRow(
             tabs = tabs,
             checkboxOptions = checkboxOptions,
@@ -179,7 +176,7 @@ private fun AccountsScreenContent(
             searchQuery = searchQuery,
             onPageChange = onPageChange,
             onAccountClicked = onAccountClicked,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier,
         )
     }
 }

@@ -10,6 +10,8 @@
 package cmp.navigation.di
 
 import cmp.navigation.ComposeAppViewModel
+import cmp.navigation.authenticatednavbar.AuthenticatedNavbarNavigationViewModel
+import cmp.navigation.rootnav.RootNavViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.library.passcode.di.PasscodeModule
@@ -27,6 +29,7 @@ import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
+import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
 import org.mifos.mobile.feature.savings.di.SavingsModule
@@ -53,6 +56,8 @@ object KoinModules {
     }
     private val sharedModule = module {
         viewModelOf(::ComposeAppViewModel)
+        viewModelOf(::AuthenticatedNavbarNavigationViewModel)
+        viewModelOf(::RootNavViewModel)
     }
     private val featureModules = module {
         includes(
@@ -76,6 +81,7 @@ object KoinModules {
             GuarantorModule,
             NotificationModule,
             ProfileModule,
+            SetOnboardingLanguageModule,
         )
     }
     private val LibraryModule = module {

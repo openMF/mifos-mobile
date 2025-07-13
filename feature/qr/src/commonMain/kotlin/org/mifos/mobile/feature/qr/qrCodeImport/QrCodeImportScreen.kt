@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.qr.qrCodeImport
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -104,14 +103,13 @@ private fun QrCodeImportScreen(
 ) {
     MifosScaffold(
         topBarTitle = stringResource(Res.string.import_qr),
-        backPress = { onAction(QrCodeImportAction.OnNavigate) },
+        onNavigationIconClick = { onAction(QrCodeImportAction.OnNavigate) },
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+                .fillMaxSize(),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 QrCodeImportContent(proceedClicked = { imageBitmap ->
