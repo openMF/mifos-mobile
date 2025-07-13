@@ -13,6 +13,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,7 +31,6 @@ import cmp.navigation.splash.navigateToSplash
 import cmp.navigation.splash.splashDestination
 import cmp.navigation.ui.rememberMifosNavController
 import cmp.navigation.utils.toObjectNavigationRoute
-import kotlinx.atomicfu.atomic
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.library.passcode.navigateToPasscodeScreen
 import org.mifos.mobile.core.ui.NonNullEnterTransitionProvider
@@ -42,9 +42,7 @@ import org.mifos.mobile.feature.auth.navigation.navigateToAuthGraph
 import org.mifos.mobile.feature.onboarding.language.navigation.OnboardingLanguageRoute
 import org.mifos.mobile.feature.onboarding.language.navigation.navigateToOnboardingLanguage
 import org.mifos.mobile.feature.onboarding.language.navigation.onBoardingLanguageDestination
-import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
-@OptIn(ExperimentalAtomicApi::class)
 @Suppress("LongMethod", "CyclomaticComplexMethod")
 @Composable
 fun RootNavScreen(
@@ -54,7 +52,7 @@ fun RootNavScreen(
     onSplashScreenRemoved: () -> Unit = {},
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val previousStateReference = remember { atomic(state) }
+    val previousStateReference = remember { mutableStateOf(state) }
 
     val isNotSplashScreen = state != RootNavState.Splash
     LaunchedEffect(isNotSplashScreen) {
