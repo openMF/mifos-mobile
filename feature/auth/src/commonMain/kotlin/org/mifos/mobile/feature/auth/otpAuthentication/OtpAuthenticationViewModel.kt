@@ -131,7 +131,7 @@ internal class OtpAuthenticationViewModel(
             dismissDialog()
             sendEvent(
                 OtpAuthEvent.NavigateToStatus(
-                    eventType = EventType.SUCCESS,
+                    eventType = EventType.SUCCESS.name,
                     eventDestination = LoginRoute::class.serializer().descriptor.serialName,
                     title = getString(Res.string.feature_signup_user_registered_successfully),
                     subtitle = getString(Res.string.feature_signup_user_registered_successfully_tip),
@@ -198,7 +198,7 @@ internal sealed interface OtpAuthEvent {
     data object NavigateBack : OtpAuthEvent
 
     data class NavigateToStatus(
-        val eventType: EventType,
+        val eventType: String,
         val eventDestination: String,
         val title: String,
         val subtitle: String,

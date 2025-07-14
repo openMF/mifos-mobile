@@ -186,7 +186,7 @@ internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswor
             dismissDialog()
             sendEvent(
                 SetPasswordEvent.NavigateToStatus(
-                    eventType = EventType.SUCCESS,
+                    eventType = EventType.SUCCESS.name,
                     eventDestination = LoginRoute::class.serializer().descriptor.serialName,
                     title = getString(Res.string.feature_recover_now_recovered_successfully),
                     subtitle = getString(Res.string.feature_recover_now_recovered_successfully_tip),
@@ -249,7 +249,7 @@ internal sealed interface SetPasswordEvent {
     data object NavigateToLogin : SetPasswordEvent
 
     data class NavigateToStatus(
-        val eventType: EventType,
+        val eventType: String,
         val eventDestination: String,
         val buttonText: String,
         val title: String,

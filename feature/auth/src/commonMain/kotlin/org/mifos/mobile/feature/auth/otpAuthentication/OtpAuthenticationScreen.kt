@@ -69,7 +69,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun OtpAuthenticationScreen(
     navigateBack: () -> Unit,
-    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToSetPasswordScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OtpAuthenticationViewModel = koinViewModel(),

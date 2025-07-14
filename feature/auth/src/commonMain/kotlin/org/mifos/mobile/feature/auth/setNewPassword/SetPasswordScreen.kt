@@ -63,7 +63,7 @@ import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun SetPasswordScreen(
-    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SetPasswordViewModel = koinViewModel(),

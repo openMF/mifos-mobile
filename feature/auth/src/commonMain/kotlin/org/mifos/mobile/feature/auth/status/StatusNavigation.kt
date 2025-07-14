@@ -21,7 +21,7 @@ import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Serializable
 data class StatusNavigationRoute(
-    val eventType: EventType,
+    val eventType: String,
     val eventDestination: String,
     val title: String,
     val subtitle: String,
@@ -29,7 +29,7 @@ data class StatusNavigationRoute(
 )
 
 fun NavController.navigateToStatusScreen(
-    eventType: EventType,
+    eventType: String,
     eventDestination: String,
     title: String,
     subtitle: String,
@@ -53,14 +53,8 @@ fun NavController.navigateToStatusScreen(
 fun NavGraphBuilder.statusDestination(
     navigateToDestination: (String) -> Unit,
 ) {
-    composableWithStayTransitions<StatusNavigationRoute> { backStackEntry ->
-        val route: StatusNavigationRoute = backStackEntry.toRoute()
+    composableWithStayTransitions<StatusNavigationRoute> {
         StatusScreen(
-            eventType = route.eventType,
-            eventDestination = route.eventDestination,
-            title = route.title,
-            subtitle = route.subtitle,
-            buttonText = route.buttonText,
             navigateToDestination = navigateToDestination,
         )
     }
