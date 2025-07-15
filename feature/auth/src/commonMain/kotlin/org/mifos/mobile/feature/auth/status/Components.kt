@@ -30,13 +30,11 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosStatusComponent
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.auth.otpAuthentication.EventType
-import org.mifos.mobile.feature.auth.otpAuthentication.OtpAuthEvent
-import org.mifos.mobile.feature.auth.setNewPassword.SetPasswordAction
 
 @Composable
 internal fun StatusScreen(
     navigateToDestination: (String) -> Unit,
-    viewModel: StatusViewModel = koinViewModel()
+    viewModel: StatusViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 

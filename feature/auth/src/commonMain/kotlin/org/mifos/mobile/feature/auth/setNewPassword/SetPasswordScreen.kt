@@ -59,7 +59,6 @@ import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
 import org.mifos.mobile.core.ui.PasswordStrengthIndicator
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun SetPasswordScreen(

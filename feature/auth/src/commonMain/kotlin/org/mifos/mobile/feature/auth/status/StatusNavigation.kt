@@ -13,11 +13,9 @@ package org.mifos.mobile.feature.auth.status
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
-import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Serializable
 data class StatusNavigationRoute(
