@@ -35,7 +35,7 @@ fun NavController.navigateToOtpAuthScreen(
 
 fun NavGraphBuilder.otpAuthenticationDestination(
     navigateBack: () -> Unit,
-    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToSetPasswordScreen: () -> Unit,
 ) {
     composableWithStayTransitions<OtpAuthenticationRoute> {

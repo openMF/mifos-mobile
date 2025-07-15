@@ -17,7 +17,6 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
-import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Serializable
 @SerialName("set_password")
@@ -28,7 +27,7 @@ fun NavController.navigateToSetPasswordScreen(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.setPasswordDestination(
-    navigateToStatusScreen: (EventType, String, String, String, String) -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToLoginScreen: () -> Unit,
 ) {
     composableWithSlideTransitions<SetPasswordRoute> {

@@ -72,7 +72,7 @@ koin = "4.0.2"
 koinAnnotationsVersion = "1.4.0-RC4"
 
 # CMP Libraries
-compose-plugin = "1.7.0-rc01"
+compose-plugin = "1.8.2"
 coil = "3.0.4"
 backHandlerVersion = "2.1.0"
 multiplatformSettings = "1.2.0"
@@ -86,7 +86,6 @@ wire = "5.0.0"
 
 # Jetbrains CMP
 windowsSizeClass = "0.5.0"
-composeJB = "1.7.3"
 composeLifecycle = "2.8.3"
 composeNavigation = "2.8.0-alpha10"
 jbCoreBundle = "1.0.1"
@@ -182,7 +181,7 @@ zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVe
 jb-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 jb-kotlin-stdlib-js = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-js", version.ref = "kotlin" }
 jb-kotlin-dom = { group = "org.jetbrains.kotlin", name = "kotlin-dom-api-compat", version.ref = "kotlin" }
-jb-composeRuntime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeJB" }
+jb-composeRuntime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-plugin" }
 jb-composeViewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeLifecycle" }
 jb-lifecycleViewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "composeLifecycle" }
 jb-lifecycleViewmodelSavedState = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "composeLifecycle" }

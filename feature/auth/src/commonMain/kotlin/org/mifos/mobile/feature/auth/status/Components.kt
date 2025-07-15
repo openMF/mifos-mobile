@@ -16,25 +16,34 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_error
 import mifos_mobile.core.ui.generated.resources.ic_icon_success
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosStatusComponent
+import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 @Composable
 internal fun StatusScreen(
-    eventType: EventType,
-    eventDestination: String,
-    title: String,
-    subtitle: String,
-    buttonText: String,
     navigateToDestination: (String) -> Unit,
+    viewModel: StatusViewModel = koinViewModel(),
 ) {
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is StatusEvent.NavigateNext -> navigateToDestination(event.nextScreen)
+        }
+    }
+
     MifosScaffold(
         bottomBar = {
             Surface {
@@ -51,15 +60,17 @@ internal fun StatusScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             MifosStatusComponent(
-                icon = if (eventType == EventType.SUCCESS) {
+                icon = if (uiState.eventType == EventType.SUCCESS.name) {
                     Res.drawable.ic_icon_success
                 } else {
                     Res.drawable.ic_icon_error
                 },
-                title = title,
-                subTitle = subtitle,
-                buttonText = buttonText,
-                onClick = { navigateToDestination(eventDestination) },
+                title = uiState.title ?: "",
+                subTitle = uiState.subtitle ?: "",
+                buttonText = uiState.buttonText ?: "",
+                onClick = remember(viewModel) {
+                    { viewModel.trySendAction(StatusAction.OnNextClick) }
+                },
             )
         }
     }
