@@ -9,6 +9,7 @@
  */
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
