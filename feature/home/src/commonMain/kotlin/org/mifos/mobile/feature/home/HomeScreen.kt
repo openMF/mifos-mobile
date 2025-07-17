@@ -134,7 +134,7 @@ internal fun HomeContent(
                 color = AppColors.customBlack,
             )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
             MifosDashboardCard(
                 savingsAccount = Res.string.feature_home_total_available_savings,
