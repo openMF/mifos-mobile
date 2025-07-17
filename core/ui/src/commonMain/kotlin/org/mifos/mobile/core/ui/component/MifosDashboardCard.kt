@@ -42,6 +42,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -53,6 +54,8 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 fun MifosDashboardCard(
     isVisible: Boolean,
     modifier: Modifier = Modifier,
+    isLoanApplied: Boolean = true,
+    onLoanApplyClick: () -> Unit = {},
     isSingleLine: Boolean = false,
     loanAccount: StringResource? = null,
     loanAmount: Double? = null,
@@ -74,79 +77,97 @@ fun MifosDashboardCard(
             contentDescription = null,
             contentScale = ContentScale.Crop,
         )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(DesignToken.padding.small),
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium, Alignment.End),
-        ) {
-            Column(
+        if (isLoanApplied) {
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(DesignToken.padding.medium),
-                verticalArrangement = Arrangement.SpaceBetween,
+                    .fillMaxWidth()
+                    .padding(DesignToken.padding.small),
+                horizontalArrangement = Arrangement.spacedBy(
+                    DesignToken.spacing.medium,
+                    Alignment.End,
+                ),
             ) {
-                if (loanAccount != null) {
-                    Column {
-                        Text(
-                            text = stringResource(loanAccount),
-                            style = MifosTypography.bodySmall,
-//                            color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f),
-                            color = AppColors.customWhite.copy(alpha = 0.5f),
-                        )
-                        AnimatedContent(
-                            targetState = isVisible,
-                            transitionSpec = {
-                                fadeIn(tween(300)) togetherWith fadeOut(tween(300))
-                            },
-                            label = "Loan Amount Animation",
-                        ) { visible ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.medium),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    if (loanAccount != null) {
+                        Column {
                             Text(
-                                text = if (visible) "$currency $loanAmount" else "$currency •••••••••",
-                                style = MifosTypography.titleMediumEmphasized,
-                                color = AppColors.customWhite,
+                                text = stringResource(loanAccount),
+                                style = MifosTypography.bodySmall,
+//                            color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f),
+                                color = AppColors.customWhite.copy(alpha = 0.5f),
                             )
+                            AnimatedContent(
+                                targetState = isVisible,
+                                transitionSpec = {
+                                    fadeIn(tween(300)) togetherWith fadeOut(tween(300))
+                                },
+                                label = "Loan Amount Animation",
+                            ) { visible ->
+                                Text(
+                                    text = if (visible) "$currency $loanAmount" else "$currency •••••••••",
+                                    style = MifosTypography.titleMediumEmphasized,
+                                    color = AppColors.customWhite,
+                                )
+                            }
                         }
                     }
-                }
 
-                if (savingsAccount != null) {
-                    Column {
-                        Text(
-                            text = stringResource(savingsAccount),
-                            style = MifosTypography.bodySmall,
-//                            color = MaterialTheme.colorScheme.secondary,
-                            color = AppColors.customWhite.copy(alpha = 0.5f),
-                        )
-                        AnimatedContent(
-                            targetState = isVisible,
-                            transitionSpec = {
-                                fadeIn(tween(300)) togetherWith fadeOut(tween(300))
-                            },
-                            label = "Savings Amount Animation",
-                        ) { visible ->
+                    if (savingsAccount != null) {
+                        Column {
                             Text(
-                                text = if (visible) "$currency $savingsAmount" else "$currency •••••••••",
-                                style = MifosTypography.titleMediumEmphasized,
-                                color = AppColors.customWhite,
+                                text = stringResource(savingsAccount),
+                                style = MifosTypography.bodySmall,
+//                            color = MaterialTheme.colorScheme.secondary,
+                                color = AppColors.customWhite.copy(alpha = 0.5f),
                             )
+                            AnimatedContent(
+                                targetState = isVisible,
+                                transitionSpec = {
+                                    fadeIn(tween(300)) togetherWith fadeOut(tween(300))
+                                },
+                                label = "Savings Amount Animation",
+                            ) { visible ->
+                                Text(
+                                    text = if (visible) "$currency $savingsAmount" else "$currency •••••••••",
+                                    style = MifosTypography.titleMediumEmphasized,
+                                    color = AppColors.customWhite,
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
 
-        IconButton(
-            onClick = onVisibilityToggle,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(12.dp),
-        ) {
-            Icon(
-                imageVector = if (isVisible) MifosIcons.EyeOff else MifosIcons.Eye,
-                contentDescription = "Toggle Visibility",
-                tint = Color.White,
+            IconButton(
+                onClick = onVisibilityToggle,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(12.dp),
+            ) {
+                Icon(
+                    imageVector = if (isVisible) MifosIcons.EyeOff else MifosIcons.Eye,
+                    contentDescription = "Toggle Visibility",
+                    tint = Color.White,
+                )
+            }
+        } else {
+            MifosButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(DesignToken.sizes.buttonHeight)
+                    .align(Alignment.Center),
+                onClick = onLoanApplyClick,
+                content = {
+                    Text(
+                        text = "Apply Loan",
+                        style = MifosTypography.bodySmall,
+                    )
+                },
             )
         }
     }
@@ -196,6 +217,11 @@ private fun MifosDashboardCard() {
                 loanAmount = 900.00,
                 currency = "$",
                 onVisibilityToggle = {},
+            )
+
+            MifosDashboardCard(
+                isLoanApplied = false,
+                isVisible = true,
             )
         }
     }

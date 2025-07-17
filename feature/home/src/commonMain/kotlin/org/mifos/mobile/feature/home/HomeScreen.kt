@@ -137,6 +137,7 @@ internal fun HomeContent(
             Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
             MifosDashboardCard(
+                isLoanApplied = state.isLoanApplied,
                 savingsAccount = Res.string.feature_home_total_available_savings,
                 loanAccount = Res.string.feature_home_total_available_loan,
                 loanAmount = state.loanAmount,

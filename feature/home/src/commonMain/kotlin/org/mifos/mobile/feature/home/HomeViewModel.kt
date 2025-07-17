@@ -95,14 +95,23 @@ internal class HomeViewModel(
             DataState.Loading -> updateState { it.copy(dialogState = HomeState.DialogState.Loading) }
 
             is DataState.Success -> {
-                getLoanAccountDetails(dataState.data.loanAccounts)
-                getSavingAccountDetails(dataState.data.savingsAccounts)
-                updateState {
-                    it.copy(
-                        clientAccounts = dataState.data,
-                        dialogState = null,
-                        currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol,
-                    )
+                if (dataState.data.loanAccounts.isNotEmpty()) {
+                    getLoanAccountDetails(dataState.data.loanAccounts)
+                    getSavingAccountDetails(dataState.data.savingsAccounts)
+                    updateState {
+                        it.copy(
+                            clientAccounts = dataState.data,
+                            dialogState = null,
+                            currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol,
+                        )
+                    }
+                } else {
+                    updateState {
+                        it.copy(
+                            dialogState = null,
+                            isLoanApplied = false,
+                        )
+                    }
                 }
             }
         }
@@ -158,6 +167,7 @@ internal class HomeViewModel(
 internal data class HomeState(
     val clientId: Long? = 0,
     val currency: String? = "",
+    val isLoanApplied: Boolean = true,
     val username: String = "",
     val clientAccounts: ClientAccounts? = null,
     val notificationCount: Int = 0,
