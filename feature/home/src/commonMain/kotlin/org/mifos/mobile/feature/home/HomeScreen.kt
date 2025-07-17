@@ -124,7 +124,6 @@ internal fun HomeContent(
     ) {
         Column(
             modifier = Modifier
-                .padding(top = DesignToken.padding.large)
                 .padding(DesignToken.padding.large),
         ) {
             Spacer(modifier = Modifier.height(DesignToken.spacing.small))
