@@ -118,7 +118,7 @@ fun MifosRoundedTopAppBar(
 ) {
     TopAppBar(
         title = {
-            if(brandIcon == null) {
+            if (brandIcon == null) {
                 Text(
                     text = title,
                     style = MifosTypography.titleMedium,

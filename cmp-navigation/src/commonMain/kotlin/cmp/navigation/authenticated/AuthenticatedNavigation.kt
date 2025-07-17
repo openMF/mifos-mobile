@@ -36,11 +36,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
         startDestination = AuthenticatedNavbarRoute,
     ) {
         authenticatedNavbarGraph(
-            navigateToNotificationScreen = navController::navigateToNotificationScreen
+            navigateToNotificationScreen = navController::navigateToNotificationScreen,
         )
 
-        notificationDestination (
-            navigateBack = navController::popBackStack
+        notificationDestination(
+            navigateBack = navController::popBackStack,
         )
     }
 }

@@ -143,7 +143,7 @@ object MifosIcons {
     val PersonTabFilled = FluentIcons.Filled.Person
 
     val Chevron = FluentIcons.Regular.ChevronLeft
-    
+
     val Alert = FluentIcons.Regular.Alert
     val SearchNew = FluentIcons.Regular.Search
 

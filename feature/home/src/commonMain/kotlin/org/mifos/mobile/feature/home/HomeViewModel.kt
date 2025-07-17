@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.home.generated.resources.Res
-import mifos_mobile.feature.home.generated.resources.no_internet_connection
+import mifos_mobile.feature.home.generated.resources.feature_home_common_error
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -25,7 +25,6 @@ import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.home.HomeEvent.*
 
 internal class HomeViewModel(
     private val homeRepositoryImpl: HomeRepository,
@@ -46,20 +45,22 @@ internal class HomeViewModel(
 
     override fun handleAction(action: HomeAction) {
         when (action) {
+            is HomeAction.OnNavigate -> sendEvent(HomeEvent.Navigate(action.route))
 
-            is HomeAction.OnNavigate -> sendEvent(Navigate(action.route))
-
-            is HomeAction.OnNotificationClick -> sendEvent(NavigateToNotification)
+            is HomeAction.OnNotificationClick -> sendEvent(HomeEvent.NavigateToNotification)
 
             is HomeAction.OnDismissDialog -> updateState { it.copy(dialogState = null) }
 
             is HomeAction.ToggleAmountVisible -> handleAmountVisible()
 
-            is HomeAction.Internal.ReceiveClientAccounts -> handleClientAccounts(action.dataState)
-
+            is HomeAction.Internal.ReceiveClientAccounts -> handleClientAccounts(
+                action
+                    .dataState,
+                action.message,
+            )
         }
     }
-    
+
     private fun updateState(update: (HomeState) -> HomeState) {
         mutableStateFlow.update(update)
     }
@@ -73,21 +74,21 @@ internal class HomeViewModel(
     private fun loadClientAccountDetails() {
         updateState { it.copy(dialogState = HomeState.DialogState.Loading) }
         viewModelScope.launch {
-            val internetConnection = getString(Res.string.no_internet_connection)
+            val message = getString(Res.string.feature_home_common_error)
             homeRepositoryImpl.clientAccounts(clientId = state.clientId ?: 0).catch {
-                updateState { it.copy(dialogState = HomeState.DialogState.Error(internetConnection)) }
+                updateState { it.copy(dialogState = HomeState.DialogState.Error(message)) }
             }.collect { clientAccounts ->
-                sendAction(HomeAction.Internal.ReceiveClientAccounts(clientAccounts))
+                sendAction(HomeAction.Internal.ReceiveClientAccounts(clientAccounts, message))
             }
         }
     }
 
-    private fun handleClientAccounts(dataState: DataState<ClientAccounts>) {
+    private fun handleClientAccounts(dataState: DataState<ClientAccounts>, message: String) {
         when (dataState) {
             is DataState.Error -> updateState {
                 it.copy(
                     dialogState = HomeState
-                        .DialogState.Error(dataState.exception.message.toString()),
+                        .DialogState.Error(message),
                 )
             }
 
@@ -168,25 +169,27 @@ internal data class HomeState(
 ) {
 
     sealed interface DialogState {
-        data class Error(val message: String): DialogState
+        data class Error(val message: String) : DialogState
 
-        data object Loading: DialogState
-
+        data object Loading : DialogState
     }
 }
 
 sealed interface HomeEvent {
-    data class Navigate(val route: String): HomeEvent
-    data object NavigateToNotification: HomeEvent
+    data class Navigate(val route: String) : HomeEvent
+    data object NavigateToNotification : HomeEvent
 }
 
 sealed interface HomeAction {
-    data class OnNavigate(val route: String): HomeAction
-    data object OnNotificationClick: HomeAction
-    data object OnDismissDialog: HomeAction
-    data object ToggleAmountVisible: HomeAction
+    data class OnNavigate(val route: String) : HomeAction
+    data object OnNotificationClick : HomeAction
+    data object OnDismissDialog : HomeAction
+    data object ToggleAmountVisible : HomeAction
 
-    sealed interface Internal: HomeAction {
-        data class ReceiveClientAccounts(val dataState: DataState<ClientAccounts>): Internal
+    sealed interface Internal : HomeAction {
+        data class ReceiveClientAccounts(
+            val dataState: DataState<ClientAccounts>,
+            val message: String,
+        ) : Internal
     }
 }

@@ -50,8 +50,8 @@ import org.mifos.mobile.navigation.generated.resources.not_connected
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
-    modifier: Modifier = Modifier,
     navigateToNotificationScreen: () -> Unit,
+    modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
     ),

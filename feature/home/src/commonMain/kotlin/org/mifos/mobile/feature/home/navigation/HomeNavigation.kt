@@ -7,6 +7,8 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.home.navigation
 
 import androidx.navigation.NavController
@@ -15,7 +17,6 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
 import org.mifos.mobile.feature.home.HomeScreen
-
 
 @Serializable
 data object HomeRoute
