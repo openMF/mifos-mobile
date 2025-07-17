@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.home
 
-import androidx.compose.material3.Text
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,26 +24,27 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -105,9 +105,9 @@ internal fun HomeContent(
         topBarTitle = "Home",
         onNavigateBack = {},
         actions = {
-            Row (
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large)
-            ){
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            ) {
                 Image(
                     imageVector = MifosIcons.SearchNew,
                     contentDescription = null,
@@ -117,17 +117,16 @@ internal fun HomeContent(
                     contentDescription = null,
                     modifier = Modifier.clickable {
                         onAction(HomeAction.OnNotificationClick)
-                    }
+                    },
                 )
             }
-        }
+        },
     ) {
         Column(
             modifier = Modifier
                 .padding(top = DesignToken.padding.large)
                 .padding(DesignToken.padding.large),
         ) {
-
             Spacer(modifier = Modifier.height(DesignToken.spacing.small))
 
             Text(
@@ -135,7 +134,6 @@ internal fun HomeContent(
                 style = MifosTypography.titleLarge,
                 color = AppColors.customBlack,
             )
-
 
             Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
@@ -163,11 +161,9 @@ internal fun HomeContent(
                 items = state.items,
                 onAction = onAction,
             )
-
         }
     }
 }
-
 
 @Suppress("UnusedParameter")
 @Composable
@@ -187,11 +183,11 @@ internal fun ServiceBox(
                     icon = item.icon,
                     // TODO call selected screen when user click on service item
 //                    onClick = { onAction(HomeAction.OnNavigate()) },
-                    onClick = { }
+                    onClick = { },
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -208,12 +204,12 @@ internal fun ServiceItemCard(
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box (
+        Box(
             modifier = Modifier
                 .clickable {
                     onClick
-                }
-        ){
+                },
+        ) {
             Image(
                 modifier = Modifier
                     .border(
@@ -228,7 +224,6 @@ internal fun ServiceItemCard(
             )
         }
 
-
         Text(
             text = stringResource(title),
             style = MifosTypography.bodySmallEmphasized,
@@ -237,8 +232,6 @@ internal fun ServiceItemCard(
         )
     }
 }
-
-
 
 @Composable
 private fun HomeScreenDialog(
