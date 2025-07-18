@@ -40,4 +40,21 @@
     <string name="no_app_to_support_action">There is no application that support this action</string>
     <string name="cancel">Cancel</string>
     <string name="dialog_logout">Are you sure you want to logout?</string>
+
+    <string name="feature_home_greet">Hello %1$s,</string>
+    <string name="feature_home_services">Services</string>
+    <string name="feature_home_saving_accounts">Savings Accounts</string>
+    <string name="feature_home_loan_accounts">Loan Accounts</string>
+    <string name="feature_home_share_accounts">Share Accounts</string>
+    <string name="feature_home_apply_for_loan">Apply For Loan</string>
+    <string name="feature_home_transaction_history">Transaction History</string>
+    <string name="feature_home_charges">Charges</string>
+    <string name="feature_home_beneficiary">beneficiary</string>
+    <string name="feature_home_faq">FAQ</string>
+
+    <string name="feature_home_total_available_savings">Total Available Savings</string>
+    <string name="feature_home_total_available_loan">Total Available Loan</string>
+
+    <string name="feature_home_common_error">Something went wrong</string>
+
 </resources>

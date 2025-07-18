@@ -23,6 +23,7 @@ import co.touchlab.kermit.Logger.Companion as KermitLogger
 
 actual val ktorHttpClient: HttpClient
     get() = HttpClient(OkHttp) {
+        expectSuccess = true
         install(HttpTimeout) {
             socketTimeoutMillis = 60_000
             requestTimeoutMillis = 60_000

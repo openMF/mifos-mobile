@@ -24,8 +24,12 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
     navigate(route = AuthenticatedNavbarRoute, navOptions = navOptions)
 }
 
-internal fun NavGraphBuilder.authenticatedNavbarGraph() {
+internal fun NavGraphBuilder.authenticatedNavbarGraph(
+    navigateToNotificationScreen: () -> Unit,
+) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
-        AuthenticatedNavbarNavigationScreen()
+        AuthenticatedNavbarNavigationScreen(
+            navigateToNotificationScreen = navigateToNotificationScreen,
+        )
     }
 }

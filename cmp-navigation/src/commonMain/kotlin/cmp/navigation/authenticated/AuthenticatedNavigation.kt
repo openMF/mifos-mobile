@@ -18,6 +18,8 @@ import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
+import org.mifos.mobile.feature.notification.navigation.notificationDestination
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -33,7 +35,13 @@ internal fun NavGraphBuilder.authenticatedGraph(
     navigation<AuthenticatedGraphRoute>(
         startDestination = AuthenticatedNavbarRoute,
     ) {
-        authenticatedNavbarGraph()
+        authenticatedNavbarGraph(
+            navigateToNotificationScreen = navController::navigateToNotificationScreen,
+        )
+
+        notificationDestination(
+            navigateBack = navController::popBackStack,
+        )
     }
 }
 

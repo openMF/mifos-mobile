@@ -28,10 +28,9 @@ class HomeRepositoryImp(
     private val ioDispatcher: CoroutineDispatcher,
 ) : HomeRepository {
 
-    override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> {
-        return dataManager.clientsApi.getClientAccounts(clientId)
+    override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> =
+        dataManager.clientsApi.getClientAccounts(clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
-    }
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
         return dataManager.clientsApi.getClientForId(clientId)

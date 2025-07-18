@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -117,11 +118,13 @@ fun MifosRoundedTopAppBar(
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                style = MifosTypography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+            if (brandIcon == null) {
+                Text(
+                    text = title,
+                    style = MifosTypography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
         },
         actions = actions,
         navigationIcon = {
@@ -133,7 +136,8 @@ fun MifosRoundedTopAppBar(
                         painter = painterResource(brandIcon),
                         contentDescription = "Brand Icon",
                         modifier = Modifier
-                            .size(344.dp, 40.dp),
+                            .size(96.dp, 28.dp)
+                            .align(Alignment.TopStart),
                     )
                 }
             } else {

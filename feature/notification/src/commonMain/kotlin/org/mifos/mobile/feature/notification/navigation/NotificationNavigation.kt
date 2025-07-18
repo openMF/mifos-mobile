@@ -7,12 +7,30 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.notification.navigation
 
-const val NOTIFICATION_NAVIGATION_ROUTE_BASE = "notification_base_route"
-const val NOTIFICATION_SCREEN_ROUTE = "notification_screen_route"
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.ui.composableWithPushTransitions
+import org.mifos.mobile.feature.notification.NotificationScreen
 
-sealed class NotificationNavigation(val route: String) {
-    data object NotificationBase : NotificationNavigation(route = NOTIFICATION_NAVIGATION_ROUTE_BASE)
-    data object NotificationScreen : NotificationNavigation(route = NOTIFICATION_SCREEN_ROUTE)
+@Serializable
+data object NotificationRoute
+
+fun NavController.navigateToNotificationScreen(navOptions: NavOptions? = null) {
+    navigate(NotificationRoute, navOptions)
+}
+
+fun NavGraphBuilder.notificationDestination(
+    navigateBack: () -> Unit,
+) {
+    composableWithPushTransitions<NotificationRoute> {
+        NotificationScreen(
+            navigateBack = navigateBack,
+        )
+    }
 }

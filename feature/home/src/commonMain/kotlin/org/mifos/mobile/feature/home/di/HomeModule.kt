@@ -11,7 +11,7 @@ package org.mifos.mobile.feature.home.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.mobile.feature.home.viewmodel.HomeViewModel
+import org.mifos.mobile.feature.home.HomeViewModel
 
 val HomeModule = module {
     viewModelOf(::HomeViewModel)

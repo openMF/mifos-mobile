@@ -50,6 +50,7 @@ import org.mifos.mobile.navigation.generated.resources.not_connected
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
+    navigateToNotificationScreen: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -98,12 +99,14 @@ internal fun AuthenticatedNavbarNavigationScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+        navigateToNotificationScreen = navigateToNotificationScreen,
     )
 }
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
+    navigateToNotificationScreen: () -> Unit,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -156,9 +159,8 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
             // TODO Add top level destination screens
 
             homeDestination(
-                onNavigate = {},
-                callHelpline = {},
-                mailHelpline = {},
+                navigateToDestinationScreen = { },
+                navigateToNotificationScreen = navigateToNotificationScreen,
             )
 
             userprofileNavGraph(navController, {})

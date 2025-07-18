@@ -54,12 +54,21 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.filled.ChatBubblesQuestion
+import fluent.ui.system.icons.filled.ChatHistory
+import fluent.ui.system.icons.filled.CoinMultiple
+import fluent.ui.system.icons.filled.ContactCardRibbon
+import fluent.ui.system.icons.filled.DataWhisker
 import fluent.ui.system.icons.filled.Document
 import fluent.ui.system.icons.filled.ErrorCircle
 import fluent.ui.system.icons.filled.Eye
+import fluent.ui.system.icons.filled.Feed
 import fluent.ui.system.icons.filled.Grid
 import fluent.ui.system.icons.filled.MoneyHand
 import fluent.ui.system.icons.filled.Person
+import fluent.ui.system.icons.filled.Receipt
+import fluent.ui.system.icons.filled.Wallet
+import fluent.ui.system.icons.regular.Alert
 import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
 import fluent.ui.system.icons.regular.CheckmarkCircle
@@ -68,6 +77,7 @@ import fluent.ui.system.icons.regular.Eye
 import fluent.ui.system.icons.regular.EyeOff
 import fluent.ui.system.icons.regular.Image
 import fluent.ui.system.icons.regular.Info
+import fluent.ui.system.icons.regular.Search
 
 object MifosIcons {
     val Paid: ImageVector = Icons.Default.Paid
@@ -133,4 +143,16 @@ object MifosIcons {
     val PersonTabFilled = FluentIcons.Filled.Person
 
     val Chevron = FluentIcons.Regular.ChevronLeft
+
+    val Alert = FluentIcons.Regular.Alert
+    val SearchNew = FluentIcons.Regular.Search
+
+    val SavingsAccount = FluentIcons.Filled.Wallet
+    val LoanAccount = FluentIcons.Filled.CoinMultiple
+    val ShareAccount = FluentIcons.Filled.DataWhisker
+    val ApplyForLoan = FluentIcons.Filled.Receipt
+    val TransactionHistory = FluentIcons.Filled.ChatHistory
+    val Charges = FluentIcons.Filled.Feed
+    val Beneficiary = FluentIcons.Filled.ContactCardRibbon
+    val Faq = FluentIcons.Filled.ChatBubblesQuestion
 }
