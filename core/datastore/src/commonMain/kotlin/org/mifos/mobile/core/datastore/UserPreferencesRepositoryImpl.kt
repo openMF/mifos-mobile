@@ -76,6 +76,9 @@ class UserPreferencesRepositoryImpl(
     override val observeDynamicColorPreference: Flow<Boolean>
         get() = preferenceManager.observeDynamicColorPreference
 
+    override val passcode: Flow<String>
+        get() = preferenceManager.passcode
+
     override suspend fun updateToken(password: String): DataState<Unit> {
         return try {
             val result = preferenceManager.updateToken(password)
@@ -166,6 +169,10 @@ class UserPreferencesRepositoryImpl(
 
     override suspend fun setIsUnlocked(isUnlocked: Boolean) {
         preferenceManager.setIsUnlocked(isUnlocked)
+    }
+
+    override suspend fun setPasscode(passcode: String) {
+        preferenceManager.setPasscode(passcode)
     }
 
     override suspend fun logOut() {

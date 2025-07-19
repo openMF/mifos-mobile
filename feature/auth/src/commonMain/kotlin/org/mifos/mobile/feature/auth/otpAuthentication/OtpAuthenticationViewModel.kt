@@ -27,6 +27,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registe
 import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_successfully_tip
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
@@ -43,7 +44,7 @@ internal class OtpAuthenticationViewModel(
         val nextRoute = savedStateHandle.toRoute<OtpAuthenticationRoute>()
 
         mutableStateFlow.update {
-            it.copy(nextRoute = nextRoute.nextRoute)
+            it.copy(nextRoute = nextRoute.nextRoute ?: "")
         }
     }
 

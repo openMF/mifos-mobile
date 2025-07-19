@@ -64,6 +64,7 @@ import fluent.ui.system.icons.filled.ErrorCircle
 import fluent.ui.system.icons.filled.Eye
 import fluent.ui.system.icons.filled.Feed
 import fluent.ui.system.icons.filled.Grid
+import fluent.ui.system.icons.filled.LockClosed
 import fluent.ui.system.icons.filled.MoneyHand
 import fluent.ui.system.icons.filled.Person
 import fluent.ui.system.icons.filled.Receipt
@@ -155,4 +156,6 @@ object MifosIcons {
     val Charges = FluentIcons.Filled.Feed
     val Beneficiary = FluentIcons.Filled.ContactCardRibbon
     val Faq = FluentIcons.Filled.ChatBubblesQuestion
+
+    val LockFilled = FluentIcons.Filled.LockClosed
 }

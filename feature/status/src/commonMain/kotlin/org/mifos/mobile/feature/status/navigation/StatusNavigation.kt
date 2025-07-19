@@ -9,13 +9,12 @@
  */
 @file:Suppress("MatchingDeclarationName")
 
-package org.mifos.mobile.feature.auth.status
+package org.mifos.mobile.feature.status.navigation
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
-import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
+import org.mifos.mobile.feature.status.StatusScreen
 
 @Serializable
 data class StatusNavigationRoute(
@@ -25,28 +24,6 @@ data class StatusNavigationRoute(
     val subtitle: String,
     val buttonText: String,
 )
-
-fun NavController.navigateToStatusScreen(
-    eventType: String,
-    eventDestination: String,
-    title: String,
-    subtitle: String,
-    buttonText: String,
-) {
-    this.navigate(
-        StatusNavigationRoute(
-            eventType = eventType,
-            eventDestination = eventDestination,
-            title = title,
-            subtitle = subtitle,
-            buttonText = buttonText,
-        ),
-    ) {
-        popUpTo(AuthGraphRoute) {
-            inclusive = false
-        }
-    }
-}
 
 fun NavGraphBuilder.statusDestination(
     navigateToDestination: (String) -> Unit,

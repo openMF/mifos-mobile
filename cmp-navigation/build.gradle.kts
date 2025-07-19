@@ -41,6 +41,8 @@ kotlin {
             implementation(projects.feature.userProfile)
             implementation(projects.feature.location)
             implementation(projects.feature.onboardingLanguage)
+            implementation(projects.feature.passcode)
+            implementation(projects.feature.status)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

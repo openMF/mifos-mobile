@@ -36,8 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_common_cancel
 import mifos_mobile.feature.auth.generated.resources.feature_common_next
@@ -295,15 +293,6 @@ internal fun OtpInputForm(
             )
         }
     }
-}
-
-@Serializable
-enum class EventType {
-    @SerialName("success")
-    SUCCESS,
-
-    @SerialName("failure")
-    FAILURE,
 }
 
 @Preview
