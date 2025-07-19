@@ -149,8 +149,11 @@ private fun PasscodeScreenContent(
                             else -> Color.Transparent
                         }
                         val borderColor =
-                            if (state.passcodeError) MaterialTheme.colorScheme.error
-                            else MaterialTheme.colorScheme.primary
+                            if (state.passcodeError) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.primary
+                            }
                         Box(
                             modifier = Modifier
                                 .size(16.dp)
@@ -217,7 +220,7 @@ fun NumericKeyboard(
                                 backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
                                 content = {
                                     Icon(
-                                        imageVector = MifosIcons.ArrowBack,
+                                        imageVector = MifosIcons.Backspace,
                                         contentDescription = "Backspace",
                                     )
                                 },
@@ -230,7 +233,7 @@ fun NumericKeyboard(
                                 backgroundColor = MaterialTheme.colorScheme.inversePrimary,
                                 content = {
                                     Icon(
-                                        imageVector = MifosIcons.ArrowBack,
+                                        imageVector = MifosIcons.Send,
                                         contentDescription = "Send",
                                     )
                                 },
