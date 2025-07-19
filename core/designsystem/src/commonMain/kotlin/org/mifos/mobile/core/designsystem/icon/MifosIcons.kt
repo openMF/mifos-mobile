@@ -70,7 +70,6 @@ import fluent.ui.system.icons.filled.Person
 import fluent.ui.system.icons.filled.Receipt
 import fluent.ui.system.icons.filled.Wallet
 import fluent.ui.system.icons.regular.Alert
-import fluent.ui.system.icons.regular.Backpack
 import fluent.ui.system.icons.regular.Backspace
 import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
