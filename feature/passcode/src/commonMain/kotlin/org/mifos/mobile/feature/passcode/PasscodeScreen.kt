@@ -111,10 +111,10 @@ private fun PasscodeScreenContent(
                     contentDescription = null,
                     modifier = Modifier
                         .background(
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                             shape = CircleShape,
                         )
-                        .padding(DesignToken.padding.large),
+                        .padding(DesignToken.padding.small),
                     tint = MaterialTheme.colorScheme.primary,
                 )
 
