@@ -358,4 +358,21 @@ object MifosTypography {
             fontFamily = fontFamily(),
             fontWeight = FontWeight(600),
         )
+
+    val keyBoardNumeric: TextStyle
+        @Composable get() = TextStyle(
+            fontSize = 21.sp,
+            lineHeight = 24.sp,
+            fontFamily = fontFamily(),
+            fontWeight = FontWeight(400),
+
+        )
+
+    val keyBoardAlpha: TextStyle
+        @Composable get() = TextStyle(
+            fontSize = 11.sp,
+            lineHeight = 16.sp,
+            fontFamily = fontFamily(),
+            fontWeight = FontWeight(400),
+        )
 }

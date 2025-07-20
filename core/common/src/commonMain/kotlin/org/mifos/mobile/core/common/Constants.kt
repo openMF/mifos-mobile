@@ -83,4 +83,8 @@ object Constants {
     const val LICENSE_LINK = "https://github.com/openMF/mifos-mobile/blob/development/LICENSE"
     const val SOURCE_CODE_LINK = "https://github.com/openMF/mifos-mobile"
     const val WEBSITE_LINK = "https://openmf.github.io/mobileapps.github.io/"
+
+    const val UNLOCKED = "unlocked"
+    const val LOGIN = "login"
+    const val SET_PASSWORD = "set_password"
 }

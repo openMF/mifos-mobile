@@ -41,6 +41,8 @@ interface UserPreferencesRepository {
 
     val observeDynamicColorPreference: Flow<Boolean>
 
+    val passcode: Flow<String>
+
     suspend fun updateToken(password: String): DataState<Unit>
 
     suspend fun updateTheme(theme: AppTheme): DataState<Unit>
@@ -60,6 +62,8 @@ interface UserPreferencesRepository {
     suspend fun setIsAuthenticated(isAuthenticated: Boolean)
 
     suspend fun setIsUnlocked(isUnlocked: Boolean)
+
+    suspend fun setPasscode(passcode: String)
 
     suspend fun setShowOnboarding(showOnboarding: Boolean)
 

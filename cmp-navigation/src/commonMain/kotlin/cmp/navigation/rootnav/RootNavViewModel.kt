@@ -55,11 +55,7 @@ class RootNavViewModel(
 
             !settingsData.isAuthenticated -> RootNavState.Auth
 
-//            settingsData.passcode.isEmpty() -> RootNavState.UserLocked
-//          TODO: Passcode library needs to update so that it updates passcode in datastore
-            settingsData.passcode.isEmpty() -> {
-                RootNavState.UserUnlocked(settingsData.userId)
-            }
+            settingsData.passcode.isEmpty() -> RootNavState.UserLocked
 
             settingsData.isUnlocked -> {
                 RootNavState.UserUnlocked(settingsData.userId)

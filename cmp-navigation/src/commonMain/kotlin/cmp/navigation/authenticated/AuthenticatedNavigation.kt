@@ -18,8 +18,14 @@ import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
+import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
+import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
+import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
+import org.mifos.mobile.feature.status.navigation.statusDestination
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -28,7 +34,6 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
-@Suppress("UnusedParameter")
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
 ) {
@@ -42,6 +47,16 @@ internal fun NavGraphBuilder.authenticatedGraph(
         notificationDestination(
             navigateBack = navController::popBackStack,
         )
+
+        statusDestination(
+            navigateToDestination = {
+                if (it == Constants.LOGIN) {
+                    navController.navigateToLoginScreen()
+                } else {
+                    navController.navigate(it)
+                }
+            },
+        )
     }
 }
 
@@ -50,4 +65,46 @@ private fun NavController.navigateUpToAuthenticatedNavbarRoot() {
     this.popBackStack<AuthenticatedNavbarRoute>(inclusive = false)
 }
 
-// User shouldn't navigate back to intermediate screens when reached to this destination
+fun NavController.navigateToStatusScreenLoginFlow(
+    eventType: String,
+    eventDestination: String,
+    title: String,
+    subtitle: String,
+    buttonText: String,
+) {
+    this.navigate(
+        StatusNavigationRoute(
+            eventType = eventType,
+            eventDestination = eventDestination,
+            title = title,
+            subtitle = subtitle,
+            buttonText = buttonText,
+        ),
+    ) {
+        popUpTo(AuthGraphRoute) {
+            inclusive = false
+        }
+    }
+}
+
+fun NavController.navigateToStatusScreenPasscodeFlow(
+    eventType: String,
+    eventDestination: String,
+    title: String,
+    subtitle: String,
+    buttonText: String,
+) {
+    this.navigate(
+        StatusNavigationRoute(
+            eventType = eventType,
+            eventDestination = eventDestination,
+            title = title,
+            subtitle = subtitle,
+            buttonText = buttonText,
+        ),
+    ) {
+        popUpTo(PasscodeRoute.Standard) {
+            inclusive = true
+        }
+    }
+}

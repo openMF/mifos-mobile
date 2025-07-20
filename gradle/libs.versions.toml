@@ -102,6 +102,7 @@ androidPackageNamespace = "org.mifos.mobile"
 materialVersion = "1.12.0"
 
 fluentui-icons = "1.0.0"
+material = "1.12.0"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
@@ -261,6 +262,7 @@ moko-permission-compose = { group = "dev.icerock.moko", name = "permissions-comp
 window-size = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "windowsSizeClass" }
 
 fluentui-system-icons = { module = "io.github.niyajali:fluentui-system-icons", version.ref = "fluentui-icons" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 androidx-compose-ui-test = [

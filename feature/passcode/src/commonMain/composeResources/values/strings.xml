@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_passcode_setup">Set Up Authentication Code</string>
+    <string name="feature_passcode_tip">Enter your 4-digit authentication code in order to set up the authentication layer</string>
+    <string name="feature_passcode_confirm">Confirm Authentication Code</string>
+    <string name="feature_passcode_setup_successful">Successful</string>
+    <string name="feature_passcode_setup_successful_msg">Authentication code successfully set up. It will be frequently used in the app</string>
+    <string name="feature_passcode_setup_failure">Failed</string>
+    <string name="feature_passcode_setup_failure_msg">Authentication code failed to set up. It will be frequently used in the app so please try again.</string>
+
+    <string name="feature_passcode_common_continue">Continue</string>
+    <string name="feature_passcode_common_try_again">Try Again</string>
+</resources>

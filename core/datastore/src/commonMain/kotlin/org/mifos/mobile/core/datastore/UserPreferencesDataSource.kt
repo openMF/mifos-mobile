@@ -73,6 +73,8 @@ class UserPreferencesDataSource(
 
     val officeName = _userInfo.map { it.officeName }
 
+    val passcode = _settingsInfo.map { it.passcode }
+
     val observeLanguage: Flow<LanguageConfig>
         get() = _settingsInfo.map { it.language }
 
@@ -210,6 +212,13 @@ class UserPreferencesDataSource(
     suspend fun setIsUnlocked(isUnlocked: Boolean) =
         withContext(dispatcher) {
             val newPreference = settings.getSettingsPreference().copy(isUnlocked = isUnlocked)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    suspend fun setPasscode(passcode: String) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(passcode = passcode)
             settings.putSettingsPreference(newPreference)
             _settingsInfo.value = newPreference
         }
