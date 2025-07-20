@@ -18,6 +18,7 @@ import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
@@ -33,7 +34,6 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
-@Suppress("UnusedParameter")
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
 ) {
@@ -50,7 +50,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         statusDestination(
             navigateToDestination = {
-                if (it == "login") {
+                if (it == Constants.LOGIN) {
                     navController.navigateToLoginScreen()
                 } else {
                     navController.navigate(it)

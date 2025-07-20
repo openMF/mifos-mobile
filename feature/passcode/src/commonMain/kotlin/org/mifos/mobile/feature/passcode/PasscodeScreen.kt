@@ -191,11 +191,11 @@ fun NumericKeyboard(
     isSendEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val keys = listOf(
-        listOf("1", "2", "3"),
-        listOf("4", "5", "6"),
-        listOf("7", "8", "9"),
-        listOf("Backspace", "0", "Send"),
+    val layout = listOf(
+        listOf(PasscodeKey.Digit("1"), PasscodeKey.Digit("2"), PasscodeKey.Digit("3")),
+        listOf(PasscodeKey.Digit("4"), PasscodeKey.Digit("5"), PasscodeKey.Digit("6")),
+        listOf(PasscodeKey.Digit("7"), PasscodeKey.Digit("8"), PasscodeKey.Digit("9")),
+        listOf(PasscodeKey.Backspace, PasscodeKey.Digit("0"), PasscodeKey.Send),
     )
 
     Column(
@@ -206,49 +206,44 @@ fun NumericKeyboard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
     ) {
-        // Numeric keys
-        keys.forEach { row ->
+        layout.forEach { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
             ) {
                 row.forEach { key ->
                     when (key) {
-                        "Backspace" -> {
-                            KeyButton(
-                                modifier = Modifier.weight(1f),
-                                backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                content = {
-                                    Icon(
-                                        imageVector = MifosIcons.Backspace,
-                                        contentDescription = "Backspace",
-                                    )
-                                },
-                                onClick = onBackspaceClick,
-                            )
-                        }
-                        "Send" -> {
-                            KeyButton(
-                                modifier = Modifier.weight(1f),
-                                backgroundColor = MaterialTheme.colorScheme.inversePrimary,
-                                content = {
-                                    Icon(
-                                        imageVector = MifosIcons.Send,
-                                        contentDescription = "Send",
-                                    )
-                                },
-                                onClick = onSendClick,
-                                enabled = isSendEnabled,
-                            )
-                        }
-                        else -> {
-                            DigitKeyButton(
-                                modifier = Modifier.weight(1f),
-                                digit = key,
-                                letters = getLettersForDigit(key),
-                                onClick = { onDigitClick(key) },
-                            )
-                        }
+                        is PasscodeKey.Digit -> DigitKeyButton(
+                            modifier = Modifier.weight(1f),
+                            digit = key.number,
+                            letters = getLettersForDigit(key.number),
+                            onClick = { onDigitClick(key.number) },
+                        )
+
+                        PasscodeKey.Backspace -> KeyButton(
+                            modifier = Modifier.weight(1f),
+                            backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            content = {
+                                Icon(
+                                    imageVector = MifosIcons.Backspace,
+                                    contentDescription = "Backspace",
+                                )
+                            },
+                            onClick = onBackspaceClick,
+                        )
+
+                        PasscodeKey.Send -> KeyButton(
+                            modifier = Modifier.weight(1f),
+                            backgroundColor = MaterialTheme.colorScheme.inversePrimary,
+                            content = {
+                                Icon(
+                                    imageVector = MifosIcons.Send,
+                                    contentDescription = "Send",
+                                )
+                            },
+                            onClick = onSendClick,
+                            enabled = isSendEnabled,
+                        )
                     }
                 }
             }
@@ -325,6 +320,12 @@ fun DigitKeyButton(
             }
         }
     }
+}
+
+sealed class PasscodeKey {
+    data class Digit(val number: String) : PasscodeKey()
+    object Backspace : PasscodeKey()
+    object Send : PasscodeKey()
 }
 
 @Preview

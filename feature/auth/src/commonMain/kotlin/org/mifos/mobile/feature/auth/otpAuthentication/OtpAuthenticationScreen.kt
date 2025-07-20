@@ -48,6 +48,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_otp_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
@@ -87,7 +88,7 @@ internal fun OtpAuthenticationScreen(
             }
 
             is OtpAuthEvent.NavigateNext -> {
-                if (uiState.nextRoute == "set_password") {
+                if (uiState.nextRoute == Constants.SET_PASSWORD) {
                     navigateToSetPasswordScreen.invoke()
                 }
             }

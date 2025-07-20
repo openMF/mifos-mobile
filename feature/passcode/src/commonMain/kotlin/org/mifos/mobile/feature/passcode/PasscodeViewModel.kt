@@ -17,6 +17,7 @@ import mifos_mobile.feature.passcode.generated.resources.feature_passcode_common
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_setup_successful
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_setup_successful_msg
 import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -79,7 +80,7 @@ internal class PasscodeViewModel(
                             sendEvent(
                                 PasscodeEvent.OnPasscodeConfirm(
                                     eventType = EventType.SUCCESS.name,
-                                    eventDestination = "unlocked",
+                                    eventDestination = Constants.UNLOCKED,
                                     title = getString(Res.string.feature_passcode_setup_successful),
                                     subtitle = getString(Res.string.feature_passcode_setup_successful_msg),
                                     buttonText = getString(Res.string.feature_passcode_common_continue),

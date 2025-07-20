@@ -25,6 +25,7 @@ import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_error
 import mifos_mobile.core.ui.generated.resources.ic_icon_success
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.model.EventType
@@ -44,7 +45,7 @@ internal fun StatusScreen(
     val clickHandler: () -> Unit = {
         coroutineScope.launch {
             when (uiState.eventDestination) {
-                "unlocked" -> {
+                Constants.UNLOCKED -> {
                     viewModel.trySendAction(StatusAction.UnlockApp)
                 }
                 else -> {
