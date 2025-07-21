@@ -269,7 +269,7 @@ sealed interface SavingsAccountAction {
 
     data object OnNavigateBack : SavingsAccountAction
 
-    data object ToggleAmountVisible: SavingsAccountAction
+    data object ToggleAmountVisible : SavingsAccountAction
 
     data class LoadAccounts(
         val searchQuery: String,
