@@ -87,4 +87,6 @@ object Constants {
     const val UNLOCKED = "unlocked"
     const val LOGIN = "login"
     const val SET_PASSWORD = "set_password"
+
+    const val SAVINGS_ACCOUNT = "savings_account"
 }

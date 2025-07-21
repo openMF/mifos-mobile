@@ -22,6 +22,7 @@ import mifos_mobile.feature.home.generated.resources.feature_home_saving_account
 import mifos_mobile.feature.home.generated.resources.feature_home_share_accounts
 import mifos_mobile.feature.home.generated.resources.feature_home_transaction_history
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 internal sealed class ServiceItem(
@@ -32,7 +33,7 @@ internal sealed class ServiceItem(
     data object SavingsAccount : ServiceItem(
         title = Res.string.feature_home_saving_accounts,
         icon = MifosIcons.SavingsAccount,
-        route = "SavingsAccountRoute",
+        route = Constants.SAVINGS_ACCOUNT,
     )
 
     data object LoanAccount : ServiceItem(

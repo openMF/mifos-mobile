@@ -38,7 +38,6 @@ import org.mifos.mobile.feature.accounts.component.AccountFilterDialog
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
 import org.mifos.mobile.feature.loanaccount.screen.LoanAccountScreen
-import org.mifos.mobile.feature.savingsaccount.screen.SavingsAccountScreen
 import org.mifos.mobile.feature.shareaccount.screen.ShareAccountScreen
 
 @Composable
@@ -228,11 +227,11 @@ private fun ClientAccountsTabRow(
         setCurrentPage = { page = it },
     ) {
         when (page) {
-            0 -> SavingsAccountScreen(
-                checkboxOptionsLabels = selectedCheckboxLabels,
-                searchQuery = searchQuery,
-                onAccountSelected = onAccountClicked,
-            )
+//            0 -> SavingsAccountScreen(
+//                checkboxOptionsLabels = selectedCheckboxLabels,
+//                searchQuery = searchQuery,
+//                onAccountSelected = onAccountClicked,
+//            )
 
             1 -> LoanAccountScreen(
                 checkboxOptionsLabels = selectedCheckboxLabels,
