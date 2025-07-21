@@ -24,4 +24,7 @@
     <string name="feature_savings_account_items">%1$d Items</string>
 
     <string name="feature_common_error">Something went wrong</string>
+
+    <string name="content_description_search">Search</string>
+    <string name="content_description_filter">Filter</string>
 </resources>

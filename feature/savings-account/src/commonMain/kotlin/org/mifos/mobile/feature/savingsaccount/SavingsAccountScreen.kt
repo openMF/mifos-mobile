@@ -35,6 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
+import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
+import mifos_mobile.feature.savings_account.generated.resources.content_description_search
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
@@ -180,14 +182,14 @@ internal fun SavingsAccountContent(
                             .clickable {}
                             .size(20.dp),
                         imageVector = MifosIcons.SearchNew,
-                        contentDescription = "search",
+                        contentDescription = stringResource(Res.string.content_description_search),
                     )
                     Icon(
                         modifier = Modifier
                             .clickable {}
                             .size(20.dp),
                         imageVector = MifosIcons.Filter,
-                        contentDescription = "filter",
+                        contentDescription = stringResource(Res.string.content_description_filter),
                     )
                 }
             }
