@@ -25,13 +25,13 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 import org.mifos.mobile.feature.auth.login.LoginRoute
-import org.mifos.mobile.feature.auth.otpAuthentication.EventType
 
 internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswordEvent, SetPasswordAction>(
     initialState = SetPasswordState(dialogState = null),

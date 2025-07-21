@@ -17,4 +17,14 @@
     <string name="feature_account_empty_savings_accounts">There is no SavingsAccount associated with you</string>
     <string name="feature_account_submitted">Submitted</string>
     <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Accounts</string>
+    <string name="feature_savings_account_dashboard">Total Available Savings</string>
+    <string name="feature_savings_account">Savings Account</string>
+    <string name="feature_savings_account_items">%1$d Items</string>
+
+    <string name="feature_common_error">Something went wrong</string>
+
+    <string name="content_description_search">Search</string>
+    <string name="content_description_filter">Filter</string>
 </resources>

@@ -14,7 +14,6 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarNavigationViewModel
 import cmp.navigation.rootnav.RootNavViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.library.passcode.di.PasscodeModule
 import org.mifos.mobile.core.common.di.DispatchersModule
 import org.mifos.mobile.core.data.di.RepositoryModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
@@ -30,12 +29,14 @@ import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
+import org.mifos.mobile.feature.passcode.di.PasscodeModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
 import org.mifos.mobile.feature.savings.di.SavingsModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.settings.di.SettingsModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
+import org.mifos.mobile.feature.status.di.StatusModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
 import org.mifos.mobile.feature.update.password.di.updatePasswordModule
@@ -82,10 +83,9 @@ object KoinModules {
             NotificationModule,
             ProfileModule,
             SetOnboardingLanguageModule,
+            PasscodeModule,
+            StatusModule,
         )
-    }
-    private val LibraryModule = module {
-        includes(PasscodeModule)
     }
 
     val allModules = listOf(
@@ -95,6 +95,5 @@ object KoinModules {
         networkModules,
         featureModules,
         sharedModule,
-        LibraryModule,
     )
 }

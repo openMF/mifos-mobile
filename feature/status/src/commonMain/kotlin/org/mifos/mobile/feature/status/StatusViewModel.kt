@@ -7,15 +7,20 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.auth.status
+package org.mifos.mobile.feature.status
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 
 internal class StatusViewModel(
     savedStateHandle: SavedStateHandle,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : BaseViewModel<StatusState, StatusEvent, StatusAction>(
     initialState = StatusState(),
 ) {
@@ -40,6 +45,14 @@ internal class StatusViewModel(
                     state.eventDestination ?: "",
                 ),
             )
+
+            StatusAction.UnlockApp -> handleUnlockApp()
+        }
+    }
+
+    private fun handleUnlockApp() {
+        viewModelScope.launch {
+            userPreferencesRepository.setIsUnlocked(true)
         }
     }
 }
@@ -56,6 +69,8 @@ internal data class StatusState(
 internal sealed interface StatusAction {
 
     data object OnNextClick : StatusAction
+
+    data object UnlockApp : StatusAction
 }
 
 internal sealed interface StatusEvent {

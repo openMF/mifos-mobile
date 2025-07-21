@@ -36,8 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_common_cancel
 import mifos_mobile.feature.auth.generated.resources.feature_common_next
@@ -50,6 +48,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_otp_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
@@ -89,7 +88,7 @@ internal fun OtpAuthenticationScreen(
             }
 
             is OtpAuthEvent.NavigateNext -> {
-                if (uiState.nextRoute == "set_password") {
+                if (uiState.nextRoute == Constants.SET_PASSWORD) {
                     navigateToSetPasswordScreen.invoke()
                 }
             }
@@ -295,15 +294,6 @@ internal fun OtpInputForm(
             )
         }
     }
-}
-
-@Serializable
-enum class EventType {
-    @SerialName("success")
-    SUCCESS,
-
-    @SerialName("failure")
-    FAILURE,
 }
 
 @Preview

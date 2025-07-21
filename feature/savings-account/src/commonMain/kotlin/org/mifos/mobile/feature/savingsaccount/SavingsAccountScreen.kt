@@ -1,0 +1,331 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savingsaccount
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import mifos_mobile.feature.savings_account.generated.resources.Res
+import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
+import mifos_mobile.feature.savings_account.generated.resources.content_description_search
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_topbar_title
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
+import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.savingsaccount.components.SavingsAccountCard
+
+@Composable
+internal fun SavingsAccountScreen(
+    navigateBack: () -> Unit,
+    viewModel: SavingsAccountViewmodel = koinViewModel(),
+) {
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
+        }
+    }
+
+    SavingsAccountDialog(
+        dialogState = state.dialogState,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+
+    SavingsAccountContent(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+}
+
+@Composable
+internal fun SavingsAccountDialog(
+    dialogState: SavingsAccountState.DialogState?,
+    onAction: (SavingsAccountAction) -> Unit,
+) {
+    when (dialogState) {
+        is SavingsAccountState.DialogState.Error -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = { onAction(SavingsAccountAction.OnDismissDialog) },
+        )
+        is SavingsAccountState.DialogState.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
+
+        null -> Unit
+    }
+}
+
+@Composable
+internal fun SavingsAccountContent(
+    state: SavingsAccountState,
+    onAction: (SavingsAccountAction) -> Unit,
+) {
+    val pullToRefreshState = rememberMifosPullToRefreshState(
+        isEnabled = true,
+        isRefreshing = state.isRefreshing ?: false,
+        onRefresh = {
+            onAction(SavingsAccountAction.Refresh)
+        },
+    )
+
+    MifosElevatedScaffold(
+        onNavigateBack = { onAction(SavingsAccountAction.OnNavigateBack) },
+        topBarTitle = stringResource(Res.string.feature_savings_account_topbar_title),
+        pullToRefreshState = pullToRefreshState,
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large),
+        ) {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+
+            MifosDashboardCard(
+                isSingleLine = true,
+                savingsAccount = Res.string.feature_savings_account_dashboard,
+                savingsAmount = state.totalSavingAmount,
+                isVisible = state.isAmountVisible,
+                currency = state.currency,
+                onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
+            )
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column {
+                    Text(
+                        text = stringResource(Res.string.feature_savings_account),
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                    Text(
+                        text = stringResource(
+                            Res.string.feature_savings_account_items,
+                            state.items ?: 0,
+                        ),
+                        style = MifosTypography.labelMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .clickable {}
+                            .size(20.dp),
+                        imageVector = MifosIcons.SearchNew,
+                        contentDescription = stringResource(Res.string.content_description_search),
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .clickable {}
+                            .size(20.dp),
+                        imageVector = MifosIcons.Filter,
+                        contentDescription = stringResource(Res.string.content_description_filter),
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.99997.dp),
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                }
+                items(accountCards) { account ->
+                    val color = when (account.statusText) {
+                        "Progress" -> AppColors.customEnable
+                        "Pending" -> AppColors.customYellow
+                        "Closed" -> MaterialTheme.colorScheme.error
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+
+                    SavingsAccountCard(
+                        accountId = account.accountId,
+                        accountNumber = account.accountNumber,
+                        accountType = account.accountType,
+                        accountStatus = if (account.statusText == "Progress") {
+                            account.statusValue ?: ""
+                        } else {
+                            account.statusText
+                        },
+                        accountStatusColor = color,
+                        onAccountClick = {},
+                    )
+                }
+            }
+        }
+    }
+}
+
+data class AccountCardData(
+    val accountId: Long,
+    val accountNumber: String,
+    val accountType: String,
+    val statusText: String,
+    val statusValue: String? = null,
+)
+
+val accountCards = listOf(
+    AccountCardData(
+        accountId = 1L,
+        accountNumber = "2689-7897-6666",
+        accountType = "Wallet Account",
+        statusText = "Progress",
+        statusValue = "$ 23,315,500",
+    ),
+    AccountCardData(
+        accountId = 2L,
+        accountNumber = "6666-2689-7897",
+        accountType = "Bank Account",
+        statusText = "Pending",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+    AccountCardData(
+        accountId = 3L,
+        accountNumber = "6576-2689-6666",
+        accountType = "Wallet Account",
+        statusText = "Closed",
+    ),
+
+)
+
+@Preview
+@Composable
+private fun Savings_Account_Preview() {
+    MifosMobileTheme {
+        SavingsAccountContent(
+            state = SavingsAccountState(
+                dialogState = null,
+                savingsAccount = emptyList(),
+                clientId = 1L,
+            ),
+            onAction = {},
+        )
+    }
+}

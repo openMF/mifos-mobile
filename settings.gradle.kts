@@ -81,6 +81,8 @@ include(":feature:share-account")
 include(":feature:loan-account")
 include(":feature:savings-account")
 include(":feature:onboarding-language")
+include(":feature:passcode")
+include(":feature:status")
 
 // Lint Modules
 //include(":lint")

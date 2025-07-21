@@ -17,17 +17,16 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
-import org.mifos.mobile.feature.auth.status.StatusNavigationRoute
 
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class OtpAuthenticationRoute(
-    val nextRoute: String = StatusNavigationRoute.serializer().descriptor.serialName,
+    val nextRoute: String? = null,
 )
 
 @OptIn(ExperimentalSerializationApi::class)
 fun NavController.navigateToOtpAuthScreen(
-    nextRoute: String = StatusNavigationRoute.serializer().descriptor.serialName,
+    nextRoute: String? = null,
     navOptions: NavOptions? = null,
 ) {
     this.navigate(OtpAuthenticationRoute(nextRoute), navOptions)

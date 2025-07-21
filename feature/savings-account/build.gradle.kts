@@ -9,6 +9,8 @@
  */
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -21,6 +23,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
 
             api(projects.core.ui)
             api(projects.core.model)
