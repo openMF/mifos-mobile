@@ -150,7 +150,7 @@ fun MifosDashboardCard(
                     .padding(12.dp),
             ) {
                 Icon(
-                    imageVector = if (isVisible) MifosIcons.EyeOff else MifosIcons.Eye,
+                    imageVector = if (isVisible) MifosIcons.Eye else MifosIcons.EyeOff,
                     contentDescription = "Toggle Visibility",
                     tint = Color.White,
                 )
