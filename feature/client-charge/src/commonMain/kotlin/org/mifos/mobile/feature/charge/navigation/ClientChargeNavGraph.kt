@@ -9,49 +9,68 @@
  */
 package org.mifos.mobile.feature.charge.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants.CHARGE_TYPE
 import org.mifos.mobile.core.common.Constants.CHARGE_TYPE_ID
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.ui.composableWithPushTransitions
+import org.mifos.mobile.feature.charge.screens.ClientChargeItem2
 import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
 
-fun NavController.navigateToClientChargeScreen(
-    chargeType: ChargeType,
-    chargeTypeId: Long? = null,
-) {
-    navigate(ClientChargeNavigation.ClientChargeScreen.passArguments(chargeType, chargeTypeId))
-}
+
+
+@Serializable
+data class ClientChargesRoute(
+    val chargeType: String,
+    val chargeTypeId: Long
+)
+
+//@Serializable
+//data object ClientChargesRoute
+
+@Serializable
+data object ClientChargesNavGraphRoute
 
 fun NavGraphBuilder.clientChargeNavGraph(
     navigateBack: () -> Unit,
-) {
-    navigation(
-        startDestination = ClientChargeNavigation.ClientChargeScreen.route,
-        route = ClientChargeNavigation.ClientChargeBase.route,
-    ) {
-        clientChargeScreenRoute(
-            navigateBack = navigateBack,
-        )
+){
+    navigation<ClientChargesNavGraphRoute>(
+        startDestination = ClientChargesRoute("",-1),
+    ){
+        clientChargesScreen(onNavigateBack = navigateBack)
     }
 }
 
-fun NavGraphBuilder.clientChargeScreenRoute(
-    navigateBack: () -> Unit,
+fun NavGraphBuilder.clientChargesScreen(
+    onNavigateBack: () -> Unit,
 ) {
-    composable(
-        route = ClientChargeNavigation.ClientChargeScreen.route,
-        arguments = listOf(
-            navArgument(CHARGE_TYPE) { type = NavType.StringType },
-            navArgument(CHARGE_TYPE_ID) { type = NavType.LongType },
-        ),
-    ) {
-        ClientChargeScreen(
-            navigateBack = navigateBack,
-        )
+    composableWithPushTransitions<ClientChargesRoute> {
+        Column {
+            Spacer(Modifier.height(40.dp))
+            ClientChargeItem2(charge= Charge())
+        }
     }
+}
+
+fun NavController.navigateToClientChargeScreen(
+    chargeType: String,
+    chargeTypeId: Long)
+{
+    this.navigate(ClientChargesRoute(chargeType,chargeTypeId))
 }

@@ -9,18 +9,23 @@
  */
 package org.mifos.mobile.feature.charge.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SnackbarHostState
@@ -30,7 +35,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
@@ -39,15 +46,20 @@ import mifos_mobile.feature.client_charge.generated.resources.amount_due
 import mifos_mobile.feature.client_charge.generated.resources.amount_outstanding
 import mifos_mobile.feature.client_charge.generated.resources.amount_paid
 import mifos_mobile.feature.client_charge.generated.resources.amount_waived
+import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
+import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
-import mifos_mobile.feature.client_charge.generated.resources.ic_charges
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -128,20 +140,20 @@ private fun ClientChargeScreen(
                     .fillMaxSize(),
             ) {
                 when {
-                    state.charges.isEmpty() && state.chargeDialog == null -> {
-                        EmptyDataView(
-                            modifier = Modifier.fillMaxSize(),
-                            image = Res.drawable.ic_charges,
-                            error = Res.string.error_no_charge,
-                        )
-                    }
-
-                    state.charges.isNotEmpty() -> {
-                        ClientChargeContent(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            chargesList = state.charges,
-                        )
-                    }
+//                    state.charges.isEmpty() && state.chargeDialog == null -> {
+//                        EmptyDataView(
+//                            modifier = Modifier.fillMaxSize(),
+//                            image = Res.drawable.ic_charges,
+//                            error = Res.string.error_no_charge,
+//                        )
+//                    }
+//
+//                    state.charges.isNotEmpty() -> {
+//                        ClientChargeContent(
+//                            modifier = Modifier.padding(horizontal = 16.dp),
+//                            chargesList = state.charges,
+//                        )
+//                    }
                 }
             }
         },
@@ -162,93 +174,164 @@ private fun ClientChargeContent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = chargesList) { charge ->
-            ClientChargeItem(charge = charge)
+            ClientChargeItem2(charge = charge)
         }
     }
 }
 
-@Composable
-private fun ClientChargeItem(
-    charge: Charge,
-    modifier: Modifier = Modifier,
-) {
-    val currencyRepresentation = charge.currency?.code ?: ""
+//@Composable
+//private fun ClientChargeItem(
+//    charge: Charge,
+//    modifier: Modifier = Modifier,
+//) {
+//    val currencyRepresentation = charge.currency?.code ?: ""
+//
+//    OutlinedCard(
+//        modifier = modifier
+//            .fillMaxWidth(),
+//    ) {
+//        Row(
+//            modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max),
+//        ) {
+//            VerticalDivider(
+//                thickness = 5.dp,
+//                color = if (charge.isChargePaid || charge.isChargeWaived ||
+//                    charge.paid || charge.waived
+//                ) {
+//                    MaterialTheme.colorScheme.error
+//                } else {
+//                    MaterialTheme.colorScheme.primary
+//                },
+//                modifier = Modifier.fillMaxHeight(),
+//            )
+//            Column(
+//                modifier = Modifier.padding(16.dp),
+//                verticalArrangement = Arrangement.spacedBy(8.dp),
+//            ) {
+//                Text(
+//                    text = charge.name ?: "",
+//                    style = MaterialTheme.typography.bodyLarge,
+//                )
+//
+//                Text(
+//                    text = if (charge.dueDate.isNotEmpty()) {
+//                        DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
+//                    } else {
+//                        ""
+//                    },
+//                    style = MaterialTheme.typography.bodyLarge,
+//                )
+//
+//                MifosTextTitleDescSingleLine(
+//                    title = stringResource(Res.string.amount_due),
+//                    description = CurrencyFormatter.format(
+//                        charge.amount,
+//                        currencyRepresentation,
+//                        2,
+//                    ),
+//                )
+//
+//                MifosTextTitleDescSingleLine(
+//                    title = stringResource(Res.string.amount_paid),
+//                    description = CurrencyFormatter.format(
+//                        charge.amountPaid,
+//                        currencyRepresentation,
+//                        2,
+//                    ),
+//                )
+//
+//                MifosTextTitleDescSingleLine(
+//                    title = stringResource(Res.string.amount_waived),
+//                    description = CurrencyFormatter.format(
+//                        charge.amountWaived,
+//                        currencyRepresentation,
+//                        2,
+//                    ),
+//                )
+//
+//                MifosTextTitleDescSingleLine(
+//                    title = stringResource(Res.string.amount_outstanding),
+//                    description = CurrencyFormatter.format(
+//                        charge.amountOutstanding,
+//                        currencyRepresentation,
+//                        2,
+//                    ),
+//
+//                )
+//            }
+//        }
+//    }
+//}
 
-    OutlinedCard(
-        modifier = modifier
-            .fillMaxWidth(),
+@Composable
+fun ClientChargeItem2(
+    charge:Charge,
+    modifier: Modifier = Modifier,
+){
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.Green)
+            .padding(vertical=DesignToken.padding.large),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max),
+        Icon(
+            painter = if(charge.isChargePaid){
+                painterResource(Res.drawable.database_checkmark)
+            }else{
+                painterResource(Res.drawable.database_warning)
+            },
+            modifier= Modifier.padding(DesignToken.padding.small).size(20.dp),
+            contentDescription = "Charges symbol"
+        )
+        Spacer(Modifier.width(DesignToken.padding.medium))
+        Column(
+            modifier = Modifier.weight(1f),
         ) {
-            VerticalDivider(
-                thickness = 5.dp,
-                color = if (charge.isChargePaid || charge.isChargeWaived ||
-                    charge.paid || charge.waived
-                ) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.primary
-                },
-                modifier = Modifier.fillMaxHeight(),
+            Text(
+                text="Adminstration Fees",
+                style= MifosTypography.titleSmallEmphasized
             )
+            Text(
+                text="Acc. No. 00878767667",
+                style= MifosTypography.bodySmall
+            )
+            Text(
+                text="12-03-2025",
+                style= MifosTypography.bodySmall
+            )
+        }
+        Spacer(Modifier.width(DesignToken.padding.medium))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ){
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment=Alignment.End
             ) {
                 Text(
-                    text = charge.name ?: "",
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+                    text="Selected",
+                    style= MifosTypography.labelSmall,
+                    color = if(charge.isChargePaid){
 
+                    }else{
+
+                    }
+                )
                 Text(
-                    text = if (charge.dueDate.isNotEmpty()) {
-                        DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
-                    } else {
-                        ""
-                    },
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_due),
-                    description = CurrencyFormatter.format(
-                        charge.amount,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_paid),
-                    description = CurrencyFormatter.format(
-                        charge.amountPaid,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_waived),
-                    description = CurrencyFormatter.format(
-                        charge.amountWaived,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_outstanding),
-                    description = CurrencyFormatter.format(
-                        charge.amountOutstanding,
-                        currencyRepresentation,
-                        2,
-                    ),
-
+                    text="Hello",
+                    style= MifosTypography.labelSmall
                 )
             }
+            Icon(
+                imageVector = MifosIcons.ChevronRight,
+                contentDescription = "",
+                modifier=Modifier.size(20.dp)
+            )
         }
     }
+
 }
 
 @Preview
@@ -259,6 +342,16 @@ private fun ClientChargeScreenPreview() {
             modifier = Modifier,
             state = ClientChargeState(chargeDialog = null, isOnline = false),
             onAction = { },
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ClientChargesItemPreview(){
+    MifosMobileTheme{
+        ClientChargeItem2(
+            charge=Charge()
         )
     }
 }

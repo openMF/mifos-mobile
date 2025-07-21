@@ -56,6 +56,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.filled.ChatBubblesQuestion
 import fluent.ui.system.icons.filled.ChatHistory
+import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
 import fluent.ui.system.icons.filled.DataWhisker
@@ -143,6 +144,7 @@ object MifosIcons {
     val PersonTabFilled = FluentIcons.Filled.Person
 
     val Chevron = FluentIcons.Regular.ChevronLeft
+    val ChevronRight = FluentIcons.Filled.ChevronRight
 
     val Alert = FluentIcons.Regular.Alert
     val SearchNew = FluentIcons.Regular.Search
