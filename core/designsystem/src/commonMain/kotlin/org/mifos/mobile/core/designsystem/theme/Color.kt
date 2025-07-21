@@ -234,4 +234,7 @@ object AppColors {
 
     val customBlack = Color(0xFF3A3A3A)
     val customWhite = Color(0xFFFFFFFF)
+
+    val customEnable = Color(0xFF009325)
+    val customYellow = Color(0xFFAE9703)
 }

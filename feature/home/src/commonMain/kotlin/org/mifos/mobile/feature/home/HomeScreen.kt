@@ -46,6 +46,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
@@ -61,7 +62,8 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun HomeScreen(
-    navigateToDestinationScreen: (String) -> Unit,
+//    navigateToDestinationScreen: (String) -> Unit,
+    navigateToSavingsScreen: () -> Unit,
     navigateToNotificationScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
@@ -70,7 +72,12 @@ internal fun HomeScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            is HomeEvent.Navigate -> navigateToDestinationScreen(event.route)
+            is HomeEvent.Navigate -> {
+                when {
+                    event.route == Constants.SAVINGS_ACCOUNT -> navigateToSavingsScreen.invoke()
+                }
+//                navigateToDestinationScreen(event.route)
+            }
 
             is HomeEvent.NavigateToNotification -> navigateToNotificationScreen.invoke()
         }
@@ -165,7 +172,6 @@ internal fun HomeContent(
     }
 }
 
-@Suppress("UnusedParameter")
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
@@ -181,9 +187,7 @@ internal fun ServiceBox(
                 ServiceItemCard(
                     title = item.title,
                     icon = item.icon,
-                    // TODO call selected screen when user click on service item
-//                    onClick = { onAction(HomeAction.OnNavigate()) },
-                    onClick = { },
+                    onClick = { onAction(HomeAction.OnNavigate(item.route)) },
                 )
             }
         },
@@ -207,7 +211,7 @@ internal fun ServiceItemCard(
         Box(
             modifier = Modifier
                 .clickable {
-                    onClick
+                    onClick()
                 },
         ) {
             Image(

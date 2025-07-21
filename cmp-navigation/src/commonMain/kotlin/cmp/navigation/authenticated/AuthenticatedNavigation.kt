@@ -24,6 +24,8 @@ import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
+import org.mifos.mobile.feature.savingsaccount.navigation.navigateToSavingsAccountScreen
+import org.mifos.mobile.feature.savingsaccount.navigation.savingsAccountDestination
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 
@@ -42,9 +44,14 @@ internal fun NavGraphBuilder.authenticatedGraph(
     ) {
         authenticatedNavbarGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
+            navigateToSavingsScreen = navController::navigateToSavingsAccountScreen,
         )
 
         notificationDestination(
+            navigateBack = navController::popBackStack,
+        )
+
+        savingsAccountDestination(
             navigateBack = navController::popBackStack,
         )
 
