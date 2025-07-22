@@ -57,7 +57,6 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
-import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.savingsaccount.components.SavingsAccountCard
 
@@ -210,24 +209,6 @@ internal fun SavingsAccountContent(
             ) {
                 item {
                     Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-                }
-                item {
-                    TransactionScreenItem(
-                        title = "Add-Money Bank Card",
-                        date = "20-03-2020",
-                        time = "5:10",
-                        transactionAmount = "87289",
-                        isPositive = true,
-                    )
-                }
-                item {
-                    TransactionScreenItem(
-                        title = "Add-Money Bank Card",
-                        date = "20-03-2020",
-                        time = "5:10",
-                        transactionAmount = "87289",
-                        isPositive = false,
-                    )
                 }
                 items(accountCards) { account ->
                     val color = when (account.statusText) {
