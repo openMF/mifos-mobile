@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.background
@@ -10,6 +19,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -18,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
@@ -32,7 +43,7 @@ fun TransactionScreenItem(
     time: String,
     transactionAmount: String,
     totalLatestBalance: String,
-    isPositive:Boolean,
+    isPositive: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -49,15 +60,15 @@ fun TransactionScreenItem(
         ) {
             Icon(
                 imageVector =
-                    if (isPositive) {
-                        MifosIcons.DrawerAdd
-                    } else {
-                        MifosIcons.DrawerSubtract
-                    }
-                ,
+                if (isPositive) {
+                    MifosIcons.DrawerAdd
+                } else {
+                    MifosIcons.DrawerSubtract
+                },
                 contentDescription = "Symbol",
                 tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
                 modifier = Modifier
+                    .size(36.dp)
                     .background(
                         color = MaterialTheme.colorScheme.background.copy(alpha = 0.2f),
                         shape = CircleShape,
@@ -85,28 +96,27 @@ fun TransactionScreenItem(
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
             Column(
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
             ) {
                 Text(
-                    text = if(isPositive){
+                    text = if (isPositive) {
                         "+ $ $transactionAmount"
-                    }else{
+                    } else {
                         "- $ $transactionAmount"
                     },
                     style = MifosTypography.labelSmall,
-                    color = if(isPositive){
+                    color = if (isPositive) {
                         AppColors.customEnable
-                    }else{
+                    } else {
                         MaterialTheme.colorScheme.error
-                    }
+                    },
                 )
 
                 Text(
                     text = "$ $totalLatestBalance",
                     style = MifosTypography.labelSmall,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.secondary,
                 )
-
             }
         }
     }
