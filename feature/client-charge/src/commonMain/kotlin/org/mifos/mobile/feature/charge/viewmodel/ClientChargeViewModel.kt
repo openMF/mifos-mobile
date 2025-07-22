@@ -11,17 +11,12 @@ package org.mifos.mobile.feature.charge.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -32,7 +27,6 @@ import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -41,9 +35,13 @@ import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.ChargeCalculationType
+import org.mifos.mobile.core.model.entity.ChargeTimeType
+import org.mifos.mobile.core.model.entity.Currency
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.charge.navigation.ClientChargesRoute
 
 internal class ClientChargeViewModel(
     private val clientChargeRepositoryImp: ClientChargeRepository,
@@ -57,25 +55,10 @@ internal class ClientChargeViewModel(
     ),
 ) {
 
+    private val chargeType = toChargeType(savedStateHandle.toRoute<ClientChargesRoute>().chargeType)
+    private val chargeTypeId = savedStateHandle.toRoute<ClientChargesRoute>().chargeTypeId
     private val refreshTrigger = MutableStateFlow(false)
-
-    private val chargeTypeString = savedStateHandle.getStateFlow<String?>(
-        key = Constants.CHARGE_TYPE,
-        initialValue = null,
-    )
-
     private val clientId = userPreferencesRepositoryImpl.clientId.value
-
-    private val chargeTypeId: StateFlow<Long?> = savedStateHandle.getStateFlow(
-        key = Constants.CHARGE_TYPE_ID,
-        initialValue = clientId,
-    ).map { if (it == -1L) clientId else it }
-        .stateIn(viewModelScope, SharingStarted.Lazily, clientId)
-
-    private val chargeType: StateFlow<ChargeType> = chargeTypeString
-        .map { it?.let { ChargeType.valueOf(it) } ?: ChargeType.CLIENT }
-        .stateIn(viewModelScope, SharingStarted.Lazily, ChargeType.CLIENT)
-
     init {
         updateTopBarTitle()
         viewModelScope.launch {
@@ -101,16 +84,15 @@ internal class ClientChargeViewModel(
 
     private fun updateTopBarTitle() {
         viewModelScope.launch {
-            chargeType.collectLatest { type ->
-                updateState {
-                    it.copy(
-                        topBarTitleResId = when (type) {
-                            ChargeType.CLIENT -> Res.string.client_charges
-                            ChargeType.SAVINGS -> Res.string.savings_charges
-                            ChargeType.LOAN -> Res.string.loan_charges
-                        },
-                    )
-                }
+            val topBarId = when (chargeType) {
+                ChargeType.CLIENT -> Res.string.client_charges
+                ChargeType.SAVINGS -> Res.string.savings_charges
+                ChargeType.LOAN -> Res.string.loan_charges
+            }
+            updateState {
+                it.copy(
+                    topBarTitleResId = topBarId,
+                )
             }
         }
     }
@@ -129,22 +111,21 @@ internal class ClientChargeViewModel(
         updateState {
             it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)
         }
-        viewModelScope.launch {
-            combine(chargeType, chargeTypeId, refreshTrigger) { type, id, _ ->
-                Pair(type, id ?: clientId ?: -1L)
-            }.flatMapLatest { (type, id) ->
-                when (type) {
-                    ChargeType.CLIENT -> clientChargeRepositoryImp.getCharges(id)
-                        .onEach { result ->
-                            processClientCharges(result)
-                        }
 
-                    ChargeType.LOAN, ChargeType.SAVINGS -> clientChargeRepositoryImp.getLoanOrSavingsCharges(type, id)
-                        .onEach { result ->
-                            processLoanOrSavingsCharges(result)
-                        }
+        viewModelScope.launch {
+            refreshTrigger
+                .flatMapLatest {
+                    val type = chargeType
+                    val id = chargeTypeId
+
+                    when (type) {
+                        ChargeType.CLIENT -> clientChargeRepositoryImp.getCharges(id)
+                            .onEach { result -> processClientCharges(result) }
+
+                        ChargeType.LOAN, ChargeType.SAVINGS -> clientChargeRepositoryImp.getLoanOrSavingsCharges(type, id)
+                            .onEach { result -> processLoanOrSavingsCharges(result) }
+                    }
                 }
-            }
                 .catch { exception ->
                     updateState {
                         it.copy(
@@ -154,7 +135,7 @@ internal class ClientChargeViewModel(
                         )
                     }
                 }
-                .collect { }
+                .collect {}
         }
     }
 
@@ -230,3 +211,118 @@ sealed interface ClientChargeAction {
     data object RefreshCharges : ClientChargeAction
     data object OnNavigate : ClientChargeAction
 }
+
+fun toChargeType(value: String?): ChargeType {
+    return try {
+        value?.let { ChargeType.valueOf(it) } ?: ChargeType.CLIENT
+    } catch (e: IllegalArgumentException) {
+        ChargeType.CLIENT
+    }
+}
+
+val dummyCharges = listOf(
+    Charge(
+        clientId = 101,
+        chargeId = 201,
+        name = "Processing Fee",
+        dueDate = arrayListOf(2025, 8, 15),
+        chargeTimeType = ChargeTimeType(),
+        chargeCalculationType = ChargeCalculationType(),
+        currency = Currency(
+            code = "INR",
+            name = "Indian Rupee",
+            decimalPlaces = 2,
+            inMultiplesOf = 1.0,
+            displaySymbol = "₹",
+            nameCode = "currency.INR",
+            displayLabel = "Indian Rupee (₹)",
+        ),
+        amount = 100.0,
+        amountPaid = 50.0,
+        amountOutstanding = 50.0,
+        isActive = true,
+    ),
+    Charge(
+        clientId = 102,
+        chargeId = 202,
+        name = "Late Payment Fee",
+        dueDate = arrayListOf(2025, 9, 1),
+        chargeTimeType = ChargeTimeType(),
+        chargeCalculationType = ChargeCalculationType(),
+        currency = Currency(
+            code = "INR",
+            name = "Indian Rupee",
+            decimalPlaces = 2,
+            inMultiplesOf = 1.0,
+            displaySymbol = "₹",
+            nameCode = "currency.INR",
+            displayLabel = "Indian Rupee (₹)",
+        ),
+        amount = 200.0,
+        amountPaid = 200.0,
+        isChargePaid = true,
+        paid = true,
+    ),
+    Charge(
+        clientId = 103,
+        chargeId = 203,
+        name = "Service Charge",
+        dueDate = arrayListOf(2025, 10, 5),
+        chargeTimeType = ChargeTimeType(),
+        chargeCalculationType = ChargeCalculationType(),
+        currency = Currency(
+            code = "INR",
+            name = "Indian Rupee",
+            decimalPlaces = 2,
+            inMultiplesOf = 1.0,
+            displaySymbol = "₹",
+            nameCode = "currency.INR",
+            displayLabel = "Indian Rupee (₹)",
+        ),
+        amount = 200.0,
+        amountWaived = 150.0,
+        waived = true,
+        isChargeWaived = true,
+    ),
+    Charge(
+        clientId = 104,
+        chargeId = 204,
+        name = "Insurance Fee",
+        dueDate = arrayListOf(2025, 11, 20),
+        chargeTimeType = ChargeTimeType(),
+        chargeCalculationType = ChargeCalculationType(),
+        currency = Currency(
+            code = "INR",
+            name = "Indian Rupee",
+            decimalPlaces = 2,
+            inMultiplesOf = 1.0,
+            displaySymbol = "₹",
+            nameCode = "currency.INR",
+            displayLabel = "Indian Rupee (₹)",
+        ),
+        amount = 300.0,
+        amountPaid = 0.0,
+        amountOutstanding = 300.0,
+        penalty = true,
+    ),
+    Charge(
+        clientId = 105,
+        chargeId = 205,
+        name = "Loan Setup Fee",
+        dueDate = arrayListOf(2025, 12, 10),
+        chargeTimeType = ChargeTimeType(),
+        chargeCalculationType = ChargeCalculationType(),
+        currency = Currency(
+            code = "INR",
+            name = "Indian Rupee",
+            decimalPlaces = 2,
+            inMultiplesOf = 1.0,
+            displaySymbol = "₹",
+            nameCode = "currency.INR",
+            displayLabel = "Indian Rupee (₹)",
+        ),
+        amount = 120.0,
+        amountPaid = 100.0,
+        amountOutstanding = 20.0,
+    ),
+)

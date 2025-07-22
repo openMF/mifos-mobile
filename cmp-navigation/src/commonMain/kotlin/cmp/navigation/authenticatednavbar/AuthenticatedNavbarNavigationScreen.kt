@@ -46,7 +46,6 @@ import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
-import org.mifos.mobile.feature.user.profile.navigation.navigateToUserProfileGraph
 import org.mifos.mobile.feature.user.profile.navigation.userprofileNavGraph
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.not_connected
@@ -77,7 +76,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToUserProfileScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToClientChargeScreen(ChargeType.CLIENT.name,-1)
+                        navigateToClientChargeScreen(ChargeType.CLIENT.name, -1)
 //                        navigateToUserProfileGraph(navOptions = it)
                     }
                 }
@@ -175,7 +174,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
                 navigateToNotificationScreen = navigateToNotificationScreen,
             )
 
-            clientChargeNavGraph{}
+            clientChargeNavGraph {}
 
             userprofileNavGraph(navController, {})
         }
