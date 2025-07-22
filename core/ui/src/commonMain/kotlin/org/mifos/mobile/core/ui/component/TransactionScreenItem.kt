@@ -42,7 +42,6 @@ fun TransactionScreenItem(
     date: String,
     time: String,
     transactionAmount: String,
-    totalLatestBalance: String,
     isPositive: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -80,6 +79,7 @@ fun TransactionScreenItem(
 
             Column(
                 modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
             ) {
                 Text(
                     text = title,
@@ -95,29 +95,19 @@ fun TransactionScreenItem(
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
-            Column(
-                horizontalAlignment = Alignment.End,
-            ) {
-                Text(
-                    text = if (isPositive) {
-                        "+ $ $transactionAmount"
-                    } else {
-                        "- $ $transactionAmount"
-                    },
-                    style = MifosTypography.labelSmall,
-                    color = if (isPositive) {
-                        AppColors.customEnable
-                    } else {
-                        MaterialTheme.colorScheme.error
-                    },
-                )
-
-                Text(
-                    text = "$ $totalLatestBalance",
-                    style = MifosTypography.labelSmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
+            Text(
+                text = if (isPositive) {
+                    "+ $ $transactionAmount"
+                } else {
+                    "- $ $transactionAmount"
+                },
+                style = MifosTypography.labelSmall,
+                color = if (isPositive) {
+                    AppColors.customEnable
+                } else {
+                    MaterialTheme.colorScheme.error
+                },
+            )
         }
     }
 }
@@ -132,19 +122,17 @@ private fun TransactionScreenItem_Preview() {
                 .padding(DesignToken.padding.large),
         ) {
             TransactionScreenItem(
-                title = "Hello",
+                title = "Add-Money Bank Card",
                 date = "20-03-2020",
                 time = "5:10",
                 transactionAmount = "87289",
-                totalLatestBalance = "20,000",
                 isPositive = true,
             )
             TransactionScreenItem(
-                title = "Hello",
+                title = "Add-Money Bank Card",
                 date = "20-03-2020",
                 time = "5:10",
                 transactionAmount = "87289",
-                totalLatestBalance = "20,000",
                 isPositive = false,
             )
         }
