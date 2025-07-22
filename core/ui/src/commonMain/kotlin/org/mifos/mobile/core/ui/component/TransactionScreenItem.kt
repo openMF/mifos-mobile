@@ -1,0 +1,142 @@
+package org.mifos.mobile.core.ui.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+
+@Composable
+fun TransactionScreenItem(
+    title: String,
+    date: String,
+    time: String,
+    transactionAmount: String,
+    totalLatestBalance: String,
+    isPositive:Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { }
+            .padding(vertical = DesignToken.padding.medium),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Icon(
+                imageVector =
+                    if (isPositive) {
+                        MifosIcons.DrawerAdd
+                    } else {
+                        MifosIcons.DrawerSubtract
+                    }
+                ,
+                contentDescription = "Symbol",
+                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.2f),
+                        shape = CircleShape,
+                    )
+                    .padding(DesignToken.padding.small),
+            )
+
+            Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
+
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                Text(
+                    text = title,
+                    style = MifosTypography.titleSmallEmphasized,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = "$time; $date",
+                    style = MifosTypography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+            }
+
+            Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
+
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    text = if(isPositive){
+                        "+ $ $transactionAmount"
+                    }else{
+                        "- $ $transactionAmount"
+                    },
+                    style = MifosTypography.labelSmall,
+                    color = if(isPositive){
+                        AppColors.customEnable
+                    }else{
+                        MaterialTheme.colorScheme.error
+                    }
+                )
+
+                Text(
+                    text = "$ $totalLatestBalance",
+                    style = MifosTypography.labelSmall,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TransactionScreenItem_Preview() {
+    MifosMobileTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large),
+        ) {
+            TransactionScreenItem(
+                title = "Hello",
+                date = "20-03-2020",
+                time = "5:10",
+                transactionAmount = "87289",
+                totalLatestBalance = "20,000",
+                isPositive = true,
+            )
+            TransactionScreenItem(
+                title = "Hello",
+                date = "20-03-2020",
+                time = "5:10",
+                transactionAmount = "87289",
+                totalLatestBalance = "20,000",
+                isPositive = false,
+            )
+        }
+    }
+}
