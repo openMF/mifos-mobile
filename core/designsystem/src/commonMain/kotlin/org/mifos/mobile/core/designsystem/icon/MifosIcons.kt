@@ -61,6 +61,8 @@ import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
 import fluent.ui.system.icons.filled.DataWhisker
 import fluent.ui.system.icons.filled.Document
+import fluent.ui.system.icons.filled.DrawerAdd
+import fluent.ui.system.icons.filled.DrawerSubtract
 import fluent.ui.system.icons.filled.ErrorCircle
 import fluent.ui.system.icons.filled.Eye
 import fluent.ui.system.icons.filled.Feed
@@ -169,4 +171,7 @@ object MifosIcons {
 
     val Filter = FluentIcons.Regular.Filter
     val PersonAccounts = FluentIcons.Filled.PersonAccounts
+
+    val DrawerAdd= FluentIcons.Filled.DrawerAdd
+    val DrawerSubtract= FluentIcons.Filled.DrawerSubtract
 }
