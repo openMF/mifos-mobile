@@ -172,6 +172,6 @@ object MifosIcons {
     val Filter = FluentIcons.Regular.Filter
     val PersonAccounts = FluentIcons.Filled.PersonAccounts
 
-    val DrawerAdd= FluentIcons.Filled.DrawerAdd
-    val DrawerSubtract= FluentIcons.Filled.DrawerSubtract
+    val DrawerAdd = FluentIcons.Filled.DrawerAdd
+    val DrawerSubtract = FluentIcons.Filled.DrawerSubtract
 }
