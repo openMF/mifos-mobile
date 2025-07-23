@@ -42,7 +42,7 @@ fun TransactionScreenItem(
     date: String,
     time: String,
     transactionAmount: String,
-    isPositive: Boolean,
+    isCredited: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -59,7 +59,7 @@ fun TransactionScreenItem(
         ) {
             Icon(
                 imageVector =
-                if (isPositive) {
+                if (isCredited) {
                     MifosIcons.DrawerAdd
                 } else {
                     MifosIcons.DrawerSubtract
@@ -96,13 +96,13 @@ fun TransactionScreenItem(
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
             Text(
-                text = if (isPositive) {
+                text = if (isCredited) {
                     "+ $ $transactionAmount"
                 } else {
                     "- $ $transactionAmount"
                 },
                 style = MifosTypography.labelSmall,
-                color = if (isPositive) {
+                color = if (isCredited) {
                     AppColors.customEnable
                 } else {
                     MaterialTheme.colorScheme.error
@@ -126,14 +126,14 @@ private fun TransactionScreenItem_Preview() {
                 date = "20-03-2020",
                 time = "5:10",
                 transactionAmount = "87289",
-                isPositive = true,
+                isCredited = true,
             )
             TransactionScreenItem(
                 title = "Add-Money Bank Card",
                 date = "20-03-2020",
                 time = "5:10",
                 transactionAmount = "87289",
-                isPositive = false,
+                isCredited = false,
             )
         }
     }
