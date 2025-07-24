@@ -214,6 +214,7 @@ internal fun SavingsAccountContent(
                 Spacer(modifier = Modifier.height(DesignToken.spacing.small))
             }
             items(state.savingsAccount.orEmpty()) { account ->
+                // TODO create enum class and use
                 val color = when (account.status?.value) {
                     "Active" -> AppColors.customEnable
                     "submittedAndPendingApproval" -> AppColors.customYellow
