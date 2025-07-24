@@ -7,20 +7,37 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.accounts.navigation
 
-import org.mifos.mobile.core.common.Constants.ACCOUNT_TYPE
-import org.mifos.mobile.core.model.enums.AccountType
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.ui.composableWithSlideTransitions
+import org.mifos.mobile.feature.accounts.screen.AccountsScreen
 
-// Constants for Routes
-const val ACCOUNTS_NAVIGATION_ROUTE_BASE = "accounts_base_route"
-const val ACCOUNT_SCREEN_ROUTE = "account_screen_route"
+@Serializable
+data class AccountNavRoute(
+    val accountType: String,
+)
 
-// Sealed class for navigation route
-sealed class AccountsNavigation(val route: String) {
-    data object AccountsBase : AccountsNavigation(route = ACCOUNTS_NAVIGATION_ROUTE_BASE)
-    data object AccountsScreen : AccountsNavigation(route = "ACCOUNT_SCREEN_ROUTE/{$ACCOUNT_TYPE}") {
-        fun passArguments(accountType: AccountType) =
-            "$ACCOUNT_SCREEN_ROUTE/${accountType.name}"
+fun NavController.navigateToAccountsScreen(
+    accountType: String,
+    navOptions: NavOptions? = null,
+) {
+    this.navigate(AccountNavRoute(accountType), navOptions)
+}
+
+fun NavGraphBuilder.accountsDestination(
+    navigateBack: () -> Unit,
+    onAccountClicked: (accountType: String, accountId: Long) -> Unit,
+) {
+    composableWithSlideTransitions<AccountNavRoute> {
+        AccountsScreen(
+            navigateBack = navigateBack,
+            onAccountClicked = onAccountClicked,
+        )
     }
 }

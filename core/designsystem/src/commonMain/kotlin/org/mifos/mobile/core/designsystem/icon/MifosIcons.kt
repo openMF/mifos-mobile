@@ -74,11 +74,16 @@ import fluent.ui.system.icons.filled.PersonAccounts
 import fluent.ui.system.icons.filled.Receipt
 import fluent.ui.system.icons.filled.Wallet
 import fluent.ui.system.icons.regular.Alert
+import fluent.ui.system.icons.regular.ArrowCounterclockwise
 import fluent.ui.system.icons.regular.Backspace
 import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
+import fluent.ui.system.icons.regular.Checkmark
 import fluent.ui.system.icons.regular.CheckmarkCircle
+import fluent.ui.system.icons.regular.ChevronDown
 import fluent.ui.system.icons.regular.ChevronLeft
+import fluent.ui.system.icons.regular.ChevronUp
+import fluent.ui.system.icons.regular.Dismiss
 import fluent.ui.system.icons.regular.Eye
 import fluent.ui.system.icons.regular.EyeOff
 import fluent.ui.system.icons.regular.Filter
@@ -171,6 +176,13 @@ object MifosIcons {
 
     val Filter = FluentIcons.Regular.Filter
     val PersonAccounts = FluentIcons.Filled.PersonAccounts
+
+    val Dismiss = FluentIcons.Regular.Dismiss
+
+    val ArrowCounterClockWise = FluentIcons.Regular.ArrowCounterclockwise
+    val ChevronUp = FluentIcons.Regular.ChevronUp
+    val ChevronDown = FluentIcons.Regular.ChevronDown
+    val CheckMark = FluentIcons.Regular.Checkmark
 
     val DrawerAdd = FluentIcons.Filled.DrawerAdd
     val DrawerSubtract = FluentIcons.Filled.DrawerSubtract

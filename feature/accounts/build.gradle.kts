@@ -11,6 +11,8 @@
 
 plugins {
     alias(libs.plugins.mifos.cmp.feature)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

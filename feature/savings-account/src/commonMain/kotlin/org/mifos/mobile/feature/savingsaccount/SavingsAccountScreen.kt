@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,9 +24,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,36 +39,60 @@ import mifos_mobile.feature.savings_account.generated.resources.content_descript
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_topbar_title
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
-import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
-import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.savingsaccount.components.SavingsAccountCard
 
+@Suppress("UnusedParameter")
 @Composable
-internal fun SavingsAccountScreen(
+fun SavingsAccountScreen(
     navigateBack: () -> Unit,
+    onAccountClicked: (String, Long) -> Unit,
+    refreshSignal: Long? = null,
+    onLoadingCompleted: () -> Unit = {},
+    accountTypeFilters: List<StringResource> = emptyList(),
+    accountStatusFilters: List<StringResource> = emptyList(),
+    filtersClicked: () -> Unit = {},
     viewModel: SavingsAccountViewmodel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(refreshSignal) {
+        viewModel.trySendAction(
+            SavingsAccountAction.LoadAccounts(
+                filters = accountTypeFilters + accountStatusFilters,
+            ),
+        )
+    }
+
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
+
+//            TODO uncomment this after designing account detail screen
+//            is SavingsAccountsEvent.AccountClicked -> {
+//                onAccountClicked(event.accountType, event.accountId)
+//            }
+
+            is SavingsAccountsEvent.AccountClicked -> {}
+
+            is SavingsAccountsEvent.LoadingCompleted -> {
+                onLoadingCompleted.invoke()
+            }
         }
     }
 
@@ -85,6 +108,7 @@ internal fun SavingsAccountScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+        filtersClicked = filtersClicked,
     )
 }
 
@@ -112,208 +136,193 @@ internal fun SavingsAccountDialog(
 internal fun SavingsAccountContent(
     state: SavingsAccountState,
     onAction: (SavingsAccountAction) -> Unit,
+    filtersClicked: () -> Unit,
 ) {
-    val pullToRefreshState = rememberMifosPullToRefreshState(
-        isEnabled = true,
-        isRefreshing = state.isRefreshing ?: false,
-        onRefresh = {
-            onAction(SavingsAccountAction.Refresh)
-        },
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(DesignToken.padding.large),
+    ) {
+        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-    MifosElevatedScaffold(
-        onNavigateBack = { onAction(SavingsAccountAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_savings_account_topbar_title),
-        pullToRefreshState = pullToRefreshState,
-        bottomBar = {
-            Surface {
-                MifosPoweredCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding(),
+        MifosDashboardCard(
+            isSingleLine = true,
+            savingsAccount = Res.string.feature_savings_account_dashboard,
+            savingsAmount = state.totalSavingAmount,
+            isVisible = state.isAmountVisible,
+            currency = state.currency,
+            onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
+        )
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Column {
+                Text(
+                    text = stringResource(Res.string.feature_savings_account),
+                    style = MifosTypography.titleMediumEmphasized,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Text(
+                    text = stringResource(
+                        Res.string.feature_savings_account_items,
+                        state.items ?: 0,
+                    ),
+                    style = MifosTypography.labelMedium,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
-        },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large),
-        ) {
-            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
-
-            MifosDashboardCard(
-                isSingleLine = true,
-                savingsAccount = Res.string.feature_savings_account_dashboard,
-                savingsAmount = state.totalSavingAmount,
-                isVisible = state.isAmountVisible,
-                currency = state.currency,
-                onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
-            )
-
-            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
             ) {
-                Column {
-                    Text(
-                        text = stringResource(Res.string.feature_savings_account),
-                        style = MifosTypography.titleMediumEmphasized,
-                        color = MaterialTheme.colorScheme.onBackground,
-                    )
-                    Text(
-                        text = stringResource(
-                            Res.string.feature_savings_account_items,
-                            state.items ?: 0,
-                        ),
-                        style = MifosTypography.labelMedium,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .clickable {}
-                            .size(20.dp),
-                        imageVector = MifosIcons.SearchNew,
-                        contentDescription = stringResource(Res.string.content_description_search),
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .clickable {}
-                            .size(20.dp),
-                        imageVector = MifosIcons.Filter,
-                        contentDescription = stringResource(Res.string.content_description_filter),
-                    )
-                }
+                Icon(
+                    modifier = Modifier
+                        .clickable {}
+                        .size(20.dp),
+                    imageVector = MifosIcons.SearchNew,
+                    contentDescription = stringResource(Res.string.content_description_search),
+                )
+                Icon(
+                    modifier = Modifier
+                        .clickable { filtersClicked() }
+                        .size(20.dp),
+                    imageVector = MifosIcons.Filter,
+                    contentDescription = stringResource(Res.string.content_description_filter),
+                )
             }
+        }
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(0.99997.dp),
-            )
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(0.99997.dp),
+        )
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+            }
+            items(state.savingsAccount.orEmpty()) { account ->
+                // TODO create enum class and use
+                val color = when (account.status?.value) {
+                    "Active" -> AppColors.customEnable
+                    "submittedAndPendingApproval" -> AppColors.customYellow
+                    "Withdrawn by applicant", "Matured" -> MaterialTheme.colorScheme.error
+                    else -> MaterialTheme.colorScheme.onSurface
                 }
-                items(accountCards) { account ->
-                    val color = when (account.statusText) {
-                        "Progress" -> AppColors.customEnable
-                        "Pending" -> AppColors.customYellow
-                        "Closed" -> MaterialTheme.colorScheme.error
-                        else -> MaterialTheme.colorScheme.onSurface
-                    }
 
-                    SavingsAccountCard(
-                        accountId = account.accountId,
-                        accountNumber = account.accountNumber,
-                        accountType = account.accountType,
-                        accountStatus = if (account.statusText == "Progress") {
-                            account.statusValue ?: ""
+                SavingsAccountCard(
+                    accountId = account.id,
+                    accountNumber = account.accountNo,
+                    accountType = account.productName,
+                    accountStatus = (
+                        if (account.status?.active == true) {
+                            CurrencyFormatter.format(
+                                account.accountBalance,
+                                account.currency?.code,
+                                account.currency?.decimalPlaces,
+                            )
                         } else {
-                            account.statusText
-                        },
-                        accountStatusColor = color,
-                        onAccountClick = {},
-                    )
-                }
+                            account.status?.value ?: ""
+                        }
+                        ),
+                    accountStatusColor = color,
+                    onAccountClick = {},
+                )
             }
         }
     }
 }
 
 data class AccountCardData(
-    val accountId: Long,
+    val accountId: String?,
     val accountNumber: String,
     val accountType: String,
     val statusText: String,
     val statusValue: String? = null,
 )
 
-val accountCards = listOf(
-    AccountCardData(
-        accountId = 1L,
-        accountNumber = "2689-7897-6666",
-        accountType = "Wallet Account",
-        statusText = "Progress",
-        statusValue = "$ 23,315,500",
-    ),
-    AccountCardData(
-        accountId = 2L,
-        accountNumber = "6666-2689-7897",
-        accountType = "Bank Account",
-        statusText = "Pending",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-    AccountCardData(
-        accountId = 3L,
-        accountNumber = "6576-2689-6666",
-        accountType = "Wallet Account",
-        statusText = "Closed",
-    ),
-
-)
+// val accountCards = listOf(
+//    AccountCardData(
+//        accountId = 1L,
+//        accountNumber = "2689-7897-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Progress",
+//        statusValue = "$ 23,315,500",
+//    ),
+//    AccountCardData(
+//        accountId = 2L,
+//        accountNumber = "6666-2689-7897",
+//        accountType = "Bank Account",
+//        statusText = "Pending",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//    AccountCardData(
+//        accountId = 3L,
+//        accountNumber = "6576-2689-6666",
+//        accountType = "Wallet Account",
+//        statusText = "Closed",
+//    ),
+//
+// )
 
 @Preview
 @Composable
@@ -326,6 +335,7 @@ private fun Savings_Account_Preview() {
                 clientId = 1L,
             ),
             onAction = {},
+            filtersClicked = {},
         )
     }
 }
