@@ -58,7 +58,7 @@ class RegistrationViewModel(
     override fun handleAction(action: SignUpAction) {
         when (action) {
             is SignUpAction.OnCustomerAccountChange -> {
-                handleCustomerAccountChange(action.customerAccount)
+                handleCustomerAccountChange(action.customerAccount.trim())
             }
 
             is SignUpAction.OnFirstNameChange -> {
@@ -70,7 +70,7 @@ class RegistrationViewModel(
             }
 
             is SignUpAction.OnEmailChange -> {
-                handleEmailChange(action.email)
+                handleEmailChange(action.email.trim())
             }
 
 //            is SignUpAction.OnMobileNumberChange -> {
@@ -418,7 +418,7 @@ class RegistrationViewModel(
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
 //        val mobileNumberError = validateMobileNumber(state.mobileNumber)
-        val accountError = validateCustomerAccount(state.customerAccount.trim())
+        val accountError = validateCustomerAccount(state.customerAccount)
         val passwordResult = validatePassword(state.password)
         val confirmPasswordResult = validateConfirmPassword(
             state.confirmPassword,
@@ -471,7 +471,7 @@ class RegistrationViewModel(
 
             sendEvent(SignUpEvent.NavigateToUploadDocuments)
         }
-//              TODO make api call and also trim the fields while inserting
+//              TODO make api call
 //            viewModelScope.launch {
 //                val response = userAuthRepositoryImpl.registerUser(
 //                    accountNumber = state.customerAccount,
