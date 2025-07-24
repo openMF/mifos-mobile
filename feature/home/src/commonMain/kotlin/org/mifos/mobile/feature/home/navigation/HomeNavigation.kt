@@ -26,13 +26,13 @@ fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.homeDestination(
 //    navigateToDestinationScreen: (route: String) -> Unit,
-    navigateToSavingsScreen: () -> Unit,
+    navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
 ) {
     composableWithStayTransitions<HomeRoute> {
         HomeScreen(
 //            navigateToDestinationScreen = navigateToDestinationScreen,
-            navigateToSavingsScreen = navigateToSavingsScreen,
+            navigateToAccountsScreen = navigateToAccountsScreen,
             navigateToNotificationScreen = navigateToNotificationScreen,
         )
     }

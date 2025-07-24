@@ -16,11 +16,20 @@ import mifos_mobile.feature.accounts.generated.resources.feature_account_approve
 import mifos_mobile.feature.accounts.generated.resources.feature_account_closed
 import mifos_mobile.feature.accounts.generated.resources.feature_account_disburse
 import mifos_mobile.feature.accounts.generated.resources.feature_account_in_arrears
-import mifos_mobile.feature.accounts.generated.resources.feature_account_matured
 import mifos_mobile.feature.accounts.generated.resources.feature_account_overpaid
 import mifos_mobile.feature.accounts.generated.resources.feature_account_rejected
 import mifos_mobile.feature.accounts.generated.resources.feature_account_withdrawn
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_active_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_approved_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_bank_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_closed_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_group_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_matured_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_nb_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_pending_account
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_wallet_account
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
+import org.mifos.mobile.feature.accounts.model.FilterType
 
 /**
  * Utility object that provides predefined checkbox options for different account types.
@@ -35,26 +44,22 @@ object StatusUtils {
      * @return A list of [CheckboxStatus] representing different savings account statuses.
      */
     internal fun getSavingsAccountCheckboxes(): List<CheckboxStatus> {
-        return listOf(
-            CheckboxStatus(
-                Res.string.feature_account_active,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_approved,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_approval_pending,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_matured,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_closed,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_rejected,
-            ),
+        val accountTypes = listOf(
+            CheckboxStatus(Res.string.feature_savings_filter_wallet_account, type = FilterType.ACCOUNT_TYPE),
+            CheckboxStatus(Res.string.feature_savings_filter_bank_account, type = FilterType.ACCOUNT_TYPE),
+            CheckboxStatus(Res.string.feature_savings_filter_group_account, type = FilterType.ACCOUNT_TYPE),
+            CheckboxStatus(Res.string.feature_savings_filter_nb_account, type = FilterType.ACCOUNT_TYPE),
         )
+
+        val accountStatuses = listOf(
+            CheckboxStatus(Res.string.feature_savings_filter_active_account, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_savings_filter_pending_account, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_savings_filter_closed_account, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_savings_filter_matured_account, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_savings_filter_approved_account, type = FilterType.ACCOUNT_STATUS),
+        )
+
+        return accountTypes + accountStatuses
     }
 
     /**

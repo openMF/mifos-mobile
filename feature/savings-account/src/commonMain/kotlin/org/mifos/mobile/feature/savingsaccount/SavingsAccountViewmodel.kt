@@ -33,7 +33,7 @@ import kotlin.collections.orEmpty
  * @param networkMonitor Observes network connectivity.
  * @param userPreferencesRepositoryImpl Provides user-specific data such as client ID.
  */
-internal class SavingsAccountViewmodel(
+class SavingsAccountViewmodel(
     private val accountsRepositoryImpl: AccountsRepository,
     private val networkMonitor: NetworkMonitor,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
@@ -47,7 +47,7 @@ internal class SavingsAccountViewmodel(
 
     init {
         observeNetwork()
-        handleAction(SavingsAccountAction.LoadAccounts("", emptyList()))
+        handleAction(SavingsAccountAction.LoadAccounts(emptyList()))
     }
 
     override fun handleAction(action: SavingsAccountAction) {
@@ -58,23 +58,21 @@ internal class SavingsAccountViewmodel(
 
             is SavingsAccountAction.ToggleAmountVisible -> handleAmountVisible()
 
-            is SavingsAccountAction.Refresh -> {
-                mutableStateFlow.update { it.copy(isRefreshing = true) }
-                handleAction(SavingsAccountAction.LoadAccounts(state.searchQuery, state.selectedFilters))
+            is SavingsAccountAction.LoadAccounts -> {
+                loadAccounts(action.filters)
             }
 
-            is SavingsAccountAction.LoadAccounts -> {
-                loadAccounts(action.searchQuery, action.filters)
-            }
+            is SavingsAccountAction.OnAccountClicked ->
+                sendEvent(SavingsAccountsEvent.AccountClicked(action.accountId, action.accountType))
 
             is SavingsAccountAction.Internal.ReceiveSavingsAccounts -> {
-                handleReceivedAccounts(action.dataState, action.searchQuery, action.filters)
+                handleReceivedAccounts(action.dataState, action.filters)
             }
         }
     }
 
     /**
-     * Toggle the amount visibility
+     * Toggles visibility of the total savings amount in UI.
      */
     private fun handleAmountVisible() {
         mutableStateFlow.update {
@@ -83,7 +81,7 @@ internal class SavingsAccountViewmodel(
     }
 
     /**
-     * Dismiss the dialog
+     * Dismisses any active dialog in the UI.
      */
     private fun handleDismissDialog() {
         mutableStateFlow.update {
@@ -105,15 +103,31 @@ internal class SavingsAccountViewmodel(
     }
 
     /**
-     * Fetches accounts from the repository and dispatches result to state handler.
+     * Fetches accounts from the repository and applies filters.
+     * If cached data is available, it uses it directly.
      *
-     * @param searchQuery Query to filter by account number or name.
      * @param selectedFilters List of selected filters to apply.
      */
     private fun loadAccounts(
-        searchQuery: String,
         selectedFilters: List<StringResource?>,
     ) {
+        val cached = state.originalAccounts
+
+        if (cached != null) {
+            val filtered = filterAccounts(selectedFilters, cached)
+            getTotalSavingAmount(filtered)
+
+            mutableStateFlow.update {
+                it.copy(
+                    savingsAccount = filtered,
+                    selectedFilters = selectedFilters,
+                    dialogState = null,
+                )
+            }
+            sendEvent(SavingsAccountsEvent.LoadingCompleted)
+            return
+        }
+
         viewModelScope.launch {
             mutableStateFlow.update { it.copy(dialogState = SavingsAccountState.DialogState.Loading) }
 
@@ -129,7 +143,6 @@ internal class SavingsAccountViewmodel(
             }.collect { clientAccounts ->
                 sendAction(
                     SavingsAccountAction.Internal.ReceiveSavingsAccounts(
-                        searchQuery = searchQuery,
                         filters = selectedFilters,
                         dataState = clientAccounts,
                     ),
@@ -139,15 +152,13 @@ internal class SavingsAccountViewmodel(
     }
 
     /**
-     * Updates UI state based on data result from repository.
+     * Handles the result of the repository call and updates the state.
      *
      * @param dataState Result of fetching savings accounts (Success, Error, Loading).
-     * @param searchQuery Current search term used to filter accounts.
      * @param selectedFilters Filters applied to the list.
      */
     private fun handleReceivedAccounts(
         dataState: DataState<ClientAccounts>,
-        searchQuery: String,
         selectedFilters: List<StringResource?>,
     ) {
         when (dataState) {
@@ -155,7 +166,6 @@ internal class SavingsAccountViewmodel(
                 mutableStateFlow.update {
                     it.copy(
                         dialogState = SavingsAccountState.DialogState.Error("Something went wrong"),
-                        isRefreshing = false,
                     )
                 }
             }
@@ -167,15 +177,17 @@ internal class SavingsAccountViewmodel(
             }
 
             is DataState.Success -> {
-                val savings = dataState.data.savingsAccounts.orEmpty()
-                val filtered = filterAccounts(searchQuery, selectedFilters, savings)
+                val allSavings = dataState.data.savingsAccounts.orEmpty()
+                val filtered = filterAccounts(selectedFilters, allSavings)
                 getTotalSavingAmount(dataState.data.savingsAccounts)
                 mutableStateFlow.update {
                     it.copy(
+                        items = filtered.size,
                         savingsAccount = filtered,
-                        currency = savings.firstOrNull()?.currency?.displayLabel,
-                        isRefreshing = false,
+                        originalAccounts = allSavings,
+                        currency = allSavings.firstOrNull()?.currency?.displaySymbol,
                         dialogState = null,
+                        selectedFilters = selectedFilters,
                     )
                 }
             }
@@ -183,15 +195,13 @@ internal class SavingsAccountViewmodel(
     }
 
     /**
-     * Applies search and filter conditions on the account list.
+     * Filters the accounts based on the selected filters (status).
      *
-     * @param searchQuery Text entered by the user to filter by name or number.
-     * @param selectedFilters List of filters applied (status, etc).
-     * @param accounts Complete list of savings accounts to be filtered.
-     * @return Filtered list based on search and filters.
+     * @param selectedFilters List of selected labels for filtering.
+     * @param accounts Original unfiltered list of accounts.
+     * @return List of accounts that match the applied filters.
      */
     private fun filterAccounts(
-        searchQuery: String,
         selectedFilters: List<StringResource?>,
         accounts: List<SavingAccount>,
     ): List<SavingAccount> {
@@ -203,30 +213,13 @@ internal class SavingsAccountViewmodel(
             accounts
         }
 
-        val searched = if (searchQuery.isNotBlank()) {
-            val query = searchQuery.lowercase()
-            filteredByStatus.filter {
-                listOf(it.productName, it.accountNo).any { text ->
-                    text?.lowercase()?.contains(query) == true
-                }
-            }
-        } else {
-            filteredByStatus
-        }
-
-        return searched.distinct()
+        return filteredByStatus.distinct()
     }
 
     /**
-     * Calculates the total savings amount by summing the `accountBalance` of each
-     * [SavingAccount] and counts the number of accounts that client holds.
+     * Calculates the total savings balance and updates state.
      *
-     * This function iterates through the provided list of savings accounts and adds up their balances.
-     * It then updates the [SavingsAccountState.totalSavingAmount] property in the
-     * [SavingsAccountState] with the result.
-     *
-     * @param accounts The list of [SavingAccount]s whose balances need to be aggregated.
-     * If `null`, the total is assumed to be 0.0.
+     * @param accounts List of [SavingAccount] to compute totals from.
      */
     private fun getTotalSavingAmount(accounts: List<SavingAccount>?) {
         var amount = 0.0
@@ -244,49 +237,100 @@ internal class SavingsAccountViewmodel(
     }
 }
 
-internal data class SavingsAccountState(
+/**
+ * State holder for the Savings Account screen.
+ * Contains all values needed to render the UI and manage logic.
+ */
+data class SavingsAccountState(
     val savingsAccount: List<SavingAccount>?,
+    val originalAccounts: List<SavingAccount>? = null,
+
+    /** Number of filtered accounts */
     val items: Int? = 0,
+
+    /** Total savings amount computed from accounts */
     val totalSavingAmount: Double? = 0.0,
+
+    /** Currency symbol (e.g., ₹, $, etc.) */
     val currency: String? = "",
+
+    /** Network connectivity status */
     val networkConnection: Boolean? = true,
+
+    /** Current client ID from user preferences */
     val clientId: Long?,
-    val isRefreshing: Boolean? = false,
+
+    /** Currently active dialog (Loading/Error) */
     val dialogState: DialogState?,
-    val searchQuery: String = "",
+
+    /** Filters currently applied */
     val selectedFilters: List<StringResource?> = emptyList(),
+
+    /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
 ) {
+
+    /**
+     * Sealed class representing possible dialog states.
+     */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-
         data object Loading : DialogState
     }
 }
 
+/**
+ * Represents user or system actions for the Savings Account screen.
+ */
 sealed interface SavingsAccountAction {
+
+    /** Dismiss any open dialog */
     data object OnDismissDialog : SavingsAccountAction
 
+    /** Navigate back from the screen */
     data object OnNavigateBack : SavingsAccountAction
 
+    /** Toggle visibility of savings amount */
     data object ToggleAmountVisible : SavingsAccountAction
 
+    /** Load savings accounts with applied filters */
     data class LoadAccounts(
-        val searchQuery: String,
         val filters: List<StringResource?>,
     ) : SavingsAccountAction
 
-    data object Refresh : SavingsAccountAction
+    /** Navigate to a selected account's detail page */
+    data class OnAccountClicked(
+        val accountId: Long,
+        val accountType: String,
+    ) : SavingsAccountAction
 
+    /**
+     * Internal-only actions triggered by repository/data flow.
+     */
     sealed interface Internal : SavingsAccountAction {
+
+        /** Called when account data is received from repository */
         data class ReceiveSavingsAccounts(
-            val searchQuery: String,
             val filters: List<StringResource?>,
             val dataState: DataState<ClientAccounts>,
         ) : SavingsAccountAction
     }
 }
 
+/**
+ * One-time UI events for the Savings Account screen.
+ */
 sealed interface SavingsAccountsEvent {
+
+    /** Trigger navigation to selected account's detail screen */
+    data class AccountClicked(
+        val accountId: Long,
+        val accountType: String,
+    ) : SavingsAccountsEvent
+
+    /** Signals the UI that loading is complete */
+    data object LoadingCompleted : SavingsAccountsEvent
+
+    /** Navigates back to the previous screen */
     data object NavigateBack : SavingsAccountsEvent
 }

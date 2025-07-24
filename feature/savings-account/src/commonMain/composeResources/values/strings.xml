@@ -27,4 +27,15 @@
 
     <string name="content_description_search">Search</string>
     <string name="content_description_filter">Filter</string>
+
+    <string name="feature_savings_filter_wallet_account">Wallet Account</string>
+    <string name="feature_savings_filter_bank_account">Bank Account</string>
+    <string name="feature_savings_filter_group_account">Group Account</string>
+    <string name="feature_savings_filter_nb_account">NB Account</string>
+
+    <string name="feature_savings_filter_active_account">Active</string>
+    <string name="feature_savings_filter_pending_account">Pending Approval</string>
+    <string name="feature_savings_filter_closed_account">Closed</string>
+    <string name="feature_savings_filter_matured_account">Matured</string>
+    <string name="feature_savings_filter_approved_account">Approved</string>
 </resources>
