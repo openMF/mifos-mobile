@@ -141,11 +141,19 @@ internal class ClientChargeViewModel(
                     }
 
                     is DataState.Success -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                charges = result.data.pageItems,
-                                data= null
-                            )
+                        if(result.data.pageItems.isEmpty()){
+                            mutableStateFlow.update {
+                                it.copy(
+                                    data = ClientChargeState.ChargesState.Empty
+                                )
+                            }
+                        }else{
+                            mutableStateFlow.update {
+                                it.copy(
+                                    charges = result.data.pageItems,
+                                    data= null
+                                )
+                            }
                         }
                     }
                 }
@@ -183,11 +191,19 @@ internal class ClientChargeViewModel(
                     }
 
                     is DataState.Success -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                charges = result.data.pageItems,
-                                data = null
-                            )
+                        if(result.data.isEmpty()){
+                            mutableStateFlow.update {
+                                it.copy(
+                                    data = ClientChargeState.ChargesState.Empty
+                                )
+                            }
+                        }else{
+                            mutableStateFlow.update {
+                                it.copy(
+                                    charges = result.data,
+                                    data = null
+                                )
+                            }
                         }
                     }
                 }

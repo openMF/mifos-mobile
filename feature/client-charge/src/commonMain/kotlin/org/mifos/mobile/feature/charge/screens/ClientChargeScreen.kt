@@ -12,10 +12,13 @@ package org.mifos.mobile.feature.charge.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -35,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
@@ -74,7 +78,6 @@ internal fun ClientChargeScreen(
     )
 }
 
-
 @Composable
 private fun ClientChargeScreen(
     state: ClientChargeState,
@@ -85,6 +88,15 @@ private fun ClientChargeScreen(
         topBarTitle = stringResource(state.topBarTitleResId),
         onNavigateBack = { onAction(ClientChargeAction.OnNavigate) },
         modifier = modifier,
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
         content = {
             Box(
                 modifier = Modifier

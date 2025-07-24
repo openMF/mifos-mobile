@@ -47,7 +47,7 @@ fun ClientChargeItem(
 ) {
     val currencyRepresentation = charge.currency?.code ?: ""
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .padding(vertical = DesignToken.padding.large),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -60,10 +60,11 @@ fun ClientChargeItem(
                 painterResource(Res.drawable.database_warning)
             },
             contentDescription = "Charges Symbol",
-            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             modifier = Modifier
+                .size(36.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
                     shape = CircleShape,
                 )
                 .padding(DesignToken.padding.small),
@@ -77,9 +78,9 @@ fun ClientChargeItem(
                 text = charge.name ?: "",
                 style = MifosTypography.titleSmallEmphasized,
             )
-            // TODO: After api is worked check how to show account number here
+            // TODO: in Figma account Number is there instead of charge id. Refactor it
             Text(
-                text = "Acc. No. 00878767667",
+                text = "ChargeId : ${charge.chargeId}",
                 style = MifosTypography.bodySmall,
             )
             Text(

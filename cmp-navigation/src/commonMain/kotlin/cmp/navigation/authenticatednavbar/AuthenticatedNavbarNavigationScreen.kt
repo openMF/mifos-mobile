@@ -76,7 +76,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToUserProfileScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToClientChargeScreen(ChargeType.CLIENT.name, 2)
+                        navigateToClientChargeScreen(ChargeType.CLIENT.name, 1)
 //                        navigateToUserProfileGraph(navOptions = it)
                     }
                 }
@@ -174,7 +174,9 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
                 navigateToNotificationScreen = navigateToNotificationScreen,
             )
 
-            clientChargeNavGraph {}
+            clientChargeNavGraph(
+                navigateBack = navController::popBackStack
+            )
 
             userprofileNavGraph(navController, {})
         }

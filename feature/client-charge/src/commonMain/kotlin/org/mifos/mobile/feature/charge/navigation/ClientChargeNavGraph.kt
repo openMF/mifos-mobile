@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
 
@@ -30,7 +31,7 @@ fun NavGraphBuilder.clientChargeNavGraph(
     navigateBack: () -> Unit,
 ) {
     navigation<ClientChargesNavGraphRoute>(
-        startDestination = ClientChargesRoute("savingsaccounts", -1),
+        startDestination = ClientChargesRoute(ChargeType.SAVINGS.name, -1),
     ) {
         clientChargesScreen(onNavigateBack = navigateBack)
     }

@@ -12,7 +12,6 @@ package org.mifos.mobile.core.data.repository
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.Charge
-import org.mifos.mobile.core.model.entity.ChargeListResponse
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 
@@ -20,7 +19,7 @@ interface ClientChargeRepository {
 
     fun getCharges(chargeTypeId: Long): Flow<DataState<Page<Charge>>>
 
-    fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<ChargeListResponse>>
+    fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>>
 
     fun clientLocalCharges(): Flow<DataState<Page<Charge>>>
 
