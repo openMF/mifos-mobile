@@ -102,8 +102,7 @@ private fun ClientChargeScreen(
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
-                when(state.data) {
-
+                when (state.data) {
                     is ClientChargeState.ChargesState.Empty -> {
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
@@ -156,7 +155,7 @@ private fun ClientChargeScreenPreview() {
     MifosMobileTheme {
         ClientChargeScreen(
             modifier = Modifier,
-            state = ClientChargeState(data=null, isOnline = false),
+            state = ClientChargeState(data = null, isOnline = false),
             onAction = { },
         )
     }

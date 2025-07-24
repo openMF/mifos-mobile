@@ -12,12 +12,7 @@ package org.mifos.mobile.feature.charge.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -36,10 +31,6 @@ import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Charge
-import org.mifos.mobile.core.model.entity.ChargeCalculationType
-import org.mifos.mobile.core.model.entity.ChargeTimeType
-import org.mifos.mobile.core.model.entity.Currency
-import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.charge.navigation.ClientChargesRoute
@@ -126,7 +117,7 @@ internal class ClientChargeViewModel(
                 when (result) {
                     DataState.Loading -> {
                         mutableStateFlow.update {
-                            it.copy(data= ClientChargeState.ChargesState.Loading)
+                            it.copy(data = ClientChargeState.ChargesState.Loading)
                         }
                     }
 
@@ -141,17 +132,17 @@ internal class ClientChargeViewModel(
                     }
 
                     is DataState.Success -> {
-                        if(result.data.pageItems.isEmpty()){
+                        if (result.data.pageItems.isEmpty()) {
                             mutableStateFlow.update {
                                 it.copy(
-                                    data = ClientChargeState.ChargesState.Empty
+                                    data = ClientChargeState.ChargesState.Empty,
                                 )
                             }
-                        }else{
+                        } else {
                             mutableStateFlow.update {
                                 it.copy(
                                     charges = result.data.pageItems,
-                                    data= null
+                                    data = null,
                                 )
                             }
                         }
@@ -175,7 +166,7 @@ internal class ClientChargeViewModel(
                     is DataState.Loading -> {
                         mutableStateFlow.update {
                             it.copy(
-                                data= ClientChargeState.ChargesState.Loading
+                                data = ClientChargeState.ChargesState.Loading,
                             )
                         }
                     }
@@ -191,17 +182,17 @@ internal class ClientChargeViewModel(
                     }
 
                     is DataState.Success -> {
-                        if(result.data.isEmpty()){
+                        if (result.data.isEmpty()) {
                             mutableStateFlow.update {
                                 it.copy(
-                                    data = ClientChargeState.ChargesState.Empty
+                                    data = ClientChargeState.ChargesState.Empty,
                                 )
                             }
-                        }else{
+                        } else {
                             mutableStateFlow.update {
                                 it.copy(
                                     charges = result.data,
-                                    data = null
+                                    data = null,
                                 )
                             }
                         }
@@ -219,7 +210,7 @@ data class ClientChargeState(
     val topBarTitleResId: StringResource = Res.string.charges,
     val data: ChargesState?,
     @IgnoredOnParcel
-    val charges:List<Charge> =emptyList()
+    val charges: List<Charge> = emptyList(),
 ) : Parcelable {
     sealed interface ChargesState : Parcelable {
         @Parcelize
@@ -229,7 +220,7 @@ data class ClientChargeState(
         data object Loading : ChargesState
 
         @Parcelize
-        data object Empty:ChargesState
+        data object Empty : ChargesState
     }
 }
 
