@@ -13,6 +13,7 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.ChargeListResponse
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
@@ -25,5 +26,5 @@ interface ClientChargeService {
     fun getChargeList(
         @Path("chargeType") chargeType: String,
         @Path("chargeTypeId") chargeTypeId: Long,
-    ): Flow<List<Charge>>
+    ): Flow<ChargeListResponse>
 }

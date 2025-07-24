@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.charge.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -45,19 +46,18 @@ import org.mifos.mobile.feature.charge.navigation.ClientChargesRoute
 
 internal class ClientChargeViewModel(
     private val clientChargeRepositoryImp: ClientChargeRepository,
-    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<ClientChargeState, ClientChargeEvent, ClientChargeAction>(
     initialState = ClientChargeState(
-        chargeDialog = null,
+        data = ClientChargeState.ChargesState.Loading,
         isOnline = false,
     ),
 ) {
 
     private val chargeType = toChargeType(savedStateHandle.toRoute<ClientChargesRoute>().chargeType)
     private val chargeTypeId = savedStateHandle.toRoute<ClientChargesRoute>().chargeTypeId
-    private val refreshTrigger = MutableStateFlow(false)
     private val clientId = userPreferencesRepositoryImpl.clientId.value
     init {
         updateTopBarTitle()
@@ -69,7 +69,7 @@ internal class ClientChargeViewModel(
                     sendEvent(ClientChargeEvent.ShowToast(message))
                     updateState {
                         it.copy(
-                            chargeDialog = ClientChargeState.ChargeDialogState.Error(message),
+                            data = ClientChargeState.ChargesState.Error(message),
                         )
                     }
                 }
@@ -108,77 +108,89 @@ internal class ClientChargeViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun loadCharges() {
-        updateState {
-            it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)
-        }
-
         viewModelScope.launch {
-            refreshTrigger
-                .flatMapLatest {
-                    val type = chargeType
-                    val id = chargeTypeId
-
-                    when (type) {
-                        ChargeType.CLIENT -> clientChargeRepositoryImp.getCharges(id)
-                            .onEach { result -> processClientCharges(result) }
-
-                        ChargeType.LOAN, ChargeType.SAVINGS -> clientChargeRepositoryImp.getLoanOrSavingsCharges(type, id)
-                            .onEach { result -> processLoanOrSavingsCharges(result) }
-                    }
-                }
-                .catch { exception ->
-                    updateState {
-                        it.copy(
-                            chargeDialog = ClientChargeState.ChargeDialogState.Error(
-                                exception.message ?: "An error occurred",
-                            ),
-                        )
-                    }
-                }
-                .collect {}
-        }
-    }
-
-    private fun refreshCharges() {
-        viewModelScope.launch {
-            refreshTrigger.tryEmit(!refreshTrigger.value)
-        }
-    }
-
-    private fun processClientCharges(result: DataState<Page<Charge>>) {
-        updateState {
-            when (result) {
-                DataState.Loading -> it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)
-
-                is DataState.Error -> it.copy(
-                    chargeDialog = ClientChargeState.ChargeDialogState.Error(
-                        result.exception.message ?: "An Error Occurred",
-                    ),
-                )
-
-                is DataState.Success -> it.copy(
-                    chargeDialog = null,
-                    charges = result.data.pageItems,
-                )
+            when (chargeType) {
+                ChargeType.CLIENT -> processClientCharges()
+                ChargeType.LOAN, ChargeType.SAVINGS -> processLoanOrSavingsCharges()
             }
         }
     }
 
-    private fun processLoanOrSavingsCharges(result: DataState<List<Charge>>) {
-        updateState {
-            when (result) {
-                DataState.Loading -> it.copy(chargeDialog = ClientChargeState.ChargeDialogState.Loading)
+    private fun refreshCharges() {
+        loadCharges()
+    }
 
-                is DataState.Error -> it.copy(
-                    chargeDialog = ClientChargeState.ChargeDialogState.Error(
-                        result.exception.message ?: "An Error Occurred",
-                    ),
-                )
+    private fun processClientCharges() {
+        viewModelScope.launch {
+            clientChargeRepositoryImp.getCharges(chargeTypeId).collect { result ->
+                when (result) {
+                    DataState.Loading -> {
+                        mutableStateFlow.update {
+                            it.copy(data= ClientChargeState.ChargesState.Loading)
+                        }
+                    }
 
-                is DataState.Success -> it.copy(
-                    chargeDialog = null,
-                    charges = result.data,
-                )
+                    is DataState.Error -> {
+                        mutableStateFlow.update {
+                            it.copy(
+                                data = ClientChargeState
+                                    .ChargesState
+                                    .Error(result.exception.message ?: "An Error Occurred"),
+                            )
+                        }
+                    }
+
+                    is DataState.Success -> {
+                        mutableStateFlow.update {
+                            it.copy(
+                                charges = result.data.pageItems,
+                                data= null
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun processLoanOrSavingsCharges() {
+        viewModelScope.launch {
+            val type = chargeType
+            val id = if (chargeTypeId == -1L) {
+                clientId ?: -1
+            } else {
+                chargeTypeId
+            }
+
+            clientChargeRepositoryImp.getLoanOrSavingsCharges(type, id).collect { result ->
+                when (result) {
+                    is DataState.Loading -> {
+                        mutableStateFlow.update {
+                            it.copy(
+                                data= ClientChargeState.ChargesState.Loading
+                            )
+                        }
+                    }
+
+                    is DataState.Error -> {
+                        mutableStateFlow.update {
+                            it.copy(
+                                data = ClientChargeState
+                                    .ChargesState
+                                    .Error(result.exception.message ?: "An Error Occurred"),
+                            )
+                        }
+                    }
+
+                    is DataState.Success -> {
+                        mutableStateFlow.update {
+                            it.copy(
+                                charges = result.data.pageItems,
+                                data = null
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -189,16 +201,19 @@ data class ClientChargeState(
     val isOnline: Boolean,
     @IgnoredOnParcel
     val topBarTitleResId: StringResource = Res.string.charges,
+    val data: ChargesState?,
     @IgnoredOnParcel
-    val charges: List<Charge> = emptyList(),
-    val chargeDialog: ChargeDialogState?,
+    val charges:List<Charge> =emptyList()
 ) : Parcelable {
-    sealed interface ChargeDialogState : Parcelable {
+    sealed interface ChargesState : Parcelable {
         @Parcelize
-        data class Error(val message: String) : ChargeDialogState
+        data class Error(val message: String) : ChargesState
 
         @Parcelize
-        data object Loading : ChargeDialogState
+        data object Loading : ChargesState
+
+        @Parcelize
+        data object Empty:ChargesState
     }
 }
 
@@ -219,110 +234,3 @@ fun toChargeType(value: String?): ChargeType {
         ChargeType.CLIENT
     }
 }
-
-val dummyCharges = listOf(
-    Charge(
-        clientId = 101,
-        chargeId = 201,
-        name = "Processing Fee",
-        dueDate = arrayListOf(2025, 8, 15),
-        chargeTimeType = ChargeTimeType(),
-        chargeCalculationType = ChargeCalculationType(),
-        currency = Currency(
-            code = "INR",
-            name = "Indian Rupee",
-            decimalPlaces = 2,
-            inMultiplesOf = 1.0,
-            displaySymbol = "₹",
-            nameCode = "currency.INR",
-            displayLabel = "Indian Rupee (₹)",
-        ),
-        amount = 100.0,
-        amountPaid = 50.0,
-        amountOutstanding = 50.0,
-        isActive = true,
-    ),
-    Charge(
-        clientId = 102,
-        chargeId = 202,
-        name = "Late Payment Fee",
-        dueDate = arrayListOf(2025, 9, 1),
-        chargeTimeType = ChargeTimeType(),
-        chargeCalculationType = ChargeCalculationType(),
-        currency = Currency(
-            code = "INR",
-            name = "Indian Rupee",
-            decimalPlaces = 2,
-            inMultiplesOf = 1.0,
-            displaySymbol = "₹",
-            nameCode = "currency.INR",
-            displayLabel = "Indian Rupee (₹)",
-        ),
-        amount = 200.0,
-        amountPaid = 200.0,
-        isChargePaid = true,
-        paid = true,
-    ),
-    Charge(
-        clientId = 103,
-        chargeId = 203,
-        name = "Service Charge",
-        dueDate = arrayListOf(2025, 10, 5),
-        chargeTimeType = ChargeTimeType(),
-        chargeCalculationType = ChargeCalculationType(),
-        currency = Currency(
-            code = "INR",
-            name = "Indian Rupee",
-            decimalPlaces = 2,
-            inMultiplesOf = 1.0,
-            displaySymbol = "₹",
-            nameCode = "currency.INR",
-            displayLabel = "Indian Rupee (₹)",
-        ),
-        amount = 200.0,
-        amountWaived = 150.0,
-        waived = true,
-        isChargeWaived = true,
-    ),
-    Charge(
-        clientId = 104,
-        chargeId = 204,
-        name = "Insurance Fee",
-        dueDate = arrayListOf(2025, 11, 20),
-        chargeTimeType = ChargeTimeType(),
-        chargeCalculationType = ChargeCalculationType(),
-        currency = Currency(
-            code = "INR",
-            name = "Indian Rupee",
-            decimalPlaces = 2,
-            inMultiplesOf = 1.0,
-            displaySymbol = "₹",
-            nameCode = "currency.INR",
-            displayLabel = "Indian Rupee (₹)",
-        ),
-        amount = 300.0,
-        amountPaid = 0.0,
-        amountOutstanding = 300.0,
-        penalty = true,
-    ),
-    Charge(
-        clientId = 105,
-        chargeId = 205,
-        name = "Loan Setup Fee",
-        dueDate = arrayListOf(2025, 12, 10),
-        chargeTimeType = ChargeTimeType(),
-        chargeCalculationType = ChargeCalculationType(),
-        currency = Currency(
-            code = "INR",
-            name = "Indian Rupee",
-            decimalPlaces = 2,
-            inMultiplesOf = 1.0,
-            displaySymbol = "₹",
-            nameCode = "currency.INR",
-            displayLabel = "Indian Rupee (₹)",
-        ),
-        amount = 120.0,
-        amountPaid = 100.0,
-        amountOutstanding = 20.0,
-    ),
-)

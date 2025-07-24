@@ -74,27 +74,6 @@ internal fun ClientChargeScreen(
     )
 }
 
-@Composable
-private fun ClientChargeDialog(
-    state: ClientChargeState,
-    onAction: (ClientChargeAction) -> Unit,
-) {
-    when (state.chargeDialog) {
-        is ClientChargeState.ChargeDialogState.Error -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.isOnline,
-                isRetryEnabled = true,
-                onRetry = { onAction(ClientChargeAction.RefreshCharges) },
-            )
-        }
-
-        is ClientChargeState.ChargeDialogState.Loading -> {
-            MifosProgressIndicator()
-        }
-
-        null -> Unit
-    }
-}
 
 @Composable
 private fun ClientChargeScreen(
@@ -111,16 +90,28 @@ private fun ClientChargeScreen(
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
-                when {
-                    state.charges.isEmpty() && state.chargeDialog == null -> {
+                when(state.data) {
+
+                    is ClientChargeState.ChargesState.Empty -> {
                         EmptyDataView(
                             modifier = Modifier.fillMaxSize(),
                             image = Res.drawable.database_warning,
                             error = Res.string.error_no_charge,
                         )
                     }
+                    is ClientChargeState.ChargesState.Error -> {
+                        MifosErrorComponent(
+                            isNetworkConnected = state.isOnline,
+                            isRetryEnabled = true,
+                            onRetry = { onAction(ClientChargeAction.RefreshCharges) },
+                        )
+                    }
 
-                    state.charges.isNotEmpty() -> {
+                    is ClientChargeState.ChargesState.Loading -> {
+                        MifosProgressIndicator()
+                    }
+
+                    null -> {
                         ClientChargeContent(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             chargesList = state.charges,
@@ -129,10 +120,6 @@ private fun ClientChargeScreen(
                 }
             }
         },
-    )
-    ClientChargeDialog(
-        state = state,
-        onAction = onAction,
     )
 }
 
@@ -157,7 +144,7 @@ private fun ClientChargeScreenPreview() {
     MifosMobileTheme {
         ClientChargeScreen(
             modifier = Modifier,
-            state = ClientChargeState(chargeDialog = null, isOnline = false),
+            state = ClientChargeState(data=null, isOnline = false),
             onAction = { },
         )
     }

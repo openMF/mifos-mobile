@@ -35,3 +35,9 @@ data class Charge(
     val paid: Boolean = false,
     val waived: Boolean = false,
 ) : Parcelable
+
+@Serializable
+data class ChargeListResponse(
+    val totalFilteredRecords: Int,
+    val pageItems: List<Charge>
+)

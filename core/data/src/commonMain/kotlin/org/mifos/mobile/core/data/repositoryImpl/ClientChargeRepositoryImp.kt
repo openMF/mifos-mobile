@@ -17,8 +17,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.ChargeListResponse
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.network.DataManager
@@ -36,10 +38,9 @@ class ClientChargeRepositoryImp(
             .flowOn(ioDispatcher)
     }
 
-    override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
+    override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<ChargeListResponse>> {
         return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
-            .map { response -> DataState.Success(response) }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+            .asDataStateFlow()
             .flowOn(ioDispatcher)
     }
 

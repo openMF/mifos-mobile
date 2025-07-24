@@ -30,7 +30,7 @@ fun NavGraphBuilder.clientChargeNavGraph(
     navigateBack: () -> Unit,
 ) {
     navigation<ClientChargesNavGraphRoute>(
-        startDestination = ClientChargesRoute("", -1),
+        startDestination = ClientChargesRoute("savingsaccounts", -1),
     ) {
         clientChargesScreen(onNavigateBack = navigateBack)
     }

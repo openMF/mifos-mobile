@@ -76,7 +76,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToUserProfileScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToClientChargeScreen(ChargeType.CLIENT.name, -1)
+                        navigateToClientChargeScreen(ChargeType.CLIENT.name, 2)
 //                        navigateToUserProfileGraph(navOptions = it)
                     }
                 }
