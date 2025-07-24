@@ -266,7 +266,7 @@ class RegistrationViewModel(
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
         )
-        (account.isEmpty() || account.length > 32) -> ValidationResult.Error(
+        account.length > 32 -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_not_valid,
         )
 
@@ -418,7 +418,7 @@ class RegistrationViewModel(
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
 //        val mobileNumberError = validateMobileNumber(state.mobileNumber)
-        val accountError = validateCustomerAccount(state.customerAccount)
+        val accountError = validateCustomerAccount(state.customerAccount.trim())
         val passwordResult = validatePassword(state.password)
         val confirmPasswordResult = validateConfirmPassword(
             state.confirmPassword,
@@ -471,7 +471,7 @@ class RegistrationViewModel(
 
             sendEvent(SignUpEvent.NavigateToUploadDocuments)
         }
-//              TODO make api call
+//              TODO make api call and also trim the fields while inserting
 //            viewModelScope.launch {
 //                val response = userAuthRepositoryImpl.registerUser(
 //                    accountNumber = state.customerAccount,
