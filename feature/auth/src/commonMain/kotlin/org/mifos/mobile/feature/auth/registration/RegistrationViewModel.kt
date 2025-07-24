@@ -266,7 +266,7 @@ class RegistrationViewModel(
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
         )
-        account.isEmpty() || account.length>32 -> ValidationResult.Error(
+        (account.isEmpty() || account.length > 32) -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_not_valid,
         )
 
