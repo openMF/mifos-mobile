@@ -33,7 +33,6 @@ import androidx.navigation.navOptions
 import cmp.navigation.ui.MifosScaffold
 import cmp.navigation.ui.ScaffoldNavigationData
 import cmp.navigation.ui.rememberMifosNavController
-import co.touchlab.kermit.Logger
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
