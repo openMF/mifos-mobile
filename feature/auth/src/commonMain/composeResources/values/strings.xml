@@ -143,13 +143,14 @@
     <string name="feature_otp_tip">Didn’t receive the code?</string>
     <string name="feature_otp_action_tip">Resend now</string>
     <string name="feature_otp_authentication_code_label">Authentication Code</string>
+    <string name="feature_otp_request_id_label">Request Id</string>
 
     <string name="feature_common_next">Next</string>
     <string name="feature_common_cancel">Cancel</string>
 
     <string name="feature_otp_required_error">OTP is required</string>
     <string name="feature_otp_invalid_error">Enter valid OTP</string>
-
+    <string name="feature_otp_request_id_error">Request id is required</string>
 
     <!--Set New Password-->
 

@@ -42,6 +42,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_common_next
 import mifos_mobile.feature.auth.generated.resources.feature_otp_action_tip
 import mifos_mobile.feature.auth.generated.resources.feature_otp_authentication_code_label
 import mifos_mobile.feature.auth.generated.resources.feature_otp_message
+import mifos_mobile.feature.auth.generated.resources.feature_otp_request_id_label
 import mifos_mobile.feature.auth.generated.resources.feature_otp_subtitle
 import mifos_mobile.feature.auth.generated.resources.feature_otp_tip
 import mifos_mobile.feature.auth.generated.resources.feature_otp_title
@@ -198,6 +199,41 @@ internal fun OtpInputForm(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
     ) {
+        if (state.nextRoute != Constants.SET_PASSWORD) {
+            MifosOutlinedTextField(
+                value = state.requestId,
+                onValueChange = {
+                    onAction(OtpAuthAction.OnRequestIdChange(it))
+                },
+                label = stringResource(Res.string.feature_otp_request_id_label),
+                shape = DesignToken.shapes.medium,
+                textStyle = MifosTypography.bodyLarge,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                    errorBorderColor = MaterialTheme.colorScheme.error,
+                ),
+                config = MifosTextFieldConfig(
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                    ),
+                    isError = state.requestIdError != null,
+                    errorText = state.requestIdError?.let { stringResource(it) },
+                    trailingIcon = if (state.requestIdError != null) {
+                        {
+                            Icon(
+                                imageVector = MifosIcons.ErrorCircle,
+                                contentDescription = "Error",
+                                tint = MaterialTheme.colorScheme.error,
+                            )
+                        }
+                    } else {
+                        null
+                    },
+                ),
+            )
+        }
+
         MifosOutlinedTextField(
             value = state.otp,
             onValueChange = {
@@ -260,7 +296,7 @@ internal fun OtpInputForm(
                 onClick = {
                     onAction(OtpAuthAction.OnNextClick)
                 },
-                enabled = state.otp.isNotBlank(),
+                enabled = state.isNextButtonEnabled,
                 shape = DesignToken.shapes.medium,
             ) {
                 Text(

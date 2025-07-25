@@ -56,7 +56,9 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         registrationDestination(
             navigateToLoginScreen = navController::navigateToLoginScreen,
-            navigateToUploadIdScreen = navController::navigateToUploadIdScreen,
+//            navigateToUploadIdScreen = navController::navigateToUploadIdScreen,
+//            TODO Remove this and use above one after getting an api for upload id screen
+            navigateToUploadIdScreen = navController::navigateToOtpAuthScreen,
         )
 
         uploadIdDestination(
