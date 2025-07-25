@@ -465,7 +465,6 @@ fun getInputConfigs(
             errorText = state.customerAccountError,
             labelRes = Res.string.feature_signup_customer_account_label,
             onValueChange = { onAction(SignUpAction.OnCustomerAccountChange(it)) },
-            fieldType = InputFieldType.NUMBER,
         ),
         InputFieldConfig(
             value = state.password,

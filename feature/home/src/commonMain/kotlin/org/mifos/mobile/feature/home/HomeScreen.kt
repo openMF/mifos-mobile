@@ -63,7 +63,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun HomeScreen(
 //    navigateToDestinationScreen: (String) -> Unit,
-    navigateToSavingsScreen: () -> Unit,
+    navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
@@ -74,7 +74,8 @@ internal fun HomeScreen(
         when (event) {
             is HomeEvent.Navigate -> {
                 when {
-                    event.route == Constants.SAVINGS_ACCOUNT -> navigateToSavingsScreen.invoke()
+                    event.route == Constants.SAVINGS_ACCOUNT ->
+                        navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
                 }
 //                navigateToDestinationScreen(event.route)
             }

@@ -10,11 +10,15 @@
 package org.mifos.mobile.feature.savingsaccount.utils
 
 import mifos_mobile.feature.savings_account.generated.resources.Res
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_active
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_approval_pending
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_approved
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_closed
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_matured
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_active_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_approved_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_bank_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_closed_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_group_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_matured_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_nb_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_pending_account
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_wallet_account
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 
@@ -37,7 +41,7 @@ enum class FilterUtil(
      * Matches if the savings account's status is active.
      */
     ACTIVE(
-        label = Res.string.feature_account_active,
+        label = Res.string.feature_savings_filter_active_account,
         matchCondition = { it.status?.active == true },
     ),
 
@@ -46,7 +50,7 @@ enum class FilterUtil(
      * Matches if the savings account's status indicates it is approved.
      */
     APPROVED(
-        label = Res.string.feature_account_approved,
+        label = Res.string.feature_savings_filter_approved_account,
         matchCondition = { it.status?.approved == true },
     ),
 
@@ -55,7 +59,7 @@ enum class FilterUtil(
      * Matches if the savings account's status indicates it is submitted and pending approval.
      */
     APPROVAL_PENDING(
-        label = Res.string.feature_account_approval_pending,
+        label = Res.string.feature_savings_filter_pending_account,
         matchCondition = { it.status?.submittedAndPendingApproval == true },
     ),
 
@@ -64,7 +68,7 @@ enum class FilterUtil(
      * Matches if the savings account's status indicates it has matured.
      */
     MATURED(
-        label = Res.string.feature_account_matured,
+        label = Res.string.feature_savings_filter_matured_account,
         matchCondition = { it.status?.matured == true },
     ),
 
@@ -73,8 +77,25 @@ enum class FilterUtil(
      * Matches if the savings account's status indicates it has been closed.
      */
     CLOSED(
-        label = Res.string.feature_account_closed,
+        label = Res.string.feature_savings_filter_closed_account,
         matchCondition = { it.status?.closed == true },
+    ),
+
+    WALLET(
+        label = Res.string.feature_savings_filter_wallet_account,
+        matchCondition = { it.productName?.contains("wallet", ignoreCase = true) == true },
+    ),
+    BANK(
+        label = Res.string.feature_savings_filter_bank_account,
+        matchCondition = { it.productName?.contains("bank", ignoreCase = true) == true },
+    ),
+    GROUP(
+        label = Res.string.feature_savings_filter_group_account,
+        matchCondition = { it.productName?.contains("group", ignoreCase = true) == true },
+    ),
+    NB_ACCOUNT(
+        label = Res.string.feature_savings_filter_nb_account,
+        matchCondition = { it.productName?.contains("nb", ignoreCase = true) == true },
     ),
     ;
 

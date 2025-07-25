@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.savingsaccount.components
+package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
@@ -38,19 +37,18 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
-internal fun SavingsAccountCard(
-    accountId: Long,
-    accountNumber: String?,
-    accountType: String?,
-    accountStatus: String,
-    accountStatusColor: Color,
-    onAccountClick: (Long) -> Unit,
+fun TransactionScreenItem(
+    title: String,
+    date: String,
+    time: String,
+    transactionAmount: String,
+    isCredited: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onAccountClick(accountId) }
+            .clickable { }
             .padding(vertical = DesignToken.padding.medium),
     ) {
         Row(
@@ -60,30 +58,36 @@ internal fun SavingsAccountCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Icon(
-                imageVector = MifosIcons.PersonAccounts,
-                contentDescription = "Person Account",
+                imageVector =
+                if (isCredited) {
+                    MifosIcons.DrawerAdd
+                } else {
+                    MifosIcons.DrawerSubtract
+                },
+                contentDescription = "Symbol",
                 tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
                 modifier = Modifier
+                    .size(36.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.2f),
                         shape = CircleShape,
                     )
                     .padding(DesignToken.padding.small),
-
             )
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
             Column(
                 modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
             ) {
                 Text(
-                    text = accountNumber ?: "",
+                    text = title,
                     style = MifosTypography.titleSmallEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = accountType ?: "",
+                    text = "$time; $date",
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -91,41 +95,45 @@ internal fun SavingsAccountCard(
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-            ) {
-                Text(
-                    text = accountStatus,
-                    style = MifosTypography.labelSmall,
-                    color = accountStatusColor,
-                )
-                Icon(
-                    imageVector = MifosIcons.ChevronRight,
-                    contentDescription = null,
-                    modifier = Modifier.clickable {}.size(20.dp),
-                )
-            }
+            Text(
+                text = if (isCredited) {
+                    "+ $ $transactionAmount"
+                } else {
+                    "- $ $transactionAmount"
+                },
+                style = MifosTypography.labelSmall,
+                color = if (isCredited) {
+                    AppColors.customEnable
+                } else {
+                    MaterialTheme.colorScheme.error
+                },
+            )
         }
     }
 }
 
 @Preview
 @Composable
-private fun Savings_Account_Preview() {
+private fun TransactionScreenItem_Preview() {
     MifosMobileTheme {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(DesignToken.padding.large),
         ) {
-            SavingsAccountCard(
-                accountId = 1L,
-                accountNumber = "2689-7897-6666",
-                accountType = "Wallet Account",
-                accountStatus = "$ 23,315,500",
-                accountStatusColor = AppColors.customEnable,
-                onAccountClick = {},
+            TransactionScreenItem(
+                title = "Add-Money Bank Card",
+                date = "20-03-2020",
+                time = "5:10",
+                transactionAmount = "87289",
+                isCredited = true,
+            )
+            TransactionScreenItem(
+                title = "Add-Money Bank Card",
+                date = "20-03-2020",
+                time = "5:10",
+                transactionAmount = "87289",
+                isCredited = false,
             )
         }
     }
