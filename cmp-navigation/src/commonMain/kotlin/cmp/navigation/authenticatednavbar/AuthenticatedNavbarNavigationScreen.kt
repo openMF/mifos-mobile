@@ -53,7 +53,7 @@ import org.mifos.mobile.navigation.generated.resources.not_connected
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
     navigateToNotificationScreen: () -> Unit,
-    navigateToSavingsScreen: () -> Unit,
+    navigateToAccountsScreen: (String) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -104,7 +104,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
             { viewModel.trySendAction(it) }
         },
         navigateToNotificationScreen = navigateToNotificationScreen,
-        navigateToSavingsScreen = navigateToSavingsScreen,
+        navigateToAccountsScreen = { navigateToAccountsScreen(it) },
     )
 }
 
@@ -112,7 +112,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
     navigateToNotificationScreen: () -> Unit,
-    navigateToSavingsScreen: () -> Unit,
+    navigateToAccountsScreen: (String) -> Unit,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -170,7 +170,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 //                        it
 //                    )
 //                },
-                navigateToSavingsScreen = navigateToSavingsScreen,
+                navigateToAccountsScreen = { navigateToAccountsScreen(it) },
                 navigateToNotificationScreen = navigateToNotificationScreen,
             )
 

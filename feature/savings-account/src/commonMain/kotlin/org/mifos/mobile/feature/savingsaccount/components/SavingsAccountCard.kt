@@ -40,8 +40,8 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 @Composable
 internal fun SavingsAccountCard(
     accountId: Long,
-    accountNumber: String,
-    accountType: String,
+    accountNumber: String?,
+    accountType: String?,
     accountStatus: String,
     accountStatusColor: Color,
     onAccountClick: (Long) -> Unit,
@@ -78,12 +78,12 @@ internal fun SavingsAccountCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = accountNumber,
+                    text = accountNumber ?: "",
                     style = MifosTypography.titleSmallEmphasized,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    text = accountType,
+                    text = accountType ?: "",
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )

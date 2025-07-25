@@ -58,7 +58,7 @@ class RegistrationViewModel(
     override fun handleAction(action: SignUpAction) {
         when (action) {
             is SignUpAction.OnCustomerAccountChange -> {
-                handleCustomerAccountChange(action.customerAccount)
+                handleCustomerAccountChange(action.customerAccount.trim())
             }
 
             is SignUpAction.OnFirstNameChange -> {
@@ -70,7 +70,7 @@ class RegistrationViewModel(
             }
 
             is SignUpAction.OnEmailChange -> {
-                handleEmailChange(action.email)
+                handleEmailChange(action.email.trim())
             }
 
 //            is SignUpAction.OnMobileNumberChange -> {
@@ -266,7 +266,7 @@ class RegistrationViewModel(
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
         )
-        account.length != 10 || !account.all { it.isDigit() } -> ValidationResult.Error(
+        account.length > 32 -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_not_valid,
         )
 

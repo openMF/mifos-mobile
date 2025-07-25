@@ -12,6 +12,12 @@ package org.mifos.mobile.feature.accounts.model
 import org.jetbrains.compose.resources.StringResource
 
 internal data class CheckboxStatus(
-    val statusLabel: StringResource?,
+    val statusLabel: StringResource,
     val isChecked: Boolean = false,
+    val type: FilterType = FilterType.ACCOUNT_STATUS,
 )
+
+enum class FilterType {
+    ACCOUNT_TYPE,
+    ACCOUNT_STATUS,
+}

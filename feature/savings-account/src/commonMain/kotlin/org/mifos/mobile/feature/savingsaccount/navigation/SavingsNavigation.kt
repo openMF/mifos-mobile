@@ -27,12 +27,15 @@ data object SavingsAccountRoute
 fun NavController.navigateToSavingsAccountScreen(navOptions: NavOptions? = null) =
     navigate(SavingsAccountRoute, navOptions)
 
+@Suppress("UnusedParameter")
 fun NavGraphBuilder.savingsAccountDestination(
     navigateBack: () -> Unit,
+    onAccountClicked: (String, Long) -> Unit,
 ) {
     composableWithSlideTransitions<SavingsAccountRoute> {
         SavingsAccountScreen(
             navigateBack = navigateBack,
+            onAccountClicked = { _, _ -> {} },
         )
     }
 }
