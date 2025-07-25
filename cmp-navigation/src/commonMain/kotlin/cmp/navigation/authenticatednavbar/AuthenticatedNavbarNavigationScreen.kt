@@ -37,15 +37,14 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
-import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
+import org.mifos.mobile.feature.user.profile.navigation.navigateToUserProfileGraph
 import org.mifos.mobile.feature.user.profile.navigation.userprofileNavGraph
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.not_connected
@@ -76,8 +75,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToUserProfileScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToClientChargeScreen(ChargeType.SAVINGS.name, 2)
-//                        navigateToUserProfileGraph(navOptions = it)
+                        navigateToUserProfileGraph(navOptions = it)
                     }
                 }
             }

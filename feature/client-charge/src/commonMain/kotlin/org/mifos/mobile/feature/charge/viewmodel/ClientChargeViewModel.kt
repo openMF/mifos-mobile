@@ -31,6 +31,7 @@ import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.charge.navigation.ClientChargesRoute
@@ -42,7 +43,7 @@ internal class ClientChargeViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<ClientChargeState, ClientChargeEvent, ClientChargeAction>(
     initialState = ClientChargeState(
-        data = ClientChargeState.ChargesState.Loading,
+        dialogState = ClientChargeState.DialogState.Loading,
         isOnline = false,
     ),
 ) {
@@ -60,7 +61,7 @@ internal class ClientChargeViewModel(
                     sendEvent(ClientChargeEvent.ShowToast(message))
                     updateState {
                         it.copy(
-                            data = ClientChargeState.ChargesState.Error(message),
+                            dialogState = ClientChargeState.DialogState.Error(message),
                         )
                     }
                 }
@@ -90,9 +91,97 @@ internal class ClientChargeViewModel(
 
     override fun handleAction(action: ClientChargeAction) {
         when (action) {
-            ClientChargeAction.RefreshCharges -> refreshCharges()
-            ClientChargeAction.OnNavigate -> {
+            is ClientChargeAction.RefreshCharges -> refreshCharges()
+
+            is ClientChargeAction.OnNavigate -> {
                 sendEvent(ClientChargeEvent.Navigate)
+            }
+
+            is ClientChargeAction.OnDismissDialog -> dismissDialog()
+
+            is ClientChargeAction.Internal.ReceiveClientChargesResult -> handleClientChargesResult(action)
+
+            is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult -> handleLoanOrSavingsChargesResult(action)
+        }
+    }
+
+    private fun dismissDialog() {
+        mutableStateFlow.update {
+            it.copy(dialogState = null)
+        }
+    }
+
+    private fun handleLoanOrSavingsChargesResult(action: ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult) {
+        when (val result = action.result) {
+            is DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ClientChargeState.DialogState.Loading,
+                    )
+                }
+            }
+
+            is DataState.Error -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ClientChargeState
+                            .DialogState
+                            .Error(result.exception.message ?: "An Error Occurred"),
+                    )
+                }
+            }
+
+            is DataState.Success -> {
+                if (result.data.isEmpty()) {
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = ClientChargeState.DialogState.Empty,
+                        )
+                    }
+                } else {
+                    mutableStateFlow.update {
+                        it.copy(
+                            charges = result.data,
+                            dialogState = null,
+                        )
+                    }
+                }
+            }
+        }
+    }
+    private fun handleClientChargesResult(action: ClientChargeAction.Internal.ReceiveClientChargesResult) {
+        when (val result = action.result) {
+            DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(dialogState = ClientChargeState.DialogState.Loading)
+                }
+            }
+
+            is DataState.Error -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ClientChargeState
+                            .DialogState
+                            .Error(result.exception.message ?: "An Error Occurred"),
+                    )
+                }
+            }
+
+            is DataState.Success -> {
+                if (result.data.pageItems.isEmpty()) {
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = ClientChargeState.DialogState.Empty,
+                        )
+                    }
+                } else {
+                    mutableStateFlow.update {
+                        it.copy(
+                            charges = result.data.pageItems,
+                            dialogState = null,
+                        )
+                    }
+                }
             }
         }
     }
@@ -114,40 +203,7 @@ internal class ClientChargeViewModel(
     private fun processClientCharges() {
         viewModelScope.launch {
             clientChargeRepositoryImp.getCharges(chargeTypeId).collect { result ->
-                when (result) {
-                    DataState.Loading -> {
-                        mutableStateFlow.update {
-                            it.copy(data = ClientChargeState.ChargesState.Loading)
-                        }
-                    }
-
-                    is DataState.Error -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                data = ClientChargeState
-                                    .ChargesState
-                                    .Error(result.exception.message ?: "An Error Occurred"),
-                            )
-                        }
-                    }
-
-                    is DataState.Success -> {
-                        if (result.data.pageItems.isEmpty()) {
-                            mutableStateFlow.update {
-                                it.copy(
-                                    data = ClientChargeState.ChargesState.Empty,
-                                )
-                            }
-                        } else {
-                            mutableStateFlow.update {
-                                it.copy(
-                                    charges = result.data.pageItems,
-                                    data = null,
-                                )
-                            }
-                        }
-                    }
-                }
+                sendAction(ClientChargeAction.Internal.ReceiveClientChargesResult(result))
             }
         }
     }
@@ -162,42 +218,7 @@ internal class ClientChargeViewModel(
             }
 
             clientChargeRepositoryImp.getLoanOrSavingsCharges(type, id).collect { result ->
-                when (result) {
-                    is DataState.Loading -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                data = ClientChargeState.ChargesState.Loading,
-                            )
-                        }
-                    }
-
-                    is DataState.Error -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                data = ClientChargeState
-                                    .ChargesState
-                                    .Error(result.exception.message ?: "An Error Occurred"),
-                            )
-                        }
-                    }
-
-                    is DataState.Success -> {
-                        if (result.data.isEmpty()) {
-                            mutableStateFlow.update {
-                                it.copy(
-                                    data = ClientChargeState.ChargesState.Empty,
-                                )
-                            }
-                        } else {
-                            mutableStateFlow.update {
-                                it.copy(
-                                    charges = result.data,
-                                    data = null,
-                                )
-                            }
-                        }
-                    }
-                }
+                sendAction(ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult(result))
             }
         }
     }
@@ -208,19 +229,17 @@ data class ClientChargeState(
     val isOnline: Boolean,
     @IgnoredOnParcel
     val topBarTitleResId: StringResource = Res.string.charges,
-    val data: ChargesState?,
+    @IgnoredOnParcel
+    val dialogState: DialogState? = null,
     @IgnoredOnParcel
     val charges: List<Charge> = emptyList(),
 ) : Parcelable {
-    sealed interface ChargesState : Parcelable {
-        @Parcelize
-        data class Error(val message: String) : ChargesState
+    sealed interface DialogState {
+        data class Error(val message: String) : DialogState
 
-        @Parcelize
-        data object Loading : ChargesState
+        data object Loading : DialogState
 
-        @Parcelize
-        data object Empty : ChargesState
+        data object Empty : DialogState
     }
 }
 
@@ -232,6 +251,15 @@ sealed interface ClientChargeEvent {
 sealed interface ClientChargeAction {
     data object RefreshCharges : ClientChargeAction
     data object OnNavigate : ClientChargeAction
+    data object OnDismissDialog : ClientChargeAction
+    sealed class Internal : ClientChargeAction {
+        data class ReceiveLoanOrSavingsChargesResult(
+            val result: DataState<List<Charge>>,
+        ) : Internal()
+        data class ReceiveClientChargesResult(
+            val result: DataState<Page<Charge>>,
+        ) : Internal()
+    }
 }
 
 fun toChargeType(value: String?): ChargeType {

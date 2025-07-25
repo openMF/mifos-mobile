@@ -33,13 +33,15 @@ import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
 import org.mifos.mobile.feature.charge.viewmodel.ClientChargeAction
@@ -74,7 +76,13 @@ internal fun ClientChargeScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+    )
 
+    ClientChargeDialogs(
+        dialogState = state.dialogState,
+        onDismissRequest = remember(viewModel) {
+            { viewModel.trySendAction(ClientChargeAction.OnDismissDialog) }
+        },
     )
 }
 
@@ -102,32 +110,11 @@ private fun ClientChargeScreen(
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
-                when (state.data) {
-                    is ClientChargeState.ChargesState.Empty -> {
-                        EmptyDataView(
-                            modifier = Modifier.fillMaxSize(),
-                            image = Res.drawable.database_warning,
-                            error = Res.string.error_no_charge,
-                        )
-                    }
-                    is ClientChargeState.ChargesState.Error -> {
-                        MifosErrorComponent(
-                            isNetworkConnected = state.isOnline,
-                            isRetryEnabled = true,
-                            onRetry = { onAction(ClientChargeAction.RefreshCharges) },
-                        )
-                    }
-
-                    is ClientChargeState.ChargesState.Loading -> {
-                        MifosProgressIndicator()
-                    }
-
-                    null -> {
-                        ClientChargeContent(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            chargesList = state.charges,
-                        )
-                    }
+                if (state.dialogState == null) {
+                    ClientChargeContent(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        chargesList = state.charges,
+                    )
                 }
             }
         },
@@ -149,13 +136,46 @@ private fun ClientChargeContent(
     }
 }
 
+@Composable
+private fun ClientChargeDialogs(
+    dialogState: ClientChargeState.DialogState?,
+    onDismissRequest: () -> Unit,
+) {
+    when (dialogState) {
+        is ClientChargeState.DialogState.Loading -> {
+            MifosLoadingDialog(
+                visibilityState = LoadingDialogState.Shown,
+            )
+        }
+
+        is ClientChargeState.DialogState.Error -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    message = dialogState.message,
+                ),
+                onDismissRequest = onDismissRequest,
+            )
+        }
+
+        ClientChargeState.DialogState.Empty -> {
+            EmptyDataView(
+                modifier = Modifier.fillMaxSize(),
+                image = Res.drawable.database_warning,
+                error = Res.string.error_no_charge,
+            )
+        }
+
+        null -> Unit
+    }
+}
+
 @Preview
 @Composable
 private fun ClientChargeScreenPreview() {
     MifosMobileTheme {
         ClientChargeScreen(
             modifier = Modifier,
-            state = ClientChargeState(data = null, isOnline = false),
+            state = ClientChargeState(dialogState = null, isOnline = false),
             onAction = { },
         )
     }
