@@ -91,6 +91,8 @@ internal fun AuthenticatedNavbarNavigationScreen(
                     duration = Indefinite,
                 )
             }
+        } else {
+            snackbarHostState.currentSnackbarData?.dismiss()
         }
     }
 
