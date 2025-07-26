@@ -99,9 +99,11 @@ internal class ClientChargeViewModel(
 
             is ClientChargeAction.OnDismissDialog -> dismissDialog()
 
-            is ClientChargeAction.Internal.ReceiveClientChargesResult -> handleClientChargesResult(action)
+            is ClientChargeAction.Internal.ReceiveClientChargesResult,
+            -> handleClientChargesResult(action)
 
-            is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult -> handleLoanOrSavingsChargesResult(action)
+            is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult,
+            -> handleLoanOrSavingsChargesResult(action)
         }
     }
 
@@ -111,7 +113,9 @@ internal class ClientChargeViewModel(
         }
     }
 
-    private fun handleLoanOrSavingsChargesResult(action: ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult) {
+    private fun handleLoanOrSavingsChargesResult(
+        action: ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult,
+    ) {
         when (val result = action.result) {
             is DataState.Loading -> {
                 mutableStateFlow.update {
@@ -149,7 +153,9 @@ internal class ClientChargeViewModel(
             }
         }
     }
-    private fun handleClientChargesResult(action: ClientChargeAction.Internal.ReceiveClientChargesResult) {
+    private fun handleClientChargesResult(
+        action: ClientChargeAction.Internal.ReceiveClientChargesResult,
+    ) {
         when (val result = action.result) {
             DataState.Loading -> {
                 mutableStateFlow.update {
