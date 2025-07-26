@@ -60,10 +60,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         savingsAccountDestination(
             navigateBack = navController::popBackStack,
-            onAccountClicked = { _, _ ->
-                {
-                }
-            },
+            onAccountClicked = { _, _ -> {} },
         )
 
         accountsDestination(
