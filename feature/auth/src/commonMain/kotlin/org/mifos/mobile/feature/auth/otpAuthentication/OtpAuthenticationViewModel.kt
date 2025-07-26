@@ -21,24 +21,25 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.serializer
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_common_next
-import mifos_mobile.feature.auth.generated.resources.feature_otp_invalid_error
+import mifos_mobile.feature.auth.generated.resources.feature_otp_request_id_error
 import mifos_mobile.feature.auth.generated.resources.feature_otp_required_error
+import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_failed
+import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_failed_tip
 import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_successfully
 import mifos_mobile.feature.auth.generated.resources.feature_signup_user_registered_successfully_tip
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
 internal class OtpAuthenticationViewModel(
+    private val userAuthRepositoryImpl: UserAuthRepository,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModel<
-    OtpAuthState,
-    OtpAuthEvent,
-    OtpAuthAction,
-    >(
+) : BaseViewModel<OtpAuthState, OtpAuthEvent, OtpAuthAction>(
     initialState = OtpAuthState(dialogState = null),
 ) {
     init {
@@ -62,6 +63,14 @@ internal class OtpAuthenticationViewModel(
             is OtpAuthAction.OnResendClick -> handleResendOtp()
 
             is OtpAuthAction.OnDismissDialog -> dismissDialog()
+
+            is OtpAuthAction.OnRequestIdChange -> handleRequestIdChange(action.requestId)
+
+            is OtpAuthAction.Internal.ReceiveOtpResult -> {
+                viewModelScope.launch {
+                    handleOtpResult(action.dataState)
+                }
+            }
         }
     }
 
@@ -86,7 +95,31 @@ internal class OtpAuthenticationViewModel(
     private fun validateOtp(otp: String): StringResource? {
         return when {
             otp.isBlank() -> Res.string.feature_otp_required_error
-            otp.length != 6 -> Res.string.feature_otp_invalid_error
+            else -> null
+        }
+    }
+
+    private fun handleRequestIdChange(requestId: String) {
+        mutableStateFlow.update {
+            it.copy(
+                requestId = requestId,
+                requestIdError = null,
+            )
+        }
+
+        debounceValidation {
+            val result = validateRequestId(requestId)
+            mutableStateFlow.update {
+                it.copy(
+                    requestIdError = result,
+                )
+            }
+        }
+    }
+
+    private fun validateRequestId(otp: String): StringResource? {
+        return when {
+            otp.isBlank() -> Res.string.feature_otp_request_id_error
             else -> null
         }
     }
@@ -121,25 +154,71 @@ internal class OtpAuthenticationViewModel(
         }
     }
 
-    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private fun registerUser() {
+        // TODO change according to new ui later
+//        viewModelScope.launch {
+//            mutableStateFlow.update {
+//                it.copy(
+//                    dialogState = OtpAuthState.DialogState.Loading,
+//                )
+//            }
+//            delay(3000)
+//            dismissDialog()
+//            sendEvent(
+//                OtpAuthEvent.NavigateToStatus(
+//                    eventType = EventType.SUCCESS.name,
+//                    eventDestination = LoginRoute::class.serializer().descriptor.serialName,
+//                    title = getString(Res.string.feature_signup_user_registered_successfully),
+//                    subtitle = getString(Res.string.feature_signup_user_registered_successfully_tip),
+//                    buttonText = getString(Res.string.feature_common_next),
+//                ),
+//            )
+//        }
+        mutableStateFlow.update { it.copy(dialogState = OtpAuthState.DialogState.Loading) }
         viewModelScope.launch {
-            mutableStateFlow.update {
-                it.copy(
-                    dialogState = OtpAuthState.DialogState.Loading,
+            val result = userAuthRepositoryImpl.verifyUser(state.otp, state.requestId)
+            sendAction(OtpAuthAction.Internal.ReceiveOtpResult(result))
+        }
+    }
+
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+    private suspend fun handleOtpResult(action: DataState<String>) {
+        when (action) {
+            is DataState.Error -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = OtpAuthState.DialogState.Error(action.message),
+                    )
+                }
+                delay(1500)
+                sendEvent(
+                    OtpAuthEvent.NavigateToStatus(
+                        eventType = EventType.FAILURE.name,
+                        eventDestination = LoginRoute::class.serializer().descriptor.serialName,
+                        title = getString(Res.string.feature_signup_user_registered_failed),
+                        subtitle = getString(Res.string.feature_signup_user_registered_failed_tip),
+                        buttonText = getString(Res.string.feature_common_next),
+                    ),
                 )
             }
-            delay(3000)
-            dismissDialog()
-            sendEvent(
-                OtpAuthEvent.NavigateToStatus(
-                    eventType = EventType.SUCCESS.name,
-                    eventDestination = LoginRoute::class.serializer().descriptor.serialName,
-                    title = getString(Res.string.feature_signup_user_registered_successfully),
-                    subtitle = getString(Res.string.feature_signup_user_registered_successfully_tip),
-                    buttonText = getString(Res.string.feature_common_next),
-                ),
-            )
+            DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = OtpAuthState.DialogState.Loading,
+                    )
+                }
+            }
+            is DataState.Success -> {
+                sendEvent(
+                    OtpAuthEvent.NavigateToStatus(
+                        eventType = EventType.SUCCESS.name,
+                        eventDestination = LoginRoute::class.serializer().descriptor.serialName,
+                        title = getString(Res.string.feature_signup_user_registered_successfully),
+                        subtitle = getString(Res.string.feature_signup_user_registered_successfully_tip),
+                        buttonText = getString(Res.string.feature_common_next),
+                    ),
+                )
+            }
         }
     }
 
@@ -170,6 +249,8 @@ internal data class OtpAuthState(
 
     val otp: String = "",
     val otpError: StringResource? = null,
+    val requestId: String = "",
+    val requestIdError: StringResource? = null,
 
     val dialogState: DialogState?,
 ) {
@@ -179,11 +260,16 @@ internal data class OtpAuthState(
 
         data object Loading : DialogState
     }
+
+    val isNextButtonEnabled
+        get() = otp.isNotBlank() && requestId.isNotBlank()
 }
 
 internal sealed interface OtpAuthAction {
 
     data class OnOtpChange(val otp: String) : OtpAuthAction
+
+    data class OnRequestIdChange(val requestId: String) : OtpAuthAction
 
     data object OnResendClick : OtpAuthAction
 
@@ -192,6 +278,10 @@ internal sealed interface OtpAuthAction {
     data object OnNextClick : OtpAuthAction
 
     data object OnDismissDialog : OtpAuthAction
+
+    sealed interface Internal : OtpAuthAction {
+        data class ReceiveOtpResult(val dataState: DataState<String>) : Internal
+    }
 }
 
 internal sealed interface OtpAuthEvent {

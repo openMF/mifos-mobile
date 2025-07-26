@@ -52,7 +52,7 @@ import org.mifos.mobile.feature.charge.viewmodel.ClientChargeViewModel
 @Composable
 internal fun ClientChargeScreen(
     navigateBack: () -> Unit,
-    onChargeClick:()->Unit,
+    onChargeClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ClientChargeViewModel = koinViewModel(),
 ) {
@@ -130,7 +130,7 @@ private fun ClientChargeScreen(
 @Composable
 private fun ClientChargeContent(
     chargesList: List<Charge>,
-    onChargeClick:()->Unit,
+    onChargeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -138,7 +138,7 @@ private fun ClientChargeContent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = chargesList) { charge ->
-            ClientChargeItem(charge = charge,onChargeClick=onChargeClick)
+            ClientChargeItem(charge = charge, onChargeClick = onChargeClick)
         }
     }
 }

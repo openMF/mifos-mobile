@@ -44,14 +44,14 @@ import org.mifos.mobile.core.model.entity.Charge
 @Composable
 fun ClientChargeItem(
     charge: Charge,
-    onChargeClick:()->Unit,
+    onChargeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val currencyRepresentation = charge.currency?.code ?: ""
     Row(
         modifier
             .fillMaxWidth()
-            .clickable{
+            .clickable {
                 onChargeClick()
             }
             .padding(vertical = DesignToken.padding.large),
@@ -159,7 +159,7 @@ private fun ClientChargesItemPreview() {
     MifosMobileTheme {
         ClientChargeItem(
             charge = Charge(),
-            onChargeClick = {}
+            onChargeClick = {},
         )
     }
 }

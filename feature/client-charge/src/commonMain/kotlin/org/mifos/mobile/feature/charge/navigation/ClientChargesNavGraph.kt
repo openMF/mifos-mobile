@@ -37,22 +37,22 @@ fun NavGraphBuilder.clientChargeNavGraph(
             onNavigateBack = navigateBack,
             navigateToChargeDetailsScreen = {
                 navController.navigateToChargesDetailsScreen()
-            }
+            },
         )
         chargesDetailsDestination(
-            navigateToQrScreen = navController::navigateToChargesDetailsScreen
+            navigateToQrScreen = navController::navigateToChargesDetailsScreen,
         )
     }
 }
 
 fun NavGraphBuilder.clientChargesScreen(
     onNavigateBack: () -> Unit,
-    navigateToChargeDetailsScreen:()->Unit
+    navigateToChargeDetailsScreen: () -> Unit,
 ) {
     composableWithPushTransitions<ClientChargesRoute> {
         ClientChargeScreen(
             navigateBack = onNavigateBack,
-            onChargeClick = navigateToChargeDetailsScreen
+            onChargeClick = navigateToChargeDetailsScreen,
         )
     }
 }

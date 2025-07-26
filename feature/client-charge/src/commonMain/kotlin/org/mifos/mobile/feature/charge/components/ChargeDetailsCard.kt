@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.charge.components
 
 import androidx.compose.foundation.border
@@ -6,11 +15,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,7 +29,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 @Composable
 fun ChargeDetailsCard(
     keyValuePairs: Map<String, String>,
-    modifier: Modifier= Modifier
+    modifier: Modifier = Modifier,
 ) {
     MifosCustomCard(
         variant = CardVariant.OUTLINED,
@@ -34,23 +41,23 @@ fun ChargeDetailsCard(
                 DesignToken.shapes.medium,
             ),
         shape = DesignToken.shapes.medium,
-    ){
+    ) {
         Column(modifier = Modifier.padding(DesignToken.padding.large)) {
             keyValuePairs.forEach { (key, value) ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = DesignToken.padding.small),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
                         text = key,
-                        style = MifosTypography.labelMediumEmphasized
+                        style = MifosTypography.labelMediumEmphasized,
                     )
                     Text(
                         text = value,
                         style = MifosTypography.labelMedium,
-                        textAlign = TextAlign.Right
+                        textAlign = TextAlign.Right,
                     )
                 }
             }

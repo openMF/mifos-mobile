@@ -49,7 +49,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
         authenticatedNavbarGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
-                navController.navigateToClientChargeScreen(ChargeType.CLIENT.name,1)
+                navController.navigateToClientChargeScreen(ChargeType.CLIENT.name, 1)
 //                when {
 //                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
 //                    else -> Unit
@@ -63,9 +63,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         savingsAccountDestination(
             navigateBack = navController::popBackStack,
-            onAccountClicked = { _, _ -> {
-
-            } },
+            onAccountClicked = { _, _ ->
+                {
+                }
+            },
         )
 
         accountsDestination(
@@ -75,7 +76,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         clientChargeNavGraph(
             navigateBack = navController::popBackStack,
-            navController = navController
+            navController = navController,
         )
 
         statusDestination(
