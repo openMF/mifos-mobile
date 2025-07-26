@@ -12,20 +12,46 @@ package org.mifos.mobile.feature.charge.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.composableWithStayTransitions
 import org.mifos.mobile.feature.charge.screens.ChargeDetailScreen
 
 @Serializable
-data object ChargesDetailsRoute
+data class ChargesDetailsRoute(
+    val title: String = "",
+    val date: String = "",
+    val due: String = "",
+    val paid: String = "",
+    val waived: String = "",
+    val outstanding: String = ",",
+    val refNo: String = "",
+    val paidOn: String = "",
+    val isPaid: Boolean = false,
+)
 
-fun NavGraphBuilder.chargesDetailsDestination(
-    navigateToQrScreen: () -> Unit,
-) {
+fun NavGraphBuilder.chargesDetailsDestination(onNavigateBack: () -> Unit) {
     composableWithStayTransitions<ChargesDetailsRoute> {
-        ChargeDetailScreen()
+        ChargeDetailScreen(
+            onNavigateBack = onNavigateBack,
+        )
     }
 }
 
-fun NavController.navigateToChargesDetailsScreen() {
-    this.navigate(ChargesDetailsRoute)
+// TODO: last charge paid On , needed that.
+// TODO: Add reference No instead of chargeId
+fun NavController.navigateToChargesDetailsScreen(charge: Charge) {
+    this.navigate(
+        ChargesDetailsRoute(
+            title = charge.name ?: "",
+            isPaid = charge.paid,
+            waived = charge.amountWaived.toString(),
+            outstanding = charge.amountOutstanding.toString(),
+            date = DateHelper.getDateAsString(charge.dueDate.mapNotNull { it }),
+            due = charge.amount.toString(),
+            paid = charge.amountPaid.toString(),
+            refNo = charge.chargeId.toString(),
+            paidOn = "",
+        ),
+    )
 }

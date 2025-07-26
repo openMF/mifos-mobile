@@ -20,4 +20,21 @@
     <string name="amount_outstanding">Outstanding:</string>
     <string name="amount_waived">Waved:</string>
     <string name="amount_paid">Paid:</string>
+
+    <string name="charge_details">Charge Details</string>
+    <string name="paid_success_message">You have successfully paid this charge completely</string>
+    <string name="status_icon_description">Status icon</string>
+    <string name="ref_no">Ref. No. %1$s</string>
+    <string name="paid_on">Paid On: %1$s</string>
+    <string name="partial_amount_paid_on">Partial Amount Paid On : %1$s</string>
+    <string name="pay_outstanding">Pay Outstanding</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Fee Title</string>
+    <string name="date">Date</string>
+    <string name="due">Due</string>
+    <string name="paid">Paid</string>
+    <string name="waived">Waived</string>
+    <string name="outstanding">Outstanding</string>
+
 </resources>

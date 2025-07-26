@@ -51,7 +51,7 @@ fun ChargeDetailsCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = key,
+                        text = "$key :",
                         style = MifosTypography.labelMediumEmphasized,
                     )
                     Text(

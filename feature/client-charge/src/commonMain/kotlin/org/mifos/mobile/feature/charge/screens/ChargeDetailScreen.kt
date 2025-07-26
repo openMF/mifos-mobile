@@ -24,36 +24,54 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import mifos_mobile.core.ui.generated.resources.Res
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_success
+import mifos_mobile.feature.client_charge.generated.resources.Res
+import mifos_mobile.feature.client_charge.generated.resources.charge_details
+import mifos_mobile.feature.client_charge.generated.resources.paid_on
+import mifos_mobile.feature.client_charge.generated.resources.paid_success_message
+import mifos_mobile.feature.client_charge.generated.resources.partial_amount_paid_on
+import mifos_mobile.feature.client_charge.generated.resources.pay_outstanding
+import mifos_mobile.feature.client_charge.generated.resources.ref_no
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ChargeDetailsCard
+import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsAction
+import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsEvent
+import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsViewModel
+import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
 @Composable
-fun ChargeDetailScreen(
+internal fun ChargeDetailScreen(
     modifier: Modifier = Modifier,
-    isPaid: Boolean = false,
+    onNavigateBack: () -> Unit,
+    viewModel: ChargeDetailsViewModel = koinViewModel(),
 ) {
-    val sampleDetails = mapOf(
-        "Charge Name" to "Client Registration Fee",
-        "Charge Type" to "Flat",
-        "Currency" to "USD",
-        "Amount" to "100.00",
-        "Due Date" to "28 July 2045",
-    )
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            ChargeDetailsEvent.NavigateBack -> onNavigateBack.invoke()
+        }
+    }
 
     MifosElevatedScaffold(
-        topBarTitle = "Charge Details",
-        onNavigateBack = {},
+        topBarTitle = stringResource(Res.string.charge_details),
+        onNavigateBack = {
+            viewModel.trySendAction(ChargeDetailsAction.NavigateBack)
+        },
         modifier = modifier,
         bottomBar = {
             Surface {
@@ -75,17 +93,19 @@ fun ChargeDetailScreen(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                ChargeDetailsCard(keyValuePairs = sampleDetails)
+                ChargeDetailsCard(keyValuePairs = state.details)
                 Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
-                if (isPaid) {
+                if (state.isPaid) {
                     ChargeDetailsPaidComponent(
-                        refNo = "&%^&BHB",
-                        paidOn = "jndjdnb",
+                        refNo = state.refNo,
+                        paidOn = state.paidOn,
                     )
                 } else {
                     ChargeDetailsUnPaidComponent(
-                        amountPaidOn = "30-10-2025",
-                        onPayOutStanding = {},
+                        amountPaidOn = state.paidOn,
+                        onPayOutStanding = {
+                            viewModel.trySendAction(ChargeDetailsAction.PayOutStanding)
+                        },
                     )
                 }
             }
@@ -106,7 +126,7 @@ fun ChargeDetailsPaidComponent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "You have successfully paid this charge completely",
+            text = stringResource(Res.string.paid_success_message),
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
         )
@@ -115,21 +135,23 @@ fun ChargeDetailsPaidComponent(
             modifier = Modifier
                 .height(60.dp)
                 .width(60.dp),
-            painter = painterResource(Res.drawable.ic_icon_success),
+            painter = painterResource(uiRes.drawable.ic_icon_success),
             contentDescription = "Status icon",
         )
         Spacer(Modifier.height(DesignToken.padding.medium))
         Text(
-            text = "Ref. No. $refNo",
+            text = stringResource(Res.string.ref_no, refNo),
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.height(DesignToken.padding.small))
-        Text(
-            text = "Paid On: $paidOn",
-            style = MifosTypography.bodySmallEmphasized,
-            textAlign = TextAlign.Center,
-        )
+        if (paidOn.isNotEmpty()) {
+            Text(
+                text = stringResource(Res.string.paid_on, paidOn),
+                style = MifosTypography.bodySmallEmphasized,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 
@@ -151,12 +173,14 @@ fun ChargeDetailsUnPaidComponent(
             shape = DesignToken.shapes.medium,
             onClick = onPayOutStanding,
         ) {
-            Text("Pay Outstanding")
+            Text(stringResource(Res.string.pay_outstanding))
         }
         Spacer(Modifier.height(DesignToken.padding.large))
-        Text(
-            text = "Partial Amount Paid On : $amountPaidOn",
-            style = MaterialTheme.typography.bodySmall,
-        )
+        if (amountPaidOn.isNotEmpty()) {
+            Text(
+                text = stringResource(Res.string.partial_amount_paid_on, amountPaidOn),
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
     }
 }

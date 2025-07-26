@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
@@ -36,18 +37,18 @@ fun NavGraphBuilder.clientChargeNavGraph(
         clientChargesScreen(
             onNavigateBack = navigateBack,
             navigateToChargeDetailsScreen = {
-                navController.navigateToChargesDetailsScreen()
+                navController.navigateToChargesDetailsScreen(it)
             },
         )
         chargesDetailsDestination(
-            navigateToQrScreen = navController::navigateToChargesDetailsScreen,
+            onNavigateBack = navController::popBackStack,
         )
     }
 }
 
 fun NavGraphBuilder.clientChargesScreen(
     onNavigateBack: () -> Unit,
-    navigateToChargeDetailsScreen: () -> Unit,
+    navigateToChargeDetailsScreen: (charge: Charge) -> Unit,
 ) {
     composableWithPushTransitions<ClientChargesRoute> {
         ClientChargeScreen(
