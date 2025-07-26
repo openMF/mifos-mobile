@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.charge.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -28,20 +27,33 @@ data class ClientChargesRoute(
 data object ClientChargesNavGraphRoute
 
 fun NavGraphBuilder.clientChargeNavGraph(
+    navController: NavController,
     navigateBack: () -> Unit,
 ) {
     navigation<ClientChargesNavGraphRoute>(
         startDestination = ClientChargesRoute(ChargeType.SAVINGS.name, -1),
     ) {
-        clientChargesScreen(onNavigateBack = navigateBack)
+        clientChargesScreen(
+            onNavigateBack = navigateBack,
+            navigateToChargeDetailsScreen = {
+                navController.navigateToChargesDetailsScreen()
+            }
+        )
+        chargesDetailsDestination(
+            navigateToQrScreen = navController::navigateToChargesDetailsScreen
+        )
     }
 }
 
 fun NavGraphBuilder.clientChargesScreen(
     onNavigateBack: () -> Unit,
+    navigateToChargeDetailsScreen:()->Unit
 ) {
     composableWithPushTransitions<ClientChargesRoute> {
-        ClientChargeScreen(navigateBack = onNavigateBack)
+        ClientChargeScreen(
+            navigateBack = onNavigateBack,
+            onChargeClick = navigateToChargeDetailsScreen
+        )
     }
 }
 
