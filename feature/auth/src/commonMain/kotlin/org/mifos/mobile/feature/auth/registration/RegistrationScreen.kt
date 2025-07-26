@@ -53,6 +53,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_signup_already_have_an_account
+import mifos_mobile.feature.auth.generated.resources.feature_signup_cell_phone_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_confirm_password_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_customer_account_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_email_label
@@ -396,6 +397,9 @@ fun MifosInputField(
                         InputFieldType.NUMBER -> {
                             KeyboardType.Number
                         }
+                        InputFieldType.PHONE -> {
+                            KeyboardType.Phone
+                        }
                         else -> {
                             KeyboardType.Text
                         }
@@ -411,6 +415,7 @@ enum class InputFieldType {
     TEXT,
     PASSWORD,
     NUMBER,
+    PHONE,
 }
 
 data class InputFieldConfig(
@@ -458,6 +463,14 @@ fun getInputConfigs(
             errorText = state.emailError,
             labelRes = Res.string.feature_signup_email_label,
             onValueChange = { onAction(SignUpAction.OnEmailChange(it)) },
+        ),
+        InputFieldConfig(
+            value = state.mobileNumber,
+            state = state,
+            errorText = state.mobileNumberError,
+            labelRes = Res.string.feature_signup_cell_phone_label,
+            fieldType = InputFieldType.PHONE,
+            onValueChange = { onAction(SignUpAction.OnMobileNumberChange(it)) },
         ),
         InputFieldConfig(
             value = state.customerAccount,
