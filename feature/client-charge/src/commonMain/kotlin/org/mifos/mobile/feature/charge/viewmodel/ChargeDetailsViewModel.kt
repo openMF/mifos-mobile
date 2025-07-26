@@ -22,8 +22,6 @@ import mifos_mobile.feature.client_charge.generated.resources.outstanding
 import mifos_mobile.feature.client_charge.generated.resources.paid
 import mifos_mobile.feature.client_charge.generated.resources.waived
 import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.charge.navigation.ChargesDetailsRoute
 

@@ -55,8 +55,8 @@ import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
 @Composable
 internal fun ChargeDetailScreen(
-    modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: ChargeDetailsViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
