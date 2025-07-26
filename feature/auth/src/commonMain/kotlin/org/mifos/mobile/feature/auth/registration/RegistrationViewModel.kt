@@ -9,13 +9,13 @@
  */
 package org.mifos.mobile.feature.auth.registration
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_not_valid
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_name_empty
@@ -28,9 +28,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.model.IgnoredOnParcel
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
@@ -38,23 +36,34 @@ import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 
-private const val KEY_STATE = "signup_state"
-
+/**
+ * ViewModel responsible for handling user registration logic.
+ *
+ * It manages the state of the sign-up form, handles user input actions,
+ * performs validation, and communicates with the [UserAuthRepository] for API calls.
+ *
+ * @property userAuthRepositoryImpl Repository to handle registration logic.
+ */
 @Suppress("TooManyFunctions")
 class RegistrationViewModel(
-//    private val userAuthRepositoryImpl: UserAuthRepository,
-    savedStateHandle: SavedStateHandle,
+    private val userAuthRepositoryImpl: UserAuthRepository,
 ) : BaseViewModel<SignUpState, SignUpEvent, SignUpAction>(
-    initialState = savedStateHandle[KEY_STATE] ?: SignUpState(),
+    initialState = SignUpState(),
 ) {
 
     private var validationJob: Job? = null
     private var passwordStrengthJob: Job = Job()
 
+    /**
+     * Updates the current UI state using a state reducer lambda.
+     */
     private fun updateState(update: (SignUpState) -> SignUpState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Handles all actions triggered from the UI by delegating to corresponding methods.
+     */
     override fun handleAction(action: SignUpAction) {
         when (action) {
             is SignUpAction.OnCustomerAccountChange -> {
@@ -73,9 +82,9 @@ class RegistrationViewModel(
                 handleEmailChange(action.email.trim())
             }
 
-//            is SignUpAction.OnMobileNumberChange -> {
-//                handleMobileNumberChange(action.mobileNumber)
-//            }
+            is SignUpAction.OnMobileNumberChange -> {
+                handleMobileNumberChange(action.mobileNumber)
+            }
 
             is SignUpAction.OnPasswordChange -> {
                 handlePasswordChange(action.password)
@@ -109,8 +118,9 @@ class RegistrationViewModel(
         }
     }
 
-//  First Name
-
+    /**
+     * Handles first name input changes and validates the name.
+     */
     private fun handleFirstNameChange(name: String) {
         mutableStateFlow.update {
             it.copy(
@@ -129,8 +139,9 @@ class RegistrationViewModel(
         }
     }
 
-//    Middle Name
-
+    /**
+     * Handles middle name input changes and validates the name.
+     */
     private fun handleMiddleNameChange(name: String) {
         mutableStateFlow.update {
             it.copy(
@@ -149,8 +160,9 @@ class RegistrationViewModel(
         }
     }
 
-//  Last Name
-
+    /**
+     * Handles last name input changes and validates the name.
+     */
     private fun handleLastNameChange(name: String) {
         mutableStateFlow.update {
             it.copy(
@@ -169,6 +181,9 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Validates the given name depending on the type (first, middle, last).
+     */
     @Suppress("ReturnCount")
     private fun validateName(name: String, nameType: String): ValidationResult? {
         if (name.isEmpty()) {
@@ -187,8 +202,9 @@ class RegistrationViewModel(
         return ValidationResult.Success
     }
 
-//  Email
-
+    /**
+     * Handles email input changes and validates the email address.
+     */
     private fun handleEmailChange(email: String) {
         mutableStateFlow.update {
             it.copy(
@@ -207,6 +223,9 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Validates the email format using helper methods.
+     */
     private fun validateEmail(email: String): ValidationResult? {
         return if (!ValidationHelper.isValidEmail(email)) {
             ValidationResult.Error(Res.string.feature_signup_error_invalid_email)
@@ -215,36 +234,41 @@ class RegistrationViewModel(
         }
     }
 
-//  Mobile Number
+    /**
+     * Handles mobile number input changes and validates it.
+     */
+    private fun handleMobileNumberChange(mobileNumber: String) {
+        mutableStateFlow.update {
+            it.copy(
+                mobileNumber = mobileNumber,
+                mobileNumberError = null,
+            )
+        }
 
-//    private fun handleMobileNumberChange(mobileNumber: String) {
-//        mutableStateFlow.update {
-//            it.copy(
-//                mobileNumber = mobileNumber,
-//                mobileNumberError = null,
-//            )
-//        }
-//
-//        debounceValidation {
-//            val result = validateMobileNumber(mobileNumber)
-//            mutableStateFlow.update {
-//                it.copy(
-//                    mobileNumberError = if (result is ValidationResult.Error) result.message else null,
-//                )
-//            }
-//        }
-//    }
+        debounceValidation {
+            val result = validateMobileNumber(mobileNumber)
+            mutableStateFlow.update {
+                it.copy(
+                    mobileNumberError = if (result is ValidationResult.Error) result.message else null,
+                )
+            }
+        }
+    }
 
-//    private fun validateMobileNumber(mobileNumber: String): ValidationResult? {
-//        return if (!ValidationHelper.isValidPhoneNumber(mobileNumber)) {
-//            ValidationResult.Error(Res.string.feature_signup_error_invalid_email)
-//        } else {
-//            ValidationResult.Success
-//        }
-//    }
+    /**
+     * Validates the mobile number using helper methods.
+     */
+    private fun validateMobileNumber(mobileNumber: String): ValidationResult? {
+        return if (!ValidationHelper.isValidPhoneNumber(mobileNumber)) {
+            ValidationResult.Error(Res.string.feature_recover_now_phone_number_error)
+        } else {
+            ValidationResult.Success
+        }
+    }
 
-//  Customer Account
-
+    /**
+     * Handles changes to the customer's account number field and validates input.
+     */
     private fun handleCustomerAccountChange(account: String) {
         mutableStateFlow.update {
             it.copy(
@@ -262,6 +286,9 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Validates the customer account number.
+     */
     private fun validateCustomerAccount(account: String): ValidationResult? = when {
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
@@ -273,8 +300,9 @@ class RegistrationViewModel(
         else -> ValidationResult.Success
     }
 
-//  Password
-
+    /**
+     * Handles password input changes and triggers strength checks and validation.
+     */
     private fun handlePasswordChange(password: String) {
         mutableStateFlow.update { it.copy(password = password, passwordError = null) }
 
@@ -319,6 +347,9 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Validates the strength and format of the password.
+     */
     @Suppress("ReturnCount")
     private fun validatePassword(password: String): ValidationResult? {
         if (password.isEmpty()) {
@@ -338,8 +369,9 @@ class RegistrationViewModel(
         }
     }
 
-//  Confirm Password
-
+    /**
+     * Handles confirm password input changes and validates against the password.
+     */
     private fun handleConfirmPasswordChange(confirmPassword: String) {
         mutableStateFlow.update {
             it.copy(
@@ -362,6 +394,9 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Validates if confirm password matches the password and meets strength requirements.
+     */
     private fun validateConfirmPassword(confirmPassword: String, password: String): ValidationResult? = when {
         confirmPassword.isEmpty() -> ValidationResult.Error(Res.string.feature_signup_error_password_required_error)
         confirmPassword.length < 8 -> ValidationResult.Error(Res.string.feature_signup_error_password_short)
@@ -369,18 +404,23 @@ class RegistrationViewModel(
         else -> ValidationResult.Success
     }
 
-//  Password visible toggle
-
+    /**
+     * Toggles the visibility of the password field.
+     */
     private fun togglePasswordVisibility() {
         mutableStateFlow.update { it.copy(isPasswordVisible = !state.isPasswordVisible) }
     }
 
+    /**
+     * Toggles the visibility of the confirm password field.
+     */
     private fun toggleConfirmPasswordVisibility() {
         mutableStateFlow.update { it.copy(isConfirmPasswordVisible = !state.isConfirmPasswordVisible) }
     }
 
-//  Password strength Result
-
+    /**
+     * Handles the result from password strength checker and updates UI accordingly.
+     */
     private fun handlePasswordStrengthResult(action: SignUpAction.Internal.ReceivePasswordStrengthResult) {
         when (val result = action.result) {
             is PasswordStrengthResult.Success -> {
@@ -410,6 +450,9 @@ class RegistrationViewModel(
 
     private fun isSuccess(result: ValidationResult?) = result is ValidationResult.Success
 
+    /**
+     * Validates all form fields and triggers user registration if valid.
+     */
     private fun handleSubmit() {
         validationJob?.cancel()
 
@@ -417,7 +460,7 @@ class RegistrationViewModel(
         val middleNameError = validateName(state.middleName, "middle")
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
-//        val mobileNumberError = validateMobileNumber(state.mobileNumber)
+        val mobileNumberError = validateMobileNumber(state.mobileNumber)
         val accountError = validateCustomerAccount(state.customerAccount)
         val passwordResult = validatePassword(state.password)
         val confirmPasswordResult = validateConfirmPassword(
@@ -438,6 +481,11 @@ class RegistrationViewModel(
                 customerAccountError = if (accountError is ValidationResult.Error) {
                     accountError
                         .message
+                } else {
+                    null
+                },
+                mobileNumberError = if (mobileNumberError is ValidationResult.Error) {
+                    mobileNumberError.message
                 } else {
                     null
                 },
@@ -463,39 +511,48 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Calls the repository to register the user with provided form data.
+     */
     private fun registerUser() {
+        // TODO uncomment when we get api for upload id until then make api call for registration
+//        viewModelScope.launch {
+//            updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
+//
+//            delay(3000)
+//
+//            sendEvent(SignUpEvent.NavigateToUploadDocuments)
+//        }
+        updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
         viewModelScope.launch {
-            updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
-
-            delay(3000)
-
-            sendEvent(SignUpEvent.NavigateToUploadDocuments)
+            val response = userAuthRepositoryImpl.registerUser(
+                accountNumber = state.customerAccount,
+                authenticationMode = "email",
+                email = state.email,
+                firstName = state.firstName,
+                lastName = state.lastName,
+                mobileNumber = state.mobileNumber,
+                password = state.password,
+                username = "${state.firstName} ${state.lastName}",
+            )
+            sendAction(
+                SignUpAction.Internal.ReceiveRegisterResult(
+                    response,
+                ),
+            )
         }
-//              TODO make api call
-//            viewModelScope.launch {
-//                val response = userAuthRepositoryImpl.registerUser(
-//                    accountNumber = state.customerAccount,
-//                    authenticationMode = "email",
-//                    email = state.email,
-//                    firstName = state.firstName,
-//                    lastName = state.lastName,
-//                    mobileNumber = state.mobileNumber,
-//                    password = state.password,
-//                    username = state.firstName,
-//                )
-//                sendAction(
-//                    SignUpAction.Internal.ReceiveRegisterResult(
-//                        response,
-//                    ),
-//                )
-//            }
     }
 
-    // TODO: Use this in the above [registerUser] function when API is available
+    /**
+     * Handles the result of the user registration API call and updates UI state.
+     */
     private fun handleRegisterResult(action: SignUpAction.Internal.ReceiveRegisterResult) {
         when (val result = action.registerResult) {
             is DataState.Success -> {
                 updateState { it.copy(dialogState = null) }
+                sendEvent(
+                    SignUpEvent.NavigateToUploadDocuments,
+                )
             }
 
             is DataState.Error -> {
@@ -515,6 +572,10 @@ class RegistrationViewModel(
         }
     }
 
+    /**
+     * Cancels any ongoing validation and launches the given validation block after a delay.
+     * Used for debounced validation of form fields.
+     */
     private fun debounceValidation(validation: suspend () -> Unit) {
         validationJob?.cancel()
         validationJob = viewModelScope.launch {
@@ -524,7 +585,9 @@ class RegistrationViewModel(
     }
 }
 
-@Parcelize
+/**
+ * Holds the UI state of the registration screen.
+ */
 data class SignUpState(
     val customerAccount: String = "",
     val firstName: String = "",
@@ -540,36 +603,31 @@ data class SignUpState(
     val isPasswordChanged: Boolean = false,
     val isPasswordVisible: Boolean = false,
     val isConfirmPasswordVisible: Boolean = false,
-    @IgnoredOnParcel
     val passwordFeedback: List<StringResource> = emptyList(),
-    @IgnoredOnParcel
     val passwordStrengthState: PasswordStrengthState = PasswordStrengthState.NONE,
 
-    @IgnoredOnParcel
     val firstNameError: StringResource? = null,
-    @IgnoredOnParcel
     val middleNameError: StringResource? = null,
-    @IgnoredOnParcel
     val lastNameError: StringResource? = null,
-    @IgnoredOnParcel
     val emailError: StringResource? = null,
-    @IgnoredOnParcel
     val mobileNumberError: StringResource? = null,
-    @IgnoredOnParcel
     val customerAccountError: StringResource? = null,
-    @IgnoredOnParcel
     val passwordError: StringResource? = null,
-    @IgnoredOnParcel
     val confirmPasswordError: StringResource? = null,
 
-) : Parcelable {
-    sealed interface SignUpDialog : Parcelable {
-        @Parcelize
+) {
+    /**
+     * Dialogs to show loading or error states during sign-up.
+     */
+    sealed interface SignUpDialog {
         data object Loading : SignUpDialog
 
-        @Parcelize
         data class Error(val message: String) : SignUpDialog
     }
+
+    /**
+     * Whether the submit button should be enabled based on required fields.
+     */
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
@@ -580,17 +638,26 @@ data class SignUpState(
             confirmPassword.isNotBlank()
 }
 
+/**
+ * Events that the UI layer listens to for side effects (navigation, toasts).
+ */
 sealed interface SignUpEvent {
     data class ShowToast(val message: String) : SignUpEvent
     data object NavigateToUploadDocuments : SignUpEvent
     data object NavigateToLogin : SignUpEvent
 }
 
+/**
+ * Represents the result of a field validation operation.
+ */
 internal sealed class ValidationResult {
     data object Success : ValidationResult()
     data class Error(val message: StringResource) : ValidationResult()
 }
 
+/**
+ * Defines all user-triggered or internal actions related to the Sign-Up screen.
+ */
 sealed interface SignUpAction {
     data class OnCustomerAccountChange(val customerAccount: String) : SignUpAction
     data class OnFirstNameChange(val firstName: String) : SignUpAction
@@ -600,7 +667,7 @@ sealed interface SignUpAction {
     data class OnPasswordChange(val password: String) : SignUpAction
     data class OnConfirmPasswordChange(val confirmPassword: String) : SignUpAction
 
-//    data class OnMobileNumberChange(val mobileNumber: String) : SignUpAction
+    data class OnMobileNumberChange(val mobileNumber: String) : SignUpAction
     data class IsPasswordChanges(val isPasswordChanged: Boolean) : SignUpAction
     data object TogglePasswordVisibility : SignUpAction
     data object ConfirmTogglePasswordVisibility : SignUpAction
@@ -608,6 +675,9 @@ sealed interface SignUpAction {
     data object OnNavigateToLogin : SignUpAction
     data object ErrorDialogDismiss : SignUpAction
 
+    /**
+     * Internal actions triggered inside ViewModel.
+     */
     sealed class Internal : SignUpAction {
         data class ReceiveRegisterResult(
             val registerResult: DataState<String>,

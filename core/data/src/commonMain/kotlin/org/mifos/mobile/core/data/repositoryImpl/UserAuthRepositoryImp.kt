@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -50,16 +51,10 @@ class UserAuthRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.registrationApi.registerUser(registerPayload)
-                if (response.status.value != 200) {
-                    val errorMessage = extractErrorMessage(response)
-                    return@withContext DataState.Error(
-                        Exception(errorMessage),
-                        null,
-                    )
-                }
                 DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e, null)
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
         }
     }
@@ -94,16 +89,10 @@ class UserAuthRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.registrationApi.verifyUser(userVerify)
-                if (response.status.value != 200) {
-                    val errorMessage = extractErrorMessage(response)
-                    return@withContext DataState.Error(
-                        Exception(errorMessage),
-                        null,
-                    )
-                }
-                DataState.Success("User Verified Successfully")
-            } catch (e: Exception) {
-                DataState.Error(e, null)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
         }
     }
