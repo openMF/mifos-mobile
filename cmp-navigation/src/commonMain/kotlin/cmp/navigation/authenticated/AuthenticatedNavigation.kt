@@ -19,11 +19,13 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.accounts.navigation.accountsDestination
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
+import org.mifos.mobile.feature.charge.navigation.navigateToClientChargeScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
@@ -47,10 +49,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
         authenticatedNavbarGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
-                when {
-                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
-                    else -> Unit
-                }
+                navController.navigateToClientChargeScreen(ChargeType.CLIENT.name,1)
+//                when {
+//                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
+//                    else -> Unit
+//                }
             },
         )
 

@@ -35,3 +35,5 @@ data class Charge(
     val paid: Boolean = false,
     val waived: Boolean = false,
 ) : Parcelable
+
+

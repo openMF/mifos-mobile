@@ -76,13 +76,12 @@ internal class ChargeDetailsViewModel(
     }
 }
 
-@Parcelize
 data class ChargeDetailsState(
     val details: Map<String, String> = emptyMap(),
     val isPaid: Boolean = false,
     val refNo: String = "",
     val paidOn: String = "",
-) : Parcelable
+)
 
 sealed interface ChargeDetailsEvent {
     data object NavigateBack : ChargeDetailsEvent
