@@ -49,11 +49,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
         authenticatedNavbarGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
-                navController.navigateToClientChargeScreen(ChargeType.CLIENT.name,1)
-//                when {
-//                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
-//                    else -> Unit
-//                }
+                when {
+                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
+                    else -> Unit
+                }
             },
         )
 
