@@ -307,6 +307,9 @@ org.jetbrains.compose.ui:ui-backhandler:1.8.2
 org.jetbrains.compose.ui:ui-geometry:1.8.2
 org.jetbrains.compose.ui:ui-graphics:1.8.2
 org.jetbrains.compose.ui:ui-text:1.8.2
+org.jetbrains.compose.ui:ui-tooling-data:1.8.2
+org.jetbrains.compose.ui:ui-tooling-preview:1.8.2
+org.jetbrains.compose.ui:ui-tooling:1.8.2
 org.jetbrains.compose.ui:ui-unit:1.8.2
 org.jetbrains.compose.ui:ui-util:1.8.2
 org.jetbrains.compose.ui:ui:1.8.2

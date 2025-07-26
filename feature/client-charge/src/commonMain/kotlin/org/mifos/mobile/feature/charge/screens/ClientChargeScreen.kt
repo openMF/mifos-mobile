@@ -11,21 +11,14 @@ package org.mifos.mobile.feature.charge.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -35,25 +28,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
-import mifos_mobile.feature.client_charge.generated.resources.amount_due
-import mifos_mobile.feature.client_charge.generated.resources.amount_outstanding
-import mifos_mobile.feature.client_charge.generated.resources.amount_paid
-import mifos_mobile.feature.client_charge.generated.resources.amount_waived
+import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
-import mifos_mobile.feature.client_charge.generated.resources.ic_charges
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.component.EmptyDataView
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosTextTitleDescSingleLine
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.charge.components.ClientChargeItem
 import org.mifos.mobile.feature.charge.viewmodel.ClientChargeAction
 import org.mifos.mobile.feature.charge.viewmodel.ClientChargeEvent
 import org.mifos.mobile.feature.charge.viewmodel.ClientChargeState
@@ -86,30 +76,14 @@ internal fun ClientChargeScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
-
     )
-}
 
-@Composable
-private fun ClientChargeDialog(
-    state: ClientChargeState,
-    onAction: (ClientChargeAction) -> Unit,
-) {
-    when (state.chargeDialog) {
-        is ClientChargeState.ChargeDialogState.Error -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.isOnline,
-                isRetryEnabled = true,
-                onRetry = { onAction(ClientChargeAction.RefreshCharges) },
-            )
-        }
-
-        is ClientChargeState.ChargeDialogState.Loading -> {
-            MifosProgressIndicator()
-        }
-
-        null -> Unit
-    }
+    ClientChargeDialogs(
+        dialogState = state.dialogState,
+        onDismissRequest = remember(viewModel) {
+            { viewModel.trySendAction(ClientChargeAction.OnDismissDialog) }
+        },
+    )
 }
 
 @Composable
@@ -118,37 +92,32 @@ private fun ClientChargeScreen(
     modifier: Modifier = Modifier,
     onAction: (ClientChargeAction) -> Unit,
 ) {
-    MifosScaffold(
+    MifosElevatedScaffold(
         topBarTitle = stringResource(state.topBarTitleResId),
-        onNavigationIconClick = { onAction(ClientChargeAction.OnNavigate) },
+        onNavigateBack = { onAction(ClientChargeAction.OnNavigate) },
         modifier = modifier,
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
         content = {
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
-                when {
-                    state.charges.isEmpty() && state.chargeDialog == null -> {
-                        EmptyDataView(
-                            modifier = Modifier.fillMaxSize(),
-                            image = Res.drawable.ic_charges,
-                            error = Res.string.error_no_charge,
-                        )
-                    }
-
-                    state.charges.isNotEmpty() -> {
-                        ClientChargeContent(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            chargesList = state.charges,
-                        )
-                    }
+                if (state.dialogState == null) {
+                    ClientChargeContent(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        chargesList = state.charges,
+                    )
                 }
             }
         },
-    )
-    ClientChargeDialog(
-        state = state,
-        onAction = onAction,
     )
 }
 
@@ -168,86 +137,35 @@ private fun ClientChargeContent(
 }
 
 @Composable
-private fun ClientChargeItem(
-    charge: Charge,
-    modifier: Modifier = Modifier,
+private fun ClientChargeDialogs(
+    dialogState: ClientChargeState.DialogState?,
+    onDismissRequest: () -> Unit,
 ) {
-    val currencyRepresentation = charge.currency?.code ?: ""
-
-    OutlinedCard(
-        modifier = modifier
-            .fillMaxWidth(),
-    ) {
-        Row(
-            modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max),
-        ) {
-            VerticalDivider(
-                thickness = 5.dp,
-                color = if (charge.isChargePaid || charge.isChargeWaived ||
-                    charge.paid || charge.waived
-                ) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.primary
-                },
-                modifier = Modifier.fillMaxHeight(),
+    when (dialogState) {
+        is ClientChargeState.DialogState.Loading -> {
+            MifosLoadingDialog(
+                visibilityState = LoadingDialogState.Shown,
             )
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    text = charge.name ?: "",
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-
-                Text(
-                    text = if (charge.dueDate.isNotEmpty()) {
-                        DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
-                    } else {
-                        ""
-                    },
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_due),
-                    description = CurrencyFormatter.format(
-                        charge.amount,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_paid),
-                    description = CurrencyFormatter.format(
-                        charge.amountPaid,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_waived),
-                    description = CurrencyFormatter.format(
-                        charge.amountWaived,
-                        currencyRepresentation,
-                        2,
-                    ),
-                )
-
-                MifosTextTitleDescSingleLine(
-                    title = stringResource(Res.string.amount_outstanding),
-                    description = CurrencyFormatter.format(
-                        charge.amountOutstanding,
-                        currencyRepresentation,
-                        2,
-                    ),
-
-                )
-            }
         }
+
+        is ClientChargeState.DialogState.Error -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    message = dialogState.message,
+                ),
+                onDismissRequest = onDismissRequest,
+            )
+        }
+
+        ClientChargeState.DialogState.Empty -> {
+            EmptyDataView(
+                modifier = Modifier.fillMaxSize(),
+                image = Res.drawable.database_warning,
+                error = Res.string.error_no_charge,
+            )
+        }
+
+        null -> Unit
     }
 }
 
@@ -257,7 +175,7 @@ private fun ClientChargeScreenPreview() {
     MifosMobileTheme {
         ClientChargeScreen(
             modifier = Modifier,
-            state = ClientChargeState(chargeDialog = null, isOnline = false),
+            state = ClientChargeState(dialogState = null, isOnline = false),
             onAction = { },
         )
     }

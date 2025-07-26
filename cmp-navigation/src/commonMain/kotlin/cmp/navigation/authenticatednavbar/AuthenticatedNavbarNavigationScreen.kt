@@ -40,6 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
@@ -169,6 +170,10 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 //                },
                 navigateToAccountsScreen = { navigateToAccountsScreen(it) },
                 navigateToNotificationScreen = navigateToNotificationScreen,
+            )
+
+            clientChargeNavGraph(
+                navigateBack = navController::popBackStack,
             )
 
             userprofileNavGraph(navController, {})
