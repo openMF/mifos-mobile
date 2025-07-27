@@ -150,6 +150,7 @@ fun ChargeDetailsPaidComponent(
                 text = stringResource(Res.string.paid_on, paidOn),
                 style = MifosTypography.bodySmallEmphasized,
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

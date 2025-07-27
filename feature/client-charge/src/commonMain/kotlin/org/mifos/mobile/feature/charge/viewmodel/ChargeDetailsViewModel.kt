@@ -32,15 +32,16 @@ internal class ChargeDetailsViewModel(
 ) {
     init {
         viewModelScope.launch {
-            val title = savedStateHandle.toRoute<ChargesDetailsRoute>().title
-            val date = savedStateHandle.toRoute<ChargesDetailsRoute>().date
-            val due = savedStateHandle.toRoute<ChargesDetailsRoute>().due
-            val paid = savedStateHandle.toRoute<ChargesDetailsRoute>().paid
-            val waived = savedStateHandle.toRoute<ChargesDetailsRoute>().waived
-            val outstanding = savedStateHandle.toRoute<ChargesDetailsRoute>().outstanding
-            val refNo = savedStateHandle.toRoute<ChargesDetailsRoute>().refNo
-            val paidOn = savedStateHandle.toRoute<ChargesDetailsRoute>().paidOn
-            val isPaid = savedStateHandle.toRoute<ChargesDetailsRoute>().isPaid
+            var route=savedStateHandle.toRoute<ChargesDetailsRoute>()
+            val title = route.title
+            val date = route.date
+            val due = route.due
+            val paid = route.paid
+            val waived = route.waived
+            val outstanding = route.outstanding
+            val refNo = route.refNo
+            val paidOn = route.paidOn
+            val isPaid = route.isPaid
 
             val chargeDetailsMap = mapOf(
                 getString(Res.string.fee_title) to title,
