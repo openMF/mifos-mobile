@@ -136,7 +136,7 @@ internal class SavingsAccountDetailsViewModel(
             LabelValueItem(Res.string.feature_savings_status_label, savings.status?.value ?: "N/A"),
             LabelValueItem(
                 Res.string.feature_savings_nominal_interest_rate_label,
-                savings.getNominalAnnualInterestRate().toString(),
+                "${savings.getNominalAnnualInterestRate()} %"
             ),
             LabelValueItem(
                 Res.string.feature_savings_total_deposits_label,

@@ -171,6 +171,8 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.EditRegular,
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+
             )
         }
 
@@ -193,6 +195,7 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.ArrowExport,
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }
