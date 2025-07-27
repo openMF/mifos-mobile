@@ -32,7 +32,7 @@ internal class ChargeDetailsViewModel(
 ) {
     init {
         viewModelScope.launch {
-            var route=savedStateHandle.toRoute<ChargesDetailsRoute>()
+            var route = savedStateHandle.toRoute<ChargesDetailsRoute>()
             val title = route.title
             val date = route.date
             val due = route.due
