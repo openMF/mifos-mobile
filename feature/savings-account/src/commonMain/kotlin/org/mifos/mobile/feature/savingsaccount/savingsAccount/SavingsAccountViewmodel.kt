@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.savingsaccount
+package org.mifos.mobile.feature.savingsaccount.savingsAccount
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch

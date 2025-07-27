@@ -38,4 +38,30 @@
     <string name="feature_savings_filter_closed_account">Closed</string>
     <string name="feature_savings_filter_matured_account">Matured</string>
     <string name="feature_savings_filter_approved_account">Approved</string>
+
+<!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Account Details</string>
+    <string name="feature_account_action_update">Update</string>
+    <string name="feature_account_action_withdraw">Withdraw</string>
+    <string name="feature_account_action_deposit">Deposit</string>
+    <string name="feature_account_action_deposit_tip">Start your deposit journey</string>
+    <string name="feature_account_action_transfer">Transfer</string>
+    <string name="feature_account_action_transfer_tip">Transfer your funds to other product</string>
+    <string name="feature_account_action_transactions">Transactions</string>
+    <string name="feature_account_action_transactions_tip">Recent transactions of this account</string>
+    <string name="feature_account_action_charges">Charges</string>
+    <string name="feature_account_action_charges_tip">Fees or charges on this account</string>
+    <string name="feature_account_action_qr">QR Code</string>
+    <string name="feature_account_action_qr_tip">Generate QR code</string>
+
+    <string name="feature_savings_account_number_label">Account Number</string>
+    <string name="feature_savings_available_balance_label">Available Balance</string>
+    <string name="feature_savings_status_label">Status</string>
+    <string name="feature_savings_nominal_interest_rate_label">Nominal Interest Rate</string>
+    <string name="feature_savings_total_deposits_label">Total Deposits</string>
+    <string name="feature_savings_total_withdrawals_label">Total Withdrawals</string>
+    <string name="feature_savings_transaction_amount_label">Amount</string>
+    <string name="feature_savings_transaction_date_label">Date</string>
+
 </resources>

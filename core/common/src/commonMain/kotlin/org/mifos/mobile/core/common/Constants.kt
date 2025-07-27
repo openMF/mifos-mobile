@@ -56,7 +56,7 @@ object Constants {
     const val QR_DATA = "qrcode_data"
     const val TEMPLATE = "template"
     const val RECENT_TRANSACTIONS = "recent_transactions"
-    const val CHARGES = "charges"
+
     const val HELP = "help"
     const val USER_PROFILE = "user_profile"
     const val USER_DETAILS = "user_details"
@@ -89,4 +89,10 @@ object Constants {
     const val SET_PASSWORD = "set_password"
 
     const val SAVINGS_ACCOUNT = "savings_account"
+
+    const val DEPOSIT = "deposit"
+    const val TRANSFER = "transfer"
+    const val TRANSACTION = "transactions"
+    const val CHARGES = "charges"
+    const val QR_CODE = "qr_code"
 }
