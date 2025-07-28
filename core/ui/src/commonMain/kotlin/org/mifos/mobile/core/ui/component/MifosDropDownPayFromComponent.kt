@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -59,12 +58,12 @@ import org.mifos.mobile.core.designsystem.utils.onClick
 
 @Composable
 fun MifosPayFromDropdownUI(
-    modifier: Modifier = Modifier,
     accounts: List<Pair<String, String>>,
-    onAccountSelected: (String, String) -> Unit
+    modifier: Modifier = Modifier,
+    onAccountSelected: (String, String) -> Unit,
 ) {
-    var selectedAccount by remember { mutableStateOf(accounts[0].first) }
-    var selectedBalance by remember { mutableStateOf(accounts[0].second) }
+    var selectedAccount by rememberSaveable { mutableStateOf(accounts[0].first) }
+    var selectedBalance by rememberSaveable { mutableStateOf(accounts[0].second) }
     Column {
         MifosDropDownPayFromComponent(
             accountNumber = selectedAccount,
@@ -77,7 +76,7 @@ fun MifosPayFromDropdownUI(
             onAccountSelected = { accountNumber, balance ->
                 selectedAccount = accountNumber
                 selectedBalance = balance
-                onAccountSelected(accountNumber,balance)
+                onAccountSelected(accountNumber, balance)
             },
         )
     }
@@ -85,16 +84,16 @@ fun MifosPayFromDropdownUI(
 
 @Composable
 fun MifosDropDownPayFromComponent(
-    modifier: Modifier = Modifier,
     accountNumber: String,
     availableBalance: String,
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
                 .height(128.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             Image(
                 modifier = Modifier.matchParentSize(),
@@ -108,7 +107,7 @@ fun MifosDropDownPayFromComponent(
                     .fillMaxSize()
                     .padding(
                         horizontal = DesignToken.padding.large,
-                        vertical = DesignToken.padding.largeIncreased
+                        vertical = DesignToken.padding.largeIncreased,
                     ),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -145,9 +144,9 @@ fun MifosDropDownPayFromComponent(
                 .offset(x = 16.dp, y = (-8).dp)
                 .background(
                     color = MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
                 )
-                .padding(horizontal = DesignToken.padding.small)
+                .padding(horizontal = DesignToken.padding.small),
         ) {
             Text(
                 text = "Pay From",
@@ -156,7 +155,6 @@ fun MifosDropDownPayFromComponent(
         }
     }
 }
-
 
 @Composable
 fun AccountDropdownItem(
@@ -270,7 +268,7 @@ private fun MifosDropDownPayFromComponentPreview() {
                 "678292726" to "$ 923,786.00",
             ),
             onAccountSelected = {
-                    _,_,->
+                    _, _ ->
             },
         )
     }
