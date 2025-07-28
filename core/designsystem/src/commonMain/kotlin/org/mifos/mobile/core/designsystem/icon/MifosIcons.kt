@@ -68,13 +68,17 @@ import fluent.ui.system.icons.filled.Eye
 import fluent.ui.system.icons.filled.Feed
 import fluent.ui.system.icons.filled.Grid
 import fluent.ui.system.icons.filled.LockClosed
+import fluent.ui.system.icons.filled.Money
 import fluent.ui.system.icons.filled.MoneyHand
 import fluent.ui.system.icons.filled.Person
 import fluent.ui.system.icons.filled.PersonAccounts
+import fluent.ui.system.icons.filled.QrCode
 import fluent.ui.system.icons.filled.Receipt
+import fluent.ui.system.icons.filled.ReceiptMoney
 import fluent.ui.system.icons.filled.Wallet
 import fluent.ui.system.icons.regular.Alert
 import fluent.ui.system.icons.regular.ArrowCounterclockwise
+import fluent.ui.system.icons.regular.ArrowExportUp
 import fluent.ui.system.icons.regular.Backspace
 import fluent.ui.system.icons.regular.Calendar
 import fluent.ui.system.icons.regular.CardUi
@@ -84,6 +88,7 @@ import fluent.ui.system.icons.regular.ChevronDown
 import fluent.ui.system.icons.regular.ChevronLeft
 import fluent.ui.system.icons.regular.ChevronUp
 import fluent.ui.system.icons.regular.Dismiss
+import fluent.ui.system.icons.regular.Edit
 import fluent.ui.system.icons.regular.Eye
 import fluent.ui.system.icons.regular.EyeOff
 import fluent.ui.system.icons.regular.Filter
@@ -186,4 +191,12 @@ object MifosIcons {
 
     val DrawerAdd = FluentIcons.Filled.DrawerAdd
     val DrawerSubtract = FluentIcons.Filled.DrawerSubtract
+
+    val EditRegular = FluentIcons.Regular.Edit
+    val ArrowExport = FluentIcons.Regular.ArrowExportUp
+    val Money = FluentIcons.Filled.Money
+    val MoneyHand = FluentIcons.Filled.MoneyHand
+    val ChatHistory = FluentIcons.Filled.ChatHistory
+    val ReceiptMoney = FluentIcons.Filled.ReceiptMoney
+    val QrCode = FluentIcons.Filled.QrCode
 }
