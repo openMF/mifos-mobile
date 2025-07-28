@@ -27,7 +27,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
-import org.mifos.mobile.feature.savingsaccount.navigation.savingsAccountDestination
+import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
+import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 
@@ -58,14 +59,13 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateBack = navController::popBackStack,
         )
 
-        savingsAccountDestination(
-            navigateBack = navController::popBackStack,
-            onAccountClicked = { _, _ -> {} },
-        )
-
         accountsDestination(
             navigateBack = navController::popBackStack,
-            onAccountClicked = { _, _ -> {} },
+            onAccountClicked = { accountType, accountId ->
+                if (accountType == Constants.SAVINGS_ACCOUNT) {
+                    navController.navigateToSavingsAccountDetailsScreen(accountId)
+                }
+            },
         )
 
         clientChargeNavGraph(
@@ -82,6 +82,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 }
             },
         )
+
+        savingsNavGraph(navController = navController)
     }
 }
 

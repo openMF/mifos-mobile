@@ -28,8 +28,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
@@ -38,19 +40,17 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
-internal fun SavingsAccountCard(
-    accountId: Long,
-    accountNumber: String?,
-    accountType: String?,
-    accountStatus: String,
-    accountStatusColor: Color,
-    onAccountClick: (Long) -> Unit,
+internal fun SavingsActionsCard(
+    title: StringResource,
+    subTitle: StringResource,
+    icon: ImageVector,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onAccountClick(accountId) }
+            .clickable { onClick() }
             .padding(vertical = DesignToken.padding.medium),
     ) {
         Row(
@@ -60,8 +60,8 @@ internal fun SavingsAccountCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Icon(
-                imageVector = MifosIcons.PersonAccounts,
-                contentDescription = "Person Account",
+                imageVector = icon,
+                contentDescription = null,
                 tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
                 modifier = Modifier
                     .background(
@@ -78,12 +78,12 @@ internal fun SavingsAccountCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = accountNumber ?: "",
+                    text = stringResource(title),
                     style = MifosTypography.titleSmallEmphasized,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    text = accountType ?: "",
+                    text = stringResource(subTitle),
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -91,21 +91,11 @@ internal fun SavingsAccountCard(
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-            ) {
-                Text(
-                    text = accountStatus,
-                    style = MifosTypography.labelSmall,
-                    color = accountStatusColor,
-                )
-                Icon(
-                    imageVector = MifosIcons.ChevronRight,
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp),
-                )
-            }
+            Icon(
+                imageVector = MifosIcons.ChevronRight,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+            )
         }
     }
 }

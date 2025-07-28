@@ -1,0 +1,318 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.savingsaccount.savingsAccountDetails
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
+import mifos_mobile.feature.savings_account.generated.resources.Res
+import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
+import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_withdraw
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_status_label
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosLabelValueCard
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
+import org.mifos.mobile.feature.savingsaccount.components.SavingsActionsCard
+import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
+
+@Composable
+internal fun SavingsAccountDetailsScreen(
+    navigateBack: () -> Unit,
+    viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
+) {
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            SavingsAccountDetailsEvent.NavigateBack -> navigateBack.invoke()
+
+            // TODO navigate user to update and withdraw while designing those screens
+            SavingsAccountDetailsEvent.UpdateAccount -> {}
+
+            SavingsAccountDetailsEvent.WithdrawAmount -> {}
+        }
+    }
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    SavingsAccountDetailsContent(
+        state = uiState,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+
+    SavingsAccountDialogs(
+        dialogState = uiState.dialogState,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+}
+
+@Composable
+internal fun SavingsAccountDetailsContent(
+    state: SavingsAccountDetailsState,
+    onAction: (SavingsAccountDetailsAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    MifosElevatedScaffold(
+        onNavigateBack = { onAction(SavingsAccountDetailsAction.OnNavigateBack) },
+        topBarTitle = "Account Details",
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
+    ) {
+        if (state.dialogState == null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(DesignToken.padding.large),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            ) {
+                ActionBar(
+                    onAction = onAction,
+                )
+
+                AccountDetailsGrid(
+                    details = state.displayItems,
+                    isActive = state.isActive,
+                )
+
+                AccountDetailsGrid(
+                    label = "Last Transactions",
+                    details = state.transactionList,
+                    isActive = state.isActive,
+                )
+
+                SavingsAccountActions(
+                    items = state.items,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun ActionBar(
+    onAction: (SavingsAccountDetailsAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = DesignToken.padding.medium),
+        horizontalArrangement = Arrangement.End,
+    ) {
+        Row(
+            modifier = Modifier.clickable {
+                onAction(SavingsAccountDetailsAction.OnUpdateAccount)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = stringResource(Res.string.feature_account_action_update),
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.EditRegular,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+
+            )
+        }
+
+        Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
+
+        Row(
+            modifier = Modifier.clickable {
+                onAction(SavingsAccountDetailsAction.OnWithDraw)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = stringResource(Res.string.feature_account_action_withdraw),
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.ArrowExport,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun AccountDetailsGrid(
+    label: String? = null,
+    details: List<LabelValueItem>? = emptyList(),
+    isActive: Boolean = false,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+    ) {
+        if (label != null) {
+            Text(
+                text = label,
+                style = MifosTypography.labelLargeEmphasized,
+                color = AppColors.customBlack,
+            )
+        }
+        if (details != null) {
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                maxItemsInEachRow = 2,
+            ) {
+                details.forEach { item ->
+                    MifosLabelValueCard(
+                        modifier = Modifier
+                            .height(64.dp)
+                            .weight(1f),
+                        label = stringResource(item.label),
+                        value = item.value,
+                        color = if (isActive && item.label == Res.string.feature_savings_status_label) {
+                            AppColors
+                                .customEnable
+                        } else {
+                            MaterialTheme
+                                .colorScheme.onBackground
+                        },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+internal fun SavingsAccountActions(
+    items: ImmutableList<SavingsActionItems>,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+    ) {
+        Text(
+            text = "Actions",
+            style = MifosTypography.labelLargeEmphasized,
+            color = AppColors.customBlack,
+        )
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items.forEach { item ->
+                SavingsActionsCard(
+                    title = item.title,
+                    subTitle = item.subTitle,
+                    icon = item.icon,
+                    //                TODO navigate to respective destinations
+                    onClick = { },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun SavingsAccountDialogs(
+    dialogState: SavingsAccountDetailsState.DialogState?,
+    onAction: (SavingsAccountDetailsAction) -> Unit,
+) {
+    when (dialogState) {
+        is SavingsAccountDetailsState.DialogState.Error -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
+        )
+
+        is SavingsAccountDetailsState.DialogState.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
+
+        null -> Unit
+    }
+}
+
+data class LabelValueItem(
+    val label: StringResource,
+    val value: String,
+)
+
+@Preview
+@Composable
+private fun Account_Details_Overview() {
+    MifosMobileTheme {
+        Column(modifier = Modifier.fillMaxSize()) {
+            SavingsAccountDetailsContent(
+                state = SavingsAccountDetailsState(
+                    items = savingsAccountActions,
+                    dialogState = null,
+                ),
+                onAction = {},
+            )
+        }
+    }
+}

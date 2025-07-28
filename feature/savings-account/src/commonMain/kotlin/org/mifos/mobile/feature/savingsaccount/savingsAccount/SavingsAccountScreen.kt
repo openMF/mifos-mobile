@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.savingsaccount
+package org.mifos.mobile.feature.savingsaccount.savingsAccount
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +43,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
@@ -57,11 +58,10 @@ import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.savingsaccount.components.SavingsAccountCard
 
-@Suppress("UnusedParameter")
 @Composable
 fun SavingsAccountScreen(
     navigateBack: () -> Unit,
-    onAccountClicked: (String, Long) -> Unit,
+    onAccountClicked: (String, Long) -> Unit = { _, _ -> },
     refreshSignal: Long? = null,
     onLoadingCompleted: () -> Unit = {},
     accountTypeFilters: List<StringResource> = emptyList(),
@@ -84,11 +84,9 @@ fun SavingsAccountScreen(
             is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
 
 //            TODO uncomment this after designing account detail screen
-//            is SavingsAccountsEvent.AccountClicked -> {
-//                onAccountClicked(event.accountType, event.accountId)
-//            }
-
-            is SavingsAccountsEvent.AccountClicked -> {}
+            is SavingsAccountsEvent.AccountClicked -> {
+                onAccountClicked(Constants.SAVINGS_ACCOUNT, event.accountId)
+            }
 
             is SavingsAccountsEvent.LoadingCompleted -> {
                 onLoadingCompleted.invoke()
@@ -214,7 +212,7 @@ internal fun SavingsAccountContent(
                 Spacer(modifier = Modifier.height(DesignToken.spacing.small))
             }
             items(state.savingsAccount.orEmpty()) { account ->
-                // TODO create enum class and use
+                // TODO create enum class
                 val color = when (account.status?.value) {
                     "Active" -> AppColors.customEnable
                     "submittedAndPendingApproval" -> AppColors.customYellow
@@ -238,91 +236,19 @@ internal fun SavingsAccountContent(
                         }
                         ),
                     accountStatusColor = color,
-                    onAccountClick = {},
+                    onAccountClick = {
+                        onAction(
+                            SavingsAccountAction.OnAccountClicked(
+                                it,
+                                Constants.SAVINGS_ACCOUNT,
+                            ),
+                        )
+                    },
                 )
             }
         }
     }
 }
-
-data class AccountCardData(
-    val accountId: String?,
-    val accountNumber: String,
-    val accountType: String,
-    val statusText: String,
-    val statusValue: String? = null,
-)
-
-// val accountCards = listOf(
-//    AccountCardData(
-//        accountId = 1L,
-//        accountNumber = "2689-7897-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Progress",
-//        statusValue = "$ 23,315,500",
-//    ),
-//    AccountCardData(
-//        accountId = 2L,
-//        accountNumber = "6666-2689-7897",
-//        accountType = "Bank Account",
-//        statusText = "Pending",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//    AccountCardData(
-//        accountId = 3L,
-//        accountNumber = "6576-2689-6666",
-//        accountType = "Wallet Account",
-//        statusText = "Closed",
-//    ),
-//
-// )
 
 @Preview
 @Composable

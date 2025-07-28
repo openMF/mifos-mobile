@@ -71,7 +71,7 @@ import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsEvent
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
-import org.mifos.mobile.feature.savingsaccount.SavingsAccountScreen
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
 
 @Composable
 internal fun AccountsScreen(
