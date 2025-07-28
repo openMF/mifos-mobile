@@ -104,6 +104,10 @@ internal class ClientChargeViewModel(
 
             is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult,
             -> handleLoanOrSavingsChargesResult(action)
+
+            is ClientChargeAction.OnChargeClick -> {
+                sendEvent(ClientChargeEvent.OnChargeClick(action.charge))
+            }
         }
     }
 
@@ -252,12 +256,14 @@ data class ClientChargeState(
 sealed interface ClientChargeEvent {
     data class ShowToast(val message: String) : ClientChargeEvent
     data object Navigate : ClientChargeEvent
+    data class OnChargeClick(val charge: Charge) : ClientChargeEvent
 }
 
 sealed interface ClientChargeAction {
     data object RefreshCharges : ClientChargeAction
     data object OnNavigate : ClientChargeAction
     data object OnDismissDialog : ClientChargeAction
+    data class OnChargeClick(val charge: Charge) : ClientChargeAction
     sealed class Internal : ClientChargeAction {
         data class ReceiveLoanOrSavingsChargesResult(
             val result: DataState<List<Charge>>,

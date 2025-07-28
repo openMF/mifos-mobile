@@ -23,6 +23,7 @@ import org.mifos.mobile.feature.accounts.navigation.accountsDestination
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
+import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
@@ -65,6 +66,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
         accountsDestination(
             navigateBack = navController::popBackStack,
             onAccountClicked = { _, _ -> {} },
+        )
+
+        clientChargeNavGraph(
+            navigateBack = navController::popBackStack,
+            navController = navController,
         )
 
         statusDestination(
