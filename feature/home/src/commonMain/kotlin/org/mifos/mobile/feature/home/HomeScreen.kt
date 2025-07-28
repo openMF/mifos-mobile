@@ -58,6 +58,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosPayFromDropdownUI
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -130,6 +131,14 @@ internal fun HomeContent(
             }
         },
     ) {
+        // List of available accounts
+        val accounts = listOf(
+            "267282972" to "$ 23,786.00",
+            "6572992762" to "$ 123,786.00",
+            "52682926" to "$ 78,786.00",
+            "678292726" to "$ 923,786.00"
+        )
+
         Column(
             modifier = Modifier
                 .padding(DesignToken.padding.large),
@@ -143,6 +152,10 @@ internal fun HomeContent(
             )
 
             Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+
+            MifosPayFromDropdownUI(
+                accounts = accounts
+            )
 
             MifosDashboardCard(
                 isLoanApplied = state.isLoanApplied,
