@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.charge.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,12 +44,16 @@ import org.mifos.mobile.core.model.entity.Charge
 @Composable
 fun ClientChargeItem(
     charge: Charge,
+    onChargeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val currencyRepresentation = charge.currency?.code ?: ""
     Row(
         modifier
             .fillMaxWidth()
+            .clickable {
+                onChargeClick()
+            }
             .padding(vertical = DesignToken.padding.large),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
@@ -154,6 +159,7 @@ private fun ClientChargesItemPreview() {
     MifosMobileTheme {
         ClientChargeItem(
             charge = Charge(),
+            onChargeClick = {},
         )
     }
 }

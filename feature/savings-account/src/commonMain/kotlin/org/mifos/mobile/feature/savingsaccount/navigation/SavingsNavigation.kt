@@ -14,28 +14,30 @@ package org.mifos.mobile.feature.savingsaccount.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import kotlinx.serialization.SerialName
+import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.ui.composableWithSlideTransitions
-import org.mifos.mobile.feature.savingsaccount.SavingsAccountScreen
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.savingsAccountDestination
+import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.savingsAccountDetailsDestination
 
 @Serializable
-@SerialName(Constants.SAVINGS_ACCOUNT)
-data object SavingsAccountRoute
+data object SavingsGraphRoute
 
-fun NavController.navigateToSavingsAccountScreen(navOptions: NavOptions? = null) =
+fun NavController.navigateToSavingsGraph(navOptions: NavOptions? = null) =
     navigate(SavingsAccountRoute, navOptions)
 
-@Suppress("UnusedParameter")
-fun NavGraphBuilder.savingsAccountDestination(
-    navigateBack: () -> Unit,
-    onAccountClicked: (String, Long) -> Unit,
+fun NavGraphBuilder.savingsNavGraph(
+    navController: NavController,
 ) {
-    composableWithSlideTransitions<SavingsAccountRoute> {
-        SavingsAccountScreen(
-            navigateBack = navigateBack,
-            onAccountClicked = { _, _ -> {} },
+    navigation<SavingsGraphRoute>(
+        startDestination = SavingsAccountRoute,
+    ) {
+        savingsAccountDestination(
+            navigateBack = navController::popBackStack,
+        )
+
+        savingsAccountDetailsDestination(
+            navigateBack = navController::popBackStack,
         )
     }
 }
