@@ -9,7 +9,9 @@
  */
 package org.mifos.mobile.feature.loanaccount.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,9 +33,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -49,19 +52,23 @@ internal fun LoanAccountCard(
     modifier: Modifier = Modifier,
 ) {
     val loanStatusColor = when (status.lowercase()) {
-        "paid" -> Color(0xFF4CAF50)
-        "due" -> Color(0xFFFF5722)
-        "not active" -> Color(0xFFFF9800)
-        else -> MaterialTheme.colorScheme.secondary
+        Constants.PAID.lowercase() -> AppColors.customEnable
+        Constants.DUE -> MaterialTheme.colorScheme.error
+        else -> AppColors.customYellow
     }
 
-    val isPaid = status.lowercase() == "paid"
+    val isPaid = status.lowercase() == Constants.PAID.lowercase()
 
     Box(
         modifier = modifier
+            .padding(vertical = DesignToken.padding.medium, horizontal = DesignToken.padding.large)
             .fillMaxWidth()
+            .border(
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondaryContainer),
+                shape = RoundedCornerShape(12.dp),
+            )
             .clickable { onLoanClick(loanId) }
-            .padding(vertical = DesignToken.padding.medium),
+            .padding(DesignToken.padding.medium),
     ) {
         Row(
             modifier = Modifier
@@ -80,8 +87,8 @@ internal fun LoanAccountCard(
             ) {
                 Text(
                     text = loanId.toString().padStart(2, '0'),
-                    style = MifosTypography.labelSmall,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MifosTypography.titleSmallEmphasized,
+                    color = AppColors.customWhite,
                 )
             }
 
@@ -92,13 +99,13 @@ internal fun LoanAccountCard(
             ) {
                 Text(
                     text = date,
-                    style = MifosTypography.titleSmallEmphasized,
-                    color = MaterialTheme.colorScheme.secondary,
+                    style = MifosTypography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline,
                 )
                 Text(
                     text = amount,
-                    style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MifosTypography.titleSmallEmphasized,
+                    color = AppColors.customBlack,
                 )
                 Text(
                     text = status,
@@ -116,19 +123,20 @@ internal fun LoanAccountCard(
                     }
                 },
                 enabled = !isPaid,
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.onPrimary,
-                    disabledContainerColor = MaterialTheme.colorScheme.onSurface,
+                    disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 ),
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondaryContainer),
                 modifier = Modifier.size(width = 60.dp, height = 32.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
             ) {
                 Text(
-                    text = if (isPaid) "Paid" else "Pay",
-                    style = MifosTypography.labelSmall,
+                    text = if (isPaid) Constants.PAID else Constants.PAY,
+                    style = MifosTypography.labelLarge,
                     color = if (isPaid) {
-                        MaterialTheme.colorScheme.secondary
+                        MaterialTheme.colorScheme.outline
                     } else {
                         MaterialTheme.colorScheme.primary
                     },
@@ -144,9 +152,7 @@ private fun Loan_Account_Preview() {
     MifosMobileTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                .fillMaxSize(),
         ) {
             LoanAccountCard(
                 loanId = 1,
