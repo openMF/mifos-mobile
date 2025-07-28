@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
@@ -12,9 +21,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,12 +39,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.core.ui.generated.resources.available_balance
+import mifos_mobile.core.ui.generated.resources.available_balance_formatted
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
-import mifos_mobile.core.ui.generated.resources.powered_by
+import mifos_mobile.core.ui.generated.resources.savings_account
+import mifos_mobile.core.ui.generated.resources.select_other_payment_account
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -41,168 +55,223 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.designsystem.utils.onClick
 
 @Composable
 fun MifosPayFromDropdownUI(
+    modifier: Modifier = Modifier,
     accounts: List<Pair<String, String>>,
+    onAccountSelected: (String, String) -> Unit
 ) {
-    var selectedAccount by remember { mutableStateOf("") }
-    var selectedBalance by remember { mutableStateOf("") }
+    var selectedAccount by remember { mutableStateOf(accounts[0].first) }
+    var selectedBalance by remember { mutableStateOf(accounts[0].second) }
     Column {
         MifosDropDownPayFromComponent(
             accountNumber = selectedAccount,
             availableBalance = selectedBalance,
+            modifier = modifier,
         )
-        Spacer(modifier = Modifier.height(8.dp))
         AccountDropdownList(
             accounts = accounts,
-            onAccountSelected = { accountNumber,balance->
+            selectedAccount = selectedAccount,
+            onAccountSelected = { accountNumber, balance ->
                 selectedAccount = accountNumber
                 selectedBalance = balance
-            }
+                onAccountSelected(accountNumber,balance)
+            },
         )
     }
 }
-
 
 @Composable
 fun MifosDropDownPayFromComponent(
-    modifier: Modifier= Modifier,
-    accountNumber:String,
-    availableBalance:String,
+    modifier: Modifier = Modifier,
+    accountNumber: String,
+    availableBalance: String,
 ) {
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
-            .height(128.dp)
-            .fillMaxWidth(),
-    ){
-        Image(
+    Box(modifier = modifier) {
+        Box(
             modifier = Modifier
-                .matchParentSize(),
-            painter = painterResource(Res.drawable.ic_icon_dashboard),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large),
-            verticalArrangement = Arrangement.SpaceBetween,
+                .clip(RoundedCornerShape(16.dp))
+                .height(128.dp)
+                .fillMaxWidth()
         ) {
-            Column {
-                Text(
-                    text = "Savings Account",
-                    style = MifosTypography.bodySmall,
-                    color = AppColors.customWhite.copy(alpha = 0.5f),
-                )
-                Text(
-                    text = accountNumber,
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = AppColors.customWhite,
-                )
+            Image(
+                modifier = Modifier.matchParentSize(),
+                painter = painterResource(Res.drawable.ic_icon_dashboard),
+                contentDescription = "Background Image",
+                contentScale = ContentScale.Crop,
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = DesignToken.padding.large,
+                        vertical = DesignToken.padding.largeIncreased
+                    ),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column {
+                    Text(
+                        text = stringResource(Res.string.savings_account),
+                        style = MifosTypography.bodySmall,
+                        color = AppColors.customWhite.copy(alpha = 0.5f),
+                    )
+                    Text(
+                        text = accountNumber,
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = AppColors.customWhite,
+                    )
+                }
+                Column {
+                    Text(
+                        text = stringResource(Res.string.available_balance),
+                        style = MifosTypography.bodySmall,
+                        color = AppColors.customWhite.copy(alpha = 0.5f),
+                    )
+                    Text(
+                        text = availableBalance,
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = AppColors.customWhite,
+                    )
+                }
             }
-            Column{
-                Text(
-                    text = "Available Balance",
-                    style = MifosTypography.bodySmall,
-                    color = AppColors.customWhite.copy(alpha = 0.5f),
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .offset(x = 16.dp, y = (-8).dp)
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(12.dp)
                 )
-                Text(
-                    text = availableBalance,
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = AppColors.customWhite,
-                )
-            }
+                .padding(horizontal = DesignToken.padding.small)
+        ) {
+            Text(
+                text = "Pay From",
+                style = MifosTypography.bodySmall,
+            )
         }
     }
 }
+
 
 @Composable
 fun AccountDropdownItem(
     accountNumber: String,
     balance: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .background(MaterialTheme.colorScheme.tertiary)
-            .padding(16.dp)
+            .padding(DesignToken.padding.medium),
     ) {
         Text(
             text = accountNumber,
             style = MifosTypography.titleMediumEmphasized,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onPrimary,
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(DesignToken.padding.extraSmall))
         Text(
-            text = "Available Balance - $balance",
+            text = stringResource(Res.string.available_balance_formatted, balance),
             style = MifosTypography.bodySmall,
-            color = Color.White.copy(alpha = 0.8f)
+            color = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }
+
 @Composable
 fun AccountDropdownList(
+    selectedAccount: String,
     accounts: List<Pair<String, String>>,
-    onAccountSelected: (String, String) -> Unit
+    onAccountSelected: (String, String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = DesignToken.padding.medium)
+            .verticalScroll(rememberScrollState())
             .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
-            .background(MaterialTheme.colorScheme.tertiary)
+            .background(MaterialTheme.colorScheme.tertiary),
     ) {
-        Row(
-            modifier = Modifier
-                .clickable { expanded = !expanded }
-                .align(Alignment.CenterHorizontally)
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            Modifier.fillMaxWidth(),
         ) {
-            Text("Select Other Payment Account")
-            Icon(
-                imageVector = if (expanded) MifosIcons.ArrowDropUp else MifosIcons.ArrowDropDown,
-                contentDescription = null
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(DesignToken.padding.small)
+                    .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+                    .background(MaterialTheme.colorScheme.background),
             )
+            Row(
+                modifier = Modifier
+                    .padding(DesignToken.padding.small)
+                    .clickable { expanded = !expanded }
+                    .align(Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
+            ) {
+                Text(
+                    text = stringResource(Res.string.select_other_payment_account),
+                    style = MifosTypography.labelSmall,
+                    color = AppColors.customWhite,
+                )
+                Icon(
+                    imageVector = if (expanded) MifosIcons.ChevronUp else MifosIcons.ChevronDown,
+                    contentDescription = "Arrow icon",
+                    modifier = Modifier.size(12.dp),
+                    tint = AppColors.customWhite,
+                )
+            }
         }
 
         AnimatedVisibility(visible = expanded) {
-            Column {
+            Column(
+                Modifier
+                    .padding(bottom = DesignToken.padding.medium),
+            ) {
                 accounts.forEach { (accountNumber, balance) ->
                     AccountDropdownItem(
                         accountNumber = accountNumber,
-                        balance = balance
-                    ) {
-                        expanded=!expanded
-                        onAccountSelected(accountNumber, balance)
-                    }
-                    Divider(color = Color.White.copy(alpha = 0.1f))
+                        balance = balance,
+                        modifier = if (selectedAccount == accountNumber) {
+                            Modifier.background(MaterialTheme.colorScheme.onTertiaryContainer)
+                        } else {
+                            Modifier.background(MaterialTheme.colorScheme.tertiary)
+                        },
+                        onClick = {
+                            expanded = !expanded
+                            onAccountSelected(accountNumber, balance)
+                        },
+                    )
                 }
             }
         }
     }
 }
 
-
-
 @Preview
 @Composable
 private fun MifosDropDownPayFromComponentPreview() {
     MifosMobileTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            MifosDropDownPayFromComponent(
-                accountNumber = "1200-67867-8474",
-                availableBalance = "25,600"
-            )
-        }
+        MifosPayFromDropdownUI(
+            accounts = listOf(
+                "267282972" to "$ 23,786.00",
+                "6572992762" to "$ 123,786.00",
+                "52682926" to "$ 78,786.00",
+                "678292726" to "$ 923,786.00",
+            ),
+            onAccountSelected = {
+                    _,_,->
+            },
+        )
     }
 }
