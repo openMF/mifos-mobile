@@ -112,4 +112,9 @@
     <string name="validation_amount_too_large">Amount cannot exceed 999,999,999.99</string>
     <string name="validation_amount_invalid_decimal_places">Amount has too many decimal places for this currency</string>
     <string name="validation_amount_invalid_increment">Amount must be in valid increments for this currency</string>
+
+    <string name="savings_account">Savings Account</string>
+    <string name="available_balance">Available Balance</string>
+    <string name="select_other_payment_account">Select other payment account</string>
+    <string name="available_balance_formatted">Available Balance - %1$s</string>
 </resources>
