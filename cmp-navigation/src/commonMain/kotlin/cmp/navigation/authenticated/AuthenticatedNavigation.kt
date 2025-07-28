@@ -19,7 +19,9 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.feature.accounts.navigation.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.navigation.accountsDestination
+import org.mifos.mobile.feature.accounts.navigation.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.navigation.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
@@ -49,7 +51,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
                 when {
-                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(it)
+                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountTransactionsScreen(it)
                     else -> Unit
                 }
             },
@@ -66,6 +68,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     navController.navigateToSavingsAccountDetailsScreen(accountId)
                 }
             },
+        )
+
+        accountTransactionsDestination(
+            navigateBack = navController::popBackStack,
         )
 
         clientChargeNavGraph(
