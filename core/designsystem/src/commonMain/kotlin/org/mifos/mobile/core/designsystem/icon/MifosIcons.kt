@@ -54,6 +54,8 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.filled.CaretDown
+import fluent.ui.system.icons.filled.CaretUp
 import fluent.ui.system.icons.filled.ChatBubblesQuestion
 import fluent.ui.system.icons.filled.ChatHistory
 import fluent.ui.system.icons.filled.ChevronRight
@@ -199,4 +201,7 @@ object MifosIcons {
     val ChatHistory = FluentIcons.Filled.ChatHistory
     val ReceiptMoney = FluentIcons.Filled.ReceiptMoney
     val QrCode = FluentIcons.Filled.QrCode
+
+    val CaretDown = FluentIcons.Filled.CaretDown
+    val CaretUp = FluentIcons.Filled.CaretUp
 }

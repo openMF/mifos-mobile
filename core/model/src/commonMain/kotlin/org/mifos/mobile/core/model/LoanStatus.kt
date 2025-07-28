@@ -17,4 +17,6 @@ enum class LoanStatus(val status: String) {
     MATURED("Matured"),
 
     APPROVED("Approved"),
+
+    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval")
 }

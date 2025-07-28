@@ -27,7 +27,11 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
+import org.mifos.mobile.feature.passcode.verifyPasscode.VerifyPasscodeRoute
+import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
+import org.mifos.mobile.feature.savingsaccount.navigation.SavingsGraphRoute
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
@@ -83,7 +87,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
         )
 
-        savingsNavGraph(navController = navController)
+        savingsNavGraph(
+            navController = navController,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen
+        )
     }
 }
 
@@ -131,6 +139,28 @@ fun NavController.navigateToStatusScreenPasscodeFlow(
         ),
     ) {
         popUpTo(PasscodeRoute.Standard) {
+            inclusive = true
+        }
+    }
+}
+
+fun NavController.navigateToStatusAfterUpdate(
+    eventType: String,
+    eventDestination: String,
+    title: String,
+    subtitle: String,
+    buttonText: String,
+) {
+    this.navigate(
+        StatusNavigationRoute(
+            eventType = eventType,
+            eventDestination = eventDestination,
+            title = title,
+            subtitle = subtitle,
+            buttonText = buttonText,
+        ),
+    ) {
+        popUpTo(SavingsGraphRoute) {
             inclusive = true
         }
     }

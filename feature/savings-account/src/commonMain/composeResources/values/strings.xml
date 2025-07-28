@@ -64,4 +64,13 @@
     <string name="feature_savings_transaction_amount_label">Amount</string>
     <string name="feature_savings_transaction_date_label">Date</string>
 
+
+<!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Update Details</string>
+    <string name="feature_savings_update_client_name_label">Client Name</string>
+    <string name="feature_savings_update_submission_date_label">Submission Date</string>
+    <string name="feature_savings_update_account_number_label">Account Number</string>
+    <string name="feature_savings_update_product_label">Product</string>
+    <string name="feature_savings_update_request_update">Request Update</string>
 </resources>
