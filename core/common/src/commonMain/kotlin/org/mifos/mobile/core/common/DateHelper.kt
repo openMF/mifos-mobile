@@ -25,7 +25,6 @@ import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 
 @OptIn(FormatStringsInDatetimeFormats::class)
@@ -103,7 +102,6 @@ object DateHelper {
             else -> formatted
         }
     }
-
 
     fun getDateAsString(integersOfDate: List<Long>, pattern: String): String {
         return getFormatConverter(

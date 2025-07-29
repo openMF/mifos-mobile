@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.accounts.screen
 
 import androidx.compose.foundation.clickable
@@ -19,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
@@ -65,14 +73,14 @@ internal fun TransactionScreen(
     }
 
     TransactionScreenContent(
-        state=state,
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
     )
 
     AccountTransactionsDialog(
-        state=state,
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -95,7 +103,7 @@ internal fun TransactionScreenContent(
     )
 
     MifosElevatedScaffold(
-        onNavigateBack = {  },
+        onNavigateBack = { },
         topBarTitle = stringResource(Res.string.feature_transaction_transaction_history),
         pullToRefreshState = pullToRefreshState,
         bottomBar = {
@@ -109,11 +117,11 @@ internal fun TransactionScreenContent(
         },
     ) {
         LazyColumn(
-            Modifier.padding(DesignToken.padding.large)
+            Modifier.padding(DesignToken.padding.large),
         ) {
-            item{
+            item {
                 ActionBar(
-                    onAction={}
+                    onAction = {},
                 )
             }
 
@@ -122,12 +130,12 @@ internal fun TransactionScreenContent(
                     Text(
                         text = date,
                         style = MifosTypography.labelLargeEmphasized,
-                        modifier = Modifier.padding(vertical= DesignToken.padding.medium)
+                        modifier = Modifier.padding(vertical = DesignToken.padding.medium),
                     )
                 }
 
                 items(transactions.size) { index ->
-                    val transaction=transactions[index]
+                    val transaction = transactions[index]
                     TransactionScreenItem(
                         title = transaction.paymentDetailData?.paymentType?.name ?: "",
                         date = DateHelper.getDateAsString(transaction.date),
@@ -162,7 +170,7 @@ internal fun AccountTransactionsDialog(
         }
         AccountTransactionState.DialogState.Filters -> {}
         AccountTransactionState.DialogState.Loading -> MifosLoadingDialog(
-            modifier=modifier,
+            modifier = modifier,
             visibilityState = LoadingDialogState.Shown,
         )
         null -> {}
@@ -182,7 +190,6 @@ internal fun ActionBar(
     ) {
         Row(
             modifier = Modifier.clickable {
-
             },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
@@ -198,7 +205,7 @@ internal fun ActionBar(
                 imageVector = MifosIcons.Download,
                 contentDescription = stringResource(Res.string.feature_transaction_download_icon_description),
                 tint = MaterialTheme.colorScheme.primary,
-                )
+            )
         }
 
         Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))

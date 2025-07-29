@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.FilterList
@@ -201,5 +200,5 @@ object MifosIcons {
     val ChatHistory = FluentIcons.Filled.ChatHistory
     val ReceiptMoney = FluentIcons.Filled.ReceiptMoney
     val QrCode = FluentIcons.Filled.QrCode
-    val Download= FluentIcons.Filled.ArrowDownload
+    val Download = FluentIcons.Filled.ArrowDownload
 }
