@@ -67,9 +67,7 @@ internal fun SavingsAccountDetailsScreen(
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
-
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
-
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
@@ -81,7 +79,7 @@ internal fun SavingsAccountDetailsScreen(
                     uiState.accountNumber,
                     uiState.clientName,
                     uiState.submissionDate,
-                    uiState.product
+                    uiState.product,
                 )
             }
 
@@ -132,7 +130,7 @@ internal fun SavingsAccountDetailsContent(
                 verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
             ) {
                 ActionBar(
-                    isUpdatable= state.isUpdatable,
+                    isUpdatable = state.isUpdatable,
                     onAction = onAction,
                 )
 
@@ -157,9 +155,9 @@ internal fun SavingsAccountDetailsContent(
 
 @Composable
 internal fun ActionBar(
-    isUpdatable: Boolean = false,
     onAction: (SavingsAccountDetailsAction) -> Unit,
     modifier: Modifier = Modifier,
+    isUpdatable: Boolean = false,
 ) {
     Row(
         modifier = modifier
@@ -168,10 +166,7 @@ internal fun ActionBar(
         horizontalArrangement = Arrangement.End,
     ) {
         Row(
-//            modifier = Modifier.clickable(isUpdatable) {
-//                onAction(SavingsAccountDetailsAction.OnUpdateAccount)
-//            },
-            modifier = Modifier.clickable {
+            modifier = Modifier.clickable(isUpdatable) {
                 onAction(SavingsAccountDetailsAction.OnUpdateAccount)
             },
             verticalAlignment = Alignment.CenterVertically,
@@ -179,8 +174,11 @@ internal fun ActionBar(
         ) {
             Text(
                 text = stringResource(Res.string.feature_account_action_update),
-                color = if(isUpdatable) MaterialTheme.colorScheme.primary else
-                    MaterialTheme.colorScheme.inversePrimary,
+                color = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -188,8 +186,11 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.EditRegular,
                 contentDescription = null,
-                tint = if(isUpdatable) MaterialTheme.colorScheme.primary else
-                    MaterialTheme.colorScheme.inversePrimary,
+                tint = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
 
             )
         }

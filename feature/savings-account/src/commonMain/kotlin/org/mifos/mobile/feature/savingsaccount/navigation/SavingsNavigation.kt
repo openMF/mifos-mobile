@@ -42,7 +42,7 @@ fun NavGraphBuilder.savingsNavGraph(
 
         savingsAccountDetailsDestination(
             navigateBack = navController::popBackStack,
-            navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen
+            navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
         )
 
         savingsAccountUpdateDestination(

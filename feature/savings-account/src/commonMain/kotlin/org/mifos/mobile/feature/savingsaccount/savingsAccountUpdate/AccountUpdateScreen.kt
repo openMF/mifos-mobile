@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate
 
 import androidx.compose.foundation.layout.Arrangement
@@ -7,24 +16,28 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_request_update
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_new_product_label
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_product_label
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_topbar_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.LoadingDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -38,13 +51,12 @@ internal fun AccountUpdateScreen(
     navigateBack: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
-    viewModel: AccountUpdateViewModel = koinViewModel()
+    viewModel: AccountUpdateViewModel = koinViewModel(),
 ) {
-
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     EventsEffect(viewModel.eventFlow) { event ->
-        when(event) {
+        when (event) {
             is AccountUpdateEvent.NavigateBack -> navigateBack.invoke()
             is AccountUpdateEvent.NavigateToStatus -> {
                 navigateToStatusScreen.invoke(
@@ -52,7 +64,7 @@ internal fun AccountUpdateScreen(
                     event.eventDestination,
                     event.title,
                     event.subtitle,
-                    event.buttonText
+                    event.buttonText,
                 )
             }
 
@@ -64,11 +76,37 @@ internal fun AccountUpdateScreen(
         state = uiState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
-        }
+        },
     )
 
+    AccountUpdateDialog(
+        dialogState = uiState.dialogState,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
 }
 
+@Composable
+internal fun AccountUpdateDialog(
+    dialogState: AccountUpdateState.DialogState?,
+    onAction: (AccountUpdateAction) -> Unit,
+) {
+    when (dialogState) {
+        is AccountUpdateState.DialogState.Error -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                message = dialogState.message,
+            ),
+            onDismissRequest = { onAction(AccountUpdateAction.DismissDialog) },
+        )
+
+        is AccountUpdateState.DialogState.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
+
+        null -> Unit
+    }
+}
 
 @Composable
 internal fun AccountUpdateScreenContent(
@@ -94,33 +132,32 @@ internal fun AccountUpdateScreenContent(
                 .fillMaxSize()
                 .padding(DesignToken.padding.large)
                 .padding(top = DesignToken.padding.medium),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large)
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
         ) {
             AccountDetailsCard(
                 keyValuePairs = state.details,
             )
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased)
+                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
             ) {
-
                 MifosOutlineDropdown(
                     selectedText = state.selectedProduct,
                     items = state.productOptions,
                     onItemSelected = { id, product ->
                         onAction(AccountUpdateAction.OnProductSelected(id, product))
                     },
-                    label = "New Product"
+                    label = stringResource(Res.string.feature_savings_update_product_label),
                 )
 
                 MifosButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(DesignToken.sizes.buttonHeight),
-                    onClick =  { onAction(AccountUpdateAction.RequestUpdate) },
+                    onClick = { onAction(AccountUpdateAction.RequestUpdate) },
                     text = {
                         Text(
-                            text = stringResource(Res.string.feature_savings_update_request_update),
+                            text = stringResource(Res.string.feature_savings_new_product_label),
                             style = MifosTypography.titleMedium,
                         )
                     },
@@ -129,7 +166,7 @@ internal fun AccountUpdateScreenContent(
                     shape = DesignToken.shapes.medium,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                    )
+                    ),
                 )
             }
         }
@@ -141,11 +178,11 @@ internal fun AccountUpdateScreenContent(
 private fun Account_Update_Preview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large)
+            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
         ) {
             AccountUpdateScreenContent(
                 state = AccountUpdateState(clientId = 1, accountId = -1L, dialogState = null),
-                onAction = {}
+                onAction = {},
             )
         }
     }

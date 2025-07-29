@@ -32,7 +32,7 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
     composableWithSlideTransitions<SavingsAccountDetailsRoute> {
         SavingsAccountDetailsScreen(
             navigateBack = navigateBack,
-            navigateToUpdateScreen = navigateToUpdateScreen
+            navigateToUpdateScreen = navigateToUpdateScreen,
         )
     }
 }

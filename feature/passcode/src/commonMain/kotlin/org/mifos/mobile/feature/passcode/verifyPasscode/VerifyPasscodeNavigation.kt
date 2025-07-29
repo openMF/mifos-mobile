@@ -1,5 +1,13 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 @file:Suppress("MatchingDeclarationName")
-
 
 package org.mifos.mobile.feature.passcode.verifyPasscode
 
@@ -7,17 +15,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.ui.composableWithRootPushTransitions
+import org.mifos.mobile.core.ui.composableWithPushTransitions
 
 sealed class VerifyPasscodeRoute {
     @Serializable
-    data class Standard(
-        val eventType: String,
-        val eventDestination: String,
-        val title: String,
-        val subtitle: String,
-        val buttonText: String,
-    ) : VerifyPasscodeRoute()
+    data object Standard : VerifyPasscodeRoute()
 
     @Serializable
     data object Biometric : VerifyPasscodeRoute()
@@ -27,15 +29,18 @@ sealed class VerifyPasscodeRoute {
 }
 
 fun NavController.navigateToVerifyPasscodeScreen(
-    navOptions: NavOptions? = null
+    navOptions: NavOptions? = null,
 ) {
-    navigate(VerifyPasscodeRoute.Standard, navOptions)
+    navigate(
+        VerifyPasscodeRoute.Standard,
+        navOptions,
+    )
 }
 
 fun NavGraphBuilder.passcodeDestination(
-    onPasscodeConfirm: (String, String, String, String, String) -> Unit,
+    onPasscodeConfirm: () -> Unit,
 ) {
-    composableWithRootPushTransitions<VerifyPasscodeRoute.Standard> {
+    composableWithPushTransitions<VerifyPasscodeRoute.Standard> {
         VerifyPasscodeScreen(
             onPasscodeConfirm = onPasscodeConfirm,
         )

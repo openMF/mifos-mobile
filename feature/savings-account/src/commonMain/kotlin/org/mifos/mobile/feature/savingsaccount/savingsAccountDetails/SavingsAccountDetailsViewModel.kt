@@ -174,7 +174,7 @@ internal class SavingsAccountDetailsViewModel(
                 accountNumber = savings.accountNo,
                 clientName = savings.clientName,
                 product = savings.savingsProductName,
-                submissionDate =  DateHelper.getDateAsString(savings.timeline?.submittedOnDate ?: emptyList()) ,
+                submissionDate = DateHelper.getDateAsString(savings.timeline?.submittedOnDate ?: emptyList()),
                 displayItems = displayItems,
                 transactionList = transactions,
                 dialogState = null,

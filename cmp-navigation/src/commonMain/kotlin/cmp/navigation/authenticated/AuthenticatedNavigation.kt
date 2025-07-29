@@ -27,11 +27,9 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
-import org.mifos.mobile.feature.passcode.verifyPasscode.VerifyPasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
-import org.mifos.mobile.feature.savingsaccount.navigation.SavingsGraphRoute
+import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
-import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
@@ -82,7 +80,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 if (it == Constants.LOGIN) {
                     navController.navigateToLoginScreen()
                 } else {
-                    navController.navigate(it)
+                    navController.navigateToHomeAfterStatus()
                 }
             },
         )
@@ -90,7 +88,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
         savingsNavGraph(
             navController = navController,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
-            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+        )
+
+        passcodeDestination(
+            onPasscodeConfirm = navController::popBackStack,
         )
     }
 }
@@ -160,8 +162,18 @@ fun NavController.navigateToStatusAfterUpdate(
             buttonText = buttonText,
         ),
     ) {
-        popUpTo(SavingsGraphRoute) {
+        popUpTo(AuthenticatedGraphRoute) {
             inclusive = true
         }
+        launchSingleTop = true
+    }
+}
+
+fun NavController.navigateToHomeAfterStatus() {
+    this.navigate(AuthenticatedNavbarRoute) {
+        popUpTo(StatusNavigationRoute::class) {
+            inclusive = true
+        }
+        launchSingleTop = true
     }
 }

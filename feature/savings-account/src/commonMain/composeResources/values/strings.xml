@@ -73,4 +73,14 @@
     <string name="feature_savings_update_account_number_label">Account Number</string>
     <string name="feature_savings_update_product_label">Product</string>
     <string name="feature_savings_update_request_update">Request Update</string>
+    <string name="feature_savings_new_product_label">New Product</string>
+
+    <string name="feature_savings_update_request_successful">Request Submitted Successfully</string>
+    <string name="feature_savings_update_request_successful_message">Request to update the account details is submitted successfully</string>
+    <string name="feature_savings_update_request_back_to_home">Back To Home</string>
+
+    <string name="feature_savings_update_request_failed">Request Failed To Submit</string>
+    <string name="feature_savings_update_request_failed_message">Request to update the account details is failed. Please try again </string>
+    <string name="feature_savings_update_request_try_again">Try Again</string>
+
 </resources>

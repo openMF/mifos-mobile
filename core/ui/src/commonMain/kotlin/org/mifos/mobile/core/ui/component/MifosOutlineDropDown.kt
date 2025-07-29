@@ -1,5 +1,13 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.ui.component
-
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,21 +17,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Text
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.ui.geometry.Size
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -39,9 +47,9 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 @Composable
 fun MifosOutlineDropdown(
     selectedText: String,
-    modifier: Modifier = Modifier,
     items: Map<Long, String>,
-    label: String = "New Product",
+    label: String,
+    modifier: Modifier = Modifier,
     onItemSelected: (Long, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -60,9 +68,9 @@ fun MifosOutlineDropdown(
                 trailingIcon = {
                     Icon(
                         modifier = Modifier.size(DesignToken.sizes.iconSmall),
-                        imageVector = if(expanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
+                        imageVector = if (expanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 },
                 showClearIcon = false,
@@ -75,13 +83,13 @@ fun MifosOutlineDropdown(
                 .onGloballyPositioned {
                     textFieldSize = it.size.toSize()
                 }
-                .clickable{ expanded = true },
+                .clickable { expanded = true },
             shape = DesignToken.shapes.medium,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
                 unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
                 errorBorderColor = MaterialTheme.colorScheme.error,
-            )
+            ),
         )
 
         ExposedDropdownMenu(
@@ -92,11 +100,11 @@ fun MifosOutlineDropdown(
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colorScheme.secondaryContainer,
-                    shape = DesignToken.shapes.medium
+                    shape = DesignToken.shapes.medium,
                 ),
             tonalElevation = 2.dp,
             shadowElevation = 2.dp,
-            containerColor =  MaterialTheme.colorScheme.inverseOnSurface,
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface,
             shape = DesignToken.shapes.large,
         ) {
             items.forEach { (productID, product) ->
@@ -111,13 +119,12 @@ fun MifosOutlineDropdown(
                     onClick = {
                         expanded = false
                         onItemSelected(productID, product)
-                    }
+                    },
                 )
             }
         }
     }
 }
-
 
 @Preview
 @Composable
@@ -140,6 +147,7 @@ private fun MifosOutlinedDropdownPreview() {
                     selectedProduct = id
                     selected = product
                 },
+                label = "New Product",
             )
         }
     }

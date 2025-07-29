@@ -18,6 +18,7 @@ import org.mifos.mobile.core.common.di.DispatchersModule
 import org.mifos.mobile.core.data.di.RepositoryModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
+import org.mifos.mobile.core.ui.di.navigatorModule
 import org.mifos.mobile.feature.accounts.di.AccountsModule
 import org.mifos.mobile.feature.auth.di.AuthModule
 import org.mifos.mobile.feature.beneficiary.di.BeneficiaryModule
@@ -62,6 +63,7 @@ object KoinModules {
     }
     private val featureModules = module {
         includes(
+            navigatorModule,
             AuthModule,
             HelpModule,
             HomeModule,

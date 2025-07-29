@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.savingsaccount.components
 
 import androidx.compose.foundation.border
@@ -81,7 +90,7 @@ private fun Account_Card_Preview() {
                     Res.string.feature_savings_update_client_name_label to "John Miller",
                     Res.string.feature_savings_update_submission_date_label to "2-05-2025",
                     Res.string.feature_savings_update_account_number_label to "268978976666",
-                    Res.string.feature_savings_update_product_label to "Wallet"
+                    Res.string.feature_savings_update_product_label to "Wallet",
                 ),
             )
         }

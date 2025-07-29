@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.passcode.verifyPasscode
 
 import androidx.compose.foundation.background
@@ -44,10 +53,9 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
-
 @Composable
 internal fun VerifyPasscodeScreen(
-    onPasscodeConfirm: (String, String, String, String, String) -> Unit,
+    onPasscodeConfirm: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: VerifyPasscodeViewModel = koinViewModel(),
 ) {
@@ -55,14 +63,8 @@ internal fun VerifyPasscodeScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            is VerifyPasscodeEvent.OnPasscodeConfirm -> {
-                onPasscodeConfirm(
-                    event.eventType,
-                    event.eventDestination,
-                    event.title,
-                    event.subtitle,
-                    event.buttonText,
-                )
+            is VerifyPasscodeEvent.PasscodeAccepted -> {
+                onPasscodeConfirm.invoke()
             }
         }
     }
@@ -132,7 +134,6 @@ private fun VerifyPasscodeScreenContent(
                     repeat(state.maxDigits) { index ->
                         val filled = index < state.filledDots
                         val color = when {
-                            state.passcodeError -> MaterialTheme.colorScheme.error
                             filled -> MaterialTheme.colorScheme.primary
                             else -> Color.Transparent
                         }
