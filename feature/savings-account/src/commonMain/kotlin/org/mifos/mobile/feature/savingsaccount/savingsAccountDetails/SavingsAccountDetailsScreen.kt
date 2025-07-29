@@ -64,19 +64,28 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 @Composable
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
+    navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             SavingsAccountDetailsEvent.NavigateBack -> navigateBack.invoke()
 
-            // TODO navigate user to update and withdraw while designing those screens
-            SavingsAccountDetailsEvent.UpdateAccount -> {}
+            SavingsAccountDetailsEvent.UpdateAccount -> {
+                navigateToUpdateScreen.invoke(
+                    uiState.accountId,
+                    uiState.accountNumber,
+                    uiState.clientName,
+                    uiState.submissionDate,
+                    uiState.product,
+                )
+            }
 
             SavingsAccountDetailsEvent.WithdrawAmount -> {}
         }
     }
-    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     SavingsAccountDetailsContent(
         state = uiState,
@@ -121,6 +130,7 @@ internal fun SavingsAccountDetailsContent(
                 verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
             ) {
                 ActionBar(
+                    isUpdatable = state.isUpdatable,
                     onAction = onAction,
                 )
 
@@ -147,6 +157,7 @@ internal fun SavingsAccountDetailsContent(
 internal fun ActionBar(
     onAction: (SavingsAccountDetailsAction) -> Unit,
     modifier: Modifier = Modifier,
+    isUpdatable: Boolean = false,
 ) {
     Row(
         modifier = modifier
@@ -155,7 +166,7 @@ internal fun ActionBar(
         horizontalArrangement = Arrangement.End,
     ) {
         Row(
-            modifier = Modifier.clickable {
+            modifier = Modifier.clickable(isUpdatable) {
                 onAction(SavingsAccountDetailsAction.OnUpdateAccount)
             },
             verticalAlignment = Alignment.CenterVertically,
@@ -163,7 +174,11 @@ internal fun ActionBar(
         ) {
             Text(
                 text = stringResource(Res.string.feature_account_action_update),
-                color = MaterialTheme.colorScheme.primary,
+                color = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -171,7 +186,11 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.EditRegular,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
 
             )
         }

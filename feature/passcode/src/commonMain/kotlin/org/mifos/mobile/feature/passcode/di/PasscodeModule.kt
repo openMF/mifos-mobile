@@ -12,7 +12,9 @@ package org.mifos.mobile.feature.passcode.di
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.passcode.PasscodeViewModel
+import org.mifos.mobile.feature.passcode.verifyPasscode.VerifyPasscodeViewModel
 
 val PasscodeModule = module {
     viewModelOf(::PasscodeViewModel)
+    viewModelOf(::VerifyPasscodeViewModel)
 }

@@ -27,6 +27,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
+import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
+import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
@@ -78,12 +80,20 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 if (it == Constants.LOGIN) {
                     navController.navigateToLoginScreen()
                 } else {
-                    navController.navigate(it)
+                    navController.navigateToHomeAfterStatus()
                 }
             },
         )
 
-        savingsNavGraph(navController = navController)
+        savingsNavGraph(
+            navController = navController,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+        )
+
+        passcodeDestination(
+            onPasscodeConfirm = navController::popBackStack,
+        )
     }
 }
 
@@ -133,5 +143,37 @@ fun NavController.navigateToStatusScreenPasscodeFlow(
         popUpTo(PasscodeRoute.Standard) {
             inclusive = true
         }
+    }
+}
+
+fun NavController.navigateToStatusAfterUpdate(
+    eventType: String,
+    eventDestination: String,
+    title: String,
+    subtitle: String,
+    buttonText: String,
+) {
+    this.navigate(
+        StatusNavigationRoute(
+            eventType = eventType,
+            eventDestination = eventDestination,
+            title = title,
+            subtitle = subtitle,
+            buttonText = buttonText,
+        ),
+    ) {
+        popUpTo(AuthenticatedGraphRoute) {
+            inclusive = true
+        }
+        launchSingleTop = true
+    }
+}
+
+fun NavController.navigateToHomeAfterStatus() {
+    this.navigate(AuthenticatedNavbarRoute) {
+        popUpTo(StatusNavigationRoute::class) {
+            inclusive = true
+        }
+        launchSingleTop = true
     }
 }
