@@ -103,7 +103,9 @@ internal fun TransactionScreenContent(
     )
 
     MifosElevatedScaffold(
-        onNavigateBack = { },
+        onNavigateBack = {
+            onAction(AccountTransactionAction.OnNavigateBackClick)
+        },
         topBarTitle = stringResource(Res.string.feature_transaction_transaction_history),
         pullToRefreshState = pullToRefreshState,
         bottomBar = {
