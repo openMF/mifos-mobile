@@ -83,7 +83,10 @@ internal class SavingsAccountWithdrawViewModel(
 
         viewModelScope.launch {
             mUiState.value = SavingsAccountWithdrawUiState.Loading
-            when (val response = savingsAccountRepositoryImp.submitWithdrawSavingsAccount(accountNo, payload)) {
+            when (
+                val response = savingsAccountRepositoryImp.submitWithdrawSavingsAccount
+                    (accountNo.toLong(), payload)
+            ) {
                 is DataState.Success -> {
                     val message = getString(Res.string.savings_account_withdraw_successful)
                     _eventFlow.emit(SavingsAccountWithdrawUiEvent.ShowSnackbar(message))

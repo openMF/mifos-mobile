@@ -60,7 +60,7 @@ interface SavingAccountsListService {
 
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}?command=withdrawnByApplicant")
     suspend fun submitWithdrawSavingsAccount(
-        @Path("savingsId") savingsId: String,
+        @Path("savingsId") savingsId: Long,
         @Body payload: SavingsAccountWithdrawPayload?,
     ): HttpResponse
 }

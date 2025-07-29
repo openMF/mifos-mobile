@@ -87,23 +87,17 @@ class SavingsAccountRepositoryImp(
     }
 
     override suspend fun submitWithdrawSavingsAccount(
-        accountId: String?,
+        accountId: Long?,
         payload: SavingsAccountWithdrawPayload?,
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
                 val response =
                     dataManager.savingAccountsListApi.submitWithdrawSavingsAccount(accountId!!, payload)
-                if (response.status.value != 200) {
-                    val errorMessage = extractErrorMessage(response)
-                    return@withContext DataState.Error(
-                        Exception(errorMessage),
-                        null,
-                    )
-                }
-                DataState.Success("Submitted successfully")
-            } catch (e: Exception) {
-                DataState.Error(e, null)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
         }
     }

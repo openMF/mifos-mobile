@@ -65,6 +65,7 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
+    navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -83,7 +84,15 @@ internal fun SavingsAccountDetailsScreen(
                 )
             }
 
-            SavingsAccountDetailsEvent.WithdrawAmount -> {}
+            SavingsAccountDetailsEvent.WithdrawAmount -> {
+                navigateToWithdrawScreen.invoke(
+                    uiState.accountId,
+                    uiState.accountNumber,
+                    uiState.clientName,
+                    uiState.submissionDate,
+                    uiState.product,
+                )
+            }
         }
     }
 
@@ -198,7 +207,7 @@ internal fun ActionBar(
         Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
 
         Row(
-            modifier = Modifier.clickable {
+            modifier = Modifier.clickable(isUpdatable) {
                 onAction(SavingsAccountDetailsAction.OnWithDraw)
             },
             verticalAlignment = Alignment.CenterVertically,
@@ -206,7 +215,11 @@ internal fun ActionBar(
         ) {
             Text(
                 text = stringResource(Res.string.feature_account_action_withdraw),
-                color = MaterialTheme.colorScheme.primary,
+                color = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -214,7 +227,11 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.ArrowExport,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = if (isUpdatable) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.inversePrimary
+                },
             )
         }
     }
