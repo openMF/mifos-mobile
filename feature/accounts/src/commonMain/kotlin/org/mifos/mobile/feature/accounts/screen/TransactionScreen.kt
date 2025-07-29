@@ -21,6 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_statement
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_transaction_history
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -89,7 +96,7 @@ internal fun TransactionScreenContent(
 
     MifosElevatedScaffold(
         onNavigateBack = {  },
-        topBarTitle = "Transaction History",
+        topBarTitle = stringResource(Res.string.feature_transaction_transaction_history),
         pullToRefreshState = pullToRefreshState,
         bottomBar = {
             Surface {
@@ -181,7 +188,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Text(
-                text = "Statement",
+                text = stringResource(Res.string.feature_transaction_statement),
                 color = MaterialTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -189,7 +196,7 @@ internal fun ActionBar(
             Icon(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Download,
-                contentDescription = "Download Icon",
+                contentDescription = stringResource(Res.string.feature_transaction_download_icon_description),
                 tint = MaterialTheme.colorScheme.primary,
                 )
         }
@@ -204,7 +211,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Text(
-                text = "Filter",
+                text = stringResource(Res.string.feature_transaction_filter),
                 color = MaterialTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -212,7 +219,7 @@ internal fun ActionBar(
             Icon(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Filter,
-                contentDescription = "Filter Icon",
+                contentDescription = stringResource(Res.string.feature_transaction_filter_icon_description),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
