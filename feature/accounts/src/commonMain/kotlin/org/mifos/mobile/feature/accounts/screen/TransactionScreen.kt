@@ -1,19 +1,26 @@
 package org.mifos.mobile.feature.accounts.screen
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import mifos_mobile.feature.accounts.generated.resources.Res
-import mifos_mobile.feature.accounts.generated.resources.feature_account_title
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -23,30 +30,30 @@ import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
-import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionAction
+import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionEvent
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionState
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsEvent
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
 import org.mifos.mobile.feature.accounts.viewmodel.getTransactionCreditStatus
-import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
 
 @Composable
 internal fun TransactionScreen(
+    navigateBack: () -> Unit,
     viewModel: AccountsTransactionViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            else -> {}
+            AccountTransactionEvent.OnNavigateBack -> {
+                navigateBack.invoke()
+            }
         }
     }
 
@@ -94,26 +101,42 @@ internal fun TransactionScreenContent(
             }
         },
     ) {
-        LazyColumn {
-            items(state.data.size){ index->
-                val transaction=state.data[index]
-                TransactionScreenItem(
-                    title = transaction.paymentDetailData?.paymentType?.name?:"",
-                    date = DateHelper.getDateAsString(transaction.date),
-                    time = "",
-                    transactionAmount = CurrencyFormatter
-                        .format(
+        LazyColumn(
+            Modifier.padding(DesignToken.padding.large)
+        ) {
+            item{
+                ActionBar(
+                    onAction={}
+                )
+            }
+
+            state.data.forEach { (date, transactions) ->
+                item {
+                    Text(
+                        text = date,
+                        style = MifosTypography.labelLargeEmphasized,
+                        modifier = Modifier.padding(vertical= DesignToken.padding.medium)
+                    )
+                }
+
+                items(transactions.size) { index ->
+                    val transaction=transactions[index]
+                    TransactionScreenItem(
+                        title = transaction.paymentDetailData?.paymentType?.name ?: "",
+                        date = DateHelper.getDateAsString(transaction.date),
+                        time = "",
+                        transactionAmount = CurrencyFormatter.format(
                             balance = transaction.amount,
-                            currencyCode = transaction.currency?.code?:"USD",
+                            currencyCode = transaction.currency?.code ?: "USD",
                             maximumFractionDigits = 3,
                         ),
-                    isCredited = getTransactionCreditStatus(transaction.transactionType),
-                )
+                        isCredited = getTransactionCreditStatus(transaction.transactionType),
+                    )
+                }
             }
         }
     }
 }
-
 
 @Composable
 internal fun AccountTransactionsDialog(
@@ -132,8 +155,66 @@ internal fun AccountTransactionsDialog(
         }
         AccountTransactionState.DialogState.Filters -> {}
         AccountTransactionState.DialogState.Loading -> MifosLoadingDialog(
+            modifier=modifier,
             visibilityState = LoadingDialogState.Shown,
         )
         null -> {}
+    }
+}
+
+@Composable
+internal fun ActionBar(
+    onAction: (AccountTransactionAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = DesignToken.padding.medium),
+        horizontalArrangement = Arrangement.End,
+    ) {
+        Row(
+            modifier = Modifier.clickable {
+
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = "Statement",
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.Download,
+                contentDescription = "Download Icon",
+                tint = MaterialTheme.colorScheme.primary,
+                )
+        }
+
+        Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
+
+        Row(
+            modifier = Modifier.clickable {
+                onAction(AccountTransactionAction.FilterClicked)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = "Filter",
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.Filter,
+                contentDescription = "Filter Icon",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }

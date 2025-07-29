@@ -52,4 +52,10 @@
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Apply</string>
     <string name="feature_filters_count">%1$s Selected</string>
+
+    <string name="feature_transaction_transaction_history">Transaction History</string>
+    <string name="feature_transaction_statement">Statement</string>
+    <string name="feature_transaction_download_icon_description">Download Icon</string>
+    <string name="feature_transaction_filter">Filter</string>
+    <string name="feature_transaction_filter_icon_description">Filter Icon</string>
 </resources>

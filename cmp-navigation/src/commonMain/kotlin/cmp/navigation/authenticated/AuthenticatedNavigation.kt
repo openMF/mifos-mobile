@@ -51,7 +51,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
                 when {
-                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountTransactionsScreen(it)
+                    it == Constants.SAVINGS_ACCOUNT -> navController.navigateToAccountTransactionsScreen(it,1)
                     else -> Unit
                 }
             },

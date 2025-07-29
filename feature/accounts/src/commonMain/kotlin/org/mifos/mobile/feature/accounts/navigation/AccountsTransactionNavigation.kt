@@ -11,19 +11,21 @@ import org.mifos.mobile.feature.accounts.screen.TransactionScreen
 @Serializable
 data class AccountTransactionsNavRoute(
     val accountType: String,
+    val accountId:Long,
 )
 
 fun NavController.navigateToAccountTransactionsScreen(
     accountType: String,
+    accountId:Long,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate(AccountTransactionsNavRoute(accountType), navOptions)
+    this.navigate(AccountTransactionsNavRoute(accountType,accountId), navOptions)
 }
 
 fun NavGraphBuilder.accountTransactionsDestination(
     navigateBack: () -> Unit,
 ) {
     composableWithSlideTransitions<AccountTransactionsNavRoute> {
-        TransactionScreen()
+        TransactionScreen(navigateBack)
     }
 }
