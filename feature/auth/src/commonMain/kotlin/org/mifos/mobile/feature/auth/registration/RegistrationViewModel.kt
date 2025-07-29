@@ -533,7 +533,7 @@ class RegistrationViewModel(
                 lastName = state.lastName,
                 mobileNumber = state.mobileNumber,
                 password = state.password,
-                username = "${state.firstName}${state.lastName}",
+                username = state.email,
             )
             sendAction(
                 SignUpAction.Internal.ReceiveRegisterResult(
