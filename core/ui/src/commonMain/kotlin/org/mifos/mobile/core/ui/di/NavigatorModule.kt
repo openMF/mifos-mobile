@@ -7,16 +7,12 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.model
+package org.mifos.mobile.core.ui.di
 
-enum class LoanStatus(val status: String) {
-    ACTIVE("Active"),
+import org.koin.dsl.module
+import org.mifos.mobile.core.ui.utils.DefaultResultNavigator
+import org.mifos.mobile.core.ui.utils.ResultNavigator
 
-    CLOSED("Closed"),
-
-    MATURED("Matured"),
-
-    APPROVED("Approved"),
-
-    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
+val navigatorModule = module {
+    single<ResultNavigator> { DefaultResultNavigator() }
 }

@@ -19,6 +19,10 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.savingsAccountDestination
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.savingsAccountDetailsDestination
+import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.navigateToSavingsAccountUpdateScreen
+import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.savingsAccountUpdateDestination
+import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.navigateToSavingsAccountWithdrawScreen
+import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.savingsAccountWithdrawDestination
 
 @Serializable
 data object SavingsGraphRoute
@@ -28,6 +32,8 @@ fun NavController.navigateToSavingsGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
+    navigateToAuthenticateScreen: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     navigation<SavingsGraphRoute>(
         startDestination = SavingsAccountRoute,
@@ -38,6 +44,20 @@ fun NavGraphBuilder.savingsNavGraph(
 
         savingsAccountDetailsDestination(
             navigateBack = navController::popBackStack,
+            navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
+            navigateToWithdrawScreen = navController::navigateToSavingsAccountWithdrawScreen,
+        )
+
+        savingsAccountUpdateDestination(
+            navigateBack = navController::popBackStack,
+            navigateToStatusScreen = navigateToStatusScreen,
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
+        )
+
+        savingsAccountWithdrawDestination(
+            navigateBack = navController::popBackStack,
+            navigateToStatusScreen = navigateToStatusScreen,
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
         )
     }
 }

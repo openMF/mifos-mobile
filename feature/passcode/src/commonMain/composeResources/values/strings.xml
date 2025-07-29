@@ -20,4 +20,7 @@
 
     <string name="feature_passcode_common_continue">Continue</string>
     <string name="feature_passcode_common_try_again">Try Again</string>
+
+    <string name="feature_passcode_authenticate">Enter Authentication Code</string>
+    <string name="feature_passcode_authenticate_tip">Confirm it’s you by entering your 4-digit  authentication code in order to complete your action</string>
 </resources>

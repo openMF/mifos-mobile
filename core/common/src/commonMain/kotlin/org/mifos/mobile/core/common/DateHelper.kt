@@ -9,8 +9,10 @@
  */
 package org.mifos.mobile.core.common
 
+import io.ktor.client.request.invoke
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimePeriod
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -20,6 +22,7 @@ import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.days
@@ -62,6 +65,42 @@ object DateHelper {
             .append(' ')
             .append(integersOfDate[0])
         return stringBuilder.toString()
+    }
+
+    fun getFormattedDateWithPrefix(dateList: List<Int>): String {
+        val inputDate = LocalDate(dateList[0], dateList[1], dateList[2])
+        val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+
+        val formatted = "${inputDate.dayOfMonth} ${getMonthName(inputDate.monthNumber)} ${inputDate.year}"
+
+        val today = now
+        val yesterday = today.minus(1, DateTimeUnit.DAY)
+
+        // Last Week
+        val currentDayOfWeek = today.dayOfWeek.isoDayNumber
+        val startOfThisWeek = today.minus(currentDayOfWeek - 1, DateTimeUnit.DAY)
+        val startOfLastWeek = startOfThisWeek.minus(7, DateTimeUnit.DAY)
+        val endOfLastWeek = startOfThisWeek.minus(1, DateTimeUnit.DAY)
+
+        // Last Month
+        val firstOfThisMonth = LocalDate(today.year, today.monthNumber, 1)
+        val lastMonthDate = firstOfThisMonth.minus(1, DateTimeUnit.MONTH)
+        val startOfLastMonth = LocalDate(lastMonthDate.year, lastMonthDate.monthNumber, 1)
+        val endOfLastMonth = firstOfThisMonth.minus(1, DateTimeUnit.DAY)
+
+        // Last Year
+        val startOfThisYear = LocalDate(today.year, 1, 1)
+        val startOfLastYear = startOfThisYear.minus(1, DateTimeUnit.YEAR)
+        val endOfLastYear = startOfThisYear.minus(1, DateTimeUnit.DAY)
+
+        return when {
+            inputDate == today -> "Today, $formatted"
+            inputDate == yesterday -> "Yesterday, $formatted"
+            inputDate in startOfLastWeek..endOfLastWeek -> "Last Week, $formatted"
+            inputDate in startOfLastMonth..endOfLastMonth -> "Last Month, $formatted"
+            inputDate in startOfLastYear..endOfLastYear -> "Last Year, $formatted"
+            else -> formatted
+        }
     }
 
     fun getDateAsString(integersOfDate: List<Long>, pattern: String): String {

@@ -87,7 +87,7 @@ fun TransactionScreenItem(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "$time; $date",
+                    text = if (time.isNotEmpty()) "$time; $date" else date,
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -97,9 +97,9 @@ fun TransactionScreenItem(
 
             Text(
                 text = if (isCredited) {
-                    "+ $ $transactionAmount"
+                    "+ $transactionAmount"
                 } else {
-                    "- $ $transactionAmount"
+                    "- $transactionAmount"
                 },
                 style = MifosTypography.labelSmall,
                 color = if (isCredited) {
