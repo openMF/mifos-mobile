@@ -14,9 +14,11 @@ import org.koin.dsl.module
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountViewmodel
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.SavingsAccountDetailsViewModel
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.AccountUpdateViewModel
+import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.AccountWithdrawViewModel
 
 val savingsAccountModule = module {
     viewModelOf(::SavingsAccountViewmodel)
     viewModelOf(::SavingsAccountDetailsViewModel)
     viewModelOf(::AccountUpdateViewModel)
+    viewModelOf(::AccountWithdrawViewModel)
 }

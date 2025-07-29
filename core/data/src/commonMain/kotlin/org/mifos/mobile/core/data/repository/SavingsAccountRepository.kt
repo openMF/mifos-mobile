@@ -35,7 +35,7 @@ interface SavingsAccountRepository {
     ): DataState<String>
 
     suspend fun submitWithdrawSavingsAccount(
-        accountId: String?,
+        accountId: Long?,
         payload: SavingsAccountWithdrawPayload?,
     ): DataState<String>
 
