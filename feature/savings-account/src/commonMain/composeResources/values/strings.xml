@@ -64,4 +64,23 @@
     <string name="feature_savings_transaction_amount_label">Amount</string>
     <string name="feature_savings_transaction_date_label">Date</string>
 
+
+<!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Update Details</string>
+    <string name="feature_savings_update_client_name_label">Client Name</string>
+    <string name="feature_savings_update_submission_date_label">Submission Date</string>
+    <string name="feature_savings_update_account_number_label">Account Number</string>
+    <string name="feature_savings_update_product_label">Product</string>
+    <string name="feature_savings_update_request_update">Request Update</string>
+    <string name="feature_savings_new_product_label">New Product</string>
+
+    <string name="feature_savings_update_request_successful">Request Submitted Successfully</string>
+    <string name="feature_savings_update_request_successful_message">Request to update the account details is submitted successfully</string>
+    <string name="feature_savings_update_request_back_to_home">Back To Home</string>
+
+    <string name="feature_savings_update_request_failed">Request Failed To Submit</string>
+    <string name="feature_savings_update_request_failed_message">Request to update the account details is failed. Please try again </string>
+    <string name="feature_savings_update_request_try_again">Try Again</string>
+
 </resources>

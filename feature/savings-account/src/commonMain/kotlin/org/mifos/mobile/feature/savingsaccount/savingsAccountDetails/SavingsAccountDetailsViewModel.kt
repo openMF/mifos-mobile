@@ -123,6 +123,7 @@ internal class SavingsAccountDetailsViewModel(
 
     private fun extractDetails(savings: SavingsWithAssociations) {
         val isActive = savings.status?.value == LoanStatus.ACTIVE.status
+        val isUpdate = savings.status?.value == LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status
 
         val currencyCode = savings.currency?.code
         val decimalPlaces = savings.currency?.decimalPlaces
@@ -168,6 +169,12 @@ internal class SavingsAccountDetailsViewModel(
         mutableStateFlow.update {
             it.copy(
                 isActive = isActive,
+                isUpdatable = isUpdate,
+                accountId = savings.id ?: -1L,
+                accountNumber = savings.accountNo,
+                clientName = savings.clientName,
+                product = savings.savingsProductName,
+                submissionDate = DateHelper.getDateAsString(savings.timeline?.submittedOnDate ?: emptyList()),
                 displayItems = displayItems,
                 transactionList = transactions,
                 dialogState = null,
@@ -184,15 +191,23 @@ internal class SavingsAccountDetailsViewModel(
  * @property transactionList List of most recent transaction details.
  * @property isActive True if the account is active.
  * @property items List of quick action items (Deposit, Transfer, etc.)
+ * @property isUpdatable user can update only when status is submit and pending approval
  * @property dialogState State representing dialogs like error, loading, etc.
  */
 @Immutable
 internal data class SavingsAccountDetailsState(
     val accountId: Long = -1L,
+    val clientName: String? = "",
+    val submissionDate: String? = "",
+    val accountNumber: String? = "",
+    val product: String? = "",
     val displayItems: List<LabelValueItem> = emptyList(),
     val transactionList: List<LabelValueItem> = emptyList(),
     val isActive: Boolean = false,
     val items: ImmutableList<SavingsActionItems>,
+
+    val isUpdatable: Boolean = false,
+
     val dialogState: DialogState?,
 ) {
     /**
