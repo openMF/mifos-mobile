@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.accounts.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -36,13 +35,9 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.accounts.model.CheckboxStatus
-import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
-import org.mifos.mobile.feature.accounts.navigation.AccountNavRoute
 import org.mifos.mobile.feature.accounts.navigation.AccountTransactionsNavRoute
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
@@ -99,17 +94,16 @@ internal class AccountsTransactionViewModel(
 
     private fun handleConfirmFilterDialog() {
         val selectedFilters = state.checkboxOptions.filter { it.isChecked }
-        val filteredRecords=applyTransactionFilters(selectedFilters)
+        val filteredRecords = applyTransactionFilters(selectedFilters)
         mutableStateFlow.update {
             it.copy(
                 selectedFilters = selectedFilters,
                 filteredData = filteredRecords,
-                isRefreshing = false
+                isRefreshing = false,
             )
         }
         handleDismissDialog()
     }
-
 
     private fun handleResetFilters() {
         mutableStateFlow.update {
@@ -193,7 +187,7 @@ internal class AccountsTransactionViewModel(
                             it.copy(
                                 dialogState = null,
                                 data = transactions,
-                                filteredData = groupedTransactions
+                                filteredData = groupedTransactions,
                             )
                         }
                     }
@@ -203,25 +197,25 @@ internal class AccountsTransactionViewModel(
     }
 
     internal fun applyTransactionFilters(
-        selectedFilters: List<TransactionCheckboxStatus>
+        selectedFilters: List<TransactionCheckboxStatus>,
     ): Map<String, List<Transactions>> {
         // Determine filters
-        val allTransactions=state.data
+        val allTransactions = state.data
         val typeFilters = selectedFilters.filter { it.type == TransactionFilterType.TRANSACTION_TYPE }
         val durationFilters = selectedFilters.filter { it.type == TransactionFilterType.DURATION }
 
         // Filter by type
         val typeFiltered = when {
             typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_credit } &&
-                    typeFilters.none { it.statusLabel == Res.string.feature_transaction_filter_debit } ->
+                typeFilters.none { it.statusLabel == Res.string.feature_transaction_filter_debit } ->
                 allTransactions.filter { getTransactionCreditStatus(it.transactionType) }
 
             typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_debit } &&
-                    typeFilters.none { it.statusLabel == Res.string.feature_transaction_filter_credit } ->
+                typeFilters.none { it.statusLabel == Res.string.feature_transaction_filter_credit } ->
                 allTransactions.filter { !getTransactionCreditStatus(it.transactionType) }
 
             typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_credit } &&
-                    typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_debit } ->
+                typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_debit } ->
                 allTransactions
 
             else -> allTransactions
@@ -245,12 +239,11 @@ internal class AccountsTransactionViewModel(
             }
         }
 
-
         val durationFiltered = if (dateRanges.isEmpty()) {
             typeFiltered
         } else {
             typeFiltered.filter { transaction ->
-                val dateList=transaction.date
+                val dateList = transaction.date
                 val transactionDate = LocalDate(dateList[0], dateList[1], dateList[2])
                 dateRanges.any { (start, end) ->
                     transactionDate in start..end
@@ -274,7 +267,7 @@ internal data class AccountTransactionState(
     val toggleFilterDialog: Boolean = false,
     val accountTypeFiltersCount: Int? = 0,
     val accountDurationFiltersCount: Int? = 0,
-    ) {
+) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
         data object Loading : DialogState

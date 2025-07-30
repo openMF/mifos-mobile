@@ -9,11 +9,6 @@
  */
 package org.mifos.mobile.feature.accounts.screen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,17 +38,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
-import mifos_mobile.feature.accounts.generated.resources.feature_account_title
-import mifos_mobile.feature.accounts.generated.resources.feature_filters_count
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_apply
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_reset
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_statement
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_transaction_history
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -73,15 +61,10 @@ import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.component.FilterTopSection
-import org.mifos.mobile.feature.accounts.model.CheckboxStatus
-import org.mifos.mobile.feature.accounts.model.FilterType
-import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionAction
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionEvent
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionState
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
 import org.mifos.mobile.feature.accounts.viewmodel.getTransactionCreditStatus
 
@@ -200,8 +183,8 @@ internal fun AccountTransactionsDialog(
         }
         AccountTransactionState.DialogState.Filters -> {
             TransactionFilters(
-                state=state,
-                onAction=onAction
+                state = state,
+                onAction = onAction,
             )
         }
         AccountTransactionState.DialogState.Loading -> MifosLoadingDialog(
@@ -297,7 +280,7 @@ internal fun TransactionFilters(
                 .padding(top = DesignToken.padding.large),
         ) {
             FilterTopSection(
-                isAnyFilterSelected =state.isAnyFilterSelected,
+                isAnyFilterSelected = state.isAnyFilterSelected,
                 resetFilters = {
                     onAction(AccountTransactionAction.ResetFilters)
                 },
@@ -306,7 +289,7 @@ internal fun TransactionFilters(
                 },
                 dismissDialog = {
                     onAction(AccountTransactionAction.DismissDialog)
-                }
+                },
             )
 
             Spacer(Modifier.height(DesignToken.spacing.largeIncreased))

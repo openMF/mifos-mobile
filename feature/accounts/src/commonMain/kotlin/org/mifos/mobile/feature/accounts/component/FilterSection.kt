@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.accounts.component
 
 import androidx.compose.animation.AnimatedVisibility
@@ -98,11 +107,19 @@ internal fun FilterSection(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     filters.forEach { filter ->
-                        when(filter){
+                        when (filter) {
                             is CheckboxStatus ->
-                                FilterCheckboxUI(filter.statusLabel, filter.isChecked, {onCheckChanged(filter.statusLabel)})
+                                FilterCheckboxUI(
+                                    filter.statusLabel,
+                                    filter.isChecked,
+                                    { onCheckChanged(filter.statusLabel) },
+                                )
                             is TransactionCheckboxStatus ->
-                                FilterCheckboxUI(filter.statusLabel, filter.isChecked, {onCheckChanged(filter.statusLabel)})
+                                FilterCheckboxUI(
+                                    filter.statusLabel,
+                                    filter.isChecked,
+                                    { onCheckChanged(filter.statusLabel) },
+                                )
                         }
                     }
                 }
@@ -117,10 +134,11 @@ internal fun FilterSection(
 fun FilterCheckboxUI(
     statusLabel: StringResource,
     isChecked: Boolean,
-    onCheckedChange: () -> Unit
+    onCheckedChange: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(

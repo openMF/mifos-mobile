@@ -129,19 +129,39 @@ object StatusUtils {
 
     internal fun getTransactionCheckboxes(): List<TransactionCheckboxStatus> {
         val type = listOf(
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_credit, type = TransactionFilterType.TRANSACTION_TYPE),
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_debit, type = TransactionFilterType.TRANSACTION_TYPE),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_credit,
+                type = TransactionFilterType.TRANSACTION_TYPE,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_debit,
+                type = TransactionFilterType.TRANSACTION_TYPE,
+            ),
         )
 
         val duration = listOf(
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_past_month, type = TransactionFilterType.DURATION),
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_past_3_months, type = TransactionFilterType.DURATION),
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_past_6_months, type = TransactionFilterType.DURATION),
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_past_1_year, type = TransactionFilterType.DURATION),
-            TransactionCheckboxStatus(Res.string.feature_transaction_filter_past_2_years, type = TransactionFilterType.DURATION),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_month,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_3_months,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_6_months,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_1_year,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_2_years,
+                type = TransactionFilterType.DURATION,
+            ),
         )
 
         return type + duration
     }
-
 }

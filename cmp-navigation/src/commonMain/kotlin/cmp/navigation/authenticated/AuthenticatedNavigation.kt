@@ -100,7 +100,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
             navigateToSavingsAccountChargesScreen = {
-                navController.navigateToClientChargeScreen(Constants.SAVINGS_ACCOUNT,it)
+                navController.navigateToClientChargeScreen(Constants.SAVINGS_ACCOUNT, it)
             },
         )
 

@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.accounts.component
 
 import androidx.compose.foundation.clickable
@@ -20,14 +29,14 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
 
 @Composable
 fun FilterTopSection(
-    isAnyFilterSelected:Boolean,
-    resetFilters:()->Unit,
-    onApplyFilter:()->Unit,
-    dismissDialog:()->Unit
+    isAnyFilterSelected: Boolean,
+    resetFilters: () -> Unit,
+    onApplyFilter: () -> Unit,
+    dismissDialog: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val resetColor = if (isAnyFilterSelected) {
         MaterialTheme.colorScheme.primary
@@ -35,7 +44,7 @@ fun FilterTopSection(
         MaterialTheme.colorScheme.inversePrimary
     }
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {

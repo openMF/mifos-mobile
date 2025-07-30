@@ -65,7 +65,7 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
-    navigateToSavingsAccountTransactionScreen:(Long)-> Unit,
+    navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
     navigateToSavingsAccountChargesScreen: (Long) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
@@ -86,26 +86,23 @@ internal fun SavingsAccountDetailsScreen(
             }
 
             is SavingsAccountDetailsEvent.OnNavigateToSavingsActionsScreen -> {
-                when(event.item){
+                when (event.item) {
                     SavingsActionItems.Charges -> {
                         navigateToSavingsAccountChargesScreen(uiState.accountId)
                     }
                     SavingsActionItems.Deposit -> {
-
                     }
                     SavingsActionItems.QrCode -> {
-
                     }
                     SavingsActionItems.Transactions -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
                     SavingsActionItems.Transfer -> {
-
                     }
                 }
             }
 
-             else -> {}
+            else -> {}
         }
     }
 
@@ -171,7 +168,7 @@ internal fun SavingsAccountDetailsContent(
                     items = state.items,
                     onClick = {
                         onAction(SavingsAccountDetailsAction.OnNavigateToSavingsActionsScreenClick(it))
-                              },
+                    },
                 )
             }
         }
@@ -294,7 +291,7 @@ internal fun AccountDetailsGrid(
 @Composable
 internal fun SavingsAccountActions(
     items: ImmutableList<SavingsActionItems>,
-    onClick:(SavingsActionItems)-> Unit
+    onClick: (SavingsActionItems) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
