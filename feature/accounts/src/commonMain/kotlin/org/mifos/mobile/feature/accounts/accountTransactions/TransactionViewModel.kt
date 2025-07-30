@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.viewmodel
+package org.mifos.mobile.feature.accounts.accountTransactions
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -38,7 +38,6 @@ import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
-import org.mifos.mobile.feature.accounts.navigation.AccountTransactionsNavRoute
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
 

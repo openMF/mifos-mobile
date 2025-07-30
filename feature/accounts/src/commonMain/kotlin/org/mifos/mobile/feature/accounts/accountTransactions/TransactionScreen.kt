@@ -64,11 +64,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.component.FilterTopSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionAction
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionEvent
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionState
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
-import org.mifos.mobile.feature.accounts.viewmodel.getTransactionCreditStatus
 
 @Composable
 internal fun TransactionScreen(
