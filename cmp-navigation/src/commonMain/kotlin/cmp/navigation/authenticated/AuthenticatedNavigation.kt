@@ -19,6 +19,7 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
@@ -100,7 +101,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
             navigateToSavingsAccountChargesScreen = {
-                navController.navigateToClientChargeScreen(Constants.SAVINGS_ACCOUNT, it)
+                navController.navigateToClientChargeScreen(ChargeType.SAVINGS.name, it)
             },
         )
 
