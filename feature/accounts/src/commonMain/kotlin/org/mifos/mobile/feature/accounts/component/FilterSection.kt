@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
@@ -32,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_filters_count
@@ -60,17 +63,16 @@ internal fun FilterSection(
             .fillMaxWidth(),
     ) {
         Column(
+            modifier = Modifier.padding(
+                start = DesignToken.spacing.extraLargeIncreased,
+                end = DesignToken.spacing.small,
+                top = DesignToken.padding.medium,
+            ),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = DesignToken.spacing.extraLargeIncreased,
-                        end = DesignToken.spacing.small,
-                        top = DesignToken.padding.medium,
-                        bottom = DesignToken.padding.medium,
-                    )
                     .clickable { onToggle() },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -108,6 +110,7 @@ internal fun FilterSection(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.padding.medium)
                 ) {
                     filters.forEach { filter ->
                         when (filter) {
@@ -135,7 +138,11 @@ internal fun FilterSection(
             }
         }
 
-        HorizontalDivider(modifier = Modifier.height(1.dp))
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(top = DesignToken.padding.medium)
+                .height(1.dp)
+        )
     }
 }
 
@@ -148,22 +155,24 @@ fun FilterCheckboxUI(
     isRadio: Boolean = false,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(horizontal = DesignToken.padding.largeIncreased),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (isRadio) {
             RadioButton(
+                modifier=Modifier.size(16.dp),
                 selected = isChecked,
                 onClick = { onCheckedChange() },
             )
         } else {
             Checkbox(
+                modifier=Modifier.size(16.dp),
                 checked = isChecked,
                 onCheckedChange = { onCheckedChange() },
             )
         }
 
-        Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
+        Spacer(modifier = Modifier.width(DesignToken.spacing.small))
         Text(
             text = stringResource(statusLabel),
             style = MifosTypography.labelMediumEmphasized,
