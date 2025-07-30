@@ -65,6 +65,8 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
+    navigateToSavingsAccountTransactionScreen:(Long)-> Unit,
+    navigateToSavingsAccountChargesScreen: (Long) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -83,7 +85,27 @@ internal fun SavingsAccountDetailsScreen(
                 )
             }
 
-            SavingsAccountDetailsEvent.WithdrawAmount -> {}
+            is SavingsAccountDetailsEvent.OnNavigateToSavingsActionsScreen -> {
+                when(event.item){
+                    SavingsActionItems.Charges -> {
+                        navigateToSavingsAccountChargesScreen(uiState.accountId)
+                    }
+                    SavingsActionItems.Deposit -> {
+
+                    }
+                    SavingsActionItems.QrCode -> {
+
+                    }
+                    SavingsActionItems.Transactions -> {
+                        navigateToSavingsAccountTransactionScreen(uiState.accountId)
+                    }
+                    SavingsActionItems.Transfer -> {
+
+                    }
+                }
+            }
+
+             else -> {}
         }
     }
 
@@ -147,6 +169,9 @@ internal fun SavingsAccountDetailsContent(
 
                 SavingsAccountActions(
                     items = state.items,
+                    onClick = {
+                        onAction(SavingsAccountDetailsAction.OnNavigateToSavingsActionsScreenClick(it))
+                              },
                 )
             }
         }
@@ -269,6 +294,7 @@ internal fun AccountDetailsGrid(
 @Composable
 internal fun SavingsAccountActions(
     items: ImmutableList<SavingsActionItems>,
+    onClick:(SavingsActionItems)-> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
@@ -286,8 +312,9 @@ internal fun SavingsAccountActions(
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,
-                    //                TODO navigate to respective destinations
-                    onClick = { },
+                    onClick = {
+                        onClick(item)
+                    },
                 )
             }
         }

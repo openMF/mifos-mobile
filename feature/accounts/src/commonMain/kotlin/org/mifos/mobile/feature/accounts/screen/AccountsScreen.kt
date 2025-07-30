@@ -65,8 +65,11 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.accounts.component.FilterSection
+import org.mifos.mobile.feature.accounts.component.FilterTopSection
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
+import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsEvent
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
@@ -141,12 +144,6 @@ internal fun SavingsAccountFilters(
     var isTypeExpanded by rememberSaveable { mutableStateOf(true) }
     var isStatusExpanded by rememberSaveable { mutableStateOf(true) }
 
-    val resetColor = if (state.isAnyFilterSelected) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        MaterialTheme.colorScheme.inversePrimary
-    }
-
     MifosElevatedScaffold(
         onNavigateBack = { onAction(AccountsAction.OnNavigateBack) },
         topBarTitle = stringResource(Res.string.feature_account_title),
@@ -166,89 +163,23 @@ internal fun SavingsAccountFilters(
                 .padding(DesignToken.padding.large)
                 .padding(top = DesignToken.padding.large),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clickable { onAction(AccountsAction.DismissDialog) },
-                        imageVector = MifosIcons.Dismiss,
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = stringResource(Res.string.feature_savings_filter),
-                        style = MifosTypography.titleMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
-                    )
+            FilterTopSection(
+                isAnyFilterSelected = state.isAnyFilterSelected,
+                resetFilters = {
+                    onAction(AccountsAction.ResetFilters)
+                },
+                onApplyFilter = {
+                    onAction(AccountsAction.GetFilterResults)
+                },
+                dismissDialog = {
+                    onAction(AccountsAction.DismissDialog)
                 }
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        DesignToken.spacing
-                            .largeIncreased,
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .clickable(
-                                state.isAnyFilterSelected,
-                            ) { onAction(AccountsAction.ResetFilters) },
-                        horizontalArrangement = Arrangement.spacedBy(
-                            DesignToken.spacing
-                                .extraSmall,
-                        ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-
-                            text = stringResource(Res.string.feature_savings_reset),
-                            style = MifosTypography.bodySmallEmphasized,
-                            color = resetColor,
-                        )
-
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            imageVector = MifosIcons.ArrowCounterClockWise,
-                            contentDescription = null,
-                            tint = resetColor,
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .clickable { onAction(AccountsAction.GetFilterResults) },
-                        horizontalArrangement = Arrangement.spacedBy(
-                            DesignToken.spacing
-                                .extraSmall,
-                        ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-
-                            text = stringResource(Res.string.feature_savings_apply),
-                            style = MifosTypography.bodySmallEmphasized,
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            imageVector = MifosIcons.CheckMark,
-                            contentDescription = null,
-                        )
-                    }
-                }
-            }
+            )
 
             Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
 
             HorizontalDivider(modifier = Modifier.height(1.dp))
+
             FilterSection(
                 title = "Type",
                 filtersSelected = state.accountTypeFiltersCount ?: 0,
@@ -274,94 +205,6 @@ internal fun SavingsAccountFilters(
     }
 }
 
-@Composable
-internal fun FilterSection(
-    title: String,
-    filtersSelected: Int,
-    isExpanded: Boolean,
-    onToggle: () -> Unit,
-    filters: List<CheckboxStatus>,
-    onCheckChanged: (StringResource) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                start = DesignToken.spacing.extraLargeIncreased,
-                end = DesignToken.spacing.small,
-                top = DesignToken.padding.medium,
-                bottom = DesignToken.padding.medium,
-            ),
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onToggle() },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = title,
-                    style = MifosTypography.labelLargeEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (filtersSelected != 0) {
-                        Text(
-                            text = stringResource(Res.string.feature_filters_count, filtersSelected),
-                            style = MifosTypography.labelSmall,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
-                    }
-                    Icon(
-                        modifier = Modifier
-                            .width(DesignToken.sizes.iconSmall)
-                            .height(DesignToken.sizes.iconSmall),
-                        imageVector = if (isExpanded) MifosIcons.ChevronUp else MifosIcons.ChevronDown,
-                        contentDescription = null,
-                    )
-                }
-            }
-
-            AnimatedVisibility(
-                visible = isExpanded,
-                enter = slideInVertically(initialOffsetY = { -40 }) + fadeIn(),
-                exit = slideOutVertically(targetOffsetY = { 40 }) + fadeOut(),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    filters.forEach { filter ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Checkbox(
-                                checked = filter.isChecked,
-                                onCheckedChange = { onCheckChanged(filter.statusLabel) },
-                            )
-                            Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
-                            Text(
-                                text = stringResource(filter.statusLabel),
-                                style = MifosTypography.labelMediumEmphasized,
-                                color = MaterialTheme.colorScheme.secondary,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        HorizontalDivider(modifier = Modifier.height(1.dp))
-    }
-}
 
 @Composable
 internal fun AccountScreenContent(

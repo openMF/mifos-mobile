@@ -28,7 +28,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
 // TODO add some constants or enum class for routes and use
-internal sealed class SavingsActionItems(
+sealed class SavingsActionItems(
     val title: StringResource,
     val subTitle: StringResource,
     val icon: ImageVector,

@@ -87,6 +87,10 @@ internal class SavingsAccountDetailsViewModel(
             SavingsAccountDetailsAction.OnWithDraw -> sendEvent(
                 SavingsAccountDetailsEvent.WithdrawAmount,
             )
+
+            is SavingsAccountDetailsAction.OnNavigateToSavingsActionsScreenClick -> sendEvent(
+                SavingsAccountDetailsEvent.OnNavigateToSavingsActionsScreen(action.item),
+            )
         }
     }
 
@@ -234,6 +238,8 @@ sealed interface SavingsAccountDetailsEvent {
 
     /** Trigger Withdraw Amount */
     data object WithdrawAmount : SavingsAccountDetailsEvent
+
+    data class OnNavigateToSavingsActionsScreen(val item: SavingsActionItems) : SavingsAccountDetailsEvent
 }
 
 /**
@@ -242,6 +248,8 @@ sealed interface SavingsAccountDetailsEvent {
 sealed interface SavingsAccountDetailsAction {
     /** User tapped back. */
     data object OnNavigateBack : SavingsAccountDetailsAction
+
+    data class OnNavigateToSavingsActionsScreenClick(val item: SavingsActionItems) : SavingsAccountDetailsAction
 
     /** User dismissed a dialog. */
     data object DismissDialog : SavingsAccountDetailsAction

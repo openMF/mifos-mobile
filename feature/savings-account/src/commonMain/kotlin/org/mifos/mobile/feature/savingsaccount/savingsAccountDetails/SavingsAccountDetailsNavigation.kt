@@ -28,11 +28,15 @@ fun NavController.navigateToSavingsAccountDetailsScreen(accountId: Long, navOpti
 fun NavGraphBuilder.savingsAccountDetailsDestination(
     navigateBack: () -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
+    navigateToSavingsAccountTransactionScreen:(Long)-> Unit,
+    navigateToSavingsAccountChargesScreen: (Long) -> Unit,
 ) {
     composableWithSlideTransitions<SavingsAccountDetailsRoute> {
         SavingsAccountDetailsScreen(
             navigateBack = navigateBack,
             navigateToUpdateScreen = navigateToUpdateScreen,
+            navigateToSavingsAccountTransactionScreen=navigateToSavingsAccountTransactionScreen,
+            navigateToSavingsAccountChargesScreen=navigateToSavingsAccountChargesScreen
         )
     }
 }

@@ -9,32 +9,52 @@
  */
 package org.mifos.mobile.feature.accounts.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_account_title
+import mifos_mobile.feature.accounts.generated.resources.feature_filters_count
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_apply
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter
+import mifos_mobile.feature.accounts.generated.resources.feature_savings_reset
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_statement
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_transaction_history
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -51,9 +71,17 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.accounts.component.FilterSection
+import org.mifos.mobile.feature.accounts.component.FilterTopSection
+import org.mifos.mobile.feature.accounts.model.CheckboxStatus
+import org.mifos.mobile.feature.accounts.model.FilterType
+import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
+import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionAction
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionEvent
 import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionState
+import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
+import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
 import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
 import org.mifos.mobile.feature.accounts.viewmodel.getTransactionCreditStatus
 
@@ -123,11 +151,11 @@ internal fun TransactionScreenContent(
         ) {
             item {
                 ActionBar(
-                    onAction = {},
+                    onAction = onAction,
                 )
             }
 
-            state.data.forEach { (date, transactions) ->
+            state.filteredData.forEach { (date, transactions) ->
                 item {
                     Text(
                         text = date,
@@ -170,7 +198,12 @@ internal fun AccountTransactionsDialog(
                 onDismissRequest = { onAction(AccountTransactionAction.DismissDialog) },
             )
         }
-        AccountTransactionState.DialogState.Filters -> {}
+        AccountTransactionState.DialogState.Filters -> {
+            TransactionFilters(
+                state=state,
+                onAction=onAction
+            )
+        }
         AccountTransactionState.DialogState.Loading -> MifosLoadingDialog(
             modifier = modifier,
             visibilityState = LoadingDialogState.Shown,
@@ -214,7 +247,7 @@ internal fun ActionBar(
 
         Row(
             modifier = Modifier.clickable {
-                onAction(AccountTransactionAction.FilterClicked)
+                onAction(AccountTransactionAction.ToggleFilter)
             },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
@@ -230,6 +263,76 @@ internal fun ActionBar(
                 imageVector = MifosIcons.Filter,
                 contentDescription = stringResource(Res.string.feature_transaction_filter_icon_description),
                 tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun TransactionFilters(
+    state: AccountTransactionState,
+    onAction: (AccountTransactionAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var isTypeExpanded by rememberSaveable { mutableStateOf(true) }
+    var isStatusExpanded by rememberSaveable { mutableStateOf(true) }
+
+    MifosElevatedScaffold(
+        onNavigateBack = { onAction(AccountTransactionAction.OnNavigateBackClick) },
+        topBarTitle = stringResource(Res.string.feature_transaction_transaction_history),
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large)
+                .padding(top = DesignToken.padding.large),
+        ) {
+            FilterTopSection(
+                isAnyFilterSelected =state.isAnyFilterSelected,
+                resetFilters = {
+                    onAction(AccountTransactionAction.ResetFilters)
+                },
+                onApplyFilter = {
+                    onAction(AccountTransactionAction.GetFilterResults)
+                },
+                dismissDialog = {
+                    onAction(AccountTransactionAction.DismissDialog)
+                }
+            )
+
+            Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
+
+            HorizontalDivider(modifier = Modifier.height(1.dp))
+
+            FilterSection(
+                title = "Transaction Type",
+                filtersSelected = state.accountTypeFiltersCount ?: 0,
+                isExpanded = isTypeExpanded,
+                onToggle = { isTypeExpanded = !isTypeExpanded },
+                filters = state.checkboxOptions.filter { it.type == TransactionFilterType.TRANSACTION_TYPE },
+                onCheckChanged = { label ->
+                    onAction(AccountTransactionAction.ToggleCheckbox(label, TransactionFilterType.TRANSACTION_TYPE))
+                },
+            )
+
+            FilterSection(
+                title = "Duration",
+                filtersSelected = state.accountDurationFiltersCount ?: 0,
+                isExpanded = isStatusExpanded,
+                onToggle = { isStatusExpanded = !isStatusExpanded },
+                filters = state.checkboxOptions.filter { it.type == TransactionFilterType.DURATION },
+                onCheckChanged = { label ->
+                    onAction(AccountTransactionAction.ToggleCheckbox(label, TransactionFilterType.DURATION))
+                },
             )
         }
     }
