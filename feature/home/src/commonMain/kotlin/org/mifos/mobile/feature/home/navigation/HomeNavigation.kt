@@ -26,6 +26,10 @@ fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.homeDestination(
 //    navigateToDestinationScreen: (route: String) -> Unit,
+    navigateToChargeScreen: () -> Unit,
+    navigateToFaqScreen: () -> Unit,
+    navigateToBeneficiaryScreen: () -> Unit,
+    navigateToTransactionScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
 ) {
@@ -34,6 +38,10 @@ fun NavGraphBuilder.homeDestination(
 //            navigateToDestinationScreen = navigateToDestinationScreen,
             navigateToAccountsScreen = navigateToAccountsScreen,
             navigateToNotificationScreen = navigateToNotificationScreen,
+            navigateToChargeScreen = navigateToChargeScreen,
+            navigateToFaqScreen = navigateToFaqScreen,
+            navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
+            navigateToTransactionScreen = navigateToTransactionScreen,
         )
     }
 }

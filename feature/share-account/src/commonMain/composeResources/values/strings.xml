@@ -17,4 +17,7 @@
     <string name="feature_account_rejected">Rejected</string>
 
     <string name="feature_account_empty_share_accounts">There is no ShareAccount associated with you</string>
+    <string name="feature_share_account_dashboard">Total Borrowings</string>
+    <string name="feature_share_account">Loan Account</string>
+    <string name="feature_share_account_items">%1$d Items</string>
 </resources>

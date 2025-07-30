@@ -24,12 +24,24 @@ import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
+import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
+import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
+import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
+import org.mifos.mobile.feature.help.navigation.helpNavGraph
+import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
+import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
+import org.mifos.mobile.feature.qr.navigation.qrNavGraph
+import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
+import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
@@ -52,10 +64,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToNotificationScreen = navController::navigateToNotificationScreen,
             navigateToAccountsScreen = {
                 when (it) {
-                    Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT -> navController.navigateToAccountsScreen(it)
+                    Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT, Constants.SHARE_ACCOUNTS ->
+                        navController.navigateToAccountsScreen(it)
                     else -> Unit
                 }
             },
+            navigateToChargeScreen = navController::navigateToChargeGraph,
+            navigateToFaqScreen = navController::navigateToHelpScreen,
+            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
+            navigateToTransactionScreen = navController::navigateToRecentTransactionScreen,
         )
 
         notificationDestination(
@@ -76,7 +93,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
         )
 
         clientChargeNavGraph(
-            navigateBack = navController::popBackStack,
             navController = navController,
         )
 
@@ -92,12 +108,36 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         savingsNavGraph(
             navController = navController,
+            navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
         passcodeDestination(
             onPasscodeConfirm = navController::popBackStack,
+        )
+
+//        TODO: refactor later after getting figma design
+        helpNavGraph(
+            findLocations = {},
+            navigateBack = navController::popBackStack,
+            callHelpline = {},
+            mailHelpline = {},
+        )
+
+        recentTransactionNavGraph(
+            navController = navController,
+        )
+
+        beneficiaryNavGraph(
+            navController = navController,
+            openQrReaderScreen = navController::navigateToQrReaderScreen,
+            openQrImportScreen = navController::navigateToQrImportScreen,
+        )
+
+        qrNavGraph(
+            navController = navController,
+            openBeneficiaryApplication = navController::navigateToBeneficiaryApplicationScreen,
         )
     }
 }

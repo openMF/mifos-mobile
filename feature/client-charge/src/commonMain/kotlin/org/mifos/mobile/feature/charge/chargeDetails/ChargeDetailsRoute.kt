@@ -7,7 +7,10 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.charge.navigation
+
+@file:Suppress("MatchingDeclarationName")
+
+package org.mifos.mobile.feature.charge.chargeDetails
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -15,7 +18,6 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.composableWithStayTransitions
-import org.mifos.mobile.feature.charge.screens.ChargeDetailScreen
 
 @Serializable
 data class ChargesDetailsRoute(

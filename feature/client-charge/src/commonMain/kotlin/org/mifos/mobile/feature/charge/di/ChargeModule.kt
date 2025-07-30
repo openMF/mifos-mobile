@@ -11,8 +11,8 @@ package org.mifos.mobile.feature.charge.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsViewModel
-import org.mifos.mobile.feature.charge.viewmodel.ClientChargeViewModel
+import org.mifos.mobile.feature.charge.chargeDetails.ChargeDetailsViewModel
+import org.mifos.mobile.feature.charge.charges.ClientChargeViewModel
 
 val ChargeModule = module {
     viewModelOf(::ClientChargeViewModel)

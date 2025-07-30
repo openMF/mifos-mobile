@@ -166,12 +166,11 @@ internal class AccountsViewModel(
      */
     private fun observeAccountTypeAndInitCheckboxes() {
         val route = savedStateHandle.toRoute<AccountNavRoute>()
-
+// TODO use enum class AccountType instead of Constants
         val type = when (route.accountType) {
             Constants.SAVINGS_ACCOUNT -> AccountType.SAVINGS
             Constants.LOAN_ACCOUNT -> AccountType.LOAN
-            // TODO use Constants when designing loan and share accounts
-            "share_account" -> AccountType.SHARE
+            Constants.SHARE_ACCOUNTS -> AccountType.SHARE
             else -> AccountType.SAVINGS
         }
         val checkboxes = getAccountCheckboxes(type.name)

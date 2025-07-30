@@ -7,35 +7,33 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.charge.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
-import org.mifos.mobile.core.ui.composableWithPushTransitions
-import org.mifos.mobile.feature.charge.screens.ClientChargeScreen
-
-@Serializable
-data class ClientChargesRoute(
-    val chargeType: String,
-    val chargeTypeId: Long,
-)
+import org.mifos.mobile.feature.charge.chargeDetails.chargesDetailsDestination
+import org.mifos.mobile.feature.charge.chargeDetails.navigateToChargesDetailsScreen
+import org.mifos.mobile.feature.charge.charges.ClientChargesRoute
+import org.mifos.mobile.feature.charge.charges.clientChargesScreen
 
 @Serializable
 data object ClientChargesNavGraphRoute
 
 fun NavGraphBuilder.clientChargeNavGraph(
     navController: NavController,
-    navigateBack: () -> Unit,
+//    navigateBack: () -> Unit,
 ) {
     navigation<ClientChargesNavGraphRoute>(
-        startDestination = ClientChargesRoute(ChargeType.SAVINGS.name, -1),
+        startDestination = ClientChargesRoute(ChargeType.CLIENT.name),
     ) {
         clientChargesScreen(
-            onNavigateBack = navigateBack,
+            onNavigateBack = navController::popBackStack,
             navigateToChargeDetailsScreen = {
                 navController.navigateToChargesDetailsScreen(it)
             },
@@ -46,21 +44,6 @@ fun NavGraphBuilder.clientChargeNavGraph(
     }
 }
 
-fun NavGraphBuilder.clientChargesScreen(
-    onNavigateBack: () -> Unit,
-    navigateToChargeDetailsScreen: (charge: Charge) -> Unit,
-) {
-    composableWithPushTransitions<ClientChargesRoute> {
-        ClientChargeScreen(
-            navigateBack = onNavigateBack,
-            onChargeClick = navigateToChargeDetailsScreen,
-        )
-    }
-}
-
-fun NavController.navigateToClientChargeScreen(
-    chargeType: String,
-    chargeTypeId: Long,
-) {
-    this.navigate(ClientChargesRoute(chargeType, chargeTypeId))
+fun NavController.navigateToChargeGraph(navOptions: NavOptions? = null) {
+    this.navigate(ClientChargesNavGraphRoute, navOptions)
 }
