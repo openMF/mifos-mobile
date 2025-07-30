@@ -205,4 +205,6 @@ object MifosIcons {
     val Download = FluentIcons.Filled.ArrowDownload
     val CaretDown = FluentIcons.Filled.CaretDown
     val CaretUp = FluentIcons.Filled.CaretUp
+
+    val CoinMultiple = FluentIcons.Filled.CoinMultiple
 }

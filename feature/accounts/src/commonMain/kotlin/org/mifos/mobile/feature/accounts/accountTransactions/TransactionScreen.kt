@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.screen
+package org.mifos.mobile.feature.accounts.accountTransactions
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

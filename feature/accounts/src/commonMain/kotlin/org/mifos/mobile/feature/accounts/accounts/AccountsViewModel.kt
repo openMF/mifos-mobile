@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.viewmodel
+package org.mifos.mobile.feature.accounts.accounts
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
@@ -19,7 +19,6 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
-import org.mifos.mobile.feature.accounts.navigation.AccountNavRoute
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
 
 /**
@@ -170,8 +169,8 @@ internal class AccountsViewModel(
 
         val type = when (route.accountType) {
             Constants.SAVINGS_ACCOUNT -> AccountType.SAVINGS
+            Constants.LOAN_ACCOUNT -> AccountType.LOAN
             // TODO use Constants when designing loan and share accounts
-            "loan_account" -> AccountType.LOAN
             "share_account" -> AccountType.SHARE
             else -> AccountType.SAVINGS
         }

@@ -12,29 +12,20 @@
 
     <string name="feature_account_title">Accounts</string>
 
-    <!--    Filter dialog actions-->
-    <string name="feature_account_clear_filters">Clear Filters</string>
-    <string name="feature_account_cancel">Cancel</string>
-    <string name="feature_account_filter">Filter</string>
-    <string name="feature_account_select_you_want">Select all filters you want to apply</string>
+<!--    Loan Account Filters-->
 
+    <string name="feature_loan_account_filter_active">Active</string>
+    <string name="feature_loan_account_filter_approval_pending">Approval Pending</string>
+    <string name="feature_loan_account_filter_closed">Closed</string>
+    <string name="feature_loan_account_filter_disburse">Waiting for Disburse</string>
+    <string name="feature_loan_account_filter_overpaid">Overpaid</string>
+    <string name="feature_loan_account_filter_in_arrears">In Arrears</string>
+    <string name="feature_loan_account_filter_withdrawn">Withdrawn</string>
+    <string name="feature_loan_account_filter_matured">Matured</string>
+    <string name="feature_loan_account_filter_rejected">Rejected</string>
 
-    <!--    Filter dialog checkbox labels-->
-    <string name="feature_account_active">Active</string>
-    <string name="feature_account_approval_pending">Approval Pending</string>
-    <string name="feature_account_closed">Closed</string>
-    <string name="feature_account_matured">Matured</string>
-    <string name="feature_account_rejected">Rejected</string>
-    <string name="feature_account_disburse">Waiting for Disburse</string>
-    <string name="feature_account_overpaid">Overpaid</string>
-    <string name="feature_account_approved">Approved</string>
-    <string name="feature_account_in_arrears">In Arrears</string>
-    <string name="feature_account_withdrawn">Withdrawn</string>
-
-    <!--    tabs-->
-    <string name="feature_account_savings_account">Savings Account</string>
-    <string name="feature_account_share_account">Share Account</string>
-    <string name="feature_account_loan_account">Loan Account</string>
+    <string name="feature_loan_account_filter_personal">Personal</string>
+    <string name="feature_loan_account_filter_bronze">Bronze</string>
 
     <!--    Savings account filters-->
     <string name="feature_savings_filter_wallet_account">Wallet Account</string>

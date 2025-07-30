@@ -19,4 +19,10 @@ enum class LoanStatus(val status: String) {
     APPROVED("Approved"),
 
     SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
+
+    DISBURSED("Disbursed"),
+
+    REJECTED("Rejected"),
+
+    WITHDRAWN("Withdrawn by applicant"),
 }

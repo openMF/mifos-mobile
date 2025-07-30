@@ -14,7 +14,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_filters_count
@@ -110,7 +108,7 @@ internal fun FilterSection(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.padding.medium)
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.padding.medium),
                 ) {
                     filters.forEach { filter ->
                         when (filter) {
@@ -129,7 +127,7 @@ internal fun FilterSection(
                                         filter.isChecked
                                     },
                                     { onCheckChanged(filter.statusLabel) },
-                                    isRadio=isRadio,
+                                    isRadio = isRadio,
                                 )
                             }
                         }
@@ -141,7 +139,7 @@ internal fun FilterSection(
         HorizontalDivider(
             modifier = Modifier
                 .padding(top = DesignToken.padding.medium)
-                .height(1.dp)
+                .height(1.dp),
         )
     }
 }
@@ -160,13 +158,13 @@ fun FilterCheckboxUI(
     ) {
         if (isRadio) {
             RadioButton(
-                modifier=Modifier.size(16.dp),
+                modifier = Modifier.size(16.dp),
                 selected = isChecked,
                 onClick = { onCheckedChange() },
             )
         } else {
             Checkbox(
-                modifier=Modifier.size(16.dp),
+                modifier = Modifier.size(16.dp),
                 checked = isChecked,
                 onCheckedChange = { onCheckedChange() },
             )
