@@ -31,6 +31,7 @@ kotlin {
             implementation(libs.jb.kotlin.stdlib)
             implementation(libs.kotlin.reflect)
             implementation(libs.kotlinx.serialization.json)
+            api(projects.feature.loanAccount)
         }
     }
 }

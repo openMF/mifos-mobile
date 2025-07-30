@@ -9,12 +9,12 @@
  */
 package org.mifos.mobile.feature.loan.loanRepaymentSchedule
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,34 +27,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.todayIn
 import mifos_mobile.feature.loan.generated.resources.Res
 import mifos_mobile.feature.loan.generated.resources.account_number
-import mifos_mobile.feature.loan.generated.resources.date
 import mifos_mobile.feature.loan.generated.resources.disbursement_date
+import mifos_mobile.feature.loan.generated.resources.due
+import mifos_mobile.feature.loan.generated.resources.installments_left
+import mifos_mobile.feature.loan.generated.resources.installments_paid
 import mifos_mobile.feature.loan.generated.resources.loan_repayment_schedule
-import mifos_mobile.feature.loan.generated.resources.no_of_payments
-import mifos_mobile.feature.loan.generated.resources.principal
-import mifos_mobile.feature.loan.generated.resources.repayment
+import mifos_mobile.feature.loan.generated.resources.not_active
+import mifos_mobile.feature.loan.generated.resources.paid
+import mifos_mobile.feature.loan.generated.resources.principal_paid_off
 import mifos_mobile.feature.loan.generated.resources.repayment_schedule
-import mifos_mobile.feature.loan.generated.resources.s_no
+import mifos_mobile.feature.loan.generated.resources.total_installments
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.loanaccount.component.LoanAccountCard
 
 @Composable
 internal fun LoanRepaymentScheduleScreen(
@@ -137,20 +142,35 @@ private fun LoanRepaymentScheduleScreen(
     )
 }
 
+fun formatDate(date: List<Int>): String {
+    return if (date.size == 3) {
+        val day = date[2].toString().padStart(2, '0')
+        val month = date[1].toString().padStart(2, '0')
+        val year = date[0].toString().padStart(4, '0')
+        "$day-$month-$year"
+    } else {
+        "--"
+    }
+}
+
 @Composable
 private fun LoanRepaymentScheduleCard(
     loanWithAssociations: LoanWithAssociations,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    Box(
         modifier = modifier
+            .padding(vertical = DesignToken.padding.medium, horizontal = DesignToken.padding.large)
             .fillMaxWidth()
-            .padding(8.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(12.dp)),
+            .border(
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondaryContainer),
+                shape = RoundedCornerShape(12.dp),
+            )
+            .padding(DesignToken.padding.medium),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
         ) {
             LoanRepaymentScheduleCardItem(
                 label = stringResource(Res.string.account_number),
@@ -158,12 +178,36 @@ private fun LoanRepaymentScheduleCard(
             )
             LoanRepaymentScheduleCardItem(
                 label = stringResource(Res.string.disbursement_date),
-                value = DateHelper.getDateAsString(
-                    loanWithAssociations.timeline?.expectedDisbursementDate ?: emptyList(),
-                ),
+                value = formatDate(loanWithAssociations.timeline?.expectedDisbursementDate ?: emptyList()),
             )
+
+            loanWithAssociations.summary?.let { summary ->
+                LoanRepaymentScheduleCardItem(
+                    label = stringResource(Res.string.principal_paid_off),
+                    value = "${loanWithAssociations.currency?.displaySymbol ?: ""} ${summary.principalPaid ?: 0.0}",
+                )
+
+                val paidInstallments = loanWithAssociations.repaymentSchedule?.periods?.count { period ->
+                    period.totalOutstandingForPeriod != null && period.totalOutstandingForPeriod!! <= 0 &&
+                        period.principalOriginalDue != null && period.principalOriginalDue!! > 0
+                } ?: 0
+
+                LoanRepaymentScheduleCardItem(
+                    label = stringResource(Res.string.installments_paid),
+                    value = paidInstallments.toString(),
+                )
+
+                val totalInstallments = loanWithAssociations.numberOfRepayments ?: 0
+                val installmentsLeft = totalInstallments - paidInstallments
+
+                LoanRepaymentScheduleCardItem(
+                    label = stringResource(Res.string.installments_left),
+                    value = installmentsLeft.toString(),
+                )
+            }
+
             LoanRepaymentScheduleCardItem(
-                label = stringResource(Res.string.no_of_payments),
+                label = stringResource(Res.string.total_installments),
                 value = loanWithAssociations.numberOfRepayments.toString(),
             )
         }
@@ -179,34 +223,34 @@ private fun RepaymentScheduleTable(
     if (periods.isNotEmpty()) {
         LazyColumn(
             modifier = modifier
-                .fillMaxSize()
-                .padding(12.dp),
+                .fillMaxSize(),
         ) {
-            item {
-                Row {
-                    TableCell(text = stringResource(Res.string.s_no), weight = 0.5f)
-                    TableCell(text = stringResource(Res.string.date), weight = 1f)
-                    TableCell(text = stringResource(Res.string.repayment), weight = 1f)
-                    TableCell(text = stringResource(Res.string.principal), weight = 1f)
-                }
-            }
             items(periods) { period ->
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    TableCell(text = "${periods.indexOf(period) + 1}", weight = 0.5f)
-                    TableCell(text = DateHelper.getDateAsString(period.dueDate), weight = 1f)
-                    TableCell(
-                        text = "$currency ${period.principalLoanBalanceOutstanding}",
-                        weight = 1f,
-                    )
-                    TableCell(
-                        text = if (period.principalOriginalDue == null) {
-                            "$currency 0.00"
-                        } else {
-                            "$currency ${period.principalOriginalDue}"
-                        },
-                        weight = 1f,
-                    )
+                val periodIndex = periods.indexOf(period) + 1
+
+                val status = when {
+                    period.principalOriginalDue == null ||
+                            period.principalOriginalDue!! <= 0 -> stringResource(Res.string.not_active)
+
+                    period.totalOutstandingForPeriod != null &&
+                            period.totalOutstandingForPeriod!! <= 0 -> stringResource(Res.string.paid)
+
+                    period.totalOutstandingForPeriod != null &&
+                            period.totalOutstandingForPeriod!! > 0 &&
+                            !isDatePastDue(period.dueDate) -> stringResource(Res.string.due)
+
+                    else -> stringResource(Res.string.not_active)
                 }
+
+                LoanAccountCard(
+                    loanId = periodIndex.toLong(),
+                    date = DateHelper.getDateAsString(period.dueDate),
+                    amount = "$currency ${period.principalOriginalDue?.toInt() ?: 0}",
+                    status = status,
+                    onLoanClick = {},
+                    onPaymentClick = {},
+                    modifier = Modifier,
+                )
             }
         }
     } else {
@@ -214,22 +258,18 @@ private fun RepaymentScheduleTable(
     }
 }
 
-@Composable
-private fun RowScope.TableCell(
-    text: String,
-    weight: Float,
-    modifier: Modifier = Modifier,
-) {
-    val borderColor = if (isSystemInDarkTheme()) Color.Gray else Color.Black
+private fun isDatePastDue(dueDate: List<Int>): Boolean {
+    if (dueDate.size < 3) return false
 
-    Text(
-        text = text,
-        modifier = modifier
-            .border(1.dp, borderColor)
-            .weight(weight)
-            .padding(4.dp),
-        textAlign = TextAlign.Center,
-    )
+    return try {
+        val currentDate = kotlinx.datetime.Clock.System.todayIn(
+            kotlinx.datetime.TimeZone.currentSystemDefault()
+        )
+        val dueDateLocal = LocalDate(dueDate[0], dueDate[1], dueDate[2])
+        currentDate > dueDateLocal
+    } catch (e: Exception) {
+        false
+    }
 }
 
 @Composable
@@ -246,14 +286,16 @@ private fun LoanRepaymentScheduleCardItem(
     ) {
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MifosTypography.labelMediumEmphasized,
             modifier = Modifier.weight(1f),
+            color = MaterialTheme.colorScheme.onSurface,
         )
         Text(
             text = value,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MifosTypography.labelMedium,
             modifier = Modifier.weight(1f),
-            textAlign = TextAlign.Start,
+            textAlign = TextAlign.End,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }

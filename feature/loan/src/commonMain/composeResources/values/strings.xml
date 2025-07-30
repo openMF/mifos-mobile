@@ -14,7 +14,7 @@
     <string name="string_and_string">%1$s %2$s</string>
     <string name="next_installment">Next Installment</string>
     <string name="due_date">Due Date</string>
-    <string name="account_number">Account Number</string>
+    <string name="account_number">Account Number:</string>
     <string name="loan_type">Loan Type</string>
     <string name="repayment_schedule">Repayment Schedule</string>
     <string name="loan_account_details">Loan Account Details</string>
@@ -83,7 +83,7 @@
     <string name="withdraw_loan_reason">Reason to Withdraw Loan</string>
     <string name="error_loan_account_withdraw">Error in withdrawing loan account</string>
     <string name="loan_repayment_schedule">Repayment Schedule</string>
-    <string name="disbursement_date">Disbursement Date</string>
+    <string name="disbursement_date">Disbursement Date:</string>
     <string name="no_of_payments">Number of payments</string>
     <string name="date">Date</string>
     <string name="loan_balance">Loan Balance</string>
@@ -93,5 +93,13 @@
     <string name="s_no">S.No</string>
     <string name="submit_loan">Submit Loan</string>
     <string name="apply_for_loan">Apply for Loan</string>
+    <string name="principal_paid_off">Principal paid-off:</string>
+    <string name="installments_paid">Installments Paid:</string>
+    <string name="installments_left">Installments Left:</string>
+    <string name="total_installments">Total Installments:</string>
 
+    <string name="paid">Paid</string>
+    <string name="pay">Pay</string>
+    <string name="due">due</string>
+    <string name="not_active">Not Active</string>
 </resources>

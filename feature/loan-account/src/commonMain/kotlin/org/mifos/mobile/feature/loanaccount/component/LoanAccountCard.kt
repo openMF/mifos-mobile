@@ -33,16 +33,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
-internal fun LoanAccountCard(
+fun LoanAccountCard(
     loanId: Long,
     date: String,
     amount: String,
@@ -52,12 +52,13 @@ internal fun LoanAccountCard(
     modifier: Modifier = Modifier,
 ) {
     val loanStatusColor = when (status.lowercase()) {
-        Constants.PAID.lowercase() -> AppColors.customEnable
-        Constants.DUE -> MaterialTheme.colorScheme.error
+        "Paid".lowercase() -> AppColors.customEnable
+        "due" -> MaterialTheme.colorScheme.error
         else -> AppColors.customYellow
     }
 
-    val isPaid = status.lowercase() == Constants.PAID.lowercase()
+    val isPaid = status.lowercase() == "Paid".lowercase()
+    val isNotActive = !isPaid && status.lowercase() != "due".lowercase()
 
     Box(
         modifier = modifier
@@ -68,7 +69,10 @@ internal fun LoanAccountCard(
                 shape = RoundedCornerShape(12.dp),
             )
             .clickable { onLoanClick(loanId) }
-            .padding(DesignToken.padding.medium),
+            .padding(DesignToken.padding.medium)
+            .then(
+                if (isNotActive) Modifier.alpha(0.6f) else Modifier,
+            ),
     ) {
         Row(
             modifier = Modifier
@@ -118,22 +122,26 @@ internal fun LoanAccountCard(
 
             Button(
                 onClick = {
-                    if (!isPaid) {
+                    if (!isPaid && !isNotActive) {
                         onPaymentClick(loanId)
                     }
                 },
-                enabled = !isPaid,
+                enabled = !isPaid && !isNotActive,
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.onPrimary,
-                    disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                    disabledContainerColor = if (isPaid) {
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                    } else {
+                        MaterialTheme.colorScheme.onPrimary
+                    },
                 ),
                 border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondaryContainer),
                 modifier = Modifier.size(width = 60.dp, height = 32.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
             ) {
                 Text(
-                    text = if (isPaid) Constants.PAID else Constants.PAY,
+                    text = if (isPaid) "Paid" else "pay",
                     style = MifosTypography.labelLarge,
                     color = if (isPaid) {
                         MaterialTheme.colorScheme.outline
