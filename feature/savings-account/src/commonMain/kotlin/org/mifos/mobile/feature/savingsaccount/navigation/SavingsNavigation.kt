@@ -21,6 +21,8 @@ import org.mifos.mobile.feature.savingsaccount.savingsAccount.savingsAccountDest
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.savingsAccountDetailsDestination
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.navigateToSavingsAccountUpdateScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.savingsAccountUpdateDestination
+import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.navigateToSavingsAccountWithdrawScreen
+import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.savingsAccountWithdrawDestination
 
 @Serializable
 data object SavingsGraphRoute
@@ -47,9 +49,16 @@ fun NavGraphBuilder.savingsNavGraph(
             navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
             navigateToSavingsAccountChargesScreen = navigateToSavingsAccountChargesScreen,
+            navigateToWithdrawScreen = navController::navigateToSavingsAccountWithdrawScreen,
         )
 
         savingsAccountUpdateDestination(
+            navigateBack = navController::popBackStack,
+            navigateToStatusScreen = navigateToStatusScreen,
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
+        )
+
+        savingsAccountWithdrawDestination(
             navigateBack = navController::popBackStack,
             navigateToStatusScreen = navigateToStatusScreen,
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
