@@ -25,7 +25,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
 import kotlin.collections.firstOrNull
 
-//TODO: Refactor according to figma design
+// TODO: Refactor according to figma design
 /**
  * ViewModel responsible for managing loan account UI state, fetching, filtering,
  * and reacting to user actions and network changes.
