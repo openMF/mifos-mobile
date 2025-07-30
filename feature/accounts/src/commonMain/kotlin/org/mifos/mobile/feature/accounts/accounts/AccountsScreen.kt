@@ -71,6 +71,7 @@ import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
+import org.mifos.mobile.feature.shareaccount.shareAccount.ShareAccountScreen
 
 @Composable
 internal fun AccountsScreen(
@@ -286,16 +287,16 @@ internal fun FilterSection(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier
-            .padding(
-                start = DesignToken.spacing.extraLargeIncreased,
-                end = DesignToken.spacing.small,
-                top = DesignToken.padding.medium,
-                bottom = DesignToken.padding.medium,
-            ),
+                .padding(
+                    start = DesignToken.spacing.extraLargeIncreased,
+                    end = DesignToken.spacing.small,
+                    top = DesignToken.padding.medium,
+                    bottom = DesignToken.padding.medium,
+                ),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             Row(
@@ -392,10 +393,10 @@ internal fun AccountScreenContent(
             }
         },
     ) {
+        val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
+        val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
         when (state.accountType) {
             AccountType.SAVINGS -> {
-                val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
-                val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
                 SavingsAccountScreen(
                     navigateBack = { onAction(AccountsAction.OnNavigateBack) },
                     refreshSignal = state.refreshSignal,
@@ -411,8 +412,6 @@ internal fun AccountScreenContent(
                 )
             }
             AccountType.LOAN -> {
-                val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
-                val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
                 LoanAccountScreen(
                     navigateBack = { onAction(AccountsAction.OnNavigateBack) },
                     refreshSignal = state.refreshSignal,
@@ -427,7 +426,21 @@ internal fun AccountScreenContent(
                     filtersClicked = { onAction(AccountsAction.ToggleFilter) },
                 )
             }
-            AccountType.SHARE -> {}
+            AccountType.SHARE -> {
+                ShareAccountScreen(
+                    navigateBack = { onAction(AccountsAction.OnNavigateBack) },
+                    refreshSignal = state.refreshSignal,
+                    onLoadingCompleted = {
+                        onAction(AccountsAction.RefreshCompleted)
+                    },
+                    onAccountClicked = { accountType, accountId ->
+                        onAction(AccountsAction.OnAccountClicked(accountId, accountType))
+                    },
+                    accountTypeFilters = typeFilters.map { it.statusLabel },
+                    accountStatusFilters = statusFilters.map { it.statusLabel },
+                    filtersClicked = { onAction(AccountsAction.ToggleFilter) },
+                )
+            }
         }
     }
 }

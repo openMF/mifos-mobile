@@ -17,7 +17,7 @@ import org.mifos.mobile.core.model.enums.ChargeType
 
 interface ClientChargeRepository {
 
-    fun getCharges(chargeTypeId: Long): Flow<DataState<Page<Charge>>>
+    fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>>
 
     fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>>
 

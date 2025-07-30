@@ -45,7 +45,7 @@ internal sealed class ServiceItem(
     data object ShareAccount : ServiceItem(
         title = Res.string.feature_home_share_accounts,
         icon = MifosIcons.ShareAccount,
-        route = "ShareAccountRoute",
+        route = Constants.SHARE_ACCOUNTS,
     )
 
     data object ApplyForLoan : ServiceItem(
@@ -57,25 +57,25 @@ internal sealed class ServiceItem(
     data object TransactionHistory : ServiceItem(
         title = Res.string.feature_home_transaction_history,
         icon = MifosIcons.TransactionHistory,
-        route = "TransactionHistoryRoute",
+        route = Constants.TRANSACTIONS,
     )
 
     data object Charges : ServiceItem(
         title = Res.string.feature_home_charges,
         icon = MifosIcons.Charges,
-        route = "ChargesRoute",
+        route = Constants.CHARGES,
     )
 
     data object Beneficiary : ServiceItem(
         title = Res.string.feature_home_beneficiary,
         icon = MifosIcons.Beneficiary,
-        route = "BeneficiaryRoute",
+        route = Constants.BENEFICIARY,
     )
 
     data object Faq : ServiceItem(
         title = Res.string.feature_home_faq,
         icon = MifosIcons.Faq,
-        route = "FaqRoute",
+        route = Constants.HELP,
     )
 }
 

@@ -44,6 +44,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
@@ -54,6 +55,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -66,6 +68,7 @@ internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
+    navigateToClientChargeScreen: (String, Long) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -73,6 +76,14 @@ internal fun SavingsAccountDetailsScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             SavingsAccountDetailsEvent.NavigateBack -> navigateBack.invoke()
+
+            is SavingsAccountDetailsEvent.NavigateToAction -> {
+                when {
+                    event.route == Constants.CHARGES -> {
+                        navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
+                    }
+                }
+            }
 
             SavingsAccountDetailsEvent.UpdateAccount -> {
                 navigateToUpdateScreen.invoke(
@@ -115,6 +126,7 @@ internal fun SavingsAccountDetailsScreen(
 internal fun SavingsAccountDetailsContent(
     state: SavingsAccountDetailsState,
     onAction: (SavingsAccountDetailsAction) -> Unit,
+//    onActionClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
@@ -156,6 +168,9 @@ internal fun SavingsAccountDetailsContent(
 
                 SavingsAccountActions(
                     items = state.items,
+                    onActionClick = {
+                        onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
+                    },
                 )
             }
         }
@@ -286,6 +301,8 @@ internal fun AccountDetailsGrid(
 @Composable
 internal fun SavingsAccountActions(
     items: ImmutableList<SavingsActionItems>,
+//    onAction: (SavingsAccountDetailsAction) -> Unit,
+    onActionClick: (String) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
@@ -303,8 +320,9 @@ internal fun SavingsAccountActions(
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,
-                    //                TODO navigate to respective destinations
-                    onClick = { },
+                    onClick = {
+                        onActionClick(item.route)
+                    },
                 )
             }
         }

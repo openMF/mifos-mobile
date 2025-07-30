@@ -11,8 +11,8 @@ package org.mifos.mobile.feature.shareaccount.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.mobile.feature.shareaccount.viewmodel.ShareAccountViewModel
+import org.mifos.mobile.feature.shareaccount.shareAccount.ShareAccountsViewmodel
 
 val shareAccountModule = module {
-    viewModelOf(::ShareAccountViewModel)
+    viewModelOf(::ShareAccountsViewmodel)
 }

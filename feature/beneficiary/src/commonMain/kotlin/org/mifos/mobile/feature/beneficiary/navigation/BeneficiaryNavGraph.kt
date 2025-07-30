@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.beneficiary.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -45,7 +44,7 @@ fun NavController.navigateToBeneficiaryApplicationScreen(
 }
 
 fun NavGraphBuilder.beneficiaryNavGraph(
-    navController: NavHostController,
+    navController: NavController,
     openQrReaderScreen: () -> Unit,
     openQrImportScreen: () -> Unit,
 ) {

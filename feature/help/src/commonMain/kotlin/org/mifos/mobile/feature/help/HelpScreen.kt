@@ -34,7 +34,7 @@ import mifos_mobile.feature.help.generated.resources.leave_email
 import mifos_mobile.feature.help.generated.resources.no_questions_found
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.component.EmptyDataView
@@ -59,7 +59,7 @@ internal fun HelpScreen(
             HelpEvent.CallHelpLine -> callNow()
             HelpEvent.Location -> findLocations()
             HelpEvent.MailHelpLine -> leaveEmail()
-            HelpEvent.NavigateBack -> navigateBack()
+            HelpEvent.NavigateBack -> navigateBack.invoke()
         }
     }
 
@@ -78,19 +78,9 @@ private fun HelpScreenContent(
     onAction: (HelpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
-//        topBar = {
-//            MifosTopAppBar(
-//                navigateBack = { onAction(HelpAction.NavigateBack) },
-//                title = {
-//                    MifosTitleSearchCard(
-//                        searchQuery = { query -> onAction(HelpAction.SearchFaq(query)) },
-//                        titleResourceId = Res.string.help,
-//                        onSearchDismiss = { onAction(HelpAction.DismissSearch) },
-//                    )
-//                },
-//            )
-//        },
+    MifosElevatedScaffold(
+        topBarTitle = stringResource(Res.string.help),
+        onNavigateBack = { onAction(HelpAction.NavigateBack) },
         content = {
             Box(modifier = Modifier) {
                 if (uiState.faqList.isNotEmpty()) {

@@ -25,7 +25,6 @@ object Constants {
     const val RECURRING_ACCOUNTS = "recurringdepositaccounts"
     const val ACCOUNT_TYPE = "accountType"
     const val REPAYMENT_SCHEDULE = "repaymentSchedule"
-    const val TRANSACTIONS = "transactions"
     const val DFRAG_DATE_PICKER = "Date Picker"
     const val TRANSFER_TYPE = "transfer_type"
     const val TRANSFER_TARGET = "transfer_target"
@@ -57,7 +56,6 @@ object Constants {
     const val TEMPLATE = "template"
     const val RECENT_TRANSACTIONS = "recent_transactions"
 
-    const val HELP = "help"
     const val USER_PROFILE = "user_profile"
     const val USER_DETAILS = "user_details"
     const val TOTAL_LOAN = "total_loan"
@@ -92,7 +90,9 @@ object Constants {
 
     const val DEPOSIT = "deposit"
     const val TRANSFER = "transfer"
-    const val TRANSACTION = "transactions"
+    const val TRANSACTIONS = "transactions"
     const val CHARGES = "charges"
     const val QR_CODE = "qr_code"
+
+    const val HELP = "help"
 }
