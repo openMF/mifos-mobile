@@ -9,33 +9,26 @@
  */
 @file:Suppress("MatchingDeclarationName")
 
-package org.mifos.mobile.feature.accounts.navigation
+package org.mifos.mobile.feature.loanaccount.loanAccount
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
-import org.mifos.mobile.feature.accounts.screen.TransactionScreen
 
 @Serializable
-data class AccountTransactionsNavRoute(
-    val accountType: String,
-    val accountId: Long,
-)
+data object LoanAccountRoute
 
-fun NavController.navigateToAccountTransactionsScreen(
-    accountType: String,
-    accountId: Long,
-    navOptions: NavOptions? = null,
-) {
-    this.navigate(AccountTransactionsNavRoute(accountType, accountId), navOptions)
-}
+fun NavController.navigateToLoanAccountScreen(navOptions: NavOptions? = null) =
+    navigate(LoanAccountRoute, navOptions)
 
-fun NavGraphBuilder.accountTransactionsDestination(
+fun NavGraphBuilder.loanAccountDestination(
     navigateBack: () -> Unit,
 ) {
-    composableWithSlideTransitions<AccountTransactionsNavRoute> {
-        TransactionScreen(navigateBack)
+    composableWithSlideTransitions<LoanAccountRoute> {
+        LoanAccountScreen(
+            navigateBack = navigateBack,
+        )
     }
 }

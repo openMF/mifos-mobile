@@ -9,14 +9,13 @@
  */
 @file:Suppress("MatchingDeclarationName")
 
-package org.mifos.mobile.feature.accounts.navigation
+package org.mifos.mobile.feature.accounts.accounts
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
-import org.mifos.mobile.feature.accounts.screen.AccountsScreen
 
 @Serializable
 data class AccountNavRoute(

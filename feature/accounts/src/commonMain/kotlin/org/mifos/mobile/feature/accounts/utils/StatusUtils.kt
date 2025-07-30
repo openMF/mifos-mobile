@@ -10,15 +10,17 @@
 package org.mifos.mobile.feature.accounts.utils
 
 import mifos_mobile.feature.accounts.generated.resources.Res
-import mifos_mobile.feature.accounts.generated.resources.feature_account_active
-import mifos_mobile.feature.accounts.generated.resources.feature_account_approval_pending
-import mifos_mobile.feature.accounts.generated.resources.feature_account_approved
-import mifos_mobile.feature.accounts.generated.resources.feature_account_closed
-import mifos_mobile.feature.accounts.generated.resources.feature_account_disburse
-import mifos_mobile.feature.accounts.generated.resources.feature_account_in_arrears
-import mifos_mobile.feature.accounts.generated.resources.feature_account_overpaid
-import mifos_mobile.feature.accounts.generated.resources.feature_account_rejected
-import mifos_mobile.feature.accounts.generated.resources.feature_account_withdrawn
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_active
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_approval_pending
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_bronze
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_closed
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_disburse
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_in_arrears
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_matured
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_overpaid
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_personal
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_rejected
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_withdrawn
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_active_account
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_approved_account
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_bank_account
@@ -68,29 +70,24 @@ object StatusUtils {
      * @return A list of [CheckboxStatus] representing different loan account statuses.
      */
     internal fun getLoanAccountCheckboxes(): List<CheckboxStatus> {
-        return listOf(
-            CheckboxStatus(
-                Res.string.feature_account_active,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_disburse,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_approval_pending,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_overpaid,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_closed,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_in_arrears,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_withdrawn,
-            ),
+        val accountTypes = listOf(
+            CheckboxStatus(Res.string.feature_loan_account_filter_personal, type = FilterType.ACCOUNT_TYPE),
+            CheckboxStatus(Res.string.feature_loan_account_filter_bronze, type = FilterType.ACCOUNT_TYPE),
         )
+
+        val accountStatuses = listOf(
+            CheckboxStatus(Res.string.feature_loan_account_filter_active, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_approval_pending, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_closed, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_disburse, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_overpaid, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_in_arrears, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_withdrawn, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_matured, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_rejected, type = FilterType.ACCOUNT_STATUS),
+        )
+
+        return accountTypes + accountStatuses
     }
 
     /**
@@ -99,22 +96,24 @@ object StatusUtils {
      * @return A list of [CheckboxStatus] representing different share account statuses.
      */
     internal fun getShareAccountCheckboxes(): List<CheckboxStatus> {
-        return listOf(
-            CheckboxStatus(
-                Res.string.feature_account_active,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_approved,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_approval_pending,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_closed,
-            ),
-            CheckboxStatus(
-                Res.string.feature_account_rejected,
-            ),
+        // TODO Replace with actual account types for share account
+        val accountTypes = listOf(
+            CheckboxStatus(Res.string.feature_savings_filter_wallet_account, type = FilterType.ACCOUNT_TYPE),
+            CheckboxStatus(Res.string.feature_savings_filter_bank_account, type = FilterType.ACCOUNT_TYPE),
         )
+
+        val accountStatuses = listOf(
+            CheckboxStatus(Res.string.feature_loan_account_filter_active, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_approval_pending, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_closed, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_disburse, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_overpaid, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_in_arrears, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_withdrawn, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_matured, type = FilterType.ACCOUNT_STATUS),
+            CheckboxStatus(Res.string.feature_loan_account_filter_rejected, type = FilterType.ACCOUNT_STATUS),
+        )
+
+        return accountTypes + accountStatuses
     }
 }

@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.savingsaccount.components
+package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,10 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
@@ -40,17 +39,20 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
-internal fun SavingsActionsCard(
-    title: StringResource,
-    subTitle: StringResource,
+fun MifosAccountCard(
+    accountId: Long,
+    accountNumber: String?,
+    accountType: String?,
+    accountStatus: String,
+    accountStatusColor: Color,
+    onAccountClick: (Long) -> Unit,
     icon: ImageVector,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onClick() }
+            .clickable { onAccountClick(accountId) }
             .padding(vertical = DesignToken.padding.medium),
     ) {
         Row(
@@ -61,7 +63,7 @@ internal fun SavingsActionsCard(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = null,
+                contentDescription = "Person Account",
                 tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
                 modifier = Modifier
                     .background(
@@ -78,12 +80,12 @@ internal fun SavingsActionsCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = stringResource(title),
+                    text = accountNumber ?: "",
                     style = MifosTypography.titleSmallEmphasized,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    text = stringResource(subTitle),
+                    text = accountType ?: "",
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -91,11 +93,21 @@ internal fun SavingsActionsCard(
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
-            Icon(
-                imageVector = MifosIcons.ChevronRight,
-                contentDescription = null,
-                modifier = Modifier.size(20.dp),
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            ) {
+                Text(
+                    text = accountStatus,
+                    style = MifosTypography.labelSmall,
+                    color = accountStatusColor,
+                )
+                Icon(
+                    imageVector = MifosIcons.ChevronRight,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
         }
     }
 }
@@ -109,13 +121,14 @@ private fun Savings_Account_Preview() {
                 .fillMaxSize()
                 .padding(DesignToken.padding.large),
         ) {
-            SavingsAccountCard(
+            MifosAccountCard(
                 accountId = 1L,
                 accountNumber = "2689-7897-6666",
                 accountType = "Wallet Account",
                 accountStatus = "$ 23,315,500",
                 accountStatusColor = AppColors.customEnable,
                 onAccountClick = {},
+                icon = MifosIcons.PersonAccounts,
             )
         }
     }

@@ -39,7 +39,7 @@ internal sealed class ServiceItem(
     data object LoanAccount : ServiceItem(
         title = Res.string.feature_home_loan_accounts,
         icon = MifosIcons.LoanAccount,
-        route = "LoanAccountRoute",
+        route = Constants.LOAN_ACCOUNT,
     )
 
     data object ShareAccount : ServiceItem(
