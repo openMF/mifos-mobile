@@ -126,7 +126,7 @@ internal fun FilterSection(
                                         filter.isChecked
                                     },
                                     { onCheckChanged(filter.statusLabel) },
-                                    isRadio,
+                                    isRadio=isRadio,
                                 )
                             }
                         }
