@@ -273,7 +273,7 @@ internal data class AccountTransactionState(
         data object Loading : DialogState
         data object Filters : DialogState
     }
-    val isAnyFilterSelected = checkboxOptions.any { it.isChecked }
+    val isAnyFilterSelected = checkboxOptions.any { it.isChecked } || selectedRadioButton != null
 }
 
 internal sealed interface AccountTransactionAction {
