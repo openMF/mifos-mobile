@@ -11,8 +11,8 @@ package org.mifos.mobile.feature.accounts.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
+import org.mifos.mobile.feature.accounts.accountTransactions.AccountsTransactionViewModel
+import org.mifos.mobile.feature.accounts.accounts.AccountsViewModel
 
 val AccountsModule = module {
     viewModelOf(::AccountsViewModel)

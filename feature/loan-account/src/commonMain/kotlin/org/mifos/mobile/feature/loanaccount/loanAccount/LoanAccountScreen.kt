@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.savingsaccount.savingsAccount
+package org.mifos.mobile.feature.loanaccount.loanAccount
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,12 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import mifos_mobile.feature.savings_account.generated.resources.Res
-import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
-import mifos_mobile.feature.savings_account.generated.resources.content_description_search
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
+import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_dashboard
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_items
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -58,9 +56,10 @@ import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import kotlin.collections.orEmpty
 
 @Composable
-fun SavingsAccountScreen(
+fun LoanAccountScreen(
     navigateBack: () -> Unit,
     onAccountClicked: (String, Long) -> Unit = { _, _ -> },
     refreshSignal: Long? = null,
@@ -68,13 +67,13 @@ fun SavingsAccountScreen(
     accountTypeFilters: List<StringResource> = emptyList(),
     accountStatusFilters: List<StringResource> = emptyList(),
     filtersClicked: () -> Unit = {},
-    viewModel: SavingsAccountViewmodel = koinViewModel(),
+    viewModel: LoanAccountsViewmodel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(refreshSignal) {
         viewModel.trySendAction(
-            SavingsAccountAction.LoadAccounts(
+            LoanAccountsAction.LoadAccounts(
                 filters = accountTypeFilters + accountStatusFilters,
             ),
         )
@@ -82,14 +81,13 @@ fun SavingsAccountScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
+            is LoanAccountsEvent.NavigateBack -> navigateBack.invoke()
 
-//            TODO uncomment this after designing account detail screen
-            is SavingsAccountsEvent.AccountClicked -> {
-                onAccountClicked(Constants.SAVINGS_ACCOUNT, event.accountId)
+            is LoanAccountsEvent.AccountClicked -> {
+                onAccountClicked(Constants.LOAN_ACCOUNT, event.accountId)
             }
 
-            is SavingsAccountsEvent.LoadingCompleted -> {
+            is LoanAccountsEvent.LoadingCompleted -> {
                 onLoadingCompleted.invoke()
             }
         }
@@ -113,17 +111,17 @@ fun SavingsAccountScreen(
 
 @Composable
 internal fun SavingsAccountDialog(
-    dialogState: SavingsAccountState.DialogState?,
-    onAction: (SavingsAccountAction) -> Unit,
+    dialogState: LoanAccountsState.DialogState?,
+    onAction: (LoanAccountsAction) -> Unit,
 ) {
     when (dialogState) {
-        is SavingsAccountState.DialogState.Error -> MifosBasicDialog(
+        is LoanAccountsState.DialogState.Error -> MifosBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
-            onDismissRequest = { onAction(SavingsAccountAction.OnDismissDialog) },
+            onDismissRequest = { onAction(LoanAccountsAction.OnDismissDialog) },
         )
-        is SavingsAccountState.DialogState.Loading -> MifosLoadingDialog(
+        is LoanAccountsState.DialogState.Loading -> MifosLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -133,8 +131,8 @@ internal fun SavingsAccountDialog(
 
 @Composable
 internal fun SavingsAccountContent(
-    state: SavingsAccountState,
-    onAction: (SavingsAccountAction) -> Unit,
+    state: LoanAccountsState,
+    onAction: (LoanAccountsAction) -> Unit,
     filtersClicked: () -> Unit,
 ) {
     Column(
@@ -146,11 +144,11 @@ internal fun SavingsAccountContent(
 
         MifosDashboardCard(
             isSingleLine = true,
-            savingsAccount = Res.string.feature_savings_account_dashboard,
-            savingsAmount = state.totalSavingAmount,
+            savingsAccount = Res.string.feature_loan_account_dashboard,
+            savingsAmount = state.totalLoanAmount,
             isVisible = state.isAmountVisible,
             currency = state.currency,
-            onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
+            onVisibilityToggle = { onAction(LoanAccountsAction.ToggleAmountVisible) },
         )
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
@@ -162,13 +160,13 @@ internal fun SavingsAccountContent(
         ) {
             Column {
                 Text(
-                    text = stringResource(Res.string.feature_savings_account),
+                    text = stringResource(Res.string.feature_loan_account),
                     style = MifosTypography.titleMediumEmphasized,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
                     text = stringResource(
-                        Res.string.feature_savings_account_items,
+                        Res.string.feature_loan_account_items,
                         state.items ?: 0,
                     ),
                     style = MifosTypography.labelMedium,
@@ -184,14 +182,14 @@ internal fun SavingsAccountContent(
                         .clickable {}
                         .size(20.dp),
                     imageVector = MifosIcons.SearchNew,
-                    contentDescription = stringResource(Res.string.content_description_search),
+                    contentDescription = null,
                 )
                 Icon(
                     modifier = Modifier
                         .clickable { filtersClicked() }
                         .size(20.dp),
                     imageVector = MifosIcons.Filter,
-                    contentDescription = stringResource(Res.string.content_description_filter),
+                    contentDescription = null,
                 )
             }
         }
@@ -212,7 +210,7 @@ internal fun SavingsAccountContent(
             item {
                 Spacer(modifier = Modifier.height(DesignToken.spacing.small))
             }
-            items(state.savingsAccount.orEmpty()) { account ->
+            items(state.loanAccounts.orEmpty()) { account ->
                 val color = when (account.status?.value) {
                     LoanStatus.ACTIVE.status -> AppColors.customEnable
                     LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
@@ -227,9 +225,9 @@ internal fun SavingsAccountContent(
                     accountStatus = (
                         if (account.status?.active == true) {
                             CurrencyFormatter.format(
-                                account.accountBalance,
+                                account.loanBalance,
                                 account.currency?.code,
-                                account.currency?.decimalPlaces,
+                                account.currency?.decimalPlaces?.toInt(),
                             )
                         } else {
                             account.status?.value ?: ""
@@ -238,13 +236,13 @@ internal fun SavingsAccountContent(
                     accountStatusColor = color,
                     onAccountClick = {
                         onAction(
-                            SavingsAccountAction.OnAccountClicked(
+                            LoanAccountsAction.OnAccountClicked(
                                 it,
-                                Constants.SAVINGS_ACCOUNT,
+                                Constants.LOAN_ACCOUNT,
                             ),
                         )
                     },
-                    icon = MifosIcons.PersonAccounts,
+                    icon = MifosIcons.CoinMultiple,
                 )
             }
         }
@@ -256,9 +254,9 @@ internal fun SavingsAccountContent(
 private fun Savings_Account_Preview() {
     MifosMobileTheme {
         SavingsAccountContent(
-            state = SavingsAccountState(
+            state = LoanAccountsState(
                 dialogState = null,
-                savingsAccount = emptyList(),
+                loanAccounts = emptyList(),
                 clientId = 1L,
             ),
             onAction = {},

@@ -10,13 +10,14 @@
 package org.mifos.mobile.feature.loanaccount.utils
 
 import mifos_mobile.feature.loan_account.generated.resources.Res
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_active
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_approval_pending
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_closed
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_disburse
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_in_arrears
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_overpaid
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_withdrawn
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_active
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_approval_pending
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_closed
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_disburse
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_in_arrears
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_overpaid
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_personal
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_withdrawn
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 
@@ -38,7 +39,7 @@ enum class FilterUtil(
      * Matches if the loan account's status is active.
      */
     ACTIVE(
-        label = Res.string.feature_account_active,
+        label = Res.string.feature_loan_account_filter_active,
         matchCondition = { it.status?.active == true },
     ),
 
@@ -47,7 +48,7 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates pending approval.
      */
     APPROVAL_PENDING(
-        label = Res.string.feature_account_approval_pending,
+        label = Res.string.feature_loan_account_filter_approval_pending,
         matchCondition = { it.status?.pendingApproval == true },
     ),
 
@@ -56,7 +57,7 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates it has been closed.
      */
     CLOSED(
-        label = Res.string.feature_account_closed,
+        label = Res.string.feature_loan_account_filter_closed,
         matchCondition = { it.status?.closed == true },
     ),
 
@@ -65,7 +66,7 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates it is awaiting disbursement.
      */
     WAITING_FOR_DISBURSE(
-        label = Res.string.feature_account_disburse,
+        label = Res.string.feature_loan_account_filter_disburse,
         matchCondition = { it.status?.waitingForDisbursal == true },
     ),
 
@@ -74,7 +75,7 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates it has been overpaid.
      */
     OVERPAID(
-        label = Res.string.feature_account_overpaid,
+        label = Res.string.feature_loan_account_filter_overpaid,
         matchCondition = { it.status?.overpaid == true },
     ),
 
@@ -83,7 +84,7 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates it is overdue or has unpaid installments.
      */
     IN_ARREARS(
-        label = Res.string.feature_account_in_arrears,
+        label = Res.string.feature_loan_account_filter_in_arrears,
         matchCondition = { it.status?.overpaid == true },
     ),
 
@@ -92,8 +93,18 @@ enum class FilterUtil(
      * Matches if the loan account's status indicates it has been withdrawn before disbursement.
      */
     WITHDRAWN(
-        label = Res.string.feature_account_withdrawn,
+        label = Res.string.feature_loan_account_filter_withdrawn,
         matchCondition = { it.status?.overpaid == true },
+    ),
+
+    PERSONAL(
+        label = Res.string.feature_loan_account_filter_personal,
+        matchCondition = { it.productName?.contains("personal", ignoreCase = true) == true },
+    ),
+
+    BRONZE(
+        label = Res.string.feature_loan_account_filter_personal,
+        matchCondition = { it.productName?.contains("bronze", ignoreCase = true) == true },
     ),
     ;
 

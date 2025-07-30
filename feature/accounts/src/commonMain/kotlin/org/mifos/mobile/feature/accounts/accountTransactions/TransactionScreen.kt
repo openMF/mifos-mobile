@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.screen
+package org.mifos.mobile.feature.accounts.accountTransactions
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -51,11 +51,6 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionAction
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionEvent
-import org.mifos.mobile.feature.accounts.viewmodel.AccountTransactionState
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsTransactionViewModel
-import org.mifos.mobile.feature.accounts.viewmodel.getTransactionCreditStatus
 
 @Composable
 internal fun TransactionScreen(

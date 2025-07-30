@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.screen
+package org.mifos.mobile.feature.accounts.accounts
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -67,10 +69,7 @@ import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsAction
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsEvent
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsState
-import org.mifos.mobile.feature.accounts.viewmodel.AccountsViewModel
+import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
 
 @Composable
@@ -163,6 +162,7 @@ internal fun SavingsAccountFilters(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(DesignToken.padding.large)
                 .padding(top = DesignToken.padding.large),
         ) {
@@ -287,14 +287,15 @@ internal fun FilterSection(
     Column(
         modifier = modifier
             .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
             .padding(
                 start = DesignToken.spacing.extraLargeIncreased,
                 end = DesignToken.spacing.small,
                 top = DesignToken.padding.medium,
                 bottom = DesignToken.padding.medium,
             ),
-    ) {
-        Column(
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             Row(
@@ -358,7 +359,6 @@ internal fun FilterSection(
                 }
             }
         }
-
         HorizontalDivider(modifier = Modifier.height(1.dp))
     }
 }
@@ -410,7 +410,23 @@ internal fun AccountScreenContent(
                     filtersClicked = { onAction(AccountsAction.ToggleFilter) },
                 )
             }
-            AccountType.LOAN -> {}
+            AccountType.LOAN -> {
+                val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
+                val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
+                LoanAccountScreen(
+                    navigateBack = { onAction(AccountsAction.OnNavigateBack) },
+                    refreshSignal = state.refreshSignal,
+                    onLoadingCompleted = {
+                        onAction(AccountsAction.RefreshCompleted)
+                    },
+                    onAccountClicked = { accountType, accountId ->
+                        onAction(AccountsAction.OnAccountClicked(accountId, accountType))
+                    },
+                    accountTypeFilters = typeFilters.map { it.statusLabel },
+                    accountStatusFilters = statusFilters.map { it.statusLabel },
+                    filtersClicked = { onAction(AccountsAction.ToggleFilter) },
+                )
+            }
             AccountType.SHARE -> {}
         }
     }
