@@ -38,11 +38,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_duration
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_statement
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_transaction_history
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_type
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -297,7 +299,7 @@ internal fun TransactionFilters(
             HorizontalDivider(modifier = Modifier.height(1.dp))
 
             FilterSection(
-                title = "Transaction Type",
+                title = stringResource(Res.string.feature_transaction_type),
                 filtersSelected = state.accountTypeFiltersCount ?: 0,
                 isExpanded = isTypeExpanded,
                 onToggle = { isTypeExpanded = !isTypeExpanded },
@@ -308,14 +310,16 @@ internal fun TransactionFilters(
             )
 
             FilterSection(
-                title = "Duration",
-                filtersSelected = state.accountDurationFiltersCount ?: 0,
+                title = stringResource(Res.string.feature_duration),
+                filtersSelected = if (state.selectedRadioButton == null) 0 else 1,
                 isExpanded = isStatusExpanded,
                 onToggle = { isStatusExpanded = !isStatusExpanded },
                 filters = state.checkboxOptions.filter { it.type == TransactionFilterType.DURATION },
                 onCheckChanged = { label ->
-                    onAction(AccountTransactionAction.ToggleCheckbox(label, TransactionFilterType.DURATION))
+                    onAction(AccountTransactionAction.ToggleRadioButton(label))
                 },
+                isRadio = true,
+                selectedRadioButton = state.selectedRadioButton,
             )
         }
     }

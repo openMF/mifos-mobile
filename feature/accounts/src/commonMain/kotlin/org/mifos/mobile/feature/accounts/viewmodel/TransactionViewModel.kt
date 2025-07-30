@@ -73,6 +73,13 @@ internal class AccountsTransactionViewModel(
             AccountTransactionAction.ResetFilters -> handleResetFilters()
             is AccountTransactionAction.ToggleCheckbox -> toggleCheckbox(action.label, action.type)
             AccountTransactionAction.ToggleFilter -> handleToggleFilterDialog()
+            is AccountTransactionAction.ToggleRadioButton -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        selectedRadioButton = action.label,
+                    )
+                }
+            }
         }
     }
 
@@ -112,6 +119,7 @@ internal class AccountsTransactionViewModel(
                 selectedFilters = emptyList(),
                 accountDurationFiltersCount = 0,
                 accountTypeFiltersCount = 0,
+                selectedRadioButton = null,
             )
         }
     }
@@ -199,12 +207,9 @@ internal class AccountsTransactionViewModel(
     internal fun applyTransactionFilters(
         selectedFilters: List<TransactionCheckboxStatus>,
     ): Map<String, List<Transactions>> {
-        // Determine filters
         val allTransactions = state.data
         val typeFilters = selectedFilters.filter { it.type == TransactionFilterType.TRANSACTION_TYPE }
-        val durationFilters = selectedFilters.filter { it.type == TransactionFilterType.DURATION }
 
-        // Filter by type
         val typeFiltered = when {
             typeFilters.any { it.statusLabel == Res.string.feature_transaction_filter_credit } &&
                 typeFilters.none { it.statusLabel == Res.string.feature_transaction_filter_debit } ->
@@ -221,33 +226,28 @@ internal class AccountsTransactionViewModel(
             else -> allTransactions
         }
 
-        // Determine date range based on duration
         val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-        val dateRanges: List<Pair<LocalDate, LocalDate>> = durationFilters.mapNotNull { filter ->
-            return@mapNotNull when (filter.statusLabel) {
-                Res.string.feature_transaction_filter_past_month ->
-                    now.minus(1, DateTimeUnit.MONTH) to now
-                Res.string.feature_transaction_filter_past_3_months ->
-                    now.minus(3, DateTimeUnit.MONTH) to now
-                Res.string.feature_transaction_filter_past_6_months ->
-                    now.minus(6, DateTimeUnit.MONTH) to now
-                Res.string.feature_transaction_filter_past_1_year ->
-                    now.minus(1, DateTimeUnit.YEAR) to now
-                Res.string.feature_transaction_filter_past_2_years ->
-                    now.minus(2, DateTimeUnit.YEAR) to now
-                else -> null
-            }
+        val dateRanges = when (state.selectedRadioButton) {
+            Res.string.feature_transaction_filter_past_month ->
+                now.minus(1, DateTimeUnit.MONTH) to now
+            Res.string.feature_transaction_filter_past_3_months ->
+                now.minus(3, DateTimeUnit.MONTH) to now
+            Res.string.feature_transaction_filter_past_6_months ->
+                now.minus(6, DateTimeUnit.MONTH) to now
+            Res.string.feature_transaction_filter_past_1_year ->
+                now.minus(1, DateTimeUnit.YEAR) to now
+            Res.string.feature_transaction_filter_past_2_years ->
+                now.minus(2, DateTimeUnit.YEAR) to now
+            else -> null
         }
 
-        val durationFiltered = if (dateRanges.isEmpty()) {
+        val durationFiltered = if (dateRanges == null) {
             typeFiltered
         } else {
             typeFiltered.filter { transaction ->
                 val dateList = transaction.date
                 val transactionDate = LocalDate(dateList[0], dateList[1], dateList[2])
-                dateRanges.any { (start, end) ->
-                    transactionDate in start..end
-                }
+                transactionDate in dateRanges.first..dateRanges.second
             }
         }
 
@@ -267,6 +267,7 @@ internal data class AccountTransactionState(
     val toggleFilterDialog: Boolean = false,
     val accountTypeFiltersCount: Int? = 0,
     val accountDurationFiltersCount: Int? = 0,
+    val selectedRadioButton: StringResource? = null,
 ) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
@@ -286,6 +287,9 @@ internal sealed interface AccountTransactionAction {
     data class ToggleCheckbox(
         val label: StringResource,
         val type: TransactionFilterType,
+    ) : AccountTransactionAction
+    data class ToggleRadioButton(
+        val label: StringResource,
     ) : AccountTransactionAction
 }
 

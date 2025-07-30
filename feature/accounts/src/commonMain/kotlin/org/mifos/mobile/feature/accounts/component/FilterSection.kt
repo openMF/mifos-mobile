@@ -27,6 +27,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,6 +52,8 @@ internal fun FilterSection(
     filters: List<Any>,
     onCheckChanged: (StringResource) -> Unit,
     modifier: Modifier = Modifier,
+    isRadio: Boolean = false,
+    selectedRadioButton: StringResource? = null,
 ) {
     Column(
         modifier = modifier
@@ -114,12 +117,18 @@ internal fun FilterSection(
                                     filter.isChecked,
                                     { onCheckChanged(filter.statusLabel) },
                                 )
-                            is TransactionCheckboxStatus ->
+                            is TransactionCheckboxStatus -> {
                                 FilterCheckboxUI(
                                     filter.statusLabel,
-                                    filter.isChecked,
+                                    if (isRadio) {
+                                        filter.statusLabel == selectedRadioButton
+                                    } else {
+                                        filter.isChecked
+                                    },
                                     { onCheckChanged(filter.statusLabel) },
+                                    isRadio,
                                 )
+                            }
                         }
                     }
                 }
@@ -136,15 +145,24 @@ fun FilterCheckboxUI(
     isChecked: Boolean,
     onCheckedChange: () -> Unit,
     modifier: Modifier = Modifier,
+    isRadio: Boolean = false,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Checkbox(
-            checked = isChecked,
-            onCheckedChange = { onCheckedChange() },
-        )
+        if (isRadio) {
+            RadioButton(
+                selected = isChecked,
+                onClick = { onCheckedChange() },
+            )
+        } else {
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = { onCheckedChange() },
+            )
+        }
+
         Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
         Text(
             text = stringResource(statusLabel),

@@ -68,4 +68,8 @@
     <string name="feature_transaction_filter_past_6_months">Past 6 Months</string>
     <string name="feature_transaction_filter_past_1_year">Past 1 Year</string>
     <string name="feature_transaction_filter_past_2_years">Past 2 Years</string>
+
+    <string name="feature_transaction_type">Transaction Type</string>
+    <string name="feature_duration">Duration</string>
+    <string name="feature_no_transactions_found">No Transactions Found</string>
 </resources>
