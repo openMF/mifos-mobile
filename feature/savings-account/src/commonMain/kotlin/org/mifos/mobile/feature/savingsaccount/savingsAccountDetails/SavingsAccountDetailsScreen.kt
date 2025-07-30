@@ -54,11 +54,11 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
-import org.mifos.mobile.feature.savingsaccount.components.SavingsActionsCard
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 
 @Composable
@@ -299,7 +299,7 @@ internal fun SavingsAccountActions(
             modifier = Modifier.fillMaxWidth(),
         ) {
             items.forEach { item ->
-                SavingsActionsCard(
+                MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,

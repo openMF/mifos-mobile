@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.viewmodel
+package org.mifos.mobile.feature.accounts.accountTransactions
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -21,7 +21,6 @@ import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.accounts.navigation.AccountTransactionsNavRoute
 
 internal class AccountsTransactionViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,

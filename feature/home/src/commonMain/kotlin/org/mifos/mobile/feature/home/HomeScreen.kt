@@ -76,6 +76,8 @@ internal fun HomeScreen(
                 when {
                     event.route == Constants.SAVINGS_ACCOUNT ->
                         navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
+                    event.route == Constants.LOAN_ACCOUNT ->
+                        navigateToAccountsScreen(Constants.LOAN_ACCOUNT)
                 }
 //                navigateToDestinationScreen(event.route)
             }
