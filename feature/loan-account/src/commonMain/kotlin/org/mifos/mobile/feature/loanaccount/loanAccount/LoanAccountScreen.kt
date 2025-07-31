@@ -37,6 +37,7 @@ import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_dashboard
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_items
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_no_loan_accounts_for_filter
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -210,40 +211,68 @@ internal fun LoanAccountContent(
             item {
                 Spacer(modifier = Modifier.height(DesignToken.spacing.small))
             }
-            items(state.loanAccounts.orEmpty()) { account ->
-                val color = when (account.status?.value) {
-                    LoanStatus.ACTIVE.status -> AppColors.customEnable
-                    LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                    LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
-                    else -> MaterialTheme.colorScheme.onSurface
-                }
 
-                MifosAccountCard(
-                    accountId = account.id,
-                    accountNumber = account.accountNo,
-                    accountType = account.productName,
-                    accountStatus = (
-                        if (account.status?.active == true) {
-                            CurrencyFormatter.format(
-                                account.loanBalance,
-                                account.currency?.code,
-                                account.currency?.decimalPlaces?.toInt(),
-                            )
-                        } else {
-                            account.status?.value ?: ""
-                        }
-                        ),
-                    accountStatusColor = color,
-                    onAccountClick = {
-                        onAction(
-                            LoanAccountsAction.OnAccountClicked(
-                                it,
-                                Constants.LOAN_ACCOUNT,
-                            ),
+            if (state.loanAccounts.isNullOrEmpty() && state.selectedFilters.isNotEmpty()) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = DesignToken.padding.large),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            imageVector = MifosIcons.Info,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
                         )
-                    },
-                    icon = MifosIcons.CoinMultiple,
-                )
+                        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+                        Text(
+                            text = stringResource(Res.string.feature_loan_account_no_loan_accounts_for_filter),
+                            style = MifosTypography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+                        )
+                    }
+                }
+            } else {
+                items(state.loanAccounts.orEmpty()) { account ->
+                    val color = when (account.status?.value) {
+                        LoanStatus.ACTIVE.status -> AppColors.customEnable
+                        LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                        LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+
+                    MifosAccountCard(
+                        accountId = account.id,
+                        accountNumber = account.accountNo,
+                        accountType = account.productName,
+                        accountStatus = (
+                            if (account.status?.active == true) {
+                                CurrencyFormatter.format(
+                                    account.loanBalance,
+                                    account.currency?.code,
+                                    account.currency?.decimalPlaces?.toInt(),
+                                )
+                            } else {
+                                account.status?.value ?: ""
+                            }
+                            ),
+                        accountStatusColor = color,
+                        onAccountClick = {
+                            onAction(
+                                LoanAccountsAction.OnAccountClicked(
+                                    it,
+                                    Constants.LOAN_ACCOUNT,
+                                ),
+                            )
+                        },
+                        icon = MifosIcons.CoinMultiple,
+                    )
+                }
             }
         }
     }

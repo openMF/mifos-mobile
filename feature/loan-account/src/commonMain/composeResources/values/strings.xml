@@ -28,4 +28,6 @@
     <string name="feature_loan_account_dashboard">Total Borrowings</string>
     <string name="feature_loan_account">Loan Account</string>
     <string name="feature_loan_account_items">%1$d Items</string>
+    <string name="feature_loan_account_no_loan_accounts_for_filter">No loan accounts for applied filter. Update filter to discover more.</string>
+
 </resources>

@@ -85,7 +85,7 @@ enum class FilterUtil(
      */
     IN_ARREARS(
         label = Res.string.feature_loan_account_filter_in_arrears,
-        matchCondition = { it.status?.overpaid == true },
+        matchCondition = { it.inArrears == true },
     ),
 
     /**
