@@ -22,7 +22,6 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountsEvent.*
 import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
 import kotlin.collections.orEmpty
 
@@ -64,7 +63,7 @@ class SavingsAccountViewmodel(
             }
 
             is SavingsAccountAction.OnAccountClicked ->
-                sendEvent(AccountClicked(action.accountId, action.accountType))
+                sendEvent(SavingsAccountsEvent.AccountClicked(action.accountId, action.accountType))
 
             is SavingsAccountAction.Internal.ReceiveSavingsAccounts -> {
                 handleReceivedAccounts(action.dataState, action.filters)
@@ -127,7 +126,7 @@ class SavingsAccountViewmodel(
                     savingsAccount = filtered,
                     selectedFilters = selectedFilters,
                     dialogState = null,
-                    isEmpty = filtered.isEmpty()
+                    isEmpty = filtered.isEmpty(),
                 )
             }
             sendEvent(SavingsAccountsEvent.LoadingCompleted)
@@ -276,7 +275,7 @@ data class SavingsAccountState(
     /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
 
-    val isEmpty:Boolean=false
+    val isEmpty: Boolean = false,
 ) {
 
     /**
@@ -293,7 +292,7 @@ data class SavingsAccountState(
  */
 sealed interface SavingsAccountAction {
 
-    data object OnRetry: SavingsAccountAction
+    data object OnRetry : SavingsAccountAction
 
     /** Dismiss any open dialog */
     data object OnDismissDialog : SavingsAccountAction

@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
-import mifos_mobile.feature.savings_account.generated.resources.content_description_search
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
@@ -46,10 +45,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -144,7 +139,7 @@ internal fun SavingsAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        if(state.dialogState == null){
+        if (state.dialogState == null) {
             Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
             MifosDashboardCard(
@@ -182,7 +177,8 @@ internal fun SavingsAccountContent(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {
-                    //TODO : un-implemented feature, commenting because user won't feels its good ,uncomment and implement it
+                    // TODO : un-implemented feature,
+                    //  commenting because user won't feels its good ,uncomment and implement it
 //                    Icon(
 //                        modifier = Modifier
 //                            .clickable {}
@@ -209,10 +205,10 @@ internal fun SavingsAccountContent(
             )
         }
 
-        if(state.isEmpty){
+        if (state.isEmpty) {
             EmptyDataView(
-                icon= MifosIcons.Info,
-                error = Res.string.feature_savings_no_accounts_found
+                icon = MifosIcons.Info,
+                error = Res.string.feature_savings_no_accounts_found,
             )
         }
 
