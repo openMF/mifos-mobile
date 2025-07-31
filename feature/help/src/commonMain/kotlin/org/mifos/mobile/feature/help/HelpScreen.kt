@@ -110,7 +110,7 @@ private fun HelpContent(
                 .fillMaxWidth()
                 .padding(16.dp),
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
         )
 
         if (faqArrayList.isNotEmpty()) {
