@@ -20,6 +20,7 @@ import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
+import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
@@ -111,6 +112,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToSavingsAccountTransactionScreen = {
+                navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
+            },
         )
 
         passcodeDestination(
