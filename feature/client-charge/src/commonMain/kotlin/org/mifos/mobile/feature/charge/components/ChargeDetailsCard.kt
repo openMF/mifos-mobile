@@ -21,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -28,7 +30,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
 @Composable
 fun ChargeDetailsCard(
-    keyValuePairs: Map<String, String>,
+    keyValuePairs: Map<StringResource, String>,
     modifier: Modifier = Modifier,
 ) {
     MifosCustomCard(
@@ -51,7 +53,7 @@ fun ChargeDetailsCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = "$key :",
+                        text = "${stringResource(key)} :",
                         style = MifosTypography.labelMediumEmphasized,
                     )
                     Text(

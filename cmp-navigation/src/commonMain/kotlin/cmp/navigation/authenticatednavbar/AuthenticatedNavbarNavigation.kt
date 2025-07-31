@@ -27,11 +27,19 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
 internal fun NavGraphBuilder.authenticatedNavbarGraph(
     navigateToNotificationScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
+    navigateToChargeScreen: () -> Unit,
+    navigateToFaqScreen: () -> Unit,
+    navigateToBeneficiaryScreen: () -> Unit,
+    navigateToTransactionScreen: () -> Unit,
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
         AuthenticatedNavbarNavigationScreen(
             navigateToNotificationScreen = navigateToNotificationScreen,
             navigateToAccountsScreen = { navigateToAccountsScreen(it) },
+            navigateToChargeScreen = navigateToChargeScreen,
+            navigateToFaqScreen = navigateToFaqScreen,
+            navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
+            navigateToTransactionScreen = navigateToTransactionScreen,
         )
     }
 }

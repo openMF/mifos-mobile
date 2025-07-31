@@ -35,7 +35,6 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
-
 /**
  * ViewModel for managing the state and logic of the Savings Account Details screen.
  *
@@ -75,6 +74,13 @@ internal class SavingsAccountDetailsViewModel(
         when (action) {
             SavingsAccountDetailsAction.OnNavigateBack -> sendEvent(SavingsAccountDetailsEvent.NavigateBack)
 
+            is SavingsAccountDetailsAction.OnNavigateToAction ->
+                sendEvent(
+                    SavingsAccountDetailsEvent.NavigateToAction(
+                        action.route,
+                    ),
+                )
+
             is SavingsAccountDetailsAction.Internal.SavingsResultReceived ->
                 handleSavingsAccountResult(action.dataState)
 
@@ -86,10 +92,6 @@ internal class SavingsAccountDetailsViewModel(
 
             SavingsAccountDetailsAction.OnWithDraw -> sendEvent(
                 SavingsAccountDetailsEvent.WithdrawAmount,
-            )
-
-            is SavingsAccountDetailsAction.OnNavigateToSavingsActionsScreenClick -> sendEvent(
-                SavingsAccountDetailsEvent.OnNavigateToSavingsActionsScreen(action.item),
             )
         }
     }
@@ -233,13 +235,14 @@ sealed interface SavingsAccountDetailsEvent {
     /** Trigger navigation back. */
     data object NavigateBack : SavingsAccountDetailsEvent
 
+    /** Trigger Event to navigate to respective screen. */
+    data class NavigateToAction(val route: String) : SavingsAccountDetailsEvent
+
     /** Trigger Update Amount */
     data object UpdateAccount : SavingsAccountDetailsEvent
 
     /** Trigger Withdraw Amount */
     data object WithdrawAmount : SavingsAccountDetailsEvent
-
-    data class OnNavigateToSavingsActionsScreen(val item: SavingsActionItems) : SavingsAccountDetailsEvent
 }
 
 /**
@@ -249,7 +252,8 @@ sealed interface SavingsAccountDetailsAction {
     /** User tapped back. */
     data object OnNavigateBack : SavingsAccountDetailsAction
 
-    data class OnNavigateToSavingsActionsScreenClick(val item: SavingsActionItems) : SavingsAccountDetailsAction
+    /** User tapped on Action. */
+    data class OnNavigateToAction(val route: String) : SavingsAccountDetailsAction
 
     /** User dismissed a dialog. */
     data object DismissDialog : SavingsAccountDetailsAction

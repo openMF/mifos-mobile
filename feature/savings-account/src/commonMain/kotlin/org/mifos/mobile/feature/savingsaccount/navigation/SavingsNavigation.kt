@@ -32,6 +32,7 @@ fun NavController.navigateToSavingsGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
+    navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
@@ -46,6 +47,7 @@ fun NavGraphBuilder.savingsNavGraph(
 
         savingsAccountDetailsDestination(
             navigateBack = navController::popBackStack,
+            navigateToClientChargeScreen = navigateToClientChargeScreen,
             navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
             navigateToSavingsAccountChargesScreen = navigateToSavingsAccountChargesScreen,

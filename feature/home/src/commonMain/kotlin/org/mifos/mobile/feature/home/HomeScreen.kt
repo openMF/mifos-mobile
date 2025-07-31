@@ -63,6 +63,10 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun HomeScreen(
 //    navigateToDestinationScreen: (String) -> Unit,
+    navigateToChargeScreen: () -> Unit,
+    navigateToFaqScreen: () -> Unit,
+    navigateToBeneficiaryScreen: () -> Unit,
+    navigateToTransactionScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
     modifier: Modifier = Modifier,
@@ -78,6 +82,13 @@ internal fun HomeScreen(
                         navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
                     event.route == Constants.LOAN_ACCOUNT ->
                         navigateToAccountsScreen(Constants.LOAN_ACCOUNT)
+                    event.route == Constants.SHARE_ACCOUNTS ->
+                        navigateToAccountsScreen(Constants.SHARE_ACCOUNTS)
+                    event.route == Constants.CHARGES ->
+                        navigateToChargeScreen()
+                    event.route == Constants.BENEFICIARY -> navigateToBeneficiaryScreen.invoke()
+                    event.route == Constants.TRANSACTIONS -> navigateToTransactionScreen.invoke()
+                    event.route == Constants.HELP -> navigateToFaqScreen.invoke()
                 }
 //                navigateToDestinationScreen(event.route)
             }

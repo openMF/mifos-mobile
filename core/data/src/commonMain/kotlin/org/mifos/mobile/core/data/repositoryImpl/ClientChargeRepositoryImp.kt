@@ -29,8 +29,8 @@ class ClientChargeRepositoryImp(
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientChargeRepository {
 
-    override fun getCharges(chargeTypeId: Long): Flow<DataState<Page<Charge>>> {
-        return dataManager.clientChargeApi.getClientChargeList(chargeTypeId)
+    override fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
+        return dataManager.clientChargeApi.getClientChargeList(clientId)
             .map { response -> DataState.Success(response) }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)

@@ -7,10 +7,8 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.charge.screens
+package org.mifos.mobile.feature.charge.charges
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -24,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -38,16 +35,14 @@ import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
-import org.mifos.mobile.feature.charge.viewmodel.ClientChargeAction
-import org.mifos.mobile.feature.charge.viewmodel.ClientChargeEvent
-import org.mifos.mobile.feature.charge.viewmodel.ClientChargeState
-import org.mifos.mobile.feature.charge.viewmodel.ClientChargeViewModel
 
 @Composable
 internal fun ClientChargeScreen(
@@ -110,23 +105,23 @@ private fun ClientChargeScreen(
                 )
             }
         },
-        content = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                if (state.dialogState == null) {
-                    ClientChargeContent(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        chargesList = state.charges,
-                        onChargeClick = {
-                            onAction(ClientChargeAction.OnChargeClick(it))
-                        },
-                    )
-                }
-            }
-        },
-    )
+    ) {
+        if (state.isEmpty) {
+            EmptyDataView(
+                modifier = Modifier.fillMaxSize(),
+                image = Res.drawable.database_warning,
+                error = Res.string.error_no_charge,
+            )
+        } else {
+            ClientChargeContent(
+                modifier = Modifier.padding(DesignToken.padding.large),
+                chargesList = state.charges,
+                onChargeClick = {
+                    onAction(ClientChargeAction.OnChargeClick(it))
+                },
+            )
+        }
+    }
 }
 
 @Composable
@@ -137,7 +132,6 @@ private fun ClientChargeContent(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = chargesList) { charge ->
             ClientChargeItem(charge = charge, onChargeClick = { onChargeClick(charge) })
@@ -166,14 +160,6 @@ private fun ClientChargeDialogs(
             )
         }
 
-        ClientChargeState.DialogState.Empty -> {
-            EmptyDataView(
-                modifier = Modifier.fillMaxSize(),
-                image = Res.drawable.database_warning,
-                error = Res.string.error_no_charge,
-            )
-        }
-
         null -> Unit
     }
 }
@@ -184,7 +170,13 @@ private fun ClientChargeScreenPreview() {
     MifosMobileTheme {
         ClientChargeScreen(
             modifier = Modifier,
-            state = ClientChargeState(dialogState = null, isOnline = false),
+            state = ClientChargeState(
+                dialogState = null,
+                isOnline = false,
+                clientId = 1L,
+                chargeType = ChargeType.CLIENT,
+                chargeTypeId = 1L,
+            ),
             onAction = { },
         )
     }

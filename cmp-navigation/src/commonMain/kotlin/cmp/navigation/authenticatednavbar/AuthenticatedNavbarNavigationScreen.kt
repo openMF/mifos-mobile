@@ -52,6 +52,10 @@ import org.mifos.mobile.navigation.generated.resources.not_connected
 internal fun AuthenticatedNavbarNavigationScreen(
     navigateToNotificationScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
+    navigateToChargeScreen: () -> Unit,
+    navigateToFaqScreen: () -> Unit,
+    navigateToBeneficiaryScreen: () -> Unit,
+    navigateToTransactionScreen: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -104,6 +108,10 @@ internal fun AuthenticatedNavbarNavigationScreen(
         },
         navigateToNotificationScreen = navigateToNotificationScreen,
         navigateToAccountsScreen = { navigateToAccountsScreen(it) },
+        navigateToChargeScreen = navigateToChargeScreen,
+        navigateToFaqScreen = navigateToFaqScreen,
+        navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
+        navigateToTransactionScreen = navigateToTransactionScreen,
     )
 }
 
@@ -112,6 +120,10 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
     navigateToNotificationScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
+    navigateToChargeScreen: () -> Unit,
+    navigateToFaqScreen: () -> Unit,
+    navigateToBeneficiaryScreen: () -> Unit,
+    navigateToTransactionScreen: () -> Unit,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -170,7 +182,11 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 //                    )
 //                },
                 navigateToAccountsScreen = { navigateToAccountsScreen(it) },
+                navigateToChargeScreen = navigateToChargeScreen,
                 navigateToNotificationScreen = navigateToNotificationScreen,
+                navigateToFaqScreen = navigateToFaqScreen,
+                navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
+                navigateToTransactionScreen = navigateToTransactionScreen,
             )
 
             userprofileNavGraph(navController, {})

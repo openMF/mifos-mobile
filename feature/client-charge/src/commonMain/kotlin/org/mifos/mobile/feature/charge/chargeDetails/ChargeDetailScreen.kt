@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.charge.screens
+package org.mifos.mobile.feature.charge.chargeDetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -48,9 +48,6 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ChargeDetailsCard
-import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsAction
-import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsEvent
-import org.mifos.mobile.feature.charge.viewmodel.ChargeDetailsViewModel
 import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
 @Composable
