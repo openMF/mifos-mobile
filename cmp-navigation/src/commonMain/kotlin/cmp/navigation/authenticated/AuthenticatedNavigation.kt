@@ -14,11 +14,14 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
+import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
@@ -33,6 +36,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
+import org.mifos.mobile.feature.location.navigation.locationsNavGraph
+import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
@@ -121,12 +126,13 @@ internal fun NavGraphBuilder.authenticatedGraph(
             onPasscodeConfirm = navController::popBackStack,
         )
 
-//        TODO: refactor later after getting figma design
+        locationsNavGraph()
+
         helpNavGraph(
-            findLocations = {},
+            findLocations = navController::navigateToLocationsScreen,
             navigateBack = navController::popBackStack,
-            callHelpline = {},
-            mailHelpline = {},
+            callHelpline = { callHelpline() },
+            mailHelpline = { mailHelpline() },
         )
 
         recentTransactionNavGraph(
