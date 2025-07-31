@@ -39,10 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_duration
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_download_icon_description
+import mifos_mobile.feature.accounts.generated.resources.feature_no_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_statement
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_transaction_history
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_type
 import org.jetbrains.compose.resources.stringResource
@@ -50,15 +49,15 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
@@ -129,34 +128,48 @@ internal fun TransactionScreenContent(
         LazyColumn(
             Modifier.padding(DesignToken.padding.large),
         ) {
-            item {
-                ActionBar(
-                    onAction = onAction,
-                )
-            }
-
-            state.filteredData.forEach { (date, transactions) ->
+            if (state.dialogState != AccountTransactionState.DialogState.Loading) {
                 item {
-                    Text(
-                        text = date,
-                        style = MifosTypography.labelLargeEmphasized,
-                        modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                    ActionBar(
+                        onAction = onAction,
                     )
                 }
+            }
 
-                items(transactions.size) { index ->
-                    val transaction = transactions[index]
-                    TransactionScreenItem(
-                        title = transaction.paymentDetailData?.paymentType?.name ?: "",
-                        date = DateHelper.getDateAsString(transaction.date),
-                        time = "",
-                        transactionAmount = CurrencyFormatter.format(
-                            balance = transaction.amount,
-                            currencyCode = transaction.currency?.code ?: "USD",
-                            maximumFractionDigits = 3,
-                        ),
-                        isCredited = getTransactionCreditStatus(transaction.transactionType),
+            if (state.isEmpty) {
+                item {
+                    EmptyDataView(
+                        error = Res.string.feature_no_transactions_found,
+                        icon = MifosIcons.Info,
+                        modifier = Modifier.fillMaxSize(),
                     )
+                }
+            }
+
+            if (!state.isEmpty) {
+                state.filteredData.forEach { (date, transactions) ->
+                    item {
+                        Text(
+                            text = date,
+                            style = MifosTypography.labelLargeEmphasized,
+                            modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                        )
+                    }
+
+                    items(transactions.size) { index ->
+                        val transaction = transactions[index]
+                        TransactionScreenItem(
+                            title = transaction.paymentDetailData?.paymentType?.name ?: "",
+                            date = DateHelper.getDateAsString(transaction.date),
+                            time = "",
+                            transactionAmount = CurrencyFormatter.format(
+                                balance = transaction.amount,
+                                currencyCode = transaction.currency?.code ?: "USD",
+                                maximumFractionDigits = 3,
+                            ),
+                            isCredited = getTransactionCreditStatus(transaction.transactionType),
+                        )
+                    }
                 }
             }
         }
@@ -184,10 +197,9 @@ internal fun AccountTransactionsDialog(
                 onAction = onAction,
             )
         }
-        AccountTransactionState.DialogState.Loading -> MifosLoadingDialog(
-            modifier = modifier,
-            visibilityState = LoadingDialogState.Shown,
-        )
+        AccountTransactionState.DialogState.Loading -> {
+            MifosProgressIndicator(modifier = modifier.fillMaxSize())
+        }
         null -> {}
     }
 }
@@ -203,25 +215,26 @@ internal fun ActionBar(
             .padding(vertical = DesignToken.padding.medium),
         horizontalArrangement = Arrangement.End,
     ) {
-        Row(
-            modifier = Modifier.clickable {
-            },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_transaction_statement),
-                color = MaterialTheme.colorScheme.primary,
-                style = MifosTypography.bodySmallEmphasized,
-            )
-
-            Icon(
-                modifier = Modifier.size(DesignToken.sizes.iconSmall),
-                imageVector = MifosIcons.Download,
-                contentDescription = stringResource(Res.string.feature_transaction_download_icon_description),
-                tint = MaterialTheme.colorScheme.primary,
-            )
-        }
+        // TODO : commenting because this feature is not currently available, uncomment and implement later
+//        Row(
+//            modifier = Modifier.clickable {
+//            },
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+//        ) {
+//            Text(
+//                text = stringResource(Res.string.feature_transaction_statement),
+//                color = MaterialTheme.colorScheme.primary,
+//                style = MifosTypography.bodySmallEmphasized,
+//            )
+//
+//            Icon(
+//                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+//                imageVector = MifosIcons.Download,
+//                contentDescription = stringResource(Res.string.feature_transaction_download_icon_description),
+//                tint = MaterialTheme.colorScheme.primary,
+//            )
+//        }
 
         Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
 

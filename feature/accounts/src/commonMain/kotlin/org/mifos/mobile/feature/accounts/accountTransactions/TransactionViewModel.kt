@@ -106,6 +106,7 @@ internal class AccountsTransactionViewModel(
                 selectedFilters = selectedFilters,
                 filteredData = filteredRecords,
                 isRefreshing = false,
+                isEmpty = filteredRecords.isEmpty(),
             )
         }
         handleDismissDialog()
@@ -195,6 +196,7 @@ internal class AccountsTransactionViewModel(
                                 dialogState = null,
                                 data = transactions,
                                 filteredData = groupedTransactions,
+                                isEmpty = groupedTransactions.isEmpty(),
                             )
                         }
                     }
@@ -267,6 +269,7 @@ internal data class AccountTransactionState(
     val accountTypeFiltersCount: Int? = 0,
     val accountDurationFiltersCount: Int? = 0,
     val selectedRadioButton: StringResource? = null,
+    val isEmpty: Boolean = false,
 ) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState

@@ -69,6 +69,7 @@ internal fun SavingsAccountDetailsScreen(
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
+    navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -81,6 +82,9 @@ internal fun SavingsAccountDetailsScreen(
                 when {
                     event.route == Constants.CHARGES -> {
                         navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
+                    }
+                    event.route == Constants.TRANSACTIONS -> {
+                        navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
                 }
             }
