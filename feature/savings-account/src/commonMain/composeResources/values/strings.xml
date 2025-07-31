@@ -91,4 +91,6 @@
     <string name="feature_savings_withdraw_request_successful_message">Request to withdraw the account is submitted successfully </string>
     <string name="feature_savings_withdraw_request_failed">Request Failed To Submit</string>
     <string name="feature_savings_withdraw_request_failed_message">Request to withdraw the account is failed. Please try again </string>
+
+    <string name="feature_savings_no_accounts_found">No Savings Accounts Found</string>
 </resources>

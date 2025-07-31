@@ -39,6 +39,7 @@ import mifos_mobile.feature.savings_account.generated.resources.content_descript
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_no_accounts_found
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -211,8 +212,7 @@ internal fun SavingsAccountContent(
         if(state.isEmpty){
             EmptyDataView(
                 icon= MifosIcons.Info,
-                errorString = "No accounts Found",
-                error = Res.string.feature_savings_account
+                error = Res.string.feature_savings_no_accounts_found
             )
         }
 
