@@ -14,7 +14,6 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
@@ -36,6 +35,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
+import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
+import org.mifos.mobile.feature.loanaccount.savingsAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
 import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
@@ -43,6 +44,7 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
@@ -90,6 +92,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
             onAccountClicked = { accountType, accountId ->
                 if (accountType == Constants.SAVINGS_ACCOUNT) {
                     navController.navigateToSavingsAccountDetailsScreen(accountId)
+                } else if (accountType == Constants.LOAN_ACCOUNT) {
+                    navController.navigateToLoanAccountDetailsScreen(accountId)
                 }
             },
         )
@@ -119,6 +123,18 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
+            },
+        )
+
+        loanNavGraph(
+            navController = navController,
+            navigateToMakePaymentScreen = {},
+            navigateToRepaymentScheduleScreen = {},
+            navigateToLoanSummaryScreen = {},
+            navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
+            navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
+            navigateToLoanAccountTransactionScreen = {
+                navController.navigateToAccountTransactionsScreen(Constants.LOAN_ACCOUNT, it)
             },
         )
 

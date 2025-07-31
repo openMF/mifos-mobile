@@ -183,6 +183,7 @@ class LoanAccountsViewmodel(
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
+                        isEmpty = filtered.isEmpty(),
                         loanAccounts = filtered,
                         originalAccounts = loanAccounts,
                         currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
@@ -244,6 +245,7 @@ class LoanAccountsViewmodel(
 data class LoanAccountsState(
     val loanAccounts: List<LoanAccount>?,
     val originalAccounts: List<LoanAccount>? = null,
+    val isEmpty: Boolean = false,
 
     /** Number of filtered accounts */
     val items: Int? = 0,

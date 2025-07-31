@@ -184,6 +184,7 @@ class ShareAccountsViewmodel(
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
+                        isEmpty = filtered.isEmpty(),
                         shareAccounts = filtered,
                         originalAccounts = shareAccounts,
                         currency = shareAccounts.firstOrNull()?.currency?.displaySymbol,
@@ -247,7 +248,7 @@ class ShareAccountsViewmodel(
 data class ShareAccountsState(
     val shareAccounts: List<ShareAccount>?,
     val originalAccounts: List<ShareAccount>? = null,
-
+    val isEmpty: Boolean = false,
     /** Number of filtered accounts */
     val items: Int? = 0,
 

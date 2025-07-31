@@ -42,10 +42,18 @@ import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
 
 internal class AccountsTransactionViewModel(
-    private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    private val savingsAccountRepositoryImpl: SavingsAccountRepository,
+//    private val loanAccountRepositoryImpl: LoanRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AccountTransactionState, AccountTransactionEvent, AccountTransactionAction>(
-    initialState = AccountTransactionState(dialogState = null),
+    initialState = run {
+        val route = savedStateHandle.toRoute<AccountTransactionsNavRoute>()
+        AccountTransactionState(
+            dialogState = AccountTransactionState.DialogState.Loading,
+            accountId = route.accountId,
+            accountType = route.accountType,
+        )
+    },
 ) {
     init {
         loadTransactions()
@@ -146,9 +154,8 @@ internal class AccountsTransactionViewModel(
     }
 
     fun loadTransactions() {
-        val route = savedStateHandle.toRoute<AccountTransactionsNavRoute>()
-        when (route.accountType) {
-            Constants.SAVINGS_ACCOUNT -> loadSavingsWithAssociations(route.accountId)
+        when (state.accountType) {
+            Constants.SAVINGS_ACCOUNT -> loadSavingsWithAssociations()
             else -> {}
         }
     }
@@ -164,10 +171,10 @@ internal class AccountsTransactionViewModel(
         }
     }
 
-    fun loadSavingsWithAssociations(accountId: Long) {
+    fun loadSavingsWithAssociations() {
         viewModelScope.launch {
-            savingsAccountRepositoryImp.getSavingsWithAssociations(
-                accountId,
+            savingsAccountRepositoryImpl.getSavingsWithAssociations(
+                state.accountId,
                 Constants.TRANSACTIONS,
             ).collect {
                     dataState ->
@@ -259,6 +266,8 @@ internal class AccountsTransactionViewModel(
 }
 
 internal data class AccountTransactionState(
+    val accountType: String,
+    val accountId: Long,
     val isRefreshing: Boolean = false,
     val data: List<Transactions> = emptyList(),
     val filteredData: Map<String, List<Transactions>> = emptyMap(),

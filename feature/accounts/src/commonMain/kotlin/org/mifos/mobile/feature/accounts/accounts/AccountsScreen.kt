@@ -34,15 +34,14 @@ import mifos_mobile.feature.accounts.generated.resources.feature_account_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
@@ -104,9 +103,7 @@ internal fun AccountsDialog(
             onAction = onAction,
             modifier = modifier,
         )
-        AccountsState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
+        AccountsState.DialogState.Loading -> MifosProgressIndicator()
         null -> {}
     }
 }
