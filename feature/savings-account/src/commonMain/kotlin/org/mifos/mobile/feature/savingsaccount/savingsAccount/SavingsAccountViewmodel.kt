@@ -22,6 +22,7 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountsEvent.*
 import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
 import kotlin.collections.orEmpty
 
@@ -63,10 +64,14 @@ class SavingsAccountViewmodel(
             }
 
             is SavingsAccountAction.OnAccountClicked ->
-                sendEvent(SavingsAccountsEvent.AccountClicked(action.accountId, action.accountType))
+                sendEvent(AccountClicked(action.accountId, action.accountType))
 
             is SavingsAccountAction.Internal.ReceiveSavingsAccounts -> {
                 handleReceivedAccounts(action.dataState, action.filters)
+            }
+
+            SavingsAccountAction.OnRetry -> {
+                handleAction(SavingsAccountAction.LoadAccounts(emptyList()))
             }
         }
     }
@@ -122,6 +127,7 @@ class SavingsAccountViewmodel(
                     savingsAccount = filtered,
                     selectedFilters = selectedFilters,
                     dialogState = null,
+                    isEmpty = filtered.isEmpty()
                 )
             }
             sendEvent(SavingsAccountsEvent.LoadingCompleted)
@@ -184,6 +190,7 @@ class SavingsAccountViewmodel(
                     it.copy(
                         items = filtered.size,
                         savingsAccount = filtered,
+                        isEmpty = filtered.isEmpty(),
                         originalAccounts = allSavings,
                         currency = allSavings.firstOrNull()?.currency?.displaySymbol,
                         dialogState = null,
@@ -268,6 +275,8 @@ data class SavingsAccountState(
 
     /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
+
+    val isEmpty:Boolean=false
 ) {
 
     /**
@@ -283,6 +292,8 @@ data class SavingsAccountState(
  * Represents user or system actions for the Savings Account screen.
  */
 sealed interface SavingsAccountAction {
+
+    data object OnRetry: SavingsAccountAction
 
     /** Dismiss any open dialog */
     data object OnDismissDialog : SavingsAccountAction

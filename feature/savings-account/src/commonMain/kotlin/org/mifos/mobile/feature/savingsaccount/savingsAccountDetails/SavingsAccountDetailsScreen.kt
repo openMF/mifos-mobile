@@ -59,6 +59,7 @@ import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
@@ -342,9 +343,9 @@ internal fun SavingsAccountDialogs(
             onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
         )
 
-        is SavingsAccountDetailsState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
+        is SavingsAccountDetailsState.DialogState.Loading -> {
+            MifosProgressIndicator()
+        }
 
         null -> Unit
     }

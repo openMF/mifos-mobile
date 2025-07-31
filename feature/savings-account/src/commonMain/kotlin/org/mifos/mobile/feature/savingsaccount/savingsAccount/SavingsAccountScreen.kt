@@ -55,8 +55,11 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LoanStatus
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -84,7 +87,6 @@ fun SavingsAccountScreen(
         when (event) {
             is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
 
-//            TODO uncomment this after designing account detail screen
             is SavingsAccountsEvent.AccountClicked -> {
                 onAccountClicked(Constants.SAVINGS_ACCOUNT, event.accountId)
             }
@@ -117,16 +119,15 @@ internal fun SavingsAccountDialog(
     onAction: (SavingsAccountAction) -> Unit,
 ) {
     when (dialogState) {
-        is SavingsAccountState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
+        is SavingsAccountState.DialogState.Error -> {
+            MifosErrorComponent(
                 message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(SavingsAccountAction.OnDismissDialog) },
-        )
-        is SavingsAccountState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
+                onRetry = { onAction(SavingsAccountAction.OnRetry) },
+            )
+        }
+        is SavingsAccountState.DialogState.Loading -> {
+            MifosProgressIndicator()
+        }
         null -> Unit
     }
 }
@@ -142,67 +143,78 @@ internal fun SavingsAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+        if(state.dialogState == null){
+            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-        MifosDashboardCard(
-            isSingleLine = true,
-            savingsAccount = Res.string.feature_savings_account_dashboard,
-            savingsAmount = state.totalSavingAmount,
-            isVisible = state.isAmountVisible,
-            currency = state.currency,
-            onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
-        )
+            MifosDashboardCard(
+                isSingleLine = true,
+                savingsAccount = Res.string.feature_savings_account_dashboard,
+                savingsAmount = state.totalSavingAmount,
+                isVisible = state.isAmountVisible,
+                currency = state.currency,
+                onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
+            )
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(Res.string.feature_savings_account),
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Text(
-                    text = stringResource(
-                        Res.string.feature_savings_account_items,
-                        state.items ?: 0,
-                    ),
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
+            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Icon(
-                    modifier = Modifier
-                        .clickable {}
-                        .size(20.dp),
-                    imageVector = MifosIcons.SearchNew,
-                    contentDescription = stringResource(Res.string.content_description_search),
-                )
-                Icon(
-                    modifier = Modifier
-                        .clickable { filtersClicked() }
-                        .size(20.dp),
-                    imageVector = MifosIcons.Filter,
-                    contentDescription = stringResource(Res.string.content_description_filter),
-                )
+                Column {
+                    Text(
+                        text = stringResource(Res.string.feature_savings_account),
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                    Text(
+                        text = stringResource(
+                            Res.string.feature_savings_account_items,
+                            state.items ?: 0,
+                        ),
+                        style = MifosTypography.labelMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    //TODO : un-implemented feature, commenting because user won't feels its good ,uncomment and implement it
+//                    Icon(
+//                        modifier = Modifier
+//                            .clickable {}
+//                            .size(20.dp),
+//                        imageVector = MifosIcons.SearchNew,
+//                        contentDescription = stringResource(Res.string.content_description_search),
+//                    )
+                    Icon(
+                        modifier = Modifier
+                            .clickable { filtersClicked() }
+                            .size(20.dp),
+                        imageVector = MifosIcons.Filter,
+                        contentDescription = stringResource(Res.string.content_description_filter),
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.99997.dp),
+            )
         }
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.99997.dp),
-        )
+        if(state.isEmpty){
+            EmptyDataView(
+                icon= MifosIcons.Info,
+                errorString = "No accounts Found",
+                error = Res.string.feature_savings_account
+            )
+        }
 
         LazyColumn(
             modifier = Modifier
