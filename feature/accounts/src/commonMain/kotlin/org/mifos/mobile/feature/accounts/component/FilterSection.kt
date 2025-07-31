@@ -41,6 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.designsystem.utils.onClick
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 
@@ -153,7 +154,12 @@ fun FilterCheckboxUI(
     isRadio: Boolean = false,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = DesignToken.padding.largeIncreased),
+        modifier = modifier
+            .fillMaxWidth()
+            .onClick {
+                onCheckedChange()
+            }
+            .padding(horizontal = DesignToken.padding.largeIncreased),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (isRadio) {
