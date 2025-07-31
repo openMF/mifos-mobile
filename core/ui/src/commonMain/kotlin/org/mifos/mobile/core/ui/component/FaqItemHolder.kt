@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -60,6 +61,7 @@ fun FaqItemHolder(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
+                fontWeight = FontWeight.SemiBold,
             )
 
             Icon(
