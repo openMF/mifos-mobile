@@ -30,8 +30,17 @@ import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_nb_account
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_pending_account
 import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter_wallet_account
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_credit
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_debit
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_1_year
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_2_years
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_3_months
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_6_months
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_month
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
+import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
+import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 
 /**
  * Utility object that provides predefined checkbox options for different account types.
@@ -115,5 +124,43 @@ object StatusUtils {
         )
 
         return accountTypes + accountStatuses
+    }
+
+    internal fun getTransactionCheckboxes(): List<TransactionCheckboxStatus> {
+        val type = listOf(
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_credit,
+                type = TransactionFilterType.TRANSACTION_TYPE,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_debit,
+                type = TransactionFilterType.TRANSACTION_TYPE,
+            ),
+        )
+
+        val duration = listOf(
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_month,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_3_months,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_6_months,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_1_year,
+                type = TransactionFilterType.DURATION,
+            ),
+            TransactionCheckboxStatus(
+                Res.string.feature_transaction_filter_past_2_years,
+                type = TransactionFilterType.DURATION,
+            ),
+        )
+
+        return type + duration
     }
 }

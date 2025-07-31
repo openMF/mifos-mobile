@@ -21,3 +21,14 @@ enum class FilterType {
     ACCOUNT_TYPE,
     ACCOUNT_STATUS,
 }
+
+internal data class TransactionCheckboxStatus(
+    val statusLabel: StringResource,
+    val isChecked: Boolean = false,
+    val type: TransactionFilterType = TransactionFilterType.TRANSACTION_TYPE,
+)
+
+enum class TransactionFilterType {
+    TRANSACTION_TYPE,
+    DURATION,
+}

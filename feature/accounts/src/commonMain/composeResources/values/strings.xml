@@ -49,4 +49,18 @@
     <string name="feature_transaction_download_icon_description">Download Icon</string>
     <string name="feature_transaction_filter">Filter</string>
     <string name="feature_transaction_filter_icon_description">Filter Icon</string>
+
+    <!--    Transaction filters -->
+    <string name="feature_transaction_filter_credit">Credit</string>
+    <string name="feature_transaction_filter_debit">Debit</string>
+
+    <string name="feature_transaction_filter_past_month">Past Month</string>
+    <string name="feature_transaction_filter_past_3_months">Past 3 Months</string>
+    <string name="feature_transaction_filter_past_6_months">Past 6 Months</string>
+    <string name="feature_transaction_filter_past_1_year">Past 1 Year</string>
+    <string name="feature_transaction_filter_past_2_years">Past 2 Years</string>
+
+    <string name="feature_transaction_type">Transaction Type</string>
+    <string name="feature_duration">Duration</string>
+    <string name="feature_no_transactions_found">No Transactions Found</string>
 </resources>

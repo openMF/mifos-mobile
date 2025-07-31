@@ -29,6 +29,7 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
     navigateBack: () -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
+    navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
 ) {
     composableWithSlideTransitions<SavingsAccountDetailsRoute> {
@@ -37,6 +38,7 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
             navigateToClientChargeScreen = navigateToClientChargeScreen,
             navigateToUpdateScreen = navigateToUpdateScreen,
             navigateToWithdrawScreen = navigateToWithdrawScreen,
+            navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
         )
     }
 }
