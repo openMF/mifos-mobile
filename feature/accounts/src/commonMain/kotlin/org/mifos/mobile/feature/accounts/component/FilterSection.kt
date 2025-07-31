@@ -158,13 +158,13 @@ fun FilterCheckboxUI(
     ) {
         if (isRadio) {
             RadioButton(
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 selected = isChecked,
                 onClick = { onCheckedChange() },
             )
         } else {
             Checkbox(
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 checked = isChecked,
                 onCheckedChange = { onCheckedChange() },
             )
