@@ -99,6 +99,15 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
+                    event.route == Constants.DEPOSIT -> {
+                        navigateToDepositScreen(uiState.accountId)
+                    }
+                    event.route == Constants.TRANSFER -> {
+                        navigateToTransferScreen(uiState.accountId)
+                    }
+//                    event.route == Constants.QR_CODE -> {
+//                        navigateToQrCodeScreen
+//                    }
                 }
             }
 
