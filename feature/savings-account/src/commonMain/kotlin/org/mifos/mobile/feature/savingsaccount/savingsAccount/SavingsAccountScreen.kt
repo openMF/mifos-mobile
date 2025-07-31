@@ -119,6 +119,7 @@ internal fun SavingsAccountDialog(
             MifosErrorComponent(
                 message = dialogState.message,
                 onRetry = { onAction(SavingsAccountAction.OnRetry) },
+                isRetryEnabled = true,
             )
         }
         is SavingsAccountState.DialogState.Loading -> {
