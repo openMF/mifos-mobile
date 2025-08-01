@@ -102,7 +102,7 @@ class RecentTransactionViewModel(
                         items.isNotEmpty() -> {
                             RecentTransactionState.Success(
                                 transactions = items,
-                                canPaginate = items.size >= (limit ?: 50)
+                                canPaginate = items.size >= (limit ?: 50),
                             )
                         }
                         isInitialLoad -> {
