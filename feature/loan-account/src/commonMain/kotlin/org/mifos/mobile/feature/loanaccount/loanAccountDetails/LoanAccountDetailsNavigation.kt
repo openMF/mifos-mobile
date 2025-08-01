@@ -9,7 +9,7 @@
  */
 @file:Suppress("MatchingDeclarationName")
 
-package org.mifos.mobile.feature.loanaccount.savingsAccountDetails
+package org.mifos.mobile.feature.loanaccount.loanAccountDetails
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

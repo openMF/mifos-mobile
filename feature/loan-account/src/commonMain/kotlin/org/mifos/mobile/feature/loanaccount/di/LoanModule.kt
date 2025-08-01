@@ -12,9 +12,11 @@ package org.mifos.mobile.feature.loanaccount.di
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountsViewmodel
-import org.mifos.mobile.feature.loanaccount.savingsAccountDetails.LoanAccountDetailsViewModel
+import org.mifos.mobile.feature.loanaccount.loanAccountDetails.LoanAccountDetailsViewModel
+import org.mifos.mobile.feature.loanaccount.loanAccountSummary.LoanAccountSummaryViewModel
 
 val loanAccountModule = module {
     viewModelOf(::LoanAccountsViewmodel)
     viewModelOf(::LoanAccountDetailsViewModel)
+    viewModelOf(::LoanAccountSummaryViewModel)
 }
