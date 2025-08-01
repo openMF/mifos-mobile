@@ -30,8 +30,11 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
@@ -44,6 +47,7 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 internal class SavingsAccountDetailsViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : BaseViewModel<SavingsAccountDetailsState, SavingsAccountDetailsEvent, SavingsAccountDetailsAction>(
     initialState = run {
         val accountId = savedStateHandle.toRoute<SavingsAccountDetailsRoute>().accountId
@@ -135,6 +139,19 @@ internal class SavingsAccountDetailsViewModel(
                 val savings = dataState.data
                 extractDetails(savings)
             }
+        }
+    }
+
+    fun getQrString(): String {
+        val officeName = userPreferencesRepository.userInfo.value.officeName
+        return if (officeName.isNotEmpty()) {
+            return getAccountDetailsInString(
+                state.accountId.toInt(),
+                officeName,
+                AccountType.SAVINGS.name,
+            )
+        } else {
+            ""
         }
     }
 
