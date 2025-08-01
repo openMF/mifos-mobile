@@ -27,8 +27,8 @@ import kotlin.collections.firstOrNull
 
 // TODO: Refactor according to figma design
 /**
- * ViewModel responsible for managing loan account UI state, fetching, filtering,
- * and reacting to user actions and network changes.
+ * ViewModel responsible for managing share account UI state, fetching,
+ * filtering, and reacting to user actions and network changes.
  *
  * @param accountsRepositoryImpl Provides access to account data.
  * @param networkMonitor Observes network connectivity.
@@ -54,26 +54,21 @@ class ShareAccountsViewmodel(
     override fun handleAction(action: ShareAccountsAction) {
         when (action) {
             is ShareAccountsAction.OnDismissDialog -> handleDismissDialog()
-
             is ShareAccountsAction.OnNavigateBack -> sendEvent(ShareAccountsEvent.NavigateBack)
-
             is ShareAccountsAction.ToggleAmountVisible -> handleAmountVisible()
-
-            is ShareAccountsAction.LoadAccounts -> {
-                loadAccounts(action.filters)
-            }
-
-            is ShareAccountsAction.OnAccountClicked ->
-                sendEvent(ShareAccountsEvent.AccountClicked(action.accountId, action.accountType))
-
-            is ShareAccountsAction.Internal.ReceiveLoanAccounts -> {
+            is ShareAccountsAction.LoadAccounts -> loadAccounts(action.filters)
+            is ShareAccountsAction.OnRetry -> loadAccounts(action.filters)
+            is ShareAccountsAction.OnAccountClicked -> sendEvent(
+                ShareAccountsEvent.AccountClicked(action.accountId, action.accountType),
+            )
+            is ShareAccountsAction.Internal.ReceiveShareAccounts -> {
                 handleReceivedAccounts(action.dataState, action.filters)
             }
         }
     }
 
     /**
-     * Toggles visibility of the total loan amount in UI.
+     * Toggles visibility of the total share amount in the UI.
      */
     private fun handleAmountVisible() {
         mutableStateFlow.update {
@@ -104,7 +99,7 @@ class ShareAccountsViewmodel(
     }
 
     /**
-     * Fetches accounts from the repository and applies filters.
+     * Fetches share accounts from the repository and applies filters.
      * If cached data is available, it uses it directly.
      *
      * @param selectedFilters List of selected filters to apply.
@@ -137,13 +132,11 @@ class ShareAccountsViewmodel(
                 accountType = Constants.SHARE_ACCOUNTS,
             ).catch {
                 mutableStateFlow.update {
-                    it.copy(
-                        dialogState = ShareAccountsState.DialogState.Error("Something went wrong"),
-                    )
+                    it.copy(dialogState = ShareAccountsState.DialogState.Error("Something went wrong"))
                 }
             }.collect { clientAccounts ->
                 sendAction(
-                    ShareAccountsAction.Internal.ReceiveLoanAccounts(
+                    ShareAccountsAction.Internal.ReceiveShareAccounts(
                         filters = selectedFilters,
                         dataState = clientAccounts,
                     ),
@@ -155,7 +148,7 @@ class ShareAccountsViewmodel(
     /**
      * Handles the result of the repository call and updates the state.
      *
-     * @param dataState Result of fetching loan accounts (Success, Error, Loading).
+     * @param dataState Result of fetching share accounts (Success, Error, Loading).
      * @param selectedFilters Filters applied to the list.
      */
     private fun handleReceivedAccounts(
@@ -165,9 +158,7 @@ class ShareAccountsViewmodel(
         when (dataState) {
             is DataState.Error -> {
                 mutableStateFlow.update {
-                    it.copy(
-                        dialogState = ShareAccountsState.DialogState.Error("Something went wrong"),
-                    )
+                    it.copy(dialogState = ShareAccountsState.DialogState.Error("Something went wrong"))
                 }
             }
 
@@ -180,10 +171,12 @@ class ShareAccountsViewmodel(
             is DataState.Success -> {
                 val shareAccounts = dataState.data.shareAccounts
                 val filtered = filterAccounts(selectedFilters, shareAccounts)
-                getTotalShareAmount(dataState.data.shareAccounts)
+                getTotalShareAmount(shareAccounts)
+
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
+                        isEmpty = filtered.isEmpty(),
                         shareAccounts = filtered,
                         originalAccounts = shareAccounts,
                         currency = shareAccounts.firstOrNull()?.currency?.displaySymbol,
@@ -196,11 +189,11 @@ class ShareAccountsViewmodel(
     }
 
     /**
-     * Filters the accounts based on the selected filters (status).
+     * Filters the share accounts based on the selected filters (status).
      *
      * @param selectedFilters List of selected labels for filtering.
-     * @param accounts Original unfiltered list of accounts.
-     * @return List of accounts that match the applied filters.
+     * @param accounts Original unfiltered list of share accounts.
+     * @return List of share accounts that match the applied filters.
      */
     private fun filterAccounts(
         selectedFilters: List<StringResource?>,
@@ -218,7 +211,7 @@ class ShareAccountsViewmodel(
     }
 
     /**
-     * Calculates the total loan balance and updates state.
+     * Calculates the total share balance and updates state.
      *
      * @param accounts List of [ShareAccount] to compute totals from.
      */
@@ -226,13 +219,8 @@ class ShareAccountsViewmodel(
     private fun getTotalShareAmount(accounts: List<ShareAccount>?) {
         var amount = 0.0
         var items = 0
-//        TODO design according to figma design later
-//        if (accounts != null) {
-//            for (account in accounts) {
-//                amount += account.totalApprovedShares
-//                items++
-//            }
-//        }
+
+        // Future logic to calculate approved share amount can be added here
 
         mutableStateFlow.update {
             it.copy(totalLoanAmount = amount, items = items)
@@ -241,17 +229,18 @@ class ShareAccountsViewmodel(
 }
 
 /**
- * State holder for the Loan Account screen.
+ * State holder for the Share Accounts screen.
  * Contains all values needed to render the UI and manage logic.
  */
 data class ShareAccountsState(
     val shareAccounts: List<ShareAccount>?,
     val originalAccounts: List<ShareAccount>? = null,
+    val isEmpty: Boolean = false,
 
     /** Number of filtered accounts */
     val items: Int? = 0,
 
-    /** Total loan amount computed from accounts */
+    /** Total share amount computed from accounts */
     val totalLoanAmount: Double? = 0.0,
 
     /** Currency symbol (e.g., ₹, $, etc.) */
@@ -272,9 +261,8 @@ data class ShareAccountsState(
     /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
 ) {
-
     /**
-     * Sealed class representing possible dialog states.
+     * Represents UI dialog states.
      */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
@@ -283,7 +271,7 @@ data class ShareAccountsState(
 }
 
 /**
- * Represents user or system actions for the Loan Account screen.
+ * Represents user or system actions for the Share Accounts screen.
  */
 sealed interface ShareAccountsAction {
 
@@ -293,43 +281,38 @@ sealed interface ShareAccountsAction {
     /** Navigate back from the screen */
     data object OnNavigateBack : ShareAccountsAction
 
-    /** Toggle visibility of loan amount */
+    /** Toggle visibility of share amount */
     data object ToggleAmountVisible : ShareAccountsAction
 
-    /** Load loan accounts with applied filters */
-    data class LoadAccounts(
-        val filters: List<StringResource?>,
-    ) : ShareAccountsAction
+    /** Load share accounts with applied filters */
+    data class LoadAccounts(val filters: List<StringResource?>) : ShareAccountsAction
+
+    /** Retry loading with same filters */
+    data class OnRetry(val filters: List<StringResource?>) : ShareAccountsAction
 
     /** Navigate to a selected account's detail page */
-    data class OnAccountClicked(
-        val accountId: Long,
-        val accountType: String,
-    ) : ShareAccountsAction
+    data class OnAccountClicked(val accountId: Long, val accountType: String) : ShareAccountsAction
 
     /**
      * Internal-only actions triggered by repository/data flow.
      */
     sealed interface Internal : ShareAccountsAction {
 
-        /** Called when account data is received from repository */
-        data class ReceiveLoanAccounts(
+        /** Called when share account data is received from repository */
+        data class ReceiveShareAccounts(
             val filters: List<StringResource?>,
             val dataState: DataState<ClientAccounts>,
-        ) : ShareAccountsAction
+        ) : Internal
     }
 }
 
 /**
- * One-time UI events for the Loan Account screen.
+ * One-time UI events for the Share Accounts screen.
  */
 sealed interface ShareAccountsEvent {
 
-    /** Trigger navigation to selected account's detail screen */
-    data class AccountClicked(
-        val accountId: Long,
-        val accountType: String,
-    ) : ShareAccountsEvent
+    /** Trigger navigation to selected share account's detail screen */
+    data class AccountClicked(val accountId: Long, val accountType: String) : ShareAccountsEvent
 
     /** Signals the UI that loading is complete */
     data object LoadingCompleted : ShareAccountsEvent

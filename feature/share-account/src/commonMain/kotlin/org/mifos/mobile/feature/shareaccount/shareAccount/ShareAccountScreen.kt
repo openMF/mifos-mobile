@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
+import mifos_mobile.feature.share_account.generated.resources.feature_account_empty_share_accounts
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_dashboard
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_items
@@ -42,18 +43,17 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LoanStatus
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import kotlin.collections.orEmpty
 
@@ -114,15 +114,14 @@ internal fun ShareAccountDialog(
     onAction: (ShareAccountsAction) -> Unit,
 ) {
     when (dialogState) {
-        is ShareAccountsState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
+        is ShareAccountsState.DialogState.Error -> {
+            MifosErrorComponent(
                 message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(ShareAccountsAction.OnDismissDialog) },
-        )
-        is ShareAccountsState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
+                onRetry = { onAction(ShareAccountsAction.OnRetry(emptyList())) },
+                isRetryEnabled = true,
+            )
+        }
+        is ShareAccountsState.DialogState.Loading -> MifosProgressIndicator()
 
         null -> Unit
     }
@@ -139,91 +138,92 @@ internal fun ShareAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+        if (!state.isEmpty && state.dialogState == null) {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-        MifosDashboardCard(
-            isSingleLine = true,
-            savingsAccount = Res.string.feature_share_account_dashboard,
-            savingsAmount = state.totalLoanAmount,
-            isVisible = state.isAmountVisible,
-            currency = state.currency,
-            onVisibilityToggle = { onAction(ShareAccountsAction.ToggleAmountVisible) },
-        )
+            MifosDashboardCard(
+                isSingleLine = true,
+                savingsAccount = Res.string.feature_share_account_dashboard,
+                savingsAmount = state.totalLoanAmount,
+                isVisible = state.isAmountVisible,
+                currency = state.currency,
+                onVisibilityToggle = { onAction(ShareAccountsAction.ToggleAmountVisible) },
+            )
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(Res.string.feature_share_account),
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Text(
-                    text = stringResource(
-                        Res.string.feature_share_account_items,
-                        state.items ?: 0,
-                    ),
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
+            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Icon(
-                    modifier = Modifier
-                        .clickable {}
-                        .size(20.dp),
-                    imageVector = MifosIcons.SearchNew,
-                    contentDescription = null,
-                )
-                Icon(
-                    modifier = Modifier
-                        .clickable { filtersClicked() }
-                        .size(20.dp),
-                    imageVector = MifosIcons.Filter,
-                    contentDescription = null,
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.99997.dp),
-        )
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-            }
-            items(state.shareAccounts.orEmpty()) { account ->
-                val color = when (account.status?.value) {
-                    LoanStatus.ACTIVE.status -> AppColors.customEnable
-                    LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                    LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
-                    else -> MaterialTheme.colorScheme.onSurface
+                Column {
+                    Text(
+                        text = stringResource(Res.string.feature_share_account),
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                    Text(
+                        text = stringResource(
+                            Res.string.feature_share_account_items,
+                            state.items ?: 0,
+                        ),
+                        style = MifosTypography.labelMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
                 }
 
-                MifosAccountCard(
-                    accountId = account.id,
-                    accountNumber = account.accountNo,
-                    accountType = account.productName,
-                    accountStatus = (
-                        account.status?.value ?: ""
-                        ),
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .clickable {}
+                            .size(20.dp),
+                        imageVector = MifosIcons.SearchNew,
+                        contentDescription = null,
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .clickable { filtersClicked() }
+                            .size(20.dp),
+                        imageVector = MifosIcons.Filter,
+                        contentDescription = null,
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.99997.dp),
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                }
+                items(state.shareAccounts.orEmpty()) { account ->
+                    val color = when (account.status?.value) {
+                        LoanStatus.ACTIVE.status -> AppColors.customEnable
+                        LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                        LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+
+                    MifosAccountCard(
+                        accountId = account.id,
+                        accountNumber = account.accountNo,
+                        accountType = account.productName,
+                        accountStatus = (
+                            account.status?.value ?: ""
+                            ),
 //                    TODO Design according to Figma design
 
 //                        if (account.status?.active == true) {
@@ -235,18 +235,25 @@ internal fun ShareAccountContent(
 //                        } else {
 //                            account.status?.value ?: ""
 //                        }),
-                    accountStatusColor = color,
-                    onAccountClick = {
-                        onAction(
-                            ShareAccountsAction.OnAccountClicked(
-                                it,
-                                Constants.LOAN_ACCOUNT,
-                            ),
-                        )
-                    },
-                    icon = MifosIcons.CoinMultiple,
-                )
+                        accountStatusColor = color,
+                        onAccountClick = {
+                            onAction(
+                                ShareAccountsAction.OnAccountClicked(
+                                    it,
+                                    Constants.LOAN_ACCOUNT,
+                                ),
+                            )
+                        },
+                        icon = MifosIcons.CoinMultiple,
+                    )
+                }
             }
+        }
+        if (state.isEmpty) {
+            EmptyDataView(
+                icon = MifosIcons.Info,
+                error = Res.string.feature_account_empty_share_accounts,
+            )
         }
     }
 }

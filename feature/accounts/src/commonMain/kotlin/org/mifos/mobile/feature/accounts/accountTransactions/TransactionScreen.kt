@@ -128,7 +128,7 @@ internal fun TransactionScreenContent(
         LazyColumn(
             Modifier.padding(DesignToken.padding.large),
         ) {
-            if (state.dialogState != AccountTransactionState.DialogState.Loading) {
+            if (!state.isEmpty && state.dialogState != AccountTransactionState.DialogState.Loading) {
                 item {
                     ActionBar(
                         onAction = onAction,
@@ -159,15 +159,15 @@ internal fun TransactionScreenContent(
                     items(transactions.size) { index ->
                         val transaction = transactions[index]
                         TransactionScreenItem(
-                            title = transaction.paymentDetailData?.paymentType?.name ?: "",
+                            title = transaction.typeValue ?: "",
                             date = DateHelper.getDateAsString(transaction.date),
                             time = "",
                             transactionAmount = CurrencyFormatter.format(
                                 balance = transaction.amount,
-                                currencyCode = transaction.currency?.code ?: "USD",
+                                currencyCode = transaction.currency,
                                 maximumFractionDigits = 3,
                             ),
-                            isCredited = getTransactionCreditStatus(transaction.transactionType),
+                            isCredited = transaction.isCredit == true,
                         )
                     }
                 }

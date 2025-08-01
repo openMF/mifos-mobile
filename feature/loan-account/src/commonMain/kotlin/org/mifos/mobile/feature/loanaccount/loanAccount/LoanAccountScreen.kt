@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_account_empty_loan_accounts
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_dashboard
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_items
@@ -43,18 +44,17 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LoanStatus
+import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import kotlin.collections.orEmpty
 
@@ -115,15 +115,14 @@ internal fun LoanAccountDialog(
     onAction: (LoanAccountsAction) -> Unit,
 ) {
     when (dialogState) {
-        is LoanAccountsState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
+        is LoanAccountsState.DialogState.Error -> {
+            MifosErrorComponent(
                 message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(LoanAccountsAction.OnDismissDialog) },
-        )
-        is LoanAccountsState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
+                onRetry = { onAction(LoanAccountsAction.OnRetry(emptyList())) },
+                isRetryEnabled = true,
+            )
+        }
+        is LoanAccountsState.DialogState.Loading -> MifosProgressIndicator()
 
         null -> Unit
     }
@@ -140,111 +139,119 @@ internal fun LoanAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+        if (state.dialogState == null) {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-        MifosDashboardCard(
-            isSingleLine = true,
-            savingsAccount = Res.string.feature_loan_account_dashboard,
-            savingsAmount = state.totalLoanAmount,
-            isVisible = state.isAmountVisible,
-            currency = state.currency,
-            onVisibilityToggle = { onAction(LoanAccountsAction.ToggleAmountVisible) },
-        )
+            MifosDashboardCard(
+                isSingleLine = true,
+                savingsAccount = Res.string.feature_loan_account_dashboard,
+                savingsAmount = state.totalLoanAmount,
+                isVisible = state.isAmountVisible,
+                currency = state.currency,
+                onVisibilityToggle = { onAction(LoanAccountsAction.ToggleAmountVisible) },
+            )
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(Res.string.feature_loan_account),
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Text(
-                    text = stringResource(
-                        Res.string.feature_loan_account_items,
-                        state.items ?: 0,
-                    ),
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            }
+            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Icon(
-                    modifier = Modifier
-                        .clickable {}
-                        .size(20.dp),
-                    imageVector = MifosIcons.SearchNew,
-                    contentDescription = null,
-                )
-                Icon(
-                    modifier = Modifier
-                        .clickable { filtersClicked() }
-                        .size(20.dp),
-                    imageVector = MifosIcons.Filter,
-                    contentDescription = null,
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.99997.dp),
-        )
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-            }
-            items(state.loanAccounts.orEmpty()) { account ->
-                val color = when (account.status?.value) {
-                    LoanStatus.ACTIVE.status -> AppColors.customEnable
-                    LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                    LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
-                    else -> MaterialTheme.colorScheme.onSurface
+                Column {
+                    Text(
+                        text = stringResource(Res.string.feature_loan_account),
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                    Text(
+                        text = stringResource(
+                            Res.string.feature_loan_account_items,
+                            state.items ?: 0,
+                        ),
+                        style = MifosTypography.labelMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
                 }
 
-                MifosAccountCard(
-                    accountId = account.id,
-                    accountNumber = account.accountNo,
-                    accountType = account.productName,
-                    accountStatus = (
-                        if (account.status?.active == true) {
-                            CurrencyFormatter.format(
-                                account.loanBalance,
-                                account.currency?.code,
-                                account.currency?.decimalPlaces?.toInt(),
-                            )
-                        } else {
-                            account.status?.value ?: ""
-                        }
-                        ),
-                    accountStatusColor = color,
-                    onAccountClick = {
-                        onAction(
-                            LoanAccountsAction.OnAccountClicked(
-                                it,
-                                Constants.LOAN_ACCOUNT,
-                            ),
-                        )
-                    },
-                    icon = MifosIcons.CoinMultiple,
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .clickable {}
+                            .size(20.dp),
+                        imageVector = MifosIcons.SearchNew,
+                        contentDescription = null,
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .clickable { filtersClicked() }
+                            .size(20.dp),
+                        imageVector = MifosIcons.Filter,
+                        contentDescription = null,
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.99997.dp),
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                }
+                items(state.loanAccounts.orEmpty()) { account ->
+                    val color = when (account.status?.value) {
+                        LoanStatus.ACTIVE.status -> AppColors.customEnable
+                        LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                        LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+
+                    MifosAccountCard(
+                        accountId = account.id,
+                        accountNumber = account.accountNo,
+                        accountType = account.productName,
+                        accountStatus = (
+                            if (account.status?.active == true) {
+                                CurrencyFormatter.format(
+                                    account.loanBalance,
+                                    account.currency?.code,
+                                    account.currency?.decimalPlaces?.toInt(),
+                                )
+                            } else {
+                                account.status?.value ?: ""
+                            }
+                            ),
+                        accountStatusColor = color,
+                        onAccountClick = {
+                            onAction(
+                                LoanAccountsAction.OnAccountClicked(
+                                    it,
+                                    Constants.LOAN_ACCOUNT,
+                                ),
+                            )
+                        },
+                        icon = MifosIcons.CoinMultiple,
+                    )
+                }
+            }
+        }
+        if (state.isEmpty) {
+            EmptyDataView(
+                icon = MifosIcons.Info,
+                error = Res.string.feature_account_empty_loan_accounts,
+            )
         }
     }
 }
