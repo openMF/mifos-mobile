@@ -90,8 +90,7 @@ internal fun LoanAccountDetailsScreen(
                         navigateToLoanSummaryScreen(uiState.accountId)
                     }
                     event.route == Constants.QR_CODE -> {
-//                        TODO Pass actual parsed string
-                        navigateToQrCodeScreen("dummy data")
+                        navigateToQrCodeScreen(viewModel.getQrString())
                     }
                 }
             }
