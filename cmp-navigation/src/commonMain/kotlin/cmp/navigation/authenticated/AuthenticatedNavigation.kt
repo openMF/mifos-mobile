@@ -124,6 +124,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
+            navigateToQrCodeScreen = { navController.navigateToQrDisplayScreen(it) },
         )
 
         loanNavGraph(

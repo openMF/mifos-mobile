@@ -36,6 +36,7 @@ fun NavGraphBuilder.savingsNavGraph(
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
+    navigateToQrCodeScreen: (String) -> Unit,
 ) {
     navigation<SavingsGraphRoute>(
         startDestination = SavingsAccountRoute,
@@ -50,6 +51,7 @@ fun NavGraphBuilder.savingsNavGraph(
             navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
             navigateToWithdrawScreen = navController::navigateToSavingsAccountWithdrawScreen,
+            navigateToQrCodeScreen = navigateToQrCodeScreen,
         )
 
         savingsAccountUpdateDestination(

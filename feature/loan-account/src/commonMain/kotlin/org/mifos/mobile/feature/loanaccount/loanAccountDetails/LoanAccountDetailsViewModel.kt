@@ -28,7 +28,10 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
@@ -40,6 +43,7 @@ import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
  */
 internal class LoanAccountDetailsViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoanAccountDetailsState, LoanAccountDetailsEvent, LoanAccountDetailsAction>(
     initialState = run {
@@ -92,6 +96,19 @@ internal class LoanAccountDetailsViewModel(
      */
     private fun handleDismissDialog() {
         mutableStateFlow.update { it.copy(dialogState = null) }
+    }
+
+    fun getQrString(): String {
+        val officeName = userPreferencesRepository.userInfo.value.officeName
+        return if (officeName.isNotEmpty()) {
+            return getAccountDetailsInString(
+                state.accountId.toInt(),
+                officeName,
+                AccountType.LOAN.name,
+            )
+        } else {
+            ""
+        }
     }
 
     /**

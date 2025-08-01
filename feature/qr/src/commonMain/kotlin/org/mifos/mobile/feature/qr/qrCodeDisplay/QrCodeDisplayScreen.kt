@@ -10,38 +10,43 @@
 package org.mifos.mobile.feature.qr.qrCodeDisplay
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.alexzhirkevich.qrose.ImageFormat
 import io.github.alexzhirkevich.qrose.rememberQrCodePainter
-import io.github.alexzhirkevich.qrose.toByteArray
 import mifos_mobile.feature.qr.generated.resources.Res
-import mifos_mobile.feature.qr.generated.resources.choose_option
+import mifos_mobile.feature.qr.generated.resources.generated_on
+import mifos_mobile.feature.qr.generated.resources.qr_alignment_instruction
+import mifos_mobile.feature.qr.generated.resources.qr_code
+import mifos_mobile.feature.qr.generated.resources.qr_scan_instruction
+import mifos_mobile.feature.qr.generated.resources.scan_your_qr
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -55,7 +60,6 @@ internal fun QrCodeDisplayScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             QrCodeDisplayEvent.Navigate -> navigateBack.invoke()
-            is QrCodeDisplayEvent.ShowToast -> { }
         }
     }
 
@@ -66,25 +70,6 @@ internal fun QrCodeDisplayScreen(
             { viewModel.trySendAction(it) }
         },
     )
-}
-
-@Composable
-private fun QrCodeDialog(
-    state: QrCodeDisplayState,
-    onAction: (QrCodeDisplayAction) -> Unit,
-) {
-    when (state.dialogState) {
-        QrCodeDisplayState.DialogState.Loading -> MifosProgressIndicatorOverlay()
-        is QrCodeDisplayState.DialogState.Error -> {
-            MifosBasicDialog(
-                visibilityState = BasicDialogState.Shown(
-                    message = state.dialogState.message,
-                ),
-                onDismissRequest = { onAction(QrCodeDisplayAction.DismissDialog) },
-            )
-        }
-        null -> Unit
-    }
 }
 
 @Suppress("UnusedPrivateProperty")
@@ -99,48 +84,22 @@ private fun QrCodeDisplayScreen(
         options = QrCodeDisplayState.QrViewState.Content(data = state.qrArgs ?: "").options,
     )
 
-    val bytes: ByteArray = remember(painter) {
-        painter.toByteArray(1024, 1024, ImageFormat.PNG)
-    }
-    val option = stringResource(Res.string.choose_option)
-    MifosScaffold(
+    MifosElevatedScaffold(
         modifier = modifier,
-//        topBar = {
-//            MifosTopAppBar(
-//                backPress = { onAction(QrCodeDisplayAction.OnNavigate) },
-//                topBarTitle = stringResource(Res.string.qr_code),
-//                actions = {
-//                    IconButton(
-//                        onClick = {
-//                            onAction(
-//                                QrCodeDisplayAction.ShareQrCode(
-//                                    bytes,
-//                                    option,
-//                                ),
-//                            )
-//                        },
-//                        content = {
-//                            Icon(
-//                                imageVector = MifosIcons.Share,
-//                                contentDescription = null,
-//                            )
-//                        },
-//                    )
-//                },
-//            )
-//        },
-        content = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                QrCodeDisplayContent(painter = painter)
+        topBarTitle = stringResource(Res.string.qr_code),
+        onNavigateBack = { onAction(QrCodeDisplayAction.OnNavigate) },
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
             }
         },
-    )
-    QrCodeDialog(
-        state = state,
-        onAction = onAction,
+        content = {
+            QrCodeDisplayContent(painter = painter)
+        },
     )
 }
 
@@ -150,32 +109,56 @@ private fun QrCodeDisplayContent(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
+            .padding(
+                horizontal = DesignToken.padding.large,
+                vertical = DesignToken.padding.extraLargeIncreased,
+            )
             .fillMaxSize(),
-        contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = modifier
-                .size(350.dp, 390.dp)
-                .background(Color.White, shape = RoundedCornerShape(15.dp))
-                .align(Alignment.Center),
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         ) {
             Text(
-                text = "Mifos Mobile",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black,
+                text = stringResource(Res.string.scan_your_qr),
+                style = MifosTypography.titleLargeEmphasized,
+                color = MaterialTheme.colorScheme.primary,
             )
+
+            Spacer(Modifier.height(DesignToken.padding.largeIncreased))
+
+            Text(
+                text = stringResource(Res.string.qr_scan_instruction),
+                style = MifosTypography.bodyMediumEmphasized,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
 
             Image(
                 painter = painter,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(bottom = 45.dp)
-                    .size(260.dp),
+                    .size(212.dp),
+            )
+
+            Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
+
+            Text(
+                text = stringResource(Res.string.qr_alignment_instruction),
+                style = MifosTypography.bodyMediumEmphasized,
+                textAlign = TextAlign.Center,
             )
         }
+
+        Text(
+            text = stringResource(Res.string.generated_on, DateHelper.formattedShortDate),
+            style = MifosTypography.bodyMediumEmphasized,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.align(Alignment.BottomCenter),
+        )
     }
 }
 
@@ -184,7 +167,7 @@ private fun QrCodeDisplayContent(
 private fun QrCodeDisplayScreenPreview() {
     MifosMobileTheme {
         QrCodeDisplayScreen(
-            state = QrCodeDisplayState(dialogState = null),
+            state = QrCodeDisplayState(),
             onAction = { },
         )
     }

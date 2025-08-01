@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import io.github.alexzhirkevich.qrose.options.QrBallShape
 import io.github.alexzhirkevich.qrose.options.QrBrush
 import io.github.alexzhirkevich.qrose.options.QrCodeShape
@@ -30,22 +31,14 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.qr.generated.resources.Res
 import mifos_mobile.feature.qr.generated.resources.choose_option
 import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.model.IgnoredOnParcel
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.ui.utils.ShareUtils.shareImage
-import org.mifos.mobile.feature.qr.navigation.QR_ARGS
+import org.mifos.mobile.feature.qr.navigation.QrDisplayScreenRoute
 
 internal class QrCodeDisplayViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<QrCodeDisplayState, QrCodeDisplayEvent, QrCodeDisplayAction>(
     initialState = QrCodeDisplayState(
-        dialogState = null,
-        qrArgs = savedStateHandle.getStateFlow<String?>(
-            key = QR_ARGS,
-            initialValue = null,
-        ).value,
+        qrArgs = savedStateHandle.toRoute<QrDisplayScreenRoute>().qrString,
     ),
 ) {
 
@@ -65,42 +58,24 @@ internal class QrCodeDisplayViewModel(
                 ),
             )
         }
-
-//        generateQrBitmap()
     }
 
     override fun handleAction(action: QrCodeDisplayAction) {
         when (action) {
             QrCodeDisplayAction.OnNavigate -> sendEvent(QrCodeDisplayEvent.Navigate)
-            QrCodeDisplayAction.DismissDialog -> setDialogState(null)
-            is QrCodeDisplayAction.ShareQrCode -> {
-                viewModelScope.launch {
-                    shareImage(
-                        action.option,
-                        action.qrBitmap,
-                    )
-                }
-            }
         }
     }
 
     private fun updateState(update: (QrCodeDisplayState) -> QrCodeDisplayState) {
         mutableStateFlow.update(update)
     }
-
-    private fun setDialogState(dialogState: QrCodeDisplayState.DialogState?) {
-        updateState { it.copy(dialogState = dialogState) }
-    }
 }
 
-@Parcelize
 data class QrCodeDisplayState(
     val option: String = "",
     val qrArgs: String? = null,
-    val dialogState: DialogState?,
-    @IgnoredOnParcel
     val viewState: QrViewState = QrViewState.Loading,
-) : Parcelable {
+) {
 
     sealed interface QrViewState {
         data object Loading : QrViewState
@@ -135,26 +110,12 @@ data class QrCodeDisplayState(
                 )
         }
     }
-
-    sealed interface DialogState : Parcelable {
-        @Parcelize
-        data class Error(val message: String) : DialogState
-
-        @Parcelize
-        data object Loading : DialogState
-    }
 }
 
 sealed interface QrCodeDisplayEvent {
     data object Navigate : QrCodeDisplayEvent
-    data class ShowToast(val message: String) : QrCodeDisplayEvent
 }
 
 sealed interface QrCodeDisplayAction {
     data object OnNavigate : QrCodeDisplayAction
-    data object DismissDialog : QrCodeDisplayAction
-    data class ShareQrCode(
-        val qrBitmap: ByteArray,
-        val option: String,
-    ) : QrCodeDisplayAction
 }
