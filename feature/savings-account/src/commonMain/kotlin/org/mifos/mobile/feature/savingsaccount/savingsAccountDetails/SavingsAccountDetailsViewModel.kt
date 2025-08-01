@@ -142,16 +142,17 @@ internal class SavingsAccountDetailsViewModel(
         }
     }
 
-     fun getQrString(): String {
+    fun getQrString(): String {
         val userDetails = userDetailsState.value
-         return if(userDetails!=null){
+        return if (userDetails != null) {
             return getAccountDetailsInString(
                 state.accountId.toInt(),
                 userDetails.officeName,
                 AccountType.SAVINGS.name,
             )
+        } else {
+            ""
         }
-        else ""
     }
 
     private fun extractDetails(savings: SavingsWithAssociations) {

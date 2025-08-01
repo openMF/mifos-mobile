@@ -121,7 +121,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
-            viewQrCode = { navController.navigateToQrDisplayScreen(it) },
+            navigateToQrCodeScreen = { navController.navigateToQrDisplayScreen(it) },
         )
 
         passcodeDestination(
