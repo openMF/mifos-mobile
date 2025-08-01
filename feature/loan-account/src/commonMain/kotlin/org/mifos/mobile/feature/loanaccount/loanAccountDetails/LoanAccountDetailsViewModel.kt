@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.loanaccount.savingsAccountDetails
+package org.mifos.mobile.feature.loanaccount.loanAccountDetails
 
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
