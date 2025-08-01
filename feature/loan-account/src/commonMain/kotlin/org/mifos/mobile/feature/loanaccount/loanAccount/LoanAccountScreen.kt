@@ -139,7 +139,7 @@ internal fun LoanAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        if (state.dialogState == null) {
+        if (!state.isEmpty && state.dialogState == null) {
             Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
             MifosDashboardCard(

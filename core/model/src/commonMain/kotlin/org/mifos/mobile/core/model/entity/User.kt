@@ -28,6 +28,7 @@ data class User(
     val permissions: ArrayList<String> = arrayListOf(),
     val shouldRenewPassword: Boolean = false,
     val isTwoFactorAuthenticationRequired: Boolean = false,
+    val clients: ArrayList<Long> = arrayListOf(),
 ) : Parcelable
 
 @Serializable
