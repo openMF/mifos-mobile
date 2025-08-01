@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.transfer.process
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ internal class TransferProcessViewModel(
         ).value.let { TransferType.valueOf(it) },
         transferDestination = savedStateHandle.getStateFlow(
             key = TRANSFER_SUCCESS_DESTINATION,
-            initialValue = TransferSuccessDestination.HOME.name,
+            initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT.name,
         ).value.let { TransferSuccessDestination.valueOf(it) },
     ),
 ) {

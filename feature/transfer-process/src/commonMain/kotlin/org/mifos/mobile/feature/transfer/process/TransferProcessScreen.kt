@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
