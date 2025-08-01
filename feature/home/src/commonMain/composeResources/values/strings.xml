@@ -49,7 +49,7 @@
     <string name="feature_home_apply_for_loan">Apply For Loan</string>
     <string name="feature_home_transaction_history">Transaction History</string>
     <string name="feature_home_charges">Charges</string>
-    <string name="feature_home_beneficiary">beneficiary</string>
+    <string name="feature_home_beneficiary">Beneficiary</string>
     <string name="feature_home_faq">FAQ</string>
 
     <string name="feature_home_total_available_savings">Total Available Savings</string>
