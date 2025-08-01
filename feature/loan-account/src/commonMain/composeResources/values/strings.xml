@@ -99,4 +99,14 @@
     <string name="feature_loan_auto_debit_label">Auto Debit</string>
     <string name="feature_loan_linked_account_label">Linked Account</string>
 
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="feature_loan_disbursement_date_label">Disbursement Date</string>
+    <string name="feature_loan_installments_paid_label">Installments Paid</string>
+    <string name="feature_loan_installments_left_label">Installments Left</string>
+    <string name="feature_loan_total_installments_label">Total Installments</string>
+
+    <string name="feature_loan_paid">Paid</string>
+    <string name="feature_loan_due">Due</string>
+    <string name="feature_loan_pay">Pay</string>
+
 </resources>

@@ -151,12 +151,14 @@ internal fun LoanAccountDetailsContent(
                     )
                 }
 
-                SavingsAccountActions(
-                    items = state.items,
-                    onActionClick = {
-                        onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
-                    },
-                )
+                if (state.isActive) {
+                    SavingsAccountActions(
+                        items = state.items,
+                        onActionClick = {
+                            onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
+                        },
+                    )
+                }
             }
         }
     }

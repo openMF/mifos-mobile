@@ -172,12 +172,14 @@ internal fun SavingsAccountDetailsContent(
                     isActive = state.isActive,
                 )
 
-                SavingsAccountActions(
-                    items = state.items,
-                    onActionClick = {
-                        onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
-                    },
-                )
+                if (state.isActive) {
+                    SavingsAccountActions(
+                        items = state.items,
+                        onActionClick = {
+                            onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
+                        },
+                    )
+                }
             }
         }
     }
@@ -264,11 +266,7 @@ internal fun AccountDetailsGrid(
     details: List<LabelValueItem>? = emptyList(),
     isActive: Boolean = false,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-    ) {
+    if (!details.isNullOrEmpty()) {
         if (label != null) {
             Text(
                 text = label,
@@ -276,29 +274,25 @@ internal fun AccountDetailsGrid(
                 color = AppColors.customBlack,
             )
         }
-        if (details != null) {
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                maxItemsInEachRow = 2,
-            ) {
-                details.forEach { item ->
-                    MifosLabelValueCard(
-                        modifier = Modifier
-                            .height(64.dp)
-                            .weight(1f),
-                        label = stringResource(item.label),
-                        value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_savings_status_label) {
-                            AppColors
-                                .customEnable
-                        } else {
-                            MaterialTheme
-                                .colorScheme.onBackground
-                        },
-                    )
-                }
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+            maxItemsInEachRow = 2,
+        ) {
+            details.forEach { item ->
+                MifosLabelValueCard(
+                    modifier = Modifier
+                        .height(64.dp)
+                        .weight(1f),
+                    label = stringResource(item.label),
+                    value = item.value,
+                    color = if (isActive && item.label == Res.string.feature_savings_status_label) {
+                        AppColors.customEnable
+                    } else {
+                        MaterialTheme.colorScheme.onBackground
+                    },
+                )
             }
         }
     }

@@ -330,6 +330,15 @@ object MifosTypography {
             fontWeight = FontWeight(500),
         )
 
+    val labelSmallEmphasized: TextStyle
+        @Composable get() = TextStyle(
+            fontSize = 11.sp,
+            lineHeight = 16.sp,
+            fontFamily = fontFamily(),
+            letterSpacing = 0.5.sp,
+            fontWeight = FontWeight(600),
+        )
+
     // verified
     val bodyLarge: TextStyle
         @Composable get() = TextStyle(
