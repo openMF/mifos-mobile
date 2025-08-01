@@ -155,7 +155,7 @@ private fun QrCodeDisplayContent(
         }
 
         Text(
-            text = stringResource(Res.string.generated_on, date),
+            text = stringResource(Res.string.generated_on) + date,
             style = MifosTypography.bodyMediumEmphasized,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.BottomCenter),
