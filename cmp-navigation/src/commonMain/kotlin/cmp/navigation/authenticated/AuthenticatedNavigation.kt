@@ -19,6 +19,7 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
@@ -62,7 +63,6 @@ import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
-import org.mifos.mobile.feature.update.password.navigation.updatePasswordNavGraph
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -179,7 +179,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
         oldSavingsNavGraph(
             navController = navController,
             viewQrCode = {},
-            viewCharges = {_, _ -> },
+            viewCharges = { _, _ -> },
             reviewTransfer = { transferPayload, transferType, transferDestination ->
                 navController.navigateToTransferProcessScreen(
                     transferPayload,
