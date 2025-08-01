@@ -33,9 +33,9 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 /**
- * ViewModel for managing the state and logic of the Savings Account Details screen.
+ * ViewModel for managing the state and logic of the Loan Account Details screen.
  *
- * @param loanAccountRepositoryImp Repository for fetching savings account data.
+ * @param loanAccountRepositoryImp Repository for fetching loan account data.
  * @param savedStateHandle Used to retrieve route arguments such as accountId.
  */
 internal class LoanAccountDetailsViewModel(
@@ -53,13 +53,13 @@ internal class LoanAccountDetailsViewModel(
 ) {
 
     init {
-        // Automatically fetch savings account info on ViewModel creation
+        // Automatically fetch loan account info on ViewModel creation
         viewModelScope.launch {
             loanAccountRepositoryImp.getLoanWithAssociations(
                 Constants.TRANSACTIONS,
                 state.accountId,
             ).collect { result ->
-                sendAction(LoanAccountDetailsAction.Internal.SavingsResultReceived(result))
+                sendAction(LoanAccountDetailsAction.Internal.LoanResultReceived(result))
             }
         }
     }
@@ -72,14 +72,10 @@ internal class LoanAccountDetailsViewModel(
             LoanAccountDetailsAction.OnNavigateBack -> sendEvent(LoanAccountDetailsEvent.NavigateBack)
 
             is LoanAccountDetailsAction.OnNavigateToAction ->
-                sendEvent(
-                    LoanAccountDetailsEvent.NavigateToAction(
-                        action.route,
-                    ),
-                )
+                sendEvent(LoanAccountDetailsEvent.NavigateToAction(action.route))
 
-            is LoanAccountDetailsAction.Internal.SavingsResultReceived ->
-                handleSavingsAccountResult(action.dataState)
+            is LoanAccountDetailsAction.Internal.LoanResultReceived ->
+                handleLoanAccountResult(action.dataState)
 
             LoanAccountDetailsAction.DismissDialog -> handleDismissDialog()
         }
@@ -93,9 +89,9 @@ internal class LoanAccountDetailsViewModel(
     }
 
     /**
-     * Processes the savings account result from the repository.
+     * Processes the loan account result from the repository.
      */
-    private fun handleSavingsAccountResult(dataState: DataState<LoanWithAssociations?>) {
+    private fun handleLoanAccountResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
                 mutableStateFlow.update {
@@ -115,10 +111,10 @@ internal class LoanAccountDetailsViewModel(
         }
     }
 
+    /**
+     * Extracts relevant loan account details and updates the UI state.
+     */
     private fun extractDetails(loan: LoanWithAssociations?) {
-//        val isActive = loan.status?.value == LoanStatus.ACTIVE.status
-//        val isUpdate = loan.status?.value == LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status
-
         val displayItems = listOf(
             LabelValueItem(Res.string.feature_loan_account_number_label, loan?.accountNo ?: "N/A"),
             LabelValueItem(
@@ -129,15 +125,12 @@ internal class LoanAccountDetailsViewModel(
             ),
             LabelValueItem(
                 Res.string.feature_loan_product_type_label,
-                loan?.loanProductName
-                    ?: "N/A",
+                loan?.loanProductName ?: "N/A",
             ),
             LabelValueItem(
                 Res.string.feature_loan_currency_label,
-                loan?.currency?.displayLabel
-                    ?: "N/A",
+                loan?.currency?.displayLabel ?: "N/A",
             ),
-
         )
 
         val transactions = loan?.transactions?.firstOrNull()?.let { txn ->
@@ -169,15 +162,15 @@ internal class LoanAccountDetailsViewModel(
 }
 
 /**
- * UI State for the Savings Account Details screen.
+ * UI State for the Loan Account Details screen.
  *
- * @property accountId Unique ID for the savings account.
+ * @property accountId Unique ID for the loan account.
  * @property displayItems List of account metadata to be displayed.
  * @property transactionList List of most recent transaction details.
- * @property isActive True if the account is active.
- * @property items List of quick action items (Deposit, Transfer, etc.)
- * @property isUpdatable user can update only when status is submit and pending approval
- * @property dialogState State representing dialogs like error, loading, etc.
+ * @property isActive True if the loan is active.
+ * @property items List of quick action items (e.g., Repay, Foreclose).
+ * @property isUpdatable Whether the loan is editable (e.g., in a pending state).
+ * @property dialogState State representing UI dialogs like loading or error.
  */
 @Immutable
 internal data class LoanAccountDetailsState(
@@ -191,9 +184,7 @@ internal data class LoanAccountDetailsState(
     val transactionList: List<LabelValueItem>? = emptyList(),
     val isActive: Boolean = false,
     val items: ImmutableList<LoanActionItems>,
-
     val isUpdatable: Boolean = false,
-
     val dialogState: DialogState?,
 ) {
     /**
@@ -209,13 +200,13 @@ internal data class LoanAccountDetailsState(
 }
 
 /**
- * One-time navigation or effect events for the SavingsAccountDetails screen.
+ * One-time navigation or effect events for the Loan Account Details screen.
  */
 sealed interface LoanAccountDetailsEvent {
     /** Trigger navigation back. */
     data object NavigateBack : LoanAccountDetailsEvent
 
-    /** Trigger Event to navigate to respective screen. */
+    /** Trigger navigation to a specific loan action screen. */
     data class NavigateToAction(val route: String) : LoanAccountDetailsEvent
 }
 
@@ -226,7 +217,7 @@ sealed interface LoanAccountDetailsAction {
     /** User tapped back. */
     data object OnNavigateBack : LoanAccountDetailsAction
 
-    /** User tapped on Action. */
+    /** User tapped on a quick action (e.g., Repay). */
     data class OnNavigateToAction(val route: String) : LoanAccountDetailsAction
 
     /** User dismissed a dialog. */
@@ -236,7 +227,7 @@ sealed interface LoanAccountDetailsAction {
      * Internal-only actions such as results from repository calls.
      */
     sealed interface Internal : LoanAccountDetailsAction {
-        /** Result of the savings account data fetch. */
-        data class SavingsResultReceived(val dataState: DataState<LoanWithAssociations?>) : Internal
+        /** Result of the loan account data fetch. */
+        data class LoanResultReceived(val dataState: DataState<LoanWithAssociations?>) : Internal
     }
 }

@@ -338,12 +338,14 @@ internal fun SavingsAccountDialogs(
     onAction: (SavingsAccountDetailsAction) -> Unit,
 ) {
     when (dialogState) {
-        is SavingsAccountDetailsState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
-        )
+        is SavingsAccountDetailsState.DialogState.Error -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    message = dialogState.message,
+                ),
+                onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
+            )
+        }
 
         is SavingsAccountDetailsState.DialogState.Loading -> {
             MifosProgressIndicator()

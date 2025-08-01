@@ -44,8 +44,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -55,6 +53,7 @@ import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import kotlin.collections.orEmpty
@@ -116,12 +115,13 @@ internal fun LoanAccountDialog(
     onAction: (LoanAccountsAction) -> Unit,
 ) {
     when (dialogState) {
-        is LoanAccountsState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
+        is LoanAccountsState.DialogState.Error -> {
+            MifosErrorComponent(
                 message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(LoanAccountsAction.OnDismissDialog) },
-        )
+                onRetry = { onAction(LoanAccountsAction.OnRetry(emptyList())) },
+                isRetryEnabled = true,
+            )
+        }
         is LoanAccountsState.DialogState.Loading -> MifosProgressIndicator()
 
         null -> Unit
@@ -139,7 +139,7 @@ internal fun LoanAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        if (!state.isEmpty && state.dialogState == null) {
+        if (state.dialogState == null) {
             Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
             MifosDashboardCard(

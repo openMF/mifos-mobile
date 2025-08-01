@@ -62,6 +62,10 @@ class LoanAccountsViewmodel(
                 loadAccounts(action.filters)
             }
 
+            is LoanAccountsAction.OnRetry -> {
+                loadAccounts(action.filters)
+            }
+
             is LoanAccountsAction.OnAccountClicked ->
                 sendEvent(LoanAccountsEvent.AccountClicked(action.accountId, action.accountType))
 
@@ -294,6 +298,10 @@ sealed interface LoanAccountsAction {
 
     /** Toggle visibility of loan amount */
     data object ToggleAmountVisible : LoanAccountsAction
+
+    data class OnRetry(
+        val filters: List<StringResource?>,
+    ) : LoanAccountsAction
 
     /** Load loan accounts with applied filters */
     data class LoadAccounts(
