@@ -14,6 +14,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings_account.generated.resources.Res
@@ -30,8 +33,12 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
@@ -44,6 +51,7 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 internal class SavingsAccountDetailsViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
+    userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : BaseViewModel<SavingsAccountDetailsState, SavingsAccountDetailsEvent, SavingsAccountDetailsAction>(
     initialState = run {
         val accountId = savedStateHandle.toRoute<SavingsAccountDetailsRoute>().accountId
@@ -54,6 +62,13 @@ internal class SavingsAccountDetailsViewModel(
         )
     },
 ) {
+
+    private val userDetailsState: StateFlow<UserData?> = userPreferencesRepositoryImpl.userInfo
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null,
+        )
 
     init {
         // Automatically fetch savings account info on ViewModel creation
@@ -125,6 +140,18 @@ internal class SavingsAccountDetailsViewModel(
                 extractDetails(savings)
             }
         }
+    }
+
+     fun getQrString(): String {
+        val userDetails = userDetailsState.value
+         return if(userDetails!=null){
+            return getAccountDetailsInString(
+                state.accountId.toInt(),
+                userDetails.officeName,
+                AccountType.SAVINGS.name,
+            )
+        }
+        else ""
     }
 
     private fun extractDetails(savings: SavingsWithAssociations) {

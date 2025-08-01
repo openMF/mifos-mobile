@@ -69,6 +69,7 @@ internal fun SavingsAccountDetailsScreen(
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
+    viewQrCode: (String) -> Unit,
     viewModel: SavingsAccountDetailsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -84,6 +85,9 @@ internal fun SavingsAccountDetailsScreen(
                     }
                     event.route == Constants.TRANSACTIONS -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
+                    }
+                    event.route == Constants.QR_CODE ->{
+                        viewQrCode(viewModel.getQrString())
                     }
                 }
             }

@@ -43,6 +43,7 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
@@ -120,6 +121,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
+            viewQrCode = { navController.navigateToQrDisplayScreen(it) },
         )
 
         passcodeDestination(
