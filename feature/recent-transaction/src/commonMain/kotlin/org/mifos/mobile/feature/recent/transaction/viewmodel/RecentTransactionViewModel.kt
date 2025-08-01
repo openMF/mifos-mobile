@@ -75,69 +75,6 @@ class RecentTransactionViewModel(
         offset: Int?,
         limit: Int?,
     ) {
-//        viewModelScope.launch {
-//            recentTransactionRepositoryImpl.recentTransactions(
-//                clientId,
-//                offset,
-//                limit,
-//            ).catch {
-//                _recentTransactionUiState.value = RecentTransactionState.Error
-//            }
-//                .collect { recentTransactions ->
-//                    val recentTransactionsList = recentTransactions.data?.pageItems
-//                    _recentTransactionUiState.value = if (recentTransactionsList.isNullOrEmpty()) {
-//                        RecentTransactionState.Empty
-//                    } else {
-//                        RecentTransactionState.Success(
-//                            transactions = recentTransactionsList,
-//                            canPaginate = recentTransactionsList.isNotEmpty(),
-//                        )
-//                    }
-//                    _isPaginating.value = false
-//                    _isRefreshing.value = false
-//                }
-//        }
-//        viewModelScope.launch {
-//            recentTransactionRepositoryImpl.recentTransactions(clientId, offset, limit)
-//                .onStart {
-//                    if (!_isRefreshing.value && !_isPaginating.value) {
-//                        _recentTransactionUiState.value = Loading
-//                    }
-//                }
-//                .catch {
-//                    _recentTransactionUiState.value = RecentTransactionState.Error
-//                }
-//                .onCompletion {
-//                    _isPaginating.value = false
-//                    _isRefreshing.value = false
-//                }
-//                .collect { recentTransactions ->
-//                    val recentTransactionsList = recentTransactions.data?.pageItems.orEmpty()
-//
-//                    // Avoid flicker: Don't emit Empty if paginating or refreshing
-////                    val isPaginatingOrRefreshing = _isPaginating.value || _isRefreshing.value
-//                    val isInitialLoad = !_isPaginating.value && !_isRefreshing.value
-//
-//                    _recentTransactionUiState.value = when {
-//                        recentTransactionsList.isNotEmpty() -> {
-//                            RecentTransactionState.Success(
-//                                transactions = recentTransactionsList,
-//                                canPaginate = recentTransactionsList.size >= (limit ?: 50),
-//                            )
-//                        }
-//
-//                        isInitialLoad -> {
-//                            RecentTransactionState.Empty
-//                        }
-//
-//                        else -> {
-//                            // For pagination/refreshing, retain previous state
-//                            _recentTransactionUiState.value
-//                        }
-//                    }
-//                }
-//        }
-
         viewModelScope.launch {
             recentTransactionRepositoryImpl.recentTransactions(clientId, offset, limit)
                 .onStart {
@@ -155,9 +92,7 @@ class RecentTransactionViewModel(
                 .collect { recentTransactions ->
                     val items = recentTransactions.data?.pageItems
 
-                    // Don’t emit Empty until we’re sure there’s nothing
                     if (items == null) {
-                        // ignore null responses, wait for data
                         return@collect
                     }
 
