@@ -56,7 +56,7 @@ fun NavGraphBuilder.loanNavGraph(
         )
 
         loanAccountSummaryDestination(
-            navigateBack = navController::popBackStack
+            navigateBack = navController::popBackStack,
         )
     }
 }

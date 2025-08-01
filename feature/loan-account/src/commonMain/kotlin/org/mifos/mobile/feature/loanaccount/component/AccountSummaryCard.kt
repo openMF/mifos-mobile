@@ -1,16 +1,19 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.loanaccount.component
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +32,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.loan_account.generated.resources.Res
@@ -52,11 +54,11 @@ import kotlin.collections.component2
 
 @Composable
 fun AccountSummaryCard(
-    title: String = "Account Summary",
     keyValuePairs: Map<StringResource, String?>,
     modifier: Modifier = Modifier,
+    title: String = "",
 ) {
-    var isExpanded by rememberSaveable { mutableStateOf(true) }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     MifosCustomCard(
         variant = CardVariant.OUTLINED,
@@ -73,13 +75,13 @@ fun AccountSummaryCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { isExpanded = !isExpanded }
-                .padding(DesignToken.padding.large)
+                .padding(DesignToken.padding.large),
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = title,
@@ -97,7 +99,7 @@ fun AccountSummaryCard(
             AnimatedVisibility(
                 visible = isExpanded,
                 enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(),
-                exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
+                exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut(),
             ) {
                 Column(modifier = Modifier.padding(top = DesignToken.padding.medium)) {
                     keyValuePairs.forEach { (key, value) ->
@@ -116,8 +118,11 @@ fun AccountSummaryCard(
                                 text = value ?: "",
                                 style = MifosTypography.labelMedium,
                                 textAlign = TextAlign.Right,
-                                color = if(key == Res.string.feature_loan_account_status_label)
-                                     AppColors.customEnable else MaterialTheme.colorScheme.secondary,
+                                color = if (key == Res.string.feature_loan_account_status_label) {
+                                    AppColors.customEnable
+                                } else {
+                                    MaterialTheme.colorScheme.secondary
+                                },
                             )
                         }
                     }

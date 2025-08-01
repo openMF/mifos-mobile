@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.loanaccount.loanAccountSummary
 
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_action_loan_summary
-import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_top_bar_title
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_details_title
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_charges_title
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_installment_details_title
@@ -52,15 +60,15 @@ internal fun LoanAccountSummaryScreen(
         }
     }
 
-    LoanAccountSummaryDialog(
-        dialogState = state.dialogState,
+    LoanAccountSummaryContent(
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
     )
 
-    LoanAccountSummaryContent(
-        state = state,
+    LoanAccountSummaryDialog(
+        dialogState = state.dialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -111,51 +119,49 @@ internal fun LoanAccountSummaryContent(
                     .fillMaxSize()
                     .padding(DesignToken.padding.large)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased)
+                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
             ) {
-
                 Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_account_details_title),
                     keyValuePairs = state.accountDetails.orEmpty()
-                        .associate { it.label to it.value }
+                        .associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_payoff_details_title),
-                    keyValuePairs = state.payOffDetails.orEmpty().associate { it.label to it.value }
+                    keyValuePairs = state.payOffDetails.orEmpty().associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_charges_title),
-                    keyValuePairs = state.chargeDetails.orEmpty().associate { it.label to it.value }
+                    keyValuePairs = state.chargeDetails.orEmpty().associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_waivers_title),
                     keyValuePairs = state.waiversDetails.orEmpty()
-                        .associate { it.label to it.value }
+                        .associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_paid_off_details_title),
                     keyValuePairs = state.paidOffDetails.orEmpty()
-                        .associate { it.label to it.value }
+                        .associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_outstanding_details_title),
                     keyValuePairs = state.outStandingDetails.orEmpty()
-                        .associate { it.label to it.value }
+                        .associate { it.label to it.value },
                 )
 
                 AccountSummaryCard(
                     title = stringResource(Res.string.feature_loan_installment_details_title),
                     keyValuePairs = state.installmentDetails.orEmpty()
-                        .associate { it.label to it.value }
+                        .associate { it.label to it.value },
                 )
             }
-
         }
     }
 }
@@ -169,7 +175,7 @@ private fun Loan_Account_Summary_Preview() {
                 dialogState = null,
                 accountId = -1L,
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }

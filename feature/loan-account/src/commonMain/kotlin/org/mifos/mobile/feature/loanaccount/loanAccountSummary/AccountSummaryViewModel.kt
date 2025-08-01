@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.loanaccount.loanAccountSummary
 
 import androidx.compose.runtime.Immutable
@@ -14,7 +23,6 @@ import mifos_mobile.feature.loan_account.generated.resources.feature_loan_curren
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_expected_payoff_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_fees_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_fees_waived_label
-import mifos_mobile.feature.loan_account.generated.resources.feature_loan_interest_outstanding_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_interest_paid_off_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_interest_payoff_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_interest_rate_label
@@ -25,7 +33,6 @@ import mifos_mobile.feature.loan_account.generated.resources.feature_loan_next_p
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_penalties_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_penalty_waived_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_principal_label
-import mifos_mobile.feature.loan_account.generated.resources.feature_loan_principal_outstanding_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_principal_paid_off_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_regular_payment_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_scheme_label
@@ -39,7 +46,6 @@ import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.LabelValueItem
-
 
 /**
  * ViewModel for managing the state and logic of the Loan Account Details screen.
@@ -85,7 +91,6 @@ internal class LoanAccountSummaryViewModel(
 
             LoanAccountSummaryAction.Retry -> fetchLoanSummary()
 
-
             is LoanAccountSummaryAction.Internal.LoanSummaryReceived ->
                 handleLoanAccountSummaryResult(action.dataState)
 
@@ -127,7 +132,6 @@ internal class LoanAccountSummaryViewModel(
      * Extracts relevant loan account details and updates the UI state.
      */
     private fun extractDetails(loan: LoanWithAssociations?) {
-
         val currencyCode = loan?.currency?.code
         val maxDigits = loan?.currency?.decimalPlaces?.toInt()
 
@@ -147,7 +151,7 @@ internal class LoanAccountSummaryViewModel(
                 CurrencyFormatter.format(
                     loan?.summary?.totalExpectedRepayment,
                     currencyCode,
-                    maxDigits
+                    maxDigits,
                 ),
             ),
             LabelValueItem(
@@ -355,7 +359,6 @@ internal data class LoanAccountSummaryState(
 sealed interface LoanAccountSummaryEvent {
     /** Trigger navigation back. */
     data object NavigateBack : LoanAccountSummaryEvent
-
 }
 
 /**
