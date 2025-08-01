@@ -53,12 +53,14 @@ internal class ClientChargeViewModel(
 ) : BaseViewModel<ClientChargeState, ClientChargeEvent, ClientChargeAction>(
     initialState = run {
         val chargeRoute = savedStateHandle.toRoute<ClientChargesRoute>()
-        val topBarId = when (chargeRoute.chargeType) {
-            ChargeType.CLIENT.type -> Res.string.client_charges
-            ChargeType.SAVINGS.type -> Res.string.savings_charges
-            ChargeType.LOAN.type -> Res.string.loan_charges
-            else -> Res.string.client_charges
+        val chargeType = ChargeType.valueOf(chargeRoute.chargeType.uppercase())
+
+        val topBarId = when (chargeType) {
+            ChargeType.CLIENT -> Res.string.client_charges
+            ChargeType.SAVINGS -> Res.string.savings_charges
+            ChargeType.LOAN -> Res.string.loan_charges
         }
+
         ClientChargeState(
             dialogState = ClientChargeState.DialogState.Loading,
             chargeType = ChargeType.valueOf(chargeRoute.chargeType),

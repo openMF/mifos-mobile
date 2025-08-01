@@ -57,6 +57,10 @@ internal class SavingsAccountDetailsViewModel(
 
     init {
         // Automatically fetch savings account info on ViewModel creation
+        fetchSavingAccount()
+    }
+
+    private fun fetchSavingAccount() {
         viewModelScope.launch {
             savingsAccountRepositoryImp.getSavingsWithAssociations(
                 state.accountId,
@@ -73,6 +77,8 @@ internal class SavingsAccountDetailsViewModel(
     override fun handleAction(action: SavingsAccountDetailsAction) {
         when (action) {
             SavingsAccountDetailsAction.OnNavigateBack -> sendEvent(SavingsAccountDetailsEvent.NavigateBack)
+
+            SavingsAccountDetailsAction.OnRetry -> fetchSavingAccount()
 
             is SavingsAccountDetailsAction.OnNavigateToAction ->
                 sendEvent(
@@ -110,7 +116,12 @@ internal class SavingsAccountDetailsViewModel(
         when (dataState) {
             is DataState.Error -> {
                 mutableStateFlow.update {
-                    it.copy(dialogState = SavingsAccountDetailsState.DialogState.Error(dataState.message))
+//                    it.copy(dialogState = SavingsAccountDetailsState.DialogState.Error(dataState.message))
+                    it.copy(
+                        dialogState = SavingsAccountDetailsState.DialogState.Error(
+                            "Something Went Wrong",
+                        ),
+                    )
                 }
             }
 
@@ -254,6 +265,9 @@ sealed interface SavingsAccountDetailsAction {
 
     /** User tapped on Action. */
     data class OnNavigateToAction(val route: String) : SavingsAccountDetailsAction
+
+    /** When user retry */
+    data object OnRetry : SavingsAccountDetailsAction
 
     /** User dismissed a dialog. */
     data object DismissDialog : SavingsAccountDetailsAction
