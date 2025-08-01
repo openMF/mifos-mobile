@@ -33,7 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import mifos_mobile.feature.qr.generated.resources.Res
+import mifos_mobile.feature.qr.generated.resources.generated_on
+import mifos_mobile.feature.qr.generated.resources.qr_alignment_instruction
 import mifos_mobile.feature.qr.generated.resources.qr_code
+import mifos_mobile.feature.qr.generated.resources.qr_scan_instruction
+import mifos_mobile.feature.qr.generated.resources.scan_your_qr
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -118,7 +122,7 @@ private fun QrCodeDisplayContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Scan your QR",
+                text = stringResource(Res.string.scan_your_qr),
                 style = MifosTypography.titleLargeEmphasized,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -126,7 +130,7 @@ private fun QrCodeDisplayContent(
             Spacer(Modifier.height(DesignToken.padding.largeIncreased))
 
             Text(
-                text = "Import the account details in your app by scanning this QR code.",
+                text = stringResource(Res.string.qr_scan_instruction),
                 style = MifosTypography.bodyMediumEmphasized,
                 textAlign = TextAlign.Center,
             )
@@ -143,14 +147,14 @@ private fun QrCodeDisplayContent(
             Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
 
             Text(
-                text = "Please, align QR Code within the frame to make scanning easily detectable.",
+                text = stringResource(Res.string.qr_alignment_instruction),
                 style = MifosTypography.bodyMediumEmphasized,
                 textAlign = TextAlign.Center,
             )
         }
 
         Text(
-            text = "Generated on : ${DateHelper.formattedShortDate}",
+            text = stringResource(Res.string.generated_on, DateHelper.formattedShortDate),
             style = MifosTypography.bodyMediumEmphasized,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.BottomCenter),
