@@ -35,5 +35,5 @@
     <string name="scan_your_qr">Scan your QR</string>
     <string name="qr_scan_instruction">Import the account details in your app by scanning this QR code.</string>
     <string name="qr_alignment_instruction">Please, align QR Code within the frame to make scanning easily detectable.</string>
-    <string name="generated_on">Generated on : %s</string>
+    <string name="generated_on">Generated on : </string>
 </resources>

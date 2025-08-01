@@ -35,8 +35,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
+import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
-import org.mifos.mobile.feature.loanaccount.savingsAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
 import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
@@ -131,7 +131,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             navigateToMakePaymentScreen = {},
             navigateToRepaymentScheduleScreen = {},
-            navigateToLoanSummaryScreen = {},
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToLoanAccountTransactionScreen = {

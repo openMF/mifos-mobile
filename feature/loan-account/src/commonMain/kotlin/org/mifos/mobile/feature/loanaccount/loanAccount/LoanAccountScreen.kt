@@ -177,13 +177,15 @@ internal fun LoanAccountContent(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {
-                    Icon(
-                        modifier = Modifier
-                            .clickable {}
-                            .size(20.dp),
-                        imageVector = MifosIcons.SearchNew,
-                        contentDescription = null,
-                    )
+                    // TODO : commenting because it has no
+                    // functionality now which is not best experience for user
+//                    Icon(
+//                        modifier = Modifier
+//                            .clickable {}
+//                            .size(20.dp),
+//                        imageVector = MifosIcons.SearchNew,
+//                        contentDescription = null,
+//                    )
                     Icon(
                         modifier = Modifier
                             .clickable { filtersClicked() }

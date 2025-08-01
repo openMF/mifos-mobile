@@ -18,7 +18,9 @@ import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountRoute
 import org.mifos.mobile.feature.loanaccount.loanAccount.loanAccountDestination
-import org.mifos.mobile.feature.loanaccount.savingsAccountDetails.loanAccountDetailsDestination
+import org.mifos.mobile.feature.loanaccount.loanAccountDetails.loanAccountDetailsDestination
+import org.mifos.mobile.feature.loanaccount.loanAccountSummary.loanAccountSummaryDestination
+import org.mifos.mobile.feature.loanaccount.loanAccountSummary.navigateToLoanAccountSummaryScreen
 
 @Serializable
 data object LoanGraphRoute
@@ -30,7 +32,6 @@ fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
     navigateToMakePaymentScreen: () -> Unit,
     navigateToRepaymentScheduleScreen: (Long) -> Unit,
-    navigateToLoanSummaryScreen: (Long) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToLoanAccountTransactionScreen: (Long) -> Unit,
@@ -46,12 +47,16 @@ fun NavGraphBuilder.loanNavGraph(
             navigateBack = navController::popBackStack,
             navigateToClientChargeScreen = navigateToClientChargeScreen,
 //            TODO design repayment schedule and loan summary in this module and navigate using
-//             navController.navigateToRepaymentScheduleScreen() and navController.navigateToLoanSummaryScreen()
+//             navController.navigateToRepaymentScheduleScreen()
             navigateToRepaymentScheduleScreen = navigateToRepaymentScheduleScreen,
-            navigateToLoanSummaryScreen = navigateToLoanSummaryScreen,
+            navigateToLoanSummaryScreen = navController::navigateToLoanAccountSummaryScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToMakePaymentScreen = navigateToMakePaymentScreen,
             navigateToLoanAccountTransactionScreen = navigateToLoanAccountTransactionScreen,
+        )
+
+        loanAccountSummaryDestination(
+            navigateBack = navController::popBackStack,
         )
     }
 }

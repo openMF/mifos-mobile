@@ -52,4 +52,51 @@
     <string name="feature_loan_next_installment_label">Next Installment</string>
     <string name="feature_loan_installment_amount_label">Installment Amount</string>
     <string name="feature_loan_due_date_label">Due Date</string>
+
+    <!-- Account Summary -->
+
+    <string name="feature_loan_account_details_title">Account Details</string>
+    <string name="feature_loan_payoff_details_title">Pay-off Details</string>
+    <string name="feature_loan_charges_title">Charges</string>
+    <string name="feature_loan_waivers_title">Waivers</string>
+    <string name="feature_loan_paid_off_details_title">Paid-off Details</string>
+    <string name="feature_loan_outstanding_details_title">Outstanding Details</string>
+    <string name="feature_loan_installment_details_title">Installment Details</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Loan Type</string>
+    <string name="feature_loan_scheme_label">Loan Scheme</string>
+    <string name="feature_loan_account_status_label">Account Status</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Expected Payoff</string>
+    <string name="feature_loan_interest_payoff_label">Interest Payoff</string>
+    <string name="feature_loan_principal_label">Debt Principal</string>
+    <string name="feature_loan_interest_rate_label">Rate</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Fees</string>
+    <string name="feature_loan_penalties_label">Penalties</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Interest Waived</string>
+    <string name="feature_loan_penalty_waived_label">Penalties Waived</string>
+    <string name="feature_loan_fees_waived_label">Fees Waived</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Interest Paid-off</string>
+    <string name="feature_loan_principal_paid_off_label">Principal Paid-off</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Interest Outstanding</string>
+    <string name="feature_loan_principal_outstanding_label">Principal Outstanding</string>
+    <string name="feature_loan_total_outstanding_label">Total Outstanding</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Regular Payment</string>
+    <string name="feature_loan_next_payment_label">Next Payment</string>
+    <string name="feature_loan_months_left_label">Months Left</string>
+    <string name="feature_loan_auto_debit_label">Auto Debit</string>
+    <string name="feature_loan_linked_account_label">Linked Account</string>
+
 </resources>
