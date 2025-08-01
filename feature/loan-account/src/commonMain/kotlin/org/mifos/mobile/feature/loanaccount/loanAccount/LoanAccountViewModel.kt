@@ -62,6 +62,10 @@ class LoanAccountsViewmodel(
                 loadAccounts(action.filters)
             }
 
+            is LoanAccountsAction.OnRetry -> {
+                loadAccounts(action.filters)
+            }
+
             is LoanAccountsAction.OnAccountClicked ->
                 sendEvent(LoanAccountsEvent.AccountClicked(action.accountId, action.accountType))
 
@@ -183,6 +187,7 @@ class LoanAccountsViewmodel(
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
+                        isEmpty = filtered.isEmpty(),
                         loanAccounts = filtered,
                         originalAccounts = loanAccounts,
                         currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
@@ -244,6 +249,7 @@ class LoanAccountsViewmodel(
 data class LoanAccountsState(
     val loanAccounts: List<LoanAccount>?,
     val originalAccounts: List<LoanAccount>? = null,
+    val isEmpty: Boolean = false,
 
     /** Number of filtered accounts */
     val items: Int? = 0,
@@ -292,6 +298,10 @@ sealed interface LoanAccountsAction {
 
     /** Toggle visibility of loan amount */
     data object ToggleAmountVisible : LoanAccountsAction
+
+    data class OnRetry(
+        val filters: List<StringResource?>,
+    ) : LoanAccountsAction
 
     /** Load loan accounts with applied filters */
     data class LoadAccounts(
