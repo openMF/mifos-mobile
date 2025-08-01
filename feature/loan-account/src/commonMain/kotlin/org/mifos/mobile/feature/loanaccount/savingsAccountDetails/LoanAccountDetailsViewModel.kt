@@ -53,7 +53,11 @@ internal class LoanAccountDetailsViewModel(
 ) {
 
     init {
-        // Automatically fetch loan account info on ViewModel creation
+        // Automatically fetch savings account info on ViewModel creation
+        fetchLoanAccount()
+    }
+
+    private fun fetchLoanAccount() {
         viewModelScope.launch {
             loanAccountRepositoryImp.getLoanWithAssociations(
                 Constants.TRANSACTIONS,
@@ -70,6 +74,8 @@ internal class LoanAccountDetailsViewModel(
     override fun handleAction(action: LoanAccountDetailsAction) {
         when (action) {
             LoanAccountDetailsAction.OnNavigateBack -> sendEvent(LoanAccountDetailsEvent.NavigateBack)
+
+            LoanAccountDetailsAction.OnRetry -> fetchLoanAccount()
 
             is LoanAccountDetailsAction.OnNavigateToAction ->
                 sendEvent(LoanAccountDetailsEvent.NavigateToAction(action.route))
@@ -222,6 +228,9 @@ sealed interface LoanAccountDetailsAction {
 
     /** User dismissed a dialog. */
     data object DismissDialog : LoanAccountDetailsAction
+
+    /** When user retry */
+    data object OnRetry : LoanAccountDetailsAction
 
     /**
      * Internal-only actions such as results from repository calls.

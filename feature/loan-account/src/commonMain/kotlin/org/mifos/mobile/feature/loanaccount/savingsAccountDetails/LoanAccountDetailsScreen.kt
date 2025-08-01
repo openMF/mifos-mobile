@@ -39,8 +39,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -48,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -245,12 +244,13 @@ internal fun LoanAccountDialogs(
     onAction: (LoanAccountDetailsAction) -> Unit,
 ) {
     when (dialogState) {
-        is LoanAccountDetailsState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
+        is LoanAccountDetailsState.DialogState.Error -> {
+            MifosErrorComponent(
                 message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(LoanAccountDetailsAction.DismissDialog) },
-        )
+                onRetry = { onAction(LoanAccountDetailsAction.OnRetry) },
+                isRetryEnabled = true,
+            )
+        }
 
         is LoanAccountDetailsState.DialogState.Loading -> {
             MifosProgressIndicator()
