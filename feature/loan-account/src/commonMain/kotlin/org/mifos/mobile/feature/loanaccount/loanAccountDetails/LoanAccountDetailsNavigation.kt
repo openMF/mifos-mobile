@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
@@ -27,7 +28,7 @@ fun NavController.navigateToLoanAccountDetailsScreen(accountId: Long, navOptions
 
 fun NavGraphBuilder.loanAccountDetailsDestination(
     navigateBack: () -> Unit,
-    navigateToMakePaymentScreen: () -> Unit,
+    navigateToMakePaymentScreen: (args: TransferArgs) -> Unit,
     navigateToRepaymentScheduleScreen: (Long) -> Unit,
     navigateToLoanSummaryScreen: (Long) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
