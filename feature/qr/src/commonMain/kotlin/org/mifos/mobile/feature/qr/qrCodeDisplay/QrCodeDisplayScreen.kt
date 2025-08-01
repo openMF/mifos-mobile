@@ -15,10 +15,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,13 +37,17 @@ import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import io.github.alexzhirkevich.qrose.toByteArray
 import mifos_mobile.feature.qr.generated.resources.Res
 import mifos_mobile.feature.qr.generated.resources.choose_option
+import mifos_mobile.feature.qr.generated.resources.qr_code
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -55,13 +62,19 @@ internal fun QrCodeDisplayScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             QrCodeDisplayEvent.Navigate -> navigateBack.invoke()
-            is QrCodeDisplayEvent.ShowToast -> { }
         }
     }
 
     QrCodeDisplayScreen(
         state = state,
         modifier = modifier,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+
+    QrCodeDialog(
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -74,7 +87,7 @@ private fun QrCodeDialog(
     onAction: (QrCodeDisplayAction) -> Unit,
 ) {
     when (state.dialogState) {
-        QrCodeDisplayState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        QrCodeDisplayState.DialogState.Loading -> MifosProgressIndicator()
         is QrCodeDisplayState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -99,36 +112,19 @@ private fun QrCodeDisplayScreen(
         options = QrCodeDisplayState.QrViewState.Content(data = state.qrArgs ?: "").options,
     )
 
-    val bytes: ByteArray = remember(painter) {
-        painter.toByteArray(1024, 1024, ImageFormat.PNG)
-    }
-    val option = stringResource(Res.string.choose_option)
-    MifosScaffold(
+    MifosElevatedScaffold(
         modifier = modifier,
-//        topBar = {
-//            MifosTopAppBar(
-//                backPress = { onAction(QrCodeDisplayAction.OnNavigate) },
-//                topBarTitle = stringResource(Res.string.qr_code),
-//                actions = {
-//                    IconButton(
-//                        onClick = {
-//                            onAction(
-//                                QrCodeDisplayAction.ShareQrCode(
-//                                    bytes,
-//                                    option,
-//                                ),
-//                            )
-//                        },
-//                        content = {
-//                            Icon(
-//                                imageVector = MifosIcons.Share,
-//                                contentDescription = null,
-//                            )
-//                        },
-//                    )
-//                },
-//            )
-//        },
+        topBarTitle = stringResource(Res.string.qr_code),
+        onNavigateBack ={ onAction(QrCodeDisplayAction.OnNavigate) },
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
         content = {
             Box(
                 modifier = Modifier
@@ -137,10 +133,6 @@ private fun QrCodeDisplayScreen(
                 QrCodeDisplayContent(painter = painter)
             }
         },
-    )
-    QrCodeDialog(
-        state = state,
-        onAction = onAction,
     )
 }
 

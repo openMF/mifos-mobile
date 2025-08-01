@@ -66,18 +66,15 @@ internal class QrCodeDisplayViewModel(
             )
         }
 
-//        generateQrBitmap()
     }
 
     override fun handleAction(action: QrCodeDisplayAction) {
         when (action) {
             QrCodeDisplayAction.OnNavigate -> sendEvent(QrCodeDisplayEvent.Navigate)
-            QrCodeDisplayAction.DismissDialog -> setDialogState(null)
-            is QrCodeDisplayAction.ShareQrCode -> {
-                viewModelScope.launch {
-                    shareImage(
-                        action.option,
-                        action.qrBitmap,
+            QrCodeDisplayAction.DismissDialog -> {
+                updateState {
+                    it.copy(
+                        dialogState = null
                     )
                 }
             }
@@ -88,9 +85,6 @@ internal class QrCodeDisplayViewModel(
         mutableStateFlow.update(update)
     }
 
-    private fun setDialogState(dialogState: QrCodeDisplayState.DialogState?) {
-        updateState { it.copy(dialogState = dialogState) }
-    }
 }
 
 @Parcelize
@@ -147,14 +141,9 @@ data class QrCodeDisplayState(
 
 sealed interface QrCodeDisplayEvent {
     data object Navigate : QrCodeDisplayEvent
-    data class ShowToast(val message: String) : QrCodeDisplayEvent
 }
 
 sealed interface QrCodeDisplayAction {
     data object OnNavigate : QrCodeDisplayAction
     data object DismissDialog : QrCodeDisplayAction
-    data class ShareQrCode(
-        val qrBitmap: ByteArray,
-        val option: String,
-    ) : QrCodeDisplayAction
 }
