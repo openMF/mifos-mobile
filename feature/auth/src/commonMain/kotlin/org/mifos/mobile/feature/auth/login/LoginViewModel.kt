@@ -114,7 +114,11 @@ class LoginViewModel(
                 val userData = UserData(
                     userId = user.userId,
                     userName = user.username.orEmpty(),
-                    clientId = user.userId,
+                    clientId = if (user.clients.isNotEmpty()) {
+                        user.clients[0]
+                    } else {
+                        user.userId
+                    },
                     isAuthenticated = user.isAuthenticated,
                     base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
                     officeName = user.officeName.orEmpty(),

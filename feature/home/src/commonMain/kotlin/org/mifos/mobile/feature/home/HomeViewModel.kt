@@ -95,14 +95,24 @@ internal class HomeViewModel(
             DataState.Loading -> updateState { it.copy(dialogState = HomeState.DialogState.Loading) }
 
             is DataState.Success -> {
-                if (dataState.data.loanAccounts.isNotEmpty()) {
+                val hasLoans = dataState.data.loanAccounts.isNotEmpty()
+                val hasSavings = dataState.data.savingsAccounts?.isNotEmpty() ?: false
+
+                if (hasLoans) {
                     getLoanAccountDetails(dataState.data.loanAccounts)
+                }
+
+                if (hasSavings) {
                     getSavingAccountDetails(dataState.data.savingsAccounts)
+                }
+
+                if (hasLoans || hasSavings) {
                     updateState {
                         it.copy(
                             clientAccounts = dataState.data,
                             dialogState = null,
-                            currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol,
+                            currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol
+                                ?: dataState.data.savingsAccounts?.firstOrNull()?.currency?.displaySymbol,
                         )
                     }
                 } else {

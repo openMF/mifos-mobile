@@ -89,23 +89,22 @@ internal fun HomeScreen(
                     event.route == Constants.TRANSACTIONS -> navigateToTransactionScreen.invoke()
                     event.route == Constants.HELP -> navigateToFaqScreen.invoke()
                 }
-//                navigateToDestinationScreen(event.route)
             }
 
             is HomeEvent.NavigateToNotification -> navigateToNotificationScreen.invoke()
         }
     }
 
-    HomeScreenDialog(
-        dialogState = state.dialogState,
+    HomeContent(
+        state = state,
+        modifier = modifier,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
     )
 
-    HomeContent(
-        state = state,
-        modifier = modifier,
+    HomeScreenDialog(
+        dialogState = state.dialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -128,10 +127,11 @@ internal fun HomeContent(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
             ) {
-                Image(
-                    imageVector = MifosIcons.SearchNew,
-                    contentDescription = null,
-                )
+                // TODO : once ui/ux team gives this flow uncomment and implement
+//                Image(
+//                    imageVector = MifosIcons.SearchNew,
+//                    contentDescription = null,
+//                )
                 Image(
                     imageVector = MifosIcons.Alert,
                     contentDescription = null,
@@ -142,45 +142,47 @@ internal fun HomeContent(
             }
         },
     ) {
-        Column(
-            modifier = Modifier
-                .padding(DesignToken.padding.large),
-        ) {
-            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+        if (state.dialogState == null) {
+            Column(
+                modifier = Modifier
+                    .padding(DesignToken.padding.large),
+            ) {
+                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
 
-            Text(
-                text = stringResource(Res.string.feature_home_greet, state.username),
-                style = MifosTypography.titleLarge,
-                color = AppColors.customBlack,
-            )
+                Text(
+                    text = stringResource(Res.string.feature_home_greet, state.username),
+                    style = MifosTypography.titleLarge,
+                    color = AppColors.customBlack,
+                )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-            MifosDashboardCard(
-                isLoanApplied = state.isLoanApplied,
-                savingsAccount = Res.string.feature_home_total_available_savings,
-                loanAccount = Res.string.feature_home_total_available_loan,
-                loanAmount = state.loanAmount,
-                savingsAmount = state.savingsAmount,
-                isVisible = state.isAmountVisible,
-                onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
-                currency = state.currency,
-            )
+                MifosDashboardCard(
+                    isLoanApplied = state.isLoanApplied,
+                    savingsAccount = Res.string.feature_home_total_available_savings,
+                    loanAccount = Res.string.feature_home_total_available_loan,
+                    loanAmount = state.loanAmount,
+                    savingsAmount = state.savingsAmount,
+                    isVisible = state.isAmountVisible,
+                    onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
+                    currency = state.currency,
+                )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
+                Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
 
-            Text(
-                text = stringResource(Res.string.feature_home_services),
-                style = MifosTypography.titleMediumEmphasized,
-                color = AppColors.customBlack,
-            )
+                Text(
+                    text = stringResource(Res.string.feature_home_services),
+                    style = MifosTypography.titleMediumEmphasized,
+                    color = AppColors.customBlack,
+                )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-            ServiceBox(
-                items = state.items,
-                onAction = onAction,
-            )
+                ServiceBox(
+                    items = state.items,
+                    onAction = onAction,
+                )
+            }
         }
     }
 }
