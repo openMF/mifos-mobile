@@ -31,16 +31,15 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
 
@@ -145,11 +144,7 @@ private fun ClientChargeDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is ClientChargeState.DialogState.Loading -> {
-            MifosLoadingDialog(
-                visibilityState = LoadingDialogState.Shown,
-            )
-        }
+        is ClientChargeState.DialogState.Loading -> MifosProgressIndicator()
 
         is ClientChargeState.DialogState.Error -> {
             MifosBasicDialog(

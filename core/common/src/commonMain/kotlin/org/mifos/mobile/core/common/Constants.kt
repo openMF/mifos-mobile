@@ -93,6 +93,8 @@ object Constants {
     const val TRANSACTIONS = "transactions"
     const val CHARGES = "charges"
     const val QR_CODE = "qr_code"
+    const val MAKE_PAYMENT = "make_payments"
+    const val LOAN_SUMMARY = "loan_summary"
 
     const val HELP = "help"
 }

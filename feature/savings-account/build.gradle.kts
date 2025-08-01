@@ -30,6 +30,7 @@ kotlin {
             api(projects.core.ui)
             api(projects.core.model)
             api(projects.core.common)
+            implementation(projects.core.qrcode)
         }
     }
 }
