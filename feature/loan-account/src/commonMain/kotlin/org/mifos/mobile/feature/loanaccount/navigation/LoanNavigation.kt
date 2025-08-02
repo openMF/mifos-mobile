@@ -34,8 +34,6 @@ fun NavController.navigateToLoanGraph(navOptions: NavOptions? = null) =
 fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
     navigateToMakePaymentScreen: (args: TransferArgs) -> Unit,
-    navigateToRepaymentScheduleScreen: (Long) -> Unit,
-    navigateToMakePaymentScreen: () -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToLoanAccountTransactionScreen: (Long) -> Unit,

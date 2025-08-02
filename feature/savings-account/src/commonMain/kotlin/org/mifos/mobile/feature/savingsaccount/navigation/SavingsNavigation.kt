@@ -57,9 +57,6 @@ fun NavGraphBuilder.savingsNavGraph(
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToTransferScreen = navigateToTransferScreen,
             navigateToDepositScreen = navigateToDepositScreen,
-            navigateToQrCodeScreen = navigateToQrCodeScreen,
-            navigateToTransferScreen = navigateToTransferScreen,
-            navigateToDepositScreen = navigateToDepositScreen,
         )
 
         savingsAccountUpdateDestination(
