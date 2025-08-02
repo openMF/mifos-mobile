@@ -19,6 +19,7 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
@@ -34,7 +35,6 @@ import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
-import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
@@ -50,12 +50,17 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
+import org.mifos.mobile.feature.savings.navigation.oldSavingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
+import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
 import org.mifos.mobile.feature.transfer.process.make_transfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.make_transfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -123,6 +128,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
+            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
@@ -131,13 +138,18 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         loanNavGraph(
             navController = navController,
-            navigateToMakePaymentScreen = {},
-            navigateToRepaymentScheduleScreen = {},
+            navigateToMakePaymentScreen = { args ->
+                navController.navigateToSavingsMakeTransfer(
+                    args,
+                )
+            },
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToLoanAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.LOAN_ACCOUNT, it)
             },
+//            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
+//            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
         )
 
         passcodeDestination(
@@ -169,6 +181,50 @@ internal fun NavGraphBuilder.authenticatedGraph(
         )
 
         makeTransferDestination(navigateBack = navController::popBackStack)
+
+        oldSavingsNavGraph(
+            navController = navController,
+            viewQrCode = {},
+            viewCharges = { _, _ -> },
+            reviewTransfer = { transferPayload, transferType, transferDestination ->
+                navController.navigateToTransferProcessScreen(
+                    transferPayload,
+                    transferType,
+                    transferDestination,
+                )
+            },
+            callHelpline = {},
+        )
+
+        thirdPartyTransferNavGraph(
+            navigateBack = navController::popBackStack,
+            addBeneficiary = { },
+            reviewTransfer = { transferPayload, transferType, transferDestination ->
+                navController.navigateToTransferProcessScreen(
+                    transferPayload,
+                    transferType,
+                    transferDestination,
+                )
+            },
+        )
+
+        transferProcessNavGraph(
+            navigateBack = navController::popBackStack,
+            onTransferSuccessNavigate = { destination ->
+                println("getting destination from handle $destination")
+                when (destination) {
+                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
+                    TransferSuccessDestination.LOAN_ACCOUNT ->
+                        navController.navigateToAccountsScreen(
+                            Constants.LOAN_ACCOUNT,
+                        )
+
+                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(
+                        Constants.SAVINGS_ACCOUNT,
+                    )
+                }
+            },
+        )
     }
 }
 

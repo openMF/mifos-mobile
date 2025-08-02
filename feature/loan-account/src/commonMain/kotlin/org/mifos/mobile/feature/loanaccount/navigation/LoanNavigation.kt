@@ -16,9 +16,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountRoute
 import org.mifos.mobile.feature.loanaccount.loanAccount.loanAccountDestination
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.loanAccountDetailsDestination
+import org.mifos.mobile.feature.loanaccount.loanAccountRepaymentSchedule.loanAccountRepaymentDestination
+import org.mifos.mobile.feature.loanaccount.loanAccountRepaymentSchedule.navigateToLoanRepaymentScreen
 import org.mifos.mobile.feature.loanaccount.loanAccountSummary.loanAccountSummaryDestination
 import org.mifos.mobile.feature.loanaccount.loanAccountSummary.navigateToLoanAccountSummaryScreen
 
@@ -30,8 +33,7 @@ fun NavController.navigateToLoanGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
-    navigateToMakePaymentScreen: () -> Unit,
-    navigateToRepaymentScheduleScreen: (Long) -> Unit,
+    navigateToMakePaymentScreen: (args: TransferArgs) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToLoanAccountTransactionScreen: (Long) -> Unit,
@@ -46,9 +48,7 @@ fun NavGraphBuilder.loanNavGraph(
         loanAccountDetailsDestination(
             navigateBack = navController::popBackStack,
             navigateToClientChargeScreen = navigateToClientChargeScreen,
-//            TODO design repayment schedule and loan summary in this module and navigate using
-//             navController.navigateToRepaymentScheduleScreen()
-            navigateToRepaymentScheduleScreen = navigateToRepaymentScheduleScreen,
+            navigateToRepaymentScheduleScreen = navController::navigateToLoanRepaymentScreen,
             navigateToLoanSummaryScreen = navController::navigateToLoanAccountSummaryScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToMakePaymentScreen = navigateToMakePaymentScreen,
@@ -56,6 +56,10 @@ fun NavGraphBuilder.loanNavGraph(
         )
 
         loanAccountSummaryDestination(
+            navigateBack = navController::popBackStack,
+        )
+
+        loanAccountRepaymentDestination(
             navigateBack = navController::popBackStack,
         )
     }

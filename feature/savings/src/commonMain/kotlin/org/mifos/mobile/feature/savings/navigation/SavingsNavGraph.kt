@@ -57,7 +57,7 @@ fun NavController.navigateToSavingsApplicationScreen() {
     )
 }
 
-fun NavGraphBuilder.savingsNavGraph(
+fun NavGraphBuilder.oldSavingsNavGraph(
     navController: NavController,
     viewQrCode: (String) -> Unit,
     viewCharges: (ChargeType, Long) -> Unit,

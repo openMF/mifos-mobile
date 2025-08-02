@@ -16,6 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.savingsAccountDestination
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.savingsAccountDetailsDestination
@@ -33,6 +34,8 @@ fun NavController.navigateToSavingsGraph(navOptions: NavOptions? = null) =
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     navigateToClientChargeScreen: (String, Long) -> Unit,
+    navigateToTransferScreen: (TransferArgs) -> Unit,
+    navigateToDepositScreen: (TransferArgs) -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
@@ -52,6 +55,8 @@ fun NavGraphBuilder.savingsNavGraph(
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
             navigateToWithdrawScreen = navController::navigateToSavingsAccountWithdrawScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
+            navigateToTransferScreen = navigateToTransferScreen,
+            navigateToDepositScreen = navigateToDepositScreen,
         )
 
         savingsAccountUpdateDestination(

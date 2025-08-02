@@ -50,7 +50,7 @@ fun MifosOutlineDropdown(
     items: Map<Long, String>,
     label: String,
     modifier: Modifier = Modifier,
-    enabled:Boolean=true,
+    enabled: Boolean = true,
     onItemSelected: (Long, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -76,7 +76,7 @@ fun MifosOutlineDropdown(
                 },
                 showClearIcon = false,
                 readOnly = true,
-                enabled = enabled
+                enabled = enabled,
             ),
 
             modifier = Modifier
