@@ -29,6 +29,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
@@ -172,6 +173,7 @@ internal class LoanAccountDetailsViewModel(
         mutableStateFlow.update {
             it.copy(
                 accountId = loan?.id?.toLong() ?: -1L,
+                isActive = loan?.status?.value == LoanStatus.ACTIVE.status,
                 accountNumber = loan?.accountNo,
                 clientName = loan?.clientName,
                 product = loan?.loanProductName,

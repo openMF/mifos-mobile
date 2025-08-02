@@ -130,7 +130,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
         loanNavGraph(
             navController = navController,
             navigateToMakePaymentScreen = {},
-            navigateToRepaymentScheduleScreen = {},
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToLoanAccountTransactionScreen = {
