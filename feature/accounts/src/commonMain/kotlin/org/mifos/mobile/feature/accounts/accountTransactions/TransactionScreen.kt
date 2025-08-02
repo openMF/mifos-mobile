@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_duration
+import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_no_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_icon_description
@@ -125,28 +126,33 @@ internal fun TransactionScreenContent(
             }
         },
     ) {
-        LazyColumn(
-            Modifier.padding(DesignToken.padding.large),
+        if (state.isEmpty) {
+            EmptyDataView(
+                error = Res.string.feature_no_transactions_found,
+                icon = MifosIcons.Info,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
+        if (state.isFilteredRecordsEmpty && !state.isEmpty) {
+            EmptyDataView(
+                error = Res.string.feature_no__filtered_transactions_found,
+                icon = MifosIcons.Info,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large),
         ) {
             if (!state.isEmpty && state.dialogState != AccountTransactionState.DialogState.Loading) {
-                item {
-                    ActionBar(
-                        onAction = onAction,
-                    )
-                }
+                ActionBar(
+                    onAction = onAction,
+                )
             }
-
-            if (state.isEmpty) {
-                item {
-                    EmptyDataView(
-                        error = Res.string.feature_no_transactions_found,
-                        icon = MifosIcons.Info,
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                }
-            }
-
-            if (!state.isEmpty) {
+            LazyColumn {
                 state.filteredData.forEach { (date, transactions) ->
                     item {
                         Text(

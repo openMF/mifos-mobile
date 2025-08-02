@@ -47,7 +47,7 @@ internal class TransferProcessViewModel(
         ).value.let { TransferType.valueOf(it) },
         transferDestination = savedStateHandle.getStateFlow(
             key = TRANSFER_SUCCESS_DESTINATION,
-            initialValue = TransferSuccessDestination.HOME.name,
+            initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT.name,
         ).value.let { TransferSuccessDestination.valueOf(it) },
     ),
 ) {
@@ -85,13 +85,11 @@ internal class TransferProcessViewModel(
                     val response = transferRepository.makeTransfer(payload, state.transferType)
                     processTransferResult(response, successMessage)
                 } catch (e: Exception) {
-                    updateState {
-                        it.copy(
-                            dialogState = TransferProcessState.DialogState.Error(
-                                e.message ?: "An error occurred",
-                            ),
-                        )
-                    }
+                    sendEvent(
+                        TransferProcessEvent.ShowToast(
+                            "${e.message}",
+                        ),
+                    )
                 }
             }
         }
@@ -133,7 +131,6 @@ internal class TransferProcessViewModel(
 
 @Parcelize
 data class TransferProcessState(
-    val isOnline: Boolean = false,
     val transferPayloadString: String? = null,
     @IgnoredOnParcel
     val transferDestination: TransferSuccessDestination? = null,
