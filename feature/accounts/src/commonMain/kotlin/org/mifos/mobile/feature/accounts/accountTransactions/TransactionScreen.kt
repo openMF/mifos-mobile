@@ -134,7 +134,7 @@ internal fun TransactionScreenContent(
             )
         }
 
-        if (state.isFilteredRecordsEmpty) {
+        if (state.isFilteredRecordsEmpty && !state.isEmpty) {
             EmptyDataView(
                 error = Res.string.feature_no__filtered_transactions_found,
                 icon = MifosIcons.Info,
