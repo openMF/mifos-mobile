@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.transfer.process
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -86,13 +85,11 @@ internal class TransferProcessViewModel(
                     val response = transferRepository.makeTransfer(payload, state.transferType)
                     processTransferResult(response, successMessage)
                 } catch (e: Exception) {
-                    updateState {
-                        it.copy(
-                            dialogState = TransferProcessState.DialogState.Error(
-                                e.message ?: "An error occurred",
-                            ),
-                        )
-                    }
+                    sendEvent(
+                        TransferProcessEvent.ShowToast(
+                            "${e.message}",
+                        ),
+                    )
                 }
             }
         }
@@ -134,7 +131,6 @@ internal class TransferProcessViewModel(
 
 @Parcelize
 data class TransferProcessState(
-    val isOnline: Boolean = false,
     val transferPayloadString: String? = null,
     @IgnoredOnParcel
     val transferDestination: TransferSuccessDestination? = null,

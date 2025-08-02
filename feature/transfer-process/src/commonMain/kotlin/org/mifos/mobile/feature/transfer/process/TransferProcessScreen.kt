@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
@@ -97,9 +97,7 @@ private fun TransferProcessDialog(
 ) {
     when (state.dialogState) {
         TransferProcessState.DialogState.Loading -> MifosProgressIndicatorOverlay()
-        is TransferProcessState.DialogState.Error -> MifosErrorComponent(
-            isNetworkConnected = state.isOnline,
-        )
+        is TransferProcessState.DialogState.Error -> MifosErrorComponent()
         null -> Unit
     }
 }
@@ -115,7 +113,7 @@ private fun TransferProcessScreen(
         topBarTitle = stringResource(Res.string.transfer),
         onNavigationIconClick = { onAction(TransferProcessAction.OnNavigate) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        modifier = modifier,
+        modifier = modifier.navigationBarsPadding(),
     ) {
         Box(
             modifier = Modifier
@@ -252,7 +250,6 @@ private fun TransferProcessScreenPreview() {
         TransferProcessScreen(
             state = TransferProcessState(
                 dialogState = null,
-                isOnline = false,
                 transferType = TransferType.SELF,
             ),
             onAction = { },

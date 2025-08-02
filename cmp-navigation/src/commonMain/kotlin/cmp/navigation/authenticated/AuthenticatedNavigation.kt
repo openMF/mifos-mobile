@@ -19,9 +19,9 @@ import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
@@ -36,7 +36,6 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
-import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
@@ -209,8 +208,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
         transferProcessNavGraph(
             navigateBack = navController::popBackStack,
             onTransferSuccessNavigate = { destination ->
+                println("getting destination from handle $destination")
                 when (destination) {
-                    TransferSuccessDestination.HOME -> navController::navigateToHomeScreen
+                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
                     TransferSuccessDestination.LOAN_ACCOUNT ->
                         navController.navigateToAccountsScreen(
                             Constants.LOAN_ACCOUNT,

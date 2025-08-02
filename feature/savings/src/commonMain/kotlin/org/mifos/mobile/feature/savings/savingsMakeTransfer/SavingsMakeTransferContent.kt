@@ -136,7 +136,7 @@ internal fun SavingsMakeTransferContent(
                         modifier = processModifier,
                         processState = payFromStepState,
                         fromAccountOptions = uiData.accountOptionsTemplate.fromAccountOptions.filter {
-                            it.accountNo!=payToAccount?.accountNo
+                            it.accountNo != payToAccount?.accountNo
                         },
                         prefilledAccount = payFromAccount,
                         onContinueClick = {

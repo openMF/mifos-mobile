@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -35,18 +36,12 @@ class TransferRepositoryImp(
                     TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(payload)
                     else -> dataManager.thirdPartyTransferApi.makeTransfer(payload)
                 }
-                if (response.status.value != 200) {
-                    val errorMessage = extractErrorMessage(response)
-                    return@withContext DataState.Error(
-                        Exception(errorMessage),
-                        null,
-                    )
-                }
 
                 val transferResponse = Json.decodeFromString<TransferResponse>(response.bodyAsText())
                 DataState.Success(transferResponse.resourceId.toString())
-            } catch (e: Exception) {
-                DataState.Error(e, null)
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
         }
     }
