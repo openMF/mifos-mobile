@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_account_empty_filtered_loan_accounts
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_empty_loan_accounts
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_dashboard
@@ -253,6 +254,12 @@ internal fun LoanAccountContent(
             EmptyDataView(
                 icon = MifosIcons.Info,
                 error = Res.string.feature_account_empty_loan_accounts,
+            )
+        }
+        if (state.isFilteredEmpty && !state.isEmpty) {
+            EmptyDataView(
+                icon = MifosIcons.Info,
+                error = Res.string.feature_account_empty_filtered_loan_accounts,
             )
         }
     }

@@ -24,6 +24,7 @@
     <string name="feature_loan_account_filter_bronze">Bronze</string>
 
     <string name="feature_account_empty_loan_accounts">There is no LoanAccount associated with you</string>
+    <string name="feature_account_empty_filtered_loan_accounts">There is no LoanAccount associated with Filters you Selected</string>
 
     <string name="feature_loan_account_dashboard">Total Borrowings</string>
     <string name="feature_loan_account">Loan Account</string>
