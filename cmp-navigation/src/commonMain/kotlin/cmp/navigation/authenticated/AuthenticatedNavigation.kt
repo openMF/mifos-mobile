@@ -54,6 +54,8 @@ import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
+import org.mifos.mobile.feature.transfer.process.make_transfer.makeTransferDestination
+import org.mifos.mobile.feature.transfer.process.make_transfer.navigateToMakeTransferScreen
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -78,7 +80,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 }
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
-            navigateToFaqScreen = navController::navigateToHelpScreen,
+            navigateToFaqScreen = navController::navigateToMakeTransferScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
             navigateToTransactionScreen = navController::navigateToRecentTransactionScreen,
         )
@@ -165,6 +167,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             openBeneficiaryApplication = navController::navigateToBeneficiaryApplicationScreen,
         )
+
+        makeTransferDestination(navigateBack = navController::popBackStack)
     }
 }
 

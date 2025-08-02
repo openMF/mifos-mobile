@@ -50,6 +50,7 @@ fun MifosOutlineDropdown(
     items: Map<Long, String>,
     label: String,
     modifier: Modifier = Modifier,
+    enabled:Boolean=true,
     onItemSelected: (Long, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -75,6 +76,7 @@ fun MifosOutlineDropdown(
                 },
                 showClearIcon = false,
                 readOnly = true,
+                enabled = enabled
             ),
 
             modifier = Modifier
@@ -93,7 +95,7 @@ fun MifosOutlineDropdown(
         )
 
         ExposedDropdownMenu(
-            expanded = expanded,
+            expanded = expanded && enabled,
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
