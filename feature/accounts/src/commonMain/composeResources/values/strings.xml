@@ -63,4 +63,5 @@
     <string name="feature_transaction_type">Transaction Type</string>
     <string name="feature_duration">Duration</string>
     <string name="feature_no_transactions_found">No Transactions Found</string>
+    <string name="feature_no__filtered_transactions_found">No Transactions Found for selected Filters</string>
 </resources>
