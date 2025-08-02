@@ -25,6 +25,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.kotlinx.serialization.json)
 
             api(projects.core.ui)
             api(projects.core.model)

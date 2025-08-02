@@ -29,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_action
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_top_bar_title
@@ -39,12 +41,17 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.model.entity.TransferArgs
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
@@ -57,7 +64,7 @@ import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 @Composable
 internal fun LoanAccountDetailsScreen(
     navigateBack: () -> Unit,
-    navigateToMakePaymentScreen: () -> Unit,
+    navigateToMakePaymentScreen: (args: TransferArgs) -> Unit,
     navigateToRepaymentScheduleScreen: (Long) -> Unit,
     navigateToLoanSummaryScreen: (Long) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
@@ -80,9 +87,22 @@ internal fun LoanAccountDetailsScreen(
                         navigateToLoanAccountTransactionScreen(uiState.accountId)
                     }
 
+                    // TODO: move this to viewmodel after making new screens
                     event.route == Constants.MAKE_PAYMENT -> {
-                        navigateToMakePaymentScreen.invoke()
+                        val transferArgs = TransferArgs(
+                            transferPayloadJson = Json.encodeToString(
+                                AccountDetails(
+                                    accountId = uiState.accountId,
+                                    outstandingBalance = uiState.totalOutStandingBalance ?: 1.00,
+                                    transferType = TRANSFER_PAY_TO,
+                                    transferTarget = TransferType.SELF,
+                                    transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
+                                ),
+                            ),
+                        )
+                        navigateToMakePaymentScreen(transferArgs)
                     }
+
                     event.route == Constants.REPAYMENT_SCHEDULE -> {
                         navigateToRepaymentScheduleScreen(uiState.accountId)
                     }

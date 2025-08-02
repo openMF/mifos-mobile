@@ -181,6 +181,7 @@ internal class LoanAccountDetailsViewModel(
                 displayItems = displayItems,
                 transactionList = transactions,
                 dialogState = null,
+                totalOutStandingBalance = loan?.summary?.totalOutstanding,
             )
         }
     }
@@ -200,6 +201,7 @@ internal class LoanAccountDetailsViewModel(
 @Immutable
 internal data class LoanAccountDetailsState(
     val accountId: Long = -1L,
+    val totalOutStandingBalance: Double? = null,
     val isEmpty: Boolean = true,
     val clientName: String? = "",
     val submissionDate: String? = "",

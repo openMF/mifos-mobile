@@ -64,6 +64,8 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 @Composable
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
+    navigateToDepositScreen: (Long) -> Unit,
+    navigateToTransferScreen: (Long) -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
@@ -82,12 +84,30 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.CHARGES -> {
                         navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
                     }
+                    event.route == Constants.DEPOSIT -> {
+                        navigateToDepositScreen(uiState.accountId)
+                    }
+                    event.route == Constants.TRANSFER -> {
+                        navigateToTransferScreen(uiState.accountId)
+                    }
+//                    event.route == Constants.QR_CODE -> {
+//                        navigateToQrCodeScreen
+//                    }
                     event.route == Constants.TRANSACTIONS -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
+                    event.route == Constants.DEPOSIT -> {
+                        navigateToDepositScreen(uiState.accountId)
+                    }
+                    event.route == Constants.TRANSFER -> {
+                        navigateToTransferScreen(uiState.accountId)
+                    }
+//                    event.route == Constants.QR_CODE -> {
+//                        navigateToQrCodeScreen
+//                    }
                 }
             }
 
@@ -266,7 +286,11 @@ internal fun AccountDetailsGrid(
     details: List<LabelValueItem>? = emptyList(),
     isActive: Boolean = false,
 ) {
-    if (!details.isNullOrEmpty()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+    ) {
         if (label != null) {
             Text(
                 text = label,
@@ -274,25 +298,29 @@ internal fun AccountDetailsGrid(
                 color = AppColors.customBlack,
             )
         }
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-            maxItemsInEachRow = 2,
-        ) {
-            details.forEach { item ->
-                MifosLabelValueCard(
-                    modifier = Modifier
-                        .height(64.dp)
-                        .weight(1f),
-                    label = stringResource(item.label),
-                    value = item.value,
-                    color = if (isActive && item.label == Res.string.feature_savings_status_label) {
-                        AppColors.customEnable
-                    } else {
-                        MaterialTheme.colorScheme.onBackground
-                    },
-                )
+        if (details != null) {
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                maxItemsInEachRow = 2,
+            ) {
+                details.forEach { item ->
+                    MifosLabelValueCard(
+                        modifier = Modifier
+                            .height(64.dp)
+                            .weight(1f),
+                        label = stringResource(item.label),
+                        value = item.value,
+                        color = if (isActive && item.label == Res.string.feature_savings_status_label) {
+                            AppColors
+                                .customEnable
+                        } else {
+                            MaterialTheme
+                                .colorScheme.onBackground
+                        },
+                    )
+                }
             }
         }
     }
