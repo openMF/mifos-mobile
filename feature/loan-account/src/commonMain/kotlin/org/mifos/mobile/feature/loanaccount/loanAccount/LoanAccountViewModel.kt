@@ -126,6 +126,7 @@ class LoanAccountsViewmodel(
                     loanAccounts = filtered,
                     selectedFilters = selectedFilters,
                     dialogState = null,
+                    isFilteredEmpty = filtered.isEmpty(),
                 )
             }
             sendEvent(LoanAccountsEvent.LoadingCompleted)
@@ -187,7 +188,8 @@ class LoanAccountsViewmodel(
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
-                        isEmpty = filtered.isEmpty(),
+                        isEmpty = loanAccounts.isEmpty(),
+                        isFilteredEmpty = filtered.isEmpty(),
                         loanAccounts = filtered,
                         originalAccounts = loanAccounts,
                         currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
@@ -250,6 +252,7 @@ data class LoanAccountsState(
     val loanAccounts: List<LoanAccount>?,
     val originalAccounts: List<LoanAccount>? = null,
     val isEmpty: Boolean = false,
+    val isFilteredEmpty: Boolean = false,
 
     /** Number of filtered accounts */
     val items: Int? = 0,
