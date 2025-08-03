@@ -51,7 +51,6 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
-import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.oldSavingsNavGraph
@@ -88,7 +87,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
-            navigateToTransactionScreen = navController::navigateToRecentTransactionScreen,
+            navigateToTransactionScreen = {
+                navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
+            },
             navigateToApplyLoanScreen = navController::navigateToLoanApplicationGraph,
         )
 
