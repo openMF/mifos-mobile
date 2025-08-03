@@ -64,7 +64,6 @@ import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 @Composable
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
-    navigateToDepositScreen: (Long) -> Unit,
     navigateToTransferScreen: (Long) -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
@@ -84,30 +83,18 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.CHARGES -> {
                         navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
                     }
-                    event.route == Constants.DEPOSIT -> {
-                        navigateToDepositScreen(uiState.accountId)
-                    }
                     event.route == Constants.TRANSFER -> {
                         navigateToTransferScreen(uiState.accountId)
                     }
-//                    event.route == Constants.QR_CODE -> {
-//                        navigateToQrCodeScreen
-//                    }
                     event.route == Constants.TRANSACTIONS -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
-                    event.route == Constants.DEPOSIT -> {
-                        navigateToDepositScreen(uiState.accountId)
-                    }
                     event.route == Constants.TRANSFER -> {
                         navigateToTransferScreen(uiState.accountId)
                     }
-//                    event.route == Constants.QR_CODE -> {
-//                        navigateToQrCodeScreen
-//                    }
                 }
             }
 

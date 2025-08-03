@@ -62,8 +62,8 @@ fun MifosPayFromDropdownUI(
     modifier: Modifier = Modifier,
     onAccountSelected: (String, String) -> Unit,
 ) {
-    var selectedAccount by rememberSaveable { mutableStateOf(accounts[0].first) }
-    var selectedBalance by rememberSaveable { mutableStateOf(accounts[0].second) }
+    var selectedAccount by rememberSaveable { mutableStateOf("") }
+    var selectedBalance by rememberSaveable { mutableStateOf("") }
     Column {
         MifosDropDownPayFromComponent(
             accountNumber = selectedAccount,

@@ -20,6 +20,7 @@ import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
@@ -35,6 +36,7 @@ import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
+import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
@@ -57,10 +59,10 @@ import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToS
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
-import org.mifos.mobile.feature.transfer.process.make_transfer.makeTransferDestination
-import org.mifos.mobile.feature.transfer.process.make_transfer.navigateToMakeTransferScreen
-import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
-import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
+import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -85,7 +87,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 }
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
-            navigateToFaqScreen = navController::navigateToMakeTransferScreen,
+            navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
             navigateToTransactionScreen = navController::navigateToRecentTransactionScreen,
         )
@@ -128,8 +130,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
-            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
-            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
+            navigateToTransferScreen = {
+                navController.navigateToMakeTransferScreen(it)
+            },
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
@@ -180,7 +183,16 @@ internal fun NavGraphBuilder.authenticatedGraph(
             openBeneficiaryApplication = navController::navigateToBeneficiaryApplicationScreen,
         )
 
-        makeTransferDestination(navigateBack = navController::popBackStack)
+        makeTransferDestination(
+            navigateBack = navController::popBackStack,
+            navigateToTransferScreen = {
+                navController.navigateToTransferProcessScreen(
+                    transferPayload = it,
+                    transferType = TransferType.SELF,
+                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                )
+            },
+        )
 
         oldSavingsNavGraph(
             navController = navController,
@@ -208,22 +220,26 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
         )
 
-        transferProcessNavGraph(
-            navigateBack = navController::popBackStack,
-            onTransferSuccessNavigate = { destination ->
-                println("getting destination from handle $destination")
-                when (destination) {
-                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
-                    TransferSuccessDestination.LOAN_ACCOUNT ->
-                        navController.navigateToAccountsScreen(
-                            Constants.LOAN_ACCOUNT,
-                        )
+//        transferProcessNavGraph(
+//            navigateBack = navController::popBackStack,
+//            onTransferSuccessNavigate = { destination ->
+//                println("getting destination from handle $destination")
+//                when (destination) {
+//                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
+//                    TransferSuccessDestination.LOAN_ACCOUNT ->
+//                        navController.navigateToAccountsScreen(
+//                            Constants.LOAN_ACCOUNT,
+//                        )
+//
+//                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(
+//                        Constants.SAVINGS_ACCOUNT,
+//                    )
+//                }
+//            },
+//        )
 
-                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(
-                        Constants.SAVINGS_ACCOUNT,
-                    )
-                }
-            },
+        transferProcessDestination(
+            navigateBack = navController::popBackStack,
         )
     }
 }

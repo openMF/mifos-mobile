@@ -7,25 +7,22 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transfer.process
+package org.mifos.mobile.feature.transfer.process.transferProcess
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.transferred_successfully
 import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.common.Constants.PAYLOAD
-import org.mifos.mobile.core.common.Constants.TRANSFER_SUCCESS_DESTINATION
-import org.mifos.mobile.core.common.Constants.TRANSFER_TYPE
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.DateHelper.currentDate
 import org.mifos.mobile.core.data.repository.TransferRepository
-import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -35,34 +32,35 @@ internal class TransferProcessViewModel(
     private val transferRepository: TransferRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TransferProcessState, TransferProcessEvent, TransferProcessAction>(
-    initialState = TransferProcessState(
-        dialogState = null,
-        transferPayloadString = savedStateHandle.getStateFlow<String?>(
-            key = PAYLOAD,
-            initialValue = null,
-        ).value,
-        transferType = savedStateHandle.getStateFlow(
-            key = TRANSFER_TYPE,
-            initialValue = TransferType.SELF.name,
-        ).value.let { TransferType.valueOf(it) },
-        transferDestination = savedStateHandle.getStateFlow(
-            key = TRANSFER_SUCCESS_DESTINATION,
-            initialValue = TransferSuccessDestination.SAVINGS_ACCOUNT.name,
-        ).value.let { TransferSuccessDestination.valueOf(it) },
-    ),
+    initialState = run {
+        val route = savedStateHandle.toRoute<TransferProcessRoute>()
+        val transferDate = listOf(
+            currentDate.dayOfMonth,
+            currentDate.monthNumber,
+            currentDate.year,
+        )
+        TransferProcessState(
+            transferDestination = enumValueOf<TransferSuccessDestination>(route.transferSuccessDestination),
+            transferType = enumValueOf<TransferType>(route.transferType),
+            transferPayload = TransferPayload(
+                fromAccountId = route.fromAccountId,
+                fromClientId = route.fromClientId,
+                fromAccountType = route.fromAccountType,
+                fromOfficeId = route.fromOfficeId,
+                toOfficeId = route.toOfficeId,
+                toAccountId = route.toAccountId,
+                toClientId = route.toClientId,
+                toAccountType = route.toAccountType,
+                transferDate = DateHelper.getDateMonthYearString(transferDate),
+                transferAmount = route.transferAmount,
+                transferDescription = route.transferDescription,
+                dateFormat = "dd MMMM yyyy",
+                locale = "en",
+            ),
+            dialogState = null,
+        )
+    },
 ) {
-
-    init {
-        updateState {
-            it.copy(
-                transferPayload = state.transferPayloadString?.let { jsonString ->
-                    jsonString.let {
-                        Json.decodeFromString<TransferPayload>(it)
-                    }
-                },
-            )
-        }
-    }
 
     override fun handleAction(action: TransferProcessAction) {
         when (action) {
@@ -129,22 +127,15 @@ internal class TransferProcessViewModel(
     }
 }
 
-@Parcelize
 data class TransferProcessState(
-    val transferPayloadString: String? = null,
-    @IgnoredOnParcel
     val transferDestination: TransferSuccessDestination? = null,
-    @IgnoredOnParcel
     val transferType: TransferType? = null,
-    @IgnoredOnParcel
     val transferPayload: TransferPayload? = null,
     val dialogState: DialogState?,
 ) : Parcelable {
     sealed interface DialogState : Parcelable {
-        @Parcelize
         data class Error(val message: String) : DialogState
 
-        @Parcelize
         data object Loading : DialogState
     }
 }

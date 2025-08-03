@@ -7,10 +7,9 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.transfer.process
+package org.mifos.mobile.feature.transfer.process.transferProcess
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,12 +49,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosCard
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -96,7 +97,7 @@ private fun TransferProcessDialog(
     state: TransferProcessState,
 ) {
     when (state.dialogState) {
-        TransferProcessState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        TransferProcessState.DialogState.Loading -> MifosProgressIndicator()
         is TransferProcessState.DialogState.Error -> MifosErrorComponent()
         null -> Unit
     }
@@ -109,21 +110,25 @@ private fun TransferProcessScreen(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    MifosElevatedScaffold(
         topBarTitle = stringResource(Res.string.transfer),
-        onNavigationIconClick = { onAction(TransferProcessAction.OnNavigate) },
+        onNavigateBack = { onAction(TransferProcessAction.OnNavigate) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier.navigationBarsPadding(),
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-        ) {
-            TransferProcessContent(
-                state = state,
-                onAction = onAction,
-            )
-        }
+        TransferProcessContent(
+            state = state,
+            onAction = onAction,
+        )
     }
     TransferProcessDialog(
         state = state,
@@ -136,12 +141,10 @@ private fun TransferProcessContent(
     onAction: (TransferProcessAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(scrollState),
+            .verticalScroll(rememberScrollState()),
     ) {
         MifosCard(
             modifier = Modifier
