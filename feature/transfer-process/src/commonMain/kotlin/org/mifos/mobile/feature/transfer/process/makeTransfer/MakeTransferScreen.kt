@@ -30,6 +30,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
+import mifos_mobile.feature.transfer_process.generated.resources.error_description
+import mifos_mobile.feature.transfer_process.generated.resources.make_transfer
+import mifos_mobile.feature.transfer_process.generated.resources.remarks
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -84,7 +88,7 @@ internal fun MakeTransferScreenContent(
     onAction: (MakeTransferAction) -> Unit,
 ) {
     MifosElevatedScaffold(
-        topBarTitle = "Make Transfer",
+        topBarTitle = stringResource(Res.string.make_transfer),
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -130,7 +134,6 @@ internal fun MakeTransferScreenContent(
                         onClick = { index, _ ->
                             onAction(MakeTransferAction.OnToAccountSelected(state.toAccountOptions[index].accountNo ?: ""))
                         },
-
                     )
 
                     MifosPayFromDropdownUI(
@@ -144,22 +147,17 @@ internal fun MakeTransferScreenContent(
                     MifosOutlinedTextField(
                         value = state.amount,
                         onValueChange = { onAction(MakeTransferAction.OnAmountChanged(it)) },
-                        label = "Amount",
+                        label = stringResource(Res.string.amount),
                         shape = DesignToken.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                            errorBorderColor = MaterialTheme.colorScheme.error,
-                        ),
                         config = MifosTextFieldConfig(
-                            isError = state.amountError.isNotEmpty(),
-                            errorText = state.amountError,
-                            trailingIcon = if (state.amountError.isNotEmpty()) {
+                            isError = state.amountError,
+                            errorText = stringResource(Res.string.error_description),
+                            trailingIcon = if (state.amountError) {
                                 {
                                     Icon(
                                         imageVector = MifosIcons.ErrorCircle,
-                                        contentDescription = "Error",
+                                        contentDescription = stringResource(Res.string.error_description),
                                         tint = MaterialTheme.colorScheme.error,
                                     )
                                 }
@@ -175,14 +173,9 @@ internal fun MakeTransferScreenContent(
                     MifosOutlinedTextField(
                         value = state.remarks,
                         onValueChange = { onAction(MakeTransferAction.OnRemarksChanged(it)) },
-                        label = "Remarks",
+                        label = stringResource(Res.string.remarks),
                         shape = DesignToken.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                            errorBorderColor = MaterialTheme.colorScheme.error,
-                        ),
                     )
 
                     MifosButton(
@@ -194,7 +187,7 @@ internal fun MakeTransferScreenContent(
                         },
                         text = {
                             Text(
-                                text = "Make Transfer",
+                                text = stringResource(Res.string.make_transfer),
                                 style = MifosTypography.titleMedium,
                             )
                         },

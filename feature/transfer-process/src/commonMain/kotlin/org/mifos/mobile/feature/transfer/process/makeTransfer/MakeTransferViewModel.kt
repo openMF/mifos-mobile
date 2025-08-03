@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.feature.transfer_process.generated.resources.Res
+import mifos_mobile.feature.transfer_process.generated.resources.error_description
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
@@ -112,11 +114,10 @@ internal class MakeTransferViewModel(
                 val isError = state.amount.any {
                     !it.isDigit()
                 }
-                if (isError) {
-                    updateState {
-                        it.copy(amountError = "Invalid Amount")
-                    }
-                } else {
+                updateState {
+                    it.copy(amountError = isError)
+                }
+                if (!isError) {
                     viewModelScope.launch {
                         sendAction(MakeTransferAction.Internal.PerformTransfer)
                     }
@@ -238,7 +239,7 @@ internal data class MakeTransferState(
     val transferTarget: TransferType? = null,
     val transferSuccessDestination: TransferSuccessDestination? = null,
     val amount: String = "",
-    val amountError: String = "",
+    val amountError: Boolean = false,
     val remarks: String = "",
     var accountOptionsTemplate: AccountOptionsTemplate = AccountOptionsTemplate(),
     var fromAccountOptions: List<AccountOption> = emptyList(),

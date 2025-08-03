@@ -176,7 +176,7 @@ fun AccountDropdownItem(
         )
         Spacer(modifier = Modifier.height(DesignToken.padding.extraSmall))
         Text(
-            text = stringResource(Res.string.available_balance_formatted, balance),
+            text = balance,
             style = MifosTypography.bodySmall,
             color = MaterialTheme.colorScheme.onPrimary,
         )

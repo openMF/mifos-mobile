@@ -132,8 +132,8 @@ data class TransferProcessState(
     val transferType: TransferType? = null,
     val transferPayload: TransferPayload? = null,
     val dialogState: DialogState?,
-) : Parcelable {
-    sealed interface DialogState : Parcelable {
+)  {
+    sealed interface DialogState {
         data class Error(val message: String) : DialogState
 
         data object Loading : DialogState
