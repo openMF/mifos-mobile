@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.common
 
-import io.ktor.client.request.invoke
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.DateTimeUnit
@@ -27,6 +26,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.days
 
+@Suppress("TooManyFunctions")
 @OptIn(FormatStringsInDatetimeFormats::class)
 object DateHelper {
     /*
@@ -257,6 +257,17 @@ object DateHelper {
         val monthName = instant.month.name.lowercase().capitalize()
 
         return "${instant.dayOfMonth} $monthName"
+    }
+
+    fun getDateMonthYearString(timeInMillis: Long): String {
+        val instant = Instant.fromEpochMilliseconds(timeInMillis)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+
+        val day = instant.dayOfMonth
+        val month = instant.month.name.lowercase().replaceFirstChar { it.uppercase() }.take(3)
+        val year = instant.year
+
+        return "$day $month $year"
     }
 
     /**

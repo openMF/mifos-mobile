@@ -97,4 +97,6 @@ object Constants {
     const val LOAN_SUMMARY = "loan_summary"
 
     const val HELP = "help"
+
+    const val APPLY_LOAN = "apply_loan"
 }

@@ -50,6 +50,7 @@ fun MifosOutlineDropdown(
     items: Map<Long, String>,
     label: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onItemSelected: (Long, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -57,7 +58,7 @@ fun MifosOutlineDropdown(
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
+        onExpandedChange = { if (enabled) expanded = !expanded },
         modifier = modifier,
     ) {
         MifosOutlinedTextField(
@@ -70,7 +71,9 @@ fun MifosOutlineDropdown(
                         modifier = Modifier.size(DesignToken.sizes.iconSmall),
                         imageVector = if (expanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = if (enabled)
+                            MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
                     )
                 },
                 showClearIcon = false,
@@ -83,7 +86,7 @@ fun MifosOutlineDropdown(
                 .onGloballyPositioned {
                     textFieldSize = it.size.toSize()
                 }
-                .clickable { expanded = true },
+                .then(if (enabled) Modifier.clickable { expanded = true } else Modifier),
             shape = DesignToken.shapes.medium,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,

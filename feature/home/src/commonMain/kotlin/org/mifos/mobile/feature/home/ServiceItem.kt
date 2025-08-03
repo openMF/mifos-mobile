@@ -51,7 +51,7 @@ internal sealed class ServiceItem(
     data object ApplyForLoan : ServiceItem(
         title = Res.string.feature_home_apply_for_loan,
         icon = MifosIcons.ApplyForLoan,
-        route = "ApplyForLoanRoute",
+        route = Constants.APPLY_LOAN,
     )
 
     data object TransactionHistory : ServiceItem(
