@@ -36,6 +36,8 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
+import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
+import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
@@ -87,6 +89,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
             navigateToTransactionScreen = navController::navigateToRecentTransactionScreen,
+            navigateToApplyLoanScreen = navController::navigateToLoanApplicationGraph,
         )
 
         notificationDestination(
@@ -149,6 +152,12 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
 //            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
 //            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
+        )
+
+        loanApplicationNavGraph(
+            navController = navController,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
 
         passcodeDestination(

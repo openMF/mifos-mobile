@@ -32,6 +32,7 @@ fun NavGraphBuilder.homeDestination(
     navigateToTransactionScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
+    navigateToApplyLoanScreen: () -> Unit,
 ) {
     composableWithStayTransitions<HomeRoute> {
         HomeScreen(
@@ -42,6 +43,7 @@ fun NavGraphBuilder.homeDestination(
             navigateToFaqScreen = navigateToFaqScreen,
             navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
             navigateToTransactionScreen = navigateToTransactionScreen,
+            navigateToApplyLoanScreen = navigateToApplyLoanScreen,
         )
     }
 }

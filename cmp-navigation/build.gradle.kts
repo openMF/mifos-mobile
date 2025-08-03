@@ -43,6 +43,7 @@ kotlin {
             implementation(projects.feature.onboardingLanguage)
             implementation(projects.feature.passcode)
             implementation(projects.feature.status)
+            implementation(projects.feature.loanApplication)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
