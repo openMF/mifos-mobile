@@ -47,6 +47,8 @@ data class LoansPayload(
 
     val transactionProcessingStrategyId: Int? = null,
 
+    val transactionProcessingStrategyCode: String? = null,
+
     val expectedDisbursementDate: String? = null,
 
     val submittedOnDate: String? = null,

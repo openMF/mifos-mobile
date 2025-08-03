@@ -25,7 +25,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults.colors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -49,7 +48,11 @@ fun MifosOutlinedTextField(
     label: String,
     modifier: Modifier = Modifier,
     shape: Shape = OutlinedTextFieldDefaults.shape,
-    colors: TextFieldColors = TextFieldDefaults.colors(),
+    colors: TextFieldColors = colors(
+        focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+        unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+        errorBorderColor = MaterialTheme.colorScheme.error,
+    ),
     textStyle: TextStyle = LocalTextStyle.current,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     config: MifosTextFieldConfig = MifosTextFieldConfig(),

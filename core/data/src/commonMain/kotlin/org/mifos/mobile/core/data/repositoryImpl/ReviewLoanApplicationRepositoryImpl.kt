@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.plugins.ClientRequestException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
@@ -28,35 +29,24 @@ class ReviewLoanApplicationRepositoryImpl(
         loansPayload: LoansPayload,
         loanId: Long,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                if (loanState == LoanState.CREATE) {
-                    val response = dataManager.loanAccountsListApi.createLoansAccount(loansPayload)
-                    if (response.status.value != 200) {
-                        val errorMessage = extractErrorMessage(response)
-                        return@withContext DataState.Error(
-                            Exception(errorMessage),
-                            null,
-                        )
+        return withContext(ioDispatcher) {
+            try {
+                when (loanState) {
+                    LoanState.CREATE -> {
+                        val response = dataManager.loanAccountsListApi.createLoansAccount(loansPayload)
+                        println("response $response")
+                        return@withContext DataState.Success("Loan Created Successfully")
                     }
-                    DataState.Success("Loan Created successfully")
-                } else {
-                    val response = dataManager.loanAccountsListApi.updateLoanAccount(
-                        loanId,
-                        loansPayload,
-                    )
-                    if (response.status.value != 200) {
-                        val errorMessage = extractErrorMessage(response)
-                        return@withContext DataState.Error(
-                            Exception(errorMessage),
-                            null,
-                        )
+                    LoanState.UPDATE -> {
+                        val response = dataManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
+                        println("response $response")
+                        return@withContext DataState.Success("Loan Updated Successfully")
                     }
-                    DataState.Success("Loan Updated Successfully")
                 }
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 }

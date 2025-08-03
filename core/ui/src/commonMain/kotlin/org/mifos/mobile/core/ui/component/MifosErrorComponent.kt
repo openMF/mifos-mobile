@@ -73,7 +73,7 @@ fun NoInternetComponent(
     ) {
         Icon(
             modifier = Modifier
-                .size(100.dp)
+                .size(50.dp)
                 .padding(bottom = 12.dp),
             imageVector = MifosIcons.WifiOff,
             contentDescription = "Wifi Icon",

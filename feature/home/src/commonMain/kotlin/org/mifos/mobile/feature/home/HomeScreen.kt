@@ -68,6 +68,7 @@ internal fun HomeScreen(
     navigateToTransactionScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToNotificationScreen: () -> Unit,
+    navigateToApplyLoanScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
@@ -85,6 +86,7 @@ internal fun HomeScreen(
                         navigateToAccountsScreen(Constants.SHARE_ACCOUNTS)
                     event.route == Constants.CHARGES ->
                         navigateToChargeScreen()
+                    event.route == Constants.APPLY_LOAN -> navigateToApplyLoanScreen.invoke()
                     event.route == Constants.BENEFICIARY -> navigateToBeneficiaryScreen.invoke()
                     event.route == Constants.TRANSACTIONS -> navigateToTransactionScreen.invoke()
                     event.route == Constants.HELP -> navigateToFaqScreen.invoke()

@@ -26,6 +26,7 @@ import org.mifos.mobile.feature.charge.di.ChargeModule
 import org.mifos.mobile.feature.guarantor.di.GuarantorModule
 import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
+import org.mifos.mobile.feature.loan.application.di.loanApplicationModule
 import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
@@ -87,6 +88,7 @@ object KoinModules {
             SetOnboardingLanguageModule,
             PasscodeModule,
             StatusModule,
+            loanApplicationModule,
         )
     }
 

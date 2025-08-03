@@ -80,6 +80,8 @@ data class LoanTemplate(
 
     val transactionProcessingStrategyId: Int? = null,
 
+    val transactionProcessingStrategyCode: String? = null,
+
     val graceOnArrearsAgeing: Int? = null,
 
     val timeline: Timeline? = null,
