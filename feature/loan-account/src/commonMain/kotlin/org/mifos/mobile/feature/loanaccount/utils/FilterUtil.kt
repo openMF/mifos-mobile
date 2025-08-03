@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.loanaccount.utils
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_active
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_approval_pending
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_bronze
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_closed
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_disburse
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_filter_in_arrears
@@ -85,7 +86,7 @@ enum class FilterUtil(
      */
     IN_ARREARS(
         label = Res.string.feature_loan_account_filter_in_arrears,
-        matchCondition = { it.status?.overpaid == true },
+        matchCondition = { it.inArrears == true },
     ),
 
     /**
@@ -103,7 +104,7 @@ enum class FilterUtil(
     ),
 
     BRONZE(
-        label = Res.string.feature_loan_account_filter_personal,
+        label = Res.string.feature_loan_account_filter_bronze,
         matchCondition = { it.productName?.contains("bronze", ignoreCase = true) == true },
     ),
     ;
