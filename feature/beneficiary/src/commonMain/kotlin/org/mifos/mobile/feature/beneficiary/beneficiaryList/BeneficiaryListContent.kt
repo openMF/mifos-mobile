@@ -9,27 +9,18 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.ui.component.MifosBeneficiariesCard
 
 @Composable
 fun ShowBeneficiary(
@@ -44,69 +35,23 @@ fun ShowBeneficiary(
     ) {
         LazyColumn {
             items(beneficiaryList) { beneficiary ->
-                BeneficiaryItem(
+                MifosBeneficiariesCard(
                     beneficiary = beneficiary,
-                    onClick = { onClick(beneficiary.id ?: -1) },
+                    onBeneficiaryClick = { onClick(beneficiary.id ?: -1) },
                 )
             }
         }
-    }
-}
-
-@Composable
-fun BeneficiaryItem(
-    beneficiary: Beneficiary,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    MifosCard(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(0.dp),
-        onClick = onClick,
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Text(
-                text = "${beneficiary.name}",
-                style = MaterialTheme.typography.bodyMedium,
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    text = "${beneficiary.id}",
-                    style = MaterialTheme.typography.labelMedium,
-                )
-
-                Text(
-                    text = "${beneficiary.officeName}",
-                    style = MaterialTheme.typography.labelMedium,
-                )
-            }
-        }
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.2.dp),
-        )
     }
 }
 
 @Preview
 @Composable
-fun PreviewBeneficiaryListEmpty(modifier: Modifier = Modifier) {
+fun PreviewBeneficiaryListEmpty() {
     val beneficiary = Beneficiary(name = "Victor", id = 242344343, officeName = "Main office")
     MifosMobileTheme {
-        BeneficiaryItem(
+        MifosBeneficiariesCard(
             beneficiary = beneficiary,
-            onClick = {},
-            modifier = modifier,
+            onBeneficiaryClick = {},
         )
     }
 }

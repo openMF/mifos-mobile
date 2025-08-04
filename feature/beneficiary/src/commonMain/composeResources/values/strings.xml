@@ -72,4 +72,20 @@
     <string name="add">Add</string>
     <string name="scan">Scan</string>
     <string name="upload_qr_code">Upload QR</string>
+
+
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filters</string>
+    <string name="feature_savings_reset">Reset</string>
+    <string name="feature_savings_apply">Apply</string>
+    <string name="feature_filters_count">%1$s Selected</string>
+    
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Account Type</string>
+    <string name="filter_loan_account">Loan Account</string>
+    <string name="filter_savings_account">Savings Account</string>
+    <string name="filter_linked_with">Linked With</string>
+    <string name="filter_self">Self</string>
+    <string name="filter_other_clients">Other Clients</string>
 </resources>
