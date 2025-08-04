@@ -32,12 +32,6 @@ sealed class SavingsActionItems(
     val icon: ImageVector,
     val route: String,
 ) {
-//    data object Deposit : SavingsActionItems(
-//        title = Res.string.feature_account_action_deposit,
-//        subTitle = Res.string.feature_account_action_deposit_tip,
-//        icon = MifosIcons.Money,
-//        route = Constants.DEPOSIT,
-//    )
 
     data object Transfer : SavingsActionItems(
         title = Res.string.feature_account_action_transfer,
@@ -69,7 +63,6 @@ sealed class SavingsActionItems(
 }
 
 internal val savingsAccountActions: ImmutableList<SavingsActionItems> = persistentListOf(
-//    SavingsActionItems.Deposit,
     SavingsActionItems.Transfer,
     SavingsActionItems.Transactions,
     SavingsActionItems.Charges,
