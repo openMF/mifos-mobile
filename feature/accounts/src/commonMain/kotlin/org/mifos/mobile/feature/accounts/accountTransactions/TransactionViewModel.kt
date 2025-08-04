@@ -12,6 +12,9 @@ package org.mifos.mobile.feature.accounts.accountTransactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -33,7 +36,11 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
@@ -54,13 +61,17 @@ import kotlin.collections.map
  * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
 internal class AccountsTransactionViewModel(
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val recentTransactionRepositoryImpl: RecentTransactionRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
     private val loanAccountRepositoryImpl: LoanRepository,
+    private val networkMonitor: NetworkMonitor,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AccountTransactionState, AccountTransactionEvent, AccountTransactionAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<AccountTransactionsNavRoute>()
         AccountTransactionState(
+            clientId = requireNotNull(userPreferencesRepository.clientId.value),
             dialogState = AccountTransactionState.DialogState.Loading,
             accountId = route.accountId,
             accountType = route.accountType,
@@ -70,6 +81,39 @@ internal class AccountsTransactionViewModel(
     init {
         loadTransactions()
         observeAccountTypeAndInitCheckboxes()
+        observeNetworkStatus()
+    }
+
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * If the network is unavailable, it sets the `networkUnavailable` flag in the state
+     * and shows a network-related dialog.
+     */
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .map(Boolean::not)
+                .distinctUntilChanged()
+                .collect { isOffline ->
+                    updateState {
+                        it.copy(
+                            networkUnavailable = isOffline,
+                            dialogState = if (isOffline) {
+                                AccountTransactionState.DialogState.Network
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                }
+        }
+    }
+
+    private val offset = 0
+    private val limit = 50
+
+    private fun updateState(state: (AccountTransactionState) -> AccountTransactionState) {
+        mutableStateFlow.update(state)
     }
 
     /**
@@ -103,6 +147,9 @@ internal class AccountsTransactionViewModel(
                     )
                 }
             }
+
+            is AccountTransactionAction.Internal.ReceiveTransactions ->
+                handleTransactionResult(action.dataState)
         }
     }
 
@@ -199,7 +246,78 @@ internal class AccountsTransactionViewModel(
         when (state.accountType) {
             Constants.SAVINGS_ACCOUNT -> loadSavingsWithAssociations()
             Constants.LOAN_ACCOUNT -> loadLoanTransactions()
-            else -> {}
+            else -> loadRecentTransactions()
+        }
+    }
+
+    /**
+     * Loads recent transactions from the [RecentTransactionRepository] for the current client.
+     *
+     * This function launches a coroutine in the [viewModelScope] and makes a call to fetch paginated
+     * transactions. It handles three scenarios:
+     *
+     * 1. **Success** – Emits a [DataState.Success] result which is passed to the `ReceiveTransactions` internal action.
+     * 2. **Error** – Emits a [DataState.Error] which updates the state with an appropriate error message.
+     * 3. **Loading** – The loading state is handled implicitly by the UI state and flow.
+     *
+     * On successful data retrieval, the result is dispatched via [AccountTransactionAction.Internal.ReceiveTransactions]
+     * to be processed in the `handleAction` method.
+     */
+    private fun loadRecentTransactions() {
+        viewModelScope.launch {
+            recentTransactionRepositoryImpl.recentTransactions(state.clientId, offset, limit)
+                .catch { error ->
+                    updateState {
+                        it.copy(
+                            dialogState = AccountTransactionState.DialogState.Error("Something Went Wrong"),
+                        )
+                    }
+                }
+                .collect { result ->
+                    sendAction(AccountTransactionAction.Internal.ReceiveTransactions(result))
+                }
+        }
+    }
+
+    /**
+     * Handles the result of the recent transactions API call by updating the UI state
+     * based on [DataState] — success, loading, or error.
+     */
+    private fun handleTransactionResult(dataState: DataState<Page<Transaction>>) {
+        when (dataState) {
+            is DataState.Error -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = AccountTransactionState.DialogState.Error(dataState.message),
+                    )
+                }
+            }
+
+            DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                }
+            }
+
+            is DataState.Success -> {
+                val transactions = dataState.data.pageItems.map {
+                    it.toUiTransaction()
+                }
+
+                val groupedTransactions = transactions.groupBy { transaction ->
+                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                }
+
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = null,
+                        data = transactions,
+                        filteredData = groupedTransactions,
+                        isEmpty = transactions.isEmpty(),
+                        isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                    )
+                }
+            }
         }
     }
 
@@ -423,7 +541,7 @@ data class UiTransaction(
 
 /**
  * The state of the account transactions screen.
- *
+ * @property clientId clientId of user
  * @property accountType The type of account (e.g., "SAVINGS_ACCOUNT", "LOAN_ACCOUNT").
  * @property accountId The ID of the account.
  * @property isRefreshing A boolean indicating if the data is currently being refreshed.
@@ -437,8 +555,10 @@ data class UiTransaction(
  * @property accountDurationFiltersCount The number of active duration filters.
  * @property selectedRadioButton The string resource ID of the selected radio button filter.
  * @property isEmpty A boolean indicating if the filtered data is empty.
+ * @property networkUnavailable A boolean indicating if the network is unavailable.
  */
 internal data class AccountTransactionState(
+    val clientId: Long,
     val accountType: String,
     val accountId: Long,
     val isRefreshing: Boolean = false,
@@ -453,6 +573,7 @@ internal data class AccountTransactionState(
     val selectedRadioButton: StringResource? = null,
     val isEmpty: Boolean = false,
     val isFilteredRecordsEmpty: Boolean = false,
+    val networkUnavailable: Boolean = false,
 ) {
     /**
      * Sealed interface representing the different states of the dialog.
@@ -461,6 +582,7 @@ internal data class AccountTransactionState(
         data class Error(val message: String) : DialogState
         data object Loading : DialogState
         data object Filters : DialogState
+        data object Network : DialogState
     }
 
     /**
@@ -499,6 +621,23 @@ internal sealed interface AccountTransactionAction {
     data class ToggleRadioButton(
         val label: StringResource,
     ) : AccountTransactionAction
+
+    /**
+     * Internal actions used within the [AccountsTransactionViewModel] to handle
+     * data results or internal logic transitions that are not directly triggered by the UI.
+     */
+    sealed interface Internal : AccountTransactionAction {
+        /**
+         * Action representing the result of a transaction fetch operation.
+         *
+         * This is used internally by the ViewModel to process the response from the repository
+         * and update the state accordingly. It encapsulates a [DataState] containing a
+         * [Page] of [Transaction]s which could be loading, success, or error.
+         *
+         * @property dataState The result of the transaction API call.
+         */
+        data class ReceiveTransactions(val dataState: DataState<Page<Transaction>>) : Internal
+    }
 }
 
 /**

@@ -57,6 +57,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
@@ -152,29 +153,31 @@ internal fun TransactionScreenContent(
                     onAction = onAction,
                 )
             }
-            LazyColumn {
-                state.filteredData.forEach { (date, transactions) ->
-                    item {
-                        Text(
-                            text = date,
-                            style = MifosTypography.labelLargeEmphasized,
-                            modifier = Modifier.padding(vertical = DesignToken.padding.medium),
-                        )
-                    }
+            if (state.dialogState == null) {
+                LazyColumn {
+                    state.filteredData.forEach { (date, transactions) ->
+                        item {
+                            Text(
+                                text = date,
+                                style = MifosTypography.labelLargeEmphasized,
+                                modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                            )
+                        }
 
-                    items(transactions.size) { index ->
-                        val transaction = transactions[index]
-                        TransactionScreenItem(
-                            title = transaction.typeValue ?: "",
-                            date = DateHelper.getDateAsString(transaction.date),
-                            time = "",
-                            transactionAmount = CurrencyFormatter.format(
-                                balance = transaction.amount,
-                                currencyCode = transaction.currency,
-                                maximumFractionDigits = 3,
-                            ),
-                            isCredited = transaction.isCredit == true,
-                        )
+                        items(transactions.size) { index ->
+                            val transaction = transactions[index]
+                            TransactionScreenItem(
+                                title = transaction.typeValue ?: "",
+                                date = DateHelper.getDateAsString(transaction.date),
+                                time = "",
+                                transactionAmount = CurrencyFormatter.format(
+                                    balance = transaction.amount,
+                                    currencyCode = transaction.currency,
+                                    maximumFractionDigits = 3,
+                                ),
+                                isCredited = transaction.isCredit == true,
+                            )
+                        }
                     }
                 }
             }
@@ -206,6 +209,12 @@ internal fun AccountTransactionsDialog(
         AccountTransactionState.DialogState.Loading -> {
             MifosProgressIndicator(modifier = modifier.fillMaxSize())
         }
+        AccountTransactionState.DialogState.Network ->
+            MifosErrorComponent(
+                isNetworkConnected = state.networkUnavailable,
+                isRetryEnabled = true,
+                onRetry = { onAction(AccountTransactionAction.Refresh) },
+            )
         null -> {}
     }
 }
