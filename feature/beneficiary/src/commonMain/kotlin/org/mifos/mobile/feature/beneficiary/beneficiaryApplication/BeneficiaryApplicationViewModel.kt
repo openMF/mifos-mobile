@@ -32,14 +32,11 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.model.entity.Page
-import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationEvent.*
 
 internal class BeneficiaryApplicationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
@@ -117,7 +114,8 @@ internal class BeneficiaryApplicationViewModel(
             is BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult -> {
                 updateStateFromResults(
                     action.beneficiaryList,
-                    action.beneficiaryTemplate)
+                    action.beneficiaryTemplate,
+                )
             }
         }
     }
@@ -131,7 +129,9 @@ internal class BeneficiaryApplicationViewModel(
         }.catch { error ->
             setDialogState(
                 BeneficiaryApplicationState.DialogState.Error(
-                error.message ?: "An error occurred",),)
+                    error.message ?: "An error occurred",
+                ),
+            )
         }.launchIn(viewModelScope)
     }
 
@@ -141,13 +141,13 @@ internal class BeneficiaryApplicationViewModel(
     ) {
         when {
             beneficiaryList is DataState.Loading || beneficiaryTemplate is DataState.Loading -> {
-                setDialogState( BeneficiaryApplicationState.DialogState.Loading)
+                setDialogState(BeneficiaryApplicationState.DialogState.Loading)
             }
             beneficiaryList is DataState.Error || beneficiaryTemplate is DataState.Error -> {
                 val error = (beneficiaryList as? DataState.Error)?.exception?.message
                     ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
                     ?: "An error occurred"
-                setDialogState( BeneficiaryApplicationState.DialogState.Error(error))
+                setDialogState(BeneficiaryApplicationState.DialogState.Error(error))
             }
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
                 updateState { currentState ->
@@ -161,10 +161,10 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
-    private fun requestPayload(payload: BeneficiaryPayload){
-        if(validateFields(payload)){
+    private fun requestPayload(payload: BeneficiaryPayload) {
+        if (validateFields(payload)) {
             viewModelScope.launch {
-                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(payload,state.beneficiaryState))
+                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(payload, state.beneficiaryState))
             }
         }
     }
@@ -264,7 +264,7 @@ internal class BeneficiaryApplicationViewModel(
 
 data class BeneficiaryApplicationState(
     val topBarTitle: StringResource = Res.string.add_beneficiary,
-    val beneficiaryId: Int =-1,
+    val beneficiaryId: Int = -1,
     val networkUnavailable: Boolean = false,
     val template: BeneficiaryTemplate? = null,
     val beneficiary: Beneficiary? = null,
@@ -307,7 +307,9 @@ sealed interface BeneficiaryApplicationAction {
 
     sealed interface Internal : BeneficiaryApplicationAction {
 
-        data class ReceiveBeneficiaryResult(val beneficiaryList: DataState<List<Beneficiary>>,
-                                       val beneficiaryTemplate: DataState<BeneficiaryTemplate>,) : Internal
+        data class ReceiveBeneficiaryResult(
+            val beneficiaryList: DataState<List<Beneficiary>>,
+            val beneficiaryTemplate: DataState<BeneficiaryTemplate>,
+        ) : Internal
     }
 }

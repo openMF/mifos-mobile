@@ -26,11 +26,9 @@ import mifos_mobile.feature.beneficiary.generated.resources.try_again
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
-import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
@@ -129,7 +127,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     setDialogState(null)
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
-                            eventType = EventType.FAILURE.name,
+                            eventType = EventType.SUCCESS.name,
                             eventDestination = "",
                             title = getString(Res.string.beneficiary_created_successfully),
                             subtitle = successMsg,
@@ -165,7 +163,8 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                 .collect { result ->
                     sendAction(
                         BeneficiaryApplicationConfirmationAction
-                            .Internal.ReceiveAuthenticationResult(result.success))
+                            .Internal.ReceiveAuthenticationResult(result.success),
+                    )
                 }
         }
     }

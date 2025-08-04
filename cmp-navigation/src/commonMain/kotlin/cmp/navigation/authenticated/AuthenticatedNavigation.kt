@@ -35,9 +35,7 @@ import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToMan
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.beneficiaryAddConfirmationDestination
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
-import org.mifos.mobile.feature.beneficiary.navigation.navigateToAddBeneficiaryScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
-import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
@@ -202,18 +200,18 @@ internal fun NavGraphBuilder.authenticatedGraph(
             openQrImportScreen = navController::navigateToQrImportScreen,
         )
 
-        //TODO: After beneficiaryNavGraph list completed change accordingly
+        // TODO: After beneficiaryNavGraph list completed change accordingly
         manualBeneficiaryAddDestination(
             navigateBack = navController::popBackStack,
             navigateToConfirmationScreen = { id, beneficiary, beneficiaryState ->
                 navController.navigateToBeneficiaryApplicationAddConfirmationScreen(
                     beneficiaryId = id,
                     beneficiaryState = beneficiaryState.name,
-                    name = beneficiary.name?:"",
-                    officeName = beneficiary.officeName?:"",
-                    accountType = beneficiary.accountType?:1,
-                    accountNumber = beneficiary.accountNumber?:"",
-                    transferLimit = beneficiary.transferLimit?:0,
+                    name = beneficiary.name ?: "",
+                    officeName = beneficiary.officeName ?: "",
+                    accountType = beneficiary.accountType ?: 1,
+                    accountNumber = beneficiary.accountNumber ?: "",
+                    transferLimit = beneficiary.transferLimit ?: 0,
                 )
             },
         )

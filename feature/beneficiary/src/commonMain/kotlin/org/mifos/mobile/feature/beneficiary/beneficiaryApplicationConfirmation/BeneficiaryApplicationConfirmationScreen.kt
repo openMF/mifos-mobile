@@ -53,8 +53,8 @@ internal fun BeneficiaryApplicationConfirmationScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    EventsEffect(viewModel.eventFlow){ event->
-        when(event){
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
             BeneficiaryApplicationConfirmationEvent.Navigate -> {
                 navigateBack.invoke()
             }

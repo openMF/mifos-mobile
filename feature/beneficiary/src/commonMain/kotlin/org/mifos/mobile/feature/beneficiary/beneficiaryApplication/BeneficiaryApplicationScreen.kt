@@ -121,13 +121,13 @@ private fun BeneficiaryApplicationScreen(
 @Composable
 private fun BeneficiaryApplicationScreenPreview() {
     MifosMobileTheme {
-//        BeneficiaryApplicationScreen(
-//            state = BeneficiaryApplicationState(
-//                dialogState = null,
-//                beneficiaryState = BeneficiaryState.CREATE_QR,
-//            ),
-//            onAction = { },
-//            modifier = Modifier,
-//        )
+        BeneficiaryApplicationScreen(
+            state = BeneficiaryApplicationState(
+                dialogState = null,
+                beneficiaryState = BeneficiaryState.CREATE_QR,
+            ),
+            onAction = {},
+            modifier = Modifier,
+        )
     }
 }

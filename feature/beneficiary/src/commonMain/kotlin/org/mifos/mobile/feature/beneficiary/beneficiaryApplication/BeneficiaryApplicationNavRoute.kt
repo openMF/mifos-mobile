@@ -24,8 +24,8 @@ data class BeneficiaryApplicationNavRoute(
 )
 
 fun NavController.navigateToManualBeneficiaryAddScreen(
-    beneficiaryId: Int =-1,
-    beneficiaryState: String =BeneficiaryState.CREATE_MANUAL.name,
+    beneficiaryId: Int = -1,
+    beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
     navOptions: NavOptions? = null,
 ) {
     this.navigate(BeneficiaryApplicationNavRoute(beneficiaryId, beneficiaryState), navOptions)
