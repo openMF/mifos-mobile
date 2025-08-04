@@ -50,7 +50,7 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
                 val args = AccountDetails(
                     accountId = it,
                     transferType = TRANSFER_PAY_FROM,
-                    transferTarget = TransferType.TPT,
+                    transferTarget = TransferType.SELF,
                     transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
                 )
                 navigateToTransferScreen(args)

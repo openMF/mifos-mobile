@@ -61,24 +61,32 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun TransferProcessScreen(
     navigateBack: () -> Unit,
-    onTransferSuccessNavigate: (TransferSuccessDestination) -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
+    navigateToAuthenticateScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TransferProcessViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             TransferProcessEvent.Navigate -> navigateBack.invoke()
             is TransferProcessEvent.TransferSuccess -> {
-                onTransferSuccessNavigate(event.destination)
+
             }
-            is TransferProcessEvent.ShowToast -> {
-                scope.launch {
-                    snackbarHostState.showSnackbar(event.message)
-                }
+
+            is TransferProcessEvent.NavigateToAuthenticate -> {
+                navigateToAuthenticateScreen.invoke()
+            }
+
+            is TransferProcessEvent.NavigateToStatus -> {
+                navigateToStatusScreen.invoke(
+                    event.eventType,
+                    event.eventDestination,
+                    event.title,
+                    event.subtitle,
+                    event.buttonText,
+                )
             }
         }
     }
@@ -88,32 +96,18 @@ internal fun TransferProcessScreen(
             { viewModel.trySendAction(it) }
         },
         modifier = modifier,
-        snackbarHostState = snackbarHostState,
     )
-}
-
-@Composable
-private fun TransferProcessDialog(
-    state: TransferProcessState,
-) {
-    when (state.dialogState) {
-        TransferProcessState.DialogState.Loading -> MifosProgressIndicator()
-        is TransferProcessState.DialogState.Error -> MifosErrorComponent()
-        null -> Unit
-    }
 }
 
 @Composable
 private fun TransferProcessScreen(
     state: TransferProcessState,
     onAction: (TransferProcessAction) -> Unit,
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
         topBarTitle = stringResource(Res.string.transfer),
         onNavigateBack = { onAction(TransferProcessAction.OnNavigate) },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier.navigationBarsPadding(),
         bottomBar = {
             Surface {
@@ -125,14 +119,17 @@ private fun TransferProcessScreen(
             }
         },
     ) {
-        TransferProcessContent(
-            state = state,
-            onAction = onAction,
-        )
+        if(state.isLoading){
+            MifosProgressIndicator()
+        }
+        else{
+            TransferProcessContent(
+                state = state,
+                onAction = onAction,
+            )
+        }
+
     }
-    TransferProcessDialog(
-        state = state,
-    )
 }
 
 @Composable
@@ -237,7 +234,7 @@ private fun TransferProcessContent(
                         )
                         MifosButton(
                             text = { Text(text = stringResource(Res.string.transfer)) },
-                            onClick = { onAction(TransferProcessAction.MakeTransfer) },
+                            onClick = { onAction(TransferProcessAction.RequestTransfer) },
                         )
                     }
                 }
@@ -252,12 +249,10 @@ private fun TransferProcessScreenPreview() {
     MifosMobileTheme {
         TransferProcessScreen(
             state = TransferProcessState(
-                dialogState = null,
                 transferType = TransferType.SELF,
             ),
             onAction = { },
             modifier = Modifier,
-            snackbarHostState = SnackbarHostState(),
         )
     }
 }

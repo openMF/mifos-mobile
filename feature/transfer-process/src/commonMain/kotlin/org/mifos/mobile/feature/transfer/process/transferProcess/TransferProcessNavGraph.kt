@@ -30,16 +30,19 @@ data class TransferProcessRoute(
     val transferAmount: Double? = null,
     val transferDescription: String? = null,
     val transferType: String = TransferType.SELF.name,
-    val transferSuccessDestination: String = TransferSuccessDestination.HOME.name,
+    val transferSuccessDestination: String = "",
 )
 
 fun NavGraphBuilder.transferProcessDestination(
     navigateBack: () -> Unit,
+    navigateToAuthenticateScreen: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     composableWithSlideTransitions<TransferProcessRoute> {
         TransferProcessScreen(
             navigateBack = navigateBack,
-            onTransferSuccessNavigate = {},
+            navigateToAuthenticateScreen=navigateToAuthenticateScreen,
+            navigateToStatusScreen = navigateToStatusScreen,
         )
     }
 }
@@ -47,7 +50,7 @@ fun NavGraphBuilder.transferProcessDestination(
 fun NavController.navigateToTransferProcessScreen(
     transferPayload: ReviewTransferPayload,
     transferType: TransferType,
-    transferSuccessDestination: TransferSuccessDestination,
+    transferSuccessDestination: String,
 ) {
     this.navigate(
         TransferProcessRoute(
@@ -62,7 +65,7 @@ fun NavController.navigateToTransferProcessScreen(
             transferAmount = transferPayload.amount.toDoubleOrNull(),
             transferDescription = transferPayload.review,
             transferType = transferType.name,
-            transferSuccessDestination = transferSuccessDestination.name,
+            transferSuccessDestination = transferSuccessDestination,
         ),
     )
 }

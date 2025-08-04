@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,7 +45,9 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPayFromDropdownUI
@@ -55,7 +58,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun MakeTransferScreen(
     navigateBack: () -> Unit,
-    navigateToTransferScreen: (ReviewTransferPayload) -> Unit,
+    navigateToTransferScreen: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
     viewModel: MakeTransferViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -67,7 +70,7 @@ internal fun MakeTransferScreen(
                 navigateBack.invoke()
             }
             is MakeTransferEvent.NavigateToTransferScreen -> {
-                navigateToTransferScreen(event.reviewTransferPayload)
+                navigateToTransferScreen(event.reviewTransferPayload,event.transferType,event.destination)
             }
         }
     }
@@ -75,8 +78,10 @@ internal fun MakeTransferScreen(
     MakeTransferScreenContent(
         state = state,
         isNetworkAvailable = isNetworkAvailable,
-        onAction = {
-            viewModel.trySendAction(it)
+        onAction = remember(viewModel){
+            {
+                viewModel.trySendAction(it)
+            }
         },
     )
 }
@@ -152,7 +157,9 @@ internal fun MakeTransferScreenContent(
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.amountError,
-                            errorText = stringResource(Res.string.error_description),
+                            errorText = if(state.amountError){
+                                stringResource(Res.string.error_description)
+                            }else{""},
                             trailingIcon = if (state.amountError) {
                                 {
                                     Icon(

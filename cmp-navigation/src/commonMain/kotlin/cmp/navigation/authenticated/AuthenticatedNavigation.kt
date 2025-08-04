@@ -17,7 +17,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializer
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
@@ -37,8 +40,10 @@ import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.help.navigation.helpNavGraph
 import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
+import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
 import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
+import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountRoute
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
@@ -57,6 +62,7 @@ import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionN
 import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
 import org.mifos.mobile.feature.savings.navigation.oldSavingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
+import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
@@ -73,6 +79,7 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
+@OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
 ) {
@@ -194,11 +201,18 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         makeTransferDestination(
             navigateBack = navController::popBackStack,
-            navigateToTransferScreen = {
+            navigateToTransferScreen = {transferPayload, transferType, transferDestination ->
                 navController.navigateToTransferProcessScreen(
-                    transferPayload = it,
-                    transferType = TransferType.SELF,
-                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                    transferPayload = transferPayload,
+                    transferType = transferType,
+                    transferSuccessDestination = when(transferDestination){
+                        TransferSuccessDestination.SAVINGS_ACCOUNT -> SavingsAccountRoute::class.serializer().descriptor.serialName
+                        TransferSuccessDestination.LOAN_ACCOUNT -> LoanAccountRoute::class.serializer().descriptor.serialName
+                        TransferSuccessDestination.HOME -> {
+                            HomeRoute::class.serializer().descriptor.serialName
+                        }
+                    }
+
                 )
             },
         )
@@ -208,11 +222,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
             viewQrCode = {},
             viewCharges = { _, _ -> },
             reviewTransfer = { transferPayload, transferType, transferDestination ->
-                navController.navigateToTransferProcessScreen(
-                    transferPayload,
-                    transferType,
-                    transferDestination,
-                )
+//                navController.navigateToTransferProcessScreen(
+//                    transferPayload,
+//                    transferType,
+//                    transferDestination,
+//                )
             },
             callHelpline = {},
         )
@@ -221,34 +235,19 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateBack = navController::popBackStack,
             addBeneficiary = { },
             reviewTransfer = { transferPayload, transferType, transferDestination ->
-                navController.navigateToTransferProcessScreen(
-                    transferPayload,
-                    transferType,
-                    transferDestination,
-                )
+//                navController.navigateToTransferProcessScreen(
+//                    transferPayload,
+//                    transferType,
+//                    transferDestination,
+//                )
             },
         )
 
-//        transferProcessNavGraph(
-//            navigateBack = navController::popBackStack,
-//            onTransferSuccessNavigate = { destination ->
-//                println("getting destination from handle $destination")
-//                when (destination) {
-//                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
-//                    TransferSuccessDestination.LOAN_ACCOUNT ->
-//                        navController.navigateToAccountsScreen(
-//                            Constants.LOAN_ACCOUNT,
-//                        )
-//
-//                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(
-//                        Constants.SAVINGS_ACCOUNT,
-//                    )
-//                }
-//            },
-//        )
 
         transferProcessDestination(
             navigateBack = navController::popBackStack,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToStatusScreen=navController::navigateToStatusAfterUpdate,
         )
     }
 }
