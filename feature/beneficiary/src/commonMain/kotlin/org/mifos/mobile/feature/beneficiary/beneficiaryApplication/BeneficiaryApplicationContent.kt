@@ -203,6 +203,7 @@ private fun BeneficiaryApplicationContentPreview() {
         BeneficiaryApplicationContent(
             state = BeneficiaryApplicationState(
                 dialogState = null,
+                beneficiaryState = BeneficiaryState.CREATE_QR,
             ),
             onAction = {},
         )

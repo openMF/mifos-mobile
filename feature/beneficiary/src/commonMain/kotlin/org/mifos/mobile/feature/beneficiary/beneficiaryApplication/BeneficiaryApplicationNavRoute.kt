@@ -20,12 +20,12 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 @Serializable
 data class BeneficiaryApplicationNavRoute(
     val beneficiaryId: Int = -1,
-    val beneficiaryState: String,
+    val beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
 )
 
 fun NavController.navigateToManualBeneficiaryAddScreen(
-    beneficiaryId: Int,
-    beneficiaryState: String,
+    beneficiaryId: Int =-1,
+    beneficiaryState: String =BeneficiaryState.CREATE_MANUAL.name,
     navOptions: NavOptions? = null,
 ) {
     this.navigate(BeneficiaryApplicationNavRoute(beneficiaryId, beneficiaryState), navOptions)

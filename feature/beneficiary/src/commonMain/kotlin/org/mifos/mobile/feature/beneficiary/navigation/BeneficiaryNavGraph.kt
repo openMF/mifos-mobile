@@ -71,13 +71,12 @@ fun NavGraphBuilder.beneficiaryNavGraph(
         addBeneficiaryRoute(
             navigateBack = navController::popBackStack,
             addBeneficiaryManually = {
-//                navController.navigate(
-//                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
-//                        -1,
-//                        BeneficiaryState.CREATE_MANUAL,
-//                    ),
-//                )
-                navController.navigateToManualBeneficiaryAddScreen(-1, BeneficiaryState.CREATE_MANUAL.name)
+                navController.navigate(
+                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
+                        -1,
+                        BeneficiaryState.CREATE_MANUAL,
+                    ),
+                )
             },
             openQrScanner = openQrReaderScreen,
             uploadQrCode = openQrImportScreen,
@@ -95,26 +94,6 @@ fun NavGraphBuilder.beneficiaryNavGraph(
             },
         )
 
-        manualBeneficiaryAddDestination(
-            navigateBack = navController::popBackStack,
-            navigateToConfirmationScreen = { id, beneficiary, beneficiaryState ->
-                navController.navigateToBeneficiaryApplicationAddConfirmationScreen(
-                    beneficiaryId = id,
-                    beneficiaryState = beneficiaryState.name,
-                    name = beneficiary.name!!,
-                    officeName = beneficiary.officeName!!,
-                    accountType = beneficiary.accountType!!,
-                    accountNumber = beneficiary.accountNumber!!,
-                    transferLimit = beneficiary.transferLimit!!,
-                )
-            },
-        )
-        beneficiaryAddConfirmationDestination(
-            navigateBack = navController::popBackStack,
-        )
-//        beneficiaryApplicationRoute(
-//            navigateBack = navController::popBackStack,
-//        )
     }
 }
 

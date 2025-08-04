@@ -30,7 +30,12 @@ import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.manualBeneficiaryAddDestination
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.beneficiaryAddConfirmationDestination
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToAddBeneficiaryScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
@@ -89,7 +94,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
-            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
+            navigateToBeneficiaryScreen = {
+                navController.navigateToManualBeneficiaryAddScreen()
+            },
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
             },
@@ -193,6 +200,27 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             openQrReaderScreen = navController::navigateToQrReaderScreen,
             openQrImportScreen = navController::navigateToQrImportScreen,
+        )
+
+        //TODO: After beneficiaryNavGraph list completed change accordingly
+        manualBeneficiaryAddDestination(
+            navigateBack = navController::popBackStack,
+            navigateToConfirmationScreen = { id, beneficiary, beneficiaryState ->
+                navController.navigateToBeneficiaryApplicationAddConfirmationScreen(
+                    beneficiaryId = id,
+                    beneficiaryState = beneficiaryState.name,
+                    name = beneficiary.name?:"",
+                    officeName = beneficiary.officeName?:"",
+                    accountType = beneficiary.accountType?:1,
+                    accountNumber = beneficiary.accountNumber?:"",
+                    transferLimit = beneficiary.transferLimit?:0,
+                )
+            },
+        )
+        beneficiaryAddConfirmationDestination(
+            navigateBack = navController::popBackStack,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
 
         qrNavGraph(

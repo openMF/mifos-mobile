@@ -83,4 +83,13 @@
     <string name="account_type_savings">Savings</string>
     <string name="account_type_loan">Loan</string>
     <string name="account_type_share">Share</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Validate Details</string>
+    <string name="confirm_details">Confirm Details</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Beneficiary Creation Failed</string>
+    <string name="try_again">Try Again</string>
+    <string name="back_to_home">Back To Home</string>
 </resources>

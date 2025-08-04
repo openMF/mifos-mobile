@@ -28,8 +28,10 @@ import mifos_mobile.feature.beneficiary.generated.resources.account_type_loan
 import mifos_mobile.feature.beneficiary.generated.resources.account_type_savings
 import mifos_mobile.feature.beneficiary.generated.resources.account_type_share
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
+import mifos_mobile.feature.beneficiary.generated.resources.confirm_details
 import mifos_mobile.feature.beneficiary.generated.resources.office_label
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit_label
+import mifos_mobile.feature.beneficiary.generated.resources.validate_details
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -40,13 +42,37 @@ import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun BeneficiaryApplicationConfirmationScreen(
+    navigateBack: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
+    navigateToAuthenticateScreen: () -> Unit,
     viewModel: BeneficiaryApplicationConfirmationViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    EventsEffect(viewModel.eventFlow){ event->
+        when(event){
+            BeneficiaryApplicationConfirmationEvent.Navigate -> {
+                navigateBack.invoke()
+            }
+            is BeneficiaryApplicationConfirmationEvent.NavigateToStatus -> {
+                navigateToStatusScreen.invoke(
+                    event.eventType,
+                    event.eventDestination,
+                    event.title,
+                    event.subtitle,
+                    event.buttonText,
+                )
+            }
+
+            is BeneficiaryApplicationConfirmationEvent.NavigateToAuthenticate -> {
+                navigateToAuthenticateScreen.invoke()
+            }
+        }
+    }
     BeneficiaryApplicationConfirmationScreenContent(
         state = state,
         onAction = remember {
@@ -100,7 +126,7 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                     verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
                 ) {
                     Text(
-                        text = "Validate Details",
+                        text = stringResource(Res.string.validate_details),
                         style = MifosTypography.labelLargeEmphasized,
                     )
 
@@ -124,7 +150,7 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         text = {
-                            Text("Confirm Details")
+                            Text(stringResource(Res.string.confirm_details))
                         },
                     )
                 }

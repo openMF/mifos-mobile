@@ -52,8 +52,14 @@ fun NavController.navigateToBeneficiaryApplicationAddConfirmationScreen(
 
 fun NavGraphBuilder.beneficiaryAddConfirmationDestination(
     navigateBack: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
+    navigateToAuthenticateScreen: () -> Unit,
 ) {
     composableWithSlideTransitions<BeneficiaryApplicationConfirmationNavRoute> {
-        BeneficiaryApplicationConfirmationScreen()
+        BeneficiaryApplicationConfirmationScreen(
+            navigateBack = navigateBack,
+            navigateToStatusScreen = navigateToStatusScreen,
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
+        )
     }
 }

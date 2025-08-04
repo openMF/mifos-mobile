@@ -32,11 +32,14 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationEvent.*
 
 internal class BeneficiaryApplicationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
@@ -56,21 +59,23 @@ internal class BeneficiaryApplicationViewModel(
     init {
         viewModelScope.launch {
             observeNetworkStatus()
+            getTopBarTitle()
             loadBeneficiaryAndTemplate()
         }
-        getTopBarTitle()
     }
 
     private fun getTopBarTitle() {
-        val update = Res.string.update_beneficiary
-        val add = Res.string.add_beneficiary
-        updateState {
-            it.copy(
-                topBarTitle = when (state.beneficiaryState) {
-                    BeneficiaryState.UPDATE -> update
-                    else -> add
-                },
-            )
+        viewModelScope.launch {
+            val update = Res.string.update_beneficiary
+            val add = Res.string.add_beneficiary
+            updateState {
+                it.copy(
+                    topBarTitle = when (state.beneficiaryState) {
+                        BeneficiaryState.UPDATE -> update
+                        else -> add
+                    },
+                )
+            }
         }
     }
 
@@ -89,9 +94,8 @@ internal class BeneficiaryApplicationViewModel(
                     loadBeneficiaryAndTemplate()
                 }
             }
-            is BeneficiaryApplicationAction.SubmitBeneficiary -> {
-                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(action.payload, state.beneficiaryState))
-            }
+            is BeneficiaryApplicationAction.SubmitBeneficiary -> requestPayload(action.payload)
+
             BeneficiaryApplicationAction.OnNavigate -> sendEvent(
                 BeneficiaryApplicationEvent.Navigate,
             )
@@ -109,6 +113,12 @@ internal class BeneficiaryApplicationViewModel(
                 transferLimit = action.transferLimit,
                 beneficiaryName = action.beneficiaryName,
             )
+
+            is BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult -> {
+                updateStateFromResults(
+                    action.beneficiaryList,
+                    action.beneficiaryTemplate)
+            }
         }
     }
 
@@ -117,16 +127,11 @@ internal class BeneficiaryApplicationViewModel(
             beneficiaryRepositoryImp.beneficiaryList(),
             beneficiaryRepositoryImp.beneficiaryTemplate(),
         ) { beneficiaryList, beneficiaryTemplate ->
-            updateStateFromResults(beneficiaryList, beneficiaryTemplate)
+            sendAction(BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(beneficiaryList, beneficiaryTemplate))
         }.catch { error ->
-            updateState {
-                it.copy(
-                    dialogState =
-                    BeneficiaryApplicationState.DialogState.Error(
-                        error.message ?: "An error occurred",
-                    ),
-                )
-            }
+            setDialogState(
+                BeneficiaryApplicationState.DialogState.Error(
+                error.message ?: "An error occurred",),)
         }.launchIn(viewModelScope)
     }
 
@@ -136,13 +141,13 @@ internal class BeneficiaryApplicationViewModel(
     ) {
         when {
             beneficiaryList is DataState.Loading || beneficiaryTemplate is DataState.Loading -> {
-                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Loading) }
+                setDialogState( BeneficiaryApplicationState.DialogState.Loading)
             }
             beneficiaryList is DataState.Error || beneficiaryTemplate is DataState.Error -> {
                 val error = (beneficiaryList as? DataState.Error)?.exception?.message
                     ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
                     ?: "An error occurred"
-                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Error(error)) }
+                setDialogState( BeneficiaryApplicationState.DialogState.Error(error))
             }
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
                 updateState { currentState ->
@@ -152,6 +157,14 @@ internal class BeneficiaryApplicationViewModel(
                         template = beneficiaryTemplate.data,
                     )
                 }
+            }
+        }
+    }
+
+    private fun requestPayload(payload: BeneficiaryPayload){
+        if(validateFields(payload)){
+            viewModelScope.launch {
+                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(payload,state.beneficiaryState))
             }
         }
     }
@@ -291,4 +304,10 @@ sealed interface BeneficiaryApplicationAction {
         val transferLimit: String? = null,
         val beneficiaryName: String? = null,
     ) : BeneficiaryApplicationAction
+
+    sealed interface Internal : BeneficiaryApplicationAction {
+
+        data class ReceiveBeneficiaryResult(val beneficiaryList: DataState<List<Beneficiary>>,
+                                       val beneficiaryTemplate: DataState<BeneficiaryTemplate>,) : Internal
+    }
 }
