@@ -38,6 +38,10 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.observe
 
+/**
+ * ViewModel for confirming beneficiary details before final submission.
+ * Handles authentication result, network state, form submission, and error states.
+ */
 internal class BeneficiaryApplicationConfirmationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
@@ -59,6 +63,10 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     },
 ) {
 
+    /**
+     * Initializes observers for network status and authentication result,
+     * and sets the top bar title based on state.
+     */
     init {
         viewModelScope.launch {
             observeNetworkStatus()
@@ -67,14 +75,23 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Updates the ViewModel state using the provided transformation.
+     */
     private fun updateState(update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Updates only the dialog state in the ViewModel.
+     */
     private fun setDialogState(dialogState: BeneficiaryApplicationConfirmationState.DialogState?) {
         updateState { it.copy(dialogState = dialogState) }
     }
 
+    /**
+     * Handles user actions such as navigation, form submission, and internal authentication results.
+     */
     override fun handleAction(action: BeneficiaryApplicationConfirmationAction) {
         when (action) {
             BeneficiaryApplicationConfirmationAction.OnNavigate -> sendEvent(
@@ -101,6 +118,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Initiates the API call to create a new beneficiary and handles success or failure events.
+     */
     private fun createBeneficiary(payload: BeneficiaryPayload?) {
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
@@ -139,7 +159,10 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
-    // TODO: Change Based on need
+    /**
+     * (Optional) Updates an existing beneficiary with the given payload.
+     * Currently not called in logic but reserved for future use.
+     */
     private fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
@@ -157,6 +180,10 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Observes the authentication result from a separate authentication screen,
+     * and triggers submission if authentication succeeds.
+     */
     private fun observeAuthResult() {
         viewModelScope.launch {
             navigator.observe<AuthResult>()
@@ -169,6 +196,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Observes network connectivity status and updates UI accordingly.
+     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
@@ -189,6 +219,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Updates the top bar title depending on whether the user is updating or adding a beneficiary.
+     */
     private fun getTopBarTitle() {
         val update = Res.string.update_beneficiary
         val add = Res.string.add_beneficiary

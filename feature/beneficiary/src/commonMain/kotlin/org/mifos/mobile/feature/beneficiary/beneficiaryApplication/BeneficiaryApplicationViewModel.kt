@@ -37,7 +37,10 @@ import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-
+/**
+ * ViewModel for handling the Beneficiary Application logic including form validation,
+ * network state observation, and interaction with repository for data operations.
+ */
 internal class BeneficiaryApplicationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
@@ -53,6 +56,10 @@ internal class BeneficiaryApplicationViewModel(
     },
 ) {
 
+    /**
+     * Initializes the ViewModel by observing the network status,
+     * setting the top bar title, and loading beneficiary and template data.
+     */
     init {
         viewModelScope.launch {
             observeNetworkStatus()
@@ -61,6 +68,9 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Sets the top bar title based on the beneficiary state (Add or Update).
+     */
     private fun getTopBarTitle() {
         viewModelScope.launch {
             val update = Res.string.update_beneficiary
@@ -76,14 +86,23 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Updates the ViewModel state using the provided lambda transformation.
+     */
     private fun updateState(update: (BeneficiaryApplicationState) -> BeneficiaryApplicationState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Updates only the dialog state in the ViewModel.
+     */
     private fun setDialogState(dialogState: BeneficiaryApplicationState.DialogState?) {
         updateState { it.copy(dialogState = dialogState) }
     }
 
+    /**
+     * Handles UI actions by triggering appropriate ViewModel logic or events.
+     */
     override fun handleAction(action: BeneficiaryApplicationAction) {
         when (action) {
             BeneficiaryApplicationAction.LoadBeneficiaryTemplate -> {
@@ -92,17 +111,12 @@ internal class BeneficiaryApplicationViewModel(
                 }
             }
             is BeneficiaryApplicationAction.SubmitBeneficiary -> requestPayload(action.payload)
-
-            BeneficiaryApplicationAction.OnNavigate -> sendEvent(
-                BeneficiaryApplicationEvent.Navigate,
-            )
-
+            BeneficiaryApplicationAction.OnNavigate -> sendEvent(BeneficiaryApplicationEvent.Navigate)
             BeneficiaryApplicationAction.OnRetry -> {
                 viewModelScope.launch {
                     loadBeneficiaryAndTemplate()
                 }
             }
-
             is BeneficiaryApplicationAction.OnFieldChange -> onFieldChange(
                 accountType = action.accountType,
                 accountNumber = action.accountNumber,
@@ -110,7 +124,6 @@ internal class BeneficiaryApplicationViewModel(
                 transferLimit = action.transferLimit,
                 beneficiaryName = action.beneficiaryName,
             )
-
             is BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult -> {
                 updateStateFromResults(
                     action.beneficiaryList,
@@ -120,6 +133,9 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Loads both the beneficiary list and template from the repository.
+     */
     private fun loadBeneficiaryAndTemplate() {
         combine(
             beneficiaryRepositoryImp.beneficiaryList(),
@@ -135,6 +151,9 @@ internal class BeneficiaryApplicationViewModel(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Updates the ViewModel state based on the results from the beneficiary list and template APIs.
+     */
     private fun updateStateFromResults(
         beneficiaryList: DataState<List<Beneficiary>>,
         beneficiaryTemplate: DataState<BeneficiaryTemplate>,
@@ -161,6 +180,9 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Validates form fields and submits the payload if validation passes.
+     */
     private fun requestPayload(payload: BeneficiaryPayload) {
         if (validateFields(payload)) {
             viewModelScope.launch {
@@ -169,6 +191,10 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Validates the input fields for the beneficiary form and updates the error states.
+     * Returns true if validation passes; false otherwise.
+     */
     private fun validateFields(payload: BeneficiaryPayload): Boolean {
         var hasError = false
 
@@ -223,6 +249,9 @@ internal class BeneficiaryApplicationViewModel(
         return !hasError
     }
 
+    /**
+     * Resets the corresponding field error when a field is changed by the user.
+     */
     private fun onFieldChange(
         accountType: Int? = null,
         accountNumber: String? = null,
@@ -241,6 +270,9 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
+    /**
+     * Observes the network status and updates the ViewModel state accordingly.
+     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
@@ -261,6 +293,7 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 }
+
 
 data class BeneficiaryApplicationState(
     val topBarTitle: StringResource = Res.string.add_beneficiary,
