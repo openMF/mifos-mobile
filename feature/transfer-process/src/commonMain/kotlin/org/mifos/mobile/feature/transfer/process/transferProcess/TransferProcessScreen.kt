@@ -59,8 +59,6 @@ internal fun TransferProcessScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             TransferProcessEvent.Navigate -> navigateBack.invoke()
-            is TransferProcessEvent.TransferSuccess -> {
-            }
 
             is TransferProcessEvent.NavigateToAuthenticate -> {
                 navigateToAuthenticateScreen.invoke()

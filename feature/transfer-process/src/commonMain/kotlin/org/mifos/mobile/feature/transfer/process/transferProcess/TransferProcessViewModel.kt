@@ -209,11 +209,6 @@ data class TransferProcessState(
  * These events are typically used to trigger navigation or show one-time messages.
  */
 sealed interface TransferProcessEvent {
-    /**
-     * Event to indicate a successful transfer and specify the destination.
-     * @param destination The target screen after a successful transfer.
-     */
-    data class TransferSuccess(val destination: TransferSuccessDestination) : TransferProcessEvent
 
     /** Generic navigation event, purpose might need further clarification or more specific events. */
     data object Navigate : TransferProcessEvent
