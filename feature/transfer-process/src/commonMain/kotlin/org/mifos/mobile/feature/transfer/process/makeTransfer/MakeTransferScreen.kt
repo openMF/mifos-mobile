@@ -32,6 +32,7 @@ import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
 import mifos_mobile.feature.transfer_process.generated.resources.error_description
 import mifos_mobile.feature.transfer_process.generated.resources.make_transfer
+import mifos_mobile.feature.transfer_process.generated.resources.pay_to
 import mifos_mobile.feature.transfer_process.generated.resources.remarks
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -133,8 +134,8 @@ internal fun MakeTransferScreenContent(
                             { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         selectedOption = state.toAccount?.accountNo ?: "",
                         isEnabled = true,
-                        labelResId = Res.string.amount,
-                        supportingText = "Hello",
+                        labelResId = Res.string.pay_to,
+                        supportingText = "",
                         onClick = { index, _ ->
                             onAction(MakeTransferAction.OnToAccountSelected(state.toAccountOptions[index].accountNo ?: ""))
                         },
@@ -159,7 +160,7 @@ internal fun MakeTransferScreenContent(
                             errorText = if (state.amountError) {
                                 stringResource(Res.string.error_description)
                             } else {
-                                ""
+                                null
                             },
                             trailingIcon = if (state.amountError) {
                                 {
