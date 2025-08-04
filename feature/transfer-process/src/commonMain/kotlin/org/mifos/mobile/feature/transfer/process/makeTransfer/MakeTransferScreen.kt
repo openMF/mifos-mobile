@@ -135,9 +135,13 @@ internal fun MakeTransferScreenContent(
                         selectedOption = state.toAccount?.accountNo ?: "",
                         isEnabled = true,
                         labelResId = Res.string.pay_to,
-                        supportingText = "",
                         onClick = { index, _ ->
-                            onAction(MakeTransferAction.OnToAccountSelected(state.toAccountOptions[index].accountNo ?: ""))
+                            onAction(
+                                MakeTransferAction
+                                    .OnToAccountSelected(
+                                        state.toAccountOptions[index].accountNo ?: "",
+                                    ),
+                            )
                         },
                     )
 

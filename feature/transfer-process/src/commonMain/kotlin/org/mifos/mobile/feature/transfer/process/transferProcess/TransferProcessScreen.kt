@@ -105,7 +105,7 @@ private fun TransferProcessScreen(
         bottomBar = {
             Surface {
                 MifosPoweredCard(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding(),
                 )

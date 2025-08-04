@@ -206,8 +206,12 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     transferPayload = transferPayload,
                     transferType = transferType,
                     transferSuccessDestination = when (transferDestination) {
-                        TransferSuccessDestination.SAVINGS_ACCOUNT -> SavingsAccountRoute::class.serializer().descriptor.serialName
-                        TransferSuccessDestination.LOAN_ACCOUNT -> LoanAccountRoute::class.serializer().descriptor.serialName
+                        TransferSuccessDestination.SAVINGS_ACCOUNT -> {
+                            SavingsAccountRoute::class.serializer().descriptor.serialName
+                        }
+                        TransferSuccessDestination.LOAN_ACCOUNT -> {
+                            LoanAccountRoute::class.serializer().descriptor.serialName
+                        }
                         TransferSuccessDestination.HOME -> {
                             HomeRoute::class.serializer().descriptor.serialName
                         }

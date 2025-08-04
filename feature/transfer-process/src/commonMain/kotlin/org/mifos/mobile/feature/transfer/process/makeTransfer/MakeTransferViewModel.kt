@@ -132,7 +132,7 @@ internal class MakeTransferViewModel(
 
             MakeTransferAction.OnMakeTransferClicked -> {
                 val isError = state.amount.any {
-                    !it.isDigit() // Basic validation, consider more robust validation
+                    !it.isDigit()
                 }
                 updateState {
                     it.copy(amountError = isError)
@@ -240,9 +240,12 @@ internal class MakeTransferViewModel(
             updateState { it.copy(dialogState = MakeTransferState.DialogState.Loading) }
             viewModelScope.launch {
                 savingsAccountRepositoryImp
-                    .accountTransferTemplate(accountId = state.accountId, accountType = 2L) // Assuming accountType 2L is for Savings or a relevant type
+                    .accountTransferTemplate(accountId = state.accountId, accountType = 2L)
                     .collect { result ->
-                        sendAction(MakeTransferAction.Internal.ReceiveAccountOptionsTemplateResult(result))
+                        sendAction(
+                            MakeTransferAction
+                                .Internal.ReceiveAccountOptionsTemplateResult(result),
+                        )
                     }
             }
         }
