@@ -72,4 +72,15 @@
     <string name="add">Add</string>
     <string name="scan">Scan</string>
     <string name="upload_qr_code">Upload QR</string>
+
+    <string name="beneficiary_name_label">Name of the Beneficiary</string>
+    <string name="office_label">Office</string>
+    <string name="account_type_label">Account Type</string>
+    <string name="account_number_label">Account Number</string>
+    <string name="transfer_limit_label">Transfer Limit</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Savings</string>
+    <string name="account_type_loan">Loan</string>
+    <string name="account_type_share">Share</string>
 </resources>

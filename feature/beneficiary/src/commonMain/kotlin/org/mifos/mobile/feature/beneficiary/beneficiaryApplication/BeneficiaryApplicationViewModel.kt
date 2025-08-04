@@ -11,16 +11,16 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
-import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully
-import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
 import mifos_mobile.feature.beneficiary.generated.resources.enter_account_number
 import mifos_mobile.feature.beneficiary.generated.resources.enter_beneficiary_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_office_name
@@ -29,62 +29,48 @@ import mifos_mobile.feature.beneficiary.generated.resources.invalid_amount
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
-import org.mifos.mobile.core.common.Constants.BENEFICIARY_STATE
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.model.IgnoredOnParcel
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.beneficiary.navigation.BENEFICIARY_ID
 
 internal class BeneficiaryApplicationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
-    networkMonitor: NetworkMonitor,
+    private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<BeneficiaryApplicationState, BeneficiaryApplicationEvent, BeneficiaryApplicationAction>(
-    initialState = BeneficiaryApplicationState(
-        dialogState = null,
-        beneficiaryId = savedStateHandle.getStateFlow<Int?>(
-            key = BENEFICIARY_ID,
-            initialValue = null,
-        ).value,
-        beneficiaryState = savedStateHandle.getStateFlow(
-            key = BENEFICIARY_STATE,
-            initialValue = BeneficiaryState.CREATE_QR.name,
-        ).value.let { BeneficiaryState.valueOf(it) },
-    ),
+    initialState = run {
+        val route = savedStateHandle.toRoute<BeneficiaryApplicationNavRoute>()
+        BeneficiaryApplicationState(
+            dialogState = null,
+            beneficiaryId = route.beneficiaryId,
+            beneficiaryState = enumValueOf<BeneficiaryState>(route.beneficiaryState),
+        )
+    },
 ) {
 
     init {
         viewModelScope.launch {
+            observeNetworkStatus()
             loadBeneficiaryAndTemplate()
-            networkMonitor.isOnline.collect { isConnected ->
-                updateState { it.copy(isOnline = isConnected) }
-            }
         }
         getTopBarTitle()
     }
 
     private fun getTopBarTitle() {
-        viewModelScope.launch {
-            val update = getString(Res.string.update_beneficiary)
-            val add = getString(Res.string.add_beneficiary)
-            updateState {
-                it.copy(
-                    topBarTitle = when (state.beneficiaryState) {
-                        BeneficiaryState.UPDATE -> update
-                        else -> add
-                    },
-                )
-            }
+        val update = Res.string.update_beneficiary
+        val add = Res.string.add_beneficiary
+        updateState {
+            it.copy(
+                topBarTitle = when (state.beneficiaryState) {
+                    BeneficiaryState.UPDATE -> update
+                    else -> add
+                },
+            )
         }
     }
 
@@ -103,7 +89,9 @@ internal class BeneficiaryApplicationViewModel(
                     loadBeneficiaryAndTemplate()
                 }
             }
-            is BeneficiaryApplicationAction.SubmitBeneficiary -> submitBeneficiary(action.payload)
+            is BeneficiaryApplicationAction.SubmitBeneficiary -> {
+                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(action.payload, state.beneficiaryState))
+            }
             BeneficiaryApplicationAction.OnNavigate -> sendEvent(
                 BeneficiaryApplicationEvent.Navigate,
             )
@@ -154,8 +142,7 @@ internal class BeneficiaryApplicationViewModel(
                 val error = (beneficiaryList as? DataState.Error)?.exception?.message
                     ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
                     ?: "An error occurred"
-                val errorMessage = "An error occurred"
-                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Error(errorMessage)) }
+                updateState { it.copy(dialogState = BeneficiaryApplicationState.DialogState.Error(error)) }
             }
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
                 updateState { currentState ->
@@ -169,64 +156,64 @@ internal class BeneficiaryApplicationViewModel(
         }
     }
 
-    private fun submitBeneficiary(beneficiaryPayload: BeneficiaryPayload) {
-        val isValid = validateFields(beneficiaryPayload)
-        if (isValid) {
-            when (state.beneficiaryState) {
-                BeneficiaryState.UPDATE -> updateBeneficiary(
-                    state.beneficiaryId?.toLong(),
-                    payload = BeneficiaryUpdatePayload(
-                        name = beneficiaryPayload.name,
-                        transferLimit = beneficiaryPayload.transferLimit ?: 0,
-                    ),
-                )
-                else -> createBeneficiary(beneficiaryPayload)
-            }
-        }
-    }
+//    private fun submitBeneficiary(beneficiaryPayload: BeneficiaryPayload) {
+//        val isValid = validateFields(beneficiaryPayload)
+//        if (isValid) {
+//            when (state.beneficiaryState) {
+//                BeneficiaryState.UPDATE -> updateBeneficiary(
+//                    state.beneficiaryId?.toLong(),
+//                    payload = BeneficiaryUpdatePayload(
+//                        name = beneficiaryPayload.name,
+//                        transferLimit = beneficiaryPayload.transferLimit ?: 0,
+//                    ),
+//                )
+//                else -> createBeneficiary(beneficiaryPayload)
+//            }
+//        }
+//    }
 
-    private fun createBeneficiary(payload: BeneficiaryPayload?) {
-        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-        viewModelScope.launch {
-            val successMsg = getString(Res.string.beneficiary_created_successfully)
-            val response = beneficiaryRepositoryImp.createBeneficiary(payload)
-            when (response) {
-                is DataState.Error -> {
-                    setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
-                }
-                DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+//    private fun createBeneficiary(payload: BeneficiaryPayload?) {
+//        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+//        viewModelScope.launch {
+//            val successMsg = getString(Res.string.beneficiary_created_successfully)
+//            val response = beneficiaryRepositoryImp.createBeneficiary(payload)
+//            when (response) {
+//                is DataState.Error -> {
+//                    setDialogState(null)
+//                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
+//                }
+//                DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+//
+//                is DataState.Success -> {
+//                    setDialogState(null)
+//                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
+//                    delay(1500)
+//                    sendEvent(BeneficiaryApplicationEvent.Navigate)
+//                }
+//            }
+//        }
+//    }
 
-                is DataState.Success -> {
-                    setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
-                    delay(1500)
-                    sendEvent(BeneficiaryApplicationEvent.Navigate)
-                }
-            }
-        }
-    }
-
-    private fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
-        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-        viewModelScope.launch {
-            val successMsg = getString(Res.string.beneficiary_updated_successfully)
-            val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
-            when (response) {
-                is DataState.Error -> {
-                    setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
-                }
-                DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-                is DataState.Success -> {
-                    setDialogState(null)
-                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
-                    delay(1500)
-                    sendEvent(BeneficiaryApplicationEvent.Navigate)
-                }
-            }
-        }
-    }
+//    private fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
+//        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+//        viewModelScope.launch {
+//            val successMsg = getString(Res.string.beneficiary_updated_successfully)
+//            val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
+//            when (response) {
+//                is DataState.Error -> {
+//                    setDialogState(null)
+//                    sendEvent(BeneficiaryApplicationEvent.ShowToast(response.message))
+//                }
+//                DataState.Loading -> setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+//                is DataState.Success -> {
+//                    setDialogState(null)
+//                    sendEvent(BeneficiaryApplicationEvent.ShowToast(successMsg))
+//                    delay(1500)
+//                    sendEvent(BeneficiaryApplicationEvent.Navigate)
+//                }
+//            }
+//        }
+//    }
 
     private fun validateFields(payload: BeneficiaryPayload): Boolean {
         var hasError = false
@@ -299,38 +286,55 @@ internal class BeneficiaryApplicationViewModel(
             )
         }
     }
+
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .map(Boolean::not)
+                .distinctUntilChanged()
+                .collect { isOffline ->
+                    updateState {
+                        it.copy(
+                            networkUnavailable = isOffline,
+                            dialogState = if (isOffline) {
+                                BeneficiaryApplicationState.DialogState.Network
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                }
+        }
+    }
 }
 
-@Parcelize
 data class BeneficiaryApplicationState(
-    val topBarTitle: String? = null,
-    val beneficiaryId: Int? = null,
-    val isOnline: Boolean = false,
-    @IgnoredOnParcel
+    val topBarTitle: StringResource = Res.string.add_beneficiary,
+    val beneficiaryId: Int,
+    val networkUnavailable: Boolean = false,
     val template: BeneficiaryTemplate? = null,
-    @IgnoredOnParcel
     val beneficiary: Beneficiary? = null,
-    val beneficiaryState: BeneficiaryState = BeneficiaryState.CREATE_QR,
+    val beneficiaryState: BeneficiaryState = BeneficiaryState.CREATE_MANUAL,
     val dialogState: DialogState?,
 
-    @IgnoredOnParcel val accountTypeError: StringResource? = null,
-    @IgnoredOnParcel val accountNumberError: StringResource? = null,
-    @IgnoredOnParcel val officeNameError: StringResource? = null,
-    @IgnoredOnParcel val transferLimitError: StringResource? = null,
-    @IgnoredOnParcel val beneficiaryNameError: StringResource? = null,
-) : Parcelable {
-    sealed interface DialogState : Parcelable {
-        @Parcelize
+    val accountTypeError: StringResource? = null,
+    val accountNumberError: StringResource? = null,
+    val officeNameError: StringResource? = null,
+    val transferLimitError: StringResource? = null,
+    val beneficiaryNameError: StringResource? = null,
+) {
+    sealed interface DialogState {
         data class Error(val message: String) : DialogState
 
-        @Parcelize
         data object Loading : DialogState
+
+        data object Network : DialogState
     }
 }
 
 sealed interface BeneficiaryApplicationEvent {
-    data class ShowToast(val message: String) : BeneficiaryApplicationEvent
     data object Navigate : BeneficiaryApplicationEvent
+    data class SubmitBeneficiary(val payload: BeneficiaryPayload, val state: BeneficiaryState) : BeneficiaryApplicationEvent
 }
 
 sealed interface BeneficiaryApplicationAction {

@@ -200,12 +200,22 @@ internal fun BeneficiaryApplicationContent(
 @Composable
 private fun BeneficiaryApplicationContentPreview() {
     MifosMobileTheme {
-        BeneficiaryApplicationContent(
-            state = BeneficiaryApplicationState(
-                dialogState = null,
-                beneficiaryState = BeneficiaryState.CREATE_QR,
-            ),
-            onAction = {},
-        )
+//        BeneficiaryApplicationContent(
+//            state = BeneficiaryApplicationState(
+//                dialogState = null,
+//                beneficiaryState = BeneficiaryState.CREATE_QR,
+//                topBarTitle = TODO(),
+//                beneficiaryId = TODO(),
+//                networkUnavailable = TODO(),
+//                template = TODO(),
+//                beneficiary = TODO(),
+//                accountTypeError = TODO(),
+//                accountNumberError = TODO(),
+//                officeNameError = TODO(),
+//                transferLimitError = TODO(),
+//                beneficiaryNameError = TODO(),
+//            ),
+//            onAction = {},
+//        )
     }
 }

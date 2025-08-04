@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.beneficiary.di
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationViewModel
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.BeneficiaryApplicationConfirmationViewModel
 import org.mifos.mobile.feature.beneficiary.beneficiaryDetail.BeneficiaryDetailViewModel
 import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListViewModel
 
@@ -19,4 +20,5 @@ val BeneficiaryModule = module {
     viewModelOf(::BeneficiaryDetailViewModel)
     viewModelOf(::BeneficiaryListViewModel)
     viewModelOf(::BeneficiaryApplicationViewModel)
+    viewModelOf(::BeneficiaryApplicationConfirmationViewModel)
 }

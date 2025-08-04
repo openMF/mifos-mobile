@@ -15,10 +15,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationScreen
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.manualBeneficiaryAddDestination
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.beneficiaryAddConfirmationDestination
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
 import org.mifos.mobile.feature.beneficiary.beneficiaryDetail.BeneficiaryDetailScreen
 import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListScreen
 import org.mifos.mobile.feature.beneficiary.presentation.BeneficiaryScreen
@@ -69,12 +71,13 @@ fun NavGraphBuilder.beneficiaryNavGraph(
         addBeneficiaryRoute(
             navigateBack = navController::popBackStack,
             addBeneficiaryManually = {
-                navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
-                        -1,
-                        BeneficiaryState.CREATE_MANUAL,
-                    ),
-                )
+//                navController.navigate(
+//                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
+//                        -1,
+//                        BeneficiaryState.CREATE_MANUAL,
+//                    ),
+//                )
+                navController.navigateToManualBeneficiaryAddScreen(-1, BeneficiaryState.CREATE_MANUAL.name)
             },
             openQrScanner = openQrReaderScreen,
             uploadQrCode = openQrImportScreen,
@@ -92,9 +95,26 @@ fun NavGraphBuilder.beneficiaryNavGraph(
             },
         )
 
-        beneficiaryApplicationRoute(
+        manualBeneficiaryAddDestination(
+            navigateBack = navController::popBackStack,
+            navigateToConfirmationScreen = { id, beneficiary, beneficiaryState ->
+                navController.navigateToBeneficiaryApplicationAddConfirmationScreen(
+                    beneficiaryId = id,
+                    beneficiaryState = beneficiaryState.name,
+                    name = beneficiary.name!!,
+                    officeName = beneficiary.officeName!!,
+                    accountType = beneficiary.accountType!!,
+                    accountNumber = beneficiary.accountNumber!!,
+                    transferLimit = beneficiary.transferLimit!!,
+                )
+            },
+        )
+        beneficiaryAddConfirmationDestination(
             navigateBack = navController::popBackStack,
         )
+//        beneficiaryApplicationRoute(
+//            navigateBack = navController::popBackStack,
+//        )
     }
 }
 
@@ -145,20 +165,21 @@ fun NavGraphBuilder.beneficiaryDetailRoute(
     }
 }
 
-fun NavGraphBuilder.beneficiaryApplicationRoute(
-    navigateBack: () -> Unit,
-) {
-    composable(
-        route = BeneficiaryNavigation.BeneficiaryApplication.route,
-        arguments = listOf(
-            navArgument(name = BENEFICIARY_ID) { type = NavType.IntType },
-            navArgument(name = Constants.BENEFICIARY_STATE) {
-                type = NavType.StringType
-            },
-        ),
-    ) {
-        BeneficiaryApplicationScreen(
-            navigateBack = navigateBack,
-        )
-    }
-}
+// fun NavGraphBuilder.beneficiaryApplicationRoute(
+//    navigateBack: () -> Unit,
+// ) {
+//    composable(
+//        route = BeneficiaryNavigation.BeneficiaryApplication.route,
+//        arguments = listOf(
+//            navArgument(name = BENEFICIARY_ID) { type = NavType.IntType },
+//            navArgument(name = Constants.BENEFICIARY_STATE) {
+//                type = NavType.StringType
+//            },
+//        ),
+//    ) {
+//        BeneficiaryApplicationScreen(
+//            navigateBack = navigateBack,
+//            navigateToConfirmationScreen = {} as (Int, BeneficiaryPayload, BeneficiaryState) -> Unit,
+//        )
+//    }
+// }
