@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -62,7 +61,6 @@ internal fun MakeTransferScreen(
     viewModel: MakeTransferViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsStateWithLifecycle()
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
@@ -77,7 +75,15 @@ internal fun MakeTransferScreen(
 
     MakeTransferScreenContent(
         state = state,
-        isNetworkAvailable = isNetworkAvailable,
+        onAction = remember(viewModel) {
+            {
+                viewModel.trySendAction(it)
+            }
+        },
+    )
+
+    MakeTransferDialog(
+        state = state,
         onAction = remember(viewModel) {
             {
                 viewModel.trySendAction(it)
@@ -89,7 +95,6 @@ internal fun MakeTransferScreen(
 @Composable
 internal fun MakeTransferScreenContent(
     state: MakeTransferState,
-    isNetworkAvailable: Boolean = false,
     onAction: (MakeTransferAction) -> Unit,
 ) {
     MifosElevatedScaffold(
@@ -107,112 +112,125 @@ internal fun MakeTransferScreenContent(
             onAction(MakeTransferAction.NavigateBack)
         },
     ) {
-        when (state.dialogState) {
-            is MakeTransferState.DialogState.Error -> {
-                MifosErrorComponent(
-                    message = state.dialogState.message,
-                    onRetry = { onAction(MakeTransferAction.OnRetry) },
-                    isRetryEnabled = true,
-                    isNetworkConnected = isNetworkAvailable,
+        if (state.dialogState == null) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = DesignToken.padding.large,
+                        vertical = DesignToken.padding.extraLargeIncreased,
+                    ),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
+            ) {
+                MifosDropDownDoubleTextField(
+                    optionsList = state.toAccountOptions.map
+                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                    selectedOption = state.toAccount?.accountNo ?: "",
+                    isEnabled = true,
+                    labelResId = Res.string.pay_to,
+                    onClick = { index, _ ->
+                        onAction(
+                            MakeTransferAction.OnToAccountSelected(
+                                state.toAccountOptions[index].accountNo ?: "",
+                            ),
+                        )
+                    },
+                )
+
+                MifosPayFromDropdownUI(
+                    accounts = state.fromAccountOptions.map
+                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                    onAccountSelected = { account, balance ->
+                        onAction(MakeTransferAction.OnFromAccountSelected(account))
+                    },
+                )
+
+                MifosOutlinedTextField(
+                    value = state.amount,
+                    onValueChange = { onAction(MakeTransferAction.OnAmountChanged(it)) },
+                    label = stringResource(Res.string.amount),
+                    shape = DesignToken.shapes.medium,
+                    textStyle = MifosTypography.bodyLarge,
+                    config = MifosTextFieldConfig(
+                        isError = state.amountError,
+                        errorText = if (state.amountError) {
+                            stringResource(Res.string.error_description)
+                        } else {
+                            null
+                        },
+                        trailingIcon = if (state.amountError) {
+                            {
+                                Icon(
+                                    imageVector = MifosIcons.ErrorCircle,
+                                    contentDescription = stringResource(Res.string.error_description),
+                                    tint = MaterialTheme.colorScheme.error,
+                                )
+                            }
+                        } else {
+                            null
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                        ),
+                    ),
+                )
+
+                MifosOutlinedTextField(
+                    value = state.remarks,
+                    onValueChange = { onAction(MakeTransferAction.OnRemarksChanged(it)) },
+                    label = stringResource(Res.string.remarks),
+                    shape = DesignToken.shapes.medium,
+                    textStyle = MifosTypography.bodyLarge,
+                )
+
+                MifosButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(DesignToken.sizes.buttonHeight),
+                    onClick = {
+                        onAction(MakeTransferAction.OnMakeTransferClicked)
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(Res.string.make_transfer),
+                            style = MifosTypography.titleMedium,
+                        )
+                    },
+                    enabled = state.isEnabled,
                 )
             }
-            MakeTransferState.DialogState.Loading -> {
-                MifosProgressIndicator()
-            }
-            null -> {
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = DesignToken.padding.large,
-                            vertical = DesignToken.padding.extraLargeIncreased,
-                        ),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
-                ) {
-                    MifosDropDownDoubleTextField(
-                        optionsList = state.toAccountOptions.map
-                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
-                        selectedOption = state.toAccount?.accountNo ?: "",
-                        isEnabled = true,
-                        labelResId = Res.string.pay_to,
-                        onClick = { index, _ ->
-                            onAction(
-                                MakeTransferAction
-                                    .OnToAccountSelected(
-                                        state.toAccountOptions[index].accountNo ?: "",
-                                    ),
-                            )
-                        },
-                    )
-
-                    MifosPayFromDropdownUI(
-                        accounts = state.fromAccountOptions.map
-                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
-                        onAccountSelected = { account, balance ->
-                            onAction(MakeTransferAction.OnFromAccountSelected(account))
-                        },
-                    )
-
-                    MifosOutlinedTextField(
-                        value = state.amount,
-                        onValueChange = { onAction(MakeTransferAction.OnAmountChanged(it)) },
-                        label = stringResource(Res.string.amount),
-                        shape = DesignToken.shapes.medium,
-                        textStyle = MifosTypography.bodyLarge,
-                        config = MifosTextFieldConfig(
-                            isError = state.amountError,
-                            errorText = if (state.amountError) {
-                                stringResource(Res.string.error_description)
-                            } else {
-                                null
-                            },
-                            trailingIcon = if (state.amountError) {
-                                {
-                                    Icon(
-                                        imageVector = MifosIcons.ErrorCircle,
-                                        contentDescription = stringResource(Res.string.error_description),
-                                        tint = MaterialTheme.colorScheme.error,
-                                    )
-                                }
-                            } else {
-                                null
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number,
-                            ),
-                        ),
-                    )
-
-                    MifosOutlinedTextField(
-                        value = state.remarks,
-                        onValueChange = { onAction(MakeTransferAction.OnRemarksChanged(it)) },
-                        label = stringResource(Res.string.remarks),
-                        shape = DesignToken.shapes.medium,
-                        textStyle = MifosTypography.bodyLarge,
-                    )
-
-                    MifosButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(DesignToken.sizes.buttonHeight),
-                        onClick = {
-                            onAction(MakeTransferAction.OnMakeTransferClicked)
-                        },
-                        text = {
-                            Text(
-                                text = stringResource(Res.string.make_transfer),
-                                style = MifosTypography.titleMedium,
-                            )
-                        },
-                        enabled = state.isEnabled,
-                        shape = DesignToken.shapes.medium,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                        ),
-                    )
-                }
-            }
         }
+    }
+}
+
+@Composable
+internal fun MakeTransferDialog(
+    state: MakeTransferState,
+    onAction: (MakeTransferAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (state.dialogState) {
+        is MakeTransferState.DialogState.Error -> {
+            MifosErrorComponent(
+                isNetworkConnected = state.networkUnavailable,
+                message = state.dialogState.message,
+                isRetryEnabled = true,
+                onRetry = { onAction(MakeTransferAction.OnRetry) },
+                modifier = modifier,
+            )
+        }
+        MakeTransferState.DialogState.Loading -> {
+            MifosProgressIndicator()
+        }
+        MakeTransferState.DialogState.Network -> {
+            MifosErrorComponent(
+                isNetworkConnected = state.networkUnavailable,
+                isRetryEnabled = true,
+                onRetry = { onAction(MakeTransferAction.OnRetry) },
+                modifier = modifier,
+            )
+        }
+        null -> {}
     }
 }
 

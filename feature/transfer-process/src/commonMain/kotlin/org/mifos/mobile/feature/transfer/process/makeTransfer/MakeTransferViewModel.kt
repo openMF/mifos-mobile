@@ -12,8 +12,8 @@ package org.mifos.mobile.feature.transfer.process.makeTransfer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
@@ -23,6 +23,7 @@ import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
@@ -44,9 +45,9 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 internal class MakeTransferViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
     savedStateHandle: SavedStateHandle,
-    networkMonitor: NetworkMonitor,
+    private val networkMonitor: NetworkMonitor,
     private val accountsRepositoryImpl: AccountsRepository,
-    userPreferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : BaseViewModel<MakeTransferState, MakeTransferEvent, MakeTransferAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<MakeTransferRoute>()
@@ -69,21 +70,9 @@ internal class MakeTransferViewModel(
 ) {
 
     init {
-        fetchAccountOptions()
+        initializeClient()
+        observeNetworkStatus()
     }
-
-    private val clientId = requireNotNull(userPreferencesRepository.clientId.value)
-
-    /**
-     * Flow indicating whether network connectivity is available.
-     * It is observed by the UI to react to network changes.
-     */
-    val isNetworkAvailable = networkMonitor.isOnline
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false,
-        )
 
     /**
      * Handles incoming actions from the UI.
@@ -159,7 +148,8 @@ internal class MakeTransferViewModel(
                     MakeTransferEvent.NavigateToTransferScreen(
                         reviewTransferPayload = payload,
                         transferType = state.transferTarget ?: TransferType.SELF,
-                        destination = state.transferSuccessDestination ?: TransferSuccessDestination.HOME,
+                        destination = state.transferSuccessDestination
+                            ?: TransferSuccessDestination.HOME,
                     ),
                 )
             }
@@ -175,6 +165,10 @@ internal class MakeTransferViewModel(
             MakeTransferAction.OnRetry -> {
                 fetchAccountOptions()
             }
+
+            is MakeTransferAction.Internal.ReceiveActiveAccountsResult -> {
+                handleActiveAccountsResult(action.dataState)
+            }
         }
     }
 
@@ -185,36 +179,13 @@ internal class MakeTransferViewModel(
     private fun fetchActiveAccount() {
         viewModelScope.launch {
             accountsRepositoryImpl.loadAccounts(
-                clientId = clientId,
+                clientId = state.clientId,
                 accountType = Constants.LOAN_ACCOUNTS,
             ).collect { result ->
-                when (result) {
-                    is DataState.Success -> {
-                        val activeAccount = result.data.loanAccounts.firstOrNull { it.status?.active == true }
-                        activeAccount?.let { acc ->
-                            updateState {
-                                it.copy(
-                                    accountId = acc.id,
-                                )
-                            }
-                            fetchAccountOptions()
-                        }
-                    }
-
-                    is DataState.Error -> {
-                        updateState {
-                            it.copy(
-                                accountId = -1L,
-                                dialogState = MakeTransferState.DialogState.Error(
-                                    result.message,
-                                ),
-                            )
-                        }
-                    }
-
-                    DataState.Loading -> {
-                    }
-                }
+                sendAction(
+                    MakeTransferAction
+                        .Internal.ReceiveActiveAccountsResult(result),
+                )
             }
         }
     }
@@ -226,6 +197,41 @@ internal class MakeTransferViewModel(
      */
     private fun updateState(update: (MakeTransferState) -> MakeTransferState) {
         mutableStateFlow.update(update)
+    }
+
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .map(Boolean::not)
+                .distinctUntilChanged()
+                .collect { isOffline ->
+                    updateState {
+                        it.copy(
+                            networkUnavailable = isOffline,
+                            dialogState = if (isOffline) {
+                                MakeTransferState.DialogState.Network
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    if (!isOffline) {
+                        fetchAccountOptions()
+                    }
+                }
+        }
+    }
+
+    private fun initializeClient() {
+        viewModelScope.launch {
+            userPreferencesRepository.clientId.collect { client ->
+                updateState {
+                    state.copy(
+                        clientId = client ?: -1L,
+                    )
+                }
+            }
+        }
     }
 
     /**
@@ -287,6 +293,41 @@ internal class MakeTransferViewModel(
             }
         }
     }
+
+    private fun handleActiveAccountsResult(result: DataState<ClientAccounts>) {
+        when (result) {
+            is DataState.Success -> {
+                val activeAccount = result.data.loanAccounts.firstOrNull { it.status?.active == true }
+                activeAccount?.let { acc ->
+                    updateState {
+                        it.copy(
+                            accountId = acc.id,
+                        )
+                    }
+                    fetchAccountOptions()
+                }
+            }
+
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        accountId = -1L,
+                        dialogState = MakeTransferState.DialogState.Error(
+                            result.message,
+                        ),
+                    )
+                }
+            }
+
+            DataState.Loading -> {
+                updateState {
+                    it.copy(
+                        dialogState = MakeTransferState.DialogState.Loading,
+                    )
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -310,6 +351,7 @@ internal class MakeTransferViewModel(
  */
 internal data class MakeTransferState(
     val accountId: Long = -1L,
+    val clientId: Long = -1L,
     val outstandingBalance: Double? = null,
     val transferType: String? = null,
     val transferTarget: TransferType? = null,
@@ -323,6 +365,7 @@ internal data class MakeTransferState(
     val fromAccount: AccountOption? = null,
     val toAccount: AccountOption? = null,
     val dialogState: DialogState? = null,
+    val networkUnavailable: Boolean = false,
 ) {
     /**
      * Represents the possible states of a dialog shown on the Make Transfer screen.
@@ -336,6 +379,9 @@ internal data class MakeTransferState(
 
         /** Represents a loading state, typically shown when data is being fetched. */
         data object Loading : DialogState
+
+        /** Represents a network error state */
+        data object Network : DialogState
     }
 
     /**
@@ -386,6 +432,8 @@ internal sealed interface MakeTransferAction {
          * @param dataState The result of the fetch operation.
          */
         data class ReceiveAccountOptionsTemplateResult(val dataState: DataState<AccountOptionsTemplate>) : Internal
+
+        data class ReceiveActiveAccountsResult(val dataState: DataState<ClientAccounts>) : Internal
     }
 }
 

@@ -11,8 +11,6 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,16 +18,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
@@ -39,15 +33,15 @@ import mifos_mobile.feature.transfer_process.generated.resources.pay_from
 import mifos_mobile.feature.transfer_process.generated.resources.pay_to
 import mifos_mobile.feature.transfer_process.generated.resources.remark
 import mifos_mobile.feature.transfer_process.generated.resources.transfer
-import mifos_mobile.feature.transfer_process.generated.resources.transfer_from_savings
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -132,105 +126,34 @@ private fun TransferProcessContent(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .padding(DesignToken.padding.large)
             .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.padding.large),
     ) {
-        MifosCard(
+        MifosDetailsCard(
+            keyValuePairs = mapOf(
+                Res.string.amount to state.transferPayload?.transferAmount.toString(),
+                Res.string.pay_to to state.transferPayload?.toAccountId.toString(),
+                Res.string.pay_from to state.transferPayload?.fromAccountId.toString(),
+                Res.string.date to state.transferPayload?.transferDate.toString(),
+                Res.string.remark to state.transferPayload?.transferDescription.toString(),
+            ),
+        )
+
+        MifosOutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(14.dp),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.amount),
-                    )
-
-                    Text(text = state.transferPayload?.transferAmount.toString())
-                }
-
-                Text(
-                    text = stringResource(Res.string.transfer_from_savings),
-                    fontWeight = FontWeight(500),
-                )
-
-                Text(
-                    text = stringResource(Res.string.pay_to),
-                    modifier = Modifier.padding(top = 8.dp),
-                )
-
-                Text(
-                    text = state.transferPayload?.toAccountId.toString(),
-                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                )
-
-                HorizontalDivider()
-
-                Text(
-                    text = stringResource(Res.string.pay_from),
-                    modifier = Modifier.padding(top = 8.dp),
-                )
-
-                Text(
-                    text = state.transferPayload?.fromAccountId.toString(),
-                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                )
-
-                HorizontalDivider()
-
-                Text(
-                    text = stringResource(Res.string.date),
-                    modifier = Modifier.padding(top = 8.dp),
-                )
-
-                Text(
-                    text = state.transferPayload?.transferDate.toString(),
-                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                )
-
-                HorizontalDivider()
-
-                Text(
-                    text = stringResource(Res.string.remark),
-                    modifier = Modifier.padding(top = 8.dp),
-                )
-
-                Text(
-                    text = state.transferPayload?.transferDescription.toString(),
-                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                )
-
-                HorizontalDivider()
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(30.dp),
-                    ) {
-                        MifosButton(
-                            text = { Text(text = stringResource(Res.string.cancel)) },
-                            onClick = { onAction(TransferProcessAction.OnNavigate) },
-                        )
-                        MifosButton(
-                            text = { Text(text = stringResource(Res.string.transfer)) },
-                            onClick = { onAction(TransferProcessAction.RequestTransfer) },
-                        )
-                    }
-                }
-            }
-        }
+                .height(DesignToken.sizes.buttonHeight),
+            content = { Text(text = stringResource(Res.string.cancel)) },
+            onClick = { onAction(TransferProcessAction.OnNavigate) },
+        )
+        MifosOutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(DesignToken.sizes.buttonHeight),
+            content = { Text(text = stringResource(Res.string.transfer)) },
+            onClick = { onAction(TransferProcessAction.RequestTransfer) },
+        )
     }
 }
 
