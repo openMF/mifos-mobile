@@ -139,6 +139,11 @@ internal class TransferProcessViewModel(
      */
     private fun makeTransfer() {
         state.transferPayload?.let { payload ->
+            updateState {
+                it.copy(
+                    isLoading = true,
+                )
+            }
             viewModelScope.launch {
                 val response = transferRepository.makeTransfer(payload, state.transferType)
                 processTransferResult(response)
