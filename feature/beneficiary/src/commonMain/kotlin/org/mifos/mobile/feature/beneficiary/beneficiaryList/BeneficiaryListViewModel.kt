@@ -109,18 +109,16 @@ internal class BeneficiaryListViewModel(
     }
 }
 
-
 data class BeneficiaryListState(
     val isOnline: Boolean = false,
     val isRefreshing: Boolean = false,
     @IgnoredOnParcel
     val beneficiaries: List<Beneficiary> = emptyList(),
     val dialogState: DialogState?,
-)  {
-    sealed interface DialogState  {
+) {
+    sealed interface DialogState {
 
         data class Error(val message: String) : DialogState
-
 
         data object Loading : DialogState
     }

@@ -107,7 +107,6 @@ fun ShowBeneficiary(
     }
 }
 
-
 @Composable
 private fun BeneficiaryListDialog(
     state: BeneficiaryListState,

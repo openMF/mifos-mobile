@@ -43,7 +43,7 @@ fun MifosBeneficiaryTopCard(
     beneficiary: Beneficiary?,
     modifier: Modifier = Modifier,
 ) {
-    MifosCustomCard (
+    MifosCustomCard(
         modifier = modifier
             .height(150.dp),
         shape = MaterialTheme.shapes.medium,
