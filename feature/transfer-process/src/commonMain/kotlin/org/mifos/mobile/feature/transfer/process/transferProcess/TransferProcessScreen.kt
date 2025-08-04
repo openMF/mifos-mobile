@@ -36,12 +36,13 @@ import mifos_mobile.feature.transfer_process.generated.resources.transfer
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -104,14 +105,34 @@ private fun TransferProcessScreen(
             }
         },
     ) {
-        if (state.isLoading) {
-            MifosProgressIndicator()
-        } else {
+        if (state.dialogState == null) {
             TransferProcessContent(
                 state = state,
                 onAction = onAction,
             )
         }
+        MakeTransferDialog(
+            state = state,
+        )
+    }
+}
+
+@Composable
+internal fun MakeTransferDialog(
+    state: TransferProcessState,
+    modifier: Modifier = Modifier,
+) {
+    when (state.dialogState) {
+        TransferProcessState.DialogState.Loading -> {
+            MifosProgressIndicator()
+        }
+        TransferProcessState.DialogState.Network -> {
+            MifosErrorComponent(
+                isNetworkConnected = state.networkUnavailable,
+                modifier = modifier,
+            )
+        }
+        null -> {}
     }
 }
 
@@ -138,18 +159,19 @@ private fun TransferProcessContent(
             ),
         )
 
-        MifosOutlinedButton(
+        MifosButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            content = { Text(text = stringResource(Res.string.cancel)) },
+            text = { Text(text = stringResource(Res.string.cancel)) },
             onClick = { onAction(TransferProcessAction.OnNavigate) },
         )
-        MifosOutlinedButton(
+
+        MifosButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            content = { Text(text = stringResource(Res.string.transfer)) },
+            text = { Text(text = stringResource(Res.string.transfer)) },
             onClick = { onAction(TransferProcessAction.RequestTransfer) },
         )
     }

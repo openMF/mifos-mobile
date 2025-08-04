@@ -12,6 +12,8 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.transfer_process.generated.resources.Res
@@ -23,8 +25,8 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.DateHelper.currentDate
 import org.mifos.mobile.core.data.repository.TransferRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.EventType
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.AuthResult
@@ -52,6 +54,7 @@ import org.mifos.mobile.core.ui.utils.observe
 internal class TransferProcessViewModel(
     private val transferRepository: TransferRepository,
     savedStateHandle: SavedStateHandle,
+    private val networkMonitor: NetworkMonitor,
     private val navigator: ResultNavigator,
 ) : BaseViewModel<TransferProcessState, TransferProcessEvent, TransferProcessAction>(
     initialState = run {
@@ -84,7 +87,7 @@ internal class TransferProcessViewModel(
 ) {
 
     init {
-        observeAuthResult()
+        observeNetworkStatus()
     }
 
     /**
@@ -132,6 +135,29 @@ internal class TransferProcessViewModel(
         }
     }
 
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .map(Boolean::not)
+                .distinctUntilChanged()
+                .collect { isOffline ->
+                    updateState {
+                        it.copy(
+                            networkUnavailable = isOffline,
+                            dialogState = if (isOffline) {
+                                TransferProcessState.DialogState.Network
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                    if (!isOffline) {
+                        observeAuthResult()
+                    }
+                }
+        }
+    }
+
     /**
      * Initiates the transfer process by calling the [transferRepository] with the current
      * [TransferProcessState.transferPayload].
@@ -141,7 +167,7 @@ internal class TransferProcessViewModel(
         state.transferPayload?.let { payload ->
             updateState {
                 it.copy(
-                    isLoading = true,
+                    dialogState = TransferProcessState.DialogState.Loading,
                 )
             }
             viewModelScope.launch {
@@ -172,7 +198,7 @@ internal class TransferProcessViewModel(
                 )
             }
             DataState.Loading -> {
-                updateState { it.copy(isLoading = true) }
+                updateState { it.copy(dialogState = TransferProcessState.DialogState.Loading) }
             }
             is DataState.Success -> {
                 sendEvent(
@@ -195,14 +221,23 @@ internal class TransferProcessViewModel(
  * @property transferDestination A string identifier for the screen to navigate to after a successful transfer.
  * @property transferType The [TransferType] (e.g., SELF, TPT, LOAN_REPAYMENT) of the current transfer.
  * @property transferPayload The [TransferPayload] containing all necessary data for the transfer API call.
- * @property isLoading Boolean flag indicating if a transfer operation is currently in progress.
  */
 data class TransferProcessState(
     val transferDestination: String? = null,
     val transferType: TransferType? = null,
     val transferPayload: TransferPayload? = null,
-    val isLoading: Boolean = false,
-)
+    val dialogState: DialogState? = null,
+    val networkUnavailable: Boolean = false,
+) {
+    sealed interface DialogState {
+
+        /** Represents a loading state, typically shown when data is being fetched. */
+        data object Loading : DialogState
+
+        /** Represents a network error state */
+        data object Network : DialogState
+    }
+}
 
 /**
  * Defines the events that the [TransferProcessViewModel] can send to the UI.
