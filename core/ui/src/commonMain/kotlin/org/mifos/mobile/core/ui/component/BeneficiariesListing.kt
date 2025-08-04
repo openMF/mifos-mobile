@@ -30,12 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import mifos_mobile.core.ui.generated.resources.Res
-import mifos_mobile.core.ui.generated.resources.icon_next
-import org.jetbrains.compose.resources.painterResource
 import org.mifos.mobile.core.designsystem.component.MifosCard
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -83,7 +80,6 @@ fun MifosBeneficiariesCard(
                     text = beneficiary.name!!,
                     style = MifosTypography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -109,7 +105,7 @@ fun MifosBeneficiariesCard(
                 },
             ) {
                 Icon(
-                    painter = painterResource(resource = Res.drawable.icon_next),
+                    imageVector = MifosIcons.ChevronRight,
                     contentDescription = "Next",
                 )
             }

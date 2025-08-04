@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -33,7 +37,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosBeneficiariesCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
@@ -78,6 +84,29 @@ internal fun BeneficiaryListScreen(
         snackbarHostState = snackbarHostState,
     )
 }
+
+@Composable
+fun ShowBeneficiary(
+    beneficiaryList: List<Beneficiary>,
+    onClick: (beneficiaryId: Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+    ) {
+        LazyColumn(modifier = Modifier) {
+            items(beneficiaryList) { beneficiary ->
+                MifosBeneficiariesCard(
+                    beneficiary = beneficiary,
+                    onBeneficiaryClick = { onClick(beneficiary.id ?: -1) },
+                )
+            }
+        }
+    }
+}
+
 
 @Composable
 private fun BeneficiaryListDialog(

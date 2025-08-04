@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import org.jetbrains.compose.resources.painterResource
-import org.mifos.mobile.core.designsystem.component.MifosCard
+import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
@@ -42,9 +43,9 @@ fun MifosBeneficiaryTopCard(
     beneficiary: Beneficiary?,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    MifosCustomCard (
         modifier = modifier
-            .size(320.dp, 150.dp),
+            .height(150.dp),
         shape = MaterialTheme.shapes.medium,
     ) {
         Box(
