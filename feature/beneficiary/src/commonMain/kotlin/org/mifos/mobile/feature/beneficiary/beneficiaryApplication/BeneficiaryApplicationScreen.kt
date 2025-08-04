@@ -68,11 +68,12 @@ internal fun BeneficiaryApplicationScreen(
         }
     }
 
-    LaunchedEffect(state.dialogState) {
-        Logger.e("Revanth") {
-            state.dialogState.toString()
-        }
-    }
+    BeneficiaryApplicationDialogs(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
 
     BeneficiaryApplicationScreen(
         state = state,
@@ -81,12 +82,7 @@ internal fun BeneficiaryApplicationScreen(
             { viewModel.trySendAction(it) }
         },
     )
-    BeneficiaryApplicationDialogs(
-        state = state,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
+
 }
 
 @Composable
