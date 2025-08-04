@@ -38,7 +38,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.qr.generated.resources.Res
-import mifos_mobile.feature.qr.generated.resources.Warning
 import mifos_mobile.feature.qr.generated.resources.feature_qr_instruction
 import mifos_mobile.feature.qr.generated.resources.feature_qr_upload
 import mifos_mobile.feature.qr.generated.resources.feature_qr_warning_message
