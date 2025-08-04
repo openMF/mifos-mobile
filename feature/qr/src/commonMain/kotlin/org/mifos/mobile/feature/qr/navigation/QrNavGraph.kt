@@ -7,42 +7,28 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.qr.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.feature.qr.qr.QrCodeReaderScreen
-import org.mifos.mobile.feature.qr.qrCodeDisplay.QrCodeDisplayScreen
-import org.mifos.mobile.feature.qr.qrCodeImport.QrCodeImportScreen
+import org.mifos.mobile.feature.qr.qr.qrReaderDestination
+import org.mifos.mobile.feature.qr.qrCodeDisplay.QrCodeDisplayRoute
+import org.mifos.mobile.feature.qr.qrCodeDisplay.qrDisplayDestination
+import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
+import org.mifos.mobile.feature.qr.qrCodeImport.qrImportDestination
 
 @Serializable
 data object QrGraphRoute
 
-@Serializable
-data object QrReaderScreenRoute
-
-@Serializable
-data class QrDisplayScreenRoute(val qrString: String = "")
-
-@Serializable
-data object QrImportScreenRoute
-
-fun NavController.navigateToQrReaderScreen(navOptions: NavOptions? = null) {
-    this.navigate(QrReaderScreenRoute, navOptions)
-}
-
-fun NavController.navigateToQrImportScreen(navOptions: NavOptions? = null) {
-    this.navigate(QrImportScreenRoute, navOptions)
-}
-
-fun NavController.navigateToQrDisplayScreen(qrString: String, navOptions: NavOptions? = null) {
-    this.navigate(QrDisplayScreenRoute(qrString), navOptions)
+fun NavController.navigateToQrGraph(navOptions: NavOptions? = null) {
+    this.navigate(QrGraphRoute, navOptions)
 }
 
 fun NavGraphBuilder.qrNavGraph(
@@ -50,53 +36,20 @@ fun NavGraphBuilder.qrNavGraph(
     openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
 ) {
     navigation<QrGraphRoute>(
-        startDestination = QrDisplayScreenRoute(),
+        startDestination = QrCodeDisplayRoute(),
     ) {
-        readerRoute(
+        qrReaderDestination(
             navigateBack = navController::popBackStack,
             openBeneficiaryApplication = openBeneficiaryApplication,
+            navigateToQrImportScreen = navController::navigateToQrImportScreen,
         )
 
-        displayRoute(
+        qrDisplayDestination(
             navigateBack = navController::popBackStack,
         )
 
-        importRoute(
+        qrImportDestination(
             navigateBack = navController::popBackStack,
-            openBeneficiaryApplication = openBeneficiaryApplication,
-        )
-    }
-}
-
-fun NavGraphBuilder.readerRoute(
-    navigateBack: () -> Unit,
-    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
-) {
-    composable<QrReaderScreenRoute> {
-        QrCodeReaderScreen(
-            navigateBack = navigateBack,
-            openBeneficiaryApplication = openBeneficiaryApplication,
-        )
-    }
-}
-
-fun NavGraphBuilder.displayRoute(
-    navigateBack: () -> Unit,
-) {
-    composable<QrDisplayScreenRoute> {
-        QrCodeDisplayScreen(
-            navigateBack = navigateBack,
-        )
-    }
-}
-
-fun NavGraphBuilder.importRoute(
-    navigateBack: () -> Unit,
-    openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,
-) {
-    composable<QrImportScreenRoute> {
-        QrCodeImportScreen(
-            navigateBack = navigateBack,
             openBeneficiaryApplication = openBeneficiaryApplication,
         )
     }

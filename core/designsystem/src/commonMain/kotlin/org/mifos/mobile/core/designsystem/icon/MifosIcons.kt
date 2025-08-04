@@ -54,6 +54,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.colored.Warning
 import fluent.ui.system.icons.filled.ArrowDownload
 import fluent.ui.system.icons.filled.CaretDown
 import fluent.ui.system.icons.filled.CaretUp
@@ -207,4 +208,6 @@ object MifosIcons {
     val CaretUp = FluentIcons.Filled.CaretUp
 
     val CoinMultiple = FluentIcons.Filled.CoinMultiple
+
+    val Warning = FluentIcons.Colored.Warning
 }
