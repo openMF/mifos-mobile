@@ -21,20 +21,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
 import mifos_mobile.feature.transfer_process.generated.resources.cancel
@@ -51,9 +47,7 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosCard
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
-import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -72,7 +66,6 @@ internal fun TransferProcessScreen(
         when (event) {
             TransferProcessEvent.Navigate -> navigateBack.invoke()
             is TransferProcessEvent.TransferSuccess -> {
-
             }
 
             is TransferProcessEvent.NavigateToAuthenticate -> {
@@ -119,16 +112,14 @@ private fun TransferProcessScreen(
             }
         },
     ) {
-        if(state.isLoading){
+        if (state.isLoading) {
             MifosProgressIndicator()
-        }
-        else{
+        } else {
             TransferProcessContent(
                 state = state,
                 onAction = onAction,
             )
         }
-
     }
 }
 

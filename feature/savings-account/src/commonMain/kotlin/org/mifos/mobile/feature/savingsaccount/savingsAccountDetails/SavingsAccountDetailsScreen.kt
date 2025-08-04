@@ -139,7 +139,6 @@ internal fun SavingsAccountDetailsScreen(
 internal fun SavingsAccountDetailsContent(
     state: SavingsAccountDetailsState,
     onAction: (SavingsAccountDetailsAction) -> Unit,
-//    onActionClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
@@ -316,7 +315,6 @@ internal fun AccountDetailsGrid(
 @Composable
 internal fun SavingsAccountActions(
     items: ImmutableList<SavingsActionItems>,
-//    onAction: (SavingsAccountDetailsAction) -> Unit,
     onActionClick: (String) -> Unit,
 ) {
     Column(

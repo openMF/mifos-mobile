@@ -401,7 +401,7 @@ internal class LoanApplyViewModel(
                             Res.string.feature_apply_loan_error_amount_too_small
                         } else {
                             Res.string.feature_apply_loan_error_amount_too_large
-                        }
+                        },
                     )
                 }
             }
@@ -658,7 +658,7 @@ internal class LoanApplyViewModel(
         mutableStateFlow.update {
             it.copy(
                 loanApplicationDialogState =
-                    if (it.loanApplicationDialogState is LoanApplicationDialogState.ShowDatePicker) {
+                if (it.loanApplicationDialogState is LoanApplicationDialogState.ShowDatePicker) {
                     null
                 } else {
                     LoanApplicationDialogState.ShowDatePicker(it.currentDate)
@@ -743,13 +743,13 @@ internal data class LoanApplicationState(
      */
     val isFormValid: Boolean
         get() = applicantNameError == null &&
-                loanProductError == null &&
-                principalAmountError == null &&
-                disbursementDateError == null &&
-                applicantName.isNotBlank() &&
-                selectedLoanProduct.isNotBlank() &&
-                principalAmount.isNotBlank() &&
-                disbursementDate.isNotBlank()
+            loanProductError == null &&
+            principalAmountError == null &&
+            disbursementDateError == null &&
+            applicantName.isNotBlank() &&
+            selectedLoanProduct.isNotBlank() &&
+            principalAmount.isNotBlank() &&
+            disbursementDate.isNotBlank()
 
     /**
      * A map of loan product IDs to their names, derived from `productOptions`.

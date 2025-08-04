@@ -23,7 +23,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.serializer
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
-import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
 import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
@@ -201,17 +200,17 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         makeTransferDestination(
             navigateBack = navController::popBackStack,
-            navigateToTransferScreen = {transferPayload, transferType, transferDestination ->
+            navigateToTransferScreen = { transferPayload, transferType, transferDestination ->
                 navController.navigateToTransferProcessScreen(
                     transferPayload = transferPayload,
                     transferType = transferType,
-                    transferSuccessDestination = when(transferDestination){
+                    transferSuccessDestination = when (transferDestination) {
                         TransferSuccessDestination.SAVINGS_ACCOUNT -> SavingsAccountRoute::class.serializer().descriptor.serialName
                         TransferSuccessDestination.LOAN_ACCOUNT -> LoanAccountRoute::class.serializer().descriptor.serialName
                         TransferSuccessDestination.HOME -> {
                             HomeRoute::class.serializer().descriptor.serialName
                         }
-                    }
+                    },
 
                 )
             },
@@ -243,11 +242,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
         )
 
-
         transferProcessDestination(
             navigateBack = navController::popBackStack,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
-            navigateToStatusScreen=navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
     }
 }

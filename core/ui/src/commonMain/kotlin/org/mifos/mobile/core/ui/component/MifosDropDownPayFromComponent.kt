@@ -42,7 +42,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.available_balance
-import mifos_mobile.core.ui.generated.resources.available_balance_formatted
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.savings_account
 import mifos_mobile.core.ui.generated.resources.select_other_payment_account

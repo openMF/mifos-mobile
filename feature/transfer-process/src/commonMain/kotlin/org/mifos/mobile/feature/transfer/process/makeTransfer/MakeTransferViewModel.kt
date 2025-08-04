@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import mifos_mobile.feature.transfer_process.generated.resources.Res
-import mifos_mobile.feature.transfer_process.generated.resources.error_description
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
@@ -157,11 +155,13 @@ internal class MakeTransferViewModel(
                     amount = state.amount,
                     review = state.remarks,
                 )
-                sendEvent(MakeTransferEvent.NavigateToTransferScreen(
-                    reviewTransferPayload = payload,
-                    transferType =state.transferTarget?: TransferType.SELF,
-                    destination = state.transferSuccessDestination?: TransferSuccessDestination.HOME
-                ))
+                sendEvent(
+                    MakeTransferEvent.NavigateToTransferScreen(
+                        reviewTransferPayload = payload,
+                        transferType = state.transferTarget ?: TransferType.SELF,
+                        destination = state.transferSuccessDestination ?: TransferSuccessDestination.HOME,
+                    ),
+                )
             }
 
             is MakeTransferAction.Internal.ReceiveAccountOptionsTemplateResult -> {
@@ -197,7 +197,6 @@ internal class MakeTransferViewModel(
                                     accountId = acc.id,
                                 )
                             }
-                            // After finding an active account, fetch its options
                             fetchAccountOptions()
                         }
                     }
@@ -205,16 +204,15 @@ internal class MakeTransferViewModel(
                     is DataState.Error -> {
                         updateState {
                             it.copy(
-                                accountId = -1L, // Keep as invalid
+                                accountId = -1L,
                                 dialogState = MakeTransferState.DialogState.Error(
-                                    result.message ?: Res.string.error_description.key
-                                )
+                                    result.message,
+                                ),
                             )
                         }
                     }
 
                     DataState.Loading -> {
-                        // Optionally update state to show a loading indicator for fetching active account
                     }
                 }
             }
@@ -262,14 +260,12 @@ internal class MakeTransferViewModel(
                 updateState {
                     it.copy(
                         dialogState = MakeTransferState.DialogState.Error(
-                            dataState.message ?: Res.string.error_description.key
+                            dataState.message,
                         ),
                     )
                 }
             }
             DataState.Loading -> {
-                // This state is now set before calling fetchAccountOptions if accountId is valid.
-                // If it's the initial loading before active account fetch, this might still be relevant.
                 updateState {
                     it.copy(
                         dialogState = MakeTransferState.DialogState.Loading,
@@ -282,7 +278,7 @@ internal class MakeTransferViewModel(
                         accountOptionsTemplate = dataState.data,
                         fromAccountOptions = dataState.data.fromAccountOptions,
                         toAccountOptions = dataState.data.toAccountOptions,
-                        dialogState = null, // Clear dialog on success
+                        dialogState = null,
                     )
                 }
             }
@@ -334,6 +330,7 @@ internal data class MakeTransferState(
          * @property message The error message to display.
          */
         data class Error(val message: String) : DialogState
+
         /** Represents a loading state, typically shown when data is being fetched. */
         data object Loading : DialogState
     }
@@ -352,18 +349,25 @@ internal data class MakeTransferState(
 internal sealed interface MakeTransferAction {
     /** Action triggered when a 'to' account is selected. @param accountNo The account number selected. */
     data class OnToAccountSelected(val accountNo: String) : MakeTransferAction
+
     /** Action triggered when a 'from' account is selected. @param accountNo The account number selected. */
     data class OnFromAccountSelected(val accountNo: String) : MakeTransferAction
+
     /** Action triggered when the transfer amount is changed. @param amount The new amount string. */
     data class OnAmountChanged(val amount: String) : MakeTransferAction
+
     /** Action triggered when the remarks are changed. @param remarks The new remarks string. */
     data class OnRemarksChanged(val remarks: String) : MakeTransferAction
+
     /** Action triggered when the 'Make Transfer' button is clicked. */
     data object OnMakeTransferClicked : MakeTransferAction
+
     /** Action triggered to dismiss any currently shown dialog. */
     data object DismissDialog : MakeTransferAction
+
     /** Action triggered to navigate back from the current screen. */
     data object NavigateBack : MakeTransferAction
+
     /** Action triggered to retry a failed operation, typically fetching account options. */
     data object OnRetry : MakeTransferAction
 
@@ -373,6 +377,7 @@ internal sealed interface MakeTransferAction {
     sealed interface Internal : MakeTransferAction {
         /** Internal action to initiate the transfer process. */
         data object PerformTransfer : Internal
+
         /**
          * Internal action representing the result of fetching account options.
          * @param dataState The result of the fetch operation.
@@ -388,6 +393,7 @@ internal sealed interface MakeTransferAction {
 internal sealed interface MakeTransferEvent {
     /** Event to navigate back from the current screen. */
     data object NavigateBack : MakeTransferEvent
+
     /**
      * Event to navigate to the transfer review screen.
      * @param reviewTransferPayload The payload containing details for the transfer review.
@@ -397,6 +403,6 @@ internal sealed interface MakeTransferEvent {
     data class NavigateToTransferScreen(
         val reviewTransferPayload: ReviewTransferPayload,
         val transferType: TransferType,
-        val destination:TransferSuccessDestination
+        val destination: TransferSuccessDestination,
     ) : MakeTransferEvent
 }

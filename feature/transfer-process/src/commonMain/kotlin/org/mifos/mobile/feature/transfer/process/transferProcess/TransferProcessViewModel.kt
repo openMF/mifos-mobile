@@ -12,22 +12,18 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.serializer
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.back_to_accounts
 import mifos_mobile.feature.transfer_process.generated.resources.transfer_failed
 import mifos_mobile.feature.transfer_process.generated.resources.transfer_successful
-import mifos_mobile.feature.transfer_process.generated.resources.transferred_successfully
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.DateHelper.currentDate
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.model.EventType
-import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -144,12 +140,10 @@ internal class TransferProcessViewModel(
     private fun makeTransfer() {
         state.transferPayload?.let { payload ->
             viewModelScope.launch {
-                updateState { it.copy(isLoading = true) } // Set loading state before API call
                 val response = transferRepository.makeTransfer(payload, state.transferType)
                 processTransferResult(response)
             }
         }
-        // Consider else case: What if transferPayload is null? Log error or show message.
     }
 
     /**
@@ -160,8 +154,6 @@ internal class TransferProcessViewModel(
      * @param response The [DataState] containing the result of the transfer operation.
      */
     private suspend fun processTransferResult(response: DataState<String>) {
-        updateState { it.copy(isLoading = false) }
-
         when (response) {
             is DataState.Error -> {
                 sendEvent(

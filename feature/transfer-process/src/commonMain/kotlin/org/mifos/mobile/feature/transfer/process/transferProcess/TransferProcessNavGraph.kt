@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
@@ -41,7 +40,7 @@ fun NavGraphBuilder.transferProcessDestination(
     composableWithSlideTransitions<TransferProcessRoute> {
         TransferProcessScreen(
             navigateBack = navigateBack,
-            navigateToAuthenticateScreen=navigateToAuthenticateScreen,
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
             navigateToStatusScreen = navigateToStatusScreen,
         )
     }

@@ -71,9 +71,11 @@ fun MifosOutlineDropdown(
                         modifier = Modifier.size(DesignToken.sizes.iconSmall),
                         imageVector = if (expanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
                         contentDescription = null,
-                        tint = if (enabled)
+                        tint = if (enabled) {
                             MaterialTheme.colorScheme.onSurface
-                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                        },
                     )
                 },
                 showClearIcon = false,

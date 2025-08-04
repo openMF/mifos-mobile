@@ -20,7 +20,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,7 +69,7 @@ internal fun MakeTransferScreen(
                 navigateBack.invoke()
             }
             is MakeTransferEvent.NavigateToTransferScreen -> {
-                navigateToTransferScreen(event.reviewTransferPayload,event.transferType,event.destination)
+                navigateToTransferScreen(event.reviewTransferPayload, event.transferType, event.destination)
             }
         }
     }
@@ -78,7 +77,7 @@ internal fun MakeTransferScreen(
     MakeTransferScreenContent(
         state = state,
         isNetworkAvailable = isNetworkAvailable,
-        onAction = remember(viewModel){
+        onAction = remember(viewModel) {
             {
                 viewModel.trySendAction(it)
             }
@@ -157,9 +156,11 @@ internal fun MakeTransferScreenContent(
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.amountError,
-                            errorText = if(state.amountError){
+                            errorText = if (state.amountError) {
                                 stringResource(Res.string.error_description)
-                            }else{""},
+                            } else {
+                                ""
+                            },
                             trailingIcon = if (state.amountError) {
                                 {
                                     Icon(
