@@ -13,9 +13,18 @@
     <string name="transferred_successfully">Transferred Successfully</string>
     <string name="amount">Amount</string>
     <string name="transfer_from_savings">Transfer from Savings</string>
-    <string name="pay_to">Pay To</string>
     <string name="pay_from">Pay From</string>
     <string name="date">Date</string>
     <string name="cancel">Cancel</string>
     <string name="remark">Remark</string>
+    <string name="make_transfer">Make Transfer</string>
+    <string name="pay_to">Pay To Account</string>
+    <string name="remarks">Remarks</string>
+    <string name="error_icon_description">Error</string>
+    <string name="error_description">Amount Should not contain Invalid Characters</string>
+
+    <string name="transfer_failed">Transfer Failed</string>
+    <string name="transfer_successful">Transfer Successful</string>
+    <string name="back_to_accounts">Back to Accounts Screen</string>
+    <string name="transfer_id_prefix">Transfer Id:</string>
 </resources>

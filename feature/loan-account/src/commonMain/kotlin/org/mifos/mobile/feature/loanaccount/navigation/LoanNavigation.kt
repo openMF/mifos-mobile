@@ -16,7 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.TransferArgs
+import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountRoute
 import org.mifos.mobile.feature.loanaccount.loanAccount.loanAccountDestination
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.loanAccountDetailsDestination
@@ -33,7 +33,7 @@ fun NavController.navigateToLoanGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
-    navigateToMakePaymentScreen: (args: TransferArgs) -> Unit,
+    navigateToMakePaymentScreen: (AccountDetails) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToLoanAccountTransactionScreen: (Long) -> Unit,

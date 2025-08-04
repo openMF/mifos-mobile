@@ -11,8 +11,10 @@ package org.mifos.mobile.feature.transfer.process.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.mifos.mobile.feature.transfer.process.TransferProcessViewModel
+import org.mifos.mobile.feature.transfer.process.makeTransfer.MakeTransferViewModel
+import org.mifos.mobile.feature.transfer.process.transferProcess.TransferProcessViewModel
 
 val TransferProcessModule = module {
     viewModelOf(::TransferProcessViewModel)
+    viewModelOf(::MakeTransferViewModel)
 }

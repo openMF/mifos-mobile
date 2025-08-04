@@ -17,6 +17,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
@@ -52,15 +54,15 @@ import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
-import org.mifos.mobile.feature.savings.navigation.navigateToSavingsMakeTransfer
-import org.mifos.mobile.feature.savings.navigation.oldSavingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
-import org.mifos.mobile.feature.transfer.process.navigation.navigateToTransferProcessScreen
-import org.mifos.mobile.feature.transfer.process.navigation.transferProcessNavGraph
+import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
+import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -69,6 +71,7 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
+@OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
 ) {
@@ -118,10 +121,21 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         statusDestination(
             navigateToDestination = {
-                if (it == Constants.LOGIN) {
-                    navController.navigateToLoginScreen()
-                } else {
-                    navController.navigateToHomeAfterStatus()
+                when (it) {
+                    Constants.LOGIN -> {
+                        navController.navigateToLoginScreen()
+                    }
+                    Constants.NAVIGATE_BACK_TO_LOAN -> {
+                        navController
+                            .navigateToAccountsScreen(Constants.LOAN_ACCOUNT)
+                    }
+                    Constants.NAVIGATE_BACK_TO_SAVINGS -> {
+                        navController
+                            .navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
+                    }
+                    else -> {
+                        navController.navigateToHomeAfterStatus()
+                    }
                 }
             },
         )
@@ -131,8 +145,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
-            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
-            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
+            navigateToTransferScreen = {
+                navController.navigateToMakeTransferScreen(it)
+            },
             navigateToSavingsAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.SAVINGS_ACCOUNT, it)
             },
@@ -141,18 +156,14 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         loanNavGraph(
             navController = navController,
-            navigateToMakePaymentScreen = { args ->
-                navController.navigateToSavingsMakeTransfer(
-                    args,
-                )
+            navigateToMakePaymentScreen = {
+                navController.navigateToMakeTransferScreen(it)
             },
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToLoanAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.LOAN_ACCOUNT, it)
             },
-//            navigateToDepositScreen = navController::navigateToSavingsMakeTransfer,
-//            navigateToTransferScreen = navController::navigateToSavingsMakeTransfer,
         )
 
         loanApplicationNavGraph(
@@ -189,18 +200,19 @@ internal fun NavGraphBuilder.authenticatedGraph(
             openBeneficiaryApplication = navController::navigateToBeneficiaryApplicationScreen,
         )
 
-        oldSavingsNavGraph(
-            navController = navController,
-            viewQrCode = {},
-            viewCharges = { _, _ -> },
-            reviewTransfer = { transferPayload, transferType, transferDestination ->
+        makeTransferDestination(
+            navigateBack = navController::popBackStack,
+            navigateToTransferScreen = { transferPayload, transferType, transferDestination ->
                 navController.navigateToTransferProcessScreen(
-                    transferPayload,
-                    transferType,
-                    transferDestination,
+                    transferPayload = transferPayload,
+                    transferType = transferType,
+                    transferSuccessDestination = when (transferDestination) {
+                        TransferSuccessDestination.SAVINGS_ACCOUNT -> Constants.NAVIGATE_BACK_TO_SAVINGS
+                        TransferSuccessDestination.LOAN_ACCOUNT -> Constants.NAVIGATE_BACK_TO_LOAN
+                        TransferSuccessDestination.HOME -> ""
+                    },
                 )
             },
-            callHelpline = {},
         )
 
         thirdPartyTransferNavGraph(
@@ -210,27 +222,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 navController.navigateToTransferProcessScreen(
                     transferPayload,
                     transferType,
-                    transferDestination,
+                    transferDestination.name,
                 )
             },
         )
 
-        transferProcessNavGraph(
+        transferProcessDestination(
             navigateBack = navController::popBackStack,
-            onTransferSuccessNavigate = { destination ->
-                println("getting destination from handle $destination")
-                when (destination) {
-                    TransferSuccessDestination.HOME -> navController.navigateUpToAuthenticatedNavbarRoot()
-                    TransferSuccessDestination.LOAN_ACCOUNT ->
-                        navController.navigateToAccountsScreen(
-                            Constants.LOAN_ACCOUNT,
-                        )
-
-                    TransferSuccessDestination.SAVINGS_ACCOUNT -> navController.navigateToAccountsScreen(
-                        Constants.SAVINGS_ACCOUNT,
-                    )
-                }
-            },
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
     }
 }

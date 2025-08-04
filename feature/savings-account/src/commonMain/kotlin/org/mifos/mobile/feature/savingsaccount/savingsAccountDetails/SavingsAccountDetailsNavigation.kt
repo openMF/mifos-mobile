@@ -15,12 +15,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
-import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_TO
 import org.mifos.mobile.core.model.entity.AccountDetails
-import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
@@ -35,8 +31,7 @@ fun NavController.navigateToSavingsAccountDetailsScreen(accountId: Long, navOpti
 
 fun NavGraphBuilder.savingsAccountDetailsDestination(
     navigateBack: () -> Unit,
-    navigateToDepositScreen: (TransferArgs) -> Unit,
-    navigateToTransferScreen: (TransferArgs) -> Unit,
+    navigateToTransferScreen: (AccountDetails) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
@@ -51,29 +46,12 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
             navigateToWithdrawScreen = navigateToWithdrawScreen,
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
-            navigateToDepositScreen = {
-                val args = TransferArgs(
-                    transferPayloadJson = Json.encodeToString(
-                        AccountDetails(
-                            accountId = it,
-                            transferType = TRANSFER_PAY_TO,
-                            transferTarget = TransferType.TPT,
-                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
-                        ),
-                    ),
-                )
-                navigateToDepositScreen(args)
-            },
             navigateToTransferScreen = {
-                val args = TransferArgs(
-                    transferPayloadJson = Json.encodeToString(
-                        AccountDetails(
-                            accountId = it,
-                            transferType = TRANSFER_PAY_FROM,
-                            transferTarget = TransferType.TPT,
-                            transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
-                        ),
-                    ),
+                val args = AccountDetails(
+                    accountId = it,
+                    transferType = TRANSFER_PAY_FROM,
+                    transferTarget = TransferType.SELF,
+                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
                 )
                 navigateToTransferScreen(args)
             },

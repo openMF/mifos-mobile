@@ -45,9 +45,9 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.charge.components.ChargeDetailsCard
 import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
 @Composable
@@ -90,7 +90,7 @@ internal fun ChargeDetailScreen(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                ChargeDetailsCard(keyValuePairs = state.details)
+                MifosDetailsCard(keyValuePairs = state.details)
                 Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
                 if (state.isPaid) {
                     ChargeDetailsPaidComponent(

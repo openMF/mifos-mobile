@@ -80,6 +80,7 @@ fun MifosOutlineDropdown(
                 },
                 showClearIcon = false,
                 readOnly = true,
+                enabled = enabled,
             ),
 
             modifier = Modifier
@@ -98,7 +99,7 @@ fun MifosOutlineDropdown(
         )
 
         ExposedDropdownMenu(
-            expanded = expanded,
+            expanded = expanded && enabled,
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })

@@ -137,6 +137,7 @@ fun MifosRadioButton(
     ) {
         Row(
             modifier = modifier
+                .padding(vertical = DesignToken.padding.extraSmall)
                 .border(
                     width = borderWidth,
                     color = animatedBorderColor.copy(

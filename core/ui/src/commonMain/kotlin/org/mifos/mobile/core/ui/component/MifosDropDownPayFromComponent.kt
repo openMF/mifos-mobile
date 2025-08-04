@@ -42,7 +42,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.available_balance
-import mifos_mobile.core.ui.generated.resources.available_balance_formatted
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.savings_account
 import mifos_mobile.core.ui.generated.resources.select_other_payment_account
@@ -62,8 +61,8 @@ fun MifosPayFromDropdownUI(
     modifier: Modifier = Modifier,
     onAccountSelected: (String, String) -> Unit,
 ) {
-    var selectedAccount by rememberSaveable { mutableStateOf(accounts[0].first) }
-    var selectedBalance by rememberSaveable { mutableStateOf(accounts[0].second) }
+    var selectedAccount by rememberSaveable { mutableStateOf("") }
+    var selectedBalance by rememberSaveable { mutableStateOf("") }
     Column {
         MifosDropDownPayFromComponent(
             accountNumber = selectedAccount,
@@ -176,7 +175,7 @@ fun AccountDropdownItem(
         )
         Spacer(modifier = Modifier.height(DesignToken.padding.extraSmall))
         Text(
-            text = stringResource(Res.string.available_balance_formatted, balance),
+            text = balance,
             style = MifosTypography.bodySmall,
             color = MaterialTheme.colorScheme.onPrimary,
         )

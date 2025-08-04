@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 
 /**
  * Mifos button with generic content slot. Wraps Material 3 [Button].
@@ -80,10 +81,12 @@ fun MifosButton(
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = DesignToken.shapes.medium,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+    ),
 ) {
     Button(
         onClick = onClick,
@@ -115,7 +118,7 @@ fun MifosOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = ButtonDefaults.outlinedShape,
+    shape: Shape = DesignToken.shapes.medium,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled),
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,

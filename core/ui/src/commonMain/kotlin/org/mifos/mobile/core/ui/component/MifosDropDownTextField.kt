@@ -20,6 +20,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -157,6 +158,11 @@ fun MifosDropDownDoubleTextField(
                     },
                 )
             },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                errorBorderColor = MaterialTheme.colorScheme.error,
+            ),
         )
 
         DropdownMenu(

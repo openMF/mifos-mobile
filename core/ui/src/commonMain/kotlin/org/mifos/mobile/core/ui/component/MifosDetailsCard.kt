@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.charge.components
+package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,9 +27,11 @@ import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 @Composable
-fun ChargeDetailsCard(
+fun MifosDetailsCard(
     keyValuePairs: Map<StringResource, String>,
     modifier: Modifier = Modifier,
 ) {
