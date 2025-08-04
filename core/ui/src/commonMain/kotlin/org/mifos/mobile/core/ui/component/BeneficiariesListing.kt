@@ -44,16 +44,14 @@ import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosBeneficiariesCard(
-    modifier: Modifier = Modifier,
     beneficiary: Beneficiary,
     onBeneficiaryClick: (Beneficiary) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     MifosCard(
         modifier = modifier
             .fillMaxWidth()
-            .then(
-                modifier.clickable { onBeneficiaryClick(beneficiary) },
-            )
+            .clickable { onBeneficiaryClick(beneficiary) }
             .padding(vertical = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -68,7 +66,7 @@ fun MifosBeneficiariesCard(
             // Logo section
             MifosUserImage(
                 username = beneficiary.name,
-                modifier = modifier
+                modifier = Modifier
                     .clip(CircleShape)
                     .size(48.dp)
                     .background(Color.Gray),
@@ -88,23 +86,23 @@ fun MifosBeneficiariesCard(
                     fontWeight = FontWeight.Bold,
                 )
 
-                Spacer(modifier = modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = "${beneficiary.accountType?.value}: ${beneficiary.accountNumber}",
                     style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(modifier = modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = beneficiary.officeName!!,
                     style = MifosTypography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
-            Spacer(modifier = modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             IconButton(
-                modifier = modifier
+                modifier = Modifier
                     .size(20.dp),
                 onClick = {
                     onBeneficiaryClick.invoke(beneficiary)

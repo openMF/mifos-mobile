@@ -39,11 +39,11 @@ import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
 fun MifosBeneficiaryTopCard(
-    modifier: Modifier = Modifier,
     beneficiary: Beneficiary?,
+    modifier: Modifier = Modifier,
 ) {
     MifosCard(
-        modifier = Modifier
+        modifier = modifier
             .size(320.dp, 150.dp),
         shape = MaterialTheme.shapes.medium,
     ) {
@@ -53,7 +53,7 @@ fun MifosBeneficiaryTopCard(
             contentAlignment = Alignment.Center,
         ) {
             Image(
-                modifier = modifier
+                modifier = Modifier
                     .matchParentSize(),
                 painter = painterResource(Res.drawable.ic_icon_dashboard),
                 contentDescription = null,
@@ -64,13 +64,13 @@ fun MifosBeneficiaryTopCard(
             ) {
                 MifosUserImage(
                     username = beneficiary?.name,
-                    modifier = modifier
+                    modifier = Modifier
                         .clip(CircleShape)
                         .size(48.dp)
                         .background(Color.Gray),
                     bitmap = null,
                 )
-                Spacer(modifier = modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
                         text = beneficiary!!.name!!,

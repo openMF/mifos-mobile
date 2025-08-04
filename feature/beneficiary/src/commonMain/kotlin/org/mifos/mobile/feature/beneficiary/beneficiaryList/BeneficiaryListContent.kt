@@ -33,7 +33,7 @@ fun ShowBeneficiary(
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier) {
             items(beneficiaryList) { beneficiary ->
                 MifosBeneficiariesCard(
                     beneficiary = beneficiary,
