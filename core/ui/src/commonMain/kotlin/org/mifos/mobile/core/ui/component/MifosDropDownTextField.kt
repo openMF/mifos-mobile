@@ -72,7 +72,7 @@ fun MifosDropDownTextField(
                 .fillMaxWidth(),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelSmall,
+            textStyle = MaterialTheme.typography.labelMedium,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {

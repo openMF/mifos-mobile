@@ -135,9 +135,9 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                             Res.string.beneficiary_name_label to state.name,
                             Res.string.office_label to state.officeName,
                             Res.string.account_type_label to when (state.accountType) {
-                                1 -> stringResource(Res.string.account_type_savings)
-                                2 -> stringResource(Res.string.account_type_loan)
-                                3 -> stringResource(Res.string.account_type_share)
+                                0 -> stringResource(Res.string.account_type_share)
+                                1 -> stringResource(Res.string.account_type_loan)
+                                2 -> stringResource(Res.string.account_type_savings)
                                 else -> ""
                             },
                             Res.string.account_number_label to state.accountNumber,

@@ -9,14 +9,18 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiary_template
 import org.jetbrains.compose.resources.stringResource
@@ -24,7 +28,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -34,7 +37,15 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun BeneficiaryApplicationScreen(
     navigateBack: () -> Unit,
-    navigateToConfirmationScreen: (beneficiaryId: Int, beneficiary: BeneficiaryPayload, beneficiaryState: BeneficiaryState) -> Unit,
+    navigateToConfirmationScreen: (
+        beneficiaryId: Int,
+        beneficiaryState: String,
+        name: String,
+        officeName: String,
+        accountType: Int,
+        accountNumber: String,
+        transferLimit: Int,
+    ) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BeneficiaryApplicationViewModel = koinViewModel(),
 ) {
@@ -44,14 +55,34 @@ internal fun BeneficiaryApplicationScreen(
         when (event) {
             BeneficiaryApplicationEvent.Navigate -> navigateBack.invoke()
             is BeneficiaryApplicationEvent.SubmitBeneficiary -> {
-                navigateToConfirmationScreen(state.beneficiaryId, event.payload, event.state)
+                navigateToConfirmationScreen(
+                    event.beneficiaryId,
+                    event.beneficiaryState,
+                    event.name,
+                    event.officeName,
+                    event.accountType,
+                    event.accountNumber,
+                    event.transferLimit,
+                )
             }
+        }
+    }
+
+    LaunchedEffect(state.dialogState) {
+        Logger.e("Revanth") {
+            state.dialogState.toString()
         }
     }
 
     BeneficiaryApplicationScreen(
         state = state,
         modifier = modifier,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+    BeneficiaryApplicationDialogs(
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -64,7 +95,9 @@ private fun BeneficiaryApplicationDialogs(
     onAction: (BeneficiaryApplicationAction) -> Unit,
 ) {
     when (state.dialogState) {
-        BeneficiaryApplicationState.DialogState.Loading -> MifosProgressIndicator()
+        BeneficiaryApplicationState.DialogState.Loading -> {
+            MifosProgressIndicator()
+        }
 
         is BeneficiaryApplicationState.DialogState.Error -> {
             MifosErrorComponent(
@@ -103,17 +136,15 @@ private fun BeneficiaryApplicationScreen(
             }
         },
         content = {
-            if (state.dialogState == null) {
-                BeneficiaryApplicationContent(
-                    state = state,
-                    onAction = onAction,
-                )
+            Box(Modifier.fillMaxSize()) {
+                if (state.dialogState == null) {
+                    BeneficiaryApplicationContent(
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
             }
         },
-    )
-    BeneficiaryApplicationDialogs(
-        state = state,
-        onAction = onAction,
     )
 }
 

@@ -203,17 +203,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
         // TODO: After beneficiaryNavGraph list completed change accordingly
         manualBeneficiaryAddDestination(
             navigateBack = navController::popBackStack,
-            navigateToConfirmationScreen = { id, beneficiary, beneficiaryState ->
-                navController.navigateToBeneficiaryApplicationAddConfirmationScreen(
-                    beneficiaryId = id,
-                    beneficiaryState = beneficiaryState.name,
-                    name = beneficiary.name ?: "",
-                    officeName = beneficiary.officeName ?: "",
-                    accountType = beneficiary.accountType ?: 1,
-                    accountNumber = beneficiary.accountNumber ?: "",
-                    transferLimit = beneficiary.transferLimit ?: 0,
-                )
-            },
+            navigateToConfirmationScreen =
+            navController::navigateToBeneficiaryApplicationAddConfirmationScreen,
         )
         beneficiaryAddConfirmationDestination(
             navigateBack = navController::popBackStack,

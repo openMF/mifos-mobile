@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
@@ -33,7 +32,15 @@ fun NavController.navigateToManualBeneficiaryAddScreen(
 
 fun NavGraphBuilder.manualBeneficiaryAddDestination(
     navigateBack: () -> Unit,
-    navigateToConfirmationScreen: (beneficiaryId: Int, beneficiary: BeneficiaryPayload, beneficiaryState: BeneficiaryState) -> Unit,
+    navigateToConfirmationScreen: (
+        beneficiaryId: Int,
+        beneficiaryState: String,
+        name: String,
+        officeName: String,
+        accountType: Int,
+        accountNumber: String,
+        transferLimit: Int,
+    ) -> Unit,
 ) {
     composableWithSlideTransitions<BeneficiaryApplicationNavRoute> {
         BeneficiaryApplicationScreen(

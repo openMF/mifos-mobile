@@ -21,13 +21,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number
@@ -41,8 +37,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 
@@ -53,54 +49,22 @@ internal fun BeneficiaryApplicationContent(
     onAction: (BeneficiaryApplicationAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var accountType by rememberSaveable {
-        mutableIntStateOf(
-            state.beneficiary?.accountType?.id ?: -1,
-        )
-    }
-
-    var accountNumber by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue(state.beneficiary?.accountNumber ?: ""),
-        )
-    }
-
-    var officeName by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue(state.beneficiary?.officeName ?: ""),
-        )
-    }
-
-    var transferLimit by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue(
-                state.beneficiary?.transferLimit?.toInt()?.toString() ?: "",
-            ),
-        )
-    }
-
-    var beneficiaryName by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue(state.beneficiary?.name ?: ""),
-        )
-    }
-
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(horizontal = DesignToken.padding.large, vertical = DesignToken.padding.extraLargeIncreased),
     ) {
         MifosDropDownTextField(
             optionsList = state.template?.accountTypeOptions?.mapNotNull { it.value }
                 ?: listOf(),
             labelResId = Res.string.select_account_type,
             selectedOption = state.template?.accountTypeOptions
-                ?.firstOrNull { it.id == accountType }?.value ?: "",
+                ?.firstOrNull { it.id == state.accountType }?.value ?: "",
             onClick = { index, _ ->
-                accountType = state.template?.accountTypeOptions?.filter { it.value != null }
+                val accountType = state.template?.accountTypeOptions?.filter { it.value != null }
                     ?.get(index)?.id ?: -1
-                onAction(BeneficiaryApplicationAction.OnFieldChange(accountType = accountType))
+                onAction(BeneficiaryApplicationAction.OnAccountTypeChanged(accountType = accountType))
             },
             error = state.accountTypeError != null,
             isEnabled = state.beneficiaryState != BeneficiaryState.UPDATE,
@@ -109,10 +73,9 @@ internal fun BeneficiaryApplicationContent(
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = accountNumber.text,
+            value = state.accountNumber,
             onValueChange = {
-                accountNumber = TextFieldValue(it)
-                onAction(BeneficiaryApplicationAction.OnFieldChange(accountNumber = it))
+                onAction(BeneficiaryApplicationAction.OnAccountNumberChanged(accountNumber = it))
             },
             label = stringResource(Res.string.account_number),
             config = MifosTextFieldConfig(
@@ -128,10 +91,9 @@ internal fun BeneficiaryApplicationContent(
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = officeName.text,
+            value = state.officeName,
             onValueChange = {
-                officeName = TextFieldValue(it)
-                onAction(BeneficiaryApplicationAction.OnFieldChange(officeName = it))
+                onAction(BeneficiaryApplicationAction.OnOfficeNameChanged(officeName = it))
             },
             label = stringResource(Res.string.office_name),
             config = MifosTextFieldConfig(
@@ -144,10 +106,9 @@ internal fun BeneficiaryApplicationContent(
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = transferLimit.text,
+            value = state.transferLimit,
             onValueChange = {
-                transferLimit = TextFieldValue(it)
-                onAction(BeneficiaryApplicationAction.OnFieldChange(transferLimit = it))
+                onAction(BeneficiaryApplicationAction.OnTransferLimitChanged(transferLimit = it))
             },
             label = stringResource(Res.string.transfer_limit),
             config = MifosTextFieldConfig(
@@ -161,10 +122,9 @@ internal fun BeneficiaryApplicationContent(
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = beneficiaryName.text,
+            value = state.beneficiaryName,
             onValueChange = {
-                beneficiaryName = TextFieldValue(it)
-                onAction(BeneficiaryApplicationAction.OnFieldChange(beneficiaryName = it))
+                onAction(BeneficiaryApplicationAction.OnBeneficiaryNameChanged(beneficiaryName = it))
             },
             label = stringResource(Res.string.beneficiary_name),
             config = MifosTextFieldConfig(
@@ -180,16 +140,7 @@ internal fun BeneficiaryApplicationContent(
             text = { Text(text = stringResource(Res.string.submit_beneficiary)) },
             onClick = {
                 onAction(
-                    BeneficiaryApplicationAction.SubmitBeneficiary(
-                        BeneficiaryPayload(
-                            name = beneficiaryName.text,
-                            accountNumber = accountNumber.text,
-                            transferLimit = transferLimit.text.toIntOrNull() ?: 0,
-                            officeName = officeName.text,
-                            accountType = accountType,
-                            locale = "en",
-                        ),
-                    ),
+                    BeneficiaryApplicationAction.SubmitBeneficiary,
                 )
             },
         )

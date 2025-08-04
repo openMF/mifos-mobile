@@ -33,7 +33,6 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -110,25 +109,64 @@ internal class BeneficiaryApplicationViewModel(
                     loadBeneficiaryAndTemplate()
                 }
             }
-            is BeneficiaryApplicationAction.SubmitBeneficiary -> requestPayload(action.payload)
+
+            is BeneficiaryApplicationAction.SubmitBeneficiary -> {
+                requestPayload()
+            }
+
             BeneficiaryApplicationAction.OnNavigate -> sendEvent(BeneficiaryApplicationEvent.Navigate)
+
             BeneficiaryApplicationAction.OnRetry -> {
                 viewModelScope.launch {
                     loadBeneficiaryAndTemplate()
                 }
             }
-            is BeneficiaryApplicationAction.OnFieldChange -> onFieldChange(
-                accountType = action.accountType,
-                accountNumber = action.accountNumber,
-                officeName = action.officeName,
-                transferLimit = action.transferLimit,
-                beneficiaryName = action.beneficiaryName,
-            )
+
             is BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult -> {
                 updateStateFromResults(
                     action.beneficiaryList,
                     action.beneficiaryTemplate,
                 )
+            }
+
+            is BeneficiaryApplicationAction.OnAccountNumberChanged -> {
+                updateState {
+                    it.copy(
+                        accountNumber = action.accountNumber,
+                    )
+                }
+            }
+
+            is BeneficiaryApplicationAction.OnAccountTypeChanged -> {
+                updateState {
+                    it.copy(
+                        accountType = action.accountType,
+                    )
+                }
+            }
+
+            is BeneficiaryApplicationAction.OnBeneficiaryNameChanged -> {
+                updateState {
+                    it.copy(
+                        beneficiaryName = action.beneficiaryName,
+                    )
+                }
+            }
+
+            is BeneficiaryApplicationAction.OnOfficeNameChanged -> {
+                updateState {
+                    it.copy(
+                        officeName = action.officeName,
+                    )
+                }
+            }
+
+            is BeneficiaryApplicationAction.OnTransferLimitChanged -> {
+                updateState {
+                    it.copy(
+                        transferLimit = action.transferLimit,
+                    )
+                }
             }
         }
     }
@@ -137,6 +175,11 @@ internal class BeneficiaryApplicationViewModel(
      * Loads both the beneficiary list and template from the repository.
      */
     private fun loadBeneficiaryAndTemplate() {
+        updateState {
+            it.copy(
+                dialogState = BeneficiaryApplicationState.DialogState.Loading,
+            )
+        }
         combine(
             beneficiaryRepositoryImp.beneficiaryList(),
             beneficiaryRepositoryImp.beneficiaryTemplate(),
@@ -183,10 +226,20 @@ internal class BeneficiaryApplicationViewModel(
     /**
      * Validates form fields and submits the payload if validation passes.
      */
-    private fun requestPayload(payload: BeneficiaryPayload) {
-        if (validateFields(payload)) {
+    private fun requestPayload() {
+        if (validateFields()) {
             viewModelScope.launch {
-                sendEvent(BeneficiaryApplicationEvent.SubmitBeneficiary(payload, state.beneficiaryState))
+                sendEvent(
+                    BeneficiaryApplicationEvent.SubmitBeneficiary(
+                        beneficiaryId = state.beneficiaryId,
+                        beneficiaryState = state.beneficiaryState.name,
+                        name = state.beneficiaryName.trim(),
+                        officeName = state.officeName.trim(),
+                        accountType = state.accountType,
+                        accountNumber = state.accountNumber.trim(),
+                        transferLimit = state.transferLimit.toInt(),
+                    ),
+                )
             }
         }
     }
@@ -195,19 +248,18 @@ internal class BeneficiaryApplicationViewModel(
      * Validates the input fields for the beneficiary form and updates the error states.
      * Returns true if validation passes; false otherwise.
      */
-    private fun validateFields(payload: BeneficiaryPayload): Boolean {
+    private fun validateFields(): Boolean {
         var hasError = false
 
         val updatedState = state.copy(
-            accountTypeError = if (state.beneficiaryState != BeneficiaryState.UPDATE && payload.accountType == -1) {
+            accountTypeError = if (state.beneficiaryState != BeneficiaryState.UPDATE && state.accountType == -1) {
                 hasError = true
                 Res.string.select_account_type
             } else {
                 null
             },
 
-            accountNumberError = if (state.beneficiaryState != BeneficiaryState.UPDATE &&
-                payload.accountNumber?.trim()?.isEmpty() == true
+            accountNumberError = if (state.beneficiaryState != BeneficiaryState.UPDATE && state.accountNumber.trim().isEmpty()
             ) {
                 hasError = true
                 Res.string.enter_account_number
@@ -215,8 +267,7 @@ internal class BeneficiaryApplicationViewModel(
                 null
             },
 
-            officeNameError = if (state.beneficiaryState != BeneficiaryState.UPDATE &&
-                payload.officeName?.trim()?.isEmpty() == true
+            officeNameError = if (state.beneficiaryState != BeneficiaryState.UPDATE && state.officeName.trim().isEmpty()
             ) {
                 hasError = true
                 Res.string.enter_office_name
@@ -225,18 +276,18 @@ internal class BeneficiaryApplicationViewModel(
             },
 
             transferLimitError = when {
-                payload.transferLimit == 0 -> {
+                state.transferLimit.isEmpty() -> {
                     hasError = true
                     Res.string.enter_transfer_limit
                 }
-                payload.transferLimit?.rem(1) != 0 -> {
+                state.transferLimit.toDoubleOrNull() == null -> {
                     hasError = true
                     Res.string.invalid_amount
                 }
                 else -> null
             },
 
-            beneficiaryNameError = if (payload.name?.trim()?.isEmpty() == true) {
+            beneficiaryNameError = if (state.beneficiaryName.trim().isEmpty()) {
                 hasError = true
                 Res.string.enter_beneficiary_name
             } else {
@@ -247,27 +298,6 @@ internal class BeneficiaryApplicationViewModel(
         updateState { updatedState }
 
         return !hasError
-    }
-
-    /**
-     * Resets the corresponding field error when a field is changed by the user.
-     */
-    private fun onFieldChange(
-        accountType: Int? = null,
-        accountNumber: String? = null,
-        officeName: String? = null,
-        transferLimit: String? = null,
-        beneficiaryName: String? = null,
-    ) {
-        updateState { currentState ->
-            currentState.copy(
-                accountTypeError = if (accountType != null) null else currentState.accountTypeError,
-                accountNumberError = if (accountNumber != null) null else currentState.accountNumberError,
-                officeNameError = if (officeName != null) null else currentState.officeNameError,
-                transferLimitError = if (transferLimit != null) null else currentState.transferLimitError,
-                beneficiaryNameError = if (beneficiaryName != null) null else currentState.beneficiaryNameError,
-            )
-        }
     }
 
     /**
@@ -294,7 +324,6 @@ internal class BeneficiaryApplicationViewModel(
     }
 }
 
-
 data class BeneficiaryApplicationState(
     val topBarTitle: StringResource = Res.string.add_beneficiary,
     val beneficiaryId: Int = -1,
@@ -309,6 +338,12 @@ data class BeneficiaryApplicationState(
     val officeNameError: StringResource? = null,
     val transferLimitError: StringResource? = null,
     val beneficiaryNameError: StringResource? = null,
+
+    val accountType: Int = -1,
+    val accountNumber: String = "",
+    val officeName: String = "",
+    val transferLimit: String = "",
+    val beneficiaryName: String = "",
 ) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
@@ -321,22 +356,28 @@ data class BeneficiaryApplicationState(
 
 sealed interface BeneficiaryApplicationEvent {
     data object Navigate : BeneficiaryApplicationEvent
-    data class SubmitBeneficiary(val payload: BeneficiaryPayload, val state: BeneficiaryState) : BeneficiaryApplicationEvent
+    data class SubmitBeneficiary(
+        val beneficiaryId: Int,
+        val beneficiaryState: String,
+        val name: String,
+        val officeName: String,
+        val accountType: Int,
+        val accountNumber: String,
+        val transferLimit: Int,
+    ) : BeneficiaryApplicationEvent
 }
 
 sealed interface BeneficiaryApplicationAction {
     data object LoadBeneficiaryTemplate : BeneficiaryApplicationAction
-    data class SubmitBeneficiary(val payload: BeneficiaryPayload) : BeneficiaryApplicationAction
+    data object SubmitBeneficiary : BeneficiaryApplicationAction
     data object OnNavigate : BeneficiaryApplicationAction
     data object OnRetry : BeneficiaryApplicationAction
 
-    data class OnFieldChange(
-        val accountType: Int? = null,
-        val accountNumber: String? = null,
-        val officeName: String? = null,
-        val transferLimit: String? = null,
-        val beneficiaryName: String? = null,
-    ) : BeneficiaryApplicationAction
+    data class OnAccountTypeChanged(val accountType: Int) : BeneficiaryApplicationAction
+    data class OnAccountNumberChanged(val accountNumber: String) : BeneficiaryApplicationAction
+    data class OnOfficeNameChanged(val officeName: String) : BeneficiaryApplicationAction
+    data class OnTransferLimitChanged(val transferLimit: String) : BeneficiaryApplicationAction
+    data class OnBeneficiaryNameChanged(val beneficiaryName: String) : BeneficiaryApplicationAction
 
     sealed interface Internal : BeneficiaryApplicationAction {
 
