@@ -32,13 +32,25 @@ import mifos_mobile.feature.qr.generated.resources.Res
 import mifos_mobile.feature.qr.generated.resources.choose_option
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.qr.navigation.QrDisplayScreenRoute
 
+/**
+ * `ViewModel` for the QR Code Display screen.
+ *
+ * This ViewModel is responsible for receiving a string from navigation arguments and
+ * preparing the data and styling for displaying a QR code. It uses a [BaseViewModel]
+ * to manage its state ([QrCodeDisplayState]), handle actions ([QrCodeDisplayAction]),
+ * and emit events ([QrCodeDisplayEvent]).
+ *
+ * The QR code's styling (shapes and colors) is defined within the state itself
+ * for easy access from the UI.
+ *
+ * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
+ */
 internal class QrCodeDisplayViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<QrCodeDisplayState, QrCodeDisplayEvent, QrCodeDisplayAction>(
     initialState = QrCodeDisplayState(
-        qrArgs = savedStateHandle.toRoute<QrDisplayScreenRoute>().qrString,
+        qrArgs = savedStateHandle.toRoute<QrCodeDisplayRoute>().qrString,
     ),
 ) {
 
@@ -60,26 +72,51 @@ internal class QrCodeDisplayViewModel(
         }
     }
 
+    /**
+     * Handles incoming actions from the UI.
+     *
+     * @param action The [QrCodeDisplayAction] to be handled.
+     */
     override fun handleAction(action: QrCodeDisplayAction) {
         when (action) {
             QrCodeDisplayAction.OnNavigate -> sendEvent(QrCodeDisplayEvent.Navigate)
         }
     }
 
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
     private fun updateState(update: (QrCodeDisplayState) -> QrCodeDisplayState) {
         mutableStateFlow.update(update)
     }
 }
 
+/**
+ * Represents the UI state for the QR Code Display screen.
+ *
+ * @property option A string to display on the screen, often a descriptive text.
+ * @property qrArgs The string content to be encoded in the QR code, received from navigation.
+ * @property viewState The current view state, which can be [QrViewState.Loading] or [QrViewState.Content].
+ */
 data class QrCodeDisplayState(
     val option: String = "",
     val qrArgs: String? = null,
     val viewState: QrViewState = QrViewState.Loading,
 ) {
-
+    /**
+     * A sealed interface representing the different view states of the QR code display.
+     */
     sealed interface QrViewState {
+        /** Represents a state where the QR code is still being prepared or loaded. */
         data object Loading : QrViewState
 
+        /**
+         * Represents a state where the QR code content is ready to be displayed.
+         *
+         * @property data The string content to be encoded in the QR code.
+         */
         data class Content(
             val data: String,
         ) : QrViewState {
@@ -101,6 +138,10 @@ data class QrCodeDisplayState(
                     frame = QrBrush.solid(Color(0xFF6e6e6e)),
                 )
 
+            /**
+             * The options for customizing the appearance of the QR code.
+             * This is a [Composable] property because it uses UI-specific types like `Color`.
+             */
             val options: QrOptions
                 @Composable
                 get() = QrOptions(
@@ -112,10 +153,19 @@ data class QrCodeDisplayState(
     }
 }
 
+/**
+ * A sealed interface representing one-time events that trigger UI side effects,
+ * such as navigation.
+ */
 sealed interface QrCodeDisplayEvent {
+    /** Event to trigger a generic navigation action. */
     data object Navigate : QrCodeDisplayEvent
 }
 
+/**
+ * A sealed interface representing user actions for the QR Code Display screen.
+ */
 sealed interface QrCodeDisplayAction {
+    /** Action to navigate from the screen. */
     data object OnNavigate : QrCodeDisplayAction
 }

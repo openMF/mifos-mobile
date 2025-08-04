@@ -19,7 +19,7 @@
     <string name="deny">Deny</string>
     <string name="no_image_selected_or_something_went_wrong">No image selected or Something went
         wrong</string>
-    <string name="seleted_qr_image">Selected QR image</string>
+    <string name="selected_qr_image">Selected QR image</string>
     <string name="dialog_message_write_storage_permission_never_ask_again">You have denied permission to
         write to storage, without this permission you will not be able to add beneficiaries using QR Code.
         Are you sure you want to deny this permission?
@@ -36,4 +36,13 @@
     <string name="qr_scan_instruction">Import the account details in your app by scanning this QR code.</string>
     <string name="qr_alignment_instruction">Please, align QR Code within the frame to make scanning easily detectable.</string>
     <string name="generated_on">Generated on : </string>
+
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">You can't make action into your account, please scan other user Savings and Loans Account QRCode</string>
+    <string name="feature_qr_error">Error reading QR code</string>
+    <string name="feature_qr_instruction">Please, align QR Code within the frame to make scanning easily detectable.</string>
+    <string name="feature_qr_warning_title">Potential Warning</string>
+    <string name="feature_qr_warning_message">If you scan the QR code, it could take you to a phishing website that steals your personal information, like credit card numbers or usernames and passwords. It could also download malware onto your phone and give hackers access to your device.</string>
+    <string name="feature_qr_upload">Upload QR Code</string>
 </resources>

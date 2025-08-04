@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +34,7 @@ import com.attafitamim.krop.core.crop.TriangleCropShape
 import com.attafitamim.krop.core.crop.cropperStyle
 import com.attafitamim.krop.ui.ImageCropperDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 
 @Composable
 fun CropContent(
@@ -75,7 +79,17 @@ fun CropContent(
                     Text("No image selected !")
                 }
             }
-            MifosButton(onClick = onPick) { Text("Choose Image") }
+
+            MifosButton(
+                modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+                onClick = onPick,
+                shape = DesignToken.shapes.medium,
+            ) {
+                Text(
+                    text = "Choose Image",
+                    style = MaterialTheme.typography.labelLarge,
+                )
+            }
         }
     }
 }

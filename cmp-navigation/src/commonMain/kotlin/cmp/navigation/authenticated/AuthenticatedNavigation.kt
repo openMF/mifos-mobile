@@ -49,10 +49,10 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
-import org.mifos.mobile.feature.qr.navigation.navigateToQrDisplayScreen
-import org.mifos.mobile.feature.qr.navigation.navigateToQrImportScreen
-import org.mifos.mobile.feature.qr.navigation.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
+import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
+import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
+import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen

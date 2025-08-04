@@ -12,27 +12,27 @@ package org.mifos.mobile.feature.qr.qrCodeImport
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.qr.generated.resources.Res
-import mifos_mobile.feature.qr.generated.resources.import_qr
+import mifos_mobile.feature.qr.generated.resources.qr_code
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -43,8 +43,6 @@ internal fun QrCodeImportScreen(
     modifier: Modifier = Modifier,
     viewModel: QrCodeImportViewModel = koinViewModel(),
 ) {
-    val snackbarHostState = SnackbarHostState()
-    val scope = rememberCoroutineScope()
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     EventsEffect(viewModel.eventFlow) { event ->
@@ -56,22 +54,22 @@ internal fun QrCodeImportScreen(
                     event.beneficiaryState,
                 )
             }
-            is QrCodeImportEvent.ShowToast -> {
-                scope.launch {
-                    snackbarHostState.showSnackbar(event.message)
-                }
-            }
         }
     }
 
-    QrCodeImportScreen(
-        state = state,
+    QrCodeImportScreenContent(
         modifier = modifier,
-        snackbarHostState = snackbarHostState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
 
+    )
+
+    QrCodeDialog(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
     )
 }
 
@@ -85,7 +83,7 @@ private fun QrCodeDialog(
         is QrCodeImportState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = state.dialogState.message,
+                    message = stringResource(state.dialogState.message),
                 ),
                 onDismissRequest = { onAction(QrCodeImportAction.DismissDialog) },
             )
@@ -95,17 +93,23 @@ private fun QrCodeDialog(
 }
 
 @Composable
-private fun QrCodeImportScreen(
-    state: QrCodeImportState,
-    snackbarHostState: SnackbarHostState,
+private fun QrCodeImportScreenContent(
     modifier: Modifier = Modifier,
     onAction: (QrCodeImportAction) -> Unit,
 ) {
-    MifosScaffold(
-        topBarTitle = stringResource(Res.string.import_qr),
-        onNavigationIconClick = { onAction(QrCodeImportAction.OnNavigate) },
-        modifier = modifier,
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+    MifosElevatedScaffold(
+
+        onNavigateBack = { onAction(QrCodeImportAction.OnNavigate) },
+        topBarTitle = stringResource(Res.string.qr_code),
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
     ) {
         Column(
             modifier = Modifier
@@ -120,10 +124,6 @@ private fun QrCodeImportScreen(
             }
         }
     }
-    QrCodeDialog(
-        state = state,
-        onAction = onAction,
-    )
 }
 
 @Composable
@@ -149,11 +149,9 @@ private fun QrCodeImportContent(
 @Composable
 private fun QrCodeImportPreview() {
     MifosMobileTheme {
-        QrCodeImportScreen(
-            state = QrCodeImportState(dialogState = null),
+        QrCodeImportScreenContent(
             onAction = { },
             modifier = Modifier,
-            snackbarHostState = SnackbarHostState(),
         )
     }
 }
