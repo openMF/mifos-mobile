@@ -283,6 +283,7 @@ data class AppSizes(
     val iconSmall: Dp = 16.dp,
     val iconMedium: Dp = 24.dp,
     val iconLarge: Dp = 32.dp,
+    val iconExtraLarge: Dp = 36.dp,
     val avatarSmall: Dp = 32.dp,
     val avatarMedium: Dp = 48.dp,
     val avatarLarge: Dp = 64.dp,

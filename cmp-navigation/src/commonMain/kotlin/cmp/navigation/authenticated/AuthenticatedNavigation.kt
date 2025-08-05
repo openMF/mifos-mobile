@@ -32,7 +32,7 @@ import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
-import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
@@ -50,9 +50,7 @@ import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
-import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
-import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
@@ -89,7 +87,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
-            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
+            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
             },
@@ -191,8 +189,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         beneficiaryNavGraph(
             navController = navController,
-            openQrReaderScreen = navController::navigateToQrReaderScreen,
-            openQrImportScreen = navController::navigateToQrImportScreen,
         )
 
         qrNavGraph(
