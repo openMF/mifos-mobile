@@ -13,14 +13,21 @@ import androidx.compose.ui.graphics.ImageBitmap
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.templates.account.AccountType
 
 expect fun decodeQrCode(bitmap: ImageBitmap): String?
 
 fun getAccountDetailsInString(
-    accountNumber: Int?,
-    officeName: String?,
-    accountType: String,
+    clientName: String,
+    accountNumber: String,
+    accountType: AccountType,
+    officeName: String,
 ): String {
-    val payload = Beneficiary(accountNumber, officeName, accountType)
+    val payload = Beneficiary(
+        clientName = clientName,
+        accountNumber = accountNumber,
+        accountType = accountType,
+        officeName = officeName,
+    )
     return Json.encodeToString(payload)
 }
