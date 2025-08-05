@@ -145,6 +145,13 @@ internal class BeneficiaryApplicationConfirmationViewModel(
             BeneficiaryApplicationConfirmationAction.SubmitBeneficiary -> {
                 sendEvent(BeneficiaryApplicationConfirmationEvent.NavigateToAuthenticate())
             }
+
+            is BeneficiaryApplicationConfirmationAction.Internal.ReceiveSubmitBeneficiary -> {
+                processSubmitBeneficiaryResult(action.result)
+            }
+            is BeneficiaryApplicationConfirmationAction.Internal.ReceiveUpdateBeneficiary -> {
+                processUpdateBeneficiaryResult(action.result)
+            }
         }
     }
 
@@ -155,7 +162,16 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.createBeneficiary(payload)
+            sendAction(
+                BeneficiaryApplicationConfirmationAction
+                    .Internal
+                    .ReceiveSubmitBeneficiary(response)
+            )
+        }
+    }
 
+    private fun processSubmitBeneficiaryResult(response:DataState<String>) {
+        viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
@@ -190,6 +206,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                 }
             }
         }
+
     }
 
     /**
@@ -200,6 +217,16 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
+            sendAction(
+                BeneficiaryApplicationConfirmationAction
+                    .Internal
+                    .ReceiveUpdateBeneficiary(response)
+            )
+        }
+    }
+
+    private fun processUpdateBeneficiaryResult(response:DataState<String>) {
+        viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
@@ -349,5 +376,7 @@ sealed interface BeneficiaryApplicationConfirmationAction {
 
     sealed interface Internal : BeneficiaryApplicationConfirmationAction {
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
+        data class ReceiveSubmitBeneficiary(val result:DataState<String>) : Internal
+        data class ReceiveUpdateBeneficiary(val result:DataState<String>) : Internal
     }
 }

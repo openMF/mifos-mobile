@@ -23,6 +23,7 @@ import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
+
 internal class BeneficiaryDetailViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     savedStateHandle: SavedStateHandle,
@@ -55,16 +56,10 @@ internal class BeneficiaryDetailViewModel(
             )
         }
         viewModelScope.launch {
-            beneficiaryRepositoryImp.beneficiaryList()
-                .catch { e ->
-                    setDialogState(
-                        BeneficiaryDetailState.DialogState.Error(
-                            e.message ?: "Error loading beneficiary",
-                        ),
-                    )
-                }.collect { beneficiary ->
-                    handleResponse(beneficiary)
-                }
+            beneficiaryRepositoryImp.beneficiaryList().collect {
+                sendAction(BeneficiaryDetailAction.Internal.ReceiveBeneficiaryResult(it))
+            }
+
         }
     }
 
@@ -95,6 +90,16 @@ internal class BeneficiaryDetailViewModel(
         viewModelScope.launch {
             setDialogState(BeneficiaryDetailState.DialogState.Loading)
             val response = beneficiaryRepositoryImp.deleteBeneficiary(beneficiaryId)
+            sendAction(
+                BeneficiaryDetailAction
+                    .Internal
+                    .ReceiveDeleteBeneficiary(response)
+            )
+        }
+    }
+
+    private fun processDeleteBeneficiaryResult(response: DataState<String>){
+        viewModelScope.launch {
             when (response) {
                 DataState.Loading -> {
                     setDialogState(BeneficiaryDetailState.DialogState.Loading)
@@ -124,6 +129,12 @@ internal class BeneficiaryDetailViewModel(
             is BeneficiaryDetailAction.ErrorDialogDismiss -> updateState { it.copy(beneficiaryDialog = null) }
             BeneficiaryDetailAction.ShowDeleteConfirmation -> showDeleteConfirmation()
             BeneficiaryDetailAction.OnRefresh -> loadBeneficiary()
+            is BeneficiaryDetailAction.Internal.ReceiveBeneficiaryResult -> {
+                handleResponse(action.result)
+            }
+            is BeneficiaryDetailAction.Internal.ReceiveDeleteBeneficiary -> {
+                processDeleteBeneficiaryResult(action.result)
+            }
         }
     }
 
@@ -165,4 +176,9 @@ sealed interface BeneficiaryDetailAction {
     data object OnNavigate : BeneficiaryDetailAction
     data object ErrorDialogDismiss : BeneficiaryDetailAction
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
+
+    sealed interface Internal : BeneficiaryDetailAction {
+        data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
+        data class ReceiveDeleteBeneficiary(val result:DataState<String>) : Internal
+    }
 }
