@@ -31,6 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_account_title
+import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_title
+import mifos_mobile.feature.accounts.generated.resources.feature_saving_account_title
+import mifos_mobile.feature.accounts.generated.resources.feature_share_account_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -196,7 +199,11 @@ internal fun AccountScreenContent(
 
     MifosElevatedScaffold(
         onNavigateBack = { onAction(AccountsAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_account_title),
+        topBarTitle = when (state.accountType) {
+            AccountType.SAVINGS -> stringResource(Res.string.feature_saving_account_title)
+            AccountType.LOAN -> stringResource(Res.string.feature_loan_account_title)
+            AccountType.SHARE -> stringResource(Res.string.feature_share_account_title)
+        },
         pullToRefreshState = pullToRefreshState,
         bottomBar = {
             Surface {

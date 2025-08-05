@@ -30,7 +30,7 @@
     <string name="feature_loan_account">Loan Account</string>
     <string name="feature_loan_account_items">%1$d Items</string>
 
-    <string name="feature_account_details_top_bar_title">Account Details</string>
+    <string name="feature_account_details_top_bar_title">Loan Account Details</string>
     <string name="feature_account_details_action">Action</string>
     <string name="feature_account_action_make_payment">Make Payment</string>
     <string name="feature_account_action_make_payment_tip">Pay your due installment</string>
