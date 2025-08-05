@@ -200,6 +200,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             openBeneficiaryApplication = { beneficiary, state ->
                 navController.navigateToManualBeneficiaryAddScreen(
                     beneficiary.id ?: -1,
+                    beneficiary.clientName ?: "",
+                    beneficiary.accountType?.id ?: -1,
+                    beneficiary.accountNumber ?: "",
+                    beneficiary.officeName ?: "",
                     state.name,
                 )
             },

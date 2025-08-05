@@ -66,11 +66,10 @@ fun NavGraphBuilder.beneficiaryNavGraph(
             navigateBack = navController::popBackStack,
             updateBeneficiary = { beneficiaryId ->
                 navController.navigateToManualBeneficiaryAddScreen(
-                    beneficiaryId,
-                    BeneficiaryState.UPDATE.name,
+                    beneficiaryId = beneficiaryId,
+                    beneficiaryState = BeneficiaryState.UPDATE.name,
                 )
             },
         )
     }
 }
-

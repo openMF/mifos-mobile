@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -22,7 +21,6 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-
 
 internal class BeneficiaryDetailViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
@@ -59,7 +57,6 @@ internal class BeneficiaryDetailViewModel(
             beneficiaryRepositoryImp.beneficiaryList().collect {
                 sendAction(BeneficiaryDetailAction.Internal.ReceiveBeneficiaryResult(it))
             }
-
         }
     }
 
@@ -93,12 +90,12 @@ internal class BeneficiaryDetailViewModel(
             sendAction(
                 BeneficiaryDetailAction
                     .Internal
-                    .ReceiveDeleteBeneficiary(response)
+                    .ReceiveDeleteBeneficiary(response),
             )
         }
     }
 
-    private fun processDeleteBeneficiaryResult(response: DataState<String>){
+    private fun processDeleteBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
                 DataState.Loading -> {
@@ -179,6 +176,6 @@ sealed interface BeneficiaryDetailAction {
 
     sealed interface Internal : BeneficiaryDetailAction {
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
-        data class ReceiveDeleteBeneficiary(val result:DataState<String>) : Internal
+        data class ReceiveDeleteBeneficiary(val result: DataState<String>) : Internal
     }
 }

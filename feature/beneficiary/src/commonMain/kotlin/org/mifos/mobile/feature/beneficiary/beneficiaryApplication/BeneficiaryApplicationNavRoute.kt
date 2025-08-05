@@ -20,14 +20,32 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 data class BeneficiaryApplicationNavRoute(
     val beneficiaryId: Long = -1L,
     val beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
+    val name: String = "",
+    val accountType: Int = -1,
+    val accountNumber: String = "",
+    val officeName: String = "",
 )
 
 fun NavController.navigateToManualBeneficiaryAddScreen(
     beneficiaryId: Long = -1L,
+    name: String = "",
+    accountType: Int = -1,
+    accountNumber: String = "",
+    officeName: String = "",
     beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate(BeneficiaryApplicationNavRoute(beneficiaryId, beneficiaryState), navOptions)
+    this.navigate(
+        BeneficiaryApplicationNavRoute(
+            beneficiaryId = beneficiaryId,
+            name = name,
+            accountType = accountType,
+            accountNumber = accountNumber,
+            officeName = officeName,
+            beneficiaryState = beneficiaryState,
+        ),
+        navOptions,
+    )
 }
 
 fun NavGraphBuilder.manualBeneficiaryAddDestination(

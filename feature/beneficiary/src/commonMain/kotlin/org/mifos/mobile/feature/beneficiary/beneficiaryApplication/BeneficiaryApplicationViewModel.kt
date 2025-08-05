@@ -52,6 +52,10 @@ internal class BeneficiaryApplicationViewModel(
         BeneficiaryApplicationState(
             dialogState = null,
             beneficiaryId = route.beneficiaryId,
+            beneficiaryName = route.name,
+            accountType = route.accountType,
+            accountNumber = route.accountNumber,
+            officeName = route.officeName,
             beneficiaryState = enumValueOf<BeneficiaryState>(route.beneficiaryState),
         )
     },

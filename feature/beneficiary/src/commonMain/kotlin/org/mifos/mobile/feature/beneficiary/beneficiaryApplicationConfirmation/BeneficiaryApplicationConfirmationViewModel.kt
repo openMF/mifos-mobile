@@ -118,26 +118,22 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 
             is BeneficiaryApplicationConfirmationAction.Internal.ReceiveAuthenticationResult -> {
                 if (action.result) {
-                    when (state.beneficiaryState) {
-                        BeneficiaryState.CREATE_MANUAL -> {
-                            val payload = BeneficiaryPayload(
-                                name = state.name,
-                                accountNumber = state.accountNumber,
-                                transferLimit = state.transferLimit,
-                                officeName = state.officeName,
-                                accountType = state.accountType,
-                                locale = "en",
-                            )
-                            createBeneficiary(payload)
-                        }
-                        BeneficiaryState.UPDATE -> {
-                            val payload = BeneficiaryUpdatePayload(
-                                name = state.name,
-                                transferLimit = state.transferLimit,
-                            )
-                            updateBeneficiary(state.beneficiaryId, payload)
-                        }
-                        else -> {}
+                    if (state.beneficiaryState == BeneficiaryState.UPDATE) {
+                        val payload = BeneficiaryUpdatePayload(
+                            name = state.name,
+                            transferLimit = state.transferLimit,
+                        )
+                        updateBeneficiary(state.beneficiaryId, payload)
+                    } else {
+                        val payload = BeneficiaryPayload(
+                            name = state.name,
+                            accountNumber = state.accountNumber,
+                            transferLimit = state.transferLimit,
+                            officeName = state.officeName,
+                            accountType = state.accountType,
+                            locale = "en",
+                        )
+                        createBeneficiary(payload)
                     }
                 }
             }
@@ -165,12 +161,12 @@ internal class BeneficiaryApplicationConfirmationViewModel(
             sendAction(
                 BeneficiaryApplicationConfirmationAction
                     .Internal
-                    .ReceiveSubmitBeneficiary(response)
+                    .ReceiveSubmitBeneficiary(response),
             )
         }
     }
 
-    private fun processSubmitBeneficiaryResult(response:DataState<String>) {
+    private fun processSubmitBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
@@ -206,7 +202,6 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                 }
             }
         }
-
     }
 
     /**
@@ -220,12 +215,12 @@ internal class BeneficiaryApplicationConfirmationViewModel(
             sendAction(
                 BeneficiaryApplicationConfirmationAction
                     .Internal
-                    .ReceiveUpdateBeneficiary(response)
+                    .ReceiveUpdateBeneficiary(response),
             )
         }
     }
 
-    private fun processUpdateBeneficiaryResult(response:DataState<String>) {
+    private fun processUpdateBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
@@ -376,7 +371,7 @@ sealed interface BeneficiaryApplicationConfirmationAction {
 
     sealed interface Internal : BeneficiaryApplicationConfirmationAction {
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
-        data class ReceiveSubmitBeneficiary(val result:DataState<String>) : Internal
-        data class ReceiveUpdateBeneficiary(val result:DataState<String>) : Internal
+        data class ReceiveSubmitBeneficiary(val result: DataState<String>) : Internal
+        data class ReceiveUpdateBeneficiary(val result: DataState<String>) : Internal
     }
 }
