@@ -14,13 +14,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -35,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -158,7 +155,7 @@ private fun BeneficiaryListScreen(
                 } else {
                     BeneficiaryListContent(
                         beneficiaryList = state.beneficiaries,
-                        onAction=onAction
+                        onAction = onAction,
                     )
                 }
             }
@@ -192,7 +189,7 @@ fun BeneficiaryListContent(
                     onBeneficiaryClick = {
                         onAction(
                             BeneficiaryListAction
-                                .OnBeneficiaryItemClick(beneficiary.id?:-1)
+                                .OnBeneficiaryItemClick(beneficiary.id ?: -1),
                         )
                     },
                 )
@@ -200,7 +197,6 @@ fun BeneficiaryListContent(
         }
     }
 }
-
 
 @Composable
 internal fun ActionBar(
@@ -213,7 +209,6 @@ internal fun ActionBar(
             .padding(vertical = DesignToken.padding.medium),
         horizontalArrangement = Arrangement.End,
     ) {
-
         Row(
             modifier = Modifier.clickable {
                 onAction(BeneficiaryListAction.OnAddBeneficiaryClicked)
@@ -231,11 +226,11 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Add,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
 
-        //TODO: Add space and Filter icon
+        // TODO: Add space and Filter icon
     }
 }
 

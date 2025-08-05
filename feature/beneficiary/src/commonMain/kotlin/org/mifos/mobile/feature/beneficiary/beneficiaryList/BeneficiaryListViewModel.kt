@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.model.IgnoredOnParcel
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
