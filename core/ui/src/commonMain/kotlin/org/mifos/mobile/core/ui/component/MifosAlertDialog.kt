@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
@@ -37,7 +38,7 @@ fun MifosAlertDialog(
             }
         },
         title = { Text(text = dialogTitle) },
-        text = { Text(text = dialogText) },
+        text = { Text(text = dialogText, textAlign = TextAlign.Center) },
         modifier = modifier,
         onDismissRequest = onDismissRequest,
         confirmButton = {

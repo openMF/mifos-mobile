@@ -60,7 +60,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 internal fun BeneficiaryListScreen(
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int) -> Unit,
+    onBeneficiaryItemClick: (position: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BeneficiaryListViewModel = koinViewModel(),
 ) {
@@ -189,7 +189,7 @@ fun BeneficiaryListContent(
                     onBeneficiaryClick = {
                         onAction(
                             BeneficiaryListAction
-                                .OnBeneficiaryItemClick(beneficiary.id ?: -1),
+                                .OnBeneficiaryItemClick(beneficiary.id ?: -1L),
                         )
                     },
                 )

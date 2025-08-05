@@ -26,7 +26,7 @@ fun NavController.navigateToBeneficiaryListScreen() {
 fun NavGraphBuilder.beneficiaryListScreen(
     navigateBack: () -> Unit,
     addBeneficiaryClicked: () -> Unit,
-    onBeneficiaryItemClick: (position: Int) -> Unit,
+    onBeneficiaryItemClick: (position: Long) -> Unit,
 ) {
     composableWithPushTransitions<BeneficiaryListNavRoute> {
         BeneficiaryListScreen(

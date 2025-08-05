@@ -17,7 +17,7 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
 data class BeneficiaryApplicationConfirmationNavRoute(
-    val beneficiaryId: Int = -1,
+    val beneficiaryId: Long = -1L,
     val beneficiaryState: String,
     val name: String,
     val officeName: String,
@@ -27,7 +27,7 @@ data class BeneficiaryApplicationConfirmationNavRoute(
 )
 
 fun NavController.navigateToBeneficiaryApplicationAddConfirmationScreen(
-    beneficiaryId: Int = -1,
+    beneficiaryId: Long = -1L,
     beneficiaryState: String,
     name: String,
     officeName: String,

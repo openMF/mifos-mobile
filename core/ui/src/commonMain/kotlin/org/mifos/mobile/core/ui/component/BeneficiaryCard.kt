@@ -15,8 +15,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -28,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import org.jetbrains.compose.resources.painterResource
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
+import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.ui.utils.DevicePreview
@@ -44,14 +46,11 @@ fun MifosBeneficiaryTopCard(
     modifier: Modifier = Modifier,
 ) {
     MifosCustomCard(
-        modifier = modifier
-            .height(150.dp),
+        modifier = modifier,
         shape = MaterialTheme.shapes.medium,
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Image(
                 modifier = Modifier
@@ -61,22 +60,24 @@ fun MifosBeneficiaryTopCard(
                 contentScale = ContentScale.Crop,
             )
             Row(
+                Modifier.padding(DesignToken.padding.large),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                // pass BitMap also once fetching client Image
                 MifosUserImage(
-                    username = beneficiary?.name,
+                    username = beneficiary?.name ?: "",
                     modifier = Modifier
                         .clip(CircleShape)
-                        .size(48.dp)
-                        .background(Color.Gray),
+                        .size(DesignToken.sizes.iconExtraLarge)
+                        .background(Color.LightGray),
                     bitmap = null,
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(DesignToken.padding.medium))
                 Column {
                     Text(
-                        text = beneficiary!!.name!!,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        text = beneficiary?.name ?: "",
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = AppColors.customWhite,
                     )
                 }
             }

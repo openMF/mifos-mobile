@@ -22,15 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.beneficiary.generated.resources.Res
-import mifos_mobile.feature.beneficiary.generated.resources.account_number_label
-import mifos_mobile.feature.beneficiary.generated.resources.account_type_label
-import mifos_mobile.feature.beneficiary.generated.resources.account_type_loan
-import mifos_mobile.feature.beneficiary.generated.resources.account_type_savings
-import mifos_mobile.feature.beneficiary.generated.resources.account_type_share
-import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
 import mifos_mobile.feature.beneficiary.generated.resources.confirm_details
-import mifos_mobile.feature.beneficiary.generated.resources.office_label
-import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit_label
 import mifos_mobile.feature.beneficiary.generated.resources.validate_details
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel

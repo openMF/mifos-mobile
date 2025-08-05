@@ -18,12 +18,12 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
 data class BeneficiaryApplicationNavRoute(
-    val beneficiaryId: Int = -1,
+    val beneficiaryId: Long = -1L,
     val beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
 )
 
 fun NavController.navigateToManualBeneficiaryAddScreen(
-    beneficiaryId: Int = -1,
+    beneficiaryId: Long = -1L,
     beneficiaryState: String = BeneficiaryState.CREATE_MANUAL.name,
     navOptions: NavOptions? = null,
 ) {
@@ -32,9 +32,9 @@ fun NavController.navigateToManualBeneficiaryAddScreen(
 
 fun NavGraphBuilder.manualBeneficiaryAddDestination(
     navigateBack: () -> Unit,
-    navigateToQR:()->Unit,
+    navigateToQR: () -> Unit,
     navigateToConfirmationScreen: (
-        beneficiaryId: Int,
+        beneficiaryId: Long,
         beneficiaryState: String,
         name: String,
         officeName: String,
@@ -47,7 +47,7 @@ fun NavGraphBuilder.manualBeneficiaryAddDestination(
         BeneficiaryApplicationScreen(
             navigateBack = navigateBack,
             navigateToConfirmationScreen = navigateToConfirmationScreen,
-            navigateToQR=navigateToQR
+            navigateToQR = navigateToQR,
         )
     }
 }

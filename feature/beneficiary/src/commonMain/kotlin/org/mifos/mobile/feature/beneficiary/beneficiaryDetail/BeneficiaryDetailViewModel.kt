@@ -11,7 +11,7 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,23 +20,20 @@ import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary_c
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.beneficiary.navigation.BENEFICIARY_ID
 
 internal class BeneficiaryDetailViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<BeneficiaryDetailState, BeneficiaryDetailEvent, BeneficiaryDetailAction>(
-    initialState = BeneficiaryDetailState(
-        beneficiaryDialog = null,
-        beneficiaryId = savedStateHandle.getStateFlow<Int?>(
-            key = BENEFICIARY_ID,
-            initialValue = null,
-        ).value,
-    ),
+    initialState = run {
+        val route = savedStateHandle.toRoute<BeneficiaryDetailNavRoute>()
+        BeneficiaryDetailState(
+            beneficiaryId = route.beneficiaryId,
+            beneficiaryDialog = null,
+        )
+    },
 ) {
 
     init {
@@ -94,11 +91,10 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
-    private fun deleteBeneficiary(beneficiaryId: Int?) {
+    private fun deleteBeneficiary(beneficiaryId: Long?) {
         viewModelScope.launch {
-//            val errorMsg = getString(Res.string.error_deleting_beneficiary)
             setDialogState(BeneficiaryDetailState.DialogState.Loading)
-            val response = beneficiaryRepositoryImp.deleteBeneficiary(beneficiaryId?.toLong())
+            val response = beneficiaryRepositoryImp.deleteBeneficiary(beneficiaryId)
             when (response) {
                 DataState.Loading -> {
                     setDialogState(BeneficiaryDetailState.DialogState.Loading)
@@ -111,10 +107,8 @@ internal class BeneficiaryDetailViewModel(
                     )
                 }
                 is DataState.Success -> {
-                    setDialogState(null)
-                    sendEvent(BeneficiaryDetailEvent.ShowToast(response.data))
-                    delay(1500)
                     sendEvent(BeneficiaryDetailEvent.Navigate)
+                    setDialogState(null)
                 }
             }
         }
@@ -122,9 +116,9 @@ internal class BeneficiaryDetailViewModel(
 
     override fun handleAction(action: BeneficiaryDetailAction) {
         when (action) {
-            is BeneficiaryDetailAction.DeleteBeneficiary -> deleteBeneficiary(action.beneficiaryId)
+            is BeneficiaryDetailAction.DeleteBeneficiary -> deleteBeneficiary(state.beneficiaryId)
             is BeneficiaryDetailAction.OnUpdateBeneficiary -> sendEvent(
-                BeneficiaryDetailEvent.UpdateBeneficiary(action.beneficiary),
+                BeneficiaryDetailEvent.UpdateBeneficiary(state.beneficiaryId),
             )
             BeneficiaryDetailAction.OnNavigate -> sendEvent(BeneficiaryDetailEvent.Navigate)
             is BeneficiaryDetailAction.ErrorDialogDismiss -> updateState { it.copy(beneficiaryDialog = null) }
@@ -145,34 +139,29 @@ internal class BeneficiaryDetailViewModel(
     }
 }
 
-@Parcelize
 data class BeneficiaryDetailState(
-    val beneficiaryId: Int? = null,
+    val beneficiaryId: Long = -1L,
     val beneficiary: Beneficiary? = null,
     val beneficiaryDialog: DialogState?,
-) : Parcelable {
-    sealed interface DialogState : Parcelable {
-        @Parcelize
+) {
+    sealed interface DialogState {
         data class Error(val message: String) : DialogState
 
-        @Parcelize
         data object Loading : DialogState
 
-        @Parcelize
         data class Confirmation(val message: String) : DialogState
     }
 }
 
 sealed interface BeneficiaryDetailEvent {
-    data class ShowToast(val message: String) : BeneficiaryDetailEvent
     data object Navigate : BeneficiaryDetailEvent
-    data class UpdateBeneficiary(val beneficiary: Beneficiary?) : BeneficiaryDetailEvent
+    data class UpdateBeneficiary(val beneficiaryId: Long) : BeneficiaryDetailEvent
 }
 
 sealed interface BeneficiaryDetailAction {
     data object OnRefresh : BeneficiaryDetailAction
-    data class OnUpdateBeneficiary(val beneficiary: Beneficiary?) : BeneficiaryDetailAction
-    data class DeleteBeneficiary(val beneficiaryId: Int?) : BeneficiaryDetailAction
+    data object OnUpdateBeneficiary : BeneficiaryDetailAction
+    data object DeleteBeneficiary : BeneficiaryDetailAction
     data object OnNavigate : BeneficiaryDetailAction
     data object ErrorDialogDismiss : BeneficiaryDetailAction
     data object ShowDeleteConfirmation : BeneficiaryDetailAction

@@ -36,6 +36,8 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import kotlin.Int
+
 /**
  * ViewModel for handling the Beneficiary Application logic including form validation,
  * network state observation, and interaction with repository for data operations.
@@ -63,7 +65,6 @@ internal class BeneficiaryApplicationViewModel(
         viewModelScope.launch {
             observeNetworkStatus()
             getTopBarTitle()
-            loadBeneficiaryAndTemplate()
         }
     }
 
@@ -212,12 +213,24 @@ internal class BeneficiaryApplicationViewModel(
                 setDialogState(BeneficiaryApplicationState.DialogState.Error(error))
             }
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
+                val beneficiary = beneficiaryList.data.find { it.id == state.beneficiaryId }
                 updateState { currentState ->
                     currentState.copy(
                         dialogState = null,
-                        beneficiary = beneficiaryList.data.find { it.id == currentState.beneficiaryId },
                         template = beneficiaryTemplate.data,
                     )
+                }
+                if (beneficiary != null) {
+                    updateState {
+                        it.copy(
+                            beneficiary = beneficiary,
+                            accountType = beneficiary.accountType?.id ?: -1,
+                            accountNumber = beneficiary.accountNumber ?: "",
+                            officeName = beneficiary.officeName ?: "",
+                            transferLimit = (beneficiary.transferLimit ?: 0).toLong().toString(),
+                            beneficiaryName = beneficiary.name ?: "",
+                        )
+                    }
                 }
             }
         }
@@ -237,7 +250,7 @@ internal class BeneficiaryApplicationViewModel(
                         officeName = state.officeName.trim(),
                         accountType = state.accountType,
                         accountNumber = state.accountNumber.trim(),
-                        transferLimit = state.transferLimit.toInt(),
+                        transferLimit = state.transferLimit.toDouble().toInt(),
                     ),
                 )
             }
@@ -319,6 +332,9 @@ internal class BeneficiaryApplicationViewModel(
                             },
                         )
                     }
+                    if (!isOffline) {
+                        loadBeneficiaryAndTemplate()
+                    }
                 }
         }
     }
@@ -326,7 +342,7 @@ internal class BeneficiaryApplicationViewModel(
 
 data class BeneficiaryApplicationState(
     val topBarTitle: StringResource = Res.string.add_beneficiary,
-    val beneficiaryId: Int = -1,
+    val beneficiaryId: Long = -1L,
     val networkUnavailable: Boolean = false,
     val template: BeneficiaryTemplate? = null,
     val beneficiary: Beneficiary? = null,
@@ -357,7 +373,7 @@ data class BeneficiaryApplicationState(
 sealed interface BeneficiaryApplicationEvent {
     data object Navigate : BeneficiaryApplicationEvent
     data class SubmitBeneficiary(
-        val beneficiaryId: Int,
+        val beneficiaryId: Long,
         val beneficiaryState: String,
         val name: String,
         val officeName: String,
