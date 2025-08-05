@@ -25,6 +25,7 @@ import mifos_mobile.feature.beneficiary.generated.resources.account_type_share
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.back_to_home
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully_account
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_creation_failed
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
@@ -160,7 +161,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                             eventType = EventType.SUCCESS.name,
                             eventDestination = "",
                             title = getString(Res.string.beneficiary_created_successfully),
-                            subtitle = successMsg,
+                            subtitle = getString(Res.string.beneficiary_created_successfully_account,state.accountNumber,state.name),
                             buttonText = getString(Res.string.back_to_home),
                         ),
                     )

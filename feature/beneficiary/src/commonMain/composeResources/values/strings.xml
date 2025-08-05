@@ -108,4 +108,11 @@
     <string name="filter_linked_with">Linked With</string>
     <string name="filter_self">Self</string>
     <string name="filter_other_clients">Other Clients</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Beneficiary Created Successfully with for the account %1$s to the beneficiary %2$s.
+    </string>
+
+    <string name="skip_the_form">Skip the form </string>
+    <string name="upload_or_scan_qr_code">Upload Or Scan QR Code</string>
 </resources>

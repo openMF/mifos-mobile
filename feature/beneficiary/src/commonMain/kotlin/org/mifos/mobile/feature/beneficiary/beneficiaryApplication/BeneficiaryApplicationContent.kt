@@ -37,8 +37,10 @@ import mifos_mobile.feature.beneficiary.generated.resources.account_number
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name
 import mifos_mobile.feature.beneficiary.generated.resources.office_name
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
+import mifos_mobile.feature.beneficiary.generated.resources.skip_the_form
 import mifos_mobile.feature.beneficiary.generated.resources.submit_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit
+import mifos_mobile.feature.beneficiary.generated.resources.upload_or_scan_qr_code
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -162,9 +164,9 @@ internal fun BeneficiaryApplicationContent(
 
         Text(
             text = buildAnnotatedString {
-                append("Skip the form ")
+                append(stringResource(Res.string.skip_the_form))
                 withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
-                    append("Upload Or Scan QR Code")
+                    append(stringResource(Res.string.upload_or_scan_qr_code))
                 }
             },
             modifier = Modifier.fillMaxWidth().clickable {
