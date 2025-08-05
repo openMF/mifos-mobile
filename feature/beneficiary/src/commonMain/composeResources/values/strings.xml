@@ -73,6 +73,26 @@
     <string name="scan">Scan</string>
     <string name="upload_qr_code">Upload QR</string>
 
+    <string name="beneficiary_name_label">Name of the Beneficiary</string>
+    <string name="office_label">Office</string>
+    <string name="account_type_label">Account Type</string>
+    <string name="account_number_label">Account Number</string>
+    <string name="transfer_limit_label">Transfer Limit</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Savings</string>
+    <string name="account_type_loan">Loan</string>
+    <string name="account_type_share">Share</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Validate Details</string>
+    <string name="confirm_details">Confirm Details</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Beneficiary Creation Failed</string>
+    <string name="try_again">Try Again</string>
+    <string name="back_to_home">Back To Home</string>
+
 
 
     <!-- Filter   -->
@@ -80,7 +100,7 @@
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Apply</string>
     <string name="feature_filters_count">%1$s Selected</string>
-    
+
     <!-- Beneficiary Filter Types -->
     <string name="filter_account_type">Account Type</string>
     <string name="filter_loan_account">Loan Account</string>
@@ -88,4 +108,11 @@
     <string name="filter_linked_with">Linked With</string>
     <string name="filter_self">Self</string>
     <string name="filter_other_clients">Other Clients</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Beneficiary Created Successfully with for the account %1$s to the beneficiary %2$s.
+    </string>
+
+    <string name="skip_the_form">Skip the form </string>
+    <string name="upload_or_scan_qr_code">Upload Or Scan QR Code</string>
 </resources>

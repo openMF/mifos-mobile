@@ -15,10 +15,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.beneficiaryDetail.BeneficiaryDetailScreen
 import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListScreen
 import org.mifos.mobile.feature.beneficiary.presentation.BeneficiaryScreen
@@ -42,6 +40,7 @@ fun NavController.navigateToBeneficiaryApplicationScreen(
         ),
     )
 }
+
 
 fun NavGraphBuilder.beneficiaryNavGraph(
     navController: NavController,
@@ -91,10 +90,6 @@ fun NavGraphBuilder.beneficiaryNavGraph(
                 )
             },
         )
-
-        beneficiaryApplicationRoute(
-            navigateBack = navController::popBackStack,
-        )
     }
 }
 
@@ -141,24 +136,6 @@ fun NavGraphBuilder.beneficiaryDetailRoute(
         BeneficiaryDetailScreen(
             navigateBack = navigateBack,
             updateBeneficiary = updateBeneficiary,
-        )
-    }
-}
-
-fun NavGraphBuilder.beneficiaryApplicationRoute(
-    navigateBack: () -> Unit,
-) {
-    composable(
-        route = BeneficiaryNavigation.BeneficiaryApplication.route,
-        arguments = listOf(
-            navArgument(name = BENEFICIARY_ID) { type = NavType.IntType },
-            navArgument(name = Constants.BENEFICIARY_STATE) {
-                type = NavType.StringType
-            },
-        ),
-    ) {
-        BeneficiaryApplicationScreen(
-            navigateBack = navigateBack,
         )
     }
 }

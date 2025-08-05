@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults.colors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -71,7 +72,7 @@ fun MifosDropDownTextField(
                 .fillMaxWidth(),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelSmall,
+            textStyle = MaterialTheme.typography.labelMedium,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -88,6 +89,11 @@ fun MifosDropDownTextField(
                     },
                 )
             },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+                errorBorderColor = MaterialTheme.colorScheme.error,
+            ),
         )
 
         DropdownMenu(

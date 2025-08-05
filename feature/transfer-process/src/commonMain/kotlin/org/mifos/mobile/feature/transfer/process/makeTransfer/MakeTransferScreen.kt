@@ -212,7 +212,7 @@ internal fun MakeTransferDialog(
     when (state.dialogState) {
         is MakeTransferState.DialogState.Error -> {
             MifosErrorComponent(
-                isNetworkConnected = state.networkUnavailable,
+                isNetworkConnected = !state.networkUnavailable,
                 message = state.dialogState.message,
                 isRetryEnabled = true,
                 onRetry = { onAction(MakeTransferAction.OnRetry) },
@@ -224,7 +224,7 @@ internal fun MakeTransferDialog(
         }
         MakeTransferState.DialogState.Network -> {
             MifosErrorComponent(
-                isNetworkConnected = state.networkUnavailable,
+                isNetworkConnected = !state.networkUnavailable,
                 isRetryEnabled = true,
                 onRetry = { onAction(MakeTransferAction.OnRetry) },
                 modifier = modifier,
