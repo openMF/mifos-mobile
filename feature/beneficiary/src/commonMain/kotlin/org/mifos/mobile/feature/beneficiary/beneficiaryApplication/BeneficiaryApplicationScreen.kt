@@ -32,6 +32,7 @@ import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -73,16 +74,16 @@ internal fun BeneficiaryApplicationScreen(
         }
     }
 
-    BeneficiaryApplicationDialogs(
+    BeneficiaryApplicationScreen(
         state = state,
+        modifier = modifier,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
     )
 
-    BeneficiaryApplicationScreen(
+    BeneficiaryApplicationDialogs(
         state = state,
-        modifier = modifier,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -136,17 +137,14 @@ private fun BeneficiaryApplicationScreen(
                 )
             }
         },
-        content = {
-            Box(Modifier.fillMaxSize()) {
-                if (state.dialogState == null) {
-                    BeneficiaryApplicationContent(
-                        state = state,
-                        onAction = onAction,
-                    )
-                }
-            }
-        },
-    )
+    ){
+            if (state.dialogState == null && state.template!=null) {
+                BeneficiaryApplicationContent(
+                    state = state,
+                    onAction = onAction,
+                )
+        }
+    }
 }
 
 @Preview

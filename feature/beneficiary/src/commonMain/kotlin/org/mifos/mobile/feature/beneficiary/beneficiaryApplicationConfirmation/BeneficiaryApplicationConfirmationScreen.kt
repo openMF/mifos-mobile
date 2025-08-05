@@ -130,20 +130,7 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                         style = MifosTypography.labelLargeEmphasized,
                     )
 
-                    MifosDetailsCard(
-                        mapOf(
-                            Res.string.beneficiary_name_label to state.name,
-                            Res.string.office_label to state.officeName,
-                            Res.string.account_type_label to when (state.accountType) {
-                                0 -> stringResource(Res.string.account_type_share)
-                                1 -> stringResource(Res.string.account_type_loan)
-                                2 -> stringResource(Res.string.account_type_savings)
-                                else -> ""
-                            },
-                            Res.string.account_number_label to state.accountNumber,
-                            Res.string.transfer_limit_label to state.transferLimit.toString(),
-                        ),
-                    )
+                    MifosDetailsCard(state.details)
                     MifosButton(
                         onClick = {
                             onAction(BeneficiaryApplicationConfirmationAction.SubmitBeneficiary)

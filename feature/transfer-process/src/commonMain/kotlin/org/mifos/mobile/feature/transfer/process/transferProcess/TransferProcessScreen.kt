@@ -128,7 +128,7 @@ internal fun MakeTransferDialog(
         }
         TransferProcessState.DialogState.Network -> {
             MifosErrorComponent(
-                isNetworkConnected = state.networkUnavailable,
+                isNetworkConnected = !state.networkUnavailable,
                 modifier = modifier,
             )
         }

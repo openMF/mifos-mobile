@@ -211,7 +211,7 @@ internal fun AccountTransactionsDialog(
         }
         AccountTransactionState.DialogState.Network ->
             MifosErrorComponent(
-                isNetworkConnected = state.networkUnavailable,
+                isNetworkConnected = !state.networkUnavailable,
                 isRetryEnabled = true,
                 onRetry = { onAction(AccountTransactionAction.Refresh) },
             )

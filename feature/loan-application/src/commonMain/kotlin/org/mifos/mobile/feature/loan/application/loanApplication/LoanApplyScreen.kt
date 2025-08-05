@@ -186,7 +186,7 @@ internal fun LoanAccountDialog(
 
         is LoanApplicationDialogState.Network -> {
             MifosErrorComponent(
-                isNetworkConnected = state.networkUnavailable,
+                isNetworkConnected = !state.networkUnavailable,
                 isRetryEnabled = true,
                 onRetry = { onAction(LoanApplicationAction.Retry) },
             )

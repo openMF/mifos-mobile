@@ -17,15 +17,24 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.account_number_label
+import mifos_mobile.feature.beneficiary.generated.resources.account_type_label
+import mifos_mobile.feature.beneficiary.generated.resources.account_type_loan
+import mifos_mobile.feature.beneficiary.generated.resources.account_type_savings
+import mifos_mobile.feature.beneficiary.generated.resources.account_type_share
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.back_to_home
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_creation_failed
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
+import mifos_mobile.feature.beneficiary.generated.resources.office_label
+import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit_label
 import mifos_mobile.feature.beneficiary.generated.resources.try_again
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -46,7 +55,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
     private val navigator: ResultNavigator,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<BeneficiaryApplicationConfirmationState, BeneficiaryApplicationConfirmationEvent, BeneficiaryApplicationConfirmationAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
@@ -69,6 +78,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
      */
     init {
         viewModelScope.launch {
+            initializeMapDetails()
             observeNetworkStatus()
             observeAuthResult()
             getTopBarTitle()
@@ -219,6 +229,27 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    private suspend fun initializeMapDetails(){
+        val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
+        val details = mapOf(
+            Res.string.beneficiary_name_label to route.name,
+            Res.string.office_label to route.officeName,
+            Res.string.account_type_label to when (route.accountType) {
+                0 -> getString(Res.string.account_type_share)
+                1 -> getString(Res.string.account_type_loan)
+                2 -> getString(Res.string.account_type_savings)
+                else -> ""
+            },
+            Res.string.account_number_label to route.accountNumber,
+            Res.string.transfer_limit_label to route.transferLimit.toString(),
+        )
+        updateState {
+            it.copy(
+                details=details
+            )
+        }
+    }
+
     /**
      * Updates the top bar title depending on whether the user is updating or adding a beneficiary.
      */
@@ -237,6 +268,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 }
 
 data class BeneficiaryApplicationConfirmationState(
+    val details: Map<StringResource, String> = emptyMap(),
     val topBarTitle: StringResource = Res.string.add_beneficiary,
     val beneficiaryId: Int,
     val name: String,

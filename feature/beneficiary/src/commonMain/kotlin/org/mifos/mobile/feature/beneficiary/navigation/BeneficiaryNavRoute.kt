@@ -44,9 +44,11 @@ fun NavGraphBuilder.beneficiaryNavGraph(
             addBeneficiaryClicked = {
                 navController.navigateToManualBeneficiaryAddScreen()
             },
-            onBeneficiaryItemClick = {},
+            onBeneficiaryItemClick = {
 
+            },
         )
+
         manualBeneficiaryAddDestination(
             navigateToConfirmationScreen =
                 navController::navigateToBeneficiaryApplicationAddConfirmationScreen,

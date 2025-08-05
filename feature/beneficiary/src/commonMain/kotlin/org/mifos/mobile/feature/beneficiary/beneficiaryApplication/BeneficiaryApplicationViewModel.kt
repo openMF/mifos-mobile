@@ -179,11 +179,7 @@ internal class BeneficiaryApplicationViewModel(
      * Loads both the beneficiary list and template from the repository.
      */
     private fun loadBeneficiaryAndTemplate() {
-        updateState {
-            it.copy(
-                dialogState = BeneficiaryApplicationState.DialogState.Loading,
-            )
-        }
+        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
         combine(
             beneficiaryRepositoryImp.beneficiaryList(),
             beneficiaryRepositoryImp.beneficiaryTemplate(),
