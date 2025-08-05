@@ -41,56 +41,57 @@ fun NavController.navigateToBeneficiaryApplicationScreen(
     )
 }
 
-fun NavGraphBuilder.beneficiaryNavGraph(
-    navController: NavController,
-    openQrReaderScreen: () -> Unit,
-    openQrImportScreen: () -> Unit,
-) {
-    navigation(
-        startDestination = BeneficiaryNavigation.BeneficiaryList.route,
-        route = BeneficiaryNavigation.BeneficiaryBaseRoute.route,
-    ) {
-        beneficiaryListRoute(
-            navigateBack = navController::popBackStack,
-            addBeneficiary = {
-                navController.navigate(BeneficiaryNavigation.AddBeneficiary.route)
-            },
-            showBeneficiaryDetail = { beneficiaryId ->
-                navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryDetail.passArguments(
-                        beneficiaryId = beneficiaryId,
-                    ),
-                )
-            },
-        )
-
-        addBeneficiaryRoute(
-            navigateBack = navController::popBackStack,
-            addBeneficiaryManually = {
-                navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
-                        -1,
-                        BeneficiaryState.CREATE_MANUAL,
-                    ),
-                )
-            },
-            openQrScanner = openQrReaderScreen,
-            uploadQrCode = openQrImportScreen,
-        )
-
-        beneficiaryDetailRoute(
-            navigateBack = navController::popBackStack,
-            updateBeneficiary = { beneficiary ->
-                navController.navigate(
-                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
-                        beneficiary?.id ?: -1,
-                        BeneficiaryState.UPDATE,
-                    ),
-                )
-            },
-        )
-    }
-}
+//
+//fun NavGraphBuilder.beneficiaryNavGraph(
+//    navController: NavController,
+//    openQrReaderScreen: () -> Unit,
+//    openQrImportScreen: () -> Unit,
+//) {
+//    navigation(
+//        startDestination = BeneficiaryNavigation.BeneficiaryList.route,
+//        route = BeneficiaryNavigation.BeneficiaryBaseRoute.route,
+//    ) {
+//        beneficiaryListRoute(
+//            navigateBack = navController::popBackStack,
+//            addBeneficiary = {
+//                navController.navigate(BeneficiaryNavigation.AddBeneficiary.route)
+//            },
+//            showBeneficiaryDetail = { beneficiaryId ->
+//                navController.navigate(
+//                    BeneficiaryNavigation.BeneficiaryDetail.passArguments(
+//                        beneficiaryId = beneficiaryId,
+//                    ),
+//                )
+//            },
+//        )
+//
+//        addBeneficiaryRoute(
+//            navigateBack = navController::popBackStack,
+//            addBeneficiaryManually = {
+//                navController.navigate(
+//                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
+//                        -1,
+//                        BeneficiaryState.CREATE_MANUAL,
+//                    ),
+//                )
+//            },
+//            openQrScanner = openQrReaderScreen,
+//            uploadQrCode = openQrImportScreen,
+//        )
+//
+//        beneficiaryDetailRoute(
+//            navigateBack = navController::popBackStack,
+//            updateBeneficiary = { beneficiary ->
+//                navController.navigate(
+//                    BeneficiaryNavigation.BeneficiaryApplication.passArguments(
+//                        beneficiary?.id ?: -1,
+//                        BeneficiaryState.UPDATE,
+//                    ),
+//                )
+//            },
+//        )
+//    }
+//}
 
 fun NavGraphBuilder.beneficiaryListRoute(
     navigateBack: () -> Unit,

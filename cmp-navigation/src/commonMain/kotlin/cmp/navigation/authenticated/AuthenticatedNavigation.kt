@@ -36,6 +36,7 @@ import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.b
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
@@ -94,7 +95,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = {
-                navController.navigateToManualBeneficiaryAddScreen()
+                navController.navigateToBeneficiaryNavGraph()
             },
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
@@ -197,21 +198,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         beneficiaryNavGraph(
             navController = navController,
-            openQrReaderScreen = navController::navigateToQrReaderScreen,
-            openQrImportScreen = navController::navigateToQrImportScreen,
-        )
-
-        // TODO: After beneficiaryNavGraph list completed change accordingly
-        manualBeneficiaryAddDestination(
-            navigateBack = navController::popBackStack,
-            navigateToConfirmationScreen =
-            navController::navigateToBeneficiaryApplicationAddConfirmationScreen,
-            navigateToQR = navController::navigateToQrReaderScreen
-        )
-        beneficiaryAddConfirmationDestination(
-            navigateBack = navController::popBackStack,
-            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+            navigateToQR = navController::navigateToQrReaderScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
         qrNavGraph(
