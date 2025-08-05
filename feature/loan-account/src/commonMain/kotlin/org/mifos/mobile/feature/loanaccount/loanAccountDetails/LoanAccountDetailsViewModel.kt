@@ -31,7 +31,7 @@ import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
@@ -103,9 +103,14 @@ internal class LoanAccountDetailsViewModel(
         val officeName = userPreferencesRepository.userInfo.value.officeName
         return if (officeName.isNotEmpty()) {
             return getAccountDetailsInString(
-                state.accountId.toInt(),
-                officeName,
-                AccountType.LOAN.name,
+                clientName = state.clientName.toString(),
+                accountNumber = state.accountNumber.toString(),
+                accountType = AccountType(
+                    id = 2,
+                    code = "accountType.loan",
+                    value = "Loan Account",
+                ),
+                officeName = officeName,
             )
         } else {
             ""

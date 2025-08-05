@@ -33,9 +33,7 @@ import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.model.entity.TransferArgs
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.TransferType
-import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 internal class LoanAccountsDetailViewModel(
@@ -203,12 +201,14 @@ internal class LoanAccountsDetailViewModel(
         }
     }
 
+    @Suppress("FunctionOnlyReturningConstant")
     private fun getQrString(): String {
-        return getAccountDetailsInString(
-            accountNumber = state.loanAccountAssociations?.accountNo?.toIntOrNull(),
-            officeName = state.userData?.officeName,
-            accountType = AccountType.LOAN.name,
-        )
+//        return getAccountDetailsInString(
+//            accountNumber = state.loanAccountAssociations?.accountNo?.toIntOrNull(),
+//            officeName = state.userData?.officeName,
+//            accountType = AccountType.LOAN.name,
+//        )
+        return ""
     }
 }
 
