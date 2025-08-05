@@ -41,10 +41,10 @@ import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.savingsaccount.components.AccountDetailsCard
 
 @Composable
 internal fun AccountUpdateScreen(
@@ -134,7 +134,7 @@ internal fun AccountUpdateScreenContent(
                 .padding(top = DesignToken.padding.medium),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
         ) {
-            AccountDetailsCard(
+            MifosDetailsCard(
                 keyValuePairs = state.details,
             )
 
