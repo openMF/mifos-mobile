@@ -28,7 +28,6 @@ import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully_account
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_creation_failed
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
-import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
 import mifos_mobile.feature.beneficiary.generated.resources.office_label
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit_label
 import mifos_mobile.feature.beneficiary.generated.resources.try_again
@@ -57,9 +56,10 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     private val navigator: ResultNavigator,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<
-        BeneficiaryApplicationConfirmationState,
-        BeneficiaryApplicationConfirmationEvent,
-        BeneficiaryApplicationConfirmationAction>(
+    BeneficiaryApplicationConfirmationState,
+    BeneficiaryApplicationConfirmationEvent,
+    BeneficiaryApplicationConfirmationAction,
+    >(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
         BeneficiaryApplicationConfirmationState(
@@ -92,7 +92,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
      * Updates the ViewModel state using the provided transformation.
      */
     private fun updateState(
-        update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState
+        update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState,
     ) {
         mutableStateFlow.update(update)
     }
@@ -167,7 +167,8 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                             subtitle = getString(
                                 Res.string.beneficiary_created_successfully_account,
                                 state.accountNumber,
-                                state.name),
+                                state.name,
+                            ),
                             buttonText = getString(Res.string.back_to_home),
                         ),
                     )

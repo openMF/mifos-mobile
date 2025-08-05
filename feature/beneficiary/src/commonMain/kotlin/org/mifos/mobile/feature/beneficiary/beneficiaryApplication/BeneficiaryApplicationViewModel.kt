@@ -186,8 +186,9 @@ internal class BeneficiaryApplicationViewModel(
         ) { beneficiaryList, beneficiaryTemplate ->
             sendAction(
                 BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(
-                    beneficiaryList, beneficiaryTemplate
-                )
+                    beneficiaryList,
+                    beneficiaryTemplate,
+                ),
             )
         }.catch { error ->
             setDialogState(
