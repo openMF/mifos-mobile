@@ -35,8 +35,6 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.Status
-import org.mifos.mobile.core.model.enums.AccountType
-import org.mifos.mobile.core.qr.getAccountDetailsInString
 
 internal class SavingAccountsDetailViewModel(
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
@@ -86,11 +84,12 @@ internal class SavingAccountsDetailViewModel(
         val userDetails = userDetailsState.value
 
         return if (state is SavingsAccountDetailUiState.Success && userDetails != null) {
-            getAccountDetailsInString(
-                state.savingAccount.id?.toInt(),
-                userDetails.officeName,
-                AccountType.SAVINGS.name,
-            )
+//            getAccountDetailsInString(
+//                state.savingAccount.id?.toInt(),
+//                userDetails.officeName,
+//                AccountType.SAVINGS.name,
+//            )
+            ""
         } else {
             ""
         }

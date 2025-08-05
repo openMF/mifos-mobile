@@ -33,7 +33,7 @@ import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
@@ -146,9 +146,14 @@ internal class SavingsAccountDetailsViewModel(
         val officeName = userPreferencesRepository.userInfo.value.officeName
         return if (officeName.isNotEmpty()) {
             return getAccountDetailsInString(
-                state.accountId.toInt(),
-                officeName,
-                AccountType.SAVINGS.name,
+                clientName = state.clientName.toString(),
+                accountNumber = state.accountNumber.toString(),
+                accountType = AccountType(
+                    id = 1,
+                    code = "accountType.savings",
+                    value = "Savings Account",
+                ),
+                officeName = officeName,
             )
         } else {
             ""
