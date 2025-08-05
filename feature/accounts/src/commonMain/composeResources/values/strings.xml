@@ -11,7 +11,9 @@
 <resources>
 
     <string name="feature_account_title">Accounts</string>
-
+    <string name="feature_loan_account_title">Loan Accounts</string>
+    <string name="feature_saving_account_title">Saving Accounts</string>
+    <string name="feature_share_account_title">Share Accounts</string>
 <!--    Loan Account Filters-->
 
     <string name="feature_loan_account_filter_active">Active</string>
