@@ -32,6 +32,7 @@ fun NavController.navigateToManualBeneficiaryAddScreen(
 
 fun NavGraphBuilder.manualBeneficiaryAddDestination(
     navigateBack: () -> Unit,
+    navigateToQR:()->Unit,
     navigateToConfirmationScreen: (
         beneficiaryId: Int,
         beneficiaryState: String,
@@ -46,6 +47,7 @@ fun NavGraphBuilder.manualBeneficiaryAddDestination(
         BeneficiaryApplicationScreen(
             navigateBack = navigateBack,
             navigateToConfirmationScreen = navigateToConfirmationScreen,
+            navigateToQR=navigateToQR
         )
     }
 }

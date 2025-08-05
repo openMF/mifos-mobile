@@ -37,6 +37,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun BeneficiaryApplicationScreen(
     navigateBack: () -> Unit,
+    navigateToQR: () -> Unit,
     navigateToConfirmationScreen: (
         beneficiaryId: Int,
         beneficiaryState: String,
@@ -64,6 +65,10 @@ internal fun BeneficiaryApplicationScreen(
                     event.accountNumber,
                     event.transferLimit,
                 )
+            }
+
+            BeneficiaryApplicationEvent.NavigateToQR -> {
+                navigateToQR.invoke()
             }
         }
     }

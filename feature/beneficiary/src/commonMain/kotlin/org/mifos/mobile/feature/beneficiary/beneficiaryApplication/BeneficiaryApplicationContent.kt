@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,12 +20,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number
@@ -39,6 +46,7 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 
@@ -53,8 +61,42 @@ internal fun BeneficiaryApplicationContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = DesignToken.padding.large, vertical = DesignToken.padding.extraLargeIncreased),
+            .padding(
+                horizontal = DesignToken.padding.large,
+                vertical = DesignToken.padding.extraLargeIncreased
+            ),
     ) {
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state.beneficiaryName,
+            onValueChange = {
+                onAction(BeneficiaryApplicationAction.OnBeneficiaryNameChanged(beneficiaryName = it))
+            },
+            label = stringResource(Res.string.beneficiary_name),
+            config = MifosTextFieldConfig(
+                isError = state.beneficiaryNameError != null,
+                errorText = state.beneficiaryNameError?.let { stringResource(it) } ?: "",
+            ),
+        )
+
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state.accountNumber,
+            onValueChange = {
+                onAction(BeneficiaryApplicationAction.OnAccountNumberChanged(accountNumber = it))
+            },
+            label = stringResource(Res.string.account_number),
+            config = MifosTextFieldConfig(
+                isError = state.accountNumberError != null && state.beneficiaryState !=
+                        BeneficiaryState.UPDATE,
+                enabled = state.beneficiaryState != BeneficiaryState.UPDATE,
+                errorText = state.accountNumberError?.let { stringResource(it) } ?: "",
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                ),
+            ),
+        )
+
         MifosDropDownTextField(
             optionsList = state.template?.accountTypeOptions?.mapNotNull { it.value }
                 ?: listOf(),
@@ -71,23 +113,7 @@ internal fun BeneficiaryApplicationContent(
             supportingText = state.accountTypeError?.let { stringResource(it) } ?: "",
         )
 
-        MifosOutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.accountNumber,
-            onValueChange = {
-                onAction(BeneficiaryApplicationAction.OnAccountNumberChanged(accountNumber = it))
-            },
-            label = stringResource(Res.string.account_number),
-            config = MifosTextFieldConfig(
-                isError = state.accountNumberError != null && state.beneficiaryState !=
-                    BeneficiaryState.UPDATE,
-                enabled = state.beneficiaryState != BeneficiaryState.UPDATE,
-                errorText = state.accountNumberError?.let { stringResource(it) } ?: "",
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                ),
-            ),
-        )
+
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -120,20 +146,7 @@ internal fun BeneficiaryApplicationContent(
             ),
         )
 
-        MifosOutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.beneficiaryName,
-            onValueChange = {
-                onAction(BeneficiaryApplicationAction.OnBeneficiaryNameChanged(beneficiaryName = it))
-            },
-            label = stringResource(Res.string.beneficiary_name),
-            config = MifosTextFieldConfig(
-                isError = state.beneficiaryNameError != null,
-                errorText = state.beneficiaryNameError?.let { stringResource(it) } ?: "",
-            ),
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(Modifier.height(DesignToken.padding.large))
 
         MifosButton(
             modifier = Modifier.fillMaxWidth(),
@@ -143,6 +156,22 @@ internal fun BeneficiaryApplicationContent(
                     BeneficiaryApplicationAction.SubmitBeneficiary,
                 )
             },
+        )
+
+        Spacer(Modifier.height(DesignToken.padding.extraLargeIncreased))
+
+        Text(
+            text = buildAnnotatedString {
+                append("Skip the form ")
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                    append("Upload Or Scan QR Code")
+                }
+            },
+            modifier = Modifier.fillMaxWidth().clickable {
+                onAction(BeneficiaryApplicationAction.NavigateToQR)
+            },
+            style = MifosTypography.labelMediumEmphasized,
+            textAlign = TextAlign.Center
         )
     }
 }

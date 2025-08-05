@@ -168,6 +168,10 @@ internal class BeneficiaryApplicationViewModel(
                     )
                 }
             }
+
+            BeneficiaryApplicationAction.NavigateToQR -> {
+                sendEvent(BeneficiaryApplicationEvent.NavigateToQR)
+            }
         }
     }
 
@@ -365,6 +369,7 @@ sealed interface BeneficiaryApplicationEvent {
         val accountNumber: String,
         val transferLimit: Int,
     ) : BeneficiaryApplicationEvent
+    data object NavigateToQR : BeneficiaryApplicationEvent
 }
 
 sealed interface BeneficiaryApplicationAction {
@@ -372,6 +377,7 @@ sealed interface BeneficiaryApplicationAction {
     data object SubmitBeneficiary : BeneficiaryApplicationAction
     data object OnNavigate : BeneficiaryApplicationAction
     data object OnRetry : BeneficiaryApplicationAction
+    data object NavigateToQR : BeneficiaryApplicationAction
 
     data class OnAccountTypeChanged(val accountType: Int) : BeneficiaryApplicationAction
     data class OnAccountNumberChanged(val accountNumber: String) : BeneficiaryApplicationAction

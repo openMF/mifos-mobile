@@ -52,6 +52,7 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.qr.navigation.navigateToQrGraph
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
@@ -205,6 +206,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateBack = navController::popBackStack,
             navigateToConfirmationScreen =
             navController::navigateToBeneficiaryApplicationAddConfirmationScreen,
+            navigateToQR = navController::navigateToQrReaderScreen
         )
         beneficiaryAddConfirmationDestination(
             navigateBack = navController::popBackStack,
