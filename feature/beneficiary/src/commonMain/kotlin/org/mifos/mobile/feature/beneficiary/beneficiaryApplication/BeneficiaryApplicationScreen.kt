@@ -9,18 +9,14 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.touchlab.kermit.Logger
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiary_template
 import org.jetbrains.compose.resources.stringResource
@@ -32,7 +28,6 @@ import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -88,7 +83,6 @@ internal fun BeneficiaryApplicationScreen(
             { viewModel.trySendAction(it) }
         },
     )
-
 }
 
 @Composable
@@ -137,12 +131,12 @@ private fun BeneficiaryApplicationScreen(
                 )
             }
         },
-    ){
-            if (state.dialogState == null && state.template!=null) {
-                BeneficiaryApplicationContent(
-                    state = state,
-                    onAction = onAction,
-                )
+    ) {
+        if (state.dialogState == null && state.template != null) {
+            BeneficiaryApplicationContent(
+                state = state,
+                onAction = onAction,
+            )
         }
     }
 }

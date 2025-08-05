@@ -41,7 +41,6 @@ fun NavController.navigateToBeneficiaryApplicationScreen(
     )
 }
 
-
 fun NavGraphBuilder.beneficiaryNavGraph(
     navController: NavController,
     openQrReaderScreen: () -> Unit,
