@@ -30,10 +30,6 @@ import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.manualBeneficiaryAddDestination
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.beneficiaryAddConfirmationDestination
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
@@ -53,11 +49,8 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
-import org.mifos.mobile.feature.qr.navigation.navigateToQrGraph
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
-import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
-import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
@@ -94,9 +87,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
-            navigateToBeneficiaryScreen = {
-                navController.navigateToBeneficiaryNavGraph()
-            },
+            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
             },

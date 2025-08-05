@@ -92,4 +92,20 @@
     <string name="beneficiary_creation_failed">Beneficiary Creation Failed</string>
     <string name="try_again">Try Again</string>
     <string name="back_to_home">Back To Home</string>
+
+
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filters</string>
+    <string name="feature_savings_reset">Reset</string>
+    <string name="feature_savings_apply">Apply</string>
+    <string name="feature_filters_count">%1$s Selected</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Account Type</string>
+    <string name="filter_loan_account">Loan Account</string>
+    <string name="filter_savings_account">Savings Account</string>
+    <string name="filter_linked_with">Linked With</string>
+    <string name="filter_self">Self</string>
+    <string name="filter_other_clients">Other Clients</string>
 </resources>

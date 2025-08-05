@@ -16,9 +16,6 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
-import org.mifos.mobile.core.model.IgnoredOnParcel
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -111,19 +108,16 @@ internal class BeneficiaryListViewModel(
     }
 }
 
-@Parcelize
 data class BeneficiaryListState(
     val isOnline: Boolean = false,
     val isRefreshing: Boolean = false,
-    @IgnoredOnParcel
     val beneficiaries: List<Beneficiary> = emptyList(),
     val dialogState: DialogState?,
-) : Parcelable {
-    sealed interface DialogState : Parcelable {
-        @Parcelize
+) {
+    sealed interface DialogState {
+
         data class Error(val message: String) : DialogState
 
-        @Parcelize
         data object Loading : DialogState
     }
 }

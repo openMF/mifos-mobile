@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.beneficiary.navigation
 
 import androidx.navigation.NavController
@@ -8,9 +17,13 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.BeneficiaryApplicationNavRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.manualBeneficiaryAddDestination
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.beneficiaryAddConfirmationDestination
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.navigateToBeneficiaryApplicationAddConfirmationScreen
+import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListNavRoute
+import org.mifos.mobile.feature.beneficiary.beneficiaryList.beneficiaryListScreen
 
+@Serializable
 data object BeneficiaryNavRoute
 
 
@@ -24,14 +37,23 @@ fun NavGraphBuilder.beneficiaryNavGraph(
     navigateToAuthenticateScreen: () -> Unit,
 ) {
     navigation<BeneficiaryNavRoute>(
-        startDestination = BeneficiaryApplicationNavRoute(),
+        startDestination = BeneficiaryListNavRoute,
     ) {
-        manualBeneficiaryAddDestination(
+        beneficiaryListScreen(
             navigateBack = navController::popBackStack,
+            addBeneficiaryClicked = {
+                navController.navigateToManualBeneficiaryAddScreen()
+            },
+            onBeneficiaryItemClick = {},
+
+        )
+        manualBeneficiaryAddDestination(
             navigateToConfirmationScreen =
                 navController::navigateToBeneficiaryApplicationAddConfirmationScreen,
-            navigateToQR = navigateToQR
+            navigateBack = navController::popBackStack,
+            navigateToQR = navigateToQR,
         )
+
         beneficiaryAddConfirmationDestination(
             navigateBack = navController::popBackStack,
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
