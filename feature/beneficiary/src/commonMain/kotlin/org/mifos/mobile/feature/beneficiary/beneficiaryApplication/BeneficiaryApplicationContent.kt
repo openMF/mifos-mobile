@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +30,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name
@@ -65,7 +63,7 @@ internal fun BeneficiaryApplicationContent(
             .verticalScroll(rememberScrollState())
             .padding(
                 horizontal = DesignToken.padding.large,
-                vertical = DesignToken.padding.extraLargeIncreased
+                vertical = DesignToken.padding.extraLargeIncreased,
             ),
     ) {
         MifosOutlinedTextField(
@@ -90,7 +88,7 @@ internal fun BeneficiaryApplicationContent(
             label = stringResource(Res.string.account_number),
             config = MifosTextFieldConfig(
                 isError = state.accountNumberError != null && state.beneficiaryState !=
-                        BeneficiaryState.UPDATE,
+                    BeneficiaryState.UPDATE,
                 enabled = state.beneficiaryState != BeneficiaryState.UPDATE,
                 errorText = state.accountNumberError?.let { stringResource(it) } ?: "",
                 keyboardOptions = KeyboardOptions(
@@ -114,8 +112,6 @@ internal fun BeneficiaryApplicationContent(
             isEnabled = state.beneficiaryState != BeneficiaryState.UPDATE,
             supportingText = state.accountTypeError?.let { stringResource(it) } ?: "",
         )
-
-
 
         MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -173,7 +169,7 @@ internal fun BeneficiaryApplicationContent(
                 onAction(BeneficiaryApplicationAction.NavigateToQR)
             },
             style = MifosTypography.labelMediumEmphasized,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

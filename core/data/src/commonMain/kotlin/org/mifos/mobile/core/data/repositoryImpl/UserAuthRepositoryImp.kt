@@ -105,21 +105,14 @@ class UserAuthRepositoryImp(
             password = newPassword,
             repeatPassword = confirmPassword,
         )
-        return try {
-            withContext(ioDispatcher) {
-                val result = dataManager.userDetailsApi.updateAccountPassword(payload)
-                val errorMessage = result.bodyAsText()
-                when (result.status.value) {
-                    200 -> DataState.Success("User Verified Successfully")
-                    else -> DataState.Error(
-                        Exception("Error in verifying user: $errorMessage"),
-                        null,
-                    )
-                }
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.userDetailsApi.updateAccountPassword(payload)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
-            DataState.Success("Password Updated Successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 }

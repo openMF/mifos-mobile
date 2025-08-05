@@ -184,7 +184,11 @@ internal class BeneficiaryApplicationViewModel(
             beneficiaryRepositoryImp.beneficiaryList(),
             beneficiaryRepositoryImp.beneficiaryTemplate(),
         ) { beneficiaryList, beneficiaryTemplate ->
-            sendAction(BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(beneficiaryList, beneficiaryTemplate))
+            sendAction(
+                BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(
+                    beneficiaryList, beneficiaryTemplate
+                )
+            )
         }.catch { error ->
             setDialogState(
                 BeneficiaryApplicationState.DialogState.Error(
@@ -259,7 +263,8 @@ internal class BeneficiaryApplicationViewModel(
                 null
             },
 
-            accountNumberError = if (state.beneficiaryState != BeneficiaryState.UPDATE && state.accountNumber.trim().isEmpty()
+            accountNumberError = if (
+                state.beneficiaryState != BeneficiaryState.UPDATE && state.accountNumber.trim().isEmpty()
             ) {
                 hasError = true
                 Res.string.enter_account_number

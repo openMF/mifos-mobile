@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -50,16 +52,10 @@ class LoanRepositoryImp(
             try {
                 val response =
                     dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
-                if (response.status.value != 200) {
-                    val errorMessage = extractErrorMessage(response)
-                    return@withContext DataState.Error(
-                        Exception(errorMessage),
-                        null,
-                    )
-                }
-                DataState.Success("withdraw successful")
-            } catch (e: Exception) {
-                DataState.Error(e, null)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
         }
     }
