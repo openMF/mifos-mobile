@@ -58,7 +58,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     private val networkMonitor: NetworkMonitor,
     private val navigator: ResultNavigator,
     private val savedStateHandle: SavedStateHandle,
-) : BaseViewModel<BeneficiaryApplicationConfirmationState, BeneficiaryApplicationConfirmationEvent, BeneficiaryApplicationConfirmationAction>(
+) : BaseViewModel<
+    BeneficiaryApplicationConfirmationState,
+    BeneficiaryApplicationConfirmationEvent,
+    BeneficiaryApplicationConfirmationAction,
+    >(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
         BeneficiaryApplicationConfirmationState(
@@ -90,7 +94,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     /**
      * Updates the ViewModel state using the provided transformation.
      */
-    private fun updateState(update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState) {
+    private fun updateState(
+        update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState,
+    ) {
         mutableStateFlow.update(update)
     }
 
@@ -148,7 +154,6 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     private fun createBeneficiary(payload: BeneficiaryPayload?) {
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
-            val successMsg = getString(Res.string.beneficiary_created_successfully)
             val response = beneficiaryRepositoryImp.createBeneficiary(payload)
 
             when (response) {
@@ -174,7 +179,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                             eventType = EventType.SUCCESS.name,
                             eventDestination = "",
                             title = getString(Res.string.beneficiary_created_successfully),
-                            subtitle = getString(Res.string.beneficiary_created_successfully_account, state.accountNumber, state.name),
+                            subtitle = getString(
+                                Res.string.beneficiary_created_successfully_account,
+                                state.accountNumber,
+                                state.name,
+                            ),
                             buttonText = getString(Res.string.back_to_home),
                         ),
                     )

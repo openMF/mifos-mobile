@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.GuarantorRepository
+import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
@@ -36,13 +39,14 @@ class GuarantorRepositoryImp(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.guarantorApi.createGuarantor(loanId!!, payload)
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
-            DataState.Success("Created successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
@@ -51,24 +55,30 @@ class GuarantorRepositoryImp(
         loanId: Long?,
         guarantorId: Long?,
     ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.guarantorApi.updateGuarantor(payload, loanId!!, guarantorId!!)
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.guarantorApi.updateGuarantor(
+                    payload,
+                    loanId!!,
+                    guarantorId!!,
+                )
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
-            DataState.Success("Created successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 
     override suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
+        return withContext(ioDispatcher) {
+            try {
+                val response = dataManager.guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
+                DataState.Success(response.bodyAsText())
+            } catch (e: ClientRequestException) {
+                val errorMessage = extractErrorMessage(e.response)
+                DataState.Error(Exception(errorMessage), null)
             }
-            DataState.Success("Created successfully")
-        } catch (e: Exception) {
-            DataState.Error(e, null)
         }
     }
 

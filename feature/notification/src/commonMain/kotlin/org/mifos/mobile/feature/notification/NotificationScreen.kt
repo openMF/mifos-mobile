@@ -43,8 +43,9 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextButton
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -83,9 +84,9 @@ private fun NotificationScreen(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    MifosElevatedScaffold(
         topBarTitle = stringResource(Res.string.notification),
-        onNavigationIconClick = navigateBack,
+        onNavigateBack = navigateBack,
         modifier = modifier,
         content = {
             Box(modifier = Modifier) {
@@ -112,7 +113,7 @@ private fun NotificationScreen(
 
                     is NotificationUiState.Empty -> {
                         EmptyDataView(
-                            image = Res.drawable.ic_notifications,
+                            icon = MifosIcons.Notification,
                             error = Res.string.no_notification,
                             modifier = Modifier.fillMaxSize(),
                         )
