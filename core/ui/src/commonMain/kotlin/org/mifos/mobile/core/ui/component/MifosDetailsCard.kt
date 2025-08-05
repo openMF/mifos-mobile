@@ -32,7 +32,7 @@ import kotlin.collections.component2
 
 @Composable
 fun MifosDetailsCard(
-    keyValuePairs: Map<StringResource, String>,
+    keyValuePairs: Map<StringResource, String?>,
     modifier: Modifier = Modifier,
 ) {
     MifosCustomCard(
@@ -59,7 +59,7 @@ fun MifosDetailsCard(
                         style = MifosTypography.labelMediumEmphasized,
                     )
                     Text(
-                        text = value,
+                        text = value ?: "",
                         style = MifosTypography.labelMedium,
                         textAlign = TextAlign.Right,
                     )

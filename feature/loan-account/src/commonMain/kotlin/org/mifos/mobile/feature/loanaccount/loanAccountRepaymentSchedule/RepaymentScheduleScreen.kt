@@ -35,11 +35,11 @@ import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
+import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.loanaccount.component.RepaymentDetailsCard
 import org.mifos.mobile.feature.loanaccount.component.RepaymentScheduleItem
 
 @Composable
@@ -103,7 +103,7 @@ internal fun RepaymentScreenContent(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                RepaymentDetailsCard(keyValuePairs = state.basicDetails)
+                MifosDetailsCard(keyValuePairs = state.basicDetails)
 
                 Spacer(Modifier.height(DesignToken.padding.large))
 
