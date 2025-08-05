@@ -33,6 +33,7 @@ import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryListScreen
+import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
@@ -89,7 +90,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
             navigateToFaqScreen = navController::navigateToHelpScreen,
-            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryListScreen,
+            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
             },
@@ -191,8 +192,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         beneficiaryNavGraph(
             navController = navController,
-            openQrReaderScreen = navController::navigateToQrReaderScreen,
-            openQrImportScreen = navController::navigateToQrImportScreen,
         )
 
         qrNavGraph(

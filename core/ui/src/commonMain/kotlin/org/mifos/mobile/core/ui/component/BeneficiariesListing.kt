@@ -11,6 +11,7 @@ package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -41,70 +43,59 @@ import org.mifos.mobile.core.ui.utils.DevicePreview
 @Composable
 fun MifosBeneficiariesCard(
     beneficiary: Beneficiary,
-    onBeneficiaryClick: (Beneficiary) -> Unit,
+    onBeneficiaryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onBeneficiaryClick(beneficiary) }
-            .padding(vertical = 4.dp),
+            .clickable { onBeneficiaryClick() }
+            .padding(vertical = DesignToken.padding.large),
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // Logo section
+
             MifosUserImage(
                 username = beneficiary.name,
                 modifier = Modifier
                     .clip(CircleShape)
-                    .size(48.dp)
+                    .size(DesignToken.sizes.iconExtraLarge)
                     .background(Color.Gray),
                 bitmap = null,
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(DesignToken.padding.medium))
 
-            // Content section
             Column(
                 modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
             ) {
                 Text(
-                    text = beneficiary.name!!,
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    text = beneficiary.name?:"",
+                    style = MifosTypography.titleSmallEmphasized,
                 )
-
-                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = "${beneficiary.accountType?.value}: ${beneficiary.accountNumber}",
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(modifier = Modifier.height(2.dp))
+
                 Text(
-                    text = beneficiary.officeName!!,
+                    text = beneficiary.officeName?:"",
                     style = MifosTypography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
-            Spacer(modifier = Modifier.width(16.dp))
-            IconButton(
-                modifier = Modifier
-                    .size(20.dp),
-                onClick = {
-                    onBeneficiaryClick.invoke(beneficiary)
-                },
-            ) {
+            Spacer(modifier = Modifier.width(DesignToken.padding.medium))
+
+
                 Icon(
                     imageVector = MifosIcons.ChevronRight,
                     contentDescription = "Next",
+                    modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 )
-            }
         }
     }
 }

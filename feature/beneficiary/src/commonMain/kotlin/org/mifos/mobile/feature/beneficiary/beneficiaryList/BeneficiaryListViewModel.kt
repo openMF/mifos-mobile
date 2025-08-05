@@ -112,7 +112,6 @@ internal class BeneficiaryListViewModel(
 data class BeneficiaryListState(
     val isOnline: Boolean = false,
     val isRefreshing: Boolean = false,
-    @IgnoredOnParcel
     val beneficiaries: List<Beneficiary> = emptyList(),
     val dialogState: DialogState?,
 ) {
