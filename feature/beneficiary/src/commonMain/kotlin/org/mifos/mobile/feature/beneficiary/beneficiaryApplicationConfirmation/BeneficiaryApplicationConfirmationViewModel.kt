@@ -243,7 +243,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                             eventType = EventType.SUCCESS.name,
                             eventDestination = "",
                             title = getString(Res.string.beneficiary_updated_successfully),
-                            subtitle = getString(Res.string.beneficiary_updated_successfully_account, state.name, state.transferLimit),
+                            subtitle = getString(
+                                Res.string.beneficiary_updated_successfully_account,
+                                state.name,
+                                state.transferLimit,
+                            ),
                             buttonText = getString(Res.string.back_to_home),
                         ),
                     )

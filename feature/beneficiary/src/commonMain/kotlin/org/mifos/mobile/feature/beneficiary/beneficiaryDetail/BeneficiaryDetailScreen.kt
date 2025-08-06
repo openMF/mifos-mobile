@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -104,8 +102,6 @@ private fun BeneficiaryDetailScreen(
     onAction: (BeneficiaryDetailAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var openDropdown by rememberSaveable { mutableStateOf(false) }
-
     MifosElevatedScaffold(
         topBarTitle = stringResource(Res.string.beneficiary_detail),
         onNavigateBack = { onAction(BeneficiaryDetailAction.OnNavigate) },
