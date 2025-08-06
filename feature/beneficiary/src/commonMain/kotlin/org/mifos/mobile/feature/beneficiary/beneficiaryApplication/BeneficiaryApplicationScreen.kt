@@ -35,7 +35,7 @@ internal fun BeneficiaryApplicationScreen(
     navigateBack: () -> Unit,
     navigateToQR: () -> Unit,
     navigateToConfirmationScreen: (
-        beneficiaryId: Int,
+        beneficiaryId: Long,
         beneficiaryState: String,
         name: String,
         officeName: String,

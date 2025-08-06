@@ -154,23 +154,26 @@ internal fun BeneficiaryApplicationContent(
                     BeneficiaryApplicationAction.SubmitBeneficiary,
                 )
             },
+            enabled = state.isEnabled,
         )
 
         Spacer(Modifier.height(DesignToken.padding.extraLargeIncreased))
 
-        Text(
-            text = buildAnnotatedString {
-                append(stringResource(Res.string.skip_the_form))
-                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
-                    append(stringResource(Res.string.upload_or_scan_qr_code))
-                }
-            },
-            modifier = Modifier.fillMaxWidth().clickable {
-                onAction(BeneficiaryApplicationAction.NavigateToQR)
-            },
-            style = MifosTypography.labelMediumEmphasized,
-            textAlign = TextAlign.Center,
-        )
+        if (state.beneficiaryState == BeneficiaryState.CREATE_MANUAL) {
+            Text(
+                text = buildAnnotatedString {
+                    append(stringResource(Res.string.skip_the_form))
+                    withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                        append(stringResource(Res.string.upload_or_scan_qr_code))
+                    }
+                },
+                modifier = Modifier.fillMaxWidth().clickable {
+                    onAction(BeneficiaryApplicationAction.NavigateToQR)
+                },
+                style = MifosTypography.labelMediumEmphasized,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 

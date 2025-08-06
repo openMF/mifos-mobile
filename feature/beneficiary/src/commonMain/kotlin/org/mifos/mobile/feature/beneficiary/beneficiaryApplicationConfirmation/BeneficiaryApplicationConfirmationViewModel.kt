@@ -28,6 +28,9 @@ import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_created_successfully_account
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_creation_failed
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name_label
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updated_successfully_account
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_updation_failed
 import mifos_mobile.feature.beneficiary.generated.resources.office_label
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit_label
 import mifos_mobile.feature.beneficiary.generated.resources.try_again
@@ -115,20 +118,35 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 
             is BeneficiaryApplicationConfirmationAction.Internal.ReceiveAuthenticationResult -> {
                 if (action.result) {
-                    val payload = BeneficiaryPayload(
-                        name = state.name,
-                        accountNumber = state.accountNumber,
-                        transferLimit = state.transferLimit,
-                        officeName = state.officeName,
-                        accountType = state.accountType,
-                        locale = "en",
-                    )
-                    createBeneficiary(payload)
+                    if (state.beneficiaryState == BeneficiaryState.UPDATE) {
+                        val payload = BeneficiaryUpdatePayload(
+                            name = state.name,
+                            transferLimit = state.transferLimit,
+                        )
+                        updateBeneficiary(state.beneficiaryId, payload)
+                    } else {
+                        val payload = BeneficiaryPayload(
+                            name = state.name,
+                            accountNumber = state.accountNumber,
+                            transferLimit = state.transferLimit,
+                            officeName = state.officeName,
+                            accountType = state.accountType,
+                            locale = "en",
+                        )
+                        createBeneficiary(payload)
+                    }
                 }
             }
 
             BeneficiaryApplicationConfirmationAction.SubmitBeneficiary -> {
                 sendEvent(BeneficiaryApplicationConfirmationEvent.NavigateToAuthenticate())
+            }
+
+            is BeneficiaryApplicationConfirmationAction.Internal.ReceiveSubmitBeneficiary -> {
+                processSubmitBeneficiaryResult(action.result)
+            }
+            is BeneficiaryApplicationConfirmationAction.Internal.ReceiveUpdateBeneficiary -> {
+                processUpdateBeneficiaryResult(action.result)
             }
         }
     }
@@ -140,7 +158,16 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.createBeneficiary(payload)
+            sendAction(
+                BeneficiaryApplicationConfirmationAction
+                    .Internal
+                    .ReceiveSubmitBeneficiary(response),
+            )
+        }
+    }
 
+    private fun processSubmitBeneficiaryResult(response: DataState<String>) {
+        viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
@@ -185,13 +212,45 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
+            sendAction(
+                BeneficiaryApplicationConfirmationAction
+                    .Internal
+                    .ReceiveUpdateBeneficiary(response),
+            )
+        }
+    }
+
+    private fun processUpdateBeneficiaryResult(response: DataState<String>) {
+        viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
                     setDialogState(null)
+                    sendEvent(
+                        BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
+                            eventType = EventType.FAILURE.name,
+                            eventDestination = "",
+                            title = getString(Res.string.beneficiary_updation_failed),
+                            subtitle = response.message,
+                            buttonText = getString(Res.string.try_again),
+                        ),
+                    )
                 }
                 DataState.Loading -> setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
                 is DataState.Success -> {
                     setDialogState(null)
+                    sendEvent(
+                        BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
+                            eventType = EventType.SUCCESS.name,
+                            eventDestination = "",
+                            title = getString(Res.string.beneficiary_updated_successfully),
+                            subtitle = getString(
+                                Res.string.beneficiary_updated_successfully_account,
+                                state.name,
+                                state.transferLimit,
+                            ),
+                            buttonText = getString(Res.string.back_to_home),
+                        ),
+                    )
                 }
             }
         }
@@ -277,7 +336,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 data class BeneficiaryApplicationConfirmationState(
     val details: Map<StringResource, String> = emptyMap(),
     val topBarTitle: StringResource = Res.string.add_beneficiary,
-    val beneficiaryId: Int,
+    val beneficiaryId: Long,
     val name: String,
     val officeName: String,
     val accountType: Int,
@@ -316,5 +375,7 @@ sealed interface BeneficiaryApplicationConfirmationAction {
 
     sealed interface Internal : BeneficiaryApplicationConfirmationAction {
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
+        data class ReceiveSubmitBeneficiary(val result: DataState<String>) : Internal
+        data class ReceiveUpdateBeneficiary(val result: DataState<String>) : Internal
     }
 }

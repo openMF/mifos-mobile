@@ -126,13 +126,13 @@ sealed interface BeneficiaryListAction {
     data object LoadBeneficiaries : BeneficiaryListAction
     data object RefreshBeneficiaries : BeneficiaryListAction
     data object OnAddBeneficiaryClicked : BeneficiaryListAction
-    data class OnBeneficiaryItemClick(val position: Int) : BeneficiaryListAction
+    data class OnBeneficiaryItemClick(val position: Long) : BeneficiaryListAction
     data object OnNavigate : BeneficiaryListAction
 }
 
 sealed interface BeneficiaryListEvent {
     data class ShowToast(val message: String) : BeneficiaryListEvent
     data object AddBeneficiaryClicked : BeneficiaryListEvent
-    data class BeneficiaryItemClick(val position: Int) : BeneficiaryListEvent
+    data class BeneficiaryItemClick(val position: Long) : BeneficiaryListEvent
     data object Navigate : BeneficiaryListEvent
 }

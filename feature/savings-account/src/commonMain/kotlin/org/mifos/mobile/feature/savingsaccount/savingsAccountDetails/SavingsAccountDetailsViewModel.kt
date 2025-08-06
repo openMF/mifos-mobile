@@ -145,7 +145,7 @@ internal class SavingsAccountDetailsViewModel(
                 clientName = state.clientName.toString(),
                 accountNumber = state.accountNumber.toString(),
                 accountType = AccountType(
-                    id = 1,
+                    id = 2,
                     code = "accountType.savings",
                     value = "Savings Account",
                 ),

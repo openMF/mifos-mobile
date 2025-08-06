@@ -106,7 +106,7 @@ internal class LoanAccountDetailsViewModel(
                 clientName = state.clientName.toString(),
                 accountNumber = state.accountNumber.toString(),
                 accountType = AccountType(
-                    id = 2,
+                    id = 1,
                     code = "accountType.loan",
                     value = "Loan Account",
                 ),

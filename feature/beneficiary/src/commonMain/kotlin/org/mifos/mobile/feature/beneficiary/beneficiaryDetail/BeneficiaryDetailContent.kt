@@ -9,88 +9,166 @@
  */
 package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number
-import mifos_mobile.feature.beneficiary.generated.resources.account_type
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name
-import mifos_mobile.feature.beneficiary.generated.resources.client_name
 import mifos_mobile.feature.beneficiary.generated.resources.office_name
+import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.designsystem.component.MifosCard
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.ui.component.MifosTitleDescSingleLineEqual
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosBeneficiaryTopCard
 
 @Composable
 internal fun BeneficiaryDetailContent(
     state: BeneficiaryDetailState?,
+    onAction: (BeneficiaryDetailAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(DesignToken.padding.large)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
     ) {
-        MifosTitleDescSingleLineEqual(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .padding(4.dp),
-            title = stringResource(Res.string.beneficiary_name),
-            description = state?.beneficiary?.name.toString(),
+        ActionBar(
+            onAction = onAction,
         )
 
-        MifosTitleDescSingleLineEqual(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .padding(4.dp),
-            title = stringResource(Res.string.account_number),
-            description = state?.beneficiary?.accountNumber.toString(),
+        MifosBeneficiaryTopCard(
+            beneficiary = state?.beneficiary,
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        MifosCard(
+        MifosOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
+            value = state?.beneficiary?.name ?: "",
+            onValueChange = {},
+            label = stringResource(Res.string.beneficiary_name),
+            config = MifosTextFieldConfig(
+                enabled = false,
+            ),
+        )
+
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state?.beneficiary?.accountNumber ?: "",
+            onValueChange = {},
+            label = stringResource(Res.string.account_number),
+            config = MifosTextFieldConfig(
+                enabled = false,
+            ),
+        )
+
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state?.beneficiary?.accountType?.value ?: "",
+            onValueChange = {},
+            label = stringResource(Res.string.select_account_type),
+            config = MifosTextFieldConfig(
+                enabled = false,
+            ),
+        )
+
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state?.beneficiary?.officeName ?: "",
+            onValueChange = {},
+            label = stringResource(Res.string.office_name),
+            config = MifosTextFieldConfig(
+                enabled = false,
+            ),
+        )
+
+        MifosOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = (state?.beneficiary?.transferLimit ?: 0).toString(),
+            onValueChange = {},
+            label = stringResource(Res.string.transfer_limit),
+            config = MifosTextFieldConfig(
+                enabled = false,
+            ),
+        )
+    }
+}
+
+@Composable
+internal fun ActionBar(
+    onAction: (BeneficiaryDetailAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = DesignToken.padding.medium),
+        horizontalArrangement = Arrangement.End,
+    ) {
+        Row(
+            modifier = Modifier.clickable {
+                onAction(BeneficiaryDetailAction.ShowDeleteConfirmation)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
-            Column(
-                modifier = Modifier.padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                MifosTitleDescSingleLineEqual(
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(Res.string.client_name),
-                    description = state?.beneficiary?.clientName.toString(),
-                )
+            Text(
+                text = "Delete",
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
 
-                MifosTitleDescSingleLineEqual(
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(Res.string.account_type),
-                    description = state?.beneficiary?.accountType?.value ?: "",
-                )
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.Delete,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
 
-                MifosTitleDescSingleLineEqual(
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(Res.string.transfer_limit),
-                    description = state?.beneficiary?.transferLimit.toString(),
-                )
+        Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
 
-                MifosTitleDescSingleLineEqual(
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    title = stringResource(Res.string.office_name),
-                    description = state?.beneficiary?.officeName.toString(),
-                )
-            }
+        Row(
+            modifier = Modifier.clickable {
+                onAction(BeneficiaryDetailAction.OnUpdateBeneficiary)
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = "Update",
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.Edit,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary,
+            )
         }
     }
 }
@@ -102,6 +180,7 @@ private fun PreviewBeneficiaryDetailContent() {
         BeneficiaryDetailContent(
             state = BeneficiaryDetailState(beneficiaryDialog = null),
             modifier = Modifier,
+            onAction = {},
         )
     }
 }

@@ -10,19 +10,15 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_detail
 import mifos_mobile.feature.beneficiary.generated.resources.cancel
 import mifos_mobile.feature.beneficiary.generated.resources.delete
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary
@@ -31,22 +27,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosScaffold
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun BeneficiaryDetailScreen(
     navigateBack: () -> Unit,
-    updateBeneficiary: (beneficiary: Beneficiary?) -> Unit,
+    updateBeneficiary: (beneficiaryId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BeneficiaryDetailViewModel = koinViewModel(),
 ) {
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
@@ -57,12 +51,7 @@ internal fun BeneficiaryDetailScreen(
         when (event) {
             BeneficiaryDetailEvent.Navigate -> navigateBack.invoke()
             is BeneficiaryDetailEvent.UpdateBeneficiary -> {
-                updateBeneficiary(event.beneficiary)
-            }
-            is BeneficiaryDetailEvent.ShowToast -> {
-                scope.launch {
-                    snackbarHostState.showSnackbar(event.message)
-                }
+                updateBeneficiary(event.beneficiaryId)
             }
         }
     }
@@ -73,7 +62,6 @@ internal fun BeneficiaryDetailScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
-        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -84,7 +72,7 @@ private fun BeneficiaryDialogs(
     onConfirmDelete: () -> Unit,
 ) {
     when (state.beneficiaryDialog) {
-        BeneficiaryDetailState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        BeneficiaryDetailState.DialogState.Loading -> MifosProgressIndicator()
         is BeneficiaryDetailState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -101,6 +89,7 @@ private fun BeneficiaryDialogs(
                 confirmationText = stringResource(Res.string.delete),
                 dialogTitle = stringResource(Res.string.delete_beneficiary),
                 dialogText = state.beneficiaryDialog.message,
+                icon = MifosIcons.Delete,
             )
         }
         null -> Unit
@@ -111,34 +100,20 @@ private fun BeneficiaryDialogs(
 private fun BeneficiaryDetailScreen(
     state: BeneficiaryDetailState,
     onAction: (BeneficiaryDetailAction) -> Unit,
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    var openDropdown by rememberSaveable { mutableStateOf(false) }
-
-    MifosScaffold(
-        topBar = {
-            BeneficiaryDetailTopAppBar(
-                navigateBack = { onAction(BeneficiaryDetailAction.OnNavigate) },
-                updateBeneficiaryClicked = { onAction(BeneficiaryDetailAction.OnUpdateBeneficiary(state.beneficiary)) },
-                updateDropdownValue = { value ->
-                    openDropdown = value
-                    openDropdown
-                },
-                showAlert = {
-                    onAction(BeneficiaryDetailAction.ShowDeleteConfirmation)
-                },
-            )
-        },
-        snackbarHostState = snackbarHostState,
+    MifosElevatedScaffold(
+        topBarTitle = stringResource(Res.string.beneficiary_detail),
+        onNavigateBack = { onAction(BeneficiaryDetailAction.OnNavigate) },
         modifier = modifier,
     ) {
         Box(
             modifier = Modifier,
         ) {
-            if (state.beneficiary != null) {
+            if (state.beneficiary != null && state.beneficiaryDialog == null) {
                 BeneficiaryDetailContent(
                     state = state,
+                    onAction = onAction,
                 )
             }
         }
@@ -146,58 +121,8 @@ private fun BeneficiaryDetailScreen(
     BeneficiaryDialogs(
         state = state,
         onDismissRequest = { onAction(BeneficiaryDetailAction.ErrorDialogDismiss) },
-        onConfirmDelete = { onAction(BeneficiaryDetailAction.DeleteBeneficiary(state.beneficiary?.id)) },
+        onConfirmDelete = { onAction(BeneficiaryDetailAction.DeleteBeneficiary) },
     )
-}
-
-@Suppress("UnusedParameter")
-@Composable
-private fun BeneficiaryDetailTopAppBar(
-    navigateBack: () -> Unit,
-    updateBeneficiaryClicked: () -> Unit,
-    updateDropdownValue: (value: Boolean) -> Boolean,
-    showAlert: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var openDropdown by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-//    MifosTopAppBar(
-//        onNavigationIconClick = navigateBack,
-//        title = stringResource(Res.string.beneficiary_detail),
-//        actions = {
-//            IconButton(
-//                onClick = { openDropdown = updateDropdownValue.invoke(!openDropdown) },
-//            ) {
-//                Icon(
-//                    imageVector = MifosIcons.MoreVert,
-//                    contentDescription = "More",
-//                )
-//            }
-//            DropdownMenu(
-//                expanded = openDropdown,
-//                onDismissRequest = {
-//                    openDropdown = updateDropdownValue.invoke(!openDropdown)
-//                },
-//            ) {
-//                DropdownMenuItem(
-//                    text = { Text(text = stringResource(Res.string.update_beneficiary)) },
-//                    onClick = {
-//                        openDropdown = updateDropdownValue.invoke(!openDropdown)
-//                        updateBeneficiaryClicked.invoke()
-//                    },
-//                )
-//                DropdownMenuItem(
-//                    text = { Text(text = stringResource(Res.string.delete_beneficiary)) },
-//                    onClick = {
-//                        openDropdown = updateDropdownValue.invoke(!openDropdown)
-//                        showAlert.invoke()
-//                    },
-//                )
-//            }
-//        },
-//    )
 }
 
 @Composable
@@ -208,7 +133,6 @@ private fun PreviewBeneficiaryDetailScreen() {
             state = BeneficiaryDetailState(beneficiaryDialog = null),
             onAction = { },
             modifier = Modifier,
-            snackbarHostState = SnackbarHostState(),
         )
     }
 }

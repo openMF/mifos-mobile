@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.touchlab.kermit.Logger
 import mifos_mobile.feature.qr.generated.resources.Res
 import mifos_mobile.feature.qr.generated.resources.feature_qr_instruction
 import mifos_mobile.feature.qr.generated.resources.feature_qr_upload
@@ -81,6 +82,9 @@ internal fun QrCodeReaderScreen(
             QrCodeReaderEvent.NavigateToUploadQr -> navigateToQrImportScreen.invoke()
 
             is QrCodeReaderEvent.NavigateToBeneficiary -> {
+                Logger.e("Revanth") {
+                    event.beneficiary.toString()
+                }
                 openBeneficiaryApplication(event.beneficiary, event.beneficiaryState)
             }
         }

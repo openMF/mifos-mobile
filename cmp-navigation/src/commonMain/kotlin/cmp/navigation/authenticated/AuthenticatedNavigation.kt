@@ -30,8 +30,8 @@ import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
-import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryApplicationScreen
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
@@ -197,7 +197,16 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         qrNavGraph(
             navController = navController,
-            openBeneficiaryApplication = navController::navigateToBeneficiaryApplicationScreen,
+            openBeneficiaryApplication = { beneficiary, state ->
+                navController.navigateToManualBeneficiaryAddScreen(
+                    beneficiary.id ?: -1,
+                    beneficiary.clientName ?: "",
+                    beneficiary.accountType?.id ?: -1,
+                    beneficiary.accountNumber ?: "",
+                    beneficiary.officeName ?: "",
+                    state.name,
+                )
+            },
         )
 
         makeTransferDestination(

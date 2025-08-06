@@ -65,6 +65,7 @@ import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
 import fluent.ui.system.icons.filled.DataWhisker
+import fluent.ui.system.icons.filled.Delete
 import fluent.ui.system.icons.filled.Document
 import fluent.ui.system.icons.filled.DrawerAdd
 import fluent.ui.system.icons.filled.DrawerSubtract
@@ -211,6 +212,6 @@ object MifosIcons {
     val CoinMultiple = FluentIcons.Filled.CoinMultiple
 
     val Warning = FluentIcons.Colored.Warning
-
+    val Delete = FluentIcons.Filled.Delete
     val Notification = FluentIcons.Colored.Alert
 }
