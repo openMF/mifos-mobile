@@ -122,6 +122,8 @@ internal class BeneficiaryListViewModel(
                         beneficiaries = beneficiaryList.data,
                         filteredBeneficiaries = beneficiaryList.data,
                         isEmpty = beneficiaryList.data.isEmpty(),
+                        selectedOffices = emptySet(),
+                        selectedAccounts = emptySet(),
                     )
                 }
                 getOffices(beneficiaryList.data)
