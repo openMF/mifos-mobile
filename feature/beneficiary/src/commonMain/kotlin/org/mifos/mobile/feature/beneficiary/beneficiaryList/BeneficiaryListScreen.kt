@@ -158,10 +158,12 @@ private fun BeneficiaryListScreen(
             }
         },
     ) {
-        BeneficiaryListContent(
-            state = state,
-            onAction = onAction,
-        )
+        if (state.dialogState == null) {
+            BeneficiaryListContent(
+                state = state,
+                onAction = onAction,
+            )
+        }
     }
 }
 
