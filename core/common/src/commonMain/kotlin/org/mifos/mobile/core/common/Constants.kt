@@ -72,7 +72,6 @@ object Constants {
     const val INDEX = "index"
     const val DATE_PICKER_TYPE = "datePickerType"
     const val HAS_SETTINGS_CHANGED = "hasSettingsChanged"
-    const val PASSWORD = "Password"
     const val SAVINGS_ACCOUNT_STATE = "savingsaccountstate"
     const val OUTSTANDING_BALANCE = "outstanding_balance"
     const val LOAN_REPAYMENT = "loan_repayment"
@@ -96,7 +95,18 @@ object Constants {
     const val MAKE_PAYMENT = "make_payments"
     const val LOAN_SUMMARY = "loan_summary"
 
+//    Settings constants
+    const val PROFILE = "profile"
+    const val PASSWORD = "password"
+    const val AUTH_PASSCODE = "auth_passcode"
+    const val LANGUAGE = "language"
+    const val THEME = "theme"
+    const val ENDPOINT = "endpoint"
+    const val ABOUT_US = "about_us"
+    const val FAQ = "faq"
     const val HELP = "help"
+    const val APP_INFO = "app_info"
+    const val LOGOUT = "logout"
 
     const val APPLY_LOAN = "apply_loan"
     const val NAVIGATE_BACK_TO_SAVINGS = "navigate_back_to_savings"

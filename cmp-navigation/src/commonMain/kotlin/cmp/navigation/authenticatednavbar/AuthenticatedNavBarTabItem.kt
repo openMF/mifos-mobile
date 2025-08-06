@@ -15,7 +15,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.feature.home.navigation.HomeRoute
-import org.mifos.mobile.feature.user.profile.navigation.ProfileGraphRoute
+import org.mifos.mobile.feature.settings.navigation.SettingsNavGraphRoute
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.home
 import org.mifos.mobile.navigation.generated.resources.profile
@@ -68,9 +68,9 @@ sealed class AuthenticatedNavBarTabItem : NavigationItem {
         override val contentDescriptionRes: StringResource
             get() = Res.string.profile
         override val graphRoute: String
-            get() = ProfileGraphRoute.toObjectNavigationRoute()
+            get() = SettingsNavGraphRoute.toObjectNavigationRoute()
         override val startDestinationRoute: String
-            get() = ProfileGraphRoute.toObjectNavigationRoute()
+            get() = SettingsNavGraphRoute.toObjectNavigationRoute()
         override val testTag: String
             get() = "ProfileTab"
     }

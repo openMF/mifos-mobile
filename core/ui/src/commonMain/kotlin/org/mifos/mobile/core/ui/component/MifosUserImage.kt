@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +46,8 @@ fun MifosUserImage(
     } else {
         Image(
             modifier = modifier
-                .clip(CircleShape),
+                .clip(CircleShape)
+                .fillMaxSize(),
             painter = painter,
             contentDescription = "Profile Image",
             contentScale = ContentScale.Crop,

@@ -51,4 +51,46 @@
         <item>Kiswahili</item>
         <item>فارسی</item>
     </string-array>
+
+
+    <string name="feature_settings_action_profile">Profile</string>
+    <string name="feature_settings_action_profile_tip">Change your mail, name, phone number etc</string>
+
+    <string name="feature_settings_action_password">Password</string>
+    <string name="feature_settings_action_password_tip">Change your old password</string>
+
+    <string name="feature_settings_action_auth_passcode">Auth Passcode</string>
+    <string name="feature_settings_action_auth_passcode_tip">Change your login authorization passcode</string>
+
+    <string name="feature_settings_action_language">Language</string>
+    <string name="feature_settings_action_language_tip">Choose your app language</string>
+
+    <string name="feature_settings_action_theme">Theme</string>
+    <string name="feature_settings_action_theme_tip">Choose your app theme</string>
+
+    <string name="feature_settings_action_endpoint">Endpoint</string>
+    <string name="feature_settings_action_endpoint_tip">Change your endpoint configuration</string>
+
+    <string name="feature_settings_action_about_us">About Us</string>
+    <string name="feature_settings_action_about_us_tip">Find more about our initiative</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">Frequently asked questions by users</string>
+
+    <string name="feature_settings_action_help">Help</string>
+    <string name="feature_settings_action_help_tip">Chat with our customer care</string>
+
+    <string name="feature_settings_action_app_info">App Info</string>
+    <string name="feature_settings_action_app_info_tip">Find the app version details</string>
+
+    <string name="feature_settings_action_logout">Logout</string>
+    <string name="feature_settings_action_logout_tip">Logout from all devices</string>
+
+    <string name="feature_settings_top_bar_title">Settings</string>
+
+    <string name="feature_settings_error_fetching_client">Failed to fetch client information.</string>
+    <string name="feature_settings_error_fetching_profile_image">Failed to fetch profile image.</string>
+    <string name="feature_settings_internet_not_connected">No internet connection.</string>
+    <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
+    <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
 </resources>
