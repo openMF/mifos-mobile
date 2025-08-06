@@ -148,7 +148,7 @@ internal fun TransactionScreenContent(
                 .fillMaxSize()
                 .padding(DesignToken.padding.large),
         ) {
-            if (!state.isEmpty && state.dialogState != AccountTransactionState.DialogState.Loading) {
+            if (state.data.isNotEmpty()) {
                 ActionBar(
                     onAction = onAction,
                 )
