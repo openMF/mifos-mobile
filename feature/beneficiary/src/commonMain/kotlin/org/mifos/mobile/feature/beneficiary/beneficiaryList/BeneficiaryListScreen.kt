@@ -16,6 +16,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -47,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add
+import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiaries
 import mifos_mobile.feature.beneficiary.generated.resources.filter
 import mifos_mobile.feature.beneficiary.generated.resources.ic_error_black_24dp
@@ -58,6 +60,7 @@ import mifos_mobile.feature.beneficiary.generated.resources.type_of_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -186,11 +189,29 @@ fun BeneficiaryListContent(
         }
         if (state.dialogState == null) {
             if (state.isEmpty) {
-                EmptyDataView(
-                    modifier = Modifier.fillMaxSize(),
-                    image = Res.drawable.ic_error_black_24dp,
-                    error = Res.string.no_beneficiary_found_please_add,
-                )
+                Box(
+                    Modifier.fillMaxSize().padding(horizontal = DesignToken.padding.large),
+                    contentAlignment = Alignment.Center
+                ){
+                    Column{
+                        EmptyDataView(
+                            modifier = Modifier.fillMaxWidth(),
+                            image = Res.drawable.ic_error_black_24dp,
+                            error = Res.string.no_beneficiary_found_please_add,
+                        )
+                        Spacer(Modifier.padding(DesignToken.padding.large))
+                        MifosButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                onAction(BeneficiaryListAction.OnAddBeneficiaryClicked)
+                            },
+                            shape = DesignToken.shapes.medium
+                        ){
+                            Text(stringResource(Res.string.add_beneficiary))
+                        }
+                    }
+                }
+
             }
             if (state.isFilteredEmpty) {
                 EmptyDataView(
