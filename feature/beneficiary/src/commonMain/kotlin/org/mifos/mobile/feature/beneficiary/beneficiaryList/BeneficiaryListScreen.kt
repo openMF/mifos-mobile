@@ -432,7 +432,7 @@ internal fun FilterSection(
                 ) {
                     filters.forEach { filter ->
                         Row(
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth()
                                 .onClick {
                                     onCheckChanged(filter)
