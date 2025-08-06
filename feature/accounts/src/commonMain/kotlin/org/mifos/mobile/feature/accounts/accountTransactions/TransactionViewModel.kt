@@ -42,6 +42,8 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -130,7 +132,7 @@ internal class AccountsTransactionViewModel(
             AccountTransactionAction.GetFilterResults -> handleConfirmFilterDialog()
             AccountTransactionAction.Refresh -> {
                 loadTransactions()
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
                         isRefreshing = true,
                     )
@@ -141,7 +143,7 @@ internal class AccountsTransactionViewModel(
             is AccountTransactionAction.ToggleCheckbox -> toggleCheckbox(action.label, action.type)
             AccountTransactionAction.ToggleFilter -> handleToggleFilterDialog()
             is AccountTransactionAction.ToggleRadioButton -> {
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
                         selectedRadioButton = action.label,
                     )
@@ -150,6 +152,14 @@ internal class AccountsTransactionViewModel(
 
             is AccountTransactionAction.Internal.ReceiveTransactions ->
                 handleTransactionResult(action.dataState)
+
+            is AccountTransactionAction.Internal.ReceiveSavingsTransactions -> {
+                handleSavingsTransactionsResult(action.dataState)
+            }
+
+            is AccountTransactionAction.Internal.ReceiveLoanTransactions -> {
+                handleLoanTransactionsResult(action.dataState)
+            }
         }
     }
 
@@ -157,7 +167,7 @@ internal class AccountsTransactionViewModel(
      * Dismisses any active dialog by setting the dialog state to null.
      */
     private fun handleDismissDialog() {
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 dialogState = null,
             )
@@ -168,7 +178,7 @@ internal class AccountsTransactionViewModel(
      * Shows the filter dialog by updating the dialog state.
      */
     private fun handleToggleFilterDialog() {
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 dialogState = AccountTransactionState.DialogState.Filters,
             )
@@ -184,7 +194,7 @@ internal class AccountsTransactionViewModel(
     private fun handleConfirmFilterDialog() {
         val selectedFilters = state.checkboxOptions.filter { it.isChecked }
         val filteredRecords = applyTransactionFilters(selectedFilters)
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 selectedFilters = selectedFilters,
                 filteredData = filteredRecords,
@@ -201,7 +211,7 @@ internal class AccountsTransactionViewModel(
      * This method clears all selected checkboxes and radio buttons and resets the filter counts.
      */
     private fun handleResetFilters() {
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 checkboxOptions = it.checkboxOptions.map { cb -> cb.copy(isChecked = false) },
                 selectedFilters = emptyList(),
@@ -230,7 +240,7 @@ internal class AccountsTransactionViewModel(
         val typeCount = updatedCheckboxes.count { it.isChecked && it.type == TransactionFilterType.TRANSACTION_TYPE }
         val durationCount = updatedCheckboxes.count { it.isChecked && it.type == TransactionFilterType.DURATION }
 
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 checkboxOptions = updatedCheckboxes,
                 accountTypeFiltersCount = typeCount,
@@ -286,7 +296,7 @@ internal class AccountsTransactionViewModel(
     private fun handleTransactionResult(dataState: DataState<Page<Transaction>>) {
         when (dataState) {
             is DataState.Error -> {
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
                         dialogState = AccountTransactionState.DialogState.Error(dataState.message),
                     )
@@ -294,7 +304,7 @@ internal class AccountsTransactionViewModel(
             }
 
             DataState.Loading -> {
-                mutableStateFlow.update {
+                updateState {
                     it.copy(dialogState = AccountTransactionState.DialogState.Loading)
                 }
             }
@@ -308,13 +318,85 @@ internal class AccountsTransactionViewModel(
                     DateHelper.getFormattedDateWithPrefix(transaction.date)
                 }
 
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
-                        dialogState = null,
                         data = transactions,
                         filteredData = groupedTransactions,
                         isEmpty = transactions.isEmpty(),
                         isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                        dialogState = null,
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handleSavingsTransactionsResult(dataState: DataState<SavingsWithAssociations>) {
+        when (dataState) {
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        dialogState = AccountTransactionState.DialogState.Error(dataState.message),
+                    )
+                }
+            }
+
+            DataState.Loading -> {
+                updateState {
+                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                }
+            }
+
+            is DataState.Success -> {
+                val transactions = dataState.data.transactions
+                    .map { it.toUiTransaction() }
+
+                val groupedTransactions = transactions.groupBy { transaction ->
+                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                }
+
+                updateState {
+                    it.copy(
+                        data = transactions,
+                        filteredData = groupedTransactions,
+                        isEmpty = transactions.isEmpty(),
+                        isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                        dialogState = null,
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handleLoanTransactionsResult(dataState: DataState<LoanWithAssociations?>) {
+        when (dataState) {
+            is DataState.Error -> {
+                updateState {
+                    it.copy(dialogState = AccountTransactionState.DialogState.Error(dataState.message))
+                }
+            }
+
+            DataState.Loading -> {
+                updateState {
+                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                }
+            }
+
+            is DataState.Success -> {
+                val transactions = dataState.data?.transactions
+                    ?.mapNotNull { it?.toUiTransaction() } ?: emptyList()
+
+                val grouped = transactions.groupBy {
+                    DateHelper.getFormattedDateWithPrefix(it.date)
+                }
+
+                updateState {
+                    it.copy(
+                        dialogState = null,
+                        data = transactions,
+                        filteredData = grouped,
+                        isFilteredRecordsEmpty = grouped.isEmpty(),
+                        isEmpty = transactions.isEmpty(),
                     )
                 }
             }
@@ -326,7 +408,7 @@ internal class AccountsTransactionViewModel(
      */
     private fun observeAccountTypeAndInitCheckboxes() {
         val checkboxes = StatusUtils.getTransactionCheckboxes()
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 checkboxOptions = checkboxes,
                 selectedFilters = emptyList(),
@@ -344,40 +426,7 @@ internal class AccountsTransactionViewModel(
                 state.accountId,
                 Constants.TRANSACTIONS,
             ).collect { dataState ->
-                when (dataState) {
-                    is DataState.Error -> {
-                        mutableStateFlow.update {
-                            it.copy(
-                                dialogState = AccountTransactionState.DialogState.Error(dataState.message),
-                            )
-                        }
-                    }
-
-                    DataState.Loading -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountTransactionState.DialogState.Loading)
-                        }
-                    }
-
-                    is DataState.Success -> {
-                        val transactions = dataState.data.transactions
-                            .map { it.toUiTransaction() }
-
-                        val groupedTransactions = transactions.groupBy { transaction ->
-                            DateHelper.getFormattedDateWithPrefix(transaction.date)
-                        }
-
-                        mutableStateFlow.update {
-                            it.copy(
-                                dialogState = null,
-                                data = transactions,
-                                filteredData = groupedTransactions,
-                                isEmpty = transactions.isEmpty(),
-                                isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
-                            )
-                        }
-                    }
-                }
+                sendAction(AccountTransactionAction.Internal.ReceiveSavingsTransactions(dataState))
             }
         }
     }
@@ -391,38 +440,7 @@ internal class AccountsTransactionViewModel(
                 loanId = state.accountId,
                 associationType = Constants.TRANSACTIONS,
             ).collect { dataState ->
-                when (dataState) {
-                    is DataState.Error -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountTransactionState.DialogState.Error(dataState.message))
-                        }
-                    }
-
-                    DataState.Loading -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountTransactionState.DialogState.Loading)
-                        }
-                    }
-
-                    is DataState.Success -> {
-                        val transactions = dataState.data?.transactions
-                            ?.mapNotNull { it?.toUiTransaction() } ?: emptyList()
-
-                        val grouped = transactions.groupBy {
-                            DateHelper.getFormattedDateWithPrefix(it.date)
-                        }
-
-                        mutableStateFlow.update {
-                            it.copy(
-                                dialogState = null,
-                                data = transactions,
-                                filteredData = grouped,
-                                isFilteredRecordsEmpty = grouped.isEmpty(),
-                                isEmpty = transactions.isEmpty(),
-                            )
-                        }
-                    }
-                }
+                sendAction(AccountTransactionAction.Internal.ReceiveLoanTransactions(dataState))
             }
         }
     }
@@ -564,7 +582,7 @@ internal data class AccountTransactionState(
     val isRefreshing: Boolean = false,
     val data: List<UiTransaction> = emptyList(),
     val filteredData: Map<String, List<UiTransaction>> = emptyMap(),
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = AccountTransactionState.DialogState.Loading,
     val checkboxOptions: List<TransactionCheckboxStatus> = emptyList(),
     val selectedFilters: List<TransactionCheckboxStatus> = emptyList(),
     val toggleFilterDialog: Boolean = false,
@@ -637,6 +655,14 @@ internal sealed interface AccountTransactionAction {
          * @property dataState The result of the transaction API call.
          */
         data class ReceiveTransactions(val dataState: DataState<Page<Transaction>>) : Internal
+
+        /**
+         * Action representing the result of a savings account transaction fetch operation.**/
+        data class ReceiveSavingsTransactions(val dataState: DataState<SavingsWithAssociations>) : Internal
+
+        /**
+         * Action representing the result of a loan account transaction fetch operation.**/
+        data class ReceiveLoanTransactions(val dataState: DataState<LoanWithAssociations?>) : Internal
     }
 }
 

@@ -14,14 +14,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -38,7 +36,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
-import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_withdraw
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_details_top_bar_title
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_status_label
 import org.jetbrains.compose.resources.StringResource
@@ -67,7 +64,6 @@ internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
     navigateToTransferScreen: (Long) -> Unit,
     navigateToUpdateScreen: (Long, String?, String?, String?, String?) -> Unit,
-    navigateToWithdrawScreen: (Long, String?, String?, String?, String?) -> Unit,
     navigateToClientChargeScreen: (String, Long) -> Unit,
     navigateToSavingsAccountTransactionScreen: (Long) -> Unit,
     navigateToQrCodeScreen: (String) -> Unit,
@@ -93,24 +89,11 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
-                    event.route == Constants.TRANSFER -> {
-                        navigateToTransferScreen(uiState.accountId)
-                    }
                 }
             }
 
             SavingsAccountDetailsEvent.UpdateAccount -> {
                 navigateToUpdateScreen.invoke(
-                    uiState.accountId,
-                    uiState.accountNumber,
-                    uiState.clientName,
-                    uiState.submissionDate,
-                    uiState.product,
-                )
-            }
-
-            SavingsAccountDetailsEvent.WithdrawAmount -> {
-                navigateToWithdrawScreen.invoke(
                     uiState.accountId,
                     uiState.accountNumber,
                     uiState.clientName,
@@ -231,37 +214,6 @@ internal fun ActionBar(
                     MaterialTheme.colorScheme.inversePrimary
                 },
 
-            )
-        }
-
-        Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
-
-        Row(
-            modifier = Modifier.clickable(isUpdatable) {
-                onAction(SavingsAccountDetailsAction.OnWithDraw)
-            },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_account_action_withdraw),
-                color = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.inversePrimary
-                },
-                style = MifosTypography.bodySmallEmphasized,
-            )
-
-            Icon(
-                modifier = Modifier.size(DesignToken.sizes.iconSmall),
-                imageVector = MifosIcons.ArrowExport,
-                contentDescription = null,
-                tint = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.inversePrimary
-                },
             )
         }
     }
