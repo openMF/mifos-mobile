@@ -99,10 +99,6 @@ internal class SavingsAccountDetailsViewModel(
             SavingsAccountDetailsAction.OnUpdateAccount -> sendEvent(
                 SavingsAccountDetailsEvent.UpdateAccount,
             )
-
-            SavingsAccountDetailsAction.OnWithDraw -> sendEvent(
-                SavingsAccountDetailsEvent.WithdrawAmount,
-            )
         }
     }
 
@@ -273,9 +269,6 @@ sealed interface SavingsAccountDetailsEvent {
 
     /** Trigger Update Amount */
     data object UpdateAccount : SavingsAccountDetailsEvent
-
-    /** Trigger Withdraw Amount */
-    data object WithdrawAmount : SavingsAccountDetailsEvent
 }
 
 /**
@@ -296,9 +289,6 @@ sealed interface SavingsAccountDetailsAction {
 
     /** User tapped to update Account */
     data object OnUpdateAccount : SavingsAccountDetailsAction
-
-    /** User tapped to withdraw amount */
-    data object OnWithDraw : SavingsAccountDetailsAction
 
     /**
      * Internal-only actions such as results from repository calls.
