@@ -22,7 +22,6 @@ import org.mifos.mobile.feature.savingsaccount.savingsAccount.savingsAccountDest
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.savingsAccountDetailsDestination
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.navigateToSavingsAccountUpdateScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.savingsAccountUpdateDestination
-import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.navigateToSavingsAccountWithdrawScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.savingsAccountWithdrawDestination
 
 @Serializable
@@ -52,7 +51,6 @@ fun NavGraphBuilder.savingsNavGraph(
             navigateToClientChargeScreen = navigateToClientChargeScreen,
             navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
             navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
-            navigateToWithdrawScreen = navController::navigateToSavingsAccountWithdrawScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToTransferScreen = navigateToTransferScreen,
         )
