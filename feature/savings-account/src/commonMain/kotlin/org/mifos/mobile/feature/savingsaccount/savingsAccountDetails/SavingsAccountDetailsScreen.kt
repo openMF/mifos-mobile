@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
+import mifos_mobile.feature.savings_account.generated.resources.feature_account_details_top_bar_title
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_status_label
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -126,7 +127,7 @@ internal fun SavingsAccountDetailsContent(
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(SavingsAccountDetailsAction.OnNavigateBack) },
-        topBarTitle = "Account Details",
+        topBarTitle = stringResource(Res.string.feature_account_details_top_bar_title),
         bottomBar = {
             Surface {
                 MifosPoweredCard(

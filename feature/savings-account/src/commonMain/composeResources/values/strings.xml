@@ -41,7 +41,7 @@
 
 <!--    Savings Account Details Values-->
 
-    <string name="feature_account_details_top_bar_title">Account Details</string>
+    <string name="feature_account_details_top_bar_title">Savings Account Details</string>
     <string name="feature_account_action_update">Update</string>
     <string name="feature_account_action_withdraw">Withdraw</string>
     <string name="feature_account_action_deposit">Deposit</string>
