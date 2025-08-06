@@ -16,7 +16,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,29 +32,28 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.add
 import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiaries
+import mifos_mobile.feature.beneficiary.generated.resources.filter
 import mifos_mobile.feature.beneficiary.generated.resources.ic_error_black_24dp
+import mifos_mobile.feature.beneficiary.generated.resources.linked_with
 import mifos_mobile.feature.beneficiary.generated.resources.manage_beneficiaries
 import mifos_mobile.feature.beneficiary.generated.resources.no_beneficiary_found_please_add
-import org.jetbrains.compose.resources.StringResource
+import mifos_mobile.feature.beneficiary.generated.resources.no_filtered_beneficiary_found
+import mifos_mobile.feature.beneficiary.generated.resources.type_of_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -65,14 +63,12 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.onClick
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FilterTopSection
 import org.mifos.mobile.core.ui.component.MifosBeneficiariesCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -83,9 +79,7 @@ internal fun BeneficiaryListScreen(
     modifier: Modifier = Modifier,
     viewModel: BeneficiaryListViewModel = koinViewModel(),
 ) {
-
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
@@ -98,6 +92,12 @@ internal fun BeneficiaryListScreen(
     BeneficiaryListScreen(
         state = state,
         modifier = modifier,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
+    BeneficiaryListDialog(
+        state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -153,30 +153,11 @@ private fun BeneficiaryListScreen(
             }
         },
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-        ) {
-            if (state.dialogState == null) {
-                if (state.isEmpty) {
-                    EmptyDataView(
-                        modifier = Modifier.fillMaxSize(),
-                        image = Res.drawable.ic_error_black_24dp,
-                        error = Res.string.no_beneficiary_found_please_add,
-                    )
-                } else {
-                    BeneficiaryListContent(
-                        state = state,
-                        onAction = onAction,
-                    )
-                }
-            }
-        }
+        BeneficiaryListContent(
+            state = state,
+            onAction = onAction,
+        )
     }
-    BeneficiaryListDialog(
-        state = state,
-        onAction = onAction,
-    )
 }
 
 @Composable
@@ -188,13 +169,29 @@ fun BeneficiaryListContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top=DesignToken.padding.small),
+            .padding(top = DesignToken.padding.small),
         verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
     ) {
-        if(state.beneficiaries.isNotEmpty()){
+        if (state.beneficiaries.isNotEmpty()) {
             ActionBar(
                 onAction = onAction,
             )
+        }
+        if (state.dialogState == null) {
+            if (state.isEmpty) {
+                EmptyDataView(
+                    modifier = Modifier.fillMaxSize(),
+                    image = Res.drawable.ic_error_black_24dp,
+                    error = Res.string.no_beneficiary_found_please_add,
+                )
+            }
+            if (state.isFilteredEmpty) {
+                EmptyDataView(
+                    modifier = Modifier.fillMaxSize(),
+                    image = Res.drawable.ic_error_black_24dp,
+                    error = Res.string.no_filtered_beneficiary_found,
+                )
+            }
         }
         LazyColumn(modifier = Modifier) {
             items(state.filteredBeneficiaries) { beneficiary ->
@@ -222,7 +219,7 @@ internal fun ActionBar(
             .fillMaxWidth()
             .padding(
                 vertical = DesignToken.padding.medium,
-                horizontal = DesignToken.padding.large
+                horizontal = DesignToken.padding.large,
             ),
         horizontalArrangement = Arrangement.End,
     ) {
@@ -234,7 +231,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Text(
-                text = "Add",
+                text = stringResource(Res.string.add),
                 color = MaterialTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -257,7 +254,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Text(
-                text = "Filter",
+                text = stringResource(Res.string.filter),
                 color = MaterialTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -265,13 +262,12 @@ internal fun ActionBar(
             Icon(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Filter,
-                contentDescription = "filter",
+                contentDescription = stringResource(Res.string.filter),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
     }
 }
-
 
 @Composable
 internal fun BeneficiaryFilters(
@@ -319,30 +315,29 @@ internal fun BeneficiaryFilters(
             HorizontalDivider(modifier = Modifier.height(1.dp))
 
             FilterSection(
-                title = "Linked With",
+                title = stringResource(Res.string.linked_with),
                 selectedFilters = state.selectedOffices,
                 isExpanded = isOfficesExpanded,
                 onToggle = { isOfficesExpanded = !isOfficesExpanded },
                 filters = state.offices,
                 onCheckChanged = {
-                    onAction(BeneficiaryListAction.OnOfficeChange(it?: ""))
+                    onAction(BeneficiaryListAction.OnOfficeChange(it ?: ""))
                 },
             )
 
             FilterSection(
-                title = "Type of Account",
+                title = stringResource(Res.string.type_of_account),
                 selectedFilters = state.selectedAccounts,
                 isExpanded = isAccountsExpanded,
                 onToggle = { isAccountsExpanded = !isAccountsExpanded },
-                filters = state.template?.accountTypeOptions?.map { it.value }?:emptyList(),
+                filters = state.template?.accountTypeOptions?.map { it.value } ?: emptyList(),
                 onCheckChanged = {
-                    onAction(BeneficiaryListAction.OnAccountChange(it?:""))
+                    onAction(BeneficiaryListAction.OnAccountChange(it ?: ""))
                 },
             )
         }
     }
 }
-
 
 @Composable
 internal fun FilterSection(
@@ -384,7 +379,7 @@ internal fun FilterSection(
                 ) {
                     if (selectedFilters.isNotEmpty()) {
                         Text(
-                            text = "",
+                            text = "${selectedFilters.size} selected",
                             style = MifosTypography.labelSmall,
                             color = MaterialTheme.colorScheme.secondary,
                         )
@@ -418,7 +413,6 @@ internal fun FilterSection(
                                 .padding(horizontal = DesignToken.padding.largeIncreased),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-
                             Checkbox(
                                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                                 checked = selectedFilters.contains(filter),
@@ -429,7 +423,7 @@ internal fun FilterSection(
 
                             Spacer(modifier = Modifier.width(DesignToken.spacing.small))
                             Text(
-                                text = filter?:"",
+                                text = filter ?: "",
                                 style = MifosTypography.labelMediumEmphasized,
                                 color = MaterialTheme.colorScheme.secondary,
                             )
@@ -446,7 +440,6 @@ internal fun FilterSection(
         )
     }
 }
-
 
 @Preview
 @Composable

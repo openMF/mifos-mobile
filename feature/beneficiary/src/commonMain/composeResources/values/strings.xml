@@ -19,7 +19,8 @@
     <string name="error_fetching_third_party_transfer_template">Error to fetch Third Party Transfer
         template
     </string>
-    <string name="no_beneficiary_found_please_add">Currently, you don\'t have any Beneficiary. Please add Beneficiary</string>
+    <string name="no_beneficiary_found_please_add">Currently, you don't have any Beneficiary. Please add Beneficiary</string>
+    <string name="no_filtered_beneficiary_found">No Beneficiary Found for Given Filter</string>
     <string name="beneficiary">Beneficiary</string>
     <string name="manage_beneficiaries">Manage Beneficiaries</string>
     <string name="beneficiaries">Beneficiaries</string>
@@ -117,4 +118,10 @@
 
     <string name="skip_the_form">Skip the form </string>
     <string name="upload_or_scan_qr_code">Upload Or Scan QR Code</string>
+
+    <string name="filter">Filter</string>
+    <string name="linked_with">Linked With</string>
+    <string name="type_of_account">Type of Account</string>
+    <string name="selected_count">%1$d selected</string>
+    <string name="filter_icon_description">Filter icon</string>
 </resources>

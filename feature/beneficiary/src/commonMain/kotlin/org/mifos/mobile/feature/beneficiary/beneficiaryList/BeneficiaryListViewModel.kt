@@ -22,7 +22,6 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListEvent.*
 
 internal class BeneficiaryListViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
@@ -95,7 +94,7 @@ internal class BeneficiaryListViewModel(
                         dialogState = null,
                         beneficiaries = beneficiaryList.data,
                         filteredBeneficiaries = beneficiaryList.data,
-                        isEmpty = beneficiaryList.data.isEmpty()
+                        isEmpty = beneficiaryList.data.isEmpty(),
                     )
                 }
                 getOffices(beneficiaryList.data)
@@ -118,21 +117,41 @@ internal class BeneficiaryListViewModel(
             is BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries()
 
             is BeneficiaryListAction.OnAddBeneficiaryClicked -> sendEvent(
-                AddBeneficiaryClicked,
+                BeneficiaryListEvent.AddBeneficiaryClicked,
             )
 
             is BeneficiaryListAction.OnBeneficiaryItemClick -> sendEvent(
-                BeneficiaryItemClick(action.position),
+                BeneficiaryListEvent.BeneficiaryItemClick(action.position),
             )
 
             is BeneficiaryListAction.OnNavigate -> sendEvent(
-                Navigate,
+                BeneficiaryListEvent.Navigate,
             )
 
             BeneficiaryListAction.ToggleFilter -> handleToggleFilterDialog()
 
             BeneficiaryListAction.GetFilterResults -> {
-
+                val filteredAccounts = if (state.selectedAccounts.isNotEmpty()) {
+                    state.beneficiaries.filter {
+                        state.selectedAccounts.contains(it.accountType?.value)
+                    }
+                } else {
+                    state.beneficiaries
+                }
+                val filteredOffices = if (state.selectedOffices.isNotEmpty()) {
+                    filteredAccounts.filter {
+                        state.selectedOffices.contains(it.officeName)
+                    }
+                } else {
+                    filteredAccounts
+                }
+                updateState {
+                    it.copy(
+                        filteredBeneficiaries = filteredOffices,
+                        dialogState = null,
+                        isFilteredEmpty = filteredOffices.isEmpty(),
+                    )
+                }
             }
 
             BeneficiaryListAction.ResetFilters -> resetFilters()
@@ -140,36 +159,34 @@ internal class BeneficiaryListViewModel(
             BeneficiaryListAction.DismissDialog -> dismissDialog()
 
             is BeneficiaryListAction.OnAccountChange -> {
-                val currentAccounts=state.selectedAccounts
-                if(currentAccounts.contains(action.account)){
+                val currentAccounts = state.selectedAccounts
+                if (currentAccounts.contains(action.account)) {
                     updateState {
                         it.copy(
-                            selectedAccounts = currentAccounts.minus(action.account)
+                            selectedAccounts = currentAccounts.minus(action.account),
                         )
                     }
-                }
-                else{
+                } else {
                     updateState {
                         it.copy(
-                            selectedAccounts = currentAccounts.plus(action.account)
+                            selectedAccounts = currentAccounts.plus(action.account),
                         )
                     }
                 }
             }
 
             is BeneficiaryListAction.OnOfficeChange -> {
-                val currentOffices=state.selectedOffices
-                if(currentOffices.contains(action.office)){
+                val currentOffices = state.selectedOffices
+                if (currentOffices.contains(action.office)) {
                     updateState {
                         it.copy(
-                            selectedOffices = currentOffices.minus(action.office)
+                            selectedOffices = currentOffices.minus(action.office),
                         )
                     }
-                    }
-                else{
+                } else {
                     updateState {
                         it.copy(
-                            selectedOffices = currentOffices.plus(action.office)
+                            selectedOffices = currentOffices.plus(action.office),
                         )
                     }
                 }
@@ -177,19 +194,19 @@ internal class BeneficiaryListViewModel(
         }
     }
 
-    private fun getBeneficiaryList(){
+    private fun getBeneficiaryList() {
         viewModelScope.launch {
-            beneficiaryRepositoryImp.beneficiaryTemplate().collect { result->
-                when(result){
+            beneficiaryRepositoryImp.beneficiaryTemplate().collect { result ->
+                when (result) {
                     is DataState.Error -> {}
                     DataState.Loading -> {}
                     is DataState.Success -> {
                         updateState {
                             it.copy(
-                                template = result.data
+                                template = result.data,
                             )
                         }
-                        Logger.e("Revanth"){
+                        Logger.e("Revanth") {
                             result.data.toString()
                         }
                     }
@@ -206,34 +223,34 @@ internal class BeneficiaryListViewModel(
         }
     }
 
-    private fun getOffices(beneficiaries: List<Beneficiary>){
-        val offices=beneficiaries.map {
+    private fun getOffices(beneficiaries: List<Beneficiary>) {
+        val offices = beneficiaries.map {
             it.officeName
         }.distinct()
         updateState {
             it.copy(
-                offices=offices
+                offices = offices,
             )
         }
-        Logger.e("Revanth"){
+        Logger.e("Revanth") {
             offices.toString()
         }
     }
 
-    private fun resetFilters(){
+    private fun resetFilters() {
         updateState {
             it.copy(
                 selectedOffices = emptySet(),
                 selectedAccounts = emptySet(),
-                filteredBeneficiaries = it.beneficiaries
+                filteredBeneficiaries = it.beneficiaries,
             )
         }
     }
 
-    private fun dismissDialog(){
+    private fun dismissDialog() {
         updateState {
             it.copy(
-                dialogState = null
+                dialogState = null,
             )
         }
     }
@@ -244,10 +261,11 @@ data class BeneficiaryListState(
     val isRefreshing: Boolean = false,
     val beneficiaries: List<Beneficiary> = emptyList(),
     val template: BeneficiaryTemplate? = null,
-    val selectedAccounts:Set<String> =emptySet(),
-    val selectedOffices : Set<String> =emptySet(),
-    val offices:List<String?> =emptyList(),
-    val isEmpty:Boolean=false,
+    val selectedAccounts: Set<String> = emptySet(),
+    val selectedOffices: Set<String> = emptySet(),
+    val offices: List<String?> = emptyList(),
+    val isEmpty: Boolean = false,
+    val isFilteredEmpty: Boolean = false,
     val filteredBeneficiaries: List<Beneficiary> = emptyList(),
     val dialogState: DialogState?,
 ) {
@@ -260,7 +278,7 @@ data class BeneficiaryListState(
         data object Filters : DialogState
     }
 
-    val isAnyFilterSelected=selectedAccounts.isNotEmpty()||selectedOffices.isNotEmpty()
+    val isAnyFilterSelected = selectedAccounts.isNotEmpty() || selectedOffices.isNotEmpty()
 }
 
 sealed interface BeneficiaryListAction {
