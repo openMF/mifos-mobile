@@ -94,6 +94,7 @@ internal class BeneficiaryListViewModel(
                     it.copy(
                         dialogState = null,
                         beneficiaries = beneficiaryList.data,
+                        filteredBeneficiaries = beneficiaryList.data,
                         isEmpty = beneficiaryList.data.isEmpty()
                     )
                 }

@@ -197,7 +197,7 @@ fun BeneficiaryListContent(
             )
         }
         LazyColumn(modifier = Modifier) {
-            items(state.beneficiaries) { beneficiary ->
+            items(state.filteredBeneficiaries) { beneficiary ->
                 MifosBeneficiariesCard(
                     beneficiary = beneficiary,
                     onBeneficiaryClick = {
@@ -422,7 +422,9 @@ internal fun FilterSection(
                             Checkbox(
                                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                                 checked = selectedFilters.contains(filter),
-                                onCheckedChange = {},
+                                onCheckedChange = {
+                                    onCheckChanged(filter)
+                                },
                             )
 
                             Spacer(modifier = Modifier.width(DesignToken.spacing.small))
