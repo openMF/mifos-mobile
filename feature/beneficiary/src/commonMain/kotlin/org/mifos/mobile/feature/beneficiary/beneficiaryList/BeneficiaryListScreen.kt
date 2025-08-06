@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -53,6 +55,7 @@ import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosBeneficiariesCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
@@ -64,25 +67,15 @@ internal fun BeneficiaryListScreen(
     modifier: Modifier = Modifier,
     viewModel: BeneficiaryListViewModel = koinViewModel(),
 ) {
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.trySendAction(BeneficiaryListAction.LoadBeneficiaries)
-    }
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             BeneficiaryListEvent.Navigate -> navigateBack.invoke()
             BeneficiaryListEvent.AddBeneficiaryClicked -> addBeneficiaryClicked()
             is BeneficiaryListEvent.BeneficiaryItemClick -> onBeneficiaryItemClick(event.position)
-            is BeneficiaryListEvent.ShowToast -> {
-                scope.launch {
-                    snackbarHostState.showSnackbar(event.message)
-                }
-            }
         }
     }
 
@@ -92,7 +85,6 @@ internal fun BeneficiaryListScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
-        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -102,10 +94,10 @@ private fun BeneficiaryListDialog(
     onAction: (BeneficiaryListAction) -> Unit,
 ) {
     when (state.dialogState) {
-        BeneficiaryListState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        BeneficiaryListState.DialogState.Loading -> MifosProgressIndicator()
         is BeneficiaryListState.DialogState.Error -> {
             MifosErrorComponent(
-                isNetworkConnected = state.isOnline,
+                isNetworkConnected = !state.networkUnavailable,
                 isRetryEnabled = true,
                 onRetry = {
                     onAction(
@@ -124,13 +116,11 @@ private fun BeneficiaryListDialog(
 private fun BeneficiaryListScreen(
     state: BeneficiaryListState,
     onAction: (BeneficiaryListAction) -> Unit,
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(BeneficiaryListAction.OnNavigate) },
         topBarTitle = stringResource(Res.string.manage_beneficiaries),
-        snackbarHost = { snackbarHostState },
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -146,7 +136,7 @@ private fun BeneficiaryListScreen(
                 .fillMaxSize(),
         ) {
             if (state.dialogState == null) {
-                if (state.beneficiaries.isEmpty()) {
+                if (state.isEmpty) {
                     EmptyDataView(
                         modifier = Modifier.fillMaxSize(),
                         image = Res.drawable.ic_error_black_24dp,
@@ -154,7 +144,7 @@ private fun BeneficiaryListScreen(
                     )
                 } else {
                     BeneficiaryListContent(
-                        beneficiaryList = state.beneficiaries,
+                        state = state,
                         onAction = onAction,
                     )
                 }
@@ -169,21 +159,23 @@ private fun BeneficiaryListScreen(
 
 @Composable
 fun BeneficiaryListContent(
-    beneficiaryList: List<Beneficiary>,
+    state: BeneficiaryListState,
     onAction: (BeneficiaryListAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(DesignToken.padding.large),
+            .padding(top=DesignToken.padding.small),
         verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
     ) {
-        ActionBar(
-            onAction = onAction,
-        )
+        if(state.beneficiaries.isNotEmpty()){
+            ActionBar(
+                onAction = onAction,
+            )
+        }
         LazyColumn(modifier = Modifier) {
-            items(beneficiaryList) { beneficiary ->
+            items(state.beneficiaries) { beneficiary ->
                 MifosBeneficiariesCard(
                     beneficiary = beneficiary,
                     onBeneficiaryClick = {
@@ -206,7 +198,10 @@ internal fun ActionBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = DesignToken.padding.medium),
+            .padding(
+                vertical = DesignToken.padding.medium,
+                horizontal = DesignToken.padding.large
+            ),
         horizontalArrangement = Arrangement.End,
     ) {
         Row(
@@ -230,7 +225,28 @@ internal fun ActionBar(
             )
         }
 
-        // TODO: Add space and Filter icon
+        Spacer(modifier = Modifier.width(DesignToken.spacing.largeIncreased))
+
+        Row(
+            modifier = Modifier.clickable {
+
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+        ) {
+            Text(
+                text = "Filter",
+                color = MaterialTheme.colorScheme.primary,
+                style = MifosTypography.bodySmallEmphasized,
+            )
+
+            Icon(
+                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                imageVector = MifosIcons.Filter,
+                contentDescription = "filter",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
 
@@ -242,7 +258,6 @@ fun PreviewBeneficiaryListScreen() {
             state = BeneficiaryListState(dialogState = null),
             onAction = { },
             modifier = Modifier,
-            snackbarHostState = SnackbarHostState(),
         )
     }
 }

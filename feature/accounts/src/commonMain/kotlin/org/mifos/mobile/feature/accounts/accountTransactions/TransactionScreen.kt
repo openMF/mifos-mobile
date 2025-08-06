@@ -63,7 +63,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
-import org.mifos.mobile.feature.accounts.component.FilterTopSection
+import org.mifos.mobile.core.ui.component.FilterTopSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 
 @Composable

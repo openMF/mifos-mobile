@@ -11,6 +11,8 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
@@ -27,19 +29,35 @@ internal class BeneficiaryListViewModel(
 ) {
 
     init {
-        viewModelScope.launch {
-            networkMonitor.isOnline.collect { isConnected ->
-                updateState { it.copy(isOnline = isConnected) }
-            }
-        }
-        fetchBeneficiaries(isRefreshing = false)
+        observeNetworkStatus()
+        fetchBeneficiaries()
     }
 
     private fun updateState(update: (BeneficiaryListState) -> BeneficiaryListState) {
         mutableStateFlow.update(update)
     }
 
-    private fun fetchBeneficiaries(isRefreshing: Boolean) {
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .map(Boolean::not)
+                .distinctUntilChanged()
+                .collect { isOffline ->
+                    updateState {
+                        it.copy(
+                            networkUnavailable = isOffline,
+                            dialogState = if (isOffline) {
+                                BeneficiaryListState.DialogState.Error("")
+                            } else {
+                                null
+                            },
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun fetchBeneficiaries() {
         updateState {
             it.copy(
                 dialogState = BeneficiaryListState.DialogState.Loading,
@@ -55,9 +73,6 @@ internal class BeneficiaryListViewModel(
                     )
                 }
             }.collect { beneficiaryList ->
-                if (isRefreshing) {
-                    sendEvent(BeneficiaryListEvent.ShowToast("Beneficiaries refreshed successfully"))
-                }
                 processBeneficiaryList(beneficiaryList)
             }
         }
@@ -75,6 +90,7 @@ internal class BeneficiaryListViewModel(
                     it.copy(
                         dialogState = null,
                         beneficiaries = beneficiaryList.data,
+                        isEmpty = beneficiaryList.data.isEmpty()
                     )
                 }
             }
@@ -93,15 +109,17 @@ internal class BeneficiaryListViewModel(
 
     override fun handleAction(action: BeneficiaryListAction) {
         when (action) {
-            BeneficiaryListAction.LoadBeneficiaries -> fetchBeneficiaries(isRefreshing = false)
-            BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries(isRefreshing = true)
-            BeneficiaryListAction.OnAddBeneficiaryClicked -> sendEvent(
+            is BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries()
+
+            is BeneficiaryListAction.OnAddBeneficiaryClicked -> sendEvent(
                 BeneficiaryListEvent.AddBeneficiaryClicked,
             )
+
             is BeneficiaryListAction.OnBeneficiaryItemClick -> sendEvent(
                 BeneficiaryListEvent.BeneficiaryItemClick(action.position),
             )
-            BeneficiaryListAction.OnNavigate -> sendEvent(
+
+            is BeneficiaryListAction.OnNavigate -> sendEvent(
                 BeneficiaryListEvent.Navigate,
             )
         }
@@ -109,9 +127,11 @@ internal class BeneficiaryListViewModel(
 }
 
 data class BeneficiaryListState(
-    val isOnline: Boolean = false,
+    val networkUnavailable: Boolean = false,
     val isRefreshing: Boolean = false,
     val beneficiaries: List<Beneficiary> = emptyList(),
+    val isEmpty:Boolean=false,
+    val filteredBeneficiaries: List<Beneficiary> = emptyList(),
     val dialogState: DialogState?,
 ) {
     sealed interface DialogState {
@@ -123,7 +143,6 @@ data class BeneficiaryListState(
 }
 
 sealed interface BeneficiaryListAction {
-    data object LoadBeneficiaries : BeneficiaryListAction
     data object RefreshBeneficiaries : BeneficiaryListAction
     data object OnAddBeneficiaryClicked : BeneficiaryListAction
     data class OnBeneficiaryItemClick(val position: Long) : BeneficiaryListAction
@@ -131,7 +150,6 @@ sealed interface BeneficiaryListAction {
 }
 
 sealed interface BeneficiaryListEvent {
-    data class ShowToast(val message: String) : BeneficiaryListEvent
     data object AddBeneficiaryClicked : BeneficiaryListEvent
     data class BeneficiaryItemClick(val position: Long) : BeneficiaryListEvent
     data object Navigate : BeneficiaryListEvent
