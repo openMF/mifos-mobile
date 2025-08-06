@@ -154,6 +154,7 @@ internal fun BeneficiaryApplicationContent(
                     BeneficiaryApplicationAction.SubmitBeneficiary,
                 )
             },
+            enabled = state.isEnabled,
         )
 
         Spacer(Modifier.height(DesignToken.padding.extraLargeIncreased))

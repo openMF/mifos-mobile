@@ -378,6 +378,11 @@ data class BeneficiaryApplicationState(
 
         data object Network : DialogState
     }
+    val isEnabled = accountType != -1 &&
+        accountNumber.isNotEmpty() &&
+        officeName.isNotEmpty() &&
+        transferLimit.isNotEmpty() &&
+        beneficiaryName.isNotEmpty()
 }
 
 sealed interface BeneficiaryApplicationEvent {
