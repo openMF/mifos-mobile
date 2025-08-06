@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -34,6 +33,34 @@ internal class BeneficiaryListViewModel(
         observeNetworkStatus()
         fetchBeneficiaries()
         getBeneficiaryList()
+    }
+
+    override fun handleAction(action: BeneficiaryListAction) {
+        when (action) {
+            is BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries()
+
+            is BeneficiaryListAction.OnAddBeneficiaryClicked -> handleAddBeneficiaryClick()
+
+            is BeneficiaryListAction.OnBeneficiaryItemClick -> handleBeneficiaryItemClick(action)
+
+            is BeneficiaryListAction.OnNavigate -> handleNavigate()
+
+            BeneficiaryListAction.ToggleFilter -> handleToggleFilterDialog()
+
+            BeneficiaryListAction.GetFilterResults -> handleGetFilterResults()
+
+            BeneficiaryListAction.ResetFilters -> resetFilters()
+
+            BeneficiaryListAction.DismissDialog -> dismissDialog()
+
+            is BeneficiaryListAction.OnAccountChange -> handleAccountChange(action)
+
+            is BeneficiaryListAction.OnOfficeChange -> handleOfficeChange(action)
+
+            is BeneficiaryListAction.Internal.ReceiveBeneficiaryResult -> processBeneficiaryList(action.beneficiaryList)
+
+            BeneficiaryListAction.LoadBeneficiaries -> fetchBeneficiaries()
+        }
     }
 
     private fun updateState(update: (BeneficiaryListState) -> BeneficiaryListState) {
@@ -76,7 +103,7 @@ internal class BeneficiaryListViewModel(
                     )
                 }
             }.collect { beneficiaryList ->
-                processBeneficiaryList(beneficiaryList)
+                sendAction(BeneficiaryListAction.Internal.ReceiveBeneficiaryResult(beneficiaryList))
             }
         }
     }
@@ -112,85 +139,67 @@ internal class BeneficiaryListViewModel(
         }
     }
 
-    override fun handleAction(action: BeneficiaryListAction) {
-        when (action) {
-            is BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries()
+    private fun handleAddBeneficiaryClick() {
+        sendEvent(BeneficiaryListEvent.AddBeneficiaryClicked)
+    }
 
-            is BeneficiaryListAction.OnAddBeneficiaryClicked -> sendEvent(
-                BeneficiaryListEvent.AddBeneficiaryClicked,
-            )
+    private fun handleBeneficiaryItemClick(action: BeneficiaryListAction.OnBeneficiaryItemClick) {
+        sendEvent(BeneficiaryListEvent.BeneficiaryItemClick(action.position))
+    }
 
-            is BeneficiaryListAction.OnBeneficiaryItemClick -> sendEvent(
-                BeneficiaryListEvent.BeneficiaryItemClick(action.position),
-            )
+    private fun handleNavigate() {
+        sendEvent(BeneficiaryListEvent.Navigate)
+    }
 
-            is BeneficiaryListAction.OnNavigate -> sendEvent(
-                BeneficiaryListEvent.Navigate,
-            )
-
-            BeneficiaryListAction.ToggleFilter -> handleToggleFilterDialog()
-
-            BeneficiaryListAction.GetFilterResults -> {
-                val filteredAccounts = if (state.selectedAccounts.isNotEmpty()) {
-                    state.beneficiaries.filter {
-                        state.selectedAccounts.contains(it.accountType?.value)
-                    }
-                } else {
-                    state.beneficiaries
-                }
-                val filteredOffices = if (state.selectedOffices.isNotEmpty()) {
-                    filteredAccounts.filter {
-                        state.selectedOffices.contains(it.officeName)
-                    }
-                } else {
-                    filteredAccounts
-                }
-                updateState {
-                    it.copy(
-                        filteredBeneficiaries = filteredOffices,
-                        dialogState = null,
-                        isFilteredEmpty = filteredOffices.isEmpty(),
-                    )
-                }
+    private fun handleGetFilterResults() {
+        val filteredAccounts = if (state.selectedAccounts.isNotEmpty()) {
+            state.beneficiaries.filter {
+                state.selectedAccounts.contains(it.accountType?.value)
             }
+        } else {
+            state.beneficiaries
+        }
 
-            BeneficiaryListAction.ResetFilters -> resetFilters()
-
-            BeneficiaryListAction.DismissDialog -> dismissDialog()
-
-            is BeneficiaryListAction.OnAccountChange -> {
-                val currentAccounts = state.selectedAccounts
-                if (currentAccounts.contains(action.account)) {
-                    updateState {
-                        it.copy(
-                            selectedAccounts = currentAccounts.minus(action.account),
-                        )
-                    }
-                } else {
-                    updateState {
-                        it.copy(
-                            selectedAccounts = currentAccounts.plus(action.account),
-                        )
-                    }
-                }
+        val filteredOffices = if (state.selectedOffices.isNotEmpty()) {
+            filteredAccounts.filter {
+                state.selectedOffices.contains(it.officeName)
             }
+        } else {
+            filteredAccounts
+        }
 
-            is BeneficiaryListAction.OnOfficeChange -> {
-                val currentOffices = state.selectedOffices
-                if (currentOffices.contains(action.office)) {
-                    updateState {
-                        it.copy(
-                            selectedOffices = currentOffices.minus(action.office),
-                        )
-                    }
-                } else {
-                    updateState {
-                        it.copy(
-                            selectedOffices = currentOffices.plus(action.office),
-                        )
-                    }
-                }
-            }
+        updateState {
+            it.copy(
+                filteredBeneficiaries = filteredOffices,
+                dialogState = null,
+                isFilteredEmpty = filteredOffices.isEmpty(),
+            )
+        }
+    }
+
+    private fun handleAccountChange(action: BeneficiaryListAction.OnAccountChange) {
+        val currentAccounts = state.selectedAccounts
+        val updatedAccounts = if (currentAccounts.contains(action.account)) {
+            currentAccounts.minus(action.account)
+        } else {
+            currentAccounts.plus(action.account)
+        }
+
+        updateState {
+            it.copy(selectedAccounts = updatedAccounts)
+        }
+    }
+
+    private fun handleOfficeChange(action: BeneficiaryListAction.OnOfficeChange) {
+        val currentOffices = state.selectedOffices
+        val updatedOffices = if (currentOffices.contains(action.office)) {
+            currentOffices.minus(action.office)
+        } else {
+            currentOffices.plus(action.office)
+        }
+
+        updateState {
+            it.copy(selectedOffices = updatedOffices)
         }
     }
 
@@ -205,9 +214,6 @@ internal class BeneficiaryListViewModel(
                             it.copy(
                                 template = result.data,
                             )
-                        }
-                        Logger.e("Revanth") {
-                            result.data.toString()
                         }
                     }
                 }
@@ -231,9 +237,6 @@ internal class BeneficiaryListViewModel(
             it.copy(
                 offices = offices,
             )
-        }
-        Logger.e("Revanth") {
-            offices.toString()
         }
     }
 
@@ -292,6 +295,14 @@ sealed interface BeneficiaryListAction {
     data object DismissDialog : BeneficiaryListAction
     data class OnAccountChange(val account: String) : BeneficiaryListAction
     data class OnOfficeChange(val office: String) : BeneficiaryListAction
+    data object LoadBeneficiaries : BeneficiaryListAction
+
+    sealed interface Internal : BeneficiaryListAction {
+
+        data class ReceiveBeneficiaryResult(
+            val beneficiaryList: DataState<List<Beneficiary>>,
+        ) : Internal
+    }
 }
 
 sealed interface BeneficiaryListEvent {
