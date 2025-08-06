@@ -56,14 +56,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.colored.Alert
 import fluent.ui.system.icons.colored.Warning
+import fluent.ui.system.icons.filled.AppRecent
+import fluent.ui.system.icons.filled.ArchiveSettings
 import fluent.ui.system.icons.filled.ArrowDownload
+import fluent.ui.system.icons.filled.BookLetter
 import fluent.ui.system.icons.filled.CaretDown
 import fluent.ui.system.icons.filled.CaretUp
 import fluent.ui.system.icons.filled.ChatBubblesQuestion
 import fluent.ui.system.icons.filled.ChatHistory
+import fluent.ui.system.icons.filled.ChatMultiple
 import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
+import fluent.ui.system.icons.filled.DarkTheme
 import fluent.ui.system.icons.filled.DataWhisker
 import fluent.ui.system.icons.filled.Delete
 import fluent.ui.system.icons.filled.Document
@@ -76,11 +81,16 @@ import fluent.ui.system.icons.filled.Grid
 import fluent.ui.system.icons.filled.LockClosed
 import fluent.ui.system.icons.filled.Money
 import fluent.ui.system.icons.filled.MoneyHand
+import fluent.ui.system.icons.filled.PeopleCommunity
 import fluent.ui.system.icons.filled.Person
 import fluent.ui.system.icons.filled.PersonAccounts
+import fluent.ui.system.icons.filled.PersonPasskey
 import fluent.ui.system.icons.filled.QrCode
+import fluent.ui.system.icons.filled.QuestionCircle
 import fluent.ui.system.icons.filled.Receipt
 import fluent.ui.system.icons.filled.ReceiptMoney
+import fluent.ui.system.icons.filled.SignOut
+import fluent.ui.system.icons.filled.TableCellEdit
 import fluent.ui.system.icons.filled.Wallet
 import fluent.ui.system.icons.regular.Alert
 import fluent.ui.system.icons.regular.ArrowCounterclockwise
@@ -214,4 +224,18 @@ object MifosIcons {
     val Warning = FluentIcons.Colored.Warning
     val Delete = FluentIcons.Filled.Delete
     val Notification = FluentIcons.Colored.Alert
+
+//    Settings Icons
+
+    val PersonFilled = FluentIcons.Filled.Person
+    val PersonPasskey = FluentIcons.Filled.PersonPasskey
+    val TableCellEdit = FluentIcons.Filled.TableCellEdit
+    val BookLetter = FluentIcons.Filled.BookLetter
+    val DarkTheme = FluentIcons.Filled.DarkTheme
+    val ArchiveSettings = FluentIcons.Filled.ArchiveSettings
+    val PeopleCommunity = FluentIcons.Filled.PeopleCommunity
+    val QuestionCircle = FluentIcons.Filled.QuestionCircle
+    val ChatMultiple = FluentIcons.Filled.ChatMultiple
+    val AppRecent = FluentIcons.Filled.AppRecent
+    val SignOut = FluentIcons.Filled.SignOut
 }

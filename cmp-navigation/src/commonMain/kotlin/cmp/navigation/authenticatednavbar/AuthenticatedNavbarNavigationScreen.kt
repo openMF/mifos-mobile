@@ -43,8 +43,8 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
-import org.mifos.mobile.feature.user.profile.navigation.navigateToUserProfileGraph
-import org.mifos.mobile.feature.user.profile.navigation.userprofileNavGraph
+import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
+import org.mifos.mobile.feature.settings.navigation.settingsGraph
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.not_connected
 
@@ -79,7 +79,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToUserProfileScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToUserProfileGraph(navOptions = it)
+                        navigateToSettingsGraph(navOptions = it)
                     }
                 }
             }
@@ -193,7 +193,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
                 navigateToApplyLoanScreen = navigateToApplyLoanScreen,
             )
 
-            userprofileNavGraph(navController, {})
+            settingsGraph(navController)
         }
     }
 }

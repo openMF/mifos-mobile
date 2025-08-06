@@ -49,13 +49,13 @@ fun MifosActionCard(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
             .padding(vertical = DesignToken.padding.medium),
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -63,10 +63,10 @@ fun MifosActionCard(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
                 modifier = Modifier
                     .background(
-                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
                         shape = CircleShape,
                     )
                     .padding(DesignToken.padding.small),
