@@ -191,9 +191,9 @@ fun BeneficiaryListContent(
             if (state.isEmpty) {
                 Box(
                     Modifier.fillMaxSize().padding(horizontal = DesignToken.padding.large),
-                    contentAlignment = Alignment.Center
-                ){
-                    Column{
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column {
                         EmptyDataView(
                             modifier = Modifier.fillMaxWidth(),
                             image = Res.drawable.ic_error_black_24dp,
@@ -205,13 +205,12 @@ fun BeneficiaryListContent(
                             onClick = {
                                 onAction(BeneficiaryListAction.OnAddBeneficiaryClicked)
                             },
-                            shape = DesignToken.shapes.medium
-                        ){
+                            shape = DesignToken.shapes.medium,
+                        ) {
                             Text(stringResource(Res.string.add_beneficiary))
                         }
                     }
                 }
-
             }
             if (state.isFilteredEmpty) {
                 EmptyDataView(
