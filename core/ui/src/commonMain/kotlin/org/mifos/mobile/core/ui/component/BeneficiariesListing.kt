@@ -46,7 +46,9 @@ fun MifosBeneficiariesCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onBeneficiaryClick() }
-            .padding(vertical = DesignToken.padding.large),
+            .padding(
+                DesignToken.padding.large,
+            ),
     ) {
         Row(
             modifier = Modifier
@@ -58,7 +60,7 @@ fun MifosBeneficiariesCard(
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(DesignToken.sizes.iconExtraLarge)
-                    .background(Color.Gray),
+                    .background(Color.Gray.copy(alpha = 0.5f)),
                 bitmap = null,
             )
 

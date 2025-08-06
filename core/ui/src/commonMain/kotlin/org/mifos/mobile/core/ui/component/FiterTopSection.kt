@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.accounts.component
+package org.mifos.mobile.core.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,10 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import mifos_mobile.feature.accounts.generated.resources.Res
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_apply
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_filter
-import mifos_mobile.feature.accounts.generated.resources.feature_savings_reset
+import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.core.ui.generated.resources.feature_savings_apply
+import mifos_mobile.core.ui.generated.resources.feature_savings_filter
+import mifos_mobile.core.ui.generated.resources.feature_savings_reset
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken

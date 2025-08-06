@@ -43,12 +43,12 @@ import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshSt
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.ui.component.FilterTopSection
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.accounts.component.FilterSection
-import org.mifos.mobile.feature.accounts.component.FilterTopSection
 import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
