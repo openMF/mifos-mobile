@@ -153,6 +153,7 @@ internal class SettingsViewModel(
         when (state) {
             is DataState.Error -> {
                 // No need to show user that client image getting failed
+                setDialogState(null)
             }
             DataState.Loading -> setDialogState(SettingsState.DialogState.Loading)
             is DataState.Success -> {
