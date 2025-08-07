@@ -124,14 +124,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     Constants.LOGIN -> {
                         navController.navigateToLoginScreen()
                     }
-                    Constants.NAVIGATE_BACK_TO_LOAN -> {
-                        navController
-                            .navigateToAccountsScreen(Constants.LOAN_ACCOUNT)
-                    }
-                    Constants.NAVIGATE_BACK_TO_SAVINGS -> {
-                        navController
-                            .navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
-                    }
                     else -> {
                         navController.navigateToHomeAfterStatus()
                     }

@@ -127,4 +127,19 @@
     <string name="feature_settings_appinfo_version">Version</string>
     <string name="feature_settings_appinfo_privacy_policy">Privacy Policy</string>
     <string name="feature_settings_appinfo_terms_conditions">Terms and Conditions</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Update Passcode</string>
+    <string name="feature_settings_old_passcode">Old Passcode</string>
+    <string name="feature_settings_new_passcode">New Passcode</string>
+    <string name="feature_settings_confirm_new_passcode">Confirm New Passcode</string>
+    <string name="feature_settings_authorization_passcode">Authorization Passcode</string>
+    <string name="feature_settings_passcode_length_error">Passcode must be 4 digit long.</string>
+    <string name="feature_settings_passcode_empty_error">Passcode cannot be empty.</string>
+    <string name="feature_settings_passcode_invalid_error">Passcode shouldn't contain any character.</string>
+    <string name="feature_settings_passcode_confirm_error">New and confirm passcode must be same.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Old passcode must be valid.</string>
+    <string name="feature_settings_passcode_updated_successfully">Passcode updated successfully.</string>
+    <string name="feature_settings_passcode_updated_message">You need to enter the new passcode to use the services of the app.</string>
+    <string name="feature_settings_next">Next</string>
 </resources>

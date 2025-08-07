@@ -68,7 +68,8 @@ internal fun SettingsScreen(
                 if (
                     events.item == SettingsItems.Help ||
                     events.item == SettingsItems.AboutUs ||
-                    events.item == SettingsItems.AppInfo
+                    events.item == SettingsItems.AppInfo ||
+                    events.item == SettingsItems.AuthPasscode
                 ) {
                     navigateToScreen.invoke(events.item)
                 }
