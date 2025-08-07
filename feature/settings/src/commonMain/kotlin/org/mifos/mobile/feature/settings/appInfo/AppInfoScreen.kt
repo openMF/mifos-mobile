@@ -63,6 +63,7 @@ internal fun AppInfoScreen(
     )
 }
 
+@Suppress("UnusedParameter")
 @Composable
 internal fun AppInfoContent(
     onBackClick: () -> Unit,
