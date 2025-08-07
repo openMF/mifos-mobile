@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_client
-import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_profile_image
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -86,6 +85,7 @@ internal class SettingsViewModel(
             SettingsAction.DismissDialog -> setDialogState(null)
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
+            is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
         }
     }
 
@@ -152,11 +152,8 @@ internal class SettingsViewModel(
     private fun handleClientImageResponse(state: DataState<String>) {
         when (state) {
             is DataState.Error -> {
-                setDialogState(
-                    SettingsState.DialogState.Error(
-                        Res.string.feature_settings_error_fetching_profile_image,
-                    ),
-                )
+                // No need to show user that client image getting failed
+                setDialogState(null)
             }
             DataState.Loading -> setDialogState(SettingsState.DialogState.Loading)
             is DataState.Success -> {
@@ -237,6 +234,8 @@ internal sealed interface SettingsAction {
     /** User action to dismiss a dialog. */
     data object DismissDialog : SettingsAction
 
+    data class NavigateTo(val item: SettingsItems) : SettingsAction
+
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
      */
@@ -262,4 +261,6 @@ internal sealed interface SettingsAction {
 internal sealed interface SettingsEvents {
     /** Event to navigate back from the screen. */
     data object NavigateBack : SettingsEvents
+
+    data class NavigateTo(val item: SettingsItems) : SettingsEvents
 }

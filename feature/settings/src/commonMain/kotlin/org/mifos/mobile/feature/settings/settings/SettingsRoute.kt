@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
+import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
 @Serializable
 data object SettingsRoute
@@ -24,10 +25,12 @@ fun NavController.navigateToSettingsRoute(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.settingsDestination(
     navigateBack: () -> Unit,
+    navigateToScreen: (SettingsItems) -> Unit,
 ) {
     composableWithSlideTransitions<SettingsRoute> {
         SettingsScreen(
             navigateBack = navigateBack,
+            navigateToScreen = navigateToScreen,
         )
     }
 }
