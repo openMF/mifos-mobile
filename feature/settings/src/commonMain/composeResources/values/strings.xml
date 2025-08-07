@@ -94,6 +94,17 @@
     <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
     <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
 
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">About Us</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_about_who_are_we">Who are we?</string>
+    <string name="feature_settings_about_what_does_mifos_do">What does Mifos do?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos is a non-profit organization that seeks to provide people with access to basic financial services. It does so through an open-source platform.</string>
+    <string name="feature_settings_about_point_1">It helps financial institutions offer modern financial services</string>
+    <string name="feature_settings_about_point_2">It enables people to get loans, save money, and more</string>
+    <string name="feature_settings_about_point_3">It supports financial institutions that serve millions of people around the world</string>
+
 
     <string name="feature_settings_doubt">Many Doubts Are Solved In FAQ’s !</string>
     <string name="feature_settings_doubt_message">No, I haven't checked them, take me there!</string>

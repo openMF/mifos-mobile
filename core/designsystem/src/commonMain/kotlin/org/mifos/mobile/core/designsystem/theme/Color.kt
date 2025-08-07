@@ -238,6 +238,8 @@ object AppColors {
     val customEnable = Color(0xFF009325)
     val customYellow = Color(0xFFAE9703)
 
+    val lightBlueBackground = Color(0xFFD8F0FF)
+
     val lightRed = Color(0xFFFF6E6E)
     val peach = Color(0xFFFF926E)
     val lightPurple = Color(0xFF706EFF)

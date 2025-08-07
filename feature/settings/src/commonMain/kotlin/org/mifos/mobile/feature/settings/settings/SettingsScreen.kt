@@ -65,7 +65,10 @@ internal fun SettingsScreen(
             SettingsEvents.NavigateBack -> navigateBack.invoke()
             is SettingsEvents.NavigateTo -> {
                 // Using inside of if condition to resolve crash for other screens
-                if (events.item == SettingsItems.Help) {
+                if (
+                    events.item == SettingsItems.Help ||
+                    events.item == SettingsItems.AboutUs
+                ) {
                     navigateToScreen.invoke(events.item)
                 }
             }

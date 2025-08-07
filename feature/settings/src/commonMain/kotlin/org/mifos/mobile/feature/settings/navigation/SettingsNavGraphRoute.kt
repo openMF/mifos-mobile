@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.settings.about.aboutDestination
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
@@ -38,6 +39,9 @@ fun NavGraphBuilder.settingsGraph(
         helpDestination(
             onBackClick = navController::popBackStack,
             navigateToFAQ = {},
+        )
+        aboutDestination(
+            onBackClick = navController::popBackStack,
         )
     }
 }
