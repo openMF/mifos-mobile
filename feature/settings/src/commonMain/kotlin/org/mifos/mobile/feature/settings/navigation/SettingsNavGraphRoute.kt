@@ -47,7 +47,7 @@ fun NavGraphBuilder.settingsGraph(
         appInfoDestination(
             onBackClick = navController::popBackStack,
             navigateToPrivacyPolicy = {},
-            navigateToTermsAndConditions = {}
+            navigateToTermsAndConditions = {},
         )
     }
 }
