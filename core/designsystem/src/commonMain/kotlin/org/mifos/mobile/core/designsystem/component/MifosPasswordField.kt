@@ -36,6 +36,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.utils.nonLetterColorVisualTransformation
 import org.mifos.mobile.core.designsystem.utils.tabNavigation
 
@@ -47,8 +48,12 @@ fun MifosPasswordField(
     showPasswordChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    shape: Shape = OutlinedTextFieldDefaults.shape,
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    shape: Shape = DesignToken.shapes.medium,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+        unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
+        errorBorderColor = MaterialTheme.colorScheme.error,
+    ),
     isError: Boolean = false,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
