@@ -119,8 +119,10 @@
 
     <!--App Info -->
     <string name="feature_settings_appinfo_topbar_title">App Info</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
     <string name="feature_settings_appinfo_logo_content_description">Mifos Image</string>
     <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Electronic Banking</string>
     <string name="feature_settings_appinfo_all_rights_reserved">All rights reserved</string>
     <string name="feature_settings_appinfo_version">Version</string>
     <string name="feature_settings_appinfo_privacy_policy">Privacy Policy</string>
