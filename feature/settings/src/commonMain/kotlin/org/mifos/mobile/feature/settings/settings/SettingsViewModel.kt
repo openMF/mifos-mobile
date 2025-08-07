@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_client
-import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_profile_image
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -38,12 +37,14 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  * Data Flow (UDF) pattern, using a [BaseViewModel] to manage its state ([SettingsState]),
  * handle actions ([SettingsAction]), and emit events ([SettingsEvents]).
  *
- * @param homeRepositoryImp Repository for fetching home-related data, such as client info and image.
+ * @param homeRepositoryImpl Repository for fetching home-related data, such as client info and image.
  * @param userPreferencesRepositoryImpl Repository for accessing user preferences, including the client ID.
+ * @param userDataRepositoryImpl Repository for logout user.
  */
 internal class SettingsViewModel(
-    private val homeRepositoryImp: HomeRepository,
+    private val homeRepositoryImpl: HomeRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+//    private val userDataRepositoryImpl: UserDataRepository,
 ) : BaseViewModel<SettingsState, SettingsEvents, SettingsAction>(
     initialState = run {
         SettingsState(
@@ -84,8 +85,25 @@ internal class SettingsViewModel(
         when (action) {
             SettingsAction.OnNavigateBack -> sendEvent(SettingsEvents.NavigateBack)
             SettingsAction.DismissDialog -> setDialogState(null)
+            SettingsAction.LogoutDialog -> setDialogState(SettingsState.DialogState.Logout)
+            SettingsAction.Logout -> handleLogout()
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
+            is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
+        }
+    }
+
+    /**
+     * Handles the user logout process.
+     *
+     * This function would typically perform the following actions:
+     * 1. Clear user-specific data, such as authentication tokens and client information, from the repository.
+     * 2. Reset the application state to its initial, logged-out state.
+     * 3. Send a navigation event to redirect the user to the login or welcome screen.
+     */
+    private fun handleLogout() {
+        viewModelScope.launch {
+            userPreferencesRepositoryImpl.logOut()
         }
     }
 
@@ -94,7 +112,7 @@ internal class SettingsViewModel(
      */
     private fun loadUserData() {
         viewModelScope.launch {
-            homeRepositoryImp.currentClient(state.clientId ?: -1L)
+            homeRepositoryImpl.currentClient(state.clientId ?: -1L)
                 .catch {
                     setDialogState(
                         SettingsState.DialogState.Error(
@@ -106,7 +124,7 @@ internal class SettingsViewModel(
         }
 
         viewModelScope.launch {
-            homeRepositoryImp.clientImage(state.clientId ?: -1L)
+            homeRepositoryImpl.clientImage(state.clientId ?: -1L)
                 .catch {
                     // Do nothing on image fetch error, as it's not critical.
                 }
@@ -145,18 +163,14 @@ internal class SettingsViewModel(
      *
      * On success, it calls [setUserProfile] to process the image data.
      * On loading, it shows a loading dialog.
-     * On error, it shows an error dialog.
      *
      * @param state The [DataState] containing the base64 encoded image string.
      */
     private fun handleClientImageResponse(state: DataState<String>) {
         when (state) {
             is DataState.Error -> {
-                setDialogState(
-                    SettingsState.DialogState.Error(
-                        Res.string.feature_settings_error_fetching_profile_image,
-                    ),
-                )
+                // No need to show user that client image getting failed
+                setDialogState(null)
             }
             DataState.Loading -> setDialogState(SettingsState.DialogState.Loading)
             is DataState.Success -> {
@@ -223,6 +237,9 @@ internal data class SettingsState(
 
         /** Represents a loading dialog. */
         data object Loading : DialogState
+
+        /** Represents a logout dialog. */
+        data object Logout : DialogState
     }
 }
 
@@ -236,6 +253,22 @@ internal sealed interface SettingsAction {
 
     /** User action to dismiss a dialog. */
     data object DismissDialog : SettingsAction
+
+    /**
+     * Action to navigate to a specific settings screen.
+     * @property item The [SettingsItems] to navigate to.
+     */
+    data class NavigateTo(val item: SettingsItems) : SettingsAction
+
+    /**
+     * Action to display a logout confirmation dialog.
+     */
+    data object LogoutDialog : SettingsAction
+
+    /**
+     * Action to perform user logout.
+     */
+    data object Logout : SettingsAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
@@ -262,4 +295,6 @@ internal sealed interface SettingsAction {
 internal sealed interface SettingsEvents {
     /** Event to navigate back from the screen. */
     data object NavigateBack : SettingsEvents
+
+    data class NavigateTo(val item: SettingsItems) : SettingsEvents
 }

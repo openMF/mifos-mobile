@@ -7,30 +7,23 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.settings.settings
+package org.mifos.mobile.feature.settings.passcode
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.ui.composableWithSlideTransitions
+import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
-@Serializable
-data object SettingsRoute
+fun NavController.navigateToUpdatePasscode(navOptions: NavOptions? = null) =
+    navigate(SettingsItems.AuthPasscode, navOptions)
 
-fun NavController.navigateToSettingsRoute(navOptions: NavOptions? = null) {
-    this.navigate(SettingsRoute, navOptions)
-}
-
-fun NavGraphBuilder.settingsDestination(
+internal fun NavGraphBuilder.updatePasscodeDestination(
     navigateBack: () -> Unit,
-    navigateToScreen: (SettingsItems) -> Unit,
 ) {
-    composableWithSlideTransitions<SettingsRoute> {
-        SettingsScreen(
+    composableWithPushTransitions<SettingsItems.AuthPasscode> {
+        UpdatePasscodeScreen(
             navigateBack = navigateBack,
-            navigateToScreen = navigateToScreen,
         )
     }
 }

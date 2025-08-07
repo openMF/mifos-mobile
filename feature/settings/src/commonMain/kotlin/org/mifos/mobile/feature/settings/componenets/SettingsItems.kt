@@ -12,6 +12,8 @@ package org.mifos.mobile.feature.settings.componenets
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_about_us
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_about_us_tip
@@ -39,12 +41,14 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
+@Serializable
 sealed class SettingsItems(
-    val title: StringResource,
-    val subTitle: StringResource,
-    val icon: ImageVector,
+    @Contextual val title: StringResource,
+    @Contextual val subTitle: StringResource,
+    @Contextual val icon: ImageVector,
     val route: String,
 ) {
+    @Serializable
     data object Profile : SettingsItems(
         title = Res.string.feature_settings_action_profile,
         subTitle = Res.string.feature_settings_action_profile_tip,
@@ -52,6 +56,7 @@ sealed class SettingsItems(
         route = Constants.PROFILE,
     )
 
+    @Serializable
     data object Password : SettingsItems(
         title = Res.string.feature_settings_action_password,
         subTitle = Res.string.feature_settings_action_password_tip,
@@ -59,6 +64,7 @@ sealed class SettingsItems(
         route = Constants.PASSWORD,
     )
 
+    @Serializable
     data object AuthPasscode : SettingsItems(
         title = Res.string.feature_settings_action_auth_passcode,
         subTitle = Res.string.feature_settings_action_auth_passcode_tip,
@@ -66,6 +72,7 @@ sealed class SettingsItems(
         route = Constants.AUTH_PASSCODE,
     )
 
+    @Serializable
     data object Language : SettingsItems(
         title = Res.string.feature_settings_action_language,
         subTitle = Res.string.feature_settings_action_language_tip,
@@ -73,6 +80,7 @@ sealed class SettingsItems(
         route = Constants.LANGUAGE,
     )
 
+    @Serializable
     data object Theme : SettingsItems(
         title = Res.string.feature_settings_action_theme,
         subTitle = Res.string.feature_settings_action_theme_tip,
@@ -80,6 +88,7 @@ sealed class SettingsItems(
         route = Constants.THEME,
     )
 
+    @Serializable
     data object Endpoint : SettingsItems(
         title = Res.string.feature_settings_action_endpoint,
         subTitle = Res.string.feature_settings_action_endpoint_tip,
@@ -87,6 +96,7 @@ sealed class SettingsItems(
         route = Constants.ENDPOINT,
     )
 
+    @Serializable
     data object AboutUs : SettingsItems(
         title = Res.string.feature_settings_action_about_us,
         subTitle = Res.string.feature_settings_action_about_us_tip,
@@ -94,6 +104,7 @@ sealed class SettingsItems(
         route = Constants.ABOUT_US,
     )
 
+    @Serializable
     data object FAQ : SettingsItems(
         title = Res.string.feature_settings_action_faq,
         subTitle = Res.string.feature_settings_action_faq_tip,
@@ -101,6 +112,7 @@ sealed class SettingsItems(
         route = Constants.FAQ,
     )
 
+    @Serializable
     data object Help : SettingsItems(
         title = Res.string.feature_settings_action_help,
         subTitle = Res.string.feature_settings_action_help_tip,
@@ -108,6 +120,7 @@ sealed class SettingsItems(
         route = Constants.HELP,
     )
 
+    @Serializable
     data object AppInfo : SettingsItems(
         title = Res.string.feature_settings_action_app_info,
         subTitle = Res.string.feature_settings_action_app_info_tip,
@@ -115,6 +128,7 @@ sealed class SettingsItems(
         route = Constants.APP_INFO,
     )
 
+    @Serializable
     data object Logout : SettingsItems(
         title = Res.string.feature_settings_action_logout,
         subTitle = Res.string.feature_settings_action_logout_tip,

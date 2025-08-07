@@ -93,7 +93,6 @@
     <string name="feature_settings_internet_not_connected">No internet connection.</string>
     <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
     <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
-
     <string name="no_questions_found">No questions found</string>
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
@@ -124,4 +123,54 @@
 
     <string name="feature_settings_faq_doubt">Still have a doubt?</string>
     <string name="feature_settings_faq_contact_us"> Contact Us</string>
+    <string name="feature_settings_logout_message">Are you sure to logout?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">About Us</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_about_who_are_we">Who are we?</string>
+    <string name="feature_settings_about_what_does_mifos_do">What does Mifos do?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos is a non-profit organization that seeks to provide people with access to basic financial services. It does so through an open-source platform.</string>
+    <string name="feature_settings_about_point_1">It helps financial institutions offer modern financial services</string>
+    <string name="feature_settings_about_point_2">It enables people to get loans, save money, and more</string>
+    <string name="feature_settings_about_point_3">It supports financial institutions that serve millions of people around the world</string>
+
+
+    <string name="feature_settings_doubt">Many Doubts Are Solved In FAQ’s !</string>
+    <string name="feature_settings_doubt_message">No, I haven't checked them, take me there!</string>
+
+    <string name="feature_settings_still_have_doubt">Still Have Doubts?</string>
+    <string name="feature_settings_still_have_doubt_message">Facing an issue? Don’t worry at all!\nJust give our customer care a call.\nWe’re here to assist you, day and night,\nTo make sure everything’s working right!</string>
+    <string name="feature_settings_still_have_doubt_action">Call Us</string>
+
+    <string name="feature_settings_still_have_issue">Mail Your Issues?</string>
+    <string name="feature_settings_still_have_issue_message">Need support but prefer to write?\nSend us an email, day or night.\nOur team will respond with care and speed,\nEnsuring you get the help you need!</string>
+    <string name="feature_settings_still_have_issue_action">Mail Us</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">App Info</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Electronic Banking</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">All rights reserved</string>
+    <string name="feature_settings_appinfo_version">Version</string>
+    <string name="feature_settings_appinfo_privacy_policy">Privacy Policy</string>
+    <string name="feature_settings_appinfo_terms_conditions">Terms and Conditions</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Update Passcode</string>
+    <string name="feature_settings_old_passcode">Old Passcode</string>
+    <string name="feature_settings_new_passcode">New Passcode</string>
+    <string name="feature_settings_confirm_new_passcode">Confirm New Passcode</string>
+    <string name="feature_settings_authorization_passcode">Authorization Passcode</string>
+    <string name="feature_settings_passcode_length_error">Passcode must be 4 digit long.</string>
+    <string name="feature_settings_passcode_empty_error">Passcode cannot be empty.</string>
+    <string name="feature_settings_passcode_invalid_error">Passcode shouldn't contain any character.</string>
+    <string name="feature_settings_passcode_confirm_error">New and confirm passcode must be same.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Old passcode must be valid.</string>
+    <string name="feature_settings_passcode_updated_successfully">Passcode updated successfully.</string>
+    <string name="feature_settings_passcode_updated_message">You need to enter the new passcode to use the services of the app.</string>
+    <string name="feature_settings_next">Next</string>
 </resources>

@@ -38,9 +38,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_customer_account_no
+import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_message
 import mifos_mobile.feature.settings.generated.resources.feature_settings_top_bar_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
@@ -55,6 +57,7 @@ import org.mifos.mobile.feature.settings.componenets.SettingsItems
 @Composable
 internal fun SettingsScreen(
     navigateBack: () -> Unit,
+    navigateToScreen: (SettingsItems) -> Unit,
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -62,6 +65,17 @@ internal fun SettingsScreen(
     EventsEffect(viewModel.eventFlow) { events ->
         when (events) {
             SettingsEvents.NavigateBack -> navigateBack.invoke()
+            is SettingsEvents.NavigateTo -> {
+                // Using inside of if condition to resolve crash for other screens
+                if (
+                    events.item == SettingsItems.Help ||
+                    events.item == SettingsItems.AboutUs ||
+                    events.item == SettingsItems.AppInfo ||
+                    events.item == SettingsItems.AuthPasscode
+                ) {
+                    navigateToScreen.invoke(events.item)
+                }
+            }
         }
     }
 
@@ -94,7 +108,19 @@ private fun SettingsDialog(
                 onDismissRequest = { onAction(SettingsAction.DismissDialog) },
             )
         }
+
         SettingsState.DialogState.Loading -> MifosProgressIndicator()
+
+        SettingsState.DialogState.Logout -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    message = stringResource(Res.string.feature_settings_logout_message),
+                ),
+                onDismissRequest = { onAction(SettingsAction.DismissDialog) },
+                onConfirm = { onAction(SettingsAction.Logout) },
+            )
+        }
+
         null -> Unit
     }
 }
@@ -133,8 +159,11 @@ internal fun SettingsScreenContent(
                             .height(0.99997.dp),
                     )
                     SettingsActions(state.settingsItems) {
-//                    TODO navigate to respective screen when clicked by user
-//                    onAction(SettingsAction.OnActionClick(it))
+                        if (it.route == Constants.LOGOUT) {
+                            onAction(SettingsAction.LogoutDialog)
+                        } else {
+                            onAction(SettingsAction.NavigateTo(it))
+                        }
                     }
                 }
             }
@@ -190,7 +219,7 @@ internal fun SettingsProfileCard(
 @Composable
 internal fun SettingsActions(
     items: ImmutableList<SettingsItems>,
-    onActionClick: (String) -> Unit,
+    onActionClick: (SettingsItems) -> Unit,
 ) {
     Column {
         FlowRow(
@@ -203,7 +232,7 @@ internal fun SettingsActions(
                     subTitle = item.subTitle,
                     icon = item.icon,
                     onClick = {
-                        onActionClick(item.route)
+                        onActionClick(item)
                     },
                 )
                 HorizontalDivider(

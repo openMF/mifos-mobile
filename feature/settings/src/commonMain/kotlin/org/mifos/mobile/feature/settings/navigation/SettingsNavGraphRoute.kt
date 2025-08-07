@@ -14,6 +14,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.settings.about.aboutDestination
+import org.mifos.mobile.feature.settings.appInfo.appInfoDestination
+import org.mifos.mobile.feature.settings.componenets.SettingsItems
+import org.mifos.mobile.feature.settings.help.helpDestination
+import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
 
@@ -29,6 +34,29 @@ fun NavGraphBuilder.settingsGraph(
     navigation<SettingsNavGraphRoute>(
         startDestination = SettingsRoute,
     ) {
-        settingsDestination(navigateBack = navController::popBackStack)
+        settingsDestination(
+            navigateBack = navController::popBackStack,
+            navigateToScreen = navController::navigateToScreen,
+        )
+        helpDestination(
+            onBackClick = navController::popBackStack,
+            navigateToFAQ = {},
+        )
+        aboutDestination(
+            onBackClick = navController::popBackStack,
+        )
+        appInfoDestination(
+            onBackClick = navController::popBackStack,
+            navigateToPrivacyPolicy = {},
+            navigateToTermsAndConditions = {},
+        )
+        updatePasscodeDestination(
+            navigateBack = navController::popBackStack,
+        )
     }
 }
+
+internal fun NavController.navigateToScreen(
+    route: SettingsItems,
+    navOptions: NavOptions? = null,
+) = navigate(route, navOptions)
