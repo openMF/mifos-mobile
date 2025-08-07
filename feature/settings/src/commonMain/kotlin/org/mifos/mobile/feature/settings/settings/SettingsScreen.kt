@@ -38,9 +38,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_customer_account_no
+import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_message
 import mifos_mobile.feature.settings.generated.resources.feature_settings_top_bar_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
@@ -106,7 +108,19 @@ private fun SettingsDialog(
                 onDismissRequest = { onAction(SettingsAction.DismissDialog) },
             )
         }
+
         SettingsState.DialogState.Loading -> MifosProgressIndicator()
+
+        SettingsState.DialogState.Logout -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    message = stringResource(Res.string.feature_settings_logout_message),
+                ),
+                onDismissRequest = { onAction(SettingsAction.DismissDialog) },
+                onConfirm = { onAction(SettingsAction.Logout) },
+            )
+        }
+
         null -> Unit
     }
 }
@@ -145,7 +159,11 @@ internal fun SettingsScreenContent(
                             .height(0.99997.dp),
                     )
                     SettingsActions(state.settingsItems) {
-                        onAction(SettingsAction.NavigateTo(it))
+                        if (it.route == Constants.LOGOUT) {
+                            onAction(SettingsAction.LogoutDialog)
+                        } else {
+                            onAction(SettingsAction.NavigateTo(it))
+                        }
                     }
                 }
             }

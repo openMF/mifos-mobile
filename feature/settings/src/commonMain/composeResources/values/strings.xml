@@ -93,6 +93,7 @@
     <string name="feature_settings_internet_not_connected">No internet connection.</string>
     <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
     <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
+    <string name="feature_settings_logout_message">Are you sure to logout?</string>
 
     <!-- About Screen -->
     <string name="feature_settings_about_topbar_title">About Us</string>
