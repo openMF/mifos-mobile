@@ -96,7 +96,8 @@
 
     <!-- About Screen -->
     <string name="feature_settings_about_topbar_title">About Us</string>
-    <string name="feature_settings_about_logo_content_description">Money Image</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos Image</string>
     <string name="feature_settings_about_who_are_we">Who are we?</string>
     <string name="feature_settings_about_what_does_mifos_do">What does Mifos do?</string>
     <string name="feature_settings_about_who_are_we_desc">Mifos is a non-profit organization that seeks to provide people with access to basic financial services. It does so through an open-source platform.</string>
