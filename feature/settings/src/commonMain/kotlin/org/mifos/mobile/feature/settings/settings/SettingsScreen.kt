@@ -55,6 +55,7 @@ import org.mifos.mobile.feature.settings.componenets.SettingsItems
 @Composable
 internal fun SettingsScreen(
     navigateBack: () -> Unit,
+    navigateToScreen: (SettingsItems) -> Unit,
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -62,6 +63,12 @@ internal fun SettingsScreen(
     EventsEffect(viewModel.eventFlow) { events ->
         when (events) {
             SettingsEvents.NavigateBack -> navigateBack.invoke()
+            is SettingsEvents.NavigateTo -> {
+                // Using inside of if condition to resolve crash for other screens
+                if (events.item == SettingsItems.Help) {
+                    navigateToScreen.invoke(events.item)
+                }
+            }
         }
     }
 
@@ -133,8 +140,7 @@ internal fun SettingsScreenContent(
                             .height(0.99997.dp),
                     )
                     SettingsActions(state.settingsItems) {
-//                    TODO navigate to respective screen when clicked by user
-//                    onAction(SettingsAction.OnActionClick(it))
+                        onAction(SettingsAction.NavigateTo(it))
                     }
                 }
             }
@@ -190,7 +196,7 @@ internal fun SettingsProfileCard(
 @Composable
 internal fun SettingsActions(
     items: ImmutableList<SettingsItems>,
-    onActionClick: (String) -> Unit,
+    onActionClick: (SettingsItems) -> Unit,
 ) {
     Column {
         FlowRow(
@@ -203,7 +209,7 @@ internal fun SettingsActions(
                     subTitle = item.subTitle,
                     icon = item.icon,
                     onClick = {
-                        onActionClick(item.route)
+                        onActionClick(item)
                     },
                 )
                 HorizontalDivider(

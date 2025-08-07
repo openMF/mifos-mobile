@@ -93,4 +93,16 @@
     <string name="feature_settings_internet_not_connected">No internet connection.</string>
     <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
     <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
+
+
+    <string name="feature_settings_doubt">Many Doubts Are Solved In FAQ’s !</string>
+    <string name="feature_settings_doubt_message">No, I haven't checked them, take me there!</string>
+
+    <string name="feature_settings_still_have_doubt">Still Have Doubts?</string>
+    <string name="feature_settings_still_have_doubt_message">Facing an issue? Don’t worry at all!\nJust give our customer care a call.\nWe’re here to assist you, day and night,\nTo make sure everything’s working right!</string>
+    <string name="feature_settings_still_have_doubt_action">Call Us</string>
+
+    <string name="feature_settings_still_have_issue">Mail Your Issues?</string>
+    <string name="feature_settings_still_have_issue_message">Need support but prefer to write?\nSend us an email, day or night.\nOur team will respond with care and speed,\nEnsuring you get the help you need!</string>
+    <string name="feature_settings_still_have_issue_action">Mail Us</string>
 </resources>
