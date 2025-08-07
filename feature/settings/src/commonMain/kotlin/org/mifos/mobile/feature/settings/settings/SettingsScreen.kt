@@ -67,7 +67,8 @@ internal fun SettingsScreen(
                 // Using inside of if condition to resolve crash for other screens
                 if (
                     events.item == SettingsItems.Help ||
-                    events.item == SettingsItems.AboutUs
+                    events.item == SettingsItems.AboutUs ||
+                    events.item == SettingsItems.AppInfo
                 ) {
                     navigateToScreen.invoke(events.item)
                 }
