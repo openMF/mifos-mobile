@@ -28,7 +28,7 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 
 ### Demo credentials
 - **Fineract Instance**: `gsoc.mifos.community`
-- **Username**: `mifos`
+- **Username**: `maria`
 - **Password**: `password`
 
 ### How to Contribute

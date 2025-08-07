@@ -116,4 +116,15 @@
     <string name="feature_settings_still_have_issue">Mail Your Issues?</string>
     <string name="feature_settings_still_have_issue_message">Need support but prefer to write?\nSend us an email, day or night.\nOur team will respond with care and speed,\nEnsuring you get the help you need!</string>
     <string name="feature_settings_still_have_issue_action">Mail Us</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">App Info</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Electronic Banking</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">All rights reserved</string>
+    <string name="feature_settings_appinfo_version">Version</string>
+    <string name="feature_settings_appinfo_privacy_policy">Privacy Policy</string>
+    <string name="feature_settings_appinfo_terms_conditions">Terms and Conditions</string>
 </resources>
