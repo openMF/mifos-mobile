@@ -25,6 +25,6 @@
 
     <string name="transfer_failed">Transfer Failed</string>
     <string name="transfer_successful">Transfer Successful</string>
-    <string name="back_to_accounts">Back to Accounts Screen</string>
+    <string name="back_to_accounts">Back to Home Screen</string>
     <string name="transfer_id_prefix">Transfer Id:</string>
 </resources>
