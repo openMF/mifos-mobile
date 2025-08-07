@@ -14,11 +14,13 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,10 +29,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.font.FontVariation.width
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
@@ -42,26 +47,30 @@ fun FaqItemHolder(
     answer: String?,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    MifosCustomCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.medium,
+            ),
     ) {
         Row(
             modifier = Modifier
                 .clickable {
                     onItemSelected.invoke(index)
                 }
-                .padding(vertical = 8.dp),
+                .padding(all = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = question.orEmpty(),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MifosTypography.bodyMedium,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.primary,
             )
 
             Icon(
@@ -85,7 +94,7 @@ fun FaqItemHolder(
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                    .padding(start = 8.dp , bottom = 8.dp),
             )
         }
 
@@ -101,10 +110,10 @@ fun FaqItemHolderPreview(
     MifosMobileTheme {
         FaqItemHolder(
             index = 0,
-            isSelected = false,
+            isSelected = true,
             onItemSelected = {},
-            question = "What is Mifos?",
-            answer = "Mifos is a platform for financial inclusion.",
+            question = "Where can I use the MIFOS Mobile app?",
+            answer = "At any time, you just need to ensure that your mobile device has internet access.",
             modifier = modifier,
         )
     }
