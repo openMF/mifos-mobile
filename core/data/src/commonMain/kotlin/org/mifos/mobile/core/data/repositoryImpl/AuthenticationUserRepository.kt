@@ -47,7 +47,7 @@ class AuthenticationUserRepository(
                 isAuthenticated = !preferencesHelper.token.value.isNullOrEmpty(),
                 userName = preferencesHelper.userInfo.firstOrNull()?.userName ?: "",
                 clientId = preferencesHelper.clientId.value ?: 0,
-                password = preferencesHelper.userInfo.firstOrNull()?.password?:""
+                password = preferencesHelper.userInfo.firstOrNull()?.password ?: "",
             )
             emit(DataState.Success(userData))
         } catch (e: Exception) {

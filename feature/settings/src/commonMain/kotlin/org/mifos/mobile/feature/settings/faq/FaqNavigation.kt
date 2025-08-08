@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.feature.settings.password
+package org.mifos.mobile.feature.settings.faq
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -15,17 +15,16 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
-fun NavController.navigateToUpdatePassword(navOptions: NavOptions? = null) =
-    navigate(SettingsItems.Password, navOptions)
-
-internal fun NavGraphBuilder.changePasswordDestination(
+internal fun NavGraphBuilder.faqDestination(
     onBackClick: () -> Unit,
-    navigateToLogin: () -> Unit,
+    contact: () -> Unit,
 ) {
-    composableWithPushTransitions<SettingsItems.Password> {
-        ChangePasswordScreen(
-            navigateBack = onBackClick,
-            navigateToLogin = navigateToLogin,
+    composableWithPushTransitions<SettingsItems.FAQ> {
+        FaqScreen(
+            onNavigateBack = onBackClick,
+            onClickHelp = contact,
         )
     }
 }
+internal fun NavController.navigateToFaq(navOptions: NavOptions? = null) =
+    navigate(SettingsItems.FAQ, navOptions)

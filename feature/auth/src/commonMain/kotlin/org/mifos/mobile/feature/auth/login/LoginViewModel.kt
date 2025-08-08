@@ -122,7 +122,7 @@ class LoginViewModel(
                     isAuthenticated = user.isAuthenticated,
                     base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
                     officeName = user.officeName.orEmpty(),
-                    password = state.password
+                    password = state.password,
                 )
                 viewModelScope.launch {
                     userPreferencesRepositoryImpl.updateUser(userData)

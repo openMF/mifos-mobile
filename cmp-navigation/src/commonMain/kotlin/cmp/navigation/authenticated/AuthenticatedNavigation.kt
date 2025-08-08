@@ -93,7 +93,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
             },
             navigateToApplyLoanScreen = navController::navigateToLoanApplicationGraph,
-            navigateToLogin = navController::navigateToLoginScreen
+            navigateToLogin = navController::navigateToLoginScreen,
         )
 
         notificationDestination(

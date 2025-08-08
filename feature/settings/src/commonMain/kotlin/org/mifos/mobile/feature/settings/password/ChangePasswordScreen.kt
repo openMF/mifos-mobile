@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.settings.password
 
 import androidx.compose.foundation.layout.Column
@@ -8,19 +17,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.touchlab.kermit.Logger
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_confirm_new_password
 import mifos_mobile.feature.settings.generated.resources.feature_settings_new_password
@@ -35,12 +38,8 @@ import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
-import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.AppSizes
-import org.mifos.mobile.core.designsystem.theme.DesignToken
-import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosSuccessDialog
@@ -121,9 +120,11 @@ internal fun PasswordScreenContent(
         MifosPasswordField(
             modifier = Modifier,
             value = state.oldPassword,
-            hint = if(state.oldPasswordError!=null){
+            hint = if (state.oldPasswordError != null) {
                 stringResource(state.oldPasswordError)
-            }else{null},
+            } else {
+                null
+            },
             showPassword = state.oldPasswordVisible,
             label = stringResource(Res.string.feature_settings_old_password),
             showPasswordChange = { onAction(PasswordAction.OldPasswordVisibleClick) },
@@ -135,9 +136,11 @@ internal fun PasswordScreenContent(
         MifosPasswordField(
             modifier = Modifier,
             value = state.newPassword,
-            hint = if(state.newPasswordError==null){
+            hint = if (state.newPasswordError == null) {
                 state.newPasswordError
-            }else{null},
+            } else {
+                null
+            },
             showPassword = state.newPasswordVisible,
             label = stringResource(Res.string.feature_settings_new_password),
             showPasswordChange = { onAction(PasswordAction.NewPasswordVisibleClick) },
@@ -159,9 +162,9 @@ internal fun PasswordScreenContent(
         MifosPasswordField(
             modifier = Modifier,
             value = state.confirmPassword,
-            hint = if(state.confirmPasswordError!=null){
+            hint = if (state.confirmPasswordError != null) {
                 stringResource(state.confirmPasswordError)
-            }else{
+            } else {
                 null
             },
             showPassword = state.confirmPasswordVisible,
@@ -182,7 +185,7 @@ internal fun PasswordScreenContent(
             onClick = {
                 onAction.invoke(PasswordAction.SubmitClick)
             },
-            modifier=Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

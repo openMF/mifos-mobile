@@ -40,7 +40,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
@@ -58,7 +57,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
-    navigateToLogin:()->Unit,
+    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -116,7 +115,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
         navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
         navigateToTransactionScreen = navigateToTransactionScreen,
         navigateToApplyLoanScreen = navigateToApplyLoanScreen,
-        navigateToLogin = navigateToLogin
+        navigateToLogin = navigateToLogin,
     )
 }
 
@@ -130,7 +129,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
-    navigateToLogin:()->Unit,
+    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -198,8 +197,8 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
             )
 
             settingsGraph(
-                navController=navController,
-                navigateToLogin = navigateToLogin
+                navController = navController,
+                navigateToLogin = navigateToLogin,
             )
         }
     }

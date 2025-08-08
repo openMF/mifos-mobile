@@ -1,3 +1,12 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.feature.settings.password
 
 import androidx.lifecycle.viewModelScope
@@ -41,7 +50,7 @@ internal class ChangePasswordViewModel(
 
     init {
         userDataRepository.userData.map {
-            it.data?.password?:""
+            it.data?.password ?: ""
         }.onEach {
             trySendAction(PasswordAction.Internal.OldPasswordReceived(it))
         }.launchIn(viewModelScope)
@@ -262,8 +271,8 @@ internal class ChangePasswordViewModel(
         viewModelScope.launch {
             try {
                 val result = repository.updateAccountPassword(
-                         state.newPassword,
-                        state.confirmPassword,
+                    state.newPassword,
+                    state.confirmPassword,
                 )
                 trySendAction(
                     PasswordAction.Internal.UpdatePasswordResult(
@@ -412,12 +421,12 @@ internal data class PasswordState(
         data class Success(val message: StringResource) : DialogState
         data class Error(val message: StringResource) : DialogState
     }
-    internal val isEnabled=oldPasswordError== null &&
-            newPasswordError== null &&
-            confirmPasswordError== null &&
-            oldPassword.isNotEmpty() &&
-            newPassword.isNotEmpty() &&
-            confirmPassword.isNotEmpty()
+    internal val isEnabled = oldPasswordError == null &&
+        newPasswordError == null &&
+        confirmPasswordError == null &&
+        oldPassword.isNotEmpty() &&
+        newPassword.isNotEmpty() &&
+        confirmPassword.isNotEmpty()
 }
 
 internal sealed interface PasswordEvent {
