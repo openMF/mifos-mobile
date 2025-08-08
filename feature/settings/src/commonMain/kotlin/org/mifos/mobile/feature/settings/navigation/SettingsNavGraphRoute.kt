@@ -17,6 +17,7 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.settings.about.aboutDestination
 import org.mifos.mobile.feature.settings.appInfo.appInfoDestination
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
+import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
@@ -40,7 +41,7 @@ fun NavGraphBuilder.settingsGraph(
         )
         helpDestination(
             onBackClick = navController::popBackStack,
-            navigateToFAQ = {},
+            navigateToFAQ = { navController.navigateToScreen(SettingsItems.FAQ) },
         )
         aboutDestination(
             onBackClick = navController::popBackStack,
@@ -52,6 +53,10 @@ fun NavGraphBuilder.settingsGraph(
         )
         updatePasscodeDestination(
             navigateBack = navController::popBackStack,
+        )
+        faqDestination(
+            onBackClick = navController::popBackStack,
+            contact = { navController.navigateToScreen(SettingsItems.Help) },
         )
     }
 }
