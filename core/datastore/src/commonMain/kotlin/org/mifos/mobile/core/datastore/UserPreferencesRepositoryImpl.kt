@@ -178,4 +178,8 @@ class UserPreferencesRepositoryImpl(
     override suspend fun logOut() {
         preferenceManager.clearInfo()
     }
+
+    override suspend fun setThemeConfig(theme: DarkThemeConfig) {
+        preferenceManager.setDarkThemeConfig(theme)
+    }
 }

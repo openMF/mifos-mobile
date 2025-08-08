@@ -72,4 +72,5 @@ interface UserPreferencesRepository {
     suspend fun setLanguage(language: LanguageConfig)
 
     suspend fun logOut(): Unit
+    suspend fun setThemeConfig(theme: DarkThemeConfig)
 }

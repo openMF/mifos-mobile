@@ -67,15 +67,15 @@ internal fun SettingsScreen(
             SettingsEvents.NavigateBack -> navigateBack.invoke()
             is SettingsEvents.NavigateTo -> {
                 // Using inside of if condition to resolve crash for other screens
-                when (events.item) {
-                    SettingsItems.Help, SettingsItems.AboutUs,
+                val navigableItems = setOf(
+                    SettingsItems.Help,
+                    SettingsItems.AboutUs,
                     SettingsItems.AppInfo,
                     SettingsItems.AuthPasscode,
-                    SettingsItems.Language,
                     SettingsItems.FAQ,
-                    -> navigateToScreen.invoke(events.item)
-
-                    else -> {}
+                )
+                if (events.item in navigableItems) {
+                    navigateToScreen.invoke(events.item)
                 }
             }
         }
