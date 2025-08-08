@@ -19,6 +19,7 @@ import org.mifos.mobile.feature.settings.appInfo.appInfoDestination
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.help.helpDestination
+import org.mifos.mobile.feature.settings.language.languageDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
@@ -52,6 +53,9 @@ fun NavGraphBuilder.settingsGraph(
             navigateToTermsAndConditions = {},
         )
         updatePasscodeDestination(
+            navigateBack = navController::popBackStack,
+        )
+        languageDestination(
             navigateBack = navController::popBackStack,
         )
         faqDestination(

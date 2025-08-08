@@ -176,4 +176,8 @@
 
     <string name="feature_settings_faq_doubt">Still have a doubt?</string>
     <string name="feature_settings_faq_contact_us"> Contact Us</string>
+
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Language</string>
+    <string name="feature_settings_change_language">Change Language</string>
 </resources>
