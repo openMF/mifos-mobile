@@ -12,9 +12,11 @@ package org.mifos.mobile.feature.settings.di
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.settings.passcode.UpdatePasscodeViewModel
+import org.mifos.mobile.feature.settings.password.ChangePasswordViewModel
 import org.mifos.mobile.feature.settings.settings.SettingsViewModel
 
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel)
     viewModelOf(::UpdatePasscodeViewModel)
+    viewModelOf(::ChangePasswordViewModel)
 }

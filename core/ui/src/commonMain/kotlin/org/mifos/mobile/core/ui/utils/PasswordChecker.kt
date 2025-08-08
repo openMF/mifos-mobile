@@ -94,9 +94,9 @@ object PasswordChecker {
         if (!password.any { !it.isLetterOrDigit() }) {
             feedback.add(Res.string.password_checker_special_char_feedback)
         }
-        if (password.length < STRONG_PASSWORD_LENGTH) {
-            feedback.add(Res.string.password_checker_strong_length_feedback)
-        }
+//        if (password.length < STRONG_PASSWORD_LENGTH) {
+//            feedback.add(Res.string.password_checker_strong_length_feedback)
+//        }
 
         return feedback
     }

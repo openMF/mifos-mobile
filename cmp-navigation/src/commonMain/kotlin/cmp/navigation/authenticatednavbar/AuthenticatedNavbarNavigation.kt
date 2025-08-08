@@ -32,6 +32,7 @@ internal fun NavGraphBuilder.authenticatedNavbarGraph(
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
+    navigateToLogin:()->Unit
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
         AuthenticatedNavbarNavigationScreen(
@@ -42,6 +43,7 @@ internal fun NavGraphBuilder.authenticatedNavbarGraph(
             navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
             navigateToTransactionScreen = navigateToTransactionScreen,
             navigateToApplyLoanScreen = navigateToApplyLoanScreen,
+            navigateToLogin=navigateToLogin
         )
     }
 }

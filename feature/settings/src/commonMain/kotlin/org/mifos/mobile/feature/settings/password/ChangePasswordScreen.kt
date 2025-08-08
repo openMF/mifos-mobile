@@ -3,22 +3,48 @@ package org.mifos.mobile.feature.settings.password
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import mifos_mobile.core.ui.generated.resources.Res
+import co.touchlab.kermit.Logger
+import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_confirm_new_password
+import mifos_mobile.feature.settings.generated.resources.feature_settings_new_password
+import mifos_mobile.feature.settings.generated.resources.feature_settings_next
+import mifos_mobile.feature.settings.generated.resources.feature_settings_old_password
+import mifos_mobile.feature.settings.generated.resources.feature_settings_password
+import mifos_mobile.feature.settings.generated.resources.password_update_dialog_button
+import mifos_mobile.feature.settings.generated.resources.password_update_success_message
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.theme.AppSizes
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosSuccessDialog
+import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -99,7 +125,7 @@ internal fun PasswordScreenContent(
                 stringResource(state.oldPasswordError)
             }else{null},
             showPassword = state.oldPasswordVisible,
-            label = Res.string.feature_settings_old_password,
+            label = stringResource(Res.string.feature_settings_old_password),
             showPasswordChange = { onAction(PasswordAction.OldPasswordVisibleClick) },
             onValueChange = { onAction(PasswordAction.OnOldPasswordChange(it)) },
         )
@@ -109,13 +135,23 @@ internal fun PasswordScreenContent(
         MifosPasswordField(
             modifier = Modifier,
             value = state.newPassword,
-            errors = state.passwordFeedback,
-            errorText = state.newPasswordError,
+            hint = if(state.newPasswordError==null){
+                state.newPasswordError
+            }else{null},
             showPassword = state.newPasswordVisible,
-            label = Res.string.feature_settings_new_password,
-            passwordStrengthState = state.passwordStrengthState,
+            label = stringResource(Res.string.feature_settings_new_password),
             showPasswordChange = { onAction(PasswordAction.NewPasswordVisibleClick) },
-            onValueChange = { onAction(PasswordAction.OnNewPasswordChange(it)) },
+            onValueChange = {
+                onAction(PasswordAction.OnNewPasswordChange(it))
+            },
+        )
+
+        CombinedPasswordErrorCard(
+            passwordStrengthState = state.passwordStrengthState,
+            currentCharacterCount = state.newPassword.length,
+            errorText = state.newPasswordError,
+            errors = state.passwordFeedback,
+            minimumCharacterCount = 12,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -123,9 +159,13 @@ internal fun PasswordScreenContent(
         MifosPasswordField(
             modifier = Modifier,
             value = state.confirmPassword,
-            hint = state.confirmPasswordError,
+            hint = if(state.confirmPasswordError!=null){
+                stringResource(state.confirmPasswordError)
+            }else{
+                null
+            },
             showPassword = state.confirmPasswordVisible,
-            label = Res.string.feature_settings_confirm_new_password,
+            label = stringResource(Res.string.feature_settings_confirm_new_password),
             showPasswordChange = { onAction(PasswordAction.ConfirmPasswordVisibleClick) },
             onValueChange = {
                 onAction(PasswordAction.OnConfirmPasswordChange(it))
@@ -134,12 +174,15 @@ internal fun PasswordScreenContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        MbsIconButton(
-            text = stringResource(Res.string.feature_settings_next),
-            trailingIcon = Res.drawable.ic_icon_arrow_narrow_right,
+        MifosButton(
+            enabled = state.isEnabled,
+            text = {
+                Text(stringResource(Res.string.feature_settings_next))
+            },
             onClick = {
                 onAction.invoke(PasswordAction.SubmitClick)
             },
+            modifier=Modifier.fillMaxWidth()
         )
     }
 }
@@ -151,7 +194,7 @@ private fun PasswordDialog(
     onConfirm: () -> Unit,
 ) {
     when (dialogState) {
-        is PasswordState.DialogState.Success -> MbsSuccessDialog(
+        is PasswordState.DialogState.Success -> MifosSuccessDialog(
             visibilityState = SuccessDialogState.Shown(
                 message = Res.string.password_update_success_message,
                 title = dialogState.message,
@@ -160,7 +203,7 @@ private fun PasswordDialog(
             ),
         )
 
-        is PasswordState.DialogState.Error -> MbsBasicDialog(
+        is PasswordState.DialogState.Error -> MifosBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = stringResource(dialogState.message),
             ),
@@ -168,7 +211,7 @@ private fun PasswordDialog(
         )
 
         is PasswordState.DialogState.Loading -> {
-            MbsLoadingDialog(visibilityState = LoadingDialogState.Shown)
+            MifosProgressIndicator()
         }
 
         null -> Unit

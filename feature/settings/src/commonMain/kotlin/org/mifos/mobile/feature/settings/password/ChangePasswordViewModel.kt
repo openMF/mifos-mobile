@@ -8,9 +8,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.password_confirm_mismatch_error
+import mifos_mobile.feature.settings.generated.resources.password_current_incorrect_error
+import mifos_mobile.feature.settings.generated.resources.password_empty_error
+import mifos_mobile.feature.settings.generated.resources.password_length_error
+import mifos_mobile.feature.settings.generated.resources.password_same_as_current_error
+import mifos_mobile.feature.settings.generated.resources.password_too_many_attempts
+import mifos_mobile.feature.settings.generated.resources.password_update_failed
+import mifos_mobile.feature.settings.generated.resources.password_update_success
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -20,7 +29,7 @@ import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 
 @Suppress("CyclomaticComplexMethod")
 internal class ChangePasswordViewModel(
-    private val passwordRepository: PasswordRepository,
+    private val repository: UserAuthRepository,
     private val userDataRepository: UserDataRepository,
 ) : BaseViewModel<PasswordState, PasswordEvent, PasswordAction>(
     initialState = PasswordState(),
@@ -31,11 +40,11 @@ internal class ChangePasswordViewModel(
     private val maxFailedAttempts = 3
 
     init {
-//        userDataRepository.account.map {
-//            it.password
-//        }.onEach {
-//            trySendAction(PasswordAction.Internal.OldPasswordReceived(it))
-//        }.launchIn(viewModelScope)
+        userDataRepository.userData.map {
+            it.data?.password?:""
+        }.onEach {
+            trySendAction(PasswordAction.Internal.OldPasswordReceived(it))
+        }.launchIn(viewModelScope)
     }
 
     override fun handleAction(action: PasswordAction) {
@@ -109,7 +118,6 @@ internal class ChangePasswordViewModel(
         mutableStateFlow.update {
             it.copy(
                 oldPassword = newValue,
-                oldPasswordError = null,
             )
         }
 
@@ -127,7 +135,6 @@ internal class ChangePasswordViewModel(
         mutableStateFlow.update {
             it.copy(
                 newPassword = newValue,
-                newPasswordError = null,
             )
         }
 
@@ -173,7 +180,6 @@ internal class ChangePasswordViewModel(
         mutableStateFlow.update {
             it.copy(
                 confirmPassword = newValue,
-                confirmPasswordError = null,
             )
         }
 
@@ -255,14 +261,12 @@ internal class ChangePasswordViewModel(
 
         viewModelScope.launch {
             try {
-                val result = passwordRepository.updatePassword(
-                    UserPassword(
-                        password = state.newPassword,
-                        repeatPassword = state.confirmPassword,
-                    ),
+                val result = repository.updateAccountPassword(
+                         state.newPassword,
+                        state.confirmPassword,
                 )
                 trySendAction(
-                    UpdatePasswordResult(
+                    PasswordAction.Internal.UpdatePasswordResult(
                         result,
                     ),
                 )
@@ -276,7 +280,7 @@ internal class ChangePasswordViewModel(
         }
     }
 
-    private fun handleUpdatePasswordResult(action: UpdatePasswordResult) {
+    private fun handleUpdatePasswordResult(action: PasswordAction.Internal.UpdatePasswordResult) {
         when (action.result) {
             is DataState.Error -> {
                 mutableStateFlow.update {
@@ -311,9 +315,7 @@ internal class ChangePasswordViewModel(
 
         viewModelScope.launch {
             delay(2500)
-            userDataRepository.logout(
-                reason = LogoutReason.Click("Settings Logout"),
-            )
+            userDataRepository.logOut()
         }
     }
 
@@ -410,6 +412,12 @@ internal data class PasswordState(
         data class Success(val message: StringResource) : DialogState
         data class Error(val message: StringResource) : DialogState
     }
+    internal val isEnabled=oldPasswordError== null &&
+            newPasswordError== null &&
+            confirmPasswordError== null &&
+            oldPassword.isNotEmpty() &&
+            newPassword.isNotEmpty() &&
+            confirmPassword.isNotEmpty()
 }
 
 internal sealed interface PasswordEvent {
@@ -433,7 +441,7 @@ internal sealed interface PasswordAction {
     data object NavigateToLogin : PasswordAction
 
     sealed interface Internal : PasswordAction {
-        data class UpdatePasswordResult(val result: DataState<Unit>) : Internal
+        data class UpdatePasswordResult(val result: DataState<String>) : Internal
         data class ReceivePasswordStrengthResult(val result: PasswordStrengthResult) : Internal
         data class OldPasswordReceived(val password: String?) : Internal
     }

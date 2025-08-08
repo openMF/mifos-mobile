@@ -19,6 +19,7 @@ import org.mifos.mobile.feature.settings.appInfo.appInfoDestination
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
+import org.mifos.mobile.feature.settings.password.changePasswordDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
 
@@ -30,6 +31,7 @@ fun NavController.navigateToSettingsGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.settingsGraph(
     navController: NavController,
+    navigateToLogin:()->Unit
 ) {
     navigation<SettingsNavGraphRoute>(
         startDestination = SettingsRoute,
@@ -52,6 +54,10 @@ fun NavGraphBuilder.settingsGraph(
         )
         updatePasscodeDestination(
             navigateBack = navController::popBackStack,
+        )
+        changePasswordDestination(
+            onBackClick = navController::popBackStack,
+            navigateToLogin = navigateToLogin
         )
     }
 }
