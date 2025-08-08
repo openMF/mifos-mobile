@@ -43,6 +43,7 @@ internal class ChangeThemeViewModel(
             mutableStateFlow.update {
                 it.copy(currentTheme = action.theme)
             }
+            sendEvent(ThemeEvent.OnNavigateBack)
         }
     }
     private fun handleLoadTheme(action: ThemeAction.Internal.LoadTheme) {
