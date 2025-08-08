@@ -176,4 +176,11 @@
 
     <string name="feature_settings_faq_doubt">Still have a doubt?</string>
     <string name="feature_settings_faq_contact_us"> Contact Us</string>
+
+
+    <!--  Theme  -->
+    <string name="feature_settings_theme_light">Light Theme</string>
+    <string name="feature_settings_theme_dark">Dark Theme</string>
+    <string name="feature_settings_theme_system">Default System Theme</string>
+    <string name="feature_settings_apply_theme">Apply Theme</string>
 </resources>
