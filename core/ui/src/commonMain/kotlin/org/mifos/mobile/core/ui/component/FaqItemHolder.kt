@@ -16,7 +16,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
@@ -54,13 +52,13 @@ fun FaqItemHolder(
                 color = MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.medium,
             ),
-        ) {
+    ) {
         Row(
             modifier = Modifier
                 .clickable {
                     onItemSelected.invoke(index)
                 }
-                .padding(all= DesignToken.padding.medium),
+                .padding(all = DesignToken.padding.medium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -70,7 +68,7 @@ fun FaqItemHolder(
                     .fillMaxWidth()
                     .weight(1f),
                 color = MaterialTheme.colorScheme.primary,
-                )
+            )
 
             Icon(
                 imageVector = MifosIcons.ArrowDropDown,

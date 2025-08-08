@@ -41,7 +41,7 @@ fun NavGraphBuilder.settingsGraph(
         )
         helpDestination(
             onBackClick = navController::popBackStack,
-            navigateToFAQ = {navController.navigateToScreen(SettingsItems.FAQ) },
+            navigateToFAQ = { navController.navigateToScreen(SettingsItems.FAQ) },
         )
         aboutDestination(
             onBackClick = navController::popBackStack,
@@ -56,7 +56,7 @@ fun NavGraphBuilder.settingsGraph(
         )
         faqDestination(
             onBackClick = navController::popBackStack,
-            contact = {navController.navigateToScreen(SettingsItems.Help) },
+            contact = { navController.navigateToScreen(SettingsItems.Help) },
         )
     }
 }
