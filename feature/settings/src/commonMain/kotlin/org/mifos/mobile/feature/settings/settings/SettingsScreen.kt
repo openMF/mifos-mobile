@@ -73,6 +73,7 @@ internal fun SettingsScreen(
                     SettingsItems.AppInfo,
                     SettingsItems.AuthPasscode,
                     SettingsItems.FAQ,
+                    SettingsItems.Theme,
                 )
                 if (events.item in navigableItems) {
                     navigateToScreen.invoke(events.item)

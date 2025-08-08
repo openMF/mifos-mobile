@@ -22,6 +22,7 @@ import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
+import org.mifos.mobile.feature.settings.theme.themeDestination
 
 @Serializable
 data object SettingsNavGraphRoute
@@ -57,6 +58,9 @@ fun NavGraphBuilder.settingsGraph(
         faqDestination(
             onBackClick = navController::popBackStack,
             contact = { navController.navigateToScreen(SettingsItems.Help) },
+        )
+        themeDestination(
+            onBackClick = navController::popBackStack,
         )
     }
 }

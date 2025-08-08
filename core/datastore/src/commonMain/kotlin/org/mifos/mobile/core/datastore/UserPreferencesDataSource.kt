@@ -151,6 +151,14 @@ class UserPreferencesDataSource(
         return settings.getString(PROFILE_IMAGE, "").ifEmpty { null }
     }
 
+    suspend fun setDarkThemeConfig(theme: DarkThemeConfig) {
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(darkThemeConfig = theme)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+    }
+
     suspend fun clearInfo() {
         withContext(dispatcher) {
             settings.putUserPreference(UserData.DEFAULT)
