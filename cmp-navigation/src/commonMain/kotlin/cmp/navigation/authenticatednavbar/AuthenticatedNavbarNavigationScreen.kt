@@ -43,6 +43,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
+import org.mifos.mobile.feature.settings.faq.navigateToFaq
 import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
 import org.mifos.mobile.feature.settings.navigation.settingsGraph
 import org.mifos.mobile.navigation.generated.resources.Res
@@ -53,7 +54,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
     navigateToNotificationScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToChargeScreen: () -> Unit,
-    navigateToFaqScreen: () -> Unit,
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
@@ -110,7 +110,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
         navigateToNotificationScreen = navigateToNotificationScreen,
         navigateToAccountsScreen = { navigateToAccountsScreen(it) },
         navigateToChargeScreen = navigateToChargeScreen,
-        navigateToFaqScreen = navigateToFaqScreen,
         navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
         navigateToTransactionScreen = navigateToTransactionScreen,
         navigateToApplyLoanScreen = navigateToApplyLoanScreen,
@@ -123,7 +122,6 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
     navigateToNotificationScreen: () -> Unit,
     navigateToAccountsScreen: (String) -> Unit,
     navigateToChargeScreen: () -> Unit,
-    navigateToFaqScreen: () -> Unit,
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
@@ -187,7 +185,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
                 navigateToAccountsScreen = { navigateToAccountsScreen(it) },
                 navigateToChargeScreen = navigateToChargeScreen,
                 navigateToNotificationScreen = navigateToNotificationScreen,
-                navigateToFaqScreen = navigateToFaqScreen,
+                navigateToFaqScreen = navController::navigateToFaq,
                 navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
                 navigateToTransactionScreen = navigateToTransactionScreen,
                 navigateToApplyLoanScreen = navigateToApplyLoanScreen,

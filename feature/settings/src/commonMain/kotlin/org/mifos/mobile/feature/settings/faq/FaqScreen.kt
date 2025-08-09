@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.settings.faq
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.settings.generated.resources.Res
@@ -102,13 +104,14 @@ private fun FaqContent(
     onAction: (FaqAction) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(vertical = DesignToken.padding.extraLarge),
+        modifier = Modifier.fillMaxSize(),
     ) {
         if (faqArrayList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.weight(1f).fillMaxWidth()
-                    .padding(horizontal = DesignToken.padding.extraLarge),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(horizontal = DesignToken.padding.large)
+                    .padding(top = DesignToken.padding.extraLarge),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
             ) {
                 itemsIndexed(items = faqArrayList) { index, faqItem ->
                     FaqItemHolder(
@@ -121,7 +124,7 @@ private fun FaqContent(
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = DesignToken.padding.medium),
+                modifier = Modifier.fillMaxWidth().padding(DesignToken.padding.medium),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {

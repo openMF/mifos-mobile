@@ -87,7 +87,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 }
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
-            navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
@@ -168,13 +167,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
         )
 
         locationsNavGraph()
-
-        helpNavGraph(
-            findLocations = navController::navigateToLocationsScreen,
-            navigateBack = navController::popBackStack,
-            callHelpline = { callHelpline() },
-            mailHelpline = { mailHelpline() },
-        )
 
         recentTransactionNavGraph(
             navController = navController,
