@@ -130,6 +130,7 @@ data class AppSpacing(
 @Immutable
 data class AppPadding(
     val none: Dp = 0.dp,
+    val tiny:Dp=2.dp,
     val extraSmall: Dp = 4.dp,
     val small: Dp = 8.dp,
     val medium: Dp = 12.dp,
