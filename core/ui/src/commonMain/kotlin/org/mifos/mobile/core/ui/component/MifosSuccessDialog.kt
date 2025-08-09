@@ -41,7 +41,7 @@ fun MifosSuccessDialog(
                 )
             },
             confirmButton = {
-                if(visibilityState.buttonText!=null){
+                if (visibilityState.buttonText != null) {
                     MifosButton(
                         text = {
                             Text(stringResource(visibilityState.buttonText))

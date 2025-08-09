@@ -36,7 +36,7 @@ import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 
-@Suppress("CyclomaticComplexMethod")
+@Suppress("CyclomaticComplexMethod","TooManyFunctions")
 internal class ChangePasswordViewModel(
     private val repository: UserAuthRepository,
     private val userDataRepository: UserDataRepository,

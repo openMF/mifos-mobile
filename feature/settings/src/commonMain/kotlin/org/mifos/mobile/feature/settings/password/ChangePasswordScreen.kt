@@ -15,14 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_confirm_new_password
@@ -30,7 +28,6 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_new_pa
 import mifos_mobile.feature.settings.generated.resources.feature_settings_next
 import mifos_mobile.feature.settings.generated.resources.feature_settings_old_password
 import mifos_mobile.feature.settings.generated.resources.feature_settings_password
-import mifos_mobile.feature.settings.generated.resources.password_update_dialog_button
 import mifos_mobile.feature.settings.generated.resources.password_update_success_message
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -39,7 +36,7 @@ import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
-import org.mifos.mobile.core.designsystem.theme.AppSizes
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosSuccessDialog
@@ -89,11 +86,11 @@ internal fun ChangePasswordScreen(
         },
         topBarTitle = stringResource(Res.string.feature_settings_password),
     ) {
-        if(state.dialogState!= PasswordState.DialogState.Loading){
+        if (state.dialogState != PasswordState.DialogState.Loading) {
             PasswordScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = AppSizes().headerToContentHeight),
+                    .padding(horizontal = DesignToken.padding.large),
                 state = state,
                 onAction = onAction,
             )
@@ -111,8 +108,7 @@ internal fun PasswordScreenContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(top = 24.dp)
-            .statusBarsPadding(),
+            .padding(top = DesignToken.padding.largeIncreased),
     ) {
         MifosPasswordField(
             modifier = Modifier,
@@ -128,7 +124,7 @@ internal fun PasswordScreenContent(
             onValueChange = { onAction(PasswordAction.OnOldPasswordChange(it)) },
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.padding.medium))
 
         MifosPasswordField(
             modifier = Modifier,
@@ -154,7 +150,7 @@ internal fun PasswordScreenContent(
             minimumCharacterCount = 12,
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.padding.medium))
 
         MifosPasswordField(
             modifier = Modifier,
@@ -172,7 +168,7 @@ internal fun PasswordScreenContent(
             },
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(DesignToken.padding.largeIncreased))
 
         MifosButton(
             enabled = state.isEnabled,
