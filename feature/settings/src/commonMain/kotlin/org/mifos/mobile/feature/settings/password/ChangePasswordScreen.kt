@@ -49,7 +49,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun ChangePasswordScreen(
     navigateBack: () -> Unit,
-    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     viewmodel: ChangePasswordViewModel = koinViewModel(),
 ) {
@@ -58,7 +57,6 @@ internal fun ChangePasswordScreen(
     EventsEffect(eventFlow = viewmodel.eventFlow) { event ->
         when (event) {
             PasswordEvent.OnNavigateBack -> navigateBack.invoke()
-            PasswordEvent.OnNavigateToLogin -> navigateToLogin.invoke()
         }
     }
 
@@ -72,9 +70,7 @@ internal fun ChangePasswordScreen(
 
     PasswordDialog(
         dialogState = state.dialogState,
-        onConfirm = remember(viewmodel) {
-            { viewmodel.trySendAction(PasswordAction.NavigateToLogin) }
-        },
+        onConfirm ={},
         onDismiss = remember(viewmodel) {
             { viewmodel.trySendAction(PasswordAction.DismissDialog) }
         },
@@ -201,8 +197,8 @@ private fun PasswordDialog(
             visibilityState = SuccessDialogState.Shown(
                 message = Res.string.password_update_success_message,
                 title = dialogState.message,
-                buttonText = Res.string.password_update_dialog_button,
-                onBtnClick = onConfirm,
+                buttonText = null,
+                onBtnClick = {},
             ),
         )
 

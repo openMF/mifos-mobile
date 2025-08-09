@@ -57,7 +57,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
-    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -115,7 +114,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
         navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
         navigateToTransactionScreen = navigateToTransactionScreen,
         navigateToApplyLoanScreen = navigateToApplyLoanScreen,
-        navigateToLogin = navigateToLogin,
     )
 }
 
@@ -129,7 +127,6 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
     navigateToBeneficiaryScreen: () -> Unit,
     navigateToTransactionScreen: () -> Unit,
     navigateToApplyLoanScreen: () -> Unit,
-    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -198,7 +195,6 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 
             settingsGraph(
                 navController = navController,
-                navigateToLogin = navigateToLogin,
             )
         }
     }

@@ -46,7 +46,7 @@ internal class ChangePasswordViewModel(
     private var validationJob: Job? = null
     private var passwordStrengthJob: Job = Job()
     private var failedAttempts = 0
-    private val maxFailedAttempts = 3
+    private val maxFailedAttempts = 5
 
     init {
         userDataRepository.userData.map {
@@ -80,7 +80,6 @@ internal class ChangePasswordViewModel(
             is PasswordAction.Internal.UpdatePasswordResult -> handleUpdatePasswordResult(action)
             is PasswordAction.Internal.ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
             is PasswordAction.Internal.OldPasswordReceived -> handleOldPasswordReceived(action)
-            is PasswordAction.NavigateToLogin -> sendEvent(PasswordEvent.OnNavigateToLogin)
         }
     }
 
@@ -311,6 +310,10 @@ internal class ChangePasswordViewModel(
 
                 // Clear sensitive data after successful update
                 clearSensitiveData()
+                viewModelScope.launch {
+                    delay(3000)
+                    userDataRepository.logOut()
+                }
             }
             else -> {
                 failedAttempts++
@@ -431,7 +434,6 @@ internal data class PasswordState(
 
 internal sealed interface PasswordEvent {
     data object OnNavigateBack : PasswordEvent
-    data object OnNavigateToLogin : PasswordEvent
 }
 
 internal sealed interface PasswordAction {
@@ -447,7 +449,6 @@ internal sealed interface PasswordAction {
     data object RetrySubmit : PasswordAction
     data object NavigateBack : PasswordAction
     data object DismissDialog : PasswordAction
-    data object NavigateToLogin : PasswordAction
 
     sealed interface Internal : PasswordAction {
         data class UpdatePasswordResult(val result: DataState<String>) : Internal

@@ -33,7 +33,6 @@ fun NavController.navigateToSettingsGraph(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.settingsGraph(
     navController: NavController,
-    navigateToLogin: () -> Unit,
 ) {
     navigation<SettingsNavGraphRoute>(
         startDestination = SettingsRoute,
@@ -66,7 +65,6 @@ fun NavGraphBuilder.settingsGraph(
         )
         changePasswordDestination(
             onBackClick = navController::popBackStack,
-            navigateToLogin = navigateToLogin,
         )
     }
 }

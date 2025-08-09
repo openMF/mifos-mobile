@@ -20,12 +20,10 @@ fun NavController.navigateToUpdatePassword(navOptions: NavOptions? = null) =
 
 internal fun NavGraphBuilder.changePasswordDestination(
     onBackClick: () -> Unit,
-    navigateToLogin: () -> Unit,
 ) {
     composableWithPushTransitions<SettingsItems.Password> {
         ChangePasswordScreen(
             navigateBack = onBackClick,
-            navigateToLogin = navigateToLogin,
         )
     }
 }
