@@ -26,5 +26,5 @@ internal fun NavGraphBuilder.faqDestination(
         )
     }
 }
-internal fun NavController.navigateToFaq(navOptions: NavOptions? = null) =
+fun NavController.navigateToFaq(navOptions: NavOptions? = null) =
     navigate(SettingsItems.FAQ, navOptions)
