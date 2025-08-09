@@ -21,6 +21,7 @@ import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.password_confirm_mismatch_error
 import mifos_mobile.feature.settings.generated.resources.password_current_incorrect_error
 import mifos_mobile.feature.settings.generated.resources.password_empty_error
+import mifos_mobile.feature.settings.generated.resources.password_empty_error_repeat
 import mifos_mobile.feature.settings.generated.resources.password_length_error
 import mifos_mobile.feature.settings.generated.resources.password_same_as_current_error
 import mifos_mobile.feature.settings.generated.resources.password_too_many_attempts
@@ -36,7 +37,7 @@ import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 
-@Suppress("CyclomaticComplexMethod","TooManyFunctions")
+@Suppress("CyclomaticComplexMethod", "TooManyFunctions")
 internal class ChangePasswordViewModel(
     private val repository: UserAuthRepository,
     private val userDataRepository: UserDataRepository,
@@ -94,6 +95,9 @@ internal class ChangePasswordViewModel(
     private fun validateNewPassword(password: String): ValidationResult {
         if (password.isEmpty()) {
             return ValidationResult.Error(Res.string.password_empty_error)
+        }
+        if (hasConsecutiveRepeatingChars(password)) {
+            return ValidationResult.Error(Res.string.password_empty_error_repeat)
         }
 
         when (val result = PasswordChecker.getPasswordStrengthResult(password)) {
@@ -343,6 +347,15 @@ internal class ChangePasswordViewModel(
             delay(300)
             validation()
         }
+    }
+
+    private fun hasConsecutiveRepeatingChars(input: String): Boolean {
+        for (i in 0 until input.length - 1) {
+            if (input[i] == input[i + 1]) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun toggleCurrentPasswordVisibility() {

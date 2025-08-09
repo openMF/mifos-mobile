@@ -151,6 +151,7 @@
 
     <!--    //password screen-->
     <string name="password_empty_error">Password cannot be empty</string>
+    <string name="password_empty_error_repeat">consecutive repeating characters not allowed</string>
     <string name="password_length_error">Password must be at least 12 characters long</string>
     <string name="password_current_incorrect_error">Current password is incorrect</string>
     <string name="password_validation_error">Password does not meet security requirements</string>
@@ -162,7 +163,7 @@
 
     <string name="password_update_success">Password updated successfully</string>
     <string name="password_update_success_message">You need to login again to use the services of the app.</string>
-    <string name="password_update_failed">Failed to update password. Password Should not contain consecutive characters.Try Again</string>
+    <string name="password_update_failed">Failed to update password.Try Again</string>
     <string name="password_update_dialog_button">Login Now</string>
 
     <!-- Faq  -->
