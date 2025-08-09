@@ -70,7 +70,6 @@ internal fun ChangePasswordScreen(
 
     PasswordDialog(
         dialogState = state.dialogState,
-        onConfirm ={},
         onDismiss = remember(viewmodel) {
             { viewmodel.trySendAction(PasswordAction.DismissDialog) }
         },
@@ -90,13 +89,15 @@ internal fun ChangePasswordScreen(
         },
         topBarTitle = stringResource(Res.string.feature_settings_password),
     ) {
-        PasswordScreenContent(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = AppSizes().headerToContentHeight),
-            state = state,
-            onAction = onAction,
-        )
+        if(state.dialogState!= PasswordState.DialogState.Loading){
+            PasswordScreenContent(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = AppSizes().headerToContentHeight),
+                state = state,
+                onAction = onAction,
+            )
+        }
     }
 }
 
@@ -190,7 +191,6 @@ internal fun PasswordScreenContent(
 private fun PasswordDialog(
     dialogState: PasswordState.DialogState?,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
 ) {
     when (dialogState) {
         is PasswordState.DialogState.Success -> MifosSuccessDialog(
