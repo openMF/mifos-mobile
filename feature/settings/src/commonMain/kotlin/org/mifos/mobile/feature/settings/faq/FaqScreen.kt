@@ -102,13 +102,14 @@ private fun FaqContent(
     onAction: (FaqAction) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(vertical = DesignToken.padding.extraLarge),
+        modifier = Modifier.fillMaxSize(),
     ) {
         if (faqArrayList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.weight(1f).fillMaxWidth()
-                    .padding(horizontal = DesignToken.padding.extraLarge),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                    .padding(horizontal = DesignToken.padding.large)
+                    .padding(top = DesignToken.padding.extraLarge),
+                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
             ) {
                 itemsIndexed(items = faqArrayList) { index, faqItem ->
                     FaqItemHolder(
@@ -121,7 +122,7 @@ private fun FaqContent(
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = DesignToken.padding.medium),
+                modifier = Modifier.fillMaxWidth().padding(DesignToken.padding.medium),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {

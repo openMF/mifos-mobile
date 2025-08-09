@@ -22,8 +22,6 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
-import org.mifos.mobile.core.ui.utils.ShareUtils.callHelpline
-import org.mifos.mobile.core.ui.utils.ShareUtils.mailHelpline
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
@@ -36,14 +34,11 @@ import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavG
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
-import org.mifos.mobile.feature.help.navigation.helpNavGraph
-import org.mifos.mobile.feature.help.navigation.navigateToHelpScreen
 import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
 import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
 import org.mifos.mobile.feature.loanaccount.navigation.loanNavGraph
 import org.mifos.mobile.feature.location.navigation.locationsNavGraph
-import org.mifos.mobile.feature.location.navigation.navigateToLocationsScreen
 import org.mifos.mobile.feature.notification.navigation.navigateToNotificationScreen
 import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
@@ -87,7 +82,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 }
             },
             navigateToChargeScreen = navController::navigateToChargeGraph,
-            navigateToFaqScreen = navController::navigateToHelpScreen,
             navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
             navigateToTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
@@ -168,13 +162,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
         )
 
         locationsNavGraph()
-
-        helpNavGraph(
-            findLocations = navController::navigateToLocationsScreen,
-            navigateBack = navController::popBackStack,
-            callHelpline = { callHelpline() },
-            mailHelpline = { mailHelpline() },
-        )
 
         recentTransactionNavGraph(
             navController = navController,

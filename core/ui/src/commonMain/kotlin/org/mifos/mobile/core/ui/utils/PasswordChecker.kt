@@ -15,7 +15,6 @@ import mifos_mobile.core.ui.generated.resources.password_checker_empty_error
 import mifos_mobile.core.ui.generated.resources.password_checker_lowercase_feedback
 import mifos_mobile.core.ui.generated.resources.password_checker_min_length_feedback
 import mifos_mobile.core.ui.generated.resources.password_checker_special_char_feedback
-import mifos_mobile.core.ui.generated.resources.password_checker_strong_length_feedback
 import mifos_mobile.core.ui.generated.resources.password_checker_too_long_error
 import mifos_mobile.core.ui.generated.resources.password_checker_uppercase_feedback
 import org.jetbrains.compose.resources.StringResource
@@ -94,9 +93,9 @@ object PasswordChecker {
         if (!password.any { !it.isLetterOrDigit() }) {
             feedback.add(Res.string.password_checker_special_char_feedback)
         }
-        if (password.length < STRONG_PASSWORD_LENGTH) {
-            feedback.add(Res.string.password_checker_strong_length_feedback)
-        }
+//        if (password.length < STRONG_PASSWORD_LENGTH) {
+//            feedback.add(Res.string.password_checker_strong_length_feedback)
+//        }
 
         return feedback
     }

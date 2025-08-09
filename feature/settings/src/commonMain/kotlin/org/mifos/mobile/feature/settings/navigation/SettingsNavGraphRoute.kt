@@ -21,6 +21,7 @@ import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.language.languageDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
+import org.mifos.mobile.feature.settings.password.changePasswordDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
 import org.mifos.mobile.feature.settings.theme.themeDestination
@@ -64,6 +65,9 @@ fun NavGraphBuilder.settingsGraph(
             contact = { navController.navigateToScreen(SettingsItems.Help) },
         )
         themeDestination(
+            onBackClick = navController::popBackStack,
+        )
+        changePasswordDestination(
             onBackClick = navController::popBackStack,
         )
     }

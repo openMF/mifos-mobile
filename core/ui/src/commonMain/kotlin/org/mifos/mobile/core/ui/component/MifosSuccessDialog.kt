@@ -41,15 +41,17 @@ fun MifosSuccessDialog(
                 )
             },
             confirmButton = {
-                MifosButton(
-                    text = {
-                        Text(stringResource(visibilityState.buttonText))
-                    },
-                    onClick = visibilityState.onBtnClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .testTag("AcceptAlertButton"),
-                )
+                if (visibilityState.buttonText != null) {
+                    MifosButton(
+                        text = {
+                            Text(stringResource(visibilityState.buttonText))
+                        },
+                        onClick = visibilityState.onBtnClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("AcceptAlertButton"),
+                    )
+                }
             },
             title = {
                 Text(
@@ -85,7 +87,7 @@ sealed interface SuccessDialogState {
     data class Shown(
         val title: StringResource,
         val message: StringResource?,
-        val buttonText: StringResource,
+        val buttonText: StringResource?,
         val onBtnClick: () -> Unit,
     ) : SuccessDialogState
 }
