@@ -201,4 +201,71 @@
     <!-- Change Language   -->
     <string name="feature_settings_language">Language</string>
     <string name="feature_settings_change_language">Change Language</string>
+
+    <!-- Profile Screen -->
+    <!-- Screen titles and navigation -->
+    <string name="feature_settings_profile_topbar_title">Profile</string>
+
+    <!-- Profile Form Validation errors -->
+    <string name="profile_name_empty_error">Name cannot be empty</string>
+    <string name="profile_name_too_short_error">Name must be at least 2 characters long</string>
+    <string name="profile_name_too_long_error">Name cannot exceed 50 characters</string>
+    <string name="profile_name_invalid_format_error">Name can only contain letters, spaces, hyphens, and apostrophes</string>
+
+    <string name="profile_email_empty_error">Email address cannot be empty</string>
+    <string name="profile_email_invalid_format_error">Please enter a valid email address</string>
+
+    <string name="profile_mobile_empty_error">Phone number cannot be empty</string>
+    <string name="profile_mobile_too_short_error">Phone number is too short (minimum 9 digits)</string>
+    <string name="profile_mobile_too_long_error">Phone number is too long (maximum 13 characters)</string>
+    <string name="profile_mobile_invalid_format_error">Please enter a valid Spanish phone number</string>
+
+    <!-- API result messages -->
+    <string name="profile_load_failed">Failed to load profile information. Please try again.</string>
+    <string name="profile_update_success">Profile updated successfully!</string>
+    <string name="profile_update_failed">Failed to update profile. Please try again.</string>
+    <string name="profile_too_many_attempts">Too many failed attempts. Please try again later.</string>
+
+    <!-- Image update messages -->
+    <string name="profile_image_update_success">Profile picture updated successfully!</string>
+    <string name="profile_image_update_failed">Failed to update profile picture. Please try again.</string>
+    <string name="profile_image_delete_failed">Failed to delete profile picture. Please try again.</string>
+
+    <!-- Dialog messages -->
+    <string name="profile_update_success_message">Your profile has been updated with the latest information.</string>
+    <string name="profile_update_dialog_button">Continue</string>
+    <string name="profile_updating_message">Updating your profile...</string>
+
+    <!-- Error dialog -->
+    <string name="profile_error_dialog_title">Update Failed</string>
+    <string name="profile_error_dialog_retry">Retry</string>
+    <string name="profile_error_dialog_cancel">Cancel</string>
+
+    <!-- Unsaved changes dialog -->
+    <string name="profile_unsaved_changes_title">Unsaved Changes</string>
+    <string name="profile_unsaved_changes_message">You have unsaved changes. Do you want to discard them and leave?</string>
+    <string name="profile_unsaved_changes_discard">Discard</string>
+    <string name="profile_unsaved_changes_stay">Keep Editing</string>
+
+    <!-- Loading states -->
+    <string name="profile_loading_message">Loading profile...</string>
+
+    <!-- Additional error messages -->
+    <string name="feature_settings_profile_error_empty_name">Name cannot be empty</string>
+    <string name="feature_settings_profile_error_invalid_email">Please enter a valid email address</string>
+    <string name="feature_settings_profile_error_empty_mobile">Phone number cannot be empty</string>
+
+    <!-- Profile image section -->
+    <string name="feature_settings_profile_update_photo">Update Photo</string>
+    <string name="feature_settings_profile_delete_photo">Delete Photo</string>
+    <string name="feature_settings_profile_content_description_profile_icon">Profile picture</string>
+
+    <!-- Submit button -->
+    <string name="feature_settings_profile_submit_changes">Save Changes</string>
+
+    <!-- Form labels -->
+    <string name="feature_settings_profile_label_full_name">Full Name</string>
+    <string name="feature_settings_profile_label_email">Email Address</string>
+    <string name="feature_settings_profile_label_customer_account">Customer Account</string>
+    <string name="feature_settings_profile_label_phone_number">Phone Number</string>
 </resources>

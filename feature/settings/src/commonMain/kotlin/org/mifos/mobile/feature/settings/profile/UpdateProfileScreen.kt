@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -30,9 +31,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_content_description_profile_icon
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_delete_photo
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_label_customer_account
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_label_email
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_label_full_name
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_label_phone_number
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_submit_changes
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_topbar_title
+import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_update_photo
+import mifos_mobile.feature.settings.generated.resources.profile_error_dialog_title
+import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_discard
+import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_stay
+import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_title
+import mifos_mobile.feature.settings.generated.resources.profile_update_dialog_button
+import mifos_mobile.feature.settings.generated.resources.profile_update_success_message
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -41,7 +59,9 @@ import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextField
+import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppSizes
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -139,37 +159,52 @@ internal fun ProfileScreenContent(
             onDelete = onAction,
         )
 
-        MifosTextField(
+        MifosOutlinedTextField(
             value = state.name,
-            label = Res.string.feature_settings_profile_label_full_name,
+            label =stringResource( Res.string.feature_settings_profile_label_full_name),
             onValueChange = { onAction(ProfileAction.OnNameChanged(it)) },
-            isError = state.nameError != null,
-            errorText = state.nameError,
+            config = MifosTextFieldConfig(
+                isError = state.nameError != null,
+                errorText = if(state.nameError!=null){
+                    stringResource(state.nameError)
+                }else{
+                    null
+                },
+            )
         )
 
-        MbsTextField(
+        MifosOutlinedTextField(
             value = state.email,
-            label = Res.string.feature_settings_profile_label_email,
+            label =stringResource( Res.string.feature_settings_profile_label_email),
             onValueChange = { onAction(ProfileAction.OnEmailChanged(it)) },
-            isError = state.emailError != null,
-            errorText = state.emailError,
-            keyboardType = KeyboardType.Email,
+            config = MifosTextFieldConfig(
+                isError = state.emailError != null,
+                errorText = if(state.emailError!=null){
+                    stringResource(state.emailError)
+                }else{
+                    null
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                ),
+            )
         )
 
-        MbsTextField(
-            value = state.account,
-            label = Res.string.feature_settings_profile_label_customer_account,
-            onValueChange = {},
-            readOnly = true,
-        )
-
-        MbsTextField(
+        MifosOutlinedTextField(
             value = state.mobile,
-            label = Res.string.feature_settings_profile_label_phone_number,
+            label =stringResource( Res.string.feature_settings_profile_label_phone_number),
             onValueChange = { onAction(ProfileAction.OnMobileChanged(it)) },
-            isError = state.mobileError != null,
-            errorText = state.mobileError,
-            keyboardType = KeyboardType.Phone,
+            config = MifosTextFieldConfig(
+                isError =state.mobileError != null,
+                errorText = if(state.mobileError!=null){
+                    stringResource(state.mobileError)
+                }else{
+                    null
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Phone
+                ),
+            )
         )
 
         MifosButton(
@@ -215,7 +250,7 @@ private fun ProfileImageSection(
                 imageLoader = rememberImageLoader(context),
                 error = painterResource(UIRes.drawable.ic_icon_logo),
                 onLoading = {
-                    @androidx.compose.runtime.Composable {
+                    @Composable {
                         CircularProgressIndicator(
                             modifier = Modifier.size(32.dp),
                             color = MaterialTheme.colorScheme.primary,

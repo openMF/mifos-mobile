@@ -1,11 +1,26 @@
 package org.mifos.mobile.feature.settings.profile
 
 import androidx.lifecycle.viewModelScope
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.openFilePicker
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.profile_image_delete_failed
+import mifos_mobile.feature.settings.generated.resources.profile_image_update_failed
+import mifos_mobile.feature.settings.generated.resources.profile_image_update_success
+import mifos_mobile.feature.settings.generated.resources.profile_load_failed
+import mifos_mobile.feature.settings.generated.resources.profile_name_empty_error
+import mifos_mobile.feature.settings.generated.resources.profile_name_invalid_format_error
+import mifos_mobile.feature.settings.generated.resources.profile_name_too_long_error
+import mifos_mobile.feature.settings.generated.resources.profile_name_too_short_error
+import mifos_mobile.feature.settings.generated.resources.profile_too_many_attempts
+import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_message
+import mifos_mobile.feature.settings.generated.resources.profile_update_failed
+import mifos_mobile.feature.settings.generated.resources.profile_update_success
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.EmailValidationResult
@@ -18,7 +33,7 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
 ) {
     private var validationJob: Job? = null
     private var submitAttempts = 0
-    private val maxSubmitAttempts = 3
+    private val maxSubmitAttempts = 5
 
     init {
         loadProfile()
@@ -164,7 +179,7 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
         if (submitAttempts >= maxSubmitAttempts) {
             mutableStateFlow.update {
                 it.copy(
-                    dialogState = Error(
+                    dialogState = ProfileState.DialogState.Error(
                         Res.string.profile_too_many_attempts,
                     ),
                 )
@@ -265,7 +280,7 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
             } catch (_: Exception) {
                 mutableStateFlow.update {
                     it.copy(
-                        dialogState = Error(
+                        dialogState = ProfileState.DialogState.Error(
                             Res.string.profile_image_delete_failed,
                         ),
                     )

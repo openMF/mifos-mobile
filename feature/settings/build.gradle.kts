@@ -26,6 +26,14 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(projects.core.datastore)
+
+            implementation(libs.coil.kt)
+            implementation(libs.coil.kt.compose)
+            implementation(libs.coil.network.ktor)
+
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
+            implementation(libs.filekit.dialog.compose)
         }
     }
 }
