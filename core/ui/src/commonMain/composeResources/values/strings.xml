@@ -21,7 +21,7 @@
     <string name="password_checker_too_long_error">Password is too long. Maximum length is 128 characters.</string>
 
     <!-- PasswordChecker Feedback Messages -->
-    <string name="password_checker_min_length_feedback">Password should be at least 8 characters long.</string>
+    <string name="password_checker_min_length_feedback">Password should be at least 12 characters long.</string>
     <string name="password_checker_uppercase_feedback">Include at least one uppercase letter.</string>
     <string name="password_checker_lowercase_feedback">Include at least one lowercase letter.</string>
     <string name="password_checker_digit_feedback">Include at least one number.</string>

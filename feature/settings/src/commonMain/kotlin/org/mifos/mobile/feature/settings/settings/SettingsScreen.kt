@@ -73,6 +73,7 @@ internal fun SettingsScreen(
                     SettingsItems.AuthPasscode,
                     SettingsItems.Language,
                     SettingsItems.FAQ,
+                    SettingsItems.Password,
                     -> navigateToScreen.invoke(events.item)
 
                     else -> {}

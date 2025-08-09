@@ -144,6 +144,27 @@
     <string name="feature_settings_passcode_updated_message">You need to enter the new passcode to use the services of the app.</string>
     <string name="feature_settings_next">Next</string>
 
+    <string name="feature_settings_update_password">Update Password</string>
+    <string name="feature_settings_old_password">Old Password</string>
+    <string name="feature_settings_new_password">New Password</string>
+    <string name="feature_settings_confirm_new_password">Confirm New Password</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Password cannot be empty</string>
+    <string name="password_empty_error_repeat">consecutive repeating characters not allowed</string>
+    <string name="password_length_error">Password must be at least 12 characters long</string>
+    <string name="password_current_incorrect_error">Current password is incorrect</string>
+    <string name="password_validation_error">Password does not meet security requirements</string>
+    <string name="password_same_as_current_error">New password must be different from current password</string>
+    <string name="password_personal_info_error">Password should not contain personal information</string>
+    <string name="password_confirm_mismatch_error">Passwords do not match</string>
+    <string name="feature_settings_password">Password</string>
+    <string name="password_too_many_attempts">Too many failed attempts. Please wait before trying again.</string>
+
+    <string name="password_update_success">Password updated successfully</string>
+    <string name="password_update_success_message">You need to login again to use the services of the app.</string>
+    <string name="password_update_failed">Failed to update password.Try Again</string>
+    <string name="password_update_dialog_button">Login Now</string>
 
     <!-- Faq  -->
     <string name="no_questions_found">No questions found</string>

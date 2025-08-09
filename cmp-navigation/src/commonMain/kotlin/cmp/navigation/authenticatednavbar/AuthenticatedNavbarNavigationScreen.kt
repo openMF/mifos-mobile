@@ -193,7 +193,9 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
                 navigateToApplyLoanScreen = navigateToApplyLoanScreen,
             )
 
-            settingsGraph(navController)
+            settingsGraph(
+                navController = navController,
+            )
         }
     }
 }
