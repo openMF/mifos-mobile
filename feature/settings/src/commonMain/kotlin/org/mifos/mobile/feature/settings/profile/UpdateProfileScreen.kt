@@ -227,7 +227,7 @@ private fun ProfileImageSection(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(DesignToken.padding.medium),
-        modifier = modifier.padding(vertical = DesignToken.padding.average),
+        modifier = modifier.padding(vertical = DesignToken.padding.medium),
     ) {
         Box(
             modifier = Modifier
@@ -270,7 +270,7 @@ private fun ProfileImageSection(
             verticalArrangement = Arrangement.SpaceEvenly,
         ) {
             ProfileImageAction(
-                icon = UIRes.drawable.ic_icon_edit,
+                icon = MifosIcons.Edit,
                 text = stringResource(Res.string.feature_settings_profile_update_photo),
                 onClick = { onUpdate(ProfileAction.PickImage) },
                 enabled = true,
