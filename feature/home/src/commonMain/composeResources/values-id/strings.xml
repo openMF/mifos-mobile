@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">Penerima</string>
+    <string name="survey">Survei</string>
+    <string name="apply_for_loan">Ajukan Pinjaman</string>
+    <string name="charges">Biaya</string>
+    <string name="transfer">Transfer</string>
+    <string name="accounts">Akun</string>
+    <string name="recent_transactions">Transaksi Terbaru</string>
+    <string name="error_fetching_client">Gagal mengambil data klien</string>
+    <string name="no_internet_connection">Tidak ada koneksi Internet</string>
+    <string name="hello_client">Halo, %1$s</string>
+    <string name="accounts_overview">Ringkasan Akun</string>
+    <string name="total_saving">Total Tabungan</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">Total Pinjaman</string>
+    <string name="need_help">Hubungi Kami</string>
+    <string name="home">Beranda</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="third_party_transfer">Transfer ke Pihak Ketiga</string>
+    <string name="manage_beneficiaries">Kelola Penerima</string>
+    <string name="settings">Pengaturan</string>
+    <string name="about_us">Tentang Kami</string>
+    <string name="help">Bantuan</string>
+    <string name="share">Bagikan</string>
+    <string name="app_info">Info Aplikasi</string>
+    <string name="logout">Keluar</string>
+    <string name="user_query">Pertanyaan Pengguna</string>
+    <string name="no_app_to_support_action">Tidak ada aplikasi yang mendukung tindakan ini</string>
+    <string name="cancel">Batal</string>
+    <string name="dialog_logout">Apakah Anda yakin ingin keluar?</string>
+
+    <string name="feature_home_greet">Halo %1$s,</string>
+    <string name="feature_home_services">Layanan</string>
+    <string name="feature_home_saving_accounts">Rekening Tabungan</string>
+    <string name="feature_home_loan_accounts">Rekening Pinjaman</string>
+    <string name="feature_home_share_accounts">Rekening Saham</string>
+    <string name="feature_home_apply_for_loan">Ajukan Pinjaman</string>
+    <string name="feature_home_transaction_history">Riwayat Transaksi</string>
+    <string name="feature_home_charges">Biaya</string>
+    <string name="feature_home_beneficiary">Penerima</string>
+    <string name="feature_home_faq">FAQ</string>
+
+    <string name="feature_home_total_available_savings">Total Tabungan Tersedia</string>
+    <string name="feature_home_total_available_loan">Total Pinjaman Tersedia</string>
+
+    <string name="feature_home_common_error">Terjadi kesalahan</string>
+</resources>
