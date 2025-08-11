@@ -48,13 +48,14 @@ sealed class SettingsItems(
     @Contextual val icon: ImageVector,
     val route: String,
 ) {
-    @Serializable
-    data object Profile : SettingsItems(
-        title = Res.string.feature_settings_action_profile,
-        subTitle = Res.string.feature_settings_action_profile_tip,
-        icon = MifosIcons.PersonFilled,
-        route = Constants.PROFILE,
-    )
+    //TODO: commenting because we don't have an api for self edit profile
+//    @Serializable
+//    data object Profile : SettingsItems(
+//        title = Res.string.feature_settings_action_profile,
+//        subTitle = Res.string.feature_settings_action_profile_tip,
+//        icon = MifosIcons.PersonFilled,
+//        route = Constants.PROFILE,
+//    )
 
     @Serializable
     data object Password : SettingsItems(
@@ -80,13 +81,14 @@ sealed class SettingsItems(
         route = Constants.LANGUAGE,
     )
 
-    @Serializable
-    data object Theme : SettingsItems(
-        title = Res.string.feature_settings_action_theme,
-        subTitle = Res.string.feature_settings_action_theme_tip,
-        icon = MifosIcons.DarkTheme,
-        route = Constants.THEME,
-    )
+    //TODO : uncomment once ui/ux team provide a valid colours for dark theme
+//    @Serializable
+//    data object Theme : SettingsItems(
+//        title = Res.string.feature_settings_action_theme,
+//        subTitle = Res.string.feature_settings_action_theme_tip,
+//        icon = MifosIcons.DarkTheme,
+//        route = Constants.THEME,
+//    )
 
     @Serializable
     data object Endpoint : SettingsItems(
@@ -138,11 +140,11 @@ sealed class SettingsItems(
 }
 
 internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
-    SettingsItems.Profile,
+//    SettingsItems.Profile,
     SettingsItems.Password,
     SettingsItems.AuthPasscode,
     SettingsItems.Language,
-    SettingsItems.Theme,
+//    SettingsItems.Theme,
     SettingsItems.Endpoint,
     SettingsItems.AboutUs,
     SettingsItems.FAQ,
