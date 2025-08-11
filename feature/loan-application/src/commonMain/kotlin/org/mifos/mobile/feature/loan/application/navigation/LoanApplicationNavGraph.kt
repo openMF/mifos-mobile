@@ -16,8 +16,9 @@ import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.loan.application.confirmDetails.confirmDetailsDestination
 import org.mifos.mobile.feature.loan.application.confirmDetails.navigateToConfirmDetailsScreen
-import org.mifos.mobile.feature.loan.application.loanApplication.LoanApplyRoute
 import org.mifos.mobile.feature.loan.application.loanApplication.loanApplyDestination
+import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeRoute
+import org.mifos.mobile.feature.loan.application.loanType.selectLoanTypeDestination
 
 @Serializable
 data object LoanApplicationNavGraph
@@ -32,8 +33,13 @@ fun NavGraphBuilder.loanApplicationNavGraph(
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     navigation<LoanApplicationNavGraph>(
-        startDestination = LoanApplyRoute,
+        startDestination = SelectLoanTypeRoute,
     ) {
+        selectLoanTypeDestination(
+            navigateBack = navController::popBackStack,
+            navigateToLoanDescriptionScreen = {},
+        )
+
         loanApplyDestination(
             navigateBack = navController::popBackStack,
             navigateToConfirmDetailsScreen = navController::navigateToConfirmDetailsScreen,

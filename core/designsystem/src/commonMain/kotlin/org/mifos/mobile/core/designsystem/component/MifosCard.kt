@@ -12,6 +12,7 @@ package org.mifos.mobile.core.designsystem.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -46,6 +48,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fluent.ui.system.icons.FluentIcons
@@ -356,6 +360,100 @@ fun MifosUploadedCardContent(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun MifosExploreCard(
+    text: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    multiline: Boolean = true,
+    maxLines: Int = 2,
+    onClick: () -> Unit,
+) {
+    MifosCustomCard(
+        modifier = modifier
+            .height(DesignToken.sizes.inputHeight)
+            .border(
+                1.dp,
+                MaterialTheme.colorScheme.secondaryContainer,
+                DesignToken.shapes.medium,
+            ),
+        variant = CardVariant.OUTLINED,
+        onClick = onClick,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        ),
+    ) {
+        Row(
+            modifier = Modifier.padding(DesignToken.padding.large),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+        ) {
+            Image(
+                imageVector = icon,
+                contentDescription = text,
+                modifier = Modifier.size(DesignToken.sizes.iconMedium),
+            )
+
+            Text(
+                text = if (multiline) {
+                    text.replaceFirst(" ", "\n")
+                } else {
+                    text
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                style = MifosTypography.bodyMediumEmphasized,
+                maxLines = maxLines,
+                overflow = TextOverflow.MiddleEllipsis,
+                textAlign = TextAlign.Start,
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun Mifos_Explore_Card_Preview() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Row {
+            // Method 1: Automatic multiline (spaces become line breaks)
+            MifosExploreCard(
+                modifier = Modifier.weight(0.5f, true),
+                icon = MifosIcons.Money,
+                text = "Home Loan",
+                onClick = { /* Handle click */ },
+            )
+
+            // Method 2: Custom line breaks with explicit control
+            MifosExploreCard(
+                modifier = Modifier.weight(0.5f, true),
+                icon = MifosIcons.Money,
+                text = "Personal Loan",
+                onClick = { /* Handle click */ },
+            )
+        }
+
+        // Method 3: Single line version
+        MifosExploreCard(
+            icon = MifosIcons.Money,
+            text = "Savings Account",
+            multiline = true,
+            onClick = { /* Handle click */ },
+        )
+
+        MifosExploreCard(
+            icon = MifosIcons.Money,
+            text = "Business Account",
+            multiline = true,
+            onClick = { /* Handle click */ },
+        )
     }
 }
 

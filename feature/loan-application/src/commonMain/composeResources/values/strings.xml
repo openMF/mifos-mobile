@@ -94,4 +94,9 @@
     <string name="feature_apply_loan_status_failure_action">Try Again</string>
 
 
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Apply New Loan</string>
+    <string name="feature_select_loan_type_choose_loan">Choose Type of Loan</string>
+    <string name="feature_select_loan_type_empty">Currently Loan Products are not available</string>
+    <string name="feature_select_loan_type_network_issue">Make sure you connect to internet</string>
 </resources>

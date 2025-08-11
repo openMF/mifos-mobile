@@ -13,8 +13,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.loan.application.confirmDetails.ConfirmDetailsViewModel
 import org.mifos.mobile.feature.loan.application.loanApplication.LoanApplyViewModel
+import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeViewModel
 
 val loanApplicationModule = module {
+    viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanApplyViewModel)
     viewModelOf(::ConfirmDetailsViewModel)
 }
