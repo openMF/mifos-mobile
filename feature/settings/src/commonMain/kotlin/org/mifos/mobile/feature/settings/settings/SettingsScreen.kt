@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout
 import mifos_mobile.feature.settings.generated.resources.feature_settings_customer_account_no
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_message
 import mifos_mobile.feature.settings.generated.resources.feature_settings_top_bar_title
@@ -66,18 +67,7 @@ internal fun SettingsScreen(
         when (events) {
             SettingsEvents.NavigateBack -> navigateBack.invoke()
             is SettingsEvents.NavigateTo -> {
-                // Using inside of if condition to resolve crash for other screens
-                when (events.item) {
-                    SettingsItems.Help, SettingsItems.AboutUs,
-                    SettingsItems.AppInfo,
-                    SettingsItems.AuthPasscode,
-                    SettingsItems.Language,
-                    SettingsItems.FAQ,
-                    SettingsItems.Password,
-                    -> navigateToScreen.invoke(events.item)
-
-                    else -> {}
-                }
+                navigateToScreen.invoke(events.item)
             }
         }
     }
@@ -117,6 +107,7 @@ private fun SettingsDialog(
         SettingsState.DialogState.Logout -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
+                    title = stringResource(Res.string.feature_settings_action_logout),
                     message = stringResource(Res.string.feature_settings_logout_message),
                 ),
                 onDismissRequest = { onAction(SettingsAction.DismissDialog) },

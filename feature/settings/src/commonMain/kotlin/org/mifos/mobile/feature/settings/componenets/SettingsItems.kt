@@ -21,8 +21,6 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_app_info_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_auth_passcode
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_auth_passcode_tip
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_endpoint
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_endpoint_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_faq
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_faq_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_help
@@ -33,10 +31,6 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password_tip
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_profile
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_profile_tip
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme_tip
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
@@ -48,13 +42,14 @@ sealed class SettingsItems(
     @Contextual val icon: ImageVector,
     val route: String,
 ) {
-    @Serializable
-    data object Profile : SettingsItems(
-        title = Res.string.feature_settings_action_profile,
-        subTitle = Res.string.feature_settings_action_profile_tip,
-        icon = MifosIcons.PersonFilled,
-        route = Constants.PROFILE,
-    )
+    // TODO: commenting because we don't have an api for self edit profile
+//    @Serializable
+//    data object Profile : SettingsItems(
+//        title = Res.string.feature_settings_action_profile,
+//        subTitle = Res.string.feature_settings_action_profile_tip,
+//        icon = MifosIcons.PersonFilled,
+//        route = Constants.PROFILE,
+//    )
 
     @Serializable
     data object Password : SettingsItems(
@@ -80,21 +75,22 @@ sealed class SettingsItems(
         route = Constants.LANGUAGE,
     )
 
-    @Serializable
-    data object Theme : SettingsItems(
-        title = Res.string.feature_settings_action_theme,
-        subTitle = Res.string.feature_settings_action_theme_tip,
-        icon = MifosIcons.DarkTheme,
-        route = Constants.THEME,
-    )
-
-    @Serializable
-    data object Endpoint : SettingsItems(
-        title = Res.string.feature_settings_action_endpoint,
-        subTitle = Res.string.feature_settings_action_endpoint_tip,
-        icon = MifosIcons.ArchiveSettings,
-        route = Constants.ENDPOINT,
-    )
+//    TODO : uncomment once ui/ux team provide a valid colours for dark theme
+//    @Serializable
+//    data object Theme : SettingsItems(
+//        title = Res.string.feature_settings_action_theme,
+//        subTitle = Res.string.feature_settings_action_theme_tip,
+//        icon = MifosIcons.DarkTheme,
+//        route = Constants.THEME,
+//    )
+//    TODO: once ui/ux team gives this screen uncomment and implement it
+//    @Serializable
+//    data object Endpoint : SettingsItems(
+//        title = Res.string.feature_settings_action_endpoint,
+//        subTitle = Res.string.feature_settings_action_endpoint_tip,
+//        icon = MifosIcons.ArchiveSettings,
+//        route = Constants.ENDPOINT,
+//    )
 
     @Serializable
     data object AboutUs : SettingsItems(
@@ -138,12 +134,12 @@ sealed class SettingsItems(
 }
 
 internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
-    SettingsItems.Profile,
+//    SettingsItems.Profile,
     SettingsItems.Password,
     SettingsItems.AuthPasscode,
     SettingsItems.Language,
-    SettingsItems.Theme,
-    SettingsItems.Endpoint,
+//    SettingsItems.Theme,
+//    SettingsItems.Endpoint,
     SettingsItems.AboutUs,
     SettingsItems.FAQ,
     SettingsItems.Help,
