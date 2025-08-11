@@ -238,7 +238,7 @@ internal fun LoanAccountContent(
                     selectedText = state.loanProductName,
                     items = emptyMap(),
                     enabled = false,
-                    onItemSelected = {_, _ -> },
+                    onItemSelected = { _, _ -> },
                     label = stringResource(Res.string.feature_apply_loan_label_loan_product),
                 )
 
