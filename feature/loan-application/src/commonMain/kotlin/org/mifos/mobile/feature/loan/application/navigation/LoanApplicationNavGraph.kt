@@ -16,8 +16,10 @@ import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.feature.loan.application.confirmDetails.confirmDetailsDestination
 import org.mifos.mobile.feature.loan.application.confirmDetails.navigateToConfirmDetailsScreen
+import org.mifos.mobile.feature.loan.application.loanApplication.LoanApplyRoute
 import org.mifos.mobile.feature.loan.application.loanApplication.loanApplyDestination
-import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeRoute
+import org.mifos.mobile.feature.loan.application.loanProductDescription.loanProductDetailsDestination
+import org.mifos.mobile.feature.loan.application.loanProductDescription.navigateToLoanProductDetailsScreen
 import org.mifos.mobile.feature.loan.application.loanType.selectLoanTypeDestination
 
 @Serializable
@@ -33,11 +35,13 @@ fun NavGraphBuilder.loanApplicationNavGraph(
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     navigation<LoanApplicationNavGraph>(
-        startDestination = SelectLoanTypeRoute,
+        startDestination = LoanApplyRoute,
     ) {
         selectLoanTypeDestination(
             navigateBack = navController::popBackStack,
-            navigateToLoanDescriptionScreen = {},
+            navigateToLoanProductDetailsScreen = { id, name ->
+                navController.navigateToLoanProductDetailsScreen(id, name)
+            },
         )
 
         loanApplyDestination(
@@ -49,6 +53,11 @@ fun NavGraphBuilder.loanApplicationNavGraph(
             navigateBack = navController::popBackStack,
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
             navigateToStatusScreen = navigateToStatusScreen,
+        )
+
+        loanProductDetailsDestination(
+            navigateBack = navController::popBackStack,
+            navigateToApplyLoanScreen = { _, _ -> },
         )
     }
 }

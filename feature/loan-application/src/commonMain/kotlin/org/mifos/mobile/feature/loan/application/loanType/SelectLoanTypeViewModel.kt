@@ -97,7 +97,7 @@ internal class SelectLoanTypeViewModel(
             }
 
             is SelectLoanTypeAction.NavigateTo -> {
-                sendEvent(SelectLoanTypeEvent.NavigateTo(action.loanType))
+                sendEvent(SelectLoanTypeEvent.NavigateTo(action.productId, action.productName))
             }
 
             is SelectLoanTypeAction.Internal.ReceiveLoanTemplate -> handleLoanTemplate(action.template)
@@ -251,7 +251,7 @@ internal sealed interface SelectLoanTypeEvent {
      * Event to navigate to the loan application screen for a specific loan type.
      * @property loanType The selected [ProductOptions] to pass to the next screen.
      */
-    data class NavigateTo(val loanType: ProductOptions) : SelectLoanTypeEvent
+    data class NavigateTo(val productId: Int, val productName: String) : SelectLoanTypeEvent
 }
 
 /**
@@ -272,7 +272,7 @@ internal sealed interface SelectLoanTypeAction {
      * Action to navigate to the loan application screen for a specific loan type.
      * @property loanType The selected [ProductOptions].
      */
-    data class NavigateTo(val loanType: ProductOptions) : SelectLoanTypeAction
+    data class NavigateTo(val productId: Int, val productName: String) : SelectLoanTypeAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.

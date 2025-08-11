@@ -99,4 +99,37 @@
     <string name="feature_select_loan_type_choose_loan">Choose Type of Loan</string>
     <string name="feature_select_loan_type_empty">Currently Loan Products are not available</string>
     <string name="feature_select_loan_type_network_issue">Make sure you connect to internet</string>
+    <string name="feature_loan_product_details_terms">Accept Terms &amp; Conditions</string>
+
+
+    <string name="feature_loan_apply_loan">Apply %1$s Loan</string>
+    <string name="feature_loan_get_loan">Get %1$s Loan</string>
+    <string name="feature_loan_up_to">Upto %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s to %2$s Interest</string>
+    <string name="feature_loan_terms_and_conditions">Terms &amp; Conditions</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Loan Sanction and Disbursement</string>
+    <string name="feature_loan_interest_rate">Interest Rate</string>
+    <string name="feature_loan_continue">Continue</string>
+    <string name="feature_loan_repayment">Repayment</string>
+    <string name="feature_loan_security_and_collateral">Security and Collateral</string>
+    <string name="feature_loan_insurance">Insurance</string>
+    <string name="feature_loan_default">Default</string>
+    <string name="feature_loan_documentation">Documentation</string>
+    <string name="feature_loan_continue_legal_compliance">Legal Compliance</string>
+    <string name="feature_loan_amendments_and_termination">Amendments and Termination</string>
+    <string name="feature_loan_jurisdiction">Jurisdiction</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">The personal loan will be sanctioned based on the applicant’s eligibility, income stability, creditworthiness, and the lender’s internal credit policies. The lender reserves the right to approve or reject any personal loan application at its sole discretion without assigning any reason. The sanctioned loan amount may be disbursed in full or in parts, depending on the loan agreement and documentation requirements. Disbursement is subject to successful completion of KYC procedures, verification of submitted documents, and adherence to all conditions specified in the sanction letter.</string>
+    <string name="feature_personal_loan_interest_rate_description">The personal loan may carry either a fixed or floating interest rate, as chosen by the borrower at the time of loan agreement. In the case of floating interest rate loans, the applicable rate is subject to periodic revisions based on changes in the lender’s benchmark or reference rate. Such changes shall be binding on the borrower and may lead to a variation in the EMI amount and/or the loan tenure, as deemed necessary by the lender.</string>
+    <string name="feature_personal_loan_repayment_details">Repayment of the personal loan will be made through Equated Monthly Installments (EMIs) comprising both principal and interest components. EMIs will begin from the date specified in the loan agreement and will continue on a monthly basis until the full loan amount, along with applicable interest, is repaid. Prepayment or part payment may be allowed in accordance with the lender’s prevailing policies and may attract certain charges, particularly for fixed-rate loans.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Personal loans are typically unsecured in nature and do not require collateral. However, the lender reserves the right to request additional guarantees or security in exceptional cases, depending on the borrower’s credit profile and loan amount. Any such requirements will be clearly stated in the sanction letter. The borrower will bear all costs associated with documentation or legal formalities, if applicable.</string>
+    <string name="feature_personal_loan_insurance_details">While personal loans do not generally require asset insurance, the lender may recommend that the borrower opt for a life insurance policy to safeguard the outstanding loan amount in the event of the borrower’s death. This is not mandatory but is advisable as a financial protection measure for the borrower’s family or dependents.</string>
+    <string name="feature_personal_loan_default_details">Non-payment or delayed payment of EMIs will constitute a default. In such instances, the lender may initiate recovery procedures to collect the outstanding dues, which may include legal proceedings. Penal interest and other charges may be applied on overdue amounts. Continued or repeated default can negatively affect the borrower’s credit score and future borrowing ability.</string>
+    <string name="feature_personal_loan_documentation_details">The borrower is required to submit accurate and complete documentation, including but not limited to identity proof, address proof, income details, bank statements, and any other documents requested by the lender. Any discrepancies, misrepresentation, or falsification in the submitted documents may result in the rejection of the loan application or termination of the loan agreement, along with possible legal implications.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">The borrower must ensure full compliance with all applicable local, state, and national laws concerning their financial obligations. This includes timely payment of taxes, adherence to regulatory requirements, and submission of valid documents. The lender shall not be held liable for any legal breaches committed by the borrower.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">The lender may, from time to time, revise or update these terms and conditions, subject to appropriate prior notice to the borrower. The loan agreement shall be considered terminated upon full repayment of the loan amount or through foreclosure procedures initiated due to default.</string>
+    <string name="feature_personal_loan_jurisdiction_details">All disputes arising out of or in relation to the personal loan agreement shall fall under the exclusive jurisdiction of the courts at the location of the lender’s registered office, unless otherwise specified in the agreement.</string>
+
 </resources>

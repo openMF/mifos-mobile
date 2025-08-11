@@ -36,11 +36,11 @@ import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import org.mifos.mobile.feature.loan.application.component.ConfirmDetailsCard
 import kotlin.time.ExperimentalTime
 
 @Composable
@@ -134,7 +134,7 @@ internal fun ConfirmDetailsScreenContent(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraLarge),
         ) {
-            ConfirmDetailsCard(state.details)
+            MifosDetailsCard(state.details)
 
             MifosButton(
                 modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
