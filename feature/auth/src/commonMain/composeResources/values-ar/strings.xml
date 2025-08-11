@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="register">تسجيل</string>
+    <string name="login_failed">فشل تسجيل الدخول، يرجى المحاولة مرة أخرى لاحقاً.</string>
+    <string name="toast_welcome">مرحباً %1$s</string>
+    <string name="password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="create_an_account">إنشاء حساب</string>
+    <string name="rb_mobile">الهاتف المحمول</string>
+    <string name="rb_email">البريد الإلكتروني</string>
+    <string name="account_number">رقم الحساب</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">اسم العائلة</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="verification_mode">وضع التحقق</string>
+    <string name="dialog_cancel_registration_message">هل تريد إلغاء تسجيل حساب جديد؟</string>
+    <string name="dialog_cancel_registration_title">إلغاء التسجيل</string>
+    <string name="request_id">معرف الطلب</string>
+    <string name="empty_requestid">معرف الطلب لا يمكن أن يكون فارغاً</string>
+    <string name="authentication_token">رمز المصادقة</string>
+    <string name="empty_authentication_token">رمز المصادقة لا يمكن أن يكون فارغاً</string>
+    <string name="verify">تحقق</string>
+    <string name="verified">تم التحقق من المستخدم بنجاح</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="could_not_register_user_error">لم نتمكن من تسجيل المستخدم.</string>
+    <string name="password_strength_weak">ضعيفة</string>
+    <string name="password_strength_medium">متوسطة</string>
+    <string name="password_strength_strong">قوية</string>
+    <string name="password_strength_very_strong">قوية جداً</string>
+    <string name="error_message_server">خطأ في تحميل الاستجابة من الخادم</string>
+    <string name="error_validation_blank">%1$s لا يمكن أن يكون فارغاً</string>
+    <string name="error_validation_minimum_chars">%1$s لا يمكن أن يكون أقل من %2$d أحرف</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s لا يمكن أن يحتوي على %2$s</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s لا يمكن أن يبدأ أو ينتهي بمسافة فارغة</string>
+    <string name="error_username_greater_than_six">يجب أن يكون اسم المستخدم أكثر من 6 أحرف</string>
+    <string name="not_contain_username">مسافات</string>
+    <string name="invalid_phn_number">رقم هاتف غير صحيح</string>
+    <string name="error_invalid_password">يجب أن تكون كلمة المرور 8 أحرف على الأقل</string>
+    <string name="error_invalid_email">معرف بريد إلكتروني غير صحيح</string>
+    <string name="error_password_not_match">كلمة المرور غير متطابقة</string>
+    <string name="error_enter_email">يرجى إدخال بريد إلكتروني صحيح</string>
+    <string name="error_mobile_length">يجب أن يكون رقم الهاتف المحمول 10 أرقام</string>
+    <string name="error_enter_account_number">يرجى إدخال رقم حسابك</string>
+    <string name="error_enter_mobile_number">يرجى إدخال رقم هاتفك المحمول</string>
+    <string name="error_enter_first_name">يرجى إدخال اسمك الأول</string>
+    <string name="error_enter_last_name">يرجى إدخال اسم عائلتك</string>
+    <string name="error_enter_user_name">يرجى إدخال اسم المستخدم</string>
+    <string name="error_enter_country">يرجى إدخال بلدك</string>
+
+    <string name="feature_sign_in_title">تسجيل الدخول</string>
+    <string name="feature_sign_in_sub_title">أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول</string>
+    <string name="feature_sign_in_username_label">اسم المستخدم أو البريد الإلكتروني</string>
+    <string name="feature_sign_in_password_label">كلمة المرور</string>
+    <string name="feature_sign_in_forgot_password">نسيت كلمة المرور؟</string>
+    <string name="feature_sign_in_Sign_in">تسجيل الدخول</string>
+    <string name="feature_sign_in_dont_have_an_account">ليس لديك حساب؟</string>
+    <string name="feature_sign_in_sign_up">سجل الآن!</string>
+    <string name="feature_sign_in_username_error">عنوان البريد الإلكتروني غير موجود</string>
+    <string name="feature_sign_in_password_error">كلمة المرور غير صحيحة!</string>
+
+    <string name="feature_signup_title">التسجيل</string>
+    <string name="feature_signup_sub_title">أنشئ حساباً للمتابعة!</string>
+    <string name="feature_signup_first_name_label">الاسم الأول</string>
+    <string name="feature_signup_middle_name_label">الاسم الأوسط</string>
+    <string name="feature_signup_last_name_label">اسم العائلة</string>
+    <string name="feature_signup_email_label">البريد الإلكتروني</string>
+    <string name="feature_signup_cell_phone_label">الهاتف المحمول</string>
+    <string name="feature_signup_customer_account_label">حساب العميل</string>
+    <string name="feature_signup_password_label">كلمة المرور</string>
+    <string name="feature_signup_confirm_password_label">تأكيد كلمة المرور</string>
+    <string name="feature_signup_submit">إرسال</string>
+    <string name="feature_signup_already_have_an_account">لديك حساب بالفعل؟</string>
+    <string name="feature_signup_log_in">سجل الدخول!</string>
+    <string name="feature_signup_character_rules">قواعد الأحرف</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">الاسم يحتوي على حرف غير صحيح</string>
+    <string name="feature_signup_error_first_name_empty">الاسم الأول لا يمكن أن يكون فارغاً</string>
+    <string name="feature_signup_error_middle_name_empty">الاسم الأوسط لا يمكن أن يكون فارغاً</string>
+    <string name="feature_signup_error_last_name_empty">اسم العائلة لا يمكن أن يكون فارغاً</string>
+    <string name="feature_signup_error_invalid_email">عنوان بريد إلكتروني غير صحيح</string>
+    <string name="feature_signup_error_invalid_mobile_number">رقم هاتف محمول غير صحيح</string>
+    <string name="feature_signup_error_customer_account_empty">حساب العميل مطلوب</string>
+    <string name="feature_signup_error_customer_account_not_valid">قدم حساب عميل صحيح</string>
+    <string name="feature_signup_error_password_required_error">كلمة المرور مطلوبة</string>
+    <string name="feature_signup_error_password_short">يجب أن تكون كلمة المرور 6 أحرف على الأقل</string>
+    <string name="feature_signup_error_password_mismatch">كلمات المرور غير متطابقة</string>
+    <string name="feature_signup_error_name_contains_digits">الاسم يجب ألا يحتوي على أرقام</string>
+    <string name="feature_signup_error_name_contains_symbols">الاسم يجب ألا يحتوي على رموز ومسافات</string>
+    <string name="feature_signup_error_name_contains_emoji">النص يجب ألا يحتوي على رموز تعبيرية أو أحرف غير صحيحة</string>
+    <string name="feature_signup_user_registered_successfully">تم تسجيل المستخدم بنجاح</string>
+    <string name="feature_signup_user_registered_successfully_tip">يمكنك الآن تسجيل الدخول باستخدام اسم المستخدم (رقم الهاتف) وكلمة المرور.</string>
+    <string name="feature_signup_user_registered_failed">فشل في تسجيل المستخدم</string>
+    <string name="feature_signup_user_registered_failed_tip">حدث خطأ في تسجيل المستخدم. يرجى المحاولة مرة أخرى.</string>
+
+    <string name="feature_upload_id_title">رفع الهوية</string>
+    <string name="feature_upload_id_subtitle">ارفع هويتك وصورتك للتحقق!</string>
+    <string name="feature_upload_id_upload_your_id">ارفع هويتك</string>
+    <string name="feature_upload_id_upload_your_photo">ارفع صورتك</string>
+    <string name="feature_upload_id_remove_file">إزالة الملف</string>
+    <string name="feature_upload_id_view_file">عرض الملف</string>
+    <string name="feature_upload_id_select_new_file">اختر ملف جديد</string>
+    <string name="feature_upload_id_identification_doc_label">وثيقة الهوية</string>
+    <string name="feature_upload_id_profile_photo_label">صورة الملف الشخصي</string>
+    <string name="feature_upload_id_mobile_label">الهاتف المحمول</string>
+    <string name="feature_upload_id_national_id_label">رقم الهوية الوطنية</string>
+    <string name="feature_upload_id_dob_label">تاريخ الميلاد</string>
+    <string name="feature_upload_id_edit_prompt">تريد تعديل تفاصيلك الشخصية؟</string>
+    <string name="feature_upload_id_take_me_back">أعدني</string>
+    <string name="feature_upload_id_ok">موافق</string>
+    <string name="feature_upload_id_cancel">إلغاء</string>
+    <string name="feature_common_submit">إرسال</string>
+
+    <string name="feature_upload_id_error_field_empty">هذا الحقل لا يمكن أن يكون فارغاً</string>
+    <string name="feature_upload_id_error_mobile_not_valid">أدخل رقم هاتف محمول صحيح من 10 أرقام</string>
+    <string name="feature_upload_id_error_id_required">يرجى رفع هويتك</string>
+    <string name="feature_upload_id_error_photo_required">يرجى رفع صورتك</string>
+    <string name="feature_upload_id_error_dob_required">تاريخ الميلاد مطلوب</string>
+    <string name="feature_upload_id_upload_success">تم رفع الملف بنجاح</string>
+    <string name="feature_upload_id_upload_failed">فشل في رفع الملف. يرجى المحاولة مرة أخرى.</string>
+    <string name="feature_upload_id_error_invalid_dob">تاريخ الميلاد لا يمكن أن يكون اليوم أو تاريخ مستقبلي</string>
+    <string name="feature_upload_id_generic_error">حدث خطأ ما. يرجى المحاولة مرة أخرى لاحقاً.</string>
+
+    <string name="feature_otp_title">مصادقة OTP</string>
+    <string name="feature_otp_subtitle">تحقق من بريدك الإلكتروني!</string>
+    <string name="feature_otp_message">لإكمال تسجيلك، تحقق من بريدك الإلكتروني. يجب أن تكون قد تلقيت رمز مصادقة (إذا لم تتلق البريد الإلكتروني، اختر خيار الإعادة الإرسال). يجب عليك تقديمه أدناه.</string>
+    <string name="feature_otp_tip">لم تتلق الرمز؟</string>
+    <string name="feature_otp_action_tip">أعد الإرسال الآن</string>
+    <string name="feature_otp_authentication_code_label">رمز المصادقة</string>
+    <string name="feature_otp_request_id_label">معرف الطلب</string>
+
+    <string name="feature_common_next">التالي</string>
+    <string name="feature_common_cancel">إلغاء</string>
+
+    <string name="feature_otp_required_error">OTP مطلوب</string>
+    <string name="feature_otp_invalid_error">أدخل OTP صحيح</string>
+    <string name="feature_otp_request_id_error">معرف الطلب مطلوب</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">تعيين كلمة المرور</string>
+    <string name="feature_set_new_password_message">عيّن كلمة مرور آمنة جديدة الآن!</string>
+    <string name="feature_set_new_password_new_password_label">كلمة المرور الجديدة</string>
+    <string name="feature_set_new_password_confirm_password_label">تأكيد كلمة المرور الجديدة</string>
+    <string name="feature_set_new_password_submit">إرسال</string>
+    <string name="feature_set_new_password_tip">تتذكر كلمة مرورك؟</string>
+    <string name="feature_set_new_password_action_tip">تسجيل الدخول</string>
+
+    <string name="feature_common_error_password_required_error">كلمة المرور مطلوبة</string>
+    <string name="feature_common_error_password_short">يجب أن تكون كلمة المرور 6 أحرف على الأقل</string>
+    <string name="feature_common_error_password_mismatch">كلمات المرور غير متطابقة</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">استرداد الآن</string>
+    <string name="feature_recover_now_message">نسيت كلمة مرورك، لا تقلق! نحن نساعدك. أعد تعيين كلمة مرورك الآن!</string>
+    <string name="feature_recover_now_phone_number_label">رقم الهاتف</string>
+    <string name="feature_recover_now_email_label">البريد الإلكتروني</string>
+    <string name="feature_recover_now_verifying">جاري التحقق</string>
+    <string name="feature_recover_now_email_required">البريد الإلكتروني مطلوب</string>
+    <string name="feature_recover_now_phone_number_required">رقم الهاتف مطلوب</string>
+    <string name="feature_recover_now_email_format_error">بريد إلكتروني غير صحيح</string>
+    <string name="feature_recover_now_phone_number_error">رقم هاتف غير صحيح</string>
+    <string name="feature_recover_now_invalid_phone_number_error">رقم الهاتف لا يمكن أن يحتوي على أحرف أو رموز</string>
+    <string name="feature_recover_now_remember_your_password">تتذكر كلمة مرورك؟</string>
+    <string name="feature_recover_now_log_in">سجل الدخول!</string>
+
+    <string name="feature_recover_now_recovered_successfully">تم استرداد كلمة المرور بنجاح</string>
+    <string name="feature_recover_now_recovered_successfully_tip">يمكنك الآن تسجيل الدخول باستخدام اسم المستخدم (رقم الهاتف) وكلمة المرور.</string>
+    <string name="feature_recover_now_recovered_failed">فشل في استرداد كلمة المرور</string>
+    <string name="feature_recover_now_registered_failed_tip">حدث خطأ في استرداد كلمة مرور المستخدم. يرجى المحاولة مرة أخرى.</string>
+</resources>

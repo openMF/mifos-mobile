@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">Aucune connexion Internet</string>
+    <string name="register">S'inscrire</string>
+    <string name="login_failed">Échec de la connexion, veuillez réessayer plus tard.</string>
+    <string name="toast_welcome">Bienvenue %1$s</string>
+    <string name="password">Mot de passe</string>
+    <string name="login">Se connecter</string>
+    <string name="create_an_account">Créer un compte</string>
+    <string name="rb_mobile">mobile</string>
+    <string name="rb_email">e-mail</string>
+    <string name="account_number">Numéro de compte</string>
+    <string name="username">Nom d'utilisateur</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom de famille</string>
+    <string name="phone_number">Numéro de téléphone</string>
+    <string name="email">E-mail</string>
+    <string name="confirm_password">Confirmer le mot de passe</string>
+    <string name="verification_mode">Mode de vérification</string>
+    <string name="dialog_cancel_registration_message">Voulez-vous annuler l'inscription d'un nouveau compte ?</string>
+    <string name="dialog_cancel_registration_title">Annuler l'inscription</string>
+    <string name="request_id">ID de demande</string>
+    <string name="empty_requestid">L'ID de demande ne peut pas être vide</string>
+    <string name="authentication_token">Jeton d'authentification</string>
+    <string name="empty_authentication_token">Le jeton d'authentification ne peut pas être vide</string>
+    <string name="verify">Vérifier</string>
+    <string name="verified">L'utilisateur a été vérifié avec succès</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="could_not_register_user_error">Nous n'avons pas pu enregistrer l'utilisateur.</string>
+    <string name="password_strength_weak">Faible</string>
+    <string name="password_strength_medium">Moyen</string>
+    <string name="password_strength_strong">Fort</string>
+    <string name="password_strength_very_strong">Très fort</string>
+    <string name="error_message_server">Erreur lors du chargement de la réponse du serveur</string>
+    <string name="error_validation_blank">%1$s ne peut pas être vide</string>
+    <string name="error_validation_minimum_chars">%1$s ne peut pas avoir moins de %2$d caractères</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s ne peut pas contenir %2$s</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s ne peut pas commencer ou finir par un espace vide</string>
+    <string name="error_username_greater_than_six">Le nom d'utilisateur doit contenir plus de 6 lettres</string>
+    <string name="not_contain_username">Espaces</string>
+    <string name="invalid_phn_number">Numéro de téléphone invalide</string>
+    <string name="error_invalid_password">Le mot de passe doit contenir au moins 8 caractères</string>
+    <string name="error_invalid_email">Adresse e-mail invalide</string>
+    <string name="error_password_not_match">Le mot de passe ne correspond pas</string>
+    <string name="error_enter_email">Veuillez saisir un e-mail valide</string>
+    <string name="error_mobile_length">Le numéro de mobile doit contenir 10 chiffres</string>
+    <string name="error_enter_account_number">Veuillez saisir votre numéro de compte</string>
+    <string name="error_enter_mobile_number">Veuillez saisir votre numéro de mobile</string>
+    <string name="error_enter_first_name">Veuillez saisir votre prénom</string>
+    <string name="error_enter_last_name">Veuillez saisir votre nom de famille</string>
+    <string name="error_enter_user_name">Veuillez saisir votre nom d'utilisateur</string>
+    <string name="error_enter_country">Veuillez saisir votre pays</string>
+
+    <string name="feature_sign_in_title">Se connecter</string>
+    <string name="feature_sign_in_sub_title">Saisissez votre e-mail et mot de passe pour vous connecter</string>
+    <string name="feature_sign_in_username_label">Nom d'utilisateur ou e-mail</string>
+    <string name="feature_sign_in_password_label">Mot de passe</string>
+    <string name="feature_sign_in_forgot_password">Mot de passe oublié ?</string>
+    <string name="feature_sign_in_Sign_in">Se connecter</string>
+    <string name="feature_sign_in_dont_have_an_account">Vous n'avez pas de compte ?</string>
+    <string name="feature_sign_in_sign_up">Inscrivez-vous !</string>
+    <string name="feature_sign_in_username_error">Adresse e-mail introuvable</string>
+    <string name="feature_sign_in_password_error">Votre mot de passe n'est pas correct !</string>
+
+    <string name="feature_signup_title">S'inscrire</string>
+    <string name="feature_signup_sub_title">Créez un compte pour continuer !</string>
+    <string name="feature_signup_first_name_label">Prénom</string>
+    <string name="feature_signup_middle_name_label">Deuxième prénom</string>
+    <string name="feature_signup_last_name_label">Nom de famille</string>
+    <string name="feature_signup_email_label">E-mail</string>
+    <string name="feature_signup_cell_phone_label">Téléphone portable</string>
+    <string name="feature_signup_customer_account_label">Compte client</string>
+    <string name="feature_signup_password_label">Mot de passe</string>
+    <string name="feature_signup_confirm_password_label">Confirmer le mot de passe</string>
+    <string name="feature_signup_submit">Soumettre</string>
+    <string name="feature_signup_already_have_an_account">Vous avez déjà un compte ?</string>
+    <string name="feature_signup_log_in">Connectez-vous !</string>
+    <string name="feature_signup_character_rules">Règles de caractères</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">Le nom contient un caractère invalide</string>
+    <string name="feature_signup_error_first_name_empty">Le prénom ne peut pas être vide</string>
+    <string name="feature_signup_error_middle_name_empty">Le deuxième prénom ne peut pas être vide</string>
+    <string name="feature_signup_error_last_name_empty">Le nom de famille ne peut pas être vide</string>
+    <string name="feature_signup_error_invalid_email">Adresse e-mail invalide</string>
+    <string name="feature_signup_error_invalid_mobile_number">Numéro de mobile invalide</string>
+    <string name="feature_signup_error_customer_account_empty">Le compte client est requis</string>
+    <string name="feature_signup_error_customer_account_not_valid">Fournissez un compte client valide</string>
+    <string name="feature_signup_error_password_required_error">Le mot de passe est requis</string>
+    <string name="feature_signup_error_password_short">Le mot de passe doit contenir au moins 6 caractères</string>
+    <string name="feature_signup_error_password_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="feature_signup_error_name_contains_digits">Le nom ne doit pas contenir de chiffres</string>
+    <string name="feature_signup_error_name_contains_symbols">Le nom ne doit pas contenir de symboles et d'espaces</string>
+    <string name="feature_signup_error_name_contains_emoji">Le texte ne doit pas contenir d'emoji ou de caractères invalides</string>
+    <string name="feature_signup_user_registered_successfully">Utilisateur enregistré avec succès</string>
+    <string name="feature_signup_user_registered_successfully_tip">Vous pouvez maintenant vous connecter avec votre nom d'utilisateur (numéro de téléphone) et mot de passe.</string>
+    <string name="feature_signup_user_registered_failed">Échec de l'enregistrement de l'utilisateur</string>
+    <string name="feature_signup_user_registered_failed_tip">Il y a eu une erreur lors de l'enregistrement de l'utilisateur. Veuillez réessayer.</string>
+
+    <string name="feature_upload_id_title">Télécharger une pièce d'identité</string>
+    <string name="feature_upload_id_subtitle">Téléchargez votre pièce d'identité et votre photo pour vérification !</string>
+    <string name="feature_upload_id_upload_your_id">Téléchargez votre pièce d'identité</string>
+    <string name="feature_upload_id_upload_your_photo">Téléchargez votre photo</string>
+    <string name="feature_upload_id_remove_file">Supprimer le fichier</string>
+    <string name="feature_upload_id_view_file">Voir le fichier</string>
+    <string name="feature_upload_id_select_new_file">Sélectionner un nouveau fichier</string>
+    <string name="feature_upload_id_identification_doc_label">Document d'identité</string>
+    <string name="feature_upload_id_profile_photo_label">Photo de profil</string>
+    <string name="feature_upload_id_mobile_label">Téléphone portable</string>
+    <string name="feature_upload_id_national_id_label">Numéro d'identité nationale</string>
+    <string name="feature_upload_id_dob_label">Date de naissance</string>
+    <string name="feature_upload_id_edit_prompt">Voulez-vous modifier vos informations personnelles ?</string>
+    <string name="feature_upload_id_take_me_back">Ramène-moi</string>
+    <string name="feature_upload_id_ok">OK</string>
+    <string name="feature_upload_id_cancel">Annuler</string>
+    <string name="feature_common_submit">Soumettre</string>
+
+    <string name="feature_upload_id_error_field_empty">Ce champ ne peut pas être vide</string>
+    <string name="feature_upload_id_error_mobile_not_valid">Saisissez un numéro de mobile valide à 10 chiffres</string>
+    <string name="feature_upload_id_error_id_required">Veuillez télécharger votre pièce d'identité</string>
+    <string name="feature_upload_id_error_photo_required">Veuillez télécharger votre photo</string>
+    <string name="feature_upload_id_error_dob_required">La date de naissance est requise</string>
+    <string name="feature_upload_id_upload_success">Fichier téléchargé avec succès</string>
+    <string name="feature_upload_id_upload_failed">Échec du téléchargement du fichier. Veuillez réessayer.</string>
+    <string name="feature_upload_id_error_invalid_dob">La date de naissance ne peut pas être aujourd'hui ou une date future</string>
+    <string name="feature_upload_id_generic_error">Quelque chose s'est mal passé. Veuillez réessayer plus tard.</string>
+
+    <string name="feature_otp_title">Authentification OTP</string>
+    <string name="feature_otp_subtitle">Vérifiez votre e-mail !</string>
+    <string name="feature_otp_message">Pour terminer votre inscription, vérifiez votre e-mail. Vous devriez avoir reçu un code d'authentification (si vous ne recevez pas l'e-mail, sélectionnez l'option de renvoi). Vous devez le fournir ci-dessous.</string>
+    <string name="feature_otp_tip">Vous n'avez pas reçu le code ?</string>
+    <string name="feature_otp_action_tip">Renvoyer maintenant</string>
+    <string name="feature_otp_authentication_code_label">Code d'authentification</string>
+    <string name="feature_otp_request_id_label">ID de demande</string>
+
+    <string name="feature_common_next">Suivant</string>
+    <string name="feature_common_cancel">Annuler</string>
+
+    <string name="feature_otp_required_error">OTP requis</string>
+    <string name="feature_otp_invalid_error">Saisissez un OTP valide</string>
+    <string name="feature_otp_request_id_error">L'ID de demande est requis</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">Définir le mot de passe</string>
+    <string name="feature_set_new_password_message">Définissez votre nouveau mot de passe sécurisé maintenant !</string>
+    <string name="feature_set_new_password_new_password_label">Nouveau mot de passe</string>
+    <string name="feature_set_new_password_confirm_password_label">Confirmer le nouveau mot de passe</string>
+    <string name="feature_set_new_password_submit">Soumettre</string>
+    <string name="feature_set_new_password_tip">Vous vous souvenez de votre mot de passe ?</string>
+    <string name="feature_set_new_password_action_tip">Se connecter</string>
+
+    <string name="feature_common_error_password_required_error">Le mot de passe est requis</string>
+    <string name="feature_common_error_password_short">Le mot de passe doit contenir au moins 6 caractères</string>
+    <string name="feature_common_error_password_mismatch">Les mots de passe ne correspondent pas</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">Récupérer maintenant</string>
+    <string name="feature_recover_now_message">Vous avez oublié votre mot de passe, ne vous inquiétez pas ! Nous vous aidons. Réinitialisez votre mot de passe maintenant !</string>
+    <string name="feature_recover_now_phone_number_label">Numéro de téléphone</string>
+    <string name="feature_recover_now_email_label">E-mail</string>
+    <string name="feature_recover_now_verifying">Vérification en cours</string>
+    <string name="feature_recover_now_email_required">L'e-mail est requis</string>
+    <string name="feature_recover_now_phone_number_required">Le numéro de téléphone est requis</string>
+    <string name="feature_recover_now_email_format_error">E-mail invalide</string>
+    <string name="feature_recover_now_phone_number_error">Numéro de téléphone invalide</string>
+    <string name="feature_recover_now_invalid_phone_number_error">Le numéro de téléphone ne peut pas contenir de lettres ou de symboles</string>
+    <string name="feature_recover_now_remember_your_password">Vous vous souvenez de votre mot de passe ?</string>
+    <string name="feature_recover_now_log_in">Connectez-vous !</string>
+
+    <string name="feature_recover_now_recovered_successfully">Récupération du mot de passe réussie</string>
+    <string name="feature_recover_now_recovered_successfully_tip">Vous pouvez maintenant vous connecter avec votre nom d'utilisateur (numéro de téléphone) et mot de passe.</string>
+    <string name="feature_recover_now_recovered_failed">Échec de la récupération du mot de passe</string>
+    <string name="feature_recover_now_registered_failed_tip">Il y a eu une erreur lors de la récupération du mot de passe de l'utilisateur. Veuillez réessayer.</string>
+</resources>
