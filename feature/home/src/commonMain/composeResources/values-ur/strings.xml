@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">مستفیدین</string>
+    <string name="survey">سروے</string>
+    <string name="apply_for_loan">قرض کے لیے درخواست دیں</string>
+    <string name="charges">چارجز</string>
+    <string name="transfer">منتقلی</string>
+    <string name="accounts">اکاؤنٹس</string>
+    <string name="recent_transactions">حالیہ لین دین</string>
+    <string name="error_fetching_client">کلائنٹ حاصل کرنے میں ناکام</string>
+    <string name="no_internet_connection">انٹرنیٹ کنکشن نہیں ہے</string>
+    <string name="hello_client">السلام علیکم، ‎%1$s</string>
+    <string name="accounts_overview">اکاؤنٹس کا جائزہ</string>
+    <string name="total_saving">کل بچت</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">کل قرض</string>
+    <string name="need_help">ہم سے رابطہ کریں</string>
+    <string name="home">ہوم</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">مائيفوس موبائل</string>
+    <string name="third_party_transfer">تھرڈ پارٹی منتقلی</string>
+    <string name="manage_beneficiaries">مستفیدین کا انتظام کریں</string>
+    <string name="settings">سیٹنگز</string>
+    <string name="about_us">ہمارے بارے میں</string>
+    <string name="help">مدد</string>
+    <string name="share">شیئر کریں</string>
+    <string name="app_info">ایپ کی معلومات</string>
+    <string name="logout">لاگ آؤٹ</string>
+    <string name="user_query">صارف کا سوال</string>
+    <string name="no_app_to_support_action">اس عمل کی حمایت کرنے والی کوئی ایپ موجود نہیں ہے</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="dialog_logout">کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟</string>
+
+    <string name="feature_home_greet">السلام علیکم ‎%1$s،</string>
+    <string name="feature_home_services">سروسز</string>
+    <string name="feature_home_saving_accounts">بچت اکاؤنٹس</string>
+    <string name="feature_home_loan_accounts">قرض اکاؤنٹس</string>
+    <string name="feature_home_share_accounts">شیئر اکاؤنٹس</string>
+    <string name="feature_home_apply_for_loan">قرض کے لیے درخواست دیں</string>
+    <string name="feature_home_transaction_history">لین دین کی تاریخ</string>
+    <string name="feature_home_charges">چارجز</string>
+    <string name="feature_home_beneficiary">مستفید</string>
+    <string name="feature_home_faq">عمومی سوالات</string>
+
+    <string name="feature_home_total_available_savings">کل دستیاب بچت</string>
+    <string name="feature_home_total_available_loan">کل دستیاب قرض</string>
+
+    <string name="feature_home_common_error">کچھ غلط ہو گیا</string>
+</resources>

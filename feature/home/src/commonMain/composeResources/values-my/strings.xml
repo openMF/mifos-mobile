@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">အကျိုးခံစားသူများ</string>
+    <string name="survey">စစ်တမ်းများ</string>
+    <string name="apply_for_loan">ချေးငွေအတွက် လျှောက်ထားရန်</string>
+    <string name="charges">ကြေး</string>
+    <string name="transfer">လွှဲပြောင်း</string>
+    <string name="accounts">အကောင့်များ</string>
+    <string name="recent_transactions">မကြာမီ လုပ်ငန်းဆောင်တာများ</string>
+    <string name="error_fetching_client">ဝန်ဆောင်မှုယူသူအား ရယူခြင်း မအောင်မြင်ပါ</string>
+    <string name="no_internet_connection">အင်တာနက် ချိတ်ဆက်မှု မရှိပါ</string>
+    <string name="hello_client">ဟယ်လို၊ %1$s</string>
+    <string name="accounts_overview">အကောင့် အနှစ်ချုပ်</string>
+    <string name="total_saving">စုဆောင်းငွေ စုစုပေါင်း</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">ချေးငွေ စုစုပေါင်း</string>
+    <string name="need_help">ကျွန်ုပ်တို့နှင့် ဆက်သွယ်ပါ</string>
+    <string name="home">မူလစာမျက်နှာ</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">မိုင်ဖို့စ် မိုဘိုင်း</string>
+    <string name="third_party_transfer">တတိယပါတီ လွှဲပြောင်းခြင်း</string>
+    <string name="manage_beneficiaries">အကျိုးခံစားသူများကို စီမံပါ</string>
+    <string name="settings">ဆက်တင်များ</string>
+    <string name="about_us">ကျွန်ုပ်တို့အကြောင်း</string>
+    <string name="help">အကူအညီ</string>
+    <string name="share">မျှဝေပါ</string>
+    <string name="app_info">အပ်ပလီကေးရှင်း အချက်အလက်</string>
+    <string name="logout">ထွက်ရန်</string>
+    <string name="user_query">အသုံးပြုသူ မေးခြင်း</string>
+    <string name="no_app_to_support_action">ဤလုပ်ဆောင်မှုကို ပံ့ပိုးမည့် အပ်မရှိပါ</string>
+    <string name="cancel">မလုပ်တော့ပါ</string>
+    <string name="dialog_logout">ထွက်လိုသည်မှာ သေချာပါသလား?</string>
+
+    <string name="feature_home_greet">ဟယ်လို %1$s,</string>
+    <string name="feature_home_services">ဝန်ဆောင်မှုများ</string>
+    <string name="feature_home_saving_accounts">စုဆောင်းငွေ အကောင့်များ</string>
+    <string name="feature_home_loan_accounts">ချေးငွေ အကောင့်များ</string>
+    <string name="feature_home_share_accounts">ဝေစု အကောင့်များ</string>
+    <string name="feature_home_apply_for_loan">ချေးငွေအတွက် လျှောက်ထားရန်</string>
+    <string name="feature_home_transaction_history">ငွေလွှဲမှတ်တမ်း</string>
+    <string name="feature_home_charges">ကြေး</string>
+    <string name="feature_home_beneficiary">အကျိုးခံစားသူ</string>
+    <string name="feature_home_faq">မေးလေ့ရှိသောမေးခွန်းများ</string>
+
+    <string name="feature_home_total_available_savings">လက်ရှိ ရနိုင်သော စုဆောင်းငွေ စုစုပေါင်း</string>
+    <string name="feature_home_total_available_loan">လက်ရှိ ရနိုင်သော ချေးငွေ စုစုပေါင်း</string>
+
+    <string name="feature_home_common_error">တစ်စုံတစ်ခု မှားနေသည်</string>
+</resources>

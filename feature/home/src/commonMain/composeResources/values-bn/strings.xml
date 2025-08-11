@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">উপকারভোগী</string>
+    <string name="survey">সমীক্ষা</string>
+    <string name="apply_for_loan">ঋণের জন্য আবেদন করুন</string>
+    <string name="charges">চার্জ</string>
+    <string name="transfer">হস্তান্তর</string>
+    <string name="accounts">অ্যাকাউন্ট</string>
+    <string name="recent_transactions">সাম্প্রতিক লেনদেন</string>
+    <string name="error_fetching_client">ক্লায়েন্ট আনতে ব্যর্থ</string>
+    <string name="no_internet_connection">ইন্টারনেট সংযোগ নেই</string>
+    <string name="hello_client">হ্যালো, %1$s</string>
+    <string name="accounts_overview">অ্যাকাউন্টের সংক্ষিপ্ত বিবরণ</string>
+    <string name="total_saving">মোট সঞ্চয়</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">মোট ঋণ</string>
+    <string name="need_help">আমাদের সাথে যোগাযোগ করুন</string>
+    <string name="home">হোম</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">মাইফোস মোবাইল</string>
+    <string name="third_party_transfer">তৃতীয় পক্ষ হস্তান্তর</string>
+    <string name="manage_beneficiaries">উপকারভোগীদের পরিচালনা করুন</string>
+    <string name="settings">সেটিংস</string>
+    <string name="about_us">আমাদের সম্পর্কে</string>
+    <string name="help">সাহায্য</string>
+    <string name="share">শেয়ার করুন</string>
+    <string name="app_info">অ্যাপ তথ্য</string>
+    <string name="logout">লগআউট</string>
+    <string name="user_query">ব্যবহারকারীর প্রশ্ন</string>
+    <string name="no_app_to_support_action">এই ক্রিয়াটিকে সমর্থন করে এমন কোনো অ্যাপ নেই</string>
+    <string name="cancel">বাতিল</string>
+    <string name="dialog_logout">আপনি কি সত্যিই লগআউট করতে চান?</string>
+
+    <string name="feature_home_greet">হ্যালো %1$s,</string>
+    <string name="feature_home_services">সেবা</string>
+    <string name="feature_home_saving_accounts">সঞ্চয় অ্যাকাউন্ট</string>
+    <string name="feature_home_loan_accounts">ঋণ অ্যাকাউন্ট</string>
+    <string name="feature_home_share_accounts">শেয়ার অ্যাকাউন্ট</string>
+    <string name="feature_home_apply_for_loan">ঋণের জন্য আবেদন করুন</string>
+    <string name="feature_home_transaction_history">লেনদেনের ইতিহাস</string>
+    <string name="feature_home_charges">চার্জ</string>
+    <string name="feature_home_beneficiary">উপকারভোগী</string>
+    <string name="feature_home_faq">প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী</string>
+
+    <string name="feature_home_total_available_savings">মোট উপলব্ধ সঞ্চয়</string>
+    <string name="feature_home_total_available_loan">মোট উপলব্ধ ঋণ</string>
+
+    <string name="feature_home_common_error">কিছু ভুল হয়েছে</string>
+</resources>

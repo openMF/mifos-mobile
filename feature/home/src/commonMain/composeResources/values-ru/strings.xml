@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">Бенефициары</string>
+    <string name="survey">Опросы</string>
+    <string name="apply_for_loan">Подать заявку на кредит</string>
+    <string name="charges">Сборы</string>
+    <string name="transfer">Перевод</string>
+    <string name="accounts">Счета</string>
+    <string name="recent_transactions">Недавние транзакции</string>
+    <string name="error_fetching_client">Не удалось получить данные клиента</string>
+    <string name="no_internet_connection">Нет подключения к интернету</string>
+    <string name="hello_client">Здравствуйте, %1$s</string>
+    <string name="accounts_overview">Обзор счета</string>
+    <string name="total_saving">Общие сбережения</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">Общая сумма кредита</string>
+    <string name="need_help">Свяжитесь с нами</string>
+    <string name="home">Главная</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="third_party_transfer">Перевод третьей стороне</string>
+    <string name="manage_beneficiaries">Управление бенефициарами</string>
+    <string name="settings">Настройки</string>
+    <string name="about_us">О нас</string>
+    <string name="help">Помощь</string>
+    <string name="share">Поделиться</string>
+    <string name="app_info">Информация о приложении</string>
+    <string name="logout">Выйти</string>
+    <string name="user_query">Запрос пользователя</string>
+    <string name="no_app_to_support_action">Нет приложения, которое поддерживает это действие</string>
+    <string name="cancel">Отмена</string>
+    <string name="dialog_logout">Вы уверены, что хотите выйти?</string>
+
+    <string name="feature_home_greet">Здравствуйте, %1$s,</string>
+    <string name="feature_home_services">Услуги</string>
+    <string name="feature_home_saving_accounts">Сберегательные счета</string>
+    <string name="feature_home_loan_accounts">Кредитные счета</string>
+    <string name="feature_home_share_accounts">Акционерные счета</string>
+    <string name="feature_home_apply_for_loan">Подать заявку на кредит</string>
+    <string name="feature_home_transaction_history">История транзакций</string>
+    <string name="feature_home_charges">Сборы</string>
+    <string name="feature_home_beneficiary">Бенефициар</string>
+    <string name="feature_home_faq">Вопросы и ответы</string>
+
+    <string name="feature_home_total_available_savings">Общие доступные сбережения</string>
+    <string name="feature_home_total_available_loan">Общая доступная сумма кредита</string>
+
+    <string name="feature_home_common_error">Что-то пошло не так</string>
+</resources>

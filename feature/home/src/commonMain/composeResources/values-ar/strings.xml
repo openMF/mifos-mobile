@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">المستفيدون</string>
+    <string name="survey">الاستبيانات</string>
+    <string name="apply_for_loan">التقديم على قرض</string>
+    <string name="charges">الرسوم</string>
+    <string name="transfer">تحويل</string>
+    <string name="accounts">الحسابات</string>
+    <string name="recent_transactions">المعاملات الأخيرة</string>
+    <string name="error_fetching_client">فشل في جلب العميل</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="hello_client">مرحباً، ‎%1$s</string>
+    <string name="accounts_overview">نظرة عامة على الحساب</string>
+    <string name="total_saving">إجمالي المدخرات</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">إجمالي القرض</string>
+    <string name="need_help">اتصل بنا</string>
+    <string name="home">الرئيسية</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">مايفوس موبايل</string>
+    <string name="third_party_transfer">تحويل طرف ثالث</string>
+    <string name="manage_beneficiaries">إدارة المستفيدين</string>
+    <string name="settings">الإعدادات</string>
+    <string name="about_us">معلومات عنا</string>
+    <string name="help">مساعدة</string>
+    <string name="share">مشاركة</string>
+    <string name="app_info">معلومات التطبيق</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="user_query">استفسار المستخدم</string>
+    <string name="no_app_to_support_action">لا يوجد تطبيق يدعم هذا الإجراء</string>
+    <string name="cancel">إلغاء</string>
+    <string name="dialog_logout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+
+    <string name="feature_home_greet">مرحباً ‎%1$s،</string>
+    <string name="feature_home_services">الخدمات</string>
+    <string name="feature_home_saving_accounts">حسابات التوفير</string>
+    <string name="feature_home_loan_accounts">حسابات القروض</string>
+    <string name="feature_home_share_accounts">حسابات الأسهم</string>
+    <string name="feature_home_apply_for_loan">التقديم على قرض</string>
+    <string name="feature_home_transaction_history">سجل المعاملات</string>
+    <string name="feature_home_charges">الرسوم</string>
+    <string name="feature_home_beneficiary">المستفيد</string>
+    <string name="feature_home_faq">الأسئلة الشائعة</string>
+
+    <string name="feature_home_total_available_savings">إجمالي المدخرات المتاحة</string>
+    <string name="feature_home_total_available_loan">إجمالي القروض المتاحة</string>
+
+    <string name="feature_home_common_error">حدث خطأ ما</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">ಲಾಭಾಧಾರಿಗಳು</string>
+    <string name="survey">ಸಮೀಕ್ಷೆಗಳು</string>
+    <string name="apply_for_loan">ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="charges">ಶುಲ್ಕಗಳು</string>
+    <string name="transfer">ಹಸ್ತಾಂತರ</string>
+    <string name="accounts">ಖಾತೆಗಳು</string>
+    <string name="recent_transactions">ಇತ್ತೀಚಿನ ವ್ಯವಹಾರಗಳು</string>
+    <string name="error_fetching_client">ಗ್ರಾಹಕರನ್ನು ತರಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="no_internet_connection">ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಇಲ್ಲ</string>
+    <string name="hello_client">ನಮಸ್ಕಾರ, %1$s</string>
+    <string name="accounts_overview">ಖಾತೆಗಳ ಅವಲೋಕನ</string>
+    <string name="total_saving">ಒಟ್ಟು ಉಳಿತಾಯ</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">ಒಟ್ಟು ಸಾಲ</string>
+    <string name="need_help">ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+    <string name="home">ಮುಖಪುಟ</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">ಮಿಫೋಸ್ ಮೊಬೈಲ್</string>
+    <string name="third_party_transfer">ಮೂರನೇ ವ್ಯಕ್ತಿ ಹಸ್ತಾಂತರ</string>
+    <string name="manage_beneficiaries">ಲಾಭಾಧಾರಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="settings">ಸಂಯೋಜನೆಗಳು</string>
+    <string name="about_us">ನಮ್ಮ ಬಗ್ಗೆ</string>
+    <string name="help">ಸಹಾಯ</string>
+    <string name="share">ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="app_info">ಆಪ್ ಮಾಹಿತಿ</string>
+    <string name="logout">ಲಾಗ್ ಔಟ್</string>
+    <string name="user_query">ಬಳಕೆದಾರರ ಪ್ರಶ್ನೆ</string>
+    <string name="no_app_to_support_action">ಈ ಕ್ರಿಯೆಯನ್ನು ಬೆಂಬಲಿಸುವ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಇಲ್ಲ</string>
+    <string name="cancel">ರದ್ದುಮಾಡು</string>
+    <string name="dialog_logout">ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+
+    <string name="feature_home_greet">ನಮಸ್ಕಾರ %1$s,</string>
+    <string name="feature_home_services">ಸೇವೆಗಳು</string>
+    <string name="feature_home_saving_accounts">ಉಳಿತಾಯ ಖಾತೆಗಳು</string>
+    <string name="feature_home_loan_accounts">ಸಾಲ ಖಾತೆಗಳು</string>
+    <string name="feature_home_share_accounts">ಶೇರ್ ಖಾತೆಗಳು</string>
+    <string name="feature_home_apply_for_loan">ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_home_transaction_history">ವ್ಯವಹಾರಗಳ ಇತಿಹಾಸ</string>
+    <string name="feature_home_charges">ಶುಲ್ಕಗಳು</string>
+    <string name="feature_home_beneficiary">ಲಾಭಾಧಾರಿ</string>
+    <string name="feature_home_faq">ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳು</string>
+
+    <string name="feature_home_total_available_savings">ಒಟ್ಟು ಲಭ್ಯವಿರುವ ಉಳಿತಾಯ</string>
+    <string name="feature_home_total_available_loan">ಒಟ್ಟು ಲಭ್ಯವಿರುವ ಸಾಲ</string>
+
+    <string name="feature_home_common_error">ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
+</resources>

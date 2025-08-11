@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">Bénéficiaires</string>
+    <string name="survey">Enquêtes</string>
+    <string name="apply_for_loan">Demander un prêt</string>
+    <string name="charges">Frais</string>
+    <string name="transfer">Transfert</string>
+    <string name="accounts">Comptes</string>
+    <string name="recent_transactions">Transactions récentes</string>
+    <string name="error_fetching_client">Échec de la récupération du client</string>
+    <string name="no_internet_connection">Pas de connexion Internet</string>
+    <string name="hello_client">Bonjour, %1$s</string>
+    <string name="accounts_overview">Aperçu des comptes</string>
+    <string name="total_saving">Épargne totale</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">Prêt total</string>
+    <string name="need_help">Contactez-nous</string>
+    <string name="home">Accueil</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="third_party_transfer">Transfert à un tiers</string>
+    <string name="manage_beneficiaries">Gérer les bénéficiaires</string>
+    <string name="settings">Paramètres</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="help">Aide</string>
+    <string name="share">Partager</string>
+    <string name="app_info">Informations sur l'application</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="user_query">Question de l'utilisateur</string>
+    <string name="no_app_to_support_action">Aucune application ne prend en charge cette action</string>
+    <string name="cancel">Annuler</string>
+    <string name="dialog_logout">Êtes-vous sûr de vouloir vous déconnecter?</string>
+
+    <string name="feature_home_greet">Bonjour %1$s,</string>
+    <string name="feature_home_services">Services</string>
+    <string name="feature_home_saving_accounts">Comptes d'épargne</string>
+    <string name="feature_home_loan_accounts">Comptes de prêt</string>
+    <string name="feature_home_share_accounts">Comptes d'actions</string>
+    <string name="feature_home_apply_for_loan">Demander un prêt</string>
+    <string name="feature_home_transaction_history">Historique des transactions</string>
+    <string name="feature_home_charges">Frais</string>
+    <string name="feature_home_beneficiary">Bénéficiaire</string>
+    <string name="feature_home_faq">FAQ</string>
+
+    <string name="feature_home_total_available_savings">Épargne totale disponible</string>
+    <string name="feature_home_total_available_loan">Prêt total disponible</string>
+
+    <string name="feature_home_common_error">Une erreur s'est produite</string>
+</resources>
