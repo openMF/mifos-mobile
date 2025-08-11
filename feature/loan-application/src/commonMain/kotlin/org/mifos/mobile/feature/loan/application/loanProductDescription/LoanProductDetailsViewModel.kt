@@ -212,9 +212,9 @@ internal class LoanProductDetailsViewModel(
      */
     private fun formatAmount(amount: Double): String {
         val formatted = when {
-            amount >= 1_000_000 -> "$${amount / 1_000_000} Million"
-            amount >= 1_000 -> "$${amount / 1_000} Thousand"
-            else -> "$$amount"
+            amount >= 1_000_000 -> "${amount / 1_000_000} Million"
+            amount >= 1_000 -> "${amount / 1_000} Thousand"
+            else -> "$amount"
         }
         return formatted
     }

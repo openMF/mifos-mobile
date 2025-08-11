@@ -10,12 +10,13 @@
 package org.mifos.mobile.feature.loan.application.loanApplication
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -27,7 +28,6 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_name_invalid_format
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_name_too_long
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_name_too_short
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_product_empty
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_server
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_submit_failed
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
@@ -41,7 +41,6 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.templates.loans.Currency
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
-import org.mifos.mobile.core.model.entity.templates.loans.ProductOptions
 import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
@@ -77,19 +76,23 @@ internal class LoanApplyViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
     private val homeRepositoryImpl: HomeRepository,
     private val networkMonitor: NetworkMonitor,
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoanApplicationState, LoanApplicationEvent, LoanApplicationAction>(
-    initialState = LoanApplicationState(
-        loanApplicationDialogState = LoanApplicationDialogState.Loading,
-        clientId = requireNotNull(userPreferencesRepository.clientId.value),
-        applicantName = "",
-        principalAmount = "",
-        currency = Currency(),
-    ),
+    initialState = run {
+        val route = savedStateHandle.toRoute<LoanApplyRoute>()
+        LoanApplicationState(
+            loanApplicationDialogState = LoanApplicationDialogState.Loading,
+            clientId = requireNotNull(userPreferencesRepository.clientId.value),
+            applicantName = "",
+            principalAmount = "",
+            currency = Currency(),
+            loanProductId = route.productId,
+            loanProductName = route.productName,
+        )
+    },
 ) {
 
     init {
-        fetchClient()
-        fetchLoanTemplate()
         observeNetworkStatus()
     }
 
@@ -101,18 +104,23 @@ internal class LoanApplyViewModel(
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
-                .map(Boolean::not)
                 .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
+                .collect { isOnline ->
+                    mutableStateFlow.update {
                         it.copy(
-                            networkUnavailable = isOffline,
-                            loanApplicationDialogState = if (isOffline) {
+                            networkStatus = isOnline,
+                            loanApplicationDialogState = if (!isOnline) {
                                 LoanApplicationDialogState.Network
                             } else {
                                 null
                             },
                         )
+                    }
+
+                    if (isOnline) {
+                        fetchClient()
+                        fetchLoanTemplate()
+                        fetchLoanPurpose()
                     }
                 }
         }
@@ -142,10 +150,6 @@ internal class LoanApplyViewModel(
                 onPrincipalAmountChange(action.principalAmount)
             }
 
-            is LoanApplicationAction.LoanProductChange -> {
-                onLoanProductChange(action.id, action.name)
-            }
-
             is LoanApplicationAction.DisbursementDateChange -> {
                 onDisbursementDateChange(action.disbursementDate)
             }
@@ -169,9 +173,23 @@ internal class LoanApplyViewModel(
             is LoanApplicationAction.Internal.ReceiveLoanPurposeOptions ->
                 handleLoanPurpose(action.template)
 
-            LoanApplicationAction.Retry -> {
+            LoanApplicationAction.Retry -> retry()
+        }
+    }
+
+    /**
+     * Retries the data fetching process. If the network is unavailable, it shows
+     * a network error dialog. Otherwise, it triggers the `fetchLoanTemplate` `fetchClient`,
+     * `fetchLonPurpose` function.
+     */
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(loanApplicationDialogState = LoanApplicationDialogState.Network) }
+            } else {
                 fetchClient()
                 fetchLoanTemplate()
+                fetchLoanPurpose()
             }
         }
     }
@@ -233,7 +251,7 @@ internal class LoanApplyViewModel(
         viewModelScope.launch {
             loanAccountRepositoryImp.getLoanTemplateByProduct(
                 state.clientId,
-                state.selectedLoanProductId.toInt(),
+                state.loanProductId,
             )
                 .collect { result ->
                     sendAction(LoanApplicationAction.Internal.ReceiveLoanPurposeOptions(result))
@@ -278,7 +296,6 @@ internal class LoanApplyViewModel(
                 val loanTemplate = template.data
                 updateState {
                     it.copy(
-                        productOptions = loanTemplate?.productOptions ?: emptyList(),
                         currency = loanTemplate?.currency ?: Currency(
                             code = "USD",
                             name = "US Dollar",
@@ -295,10 +312,6 @@ internal class LoanApplyViewModel(
 
             is DataState.Error -> {
                 showErrorDialog(Res.string.feature_apply_loan_error_server)
-                viewModelScope.launch {
-                    delay(1500)
-                    sendEvent(LoanApplicationEvent.NavigateBack)
-                }
             }
         }
     }
@@ -336,10 +349,6 @@ internal class LoanApplyViewModel(
 
             is DataState.Error -> {
                 showErrorDialog(Res.string.feature_apply_loan_error_server)
-                viewModelScope.launch {
-                    delay(1500)
-                    sendEvent(LoanApplicationEvent.NavigateBack)
-                }
             }
         }
     }
@@ -361,17 +370,6 @@ internal class LoanApplyViewModel(
             Res.string.feature_apply_loan_error_name_invalid_format,
         )
 
-        else -> ValidationResult.Success
-    }
-
-    /**
-     * Validates that a loan product has been selected.
-     *
-     * @param loanProduct The name of the selected loan product.
-     * @return A [ValidationResult] indicating success or an error if the field is empty.
-     */
-    private fun validateLoanProduct(loanProduct: String): ValidationResult = when {
-        loanProduct.isEmpty() -> ValidationResult.Error(Res.string.feature_apply_loan_error_product_empty)
         else -> ValidationResult.Success
     }
 
@@ -440,37 +438,6 @@ internal class LoanApplyViewModel(
             mutableStateFlow.update {
                 it.copy(
                     applicantNameError = if (result is ValidationResult.Error) result.message else null,
-                )
-            }
-        }
-    }
-
-    /**
-     * Handles changes to the selected loan product.
-     * It updates the state, fetches the corresponding loan purpose options,
-     * and debounces validation.
-     *
-     * @param id The ID of the selected loan product.
-     * @param name The name of the selected loan product.
-     */
-    private fun onLoanProductChange(id: Long, name: String) {
-        mutableStateFlow.update {
-            it.copy(
-                selectedLoanProduct = name,
-                selectedLoanProductId = id,
-                selectedLoanPurpose = "",
-                loanProductError = null,
-                hasChanges = true,
-            )
-        }
-        viewModelScope.launch {
-            sendAction(LoanApplicationAction.GetLoanPurpose)
-        }
-        debounceValidation {
-            val result = validateLoanProduct(name)
-            mutableStateFlow.update {
-                it.copy(
-                    loanProductError = if (result is ValidationResult.Error) result.message else null,
                 )
             }
         }
@@ -558,7 +525,6 @@ internal class LoanApplyViewModel(
             return
         }
         val nameResult = validateApplicantName(state.applicantName)
-        val loanProductResult = validateLoanProduct(state.selectedLoanProduct)
         val amountResult = state.currency.toModelCurrency().let { currency ->
             validatePrincipalAmount(state.principalAmount, currency)
         }
@@ -567,7 +533,6 @@ internal class LoanApplyViewModel(
         mutableStateFlow.update {
             it.copy(
                 applicantNameError = if (nameResult is ValidationResult.Error) nameResult.message else null,
-                loanProductError = if (loanProductResult is ValidationResult.Error) loanProductResult.message else null,
                 principalAmountError = if (amountResult is ValidationResult.Error) amountResult.message else null,
                 disbursementDateError = if (dateResult is ValidationResult.Error) dateResult.message else null,
             )
@@ -575,7 +540,6 @@ internal class LoanApplyViewModel(
 
         val isValid = listOf(
             nameResult,
-            loanProductResult,
             amountResult,
             dateResult,
         ).all { it is ValidationResult.Success }
@@ -689,9 +653,8 @@ internal class LoanApplyViewModel(
  *
  * @property clientId The ID of the current client.
  * @property applicantName The name of the applicant.
- * @property productOptions A list of available loan product options.
- * @property selectedLoanProduct The name of the currently selected loan product.
- * @property selectedLoanProductId The ID of the currently selected loan product.
+ * @property loanProductName The name of the currently selected loan product.
+ * @property loanProductId The ID of the currently selected loan product.
  * @property activationDate The client's activation date.
  * @property loanPurposeOptions A map of loan purpose IDs to their names, based on the selected product.
  * @property selectedLoanPurpose The name of the currently selected loan purpose.
@@ -706,15 +669,14 @@ internal class LoanApplyViewModel(
  * @property principalAmountError A resource string for an error message for the principal amount field, or null.
  * @property disbursementDateError A resource string for an error message for the disbursement date field, or null.
  * @property hasChanges A boolean indicating if there are unsaved changes.
- * @property networkUnavailable A boolean indicating if the network is unavailable.
+ * @property networkStatus A boolean indicating the network status
  */
 @OptIn(ExperimentalMaterial3Api::class)
 internal data class LoanApplicationState(
     val clientId: Long,
     val applicantName: String,
-    val productOptions: List<ProductOptions> = emptyList(),
-    val selectedLoanProduct: String = "",
-    val selectedLoanProductId: Long = 0,
+    val loanProductId: Int,
+    val loanProductName: String,
     val activationDate: String = "",
     val loanPurposeOptions: Map<Long, String> = emptyMap(),
     val selectedLoanPurpose: String = "",
@@ -729,7 +691,7 @@ internal data class LoanApplicationState(
     val principalAmountError: StringResource? = null,
     val disbursementDateError: StringResource? = null,
     val hasChanges: Boolean = false,
-    val networkUnavailable: Boolean = false,
+    val networkStatus: Boolean = false,
 ) {
     /**
      * The current time in milliseconds, used for date pickers.
@@ -747,20 +709,8 @@ internal data class LoanApplicationState(
             principalAmountError == null &&
             disbursementDateError == null &&
             applicantName.isNotBlank() &&
-            selectedLoanProduct.isNotBlank() &&
             principalAmount.isNotBlank() &&
             disbursementDate.isNotBlank()
-
-    /**
-     * A map of loan product IDs to their names, derived from `productOptions`.
-     */
-    val productOptionsMap: Map<Long, String> = productOptions
-        .mapNotNull { option ->
-            val id = option.id?.toLong()
-            val name = option.name
-            if (id != null && name != null) id to name else null
-        }
-        .toMap()
 
 //    TODO Add all validations here for the fields that API Require
     /**
@@ -883,13 +833,6 @@ internal sealed interface LoanApplicationAction {
      * @property name The new value of the name field.
      */
     data class ApplicantNameChange(val name: String) : LoanApplicationAction
-
-    /**
-     * User action when a loan product is selected.
-     * @property id The ID of the selected loan product.
-     * @property name The name of the selected loan product.
-     */
-    data class LoanProductChange(val id: Long, val name: String) : LoanApplicationAction
 
     /**
      * User action when the purpose of loan field changes.

@@ -16,10 +16,17 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
-data object LoanApplyRoute
+data class LoanApplyRoute(
+    val productId: Int,
+    val productName: String,
+)
 
-fun NavController.navigateToLoanApplyScreen(navOptions: NavOptions? = null) =
-    navigate(LoanApplyRoute, navOptions)
+fun NavController.navigateToLoanApplyScreen(
+    productId: Int,
+    productName: String,
+    navOptions: NavOptions? = null,
+) =
+    navigate(LoanApplyRoute(productId, productName), navOptions)
 
 fun NavGraphBuilder.loanApplyDestination(
     navigateBack: () -> Unit,
