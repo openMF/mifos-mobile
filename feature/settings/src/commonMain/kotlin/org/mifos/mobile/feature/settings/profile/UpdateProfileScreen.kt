@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -45,6 +46,7 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_profil
 import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_submit_changes
 import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_topbar_title
 import mifos_mobile.feature.settings.generated.resources.feature_settings_profile_update_photo
+import mifos_mobile.feature.settings.generated.resources.mifos_icon
 import mifos_mobile.feature.settings.generated.resources.profile_error_dialog_title
 import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_discard
 import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes_stay
@@ -70,6 +72,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.rememberImageLoader
 
 @Composable
 internal fun UpdateProfileScreen(
@@ -126,9 +129,7 @@ internal fun UpdateProfileScreen(
                 .padding(horizontal = AppSizes().headerToContentHeight),
         ) {
             if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                )
+                MifosProgressIndicator()
             } else {
                 ProfileScreenContent(
                     state = state,
@@ -160,9 +161,9 @@ internal fun ProfileScreenContent(
         )
 
         MifosOutlinedTextField(
-            value = state.name,
+            value = state.firstName,
             label =stringResource( Res.string.feature_settings_profile_label_full_name),
-            onValueChange = { onAction(ProfileAction.OnNameChanged(it)) },
+            onValueChange = { onAction(ProfileAction.OnFirstNameChanged(it)) },
             config = MifosTextFieldConfig(
                 isError = state.nameError != null,
                 errorText = if(state.nameError!=null){
@@ -171,6 +172,18 @@ internal fun ProfileScreenContent(
                     null
                 },
             )
+        )
+
+        MifosOutlinedTextField(
+            value = state.middleName,
+            label =stringResource( Res.string.feature_settings_profile_label_full_name),
+            onValueChange = { onAction(ProfileAction.OnMiddleNameChanged(it)) },
+        )
+
+        MifosOutlinedTextField(
+            value = state.lastName,
+            label =stringResource( Res.string.feature_settings_profile_label_full_name),
+            onValueChange = { onAction(ProfileAction.OnLastNameChanged(it)) },
         )
 
         MifosOutlinedTextField(
@@ -213,7 +226,7 @@ internal fun ProfileScreenContent(
             },
             onClick = { onAction(ProfileAction.OnSubmit) },
             enabled = state.hasChanges && !state.isLoading,
-            modifier = Modifier.padding(vertical = 24.dp),
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -241,14 +254,14 @@ private fun ProfileImageSection(
             contentAlignment = Alignment.Center,
         ) {
             val context = LocalPlatformContext.current
-            val newImage = remember(image) { image ?: UIRes.drawable.ic_icon_logo }
+            val newImage = remember(image) { image ?: Res.drawable.mifos_icon }
             AsyncImage(
                 model = ImageRequest.Builder(context)
                     .data(newImage)
                     .crossfade(true)
                     .build(),
                 imageLoader = rememberImageLoader(context),
-                error = painterResource(UIRes.drawable.ic_icon_logo),
+                error = painterResource(Res.drawable.mifos_icon),
                 onLoading = {
                     @Composable {
                         CircularProgressIndicator(

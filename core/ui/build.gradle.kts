@@ -44,6 +44,7 @@ kotlin{
             implementation(libs.jb.composeNavigation)
             implementation(libs.filekit.compose)
             implementation(libs.filekit.core)
+            implementation(libs.filekit.coil)
         }
     }
 }

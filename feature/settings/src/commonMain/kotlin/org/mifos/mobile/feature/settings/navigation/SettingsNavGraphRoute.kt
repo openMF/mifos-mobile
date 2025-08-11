@@ -22,6 +22,7 @@ import org.mifos.mobile.feature.settings.help.helpDestination
 import org.mifos.mobile.feature.settings.language.languageDestination
 import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.password.changePasswordDestination
+import org.mifos.mobile.feature.settings.profile.profileDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
 
@@ -65,6 +66,9 @@ fun NavGraphBuilder.settingsGraph(
         )
         changePasswordDestination(
             onBackClick = navController::popBackStack,
+        )
+        profileDestination(
+            onBackClick = navController::popBackStack
         )
     }
 }

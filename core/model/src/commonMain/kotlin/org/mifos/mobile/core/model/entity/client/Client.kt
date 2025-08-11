@@ -64,4 +64,6 @@ data class Client(
     val gender: Gender? = null,
 
     val groups: List<Group> = emptyList(),
+
+    val emailAddress: String? = null,
 ) : Parcelable

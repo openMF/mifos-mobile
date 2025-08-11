@@ -248,6 +248,7 @@ back-handler = { group = "com.arkivanov.essenty", name = "back-handler", version
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "fileKit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "fileKit" }
 filekit-dialog-compose = { group = "io.github.vinceglb", name = "filekit-dialogs-compose", version.ref = "fileKitDialog" }
+filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "fileKitDialog" }
 qrose = { group = "io.github.alexzhirkevich", name="qrose", version.ref = "qroseVersion" }
 
 kermit-logging = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }

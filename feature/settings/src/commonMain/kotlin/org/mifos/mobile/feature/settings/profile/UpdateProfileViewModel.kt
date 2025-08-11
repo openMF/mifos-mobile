@@ -6,9 +6,11 @@ import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.openFilePicker
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_client
 import mifos_mobile.feature.settings.generated.resources.profile_image_delete_failed
 import mifos_mobile.feature.settings.generated.resources.profile_image_update_failed
 import mifos_mobile.feature.settings.generated.resources.profile_image_update_success
@@ -22,26 +24,46 @@ import mifos_mobile.feature.settings.generated.resources.profile_unsaved_changes
 import mifos_mobile.feature.settings.generated.resources.profile_update_failed
 import mifos_mobile.feature.settings.generated.resources.profile_update_success
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.HomeRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.EmailValidationResult
+import org.mifos.mobile.core.ui.utils.ImageUtil
 import org.mifos.mobile.core.ui.utils.PhoneValidationResult
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.feature.settings.password.ValidationResult
+import org.mifos.mobile.feature.settings.settings.SettingsAction
+import org.mifos.mobile.feature.settings.settings.SettingsState
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
-internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent, ProfileAction>(
-    initialState = ProfileState(),
+internal class UpdateProfileViewModel(
+    private val homeRepositoryImpl: HomeRepository,
+    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+) : BaseViewModel<ProfileState, ProfileEvent, ProfileAction>(
+    initialState = run {
+        ProfileState(
+            clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
+        )
+    }
 ) {
     private var validationJob: Job? = null
     private var submitAttempts = 0
     private val maxSubmitAttempts = 5
 
     init {
-        loadProfile()
+        loadUserData()
     }
 
     override fun handleAction(action: ProfileAction) {
         when (action) {
-            is ProfileAction.OnNameChanged -> onNameChange(action.name)
+            is ProfileAction.OnFirstNameChanged -> onFirstNameChange(action.name)
+
+            is ProfileAction.OnMiddleNameChanged -> onMiddleNameChange(action.name)
+
+            is ProfileAction.OnLastNameChanged -> onLastNameChange(action.name)
 
             is ProfileAction.OnEmailChanged -> onEmailChange(action.email)
 
@@ -62,6 +84,32 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
 
             ProfileAction.PickImage -> updateProfileImage()
             ProfileAction.DeleteImage -> deleteProfileImage()
+            is ProfileAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
+            is ProfileAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
+        }
+    }
+
+    private fun loadUserData() {
+        viewModelScope.launch {
+            homeRepositoryImpl.currentClient(state.clientId ?: -1L)
+                .catch {
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = ProfileState.DialogState.Error(
+                                Res.string.feature_settings_error_fetching_client,
+                            ),
+                        )
+                    }
+                }
+                .collect { sendAction(ProfileAction.Internal.ReceiveClientInfo(it)) }
+        }
+
+        viewModelScope.launch {
+            homeRepositoryImpl.clientImage(state.clientId ?: -1L)
+                .catch {
+                    // Do nothing on image fetch error, as it's not critical.
+                }
+                .collect { sendAction(ProfileAction.Internal.ReceiveClientImage(it)) }
         }
     }
 
@@ -83,6 +131,83 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
                     ),
                 )
             }
+        }
+    }
+
+    private fun handleClientResponse(state: DataState<Client>) {
+        when (state) {
+            is DataState.Error -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ProfileState.DialogState.Error(
+                            Res.string.feature_settings_error_fetching_client,
+                        ),
+                    )
+                }
+            }
+            DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ProfileState.DialogState.Loading
+                    )
+                }
+            }
+            is DataState.Success -> {
+                dismissDialog()
+                val client=state.data
+                mutableStateFlow.update {
+                    it.copy(
+                        client = client,
+                        firstName = client.firstname?:"",
+                        middleName = client.middlename?:"",
+                        lastName = client.lastname?:"",
+                        mobile = client.mobileNo?:"",
+                        email = client.emailAddress?:""
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handleClientImageResponse(state: DataState<String>) {
+        when (state) {
+            is DataState.Error -> {
+                // No need to show user that client image getting failed
+                dismissDialog()
+            }
+            DataState.Loading -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        dialogState = ProfileState.DialogState.Loading
+                    )
+                }
+            }
+            is DataState.Success -> {
+                dismissDialog()
+                setUserProfile(state.data)
+            }
+        }
+    }
+
+    @OptIn(ExperimentalEncodingApi::class)
+    private fun setUserProfile(image: String?) {
+        if (image.isNullOrBlank()) return
+
+        // Extract the base64 part, removing any data URI prefix
+        val base64String = image.substringAfter(",", image)
+
+        // Basic validation for a base64 string
+        if (!base64String.matches(Regex("^[A-Za-z0-9+/=]+$"))) return
+
+        try {
+            val decodedBytes = Base64.decode(base64String)
+            val bitmap = ImageUtil.compressImage(decodedBytes)
+            mutableStateFlow.update {
+                it.copy(image = bitmap)
+            }
+        } catch (e: Exception) {
+            // Log the error but fail silently in the UI
+            println(e.message)
         }
     }
 
@@ -118,10 +243,10 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
         }
     }
 
-    private fun onNameChange(newValue: String) {
+    private fun onFirstNameChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(
-                name = newValue,
+                firstName = newValue,
                 nameError = null,
                 hasChanges = true,
             )
@@ -134,6 +259,23 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
                     nameError = if (result is ValidationResult.Error) result.message else null,
                 )
             }
+        }
+    }
+
+    private fun onMiddleNameChange(newValue: String) {
+        mutableStateFlow.update {
+            it.copy(
+                middleName = newValue,
+                hasChanges = true,
+            )
+        }
+    }
+
+    private fun onLastNameChange(newValue: String) {
+        mutableStateFlow.update {
+            it.copy(
+                lastName = newValue,
+            )
         }
     }
 
@@ -187,20 +329,20 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
             return
         }
 
-        val nameResult = validateName(state.name)
+        val firstNameResult = validateName(state.firstName)
         val emailResult = validateEmail(state.email)
         val mobileResult = validateMobile(state.mobile)
 
         mutableStateFlow.update {
             it.copy(
-                nameError = if (nameResult is ValidationResult.Error) nameResult.message else null,
+                nameError = if (firstNameResult is ValidationResult.Error) firstNameResult.message else null,
                 emailError = if (emailResult is ValidationResult.Error) emailResult.message else null,
                 mobileError = if (mobileResult is ValidationResult.Error) mobileResult.message else null,
             )
         }
 
         val isValid =
-            listOf(nameResult, emailResult, mobileResult).all { it is ValidationResult.Success }
+            listOf(firstNameResult, emailResult, mobileResult).all { it is ValidationResult.Success }
 
         if (isValid) {
             handleSubmit()
@@ -294,7 +436,6 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
             is ProfileLoadResult.Success -> {
                 mutableStateFlow.update {
                     it.copy(
-                        name = "MobileByteSensei",
                         email = "test@gmail.com",
                         mobile = "+34908890098",
                         account = "129028932093",
@@ -405,11 +546,15 @@ internal class UpdateProfileViewModel : BaseViewModel<ProfileState, ProfileEvent
 }
 
 internal data class ProfileState(
+    val clientId: Long? = null,
     val image: Any? = null,
-    val name: String = "",
+    val firstName: String = "",
+    val middleName: String = "",
+    val lastName: String = "",
     val email: String = "",
     val account: String = "",
     val mobile: String = "",
+    val client: Client? = null,
     val nameError: StringResource? = null,
     val emailError: StringResource? = null,
     val mobileError: StringResource? = null,
@@ -430,7 +575,9 @@ internal sealed interface ProfileEvent {
 }
 
 internal sealed interface ProfileAction {
-    data class OnNameChanged(val name: String) : ProfileAction
+    data class OnFirstNameChanged(val name: String) : ProfileAction
+    data class OnMiddleNameChanged(val name: String) : ProfileAction
+    data class OnLastNameChanged(val name: String) : ProfileAction
     data class OnEmailChanged(val email: String) : ProfileAction
     data class OnMobileChanged(val mobile: String) : ProfileAction
 
@@ -448,6 +595,8 @@ internal sealed interface ProfileAction {
         data class LoadProfileResult(val result: ProfileLoadResult) : Internal
         data class UpdateProfileResult(val result: ProfileUpdateResult) : Internal
         data class HandleImageUpdateResult(val result: ImageUpdateResult) : Internal
+        data class ReceiveClientImage(val dataState: DataState<String>) : Internal
+        data class ReceiveClientInfo(val dataState: DataState<Client>) : Internal
     }
 }
 

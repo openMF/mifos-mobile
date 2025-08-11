@@ -80,13 +80,14 @@ sealed class SettingsItems(
         route = Constants.LANGUAGE,
     )
 
-    @Serializable
-    data object Theme : SettingsItems(
-        title = Res.string.feature_settings_action_theme,
-        subTitle = Res.string.feature_settings_action_theme_tip,
-        icon = MifosIcons.DarkTheme,
-        route = Constants.THEME,
-    )
+    //TODO: Uncomment once we get valid dark theme colours by ui/ux theme
+//    @Serializable
+//    data object Theme : SettingsItems(
+//        title = Res.string.feature_settings_action_theme,
+//        subTitle = Res.string.feature_settings_action_theme_tip,
+//        icon = MifosIcons.DarkTheme,
+//        route = Constants.THEME,
+//    )
 
     @Serializable
     data object Endpoint : SettingsItems(
@@ -142,7 +143,7 @@ internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
     SettingsItems.Password,
     SettingsItems.AuthPasscode,
     SettingsItems.Language,
-    SettingsItems.Theme,
+//    SettingsItems.Theme,
     SettingsItems.Endpoint,
     SettingsItems.AboutUs,
     SettingsItems.FAQ,
