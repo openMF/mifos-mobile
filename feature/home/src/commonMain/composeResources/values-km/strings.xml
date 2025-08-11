@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">អ្នកទទួលផល</string>
+    <string name="survey">ការស្ទង់មតិ</string>
+    <string name="apply_for_loan">ដាក់ពាក្យស្នើប្រាក់កម្ចី</string>
+    <string name="charges">ថ្លៃសេវា</string>
+    <string name="transfer">ផ្ទេរ</string>
+    <string name="accounts">គណនី</string>
+    <string name="recent_transactions">ប្រតិបត្តិការថ្មីៗ</string>
+    <string name="error_fetching_client">មិនអាចយកទិន្នន័យអតិថិជនបានទេ</string>
+    <string name="no_internet_connection">គ្មានការតភ្ជាប់អ៊ីនធឺណិត</string>
+    <string name="hello_client">សួស្តី, %1$s</string>
+    <string name="accounts_overview">ទិដ្ឋភាពទូទៅនៃគណនី</string>
+    <string name="total_saving">សន្សំសរុប</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">ប្រាក់កម្ចីសរុប</string>
+    <string name="need_help">ទាក់ទងមកយើង</string>
+    <string name="home">ទំព័រដើម</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="third_party_transfer">ផ្ទេរទៅភាគីទីបី</string>
+    <string name="manage_beneficiaries">គ្រប់គ្រងអ្នកទទួលផល</string>
+    <string name="settings">ការកំណត់</string>
+    <string name="about_us">អំពីយើង</string>
+    <string name="help">ជំនួយ</string>
+    <string name="share">ចែករំលែក</string>
+    <string name="app_info">ព័ត៌មានកម្មវិធី</string>
+    <string name="logout">ចេញពីប្រព័ន្ធ</string>
+    <string name="user_query">សំណួរអ្នកប្រើប្រាស់</string>
+    <string name="no_app_to_support_action">មិនមានកម្មវិធីណាដែលគាំទ្រសកម្មភាពនេះទេ</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="dialog_logout">តើអ្នកប្រាកដថាចង់ចេញពីប្រព័ន្ធមែនទេ?</string>
+
+    <string name="feature_home_greet">សួស្តី %1$s,</string>
+    <string name="feature_home_services">សេវាកម្ម</string>
+    <string name="feature_home_saving_accounts">គណនីសន្សំ</string>
+    <string name="feature_home_loan_accounts">គណនីប្រាក់កម្ចី</string>
+    <string name="feature_home_share_accounts">គណនីភាគហ៊ុន</string>
+    <string name="feature_home_apply_for_loan">ដាក់ពាក្យស្នើប្រាក់កម្ចី</string>
+    <string name="feature_home_transaction_history">ប្រវត្តិប្រតិបត្តិការ</string>
+    <string name="feature_home_charges">ថ្លៃសេវា</string>
+    <string name="feature_home_beneficiary">អ្នកទទួលផល</string>
+    <string name="feature_home_faq">សំណួរញឹកញាប់</string>
+
+    <string name="feature_home_total_available_savings">សន្សំដែលអាចប្រើបានសរុប</string>
+    <string name="feature_home_total_available_loan">ប្រាក់កម្ចីដែលអាចប្រើបានសរុប</string>
+
+    <string name="feature_home_common_error">មានបញ្ហាខ្លះ</string>
+</resources>

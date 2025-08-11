@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">ذی‌نفعان</string>
+    <string name="survey">نظرسنجی‌ها</string>
+    <string name="apply_for_loan">درخواست وام</string>
+    <string name="charges">هزینه‌ها</string>
+    <string name="transfer">انتقال</string>
+    <string name="accounts">حساب‌ها</string>
+    <string name="recent_transactions">تراکنش‌های اخیر</string>
+    <string name="error_fetching_client">خطا در دریافت اطلاعات مشتری</string>
+    <string name="no_internet_connection">اتصال اینترنت وجود ندارد</string>
+    <string name="hello_client">سلام، %1$s</string>
+    <string name="accounts_overview">نمای کلی حساب</string>
+    <string name="total_saving">کل پس‌انداز</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">کل وام</string>
+    <string name="need_help">تماس با ما</string>
+    <string name="home">خانه</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">میفوس موبایل</string>
+    <string name="third_party_transfer">انتقال به شخص ثالث</string>
+    <string name="manage_beneficiaries">مدیریت ذی‌نفعان</string>
+    <string name="settings">تنظیمات</string>
+    <string name="about_us">درباره ما</string>
+    <string name="help">راهنما</string>
+    <string name="share">اشتراک‌گذاری</string>
+    <string name="app_info">اطلاعات برنامه</string>
+    <string name="logout">خروج</string>
+    <string name="user_query">سؤال کاربر</string>
+    <string name="no_app_to_support_action">برنامه‌ای برای پشتیبانی از این عملیات وجود ندارد</string>
+    <string name="cancel">لغو</string>
+    <string name="dialog_logout">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
+
+    <string name="feature_home_greet">سلام %1$s،</string>
+    <string name="feature_home_services">خدمات</string>
+    <string name="feature_home_saving_accounts">حساب‌های پس‌انداز</string>
+    <string name="feature_home_loan_accounts">حساب‌های وام</string>
+    <string name="feature_home_share_accounts">حساب‌های سهام</string>
+    <string name="feature_home_apply_for_loan">درخواست وام</string>
+    <string name="feature_home_transaction_history">سوابق تراکنش</string>
+    <string name="feature_home_charges">هزینه‌ها</string>
+    <string name="feature_home_beneficiary">ذی‌نفع</string>
+    <string name="feature_home_faq">سوالات متداول</string>
+
+    <string name="feature_home_total_available_savings">کل پس‌انداز موجود</string>
+    <string name="feature_home_total_available_loan">کل وام موجود</string>
+
+    <string name="feature_home_common_error">مشکلی پیش آمد</string>
+</resources>

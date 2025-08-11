@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">लाभार्थी</string>
+    <string name="survey">सर्वेक्षण</string>
+    <string name="apply_for_loan">ऋण के लिए आवेदन करें</string>
+    <string name="charges">शुल्क</string>
+    <string name="transfer">स्थानांतरण</string>
+    <string name="accounts">खाते</string>
+    <string name="recent_transactions">हाल की लेन-देन</string>
+    <string name="error_fetching_client">क्लाइंट प्राप्त करने में विफल</string>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
+    <string name="hello_client">नमस्ते, %1$s</string>
+    <string name="accounts_overview">खाता विवरण</string>
+    <string name="total_saving">कुल बचत</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">कुल ऋण</string>
+    <string name="need_help">हमसे संपर्क करें</string>
+    <string name="home">होम</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">माइफोस मोबाइल</string>
+    <string name="third_party_transfer">तृतीय पक्ष स्थानांतरण</string>
+    <string name="manage_beneficiaries">लाभार्थियों का प्रबंधन करें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="about_us">हमारे बारे में</string>
+    <string name="help">सहायता</string>
+    <string name="share">साझा करें</string>
+    <string name="app_info">ऐप जानकारी</string>
+    <string name="logout">लॉगआउट</string>
+    <string name="user_query">उपयोगकर्ता प्रश्न</string>
+    <string name="no_app_to_support_action">इस क्रिया का समर्थन करने वाला कोई ऐप नहीं है</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="dialog_logout">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
+
+    <string name="feature_home_greet">नमस्ते %1$s,</string>
+    <string name="feature_home_services">सेवाएँ</string>
+    <string name="feature_home_saving_accounts">बचत खाते</string>
+    <string name="feature_home_loan_accounts">ऋण खाते</string>
+    <string name="feature_home_share_accounts">शेयर खाते</string>
+    <string name="feature_home_apply_for_loan">ऋण के लिए आवेदन करें</string>
+    <string name="feature_home_transaction_history">लेन-देन का इतिहास</string>
+    <string name="feature_home_charges">शुल्क</string>
+    <string name="feature_home_beneficiary">लाभार्थी</string>
+    <string name="feature_home_faq">सामान्य प्रश्न</string>
+
+    <string name="feature_home_total_available_savings">कुल उपलब्ध बचत</string>
+    <string name="feature_home_total_available_loan">कुल उपलब्ध ऋण</string>
+
+    <string name="feature_home_common_error">कुछ गलत हो गया</string>
+</resources>

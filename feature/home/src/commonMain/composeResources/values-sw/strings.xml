@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">Wafaidika</string>
+    <string name="survey">Utafiti</string>
+    <string name="apply_for_loan">Omba Mkopo</string>
+    <string name="charges">Ada</string>
+    <string name="transfer">Hamisho</string>
+    <string name="accounts">Akaunti</string>
+    <string name="recent_transactions">Miamala ya Hivi Karibuni</string>
+    <string name="error_fetching_client">Imeshindikana kupata mteja</string>
+    <string name="no_internet_connection">Hakuna muunganisho wa intaneti</string>
+    <string name="hello_client">Habari, %1$s</string>
+    <string name="accounts_overview">Muhtasari wa Akaunti</string>
+    <string name="total_saving">Jumla ya Akiba</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">Jumla ya Mkopo</string>
+    <string name="need_help">Wasiliana Nasi</string>
+    <string name="home">Nyumbani</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">Mifos Mobile</string>
+    <string name="third_party_transfer">Hamisho kwa Chama cha Tatu</string>
+    <string name="manage_beneficiaries">Dhibiti Wafaidika</string>
+    <string name="settings">Mipangilio</string>
+    <string name="about_us">Kuhusu Sisi</string>
+    <string name="help">Msaada</string>
+    <string name="share">Shiriki</string>
+    <string name="app_info">Taarifa za Programu</string>
+    <string name="logout">Toka</string>
+    <string name="user_query">Swali la Mtumiaji</string>
+    <string name="no_app_to_support_action">Hakuna programu inayosaidia hatua hii</string>
+    <string name="cancel">Ghairi</string>
+    <string name="dialog_logout">Una uhakika unataka kutoka?</string>
+
+    <string name="feature_home_greet">Habari %1$s,</string>
+    <string name="feature_home_services">Huduma</string>
+    <string name="feature_home_saving_accounts">Akaunti za Akiba</string>
+    <string name="feature_home_loan_accounts">Akaunti za Mikopo</string>
+    <string name="feature_home_share_accounts">Akaunti za Hisa</string>
+    <string name="feature_home_apply_for_loan">Omba Mkopo</string>
+    <string name="feature_home_transaction_history">Historia ya Miamala</string>
+    <string name="feature_home_charges">Ada</string>
+    <string name="feature_home_beneficiary">Mfaidika</string>
+    <string name="feature_home_faq">Maswali Yanayoulizwa Mara kwa Mara</string>
+
+    <string name="feature_home_total_available_savings">Jumla ya Akiba Inayopatikana</string>
+    <string name="feature_home_total_available_loan">Jumla ya Mkopo Inayopatikana</string>
+
+    <string name="feature_home_common_error">Kuna kitu kimeenda vibaya</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">లబ్ధిదారులు</string>
+    <string name="survey">సర్వేలు</string>
+    <string name="apply_for_loan">ఋణానికి దరఖాస్తు చేయండి</string>
+    <string name="charges">ఖర్చులు</string>
+    <string name="transfer">బదిలీ</string>
+    <string name="accounts">ఖాతాలు</string>
+    <string name="recent_transactions">ఇటీవలి లావాదేవీలు</string>
+    <string name="error_fetching_client">క్లయింట్‌ను పొందడంలో విఫలమయ్యింది</string>
+    <string name="no_internet_connection">ఇంటర్నెట్ కనెక్షన్ లేదు</string>
+    <string name="hello_client">హలో, %1$s</string>
+    <string name="accounts_overview">ఖాతాల అవలోకనం</string>
+    <string name="total_saving">మొత్తం పొదుపులు</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">మొత్తం రుణం</string>
+    <string name="need_help">మమ్మల్ని సంప్రదించండి</string>
+    <string name="home">హోమ్</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">మైఫోస్ మొబైల్</string>
+    <string name="third_party_transfer">తృతీయ పక్ష బదిలీ</string>
+    <string name="manage_beneficiaries">లబ్ధిదారులను నిర్వహించండి</string>
+    <string name="settings">సెట్టింగులు</string>
+    <string name="about_us">మా గురించి</string>
+    <string name="help">సహాయం</string>
+    <string name="share">షేర్ చేయండి</string>
+    <string name="app_info">యాప్ సమాచారం</string>
+    <string name="logout">లాగౌట్</string>
+    <string name="user_query">వినియోగదారుడి ప్రశ్న</string>
+    <string name="no_app_to_support_action">ఈ చర్యకు మద్దతు ఇచ్చే యాప్ లేదు</string>
+    <string name="cancel">రద్దు</string>
+    <string name="dialog_logout">మీరు నిజంగా లాగౌట్ అవ్వాలనుకుంటున్నారా?</string>
+
+    <string name="feature_home_greet">హలో %1$s,</string>
+    <string name="feature_home_services">సేవలు</string>
+    <string name="feature_home_saving_accounts">పొదుపు ఖాతాలు</string>
+    <string name="feature_home_loan_accounts">రుణ ఖాతాలు</string>
+    <string name="feature_home_share_accounts">షేర్ ఖాతాలు</string>
+    <string name="feature_home_apply_for_loan">ఋణానికి దరఖాస్తు చేయండి</string>
+    <string name="feature_home_transaction_history">లావాదేవీల చరిత్ర</string>
+    <string name="feature_home_charges">ఖర్చులు</string>
+    <string name="feature_home_beneficiary">లబ్ధిదారు</string>
+    <string name="feature_home_faq">తరచుగా అడిగే ప్రశ్నలు</string>
+
+    <string name="feature_home_total_available_savings">అందుబాటులో ఉన్న మొత్తం పొదుపులు</string>
+    <string name="feature_home_total_available_loan">అందుబాటులో ఉన్న మొత్తం రుణం</string>
+
+    <string name="feature_home_common_error">ఏదో తప్పు జరిగింది</string>
+</resources>
