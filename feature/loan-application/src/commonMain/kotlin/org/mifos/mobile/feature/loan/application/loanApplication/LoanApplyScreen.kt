@@ -42,7 +42,7 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_loan_product
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_principal_amount
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_title
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_section_fill_details
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
@@ -77,9 +77,9 @@ internal fun LoanApplyScreen(
 
             is LoanApplicationEvent.NavigateToConfirmDetailsScreen -> {
                 navigateToConfirmDetailsScreen(
-                    state.selectedLoanProductId,
+                    state.loanProductId.toLong(),
                     state.applicantName,
-                    state.selectedLoanProduct,
+                    state.loanProductName,
                     state.selectedLoanPurpose,
                     state.disbursementDate,
                     state.principalAmount,
@@ -117,7 +117,7 @@ internal fun LoanAccountDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = stringResource(dialogState.message),
                 ),
-                onDismissRequest = { onAction(LoanApplicationAction.DismissDialog) },
+                onDismissRequest = { onAction(LoanApplicationAction.ConfirmNavigation) },
             )
         }
 
@@ -186,7 +186,7 @@ internal fun LoanAccountDialog(
 
         is LoanApplicationDialogState.Network -> {
             MifosErrorComponent(
-                isNetworkConnected = !state.networkUnavailable,
+                isNetworkConnected = state.networkStatus,
                 isRetryEnabled = true,
                 onRetry = { onAction(LoanApplicationAction.Retry) },
             )
@@ -204,7 +204,7 @@ internal fun LoanAccountContent(
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(LoanApplicationAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_apply_loan_title),
+        topBarTitle = stringResource(Res.string.feature_apply_loan_section_fill_details),
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -235,11 +235,10 @@ internal fun LoanAccountContent(
                 )
 
                 MifosOutlineDropdown(
-                    selectedText = state.selectedLoanProduct,
-                    items = state.productOptionsMap,
-                    onItemSelected = { id, product ->
-                        onAction(LoanApplicationAction.LoanProductChange(id, product))
-                    },
+                    selectedText = state.loanProductName,
+                    items = emptyMap(),
+                    enabled = false,
+                    onItemSelected = { _, _ -> },
                     label = stringResource(Res.string.feature_apply_loan_label_loan_product),
                 )
 
@@ -249,7 +248,6 @@ internal fun LoanAccountContent(
                     onItemSelected = { id, product ->
                         onAction(LoanApplicationAction.PurposeOfLoanChange(product))
                     },
-                    enabled = state.selectedLoanProduct != "",
                     label = stringResource(Res.string.feature_apply_loan_label_purpose),
                 )
 
