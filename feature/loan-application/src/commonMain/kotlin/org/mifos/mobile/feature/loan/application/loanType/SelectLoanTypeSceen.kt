@@ -38,7 +38,6 @@ import org.mifos.mobile.core.designsystem.component.MifosExploreCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.core.model.entity.templates.loans.ProductOptions
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -47,7 +46,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun SelectLoanTypeScreen(
     navigateBack: () -> Unit,
-    navigateToLoanDescriptionScreen: (ProductOptions) -> Unit,
+    navigateToLoanProductDetailsScreen: (Int, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SelectLoanTypeViewModel = koinViewModel(),
 ) {
@@ -56,7 +55,8 @@ internal fun SelectLoanTypeScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             SelectLoanTypeEvent.NavigateBack -> navigateBack.invoke()
-            is SelectLoanTypeEvent.NavigateTo -> navigateToLoanDescriptionScreen.invoke(event.loanType)
+            is SelectLoanTypeEvent.NavigateTo ->
+                navigateToLoanProductDetailsScreen.invoke(event.productId, event.productName)
         }
     }
 
@@ -152,7 +152,12 @@ internal fun SelectLoanTypeScreenContent(
                                         icon = MifosIcons.Money,
                                         text = loanType.name ?: "",
                                         onClick = {
-                                            onAction(SelectLoanTypeAction.NavigateTo(loanType))
+                                            onAction(
+                                                SelectLoanTypeAction.NavigateTo(
+                                                    loanType.id ?: -1,
+                                                    loanType.name ?: "",
+                                                ),
+                                            )
                                         },
                                     )
                                 }
