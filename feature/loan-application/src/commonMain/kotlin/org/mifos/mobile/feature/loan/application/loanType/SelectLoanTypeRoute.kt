@@ -13,20 +13,20 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.templates.loans.ProductOptions
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
+import org.mifos.mobile.feature.loan.application.loanProductDescription.navigateToLoanProductDetailsScreen
 
 @Serializable
 data object SelectLoanTypeRoute
 
 fun NavGraphBuilder.selectLoanTypeDestination(
     navigateBack: () -> Unit,
-    navigateToLoanDescriptionScreen: (ProductOptions) -> Unit,
+    navigateToLoanProductDetailsScreen: (Int, String) -> Unit,
 ) {
     composableWithSlideTransitions<SelectLoanTypeRoute> {
         SelectLoanTypeScreen(
             navigateBack = navigateBack,
-            navigateToLoanDescriptionScreen = navigateToLoanDescriptionScreen,
+            navigateToLoanProductDetailsScreen = navigateToLoanProductDetailsScreen,
         )
     }
 }
