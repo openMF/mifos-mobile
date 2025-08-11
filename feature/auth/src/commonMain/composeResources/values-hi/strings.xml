@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
+    <string name="register">पंजीकरण करें</string>
+    <string name="login_failed">लॉगिन असफल, कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="toast_welcome">स्वागत है %1$s</string>
+    <string name="password">पासवर्ड</string>
+    <string name="login">लॉगिन</string>
+    <string name="create_an_account">खाता बनाएं</string>
+    <string name="rb_mobile">मोबाइल</string>
+    <string name="rb_email">ईमेल</string>
+    <string name="account_number">खाता संख्या</string>
+    <string name="username">उपयोगकर्ता नाम</string>
+    <string name="first_name">पहला नाम</string>
+    <string name="last_name">अंतिम नाम</string>
+    <string name="phone_number">फोन नंबर</string>
+    <string name="email">ईमेल</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि करें</string>
+    <string name="verification_mode">सत्यापन मोड</string>
+    <string name="dialog_cancel_registration_message">क्या आप नया खाता पंजीकरण रद्द करना चाहते हैं?</string>
+    <string name="dialog_cancel_registration_title">पंजीकरण रद्द करें</string>
+    <string name="request_id">अनुरोध आईडी</string>
+    <string name="empty_requestid">अनुरोध आईडी खाली नहीं हो सकती</string>
+    <string name="authentication_token">प्रमाणीकरण टोकन</string>
+    <string name="empty_authentication_token">प्रमाणीकरण टोकन खाली नहीं हो सकता</string>
+    <string name="verify">सत्यापित करें</string>
+    <string name="verified">उपयोगकर्ता सफलतापूर्वक सत्यापित हो गया है</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string name="could_not_register_user_error">हम उपयोगकर्ता को पंजीकृत नहीं कर सके।</string>
+    <string name="password_strength_weak">कमजोर</string>
+    <string name="password_strength_medium">मध्यम</string>
+    <string name="password_strength_strong">मजबूत</string>
+    <string name="password_strength_very_strong">बहुत मजबूत</string>
+    <string name="error_message_server">सर्वर से प्रतिक्रिया लोड करने में त्रुटि</string>
+    <string name="error_validation_blank">%1$s खाली नहीं हो सकता</string>
+    <string name="error_validation_minimum_chars">%1$s %2$d वर्णों से कम नहीं हो सकता</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s में %2$s नहीं हो सकता</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s खाली स्थान से शुरू या समाप्त नहीं हो सकता</string>
+    <string name="error_username_greater_than_six">उपयोगकर्ता नाम 6 अक्षरों से अधिक होना चाहिए</string>
+    <string name="not_contain_username">स्थान</string>
+    <string name="invalid_phn_number">अमान्य फोन नंबर</string>
+    <string name="error_invalid_password">पासवर्ड कम से कम 8 वर्ण लंबा होना चाहिए</string>
+    <string name="error_invalid_email">अमान्य ईमेल आईडी</string>
+    <string name="error_password_not_match">पासवर्ड मेल नहीं खाता</string>
+    <string name="error_enter_email">कृपया एक वैध ईमेल दर्ज करें</string>
+    <string name="error_mobile_length">मोबाइल नंबर 10 अंकों का होना चाहिए</string>
+    <string name="error_enter_account_number">कृपया अपना खाता नंबर दर्ज करें</string>
+    <string name="error_enter_mobile_number">कृपया अपना मोबाइल नंबर दर्ज करें</string>
+    <string name="error_enter_first_name">कृपया अपना पहला नाम दर्ज करें</string>
+    <string name="error_enter_last_name">कृपया अपना अंतिम नाम दर्ज करें</string>
+    <string name="error_enter_user_name">कृपया अपना उपयोगकर्ता नाम दर्ज करें</string>
+    <string name="error_enter_country">कृपया अपना देश दर्ज करें</string>
+
+    <string name="feature_sign_in_title">साइन इन करें</string>
+    <string name="feature_sign_in_sub_title">लॉग इन करने के लिए अपना ईमेल और पासवर्ड दर्ज करें</string>
+    <string name="feature_sign_in_username_label">उपयोगकर्ता नाम या ईमेल</string>
+    <string name="feature_sign_in_password_label">पासवर्ड</string>
+    <string name="feature_sign_in_forgot_password">पासवर्ड भूल गए?</string>
+    <string name="feature_sign_in_Sign_in">साइन इन करें</string>
+    <string name="feature_sign_in_dont_have_an_account">खाता नहीं है?</string>
+    <string name="feature_sign_in_sign_up">साइन अप करें!</string>
+    <string name="feature_sign_in_username_error">ईमेल पता नहीं मिला</string>
+    <string name="feature_sign_in_password_error">आपका पासवर्ड सही नहीं है!</string>
+
+    <string name="feature_signup_title">साइन अप करें</string>
+    <string name="feature_signup_sub_title">जारी रखने के लिए एक खाता बनाएं!</string>
+    <string name="feature_signup_first_name_label">पहला नाम</string>
+    <string name="feature_signup_middle_name_label">मध्य नाम</string>
+    <string name="feature_signup_last_name_label">अंतिम नाम</string>
+    <string name="feature_signup_email_label">ईमेल</string>
+    <string name="feature_signup_cell_phone_label">सेल फोन</string>
+    <string name="feature_signup_customer_account_label">ग्राहक खाता</string>
+    <string name="feature_signup_password_label">पासवर्ड</string>
+    <string name="feature_signup_confirm_password_label">पासवर्ड की पुष्टि करें</string>
+    <string name="feature_signup_submit">सबमिट करें</string>
+    <string name="feature_signup_already_have_an_account">पहले से खाता है?</string>
+    <string name="feature_signup_log_in">लॉग इन करें!</string>
+    <string name="feature_signup_character_rules">वर्ण नियम</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">नाम में अमान्य वर्ण है</string>
+    <string name="feature_signup_error_first_name_empty">पहला नाम खाली नहीं हो सकता</string>
+    <string name="feature_signup_error_middle_name_empty">मध्य नाम खाली नहीं हो सकता</string>
+    <string name="feature_signup_error_last_name_empty">अंतिम नाम खाली नहीं हो सकता</string>
+    <string name="feature_signup_error_invalid_email">अमान्य ईमेल पता</string>
+    <string name="feature_signup_error_invalid_mobile_number">अमान्य मोबाइल नंबर</string>
+    <string name="feature_signup_error_customer_account_empty">ग्राहक खाता आवश्यक है</string>
+    <string name="feature_signup_error_customer_account_not_valid">वैध ग्राहक खाता प्रदान करें</string>
+    <string name="feature_signup_error_password_required_error">पासवर्ड आवश्यक है</string>
+    <string name="feature_signup_error_password_short">पासवर्ड कम से कम 6 वर्ण का होना चाहिए</string>
+    <string name="feature_signup_error_password_mismatch">पासवर्ड मेल नहीं खाते</string>
+    <string name="feature_signup_error_name_contains_digits">नाम में अंक नहीं होने चाहिए</string>
+    <string name="feature_signup_error_name_contains_symbols">नाम में प्रतीक और स्थान नहीं होने चाहिए</string>
+    <string name="feature_signup_error_name_contains_emoji">टेक्स्ट में इमोजी या अमान्य वर्ण नहीं होने चाहिए</string>
+    <string name="feature_signup_user_registered_successfully">उपयोगकर्ता सफलतापूर्वक पंजीकृत</string>
+    <string name="feature_signup_user_registered_successfully_tip">अब आप अपने उपयोगकर्ता नाम (फोन नंबर) और पासवर्ड से लॉग इन कर सकते हैं।</string>
+    <string name="feature_signup_user_registered_failed">उपयोगकर्ता पंजीकरण असफल</string>
+    <string name="feature_signup_user_registered_failed_tip">उपयोगकर्ता को पंजीकृत करने में त्रुटि हुई। कृपया पुनः प्रयास करें।</string>
+
+    <string name="feature_upload_id_title">आईडी अपलोड करें</string>
+    <string name="feature_upload_id_subtitle">सत्यापन के लिए अपनी आईडी और फोटो अपलोड करें!</string>
+    <string name="feature_upload_id_upload_your_id">अपनी आईडी अपलोड करें</string>
+    <string name="feature_upload_id_upload_your_photo">अपनी फोटो अपलोड करें</string>
+    <string name="feature_upload_id_remove_file">फाइल हटाएं</string>
+    <string name="feature_upload_id_view_file">फाइल देखें</string>
+    <string name="feature_upload_id_select_new_file">नई फाइल चुनें</string>
+    <string name="feature_upload_id_identification_doc_label">पहचान दस्तावेज</string>
+    <string name="feature_upload_id_profile_photo_label">प्रोफाइल फोटो</string>
+    <string name="feature_upload_id_mobile_label">सेल फोन</string>
+    <string name="feature_upload_id_national_id_label">राष्ट्रीय आईडी नंबर</string>
+    <string name="feature_upload_id_dob_label">जन्म तिथि</string>
+    <string name="feature_upload_id_edit_prompt">अपनी व्यक्तिगत जानकारी संपादित करना चाहते हैं?</string>
+    <string name="feature_upload_id_take_me_back">मुझे वापस ले जाएं</string>
+    <string name="feature_upload_id_ok">ठीक है</string>
+    <string name="feature_upload_id_cancel">रद्द करें</string>
+    <string name="feature_common_submit">सबमिट करें</string>
+
+    <string name="feature_upload_id_error_field_empty">यह फील्ड खाली नहीं हो सकती</string>
+    <string name="feature_upload_id_error_mobile_not_valid">वैध 10-अंकीय मोबाइल नंबर दर्ज करें</string>
+    <string name="feature_upload_id_error_id_required">कृपया अपनी आईडी अपलोड करें</string>
+    <string name="feature_upload_id_error_photo_required">कृपया अपनी फोटो अपलोड करें</string>
+    <string name="feature_upload_id_error_dob_required">जन्म तिथि आवश्यक है</string>
+    <string name="feature_upload_id_upload_success">फाइल सफलतापूर्वक अपलोड हुई</string>
+    <string name="feature_upload_id_upload_failed">फाइल अपलोड असफल। कृपया पुनः प्रयास करें।</string>
+    <string name="feature_upload_id_error_invalid_dob">जन्म तिथि आज या भविष्य की तारीख नहीं हो सकती</string>
+    <string name="feature_upload_id_generic_error">कुछ गलत हुआ। कृपया बाद में पुनः प्रयास करें।</string>
+
+    <string name="feature_otp_title">OTP प्रमाणीकरण</string>
+    <string name="feature_otp_subtitle">अपना ई-मेल जांचें!</string>
+    <string name="feature_otp_message">अपना पंजीकरण पूरा करने के लिए, अपना ईमेल जांचें। आपको एक प्रमाणीकरण कोड मिला होगा (यदि आपको ईमेल नहीं मिला, तो पुनः भेजने का विकल्प चुनें)। आपको इसे नीचे प्रदान करना होगा।</string>
+    <string name="feature_otp_tip">कोड नहीं मिला?</string>
+    <string name="feature_otp_action_tip">अब पुनः भेजें</string>
+    <string name="feature_otp_authentication_code_label">प्रमाणीकरण कोड</string>
+    <string name="feature_otp_request_id_label">अनुरोध आईडी</string>
+
+    <string name="feature_common_next">अगला</string>
+    <string name="feature_common_cancel">रद्द करें</string>
+
+    <string name="feature_otp_required_error">OTP आवश्यक है</string>
+    <string name="feature_otp_invalid_error">वैध OTP दर्ज करें</string>
+    <string name="feature_otp_request_id_error">अनुरोध आईडी आवश्यक है</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">पासवर्ड सेट करें</string>
+    <string name="feature_set_new_password_message">अब अपना नया सुरक्षित पासवर्ड सेट करें!</string>
+    <string name="feature_set_new_password_new_password_label">नया पासवर्ड</string>
+    <string name="feature_set_new_password_confirm_password_label">नए पासवर्ड की पुष्टि करें</string>
+    <string name="feature_set_new_password_submit">सबमिट करें</string>
+    <string name="feature_set_new_password_tip">अपना पासवर्ड याद है?</string>
+    <string name="feature_set_new_password_action_tip">लॉग इन करें</string>
+
+    <string name="feature_common_error_password_required_error">पासवर्ड आवश्यक है</string>
+    <string name="feature_common_error_password_short">पासवर्ड कम से कम 6 वर्ण का होना चाहिए</string>
+    <string name="feature_common_error_password_mismatch">पासवर्ड मेल नहीं खाते</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">अब रिकवर करें</string>
+    <string name="feature_recover_now_message">अपना पासवर्ड भूल गए, चिंता न करें! हमने आपको कवर किया है। अब अपना पासवर्ड रीसेट करें!</string>
+    <string name="feature_recover_now_phone_number_label">फोन नंबर</string>
+    <string name="feature_recover_now_email_label">ईमेल</string>
+    <string name="feature_recover_now_verifying">सत्यापन कर रहे हैं</string>
+    <string name="feature_recover_now_email_required">ईमेल आवश्यक है</string>
+    <string name="feature_recover_now_phone_number_required">फोन नंबर आवश्यक है</string>
+    <string name="feature_recover_now_email_format_error">अमान्य ईमेल</string>
+    <string name="feature_recover_now_phone_number_error">अमान्य फोन नंबर</string>
+    <string name="feature_recover_now_invalid_phone_number_error">फोन नंबर में अक्षर या प्रतीक नहीं हो सकते</string>
+    <string name="feature_recover_now_remember_your_password">अपना पासवर्ड याद है?</string>
+    <string name="feature_recover_now_log_in">लॉग इन करें!</string>
+
+    <string name="feature_recover_now_recovered_successfully">पासवर्ड रिकवरी सफल</string>
+    <string name="feature_recover_now_recovered_successfully_tip">अब आप अपने उपयोगकर्ता नाम (फोन नंबर) और पासवर्ड से लॉग इन कर सकते हैं।</string>
+    <string name="feature_recover_now_recovered_failed">पासवर्ड रिकवरी असफल</string>
+    <string name="feature_recover_now_registered_failed_tip">उपयोगकर्ता के पासवर्ड को रिकवर करने में त्रुटि हुई। कृपया पुनः प्रयास करें।</string>
+</resources>

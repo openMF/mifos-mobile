@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">ಅಂತರ್ಜಾಲ ಸಂಪರ್ಕವಿಲ್ಲ</string>
+    <string name="register">ನೋಂದಾಯಿಸಿ</string>
+    <string name="login_failed">ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ, ದಯವಿಟ್ಟು ನಂತರ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="toast_welcome">ಸುಸ್ವಾಗತ %1$s</string>
+    <string name="password">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="login">ಲಾಗಿನ್</string>
+    <string name="create_an_account">ಖಾತೆಯನ್ನು ರಚಿಸಿ</string>
+    <string name="rb_mobile">ಮೊಬೈಲ್</string>
+    <string name="rb_email">ಇಮೇಲ್</string>
+    <string name="account_number">ಖಾತೆ ಸಂಖ್ಯೆ</string>
+    <string name="username">ಬಳಕೆದಾರ ಹೆಸರು</string>
+    <string name="first_name">ಮೊದಲ ಹೆಸರು</string>
+    <string name="last_name">ಕೊನೆಯ ಹೆಸರು</string>
+    <string name="phone_number">ದೂರವಾಣಿ ಸಂಖ್ಯೆ</string>
+    <string name="email">ಇಮೇಲ್</string>
+    <string name="confirm_password">ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಖಚಿತಪಡಿಸಿ</string>
+    <string name="verification_mode">ಪರಿಶೀಲನಾ ವಿಧಾನ</string>
+    <string name="dialog_cancel_registration_message">ನೀವು ಹೊಸ ಖಾತೆಯನ್ನು ನೋಂದಾಯಿಸುವುದನ್ನು ರದ್ದುಗೊಳಿಸಲು ಬಯಸುವಿರಾ?</string>
+    <string name="dialog_cancel_registration_title">ನೋಂದಣಿಯನ್ನು ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="request_id">ವಿನಂತಿ ಐಡಿ</string>
+    <string name="empty_requestid">ವಿನಂತಿ ಐಡಿ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="authentication_token">ಪ್ರಮಾಣೀಕರಣ ಟೋಕನ್</string>
+    <string name="empty_authentication_token">ಪ್ರಮಾಣೀಕರಣ ಟೋಕನ್ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="verify">ಪರಿಶೀಲಿಸಿ</string>
+    <string name="verified">ಬಳಕೆದಾರರನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
+    <string name="yes">ಹೌದು</string>
+    <string name="no">ಇಲ್ಲ</string>
+    <string name="could_not_register_user_error">ನಾವು ಬಳಕೆದಾರರನ್ನು ನೋಂದಾಯಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ.</string>
+    <string name="password_strength_weak">ದುರ್ಬಲ</string>
+    <string name="password_strength_medium">ಮಧ್ಯಮ</string>
+    <string name="password_strength_strong">ಬಲವಾದ</string>
+    <string name="password_strength_very_strong">ಬಹಳ ಬಲವಾದ</string>
+    <string name="error_message_server">ಸರ್ವರ್‌ನಿಂದ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಲೋಡ್ ಮಾಡುವಾಗ ದೋಷ</string>
+    <string name="error_validation_blank">%1$s ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="error_validation_minimum_chars">%1$s ಅಕ್ಷರಗಳು %2$d ಕ್ಕಿಂತ ಕಡಿಮೆ ಇರಬಾರದು</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s ಅಕ್ಷರಗಳು %2$s ಅನ್ನು ಒಳಗೊಂಡಿರಬಾರದು</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s ಖಾಲಿ ಜಾಗದಿಂದ ಪ್ರಾರಂಭವಾಗಬಾರದು ಅಥವಾ ಅಂತ್ಯದಲ್ಲಿ ಮುಗಿಯಬಾರದು</string>
+    <string name="error_username_greater_than_six">ಬಳಕೆದಾರ ಹೆಸರು 6 ಅಕ್ಷರಗಳಿಗಿಂತ ಹೆಚ್ಚಾಗಿರಬೇಕು</string>
+    <string name="not_contain_username">ಖಾಲಿ ಜಾಗಗಳು</string>
+    <string name="invalid_phn_number">ಅಮಾನ್ಯ ದೂರವಾಣಿ ಸಂಖ್ಯೆ</string>
+    <string name="error_invalid_password">ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 8 ಅಕ್ಷರಗಳ ಉದ್ದದ್ದಾಗಿರಬೇಕು</string>
+    <string name="error_invalid_email">ಅಮಾನ್ಯ ಇಮೇಲ್ ಐಡಿ</string>
+    <string name="error_password_not_match">ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೊಳ್ಳುವುದಿಲ್ಲ</string>
+    <string name="error_enter_email">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಇಮೇಲ್ ನಮೂದಿಸಿ</string>
+    <string name="error_mobile_length">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ 10 ಅಂಕಿಗಳ ಉದ್ದದ್ದಾಗಿರಬೇಕು</string>
+    <string name="error_enter_account_number">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಖಾತೆ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_enter_mobile_number">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_enter_first_name">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_enter_last_name">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಕೊನೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_enter_user_name">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_enter_country">ದಯವಿಟ್ಟು ನಿಮ್ಮ ದೇಶವನ್ನು ನಮೂದಿಸಿ</string>
+
+    <string name="feature_sign_in_title">ಸೈನ್ ಇನ್</string>
+    <string name="feature_sign_in_sub_title">ಲಾಗಿನ್ ಮಾಡಲು ನಿಮ್ಮ ಇಮೇಲ್ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_sign_in_username_label">ಬಳಕೆದಾರ ಹೆಸರು ಅಥವಾ ಇಮೇಲ್</string>
+    <string name="feature_sign_in_password_label">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_sign_in_forgot_password">ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿದ್ದೀರಾ?</string>
+    <string name="feature_sign_in_Sign_in">ಸೈನ್ ಇನ್</string>
+    <string name="feature_sign_in_dont_have_an_account">ಖಾತೆ ಇಲ್ಲವೇ?</string>
+    <string name="feature_sign_in_sign_up">ಸೈನ್ ಅಪ್ ಮಾಡಿ!</string>
+    <string name="feature_sign_in_username_error">ಇಮೇಲ್ ವಿಳಾಸವು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="feature_sign_in_password_error">ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಾಗಿಲ್ಲ!</string>
+
+    <string name="feature_signup_title">ಸೈನ್ ಅಪ್</string>
+    <string name="feature_signup_sub_title">ಮುಂದುವರಿಯಲು ಖಾತೆಯನ್ನು ರಚಿಸಿ!</string>
+    <string name="feature_signup_first_name_label">ಮೊದಲ ಹೆಸರು</string>
+    <string name="feature_signup_middle_name_label">ಮಧ್ಯ ಹೆಸರು</string>
+    <string name="feature_signup_last_name_label">ಕೊನೆಯ ಹೆಸರು</string>
+    <string name="feature_signup_email_label">ಇಮೇಲ್</string>
+    <string name="feature_signup_cell_phone_label">ಸೆಲ್ ಫೋನ್</string>
+    <string name="feature_signup_customer_account_label">ಗ್ರಾಹಕ ಖಾತೆ</string>
+    <string name="feature_signup_password_label">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_signup_confirm_password_label">ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಖಚಿತಪಡಿಸಿ</string>
+    <string name="feature_signup_submit">ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_signup_already_have_an_account">ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?</string>
+    <string name="feature_signup_log_in">ಲಾಗಿನ್ ಮಾಡಿ!</string>
+    <string name="feature_signup_character_rules">ಅಕ್ಷರ ನಿಯಮಗಳು</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">ಹೆಸರು ಅಮಾನ್ಯ ಅಕ್ಷರವನ್ನು ಒಳಗೊಂಡಿದೆ</string>
+    <string name="feature_signup_error_first_name_empty">ಮೊದಲ ಹೆಸರು ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="feature_signup_error_middle_name_empty">ಮಧ್ಯ ಹೆಸರು ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="feature_signup_error_last_name_empty">ಕೊನೆಯ ಹೆಸರು ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="feature_signup_error_invalid_email">ಅಮಾನ್ಯ ಇಮೇಲ್ ವಿಳಾಸ</string>
+    <string name="feature_signup_error_invalid_mobile_number">ಅಮಾನ್ಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</string>
+    <string name="feature_signup_error_customer_account_empty">ಗ್ರಾಹಕ ಖಾತೆ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_signup_error_customer_account_not_valid">ಮಾನ್ಯವಾದ ಗ್ರಾಹಕ ಖಾತೆಯನ್ನು ಒದಗಿಸಿ</string>
+    <string name="feature_signup_error_password_required_error">ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_signup_error_password_short">ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳ ಉದ್ದದ್ದಾಗಿರಬೇಕು</string>
+    <string name="feature_signup_error_password_mismatch">ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಿಕೊಳ್ಳುವುದಿಲ್ಲ</string>
+    <string name="feature_signup_error_name_contains_digits">ಹೆಸರು ಅಂಕಿಗಳನ್ನು ಒಳಗೊಳ್ಳಬಾರದು</string>
+    <string name="feature_signup_error_name_contains_symbols">ಹೆಸರು ಚಿಹ್ನೆಗಳು ಮತ್ತು ಖಾಲಿ ಜಾಗಗಳನ್ನು ಒಳಗೊಳ್ಳಬಾರದು</string>
+    <string name="feature_signup_error_name_contains_emoji">ಪಠ್ಯವು ಎಮೋಜಿಗಳು ಅಥವಾ ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ಒಳಗೊಳ್ಳಬಾರದು</string>
+    <string name="feature_signup_user_registered_successfully">ಬಳಕೆದಾರರನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನೋಂದಾಯಿಸಲಾಗಿದೆ</string>
+    <string name="feature_signup_user_registered_successfully_tip">ನೀವು ಈಗ ನಿಮ್ಮ ಬಳಕೆದಾರ ಹೆಸರು (ದೂರವಾಣಿ ಸಂಖ್ಯೆ) ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಉಪಯೋಗಿಸಿ ಲಾಗಿನ್ ಮಾಡಬಹುದು.</string>
+    <string name="feature_signup_user_registered_failed">ಬಳಕೆದಾರರನ್ನು ನೋಂದಾಯಿಸುವುದು ವಿಫಲಗೊಂಡಿದೆ</string>
+    <string name="feature_signup_user_registered_failed_tip">ಬಳಕೆದಾರರನ್ನು ನೋಂದಾಯಿಸುವಾಗ ದೋಷ ಸಂಭವಿಸಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="feature_upload_id_title">ಐಡಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_id_subtitle">ಪರಿಶೀಲನೆಗಾಗಿ ನಿಮ್ಮ ಐಡಿ ಮತ್ತು ಫೋಟೋವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ!</string>
+    <string name="feature_upload_id_upload_your_id">ನಿಮ್ಮ ಐಡಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_id_upload_your_photo">ನಿಮ್ಮ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_id_remove_file">ಫೈಲ್ ತೆಗೆದುಹಾಕಿ</string>
+    <string name="feature_upload_id_view_file">ಫೈಲ್ ವೀಕ್ಷಿಸಿ</string>
+    <string name="feature_upload_id_select_new_file">ಹೊಸ ಫೈಲ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="feature_upload_id_identification_doc_label">ಗುರುತಿನ ದಾಖಲೆ</string>
+    <string name="feature_upload_id_profile_photo_label">ಪ್ರೊಫೈಲ್ ಫೋಟೋ</string>
+    <string name="feature_upload_id_mobile_label">ಸೆಲ್ ಫೋನ್</string>
+    <string name="feature_upload_id_national_id_label">ರಾಷ್ಟ್ರೀಯ ಐಡಿ ಸಂಖ್ಯೆ</string>
+    <string name="feature_upload_id_dob_label">ಹುಟ್ಟು ದಿನಾಂಕ</string>
+    <string name="feature_upload_id_edit_prompt">ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಸಂಪಾದಿಸಲು ಬಯಸುವಿರಾ?</string>
+    <string name="feature_upload_id_take_me_back">ನನ್ನನ್ನು ಹಿಂದಕ್ಕೆ ತೆಗೆದುಕೊಳ್ಳಿ</string>
+    <string name="feature_upload_id_ok">ಸರಿ</string>
+    <string name="feature_upload_id_cancel">ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="feature_common_submit">ಸಲ್ಲಿಸಿ</string>
+
+    <string name="feature_upload_id_error_field_empty">ಈ ಕ್ಷೇತ್ರವು ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="feature_upload_id_error_mobile_not_valid">ಮಾನ್ಯವಾದ 10-ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_upload_id_error_id_required">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಐಡಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_id_error_photo_required">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_id_error_dob_required">ಹುಟ್ಟು ದಿನಾಂಕವು ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_upload_id_upload_success">ಫೈಲ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="feature_upload_id_upload_failed">ಫೈಲ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡುವುದು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="feature_upload_id_error_invalid_dob">ಹುಟ್ಟು ದಿನಾಂಕವು ಇಂದು ಅಥವಾ ಭವಿಷ್ಯದ ದಿನಾಂಕವಾಗಿರಬಾರದು</string>
+    <string name="feature_upload_id_generic_error">ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="feature_otp_title">OTP ಪ್ರಮಾಣೀಕರಣ</string>
+    <string name="feature_otp_subtitle">ನಿಮ್ಮ ಇಮೇಲ್ ಪರಿಶೀಲಿಸಿ!</string>
+    <string name="feature_otp_message">ನಿಮ್ಮ ನೋಂದಣಿಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು, ನಿಮ್ಮ ಇಮೇಲ್ ಪರಿಶೀಲಿಸಿ. ನಿಮಗೆ ಪ್ರಮಾಣೀಕರಣ ಕೋಡ್ ಸಿಕ್ಕಿರಬೇಕು (ಇಮೇಲ್ ಸಿಕ್ಕಿಲ್ಲದಿದ್ದರೆ, ಮರುಕಳುಹಿಸುವ ಆಯ್ಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ). ನೀವು ಅದನ್ನು ಕೆಳಗೆ ಒದಗಿಸಬೇಕು.</string>
+    <string name="feature_otp_tip">ಕೋಡ್ ಸಿಕ್ಕಿಲ್ಲವೇ?</string>
+    <string name="feature_otp_action_tip">ಈಗ ಮರುಕಳುಹಿಸಿ</string>
+    <string name="feature_otp_authentication_code_label">ಪ್ರಮಾಣೀಕರಣ ಕೋಡ್</string>
+    <string name="feature_otp_request_id_label">ವಿನಂತಿ ಐಡಿ</string>
+
+    <string name="feature_common_next">ಮುಂದೆ</string>
+    <string name="feature_common_cancel">ರದ್ದುಗೊಳಿಸಿ</string>
+
+    <string name="feature_otp_required_error">OTP ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_otp_invalid_error">ಮಾನ್ಯವಾದ OTP ಅನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_otp_request_id_error">ವಿನಂತಿ ಐಡಿ ಅಗತ್ಯವಿದೆ</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಸಿ</string>
+    <string name="feature_set_new_password_message">ನಿಮ್ಮ ಹೊಸ ಹೆಚ್ಚು ಸುರಕ್ಷಿತ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಈಗ ಹೊಂದಿಸಿ!</string>
+    <string name="feature_set_new_password_new_password_label">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_set_new_password_confirm_password_label">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಖಚಿತಪಡಿಸಿ</string>
+    <string name="feature_set_new_password_submit">ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_set_new_password_tip">ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನೆನಪಿದೆಯೇ?</string>
+    <string name="feature_set_new_password_action_tip">ಲಾಗಿನ್ ಮಾಡಿ</string>
+
+    <string name="feature_common_error_password_required_error">ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_common_error_password_short">ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳ ಉದ್ದದ್ದಾಗಿರಬೇಕು</string>
+    <string name="feature_common_error_password_mismatch">ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಿಕೊಳ್ಳುವುದಿಲ್ಲ</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">ಈಗ ಮರುಪಡೆಯಿರಿ</string>
+    <string name="feature_recover_now_message">ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿದ್ದೀರಾ, ಚಿಂತಿಸಬೇಡಿ!, ನಾವು ನಿಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತೇವೆ. ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಈಗ ಮರುಹೊಂದಿಸಿ!</string>
+    <string name="feature_recover_now_phone_number_label">ದೂರವಾಣಿ ಸಂಖ್ಯೆ</string>
+    <string name="feature_recover_now_email_label">ಇಮೇಲ್</string>
+    <string name="feature_recover_now_verifying">ಪರಿಶೀಲಿಸುತ್ತಿದೆ</string>
+    <string name="feature_recover_now_email_required">ಇಮೇಲ್ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_recover_now_phone_number_required">ದೂರವಾಣಿ ಸಂಖ್ಯೆ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_recover_now_email_format_error">ಅಮಾನ್ಯ ಇಮೇಲ್</string>
+    <string name="feature_recover_now_phone_number_error">ಅಮಾನ್ಯ ದೂರವಾಣಿ ಸಂಖ್ಯೆ</string>
+    <string name="feature_recover_now_invalid_phone_number_error">ದೂರವಾಣಿ ಸಂಖ್ಯೆಯು ಅಕ್ಷರಗಳು ಅಥವಾ ಚಿಹ್ನೆಗಳನ್ನು ಒಳಗೊಳ್ಳಬಾರದು</string>
+    <string name="feature_recover_now_remember_your_password">ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನೆನಪಿದೆಯೇ?</string>
+    <string name="feature_recover_now_log_in">ಲಾಗಿನ್ ಮಾಡಿ!</string>
+
+    <string name="feature_recover_now_recovered_successfully">ಪಾಸ್‌ವರ್ಡ್ ಮರುಪಡೆಯುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
+    <string name="feature_recover_now_recovered_successfully_tip">ನೀವು ಈಗ ನಿಮ್ಮ ಬಳಕೆದಾರ ಹೆಸರು (ದೂರವಾಣಿ ಸಂಖ್ಯೆ) ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಉಪಯೋಗಿಸಿ ಲಾಗಿನ್ ಮಾಡಬಹುದು.</string>
+    <string name="feature_recover_now_recovered_failed">ಪಾಸ್‌ವರ್ಡ್ ಮರುಪಡೆಯುವಿಕೆ ವಿಫಲಗೊಂಡಿದೆ</string>
+    <string name="feature_recover_now_registered_failed_tip">ಬಳಕೆದಾರರ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಮರುಪಡೆಯುವಾಗ ದೋಷ ಸಂಭವಿಸಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+</resources>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">Hakuna Muunganisho wa Mtandao</string>
+    <string name="register">Jisajili</string>
+    <string name="login_failed">Kuingia Kumeshindikana, Tafadhali Jaribu Tena Baadaye.</string>
+    <string name="toast_welcome">Karibu %1$s</string>
+    <string name="password">Nenosiri</string>
+    <string name="login">Ingia</string>
+    <string name="create_an_account">Unda akaunti</string>
+    <string name="rb_mobile">simu</string>
+    <string name="rb_email">barua pepe</string>
+    <string name="account_number">Nambari ya akaunti</string>
+    <string name="username">Jina la mtumiaji</string>
+    <string name="first_name">Jina la kwanza</string>
+    <string name="last_name">Jina la mwisho</string>
+    <string name="phone_number">Nambari ya simu</string>
+    <string name="email">Barua pepe</string>
+    <string name="confirm_password">Thibitisha nenosiri</string>
+    <string name="verification_mode">Njia ya uthibitishaji</string>
+    <string name="dialog_cancel_registration_message">Je, unataka kughairi usajili wa akaunti mpya?</string>
+    <string name="dialog_cancel_registration_title">Ghairi usajili</string>
+    <string name="request_id">ID ya ombi</string>
+    <string name="empty_requestid">ID ya ombi haiwezi kuwa tupu</string>
+    <string name="authentication_token">Ishara ya uthibitishaji</string>
+    <string name="empty_authentication_token">Ishara ya uthibitishaji haiwezi kuwa tupu</string>
+    <string name="verify">Thibitisha</string>
+    <string name="verified">Mtumiaji amethibitishwa kwa mafanikio</string>
+    <string name="yes">Ndiyo</string>
+    <string name="no">Hapana</string>
+    <string name="could_not_register_user_error">Haikuweza kusajili mtumiaji.</string>
+    <string name="password_strength_weak">Dhaifu</string>
+    <string name="password_strength_medium">Wastani</string>
+    <string name="password_strength_strong">Imara</string>
+    <string name="password_strength_very_strong">Imara Sana</string>
+    <string name="error_message_server">Hitilafu katika kupakia majibu ya seva</string>
+    <string name="error_validation_blank">%1$s haiwezi kuwa tupu</string>
+    <string name="error_validation_minimum_chars">%1$s haiwezi kuwa na herufi chini ya %2$d</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s haiwezi kuva na %2$s</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s haiwezi kuanza au kumaliza na nafasi</string>
+    <string name="error_username_greater_than_six">Jina la mtumiaji lazima liwe na herufi zaidi ya 6</string>
+    <string name="not_contain_username">Nafasi</string>
+    <string name="invalid_phn_number">Nambari ya simu si sahihi</string>
+    <string name="error_invalid_password">Nenosiri lazima liwe na angalau herufi 8</string>
+    <string name="error_invalid_email">Barua pepe si sahihi</string>
+    <string name="error_password_not_match">Nenosiri halilingani</string>
+    <string name="error_enter_email">Tafadhali ingiza barua pepe sahihi</string>
+    <string name="error_mobile_length">Nambari ya simu lazima iwe na tarakimu 10</string>
+    <string name="error_enter_account_number">Tafadhali ingiza nambari yako ya akaunti</string>
+    <string name="error_enter_mobile_number">Tafadhali ingiza nambari yako ya simu</string>
+    <string name="error_enter_first_name">Tafadhali ingiza jina lako la kwanza</string>
+    <string name="error_enter_last_name">Tafadhali ingiza jina lako la mwisho</string>
+    <string name="error_enter_user_name">Tafadhali ingiza jina lako la mtumiaji</string>
+    <string name="error_enter_country">Tafadhali ingiza nchi yako</string>
+
+    <string name="feature_sign_in_title">Ingia</string>
+    <string name="feature_sign_in_sub_title">Ingiza barua pepe na nenosiri yako ili kuingia</string>
+    <string name="feature_sign_in_username_label">Jina la mtumiaji au barua pepe</string>
+    <string name="feature_sign_in_password_label">Nenosiri</string>
+    <string name="feature_sign_in_forgot_password">Umesahau nenosiri?</string>
+    <string name="feature_sign_in_Sign_in">Ingia</string>
+    <string name="feature_sign_in_dont_have_an_account">Huna akaunti?</string>
+    <string name="feature_sign_in_sign_up">Jisajili!</string>
+    <string name="feature_sign_in_username_error">Barua pepe haipatikani</string>
+    <string name="feature_sign_in_password_error">Nenosiri lako si sahihi!</string>
+
+    <string name="feature_signup_title">Jisajili</string>
+    <string name="feature_signup_sub_title">Unda akaunti ili kuendelea!</string>
+    <string name="feature_signup_first_name_label">Jina la kwanza</string>
+    <string name="feature_signup_middle_name_label">Jina la kati</string>
+    <string name="feature_signup_last_name_label">Jina la mwisho</string>
+    <string name="feature_signup_email_label">Barua pepe</string>
+    <string name="feature_signup_cell_phone_label">Simu</string>
+    <string name="feature_signup_customer_account_label">Akaunti ya mteja</string>
+    <string name="feature_signup_password_label">Nenosiri</string>
+    <string name="feature_signup_confirm_password_label">Thibitisha nenosiri</string>
+    <string name="feature_signup_submit">Wasilisha</string>
+    <string name="feature_signup_already_have_an_account">Tayari una akaunti?</string>
+    <string name="feature_signup_log_in">Ingia!</string>
+    <string name="feature_signup_character_rules">Sheria za herufi</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">Jina lina herufi si sahihi</string>
+    <string name="feature_signup_error_first_name_empty">Jina la kwanza haiwezi kuwa tupu</string>
+    <string name="feature_signup_error_middle_name_empty">Jina la kati haiwezi kuwa tupu</string>
+    <string name="feature_signup_error_last_name_empty">Jina la mwisho haiwezi kuwa tupu</string>
+    <string name="feature_signup_error_invalid_email">Barua pepe si sahihi</string>
+    <string name="feature_signup_error_invalid_mobile_number">Nambari ya simu si sahihi</string>
+    <string name="feature_signup_error_customer_account_empty">Akaunti ya mteja inahitajika</string>
+    <string name="feature_signup_error_customer_account_not_valid">Tafadhali toa akaunti ya mteja sahihi</string>
+    <string name="feature_signup_error_password_required_error">Nenosiri linahitajika</string>
+    <string name="feature_signup_error_password_short">Nenosiri lazima liwe na angalau herufi 6</string>
+    <string name="feature_signup_error_password_mismatch">Nenosiri halilingani</string>
+    <string name="feature_signup_error_name_contains_digits">Jina halipaswi kuva na tarakimu</string>
+    <string name="feature_signup_error_name_contains_symbols">Jina halipaswi kuva na alama na nafasi</string>
+    <string name="feature_signup_error_name_contains_emoji">Maandishi hayapaswi kuva na emojis au herufi si sahihi</string>
+    <string name="feature_signup_user_registered_successfully">Mtumiaji amesajiliwa kwa mafanikio</string>
+    <string name="feature_signup_user_registered_successfully_tip">Sasa unaweza kuingia kwa kutumia jina lako la mtumiaji (nambari ya simu) na nenosiri.</string>
+    <string name="feature_signup_user_registered_failed">Kusajili mtumiaji kumeshindikana</string>
+    <string name="feature_signup_user_registered_failed_tip">Kulikuwa na hitilafu wakati wa kusajili mtumiaji. Tafadhali jaribu tena.</string>
+
+    <string name="feature_upload_id_title">Pakia Kitambulisho</string>
+    <string name="feature_upload_id_subtitle">Pakia hati yako ya kitambulisho na picha kwa uthibitishaji!</string>
+    <string name="feature_upload_id_upload_your_id">Pakia hati yako ya kitambulisho</string>
+    <string name="feature_upload_id_upload_your_photo">Pakia picha yako</string>
+    <string name="feature_upload_id_remove_file">Ondoa faili</string>
+    <string name="feature_upload_id_view_file">Tazama faili</string>
+    <string name="feature_upload_id_select_new_file">Chagua faili mpya</string>
+    <string name="feature_upload_id_identification_doc_label">Hati ya kitambulisho</string>
+    <string name="feature_upload_id_profile_photo_label">Picha ya wasifu</string>
+    <string name="feature_upload_id_mobile_label">Simu</string>
+    <string name="feature_upload_id_national_id_label">Nambari ya kitambulisho cha kitaifa</string>
+    <string name="feature_upload_id_dob_label">Tarehe ya kuzaliwa</string>
+    <string name="feature_upload_id_edit_prompt">Je, unataka kuhariri maelezo yako ya kibinafsi?</string>
+    <string name="feature_upload_id_take_me_back">Nirudishe nyuma</string>
+    <string name="feature_upload_id_ok">Sawa</string>
+    <string name="feature_upload_id_cancel">Ghairi</string>
+    <string name="feature_common_submit">Wasilisha</string>
+
+    <string name="feature_upload_id_error_field_empty">Sehemu hii haiwezi kuwa tupu</string>
+    <string name="feature_upload_id_error_mobile_not_valid">Tafadhali ingiza nambari ya simu sahihi yenye tarakimu 10</string>
+    <string name="feature_upload_id_error_id_required">Tafadhali pakia hati yako ya kitambulisho</string>
+    <string name="feature_upload_id_error_photo_required">Tafadhali pakia picha yako</string>
+    <string name="feature_upload_id_error_dob_required">Tarehe ya kuzaliwa inahitajika</string>
+    <string name="feature_upload_id_upload_success">Faili imepakiwa kwa mafanikio</string>
+    <string name="feature_upload_id_upload_failed">Imeshindwa kupakia faili. Tafadhali jaribu tena.</string>
+    <string name="feature_upload_id_error_invalid_dob">Tarehe ya kuzaliwa haiwezi kuwa leo au tarehe ya baadaye</string>
+    <string name="feature_upload_id_generic_error">Hitilafu fulani imetokea. Tafadhali jaribu tena baadaye.</string>
+
+    <string name="feature_otp_title">Uthibitishaji wa OTP</string>
+    <string name="feature_otp_subtitle">Thibitisha barua pepe yako!</string>
+    <string name="feature_otp_message">Ili kukamilisha usajili wako, thibitisha barua pepe yako. Unapaswa kupokea msimbo wa uthibitishaji (ikiwa hujapokea barua pepe, chagua chaguo la kutuma tena). Unapaswa kutoa msimbo hapa chini.</string>
+    <string name="feature_otp_tip">Hujapokea msimbo?</string>
+    <string name="feature_otp_action_tip">Tuma tena sasa</string>
+    <string name="feature_otp_authentication_code_label">Msimbo wa uthibitishaji</string>
+    <string name="feature_otp_request_id_label">ID ya ombi</string>
+
+    <string name="feature_common_next">Inayofuata</string>
+    <string name="feature_common_cancel">Ghairi</string>
+
+    <string name="feature_otp_required_error">OTP inahitajika</string>
+    <string name="feature_otp_invalid_error">Tafadhali ingiza OTP sahihi</string>
+    <string name="feature_otp_request_id_error">ID ya ombi inahitajika</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">Weka Nenosiri</string>
+    <string name="feature_set_new_password_message">Weka nenosiri lako jipya la usalama wa juu sasa!</string>
+    <string name="feature_set_new_password_new_password_label">Nenosiri jipya</string>
+    <string name="feature_set_new_password_confirm_password_label">Thibitisha nenosiri jipya</string>
+    <string name="feature_set_new_password_submit">Wasilisha</string>
+    <string name="feature_set_new_password_tip">Unakumbuka nenosiri lako?</string>
+    <string name="feature_set_new_password_action_tip">Ingia</string>
+
+    <string name="feature_common_error_password_required_error">Nenosiri linahitajika</string>
+    <string name="feature_common_error_password_short">Nenosiri lazima liwe na angalau herufi 6</string>
+    <string name="feature_common_error_password_mismatch">Nenosiri halilingani</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">Pata Nenosiri Sasa</string>
+    <string name="feature_recover_now_message">Umesahau nenosiri lako, usijali! Tunakusaidia. Weka upya nenosiri lako sasa!</string>
+    <string name="feature_recover_now_phone_number_label">Nambari ya simu</string>
+    <string name="feature_recover_now_email_label">Barua pepe</string>
+    <string name="feature_recover_now_verifying">Inathibitisha</string>
+    <string name="feature_recover_now_email_required">Barua pepe inahitajika</string>
+    <string name="feature_recover_now_phone_number_required">Nambari ya simu inahitajika</string>
+    <string name="feature_recover_now_email_format_error">Barua pepe si sahihi</string>
+    <string name="feature_recover_now_phone_number_error">Nambari ya simu si sahihi</string>
+    <string name="feature_recover_now_invalid_phone_number_error">Nambari ya simu haiwezi kuva na herufi au alama</string>
+    <string name="feature_recover_now_remember_your_password">Unakumbuka nenosiri lako?</string>
+    <string name="feature_recover_now_log_in">Ingia!</string>
+
+    <string name="feature_recover_now_recovered_successfully">Kupata nenosiri kumefanikiwa</string>
+    <string name="feature_recover_now_recovered_successfully_tip">Sasa unaweza kuingia kwa kutumia jina lako la mtumiaji (nambari ya simu) na nenosiri.</string>
+    <string name="feature_recover_now_recovered_failed">Imeshindwa kupata nenosiri</string>
+    <string name="feature_recover_now_registered_failed_tip">Kulikuwa na hitilafu wakati wa kupata nenosiri la mtumiaji. Tafadhali jaribu tena.</string>
+</resources>
