@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Badilisha mandhari</string>
+    <string name="settings">Mipangilio</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Badilisha Nambari ya Kufungua</string>
+    <string name="change_app_passcode">Badilisha Nambari ya Kufungua ya Programu</string>
+    <string name="change_password">Badilisha Nywila</string>
+    <string name="change_account_password">Badilisha Nywila ya Akaunti yako</string>
+    <string name="language">Lugha</string>
+    <string name="choose_language">Chagua lugha yako</string>
+    <string name="other">Nyingine</string>
+    <string name="accounts">Akaunti</string>
+    <string name="theme">Mandhari</string>
+    <string name="pref_base_url_title">Sasisha Kiungo cha Mwisho</string>
+    <string name="pref_base_url_desc">Bofya hapa kubadilisha Mipangilio ya Kiungo chako</string>
+    <string name="enter_base_url">Ingiza URL ya Msingi</string>
+    <string name="enter_tenant">Ingiza Mpangaji</string>
+    <string name="cancel">Ghairi</string>
+    <string name="dialog_action_ok">Sawa</string>
+    <string name="base_url_tenant_id_required">URL ya Msingi na Kitambulisho cha Mpangaji vinahitajika</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>System Language</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Wasifu</string>
+    <string name="feature_settings_action_profile_tip">Badilisha barua pepe yako, jina, nambari ya simu n.k</string>
+
+    <string name="feature_settings_action_password">Nywila</string>
+    <string name="feature_settings_action_password_tip">Badilisha nywila yako ya zamani</string>
+
+    <string name="feature_settings_action_auth_passcode">Nambari ya Kufungua ya Uthibitishaji</string>
+    <string name="feature_settings_action_auth_passcode_tip">Badilisha nambari yako ya kufungua ya kuingia</string>
+
+    <string name="feature_settings_action_language">Lugha</string>
+    <string name="feature_settings_action_language_tip">Chagua lugha ya programu yako</string>
+
+    <string name="feature_settings_action_theme">Mandhari</string>
+    <string name="feature_settings_action_theme_tip">Chagua mandhari ya programu yako</string>
+
+    <string name="feature_settings_action_endpoint">Kiungo cha Mwisho</string>
+    <string name="feature_settings_action_endpoint_tip">Badilisha mipangilio ya kiungo chako</string>
+
+    <string name="feature_settings_action_about_us">Kuhusu Sisi</string>
+    <string name="feature_settings_action_about_us_tip">Pata maelezo zaidi kuhusu mradi wetu</string>
+
+    <string name="feature_settings_action_faq">Maswali Yanayoulizwa Mara kwa Mara</string>
+    <string name="feature_settings_action_faq_tip">Maswali yanayoulizwa na watumiaji</string>
+
+    <string name="feature_settings_action_help">Usaidizi</string>
+    <string name="feature_settings_action_help_tip">Zungumza na huduma yetu ya wateja</string>
+
+    <string name="feature_settings_action_app_info">Maelezo ya Programu</string>
+    <string name="feature_settings_action_app_info_tip">Pata maelezo ya toleo la programu</string>
+
+    <string name="feature_settings_action_logout">Toka</string>
+    <string name="feature_settings_action_logout_tip">Toka kwenye vifaa vyote</string>
+
+    <string name="feature_settings_top_bar_title">Mipangilio</string>
+
+    <string name="feature_settings_error_fetching_client">Imeshindwa kupata maelezo ya mteja.</string>
+    <string name="feature_settings_error_fetching_profile_image">Imeshindwa kupata picha ya wasifu.</string>
+    <string name="feature_settings_internet_not_connected">Hakuna muunganisho wa mtandao.</string>
+    <string name="feature_settings_error_invalid_profile_image">Umbizo batili la picha ya wasifu.</string>
+    <string name="feature_settings_customer_account_no">Akaunti ya Mteja: %1$s</string>
+    <string name="feature_settings_logout_message">Una uhakika unataka kutoka?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">Kuhusu Sisi</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Picha ya Mifos</string>
+    <string name="feature_settings_about_who_are_we">Ni nani sisi?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Mifos inafanya nini?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos ni shirika lisilo la faida ambalo lina lenga kutoa watu na ufikiaji wa huduma za kifedha msingi. Inafanya hivyo kupitia jukwaa la chanzo huria.</string>
+    <string name="feature_settings_about_point_1">Inasaidia taasisi za kifedha kutoa huduma za kifedha za kisasa</string>
+    <string name="feature_settings_about_point_2">Inawezesha watu kupata mikopo, kuweka akiba pesa, na zaidi</string>
+    <string name="feature_settings_about_point_3">Inasaidia taasisi za kifedha ambazo huduma milioni ya watu duniani kote</string>
+
+    <string name="feature_settings_doubt">Mashaka Mengi Yanasuluhishwa Katika Maswali Yanayoulizwa Mara kwa Mara!</string>
+    <string name="feature_settings_doubt_message">Hapana, sijayazingatia, nipeleke pale!</string>
+
+    <string name="feature_settings_still_have_doubt">Bado Una Mashaka?</string>
+    <string name="feature_settings_still_have_doubt_message">Unakabiliwa na tatizo? Usiwe na wasiwasi!\nPiga simu kwa huduma yetu ya wateja.\nTuko hapa kusaidia wewe, mchana na usiku,\nKuhakikisha kila kitu kinafanya kazi vizuri!</string>
+    <string name="feature_settings_still_have_doubt_action">Tupigie</string>
+
+    <string name="feature_settings_still_have_issue">Tuma Tatizo Lako kwa Barua Pepe?</string>
+    <string name="feature_settings_still_have_issue_message">Unahitaji usaidizi lakini unapendelea kuandika?\nTutumie barua pepe, mchana au usiku.\nTimu yetu itajibu kwa uangalifu na kasi,\nKuhakikisha upate usaidizi unaohitaji!</string>
+    <string name="feature_settings_still_have_issue_action">Tutumie Barua</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">Maelezo ya Programu</string>
+    <string name="feature_settings_appinfo_mobile">Simu</string>
+    <string name="feature_settings_appinfo_logo_content_description">Picha ya Mifos</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Simu</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Benki ya Kielektroniki ya Mifos</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">Haki zote zimehifadhiwa</string>
+    <string name="feature_settings_appinfo_version">Toleo</string>
+    <string name="feature_settings_appinfo_privacy_policy">Sera ya Faragha</string>
+    <string name="feature_settings_appinfo_terms_conditions">Sheria na Masharti</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Sasisha Nambari ya Kufungua</string>
+    <string name="feature_settings_old_passcode">Nambari ya Kufungua ya Zamani</string>
+    <string name="feature_settings_new_passcode">Nambari Mpya ya Kufungua</string>
+    <string name="feature_settings_confirm_new_passcode">Thibitisha Nambari Mpya ya Kufungua</string>
+    <string name="feature_settings_authorization_passcode">Nambari ya Kufungua ya Uthibitishaji</string>
+    <string name="feature_settings_passcode_length_error">Nambari ya kufungua lazima iwe na urefu wa tarakimu 4.</string>
+    <string name="feature_settings_passcode_empty_error">Nambari ya kufungua haiwezi kuwa tupu.</string>
+    <string name="feature_settings_passcode_invalid_error">Nambari ya kufungua haipaswi kuwa na herufi.</string>
+    <string name="feature_settings_passcode_confirm_error">Nambari mpya na ya kuthibitisha lazima ziwe sawa.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Nambari ya kufungua ya zamani lazima iwe halali.</string>
+    <string name="feature_settings_passcode_updated_successfully">Nambari ya kufungua imesasishwa kwa mafanikio.</string>
+    <string name="feature_settings_passcode_updated_message">Unahitaji kuingiza nambari mpya ya kufungua ili kutumia huduma za programu.</string>
+    <string name="feature_settings_next">Inayofuata</string>
+
+    <string name="feature_settings_update_password">Sasisha Nywila</string>
+    <string name="feature_settings_old_password">Nywila ya Zamani</string>
+    <string name="feature_settings_new_password">Nywila Mpya</string>
+    <string name="feature_settings_confirm_new_password">Thibitisha Nywila Mpya</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Nywila haiwezi kuwa tupu</string>
+    <string name="password_empty_error_repeat">herufi zinazojirudia haziruhusiwi</string>
+    <string name="password_length_error">Nywila lazima iwe na urefu wa angalau vibambo 12</string>
+    <string name="password_current_incorrect_error">Nywila ya sasa si sahihi</string>
+    <string name="password_validation_error">Nywila haifanani na mahitaji ya usalama</string>
+    <string name="password_same_as_current_error">Nywila mpya lazima iwe tofauti na nywila ya sasa</string>
+    <string name="password_personal_info_error">Nywila haipaswi kuwa na maelezo ya kibinafsi</string>
+    <string name="password_confirm_mismatch_error">Nywila hazifanani</string>
+    <string name="feature_settings_password">Nywila</string>
+    <string name="password_too_many_attempts">Majaribio mengi sana yameshindwa. Tafadhali subiri kabla ya kujaribu tena.</string>
+
+    <string name="password_update_success">Nywila imesasishwa kwa mafanikio</string>
+    <string name="password_update_success_message">Unahitaji kuingia tena ili kutumia huduma za programu.</string>
+    <string name="password_update_failed">Imeshindwa kusasisha nywila. Jaribu tena</string>
+    <string name="password_update_dialog_button">Ingia Sasa</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">Hakuna maswali yaliyopatikana</string>
+    <string-array name="faq_qs">
+        <item>Ninawezaje kuomba akaunti mpya ya mkopo?</item>
+        <item>Ninaweza kuona maelezo ya wasifu wangu wapi?</item>
+        <item>Ninaweza kuona Shughuli za Akaunti zangu za Akiba wapi?</item>
+        <item>Nini matumizi ya Msimbo wa QR?</item>
+        <item>Ninawezaje kuunda mpokeaji kwa kutumia Msimbo wa QR?</item>
+        <item>Ninawezaje kufanya malipo ya Akaunti ya Mkopo?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>Ili kuomba akaunti ya mkopo, bofya "Omba Mkopo" iliyo kwenye Skrini ya Nyumbani.</item>
+        <item>Unaweza kuona maelezo ya wasifu wako kwa kubofya Picha ya Mtumiaji iliyo kwenye Skrini ya Nyumbani.</item>
+        <item>Ili kuona shughuli za akaunti yako ya akiba, nenda kwenye Sehemu ya Akaunti, bofya akaunti ya akiba unayohitaji, bofya vitone vitatu vilivyoko juu kulia na uchague chaguo la Shughuli.</item>
+        <item>Msimbo wa QR wa akaunti yoyote ya mkopo au akiba unaweza kushirikiwa na watumiaji wengine ambao watawezesha kuunda mpokeaji.</item>
+        <item>Ili kuunda Mpokeaji, nenda kwenye chaguo la Mpokeaji kutoka kwenye Skrini ya Nyumbani kisha bofya kitufe cha mviringo kilicho chini kulia, chagua chaguo la Kuchanganua ambacho hufungua kamera ya kifaa chako, changanua Msimbo wa QR wa mtu mwingine ambaye unataka kuunda mpokeaji kwa ajili yake, baada ya kujaza maelezo mengine yanayohitajika utaweza kuunda Mpokeaji kwa kutumia Msimbo wa QR.</item>
+        <item>Ili kufanya malipo ya akaunti ya mkopo, nenda kwenye Sehemu ya Akaunti, chagua MKOPO kisha fungua Akaunti yako ya Mkopo unayohitaji na bofya chaguo la Fanya Malipo.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Bado una shaka?</string>
+    <string name="feature_settings_faq_contact_us"> Wasiliana Nasi</string>
+
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Lugha</string>
+</resources>

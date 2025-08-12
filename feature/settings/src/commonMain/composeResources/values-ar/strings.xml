@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">تغيير السمة</string>
+    <string name="settings">الإعدادات</string>
+    <string name="change_passcode">تغيير رمز المرور</string>
+    <string name="change_app_passcode">تغيير رمز مرور التطبيق</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="change_account_password">تغيير كلمة مرور حسابك</string>
+    <string name="language">اللغة</string>
+    <string name="choose_language">اختر لغتك</string>
+    <string name="other">أخرى</string>
+    <string name="accounts">الحسابات</string>
+    <string name="theme">السمة</string>
+    <string name="pref_base_url_title">تحديث نقطة النهاية</string>
+    <string name="pref_base_url_desc">انقر هنا لتغيير تكوينات نقطة النهاية الخاصة بك</string>
+    <string name="enter_base_url">أدخل عنوان URL الأساسي</string>
+    <string name="enter_tenant">أدخل المستأجر</string>
+    <string name="cancel">إلغاء</string>
+    <string name="dialog_action_ok">موافق</string>
+    <string name="base_url_tenant_id_required">عنوان URL الأساسي ومعرف المستأجر مطلوبان</string>
+
+    <string name="feature_settings_action_profile">الملف الشخصي</string>
+    <string name="feature_settings_action_profile_tip">تغيير بريدك الإلكتروني، اسمك، رقم هاتفك، إلخ</string>
+
+    <string name="feature_settings_action_password">كلمة المرور</string>
+    <string name="feature_settings_action_password_tip">تغيير كلمة المرور القديمة الخاصة بك</string>
+
+    <string name="feature_settings_action_auth_passcode">رمز المرور للمصادقة</string>
+    <string name="feature_settings_action_auth_passcode_tip">تغيير رمز مرور تسجيل الدخول للمصادقة</string>
+
+    <string name="feature_settings_action_language">اللغة</string>
+    <string name="feature_settings_action_language_tip">اختر لغة تطبيقك</string>
+
+    <string name="feature_settings_action_theme">السمة</string>
+    <string name="feature_settings_action_theme_tip">اختر سمة تطبيقك</string>
+
+    <string name="feature_settings_action_endpoint">نقطة النهاية</string>
+    <string name="feature_settings_action_endpoint_tip">تغيير تكوين نقطة النهاية الخاصة بك</string>
+
+    <string name="feature_settings_action_about_us">معلومات عنا</string>
+    <string name="feature_settings_action_about_us_tip">تعرف على المزيد حول مبادرتنا</string>
+
+    <string name="feature_settings_action_faq">الأسئلة الشائعة</string>
+    <string name="feature_settings_action_faq_tip">الأسئلة المتكررة من قبل المستخدمين</string>
+
+    <string name="feature_settings_action_help">المساعدة</string>
+    <string name="feature_settings_action_help_tip">الدردشة مع خدمة العملاء لدينا</string>
+
+    <string name="feature_settings_action_app_info">معلومات التطبيق</string>
+    <string name="feature_settings_action_app_info_tip">البحث عن تفاصيل إصدار التطبيق</string>
+
+    <string name="feature_settings_action_logout">تسجيل الخروج</string>
+    <string name="feature_settings_action_logout_tip">تسجيل الخروج من جميع الأجهزة</string>
+
+    <string name="feature_settings_top_bar_title">الإعدادات</string>
+
+    <string name="feature_settings_error_fetching_client">فشل في جلب معلومات العميل.</string>
+    <string name="feature_settings_error_fetching_profile_image">فشل في جلب صورة الملف الشخصي.</string>
+    <string name="feature_settings_internet_not_connected">لا يوجد اتصال بالإنترنت.</string>
+    <string name="feature_settings_error_invalid_profile_image">تنسيق صورة الملف الشخصي غير صالح.</string>
+    <string name="feature_settings_customer_account_no">حساب العميل: %1$s</string>
+    <string name="feature_settings_logout_message">هل أنت متأكد من تسجيل الخروج؟</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">معلومات عنا</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">صورة Mifos</string>
+    <string name="feature_settings_about_who_are_we">من نحن؟</string>
+    <string name="feature_settings_about_what_does_mifos_do">ماذا تفعل Mifos؟</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos هي منظمة غير ربحية تسعى لتوفير إمكانية الوصول إلى الخدمات المالية الأساسية للأشخاص. تفعل ذلك من خلال منصة مفتوحة المصدر.</string>
+    <string name="feature_settings_about_point_1">تساعد المؤسسات المالية على تقديم خدمات مالية حديثة</string>
+    <string name="feature_settings_about_point_2">تمكن الأشخاص من الحصول على قروض، وحفظ المال، والمزيد</string>
+    <string name="feature_settings_about_point_3">تدعم المؤسسات المالية التي تخدم ملايين الأشخاص حول العالم</string>
+
+    <string name="feature_settings_doubt">يتم حل العديد من الشكوك في الأسئلة الشائعة!</string>
+    <string name="feature_settings_doubt_message">لا، لم أتحقق منها، خذني إلى هناك!</string>
+
+    <string name="feature_settings_still_have_doubt">هل لا تزال لديك الشكوك؟</string>
+    <string name="feature_settings_still_have_doubt_message">هل تواجه مشكلة؟ لا تقلق على الإطلاق!\nفقط اتصل بخدمة العملاء لدينا.\nنحن هنا لمساعدتك، نهاراً وليلاً،\nللتأكد من أن كل شيء يعمل بشكل صحيح!</string>
+    <string name="feature_settings_still_have_doubt_action">اتصل بنا</string>
+
+    <string name="feature_settings_still_have_issue">أرسل مشاكلك عبر البريد؟</string>
+    <string name="feature_settings_still_have_issue_message">هل تحتاج إلى الدعم ولكن تفضل الكتابة؟\nأرسل لنا بريداً إلكترونياً، نهاراً أو ليلاً.\nسيستجيب فريقنا بعناية وسرعة،\nللتأكد من حصولك على المساعدة التي تحتاجها!</string>
+    <string name="feature_settings_still_have_issue_action">أرسل لنا بريداً</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">معلومات التطبيق</string>
+    <string name="feature_settings_appinfo_mobile">الجوال</string>
+    <string name="feature_settings_appinfo_logo_content_description">صورة Mifos</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">الخدمات المصرفية الإلكترونية Mifos</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">جميع الحقوق محفوظة</string>
+    <string name="feature_settings_appinfo_version">الإصدار</string>
+    <string name="feature_settings_appinfo_privacy_policy">سياسة الخصوصية</string>
+    <string name="feature_settings_appinfo_terms_conditions">الشروط والأحكام</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">تحديث رمز المرور</string>
+    <string name="feature_settings_old_passcode">رمز المرور القديم</string>
+    <string name="feature_settings_new_passcode">رمز المرور الجديد</string>
+    <string name="feature_settings_confirm_new_passcode">تأكيد رمز المرور الجديد</string>
+    <string name="feature_settings_authorization_passcode">رمز المرور للمصادقة</string>
+    <string name="feature_settings_passcode_length_error">يجب أن يكون رمز المرور مكوناً من 4 أرقام.</string>
+    <string name="feature_settings_passcode_empty_error">لا يمكن أن يكون رمز المرور فارغاً.</string>
+    <string name="feature_settings_passcode_invalid_error">يجب ألا يحتوي رمز المرور على أي أحرف.</string>
+    <string name="feature_settings_passcode_confirm_error">يجب أن يكون رمز المرور الجديد ورمز المرور المؤكد متطابقين.</string>
+    <string name="feature_settings_passcode_old_passcode_error">يجب أن يكون رمز المرور القديم صالحاً.</string>
+    <string name="feature_settings_passcode_updated_successfully">تم تحديث رمز المرور بنجاح.</string>
+    <string name="feature_settings_passcode_updated_message">تحتاج إلى إدخال رمز المرور الجديد لاستخدام خدمات التطبيق.</string>
+    <string name="feature_settings_next">التالي</string>
+
+    <string name="feature_settings_update_password">تحديث كلمة المرور</string>
+    <string name="feature_settings_old_password">كلمة المرور القديمة</string>
+    <string name="feature_settings_new_password">كلمة المرور الجديدة</string>
+    <string name="feature_settings_confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">لا يمكن أن تكون كلمة المرور فارغة</string>
+    <string name="password_empty_error_repeat">غير مسموح بالأحرف المتكررة المتتالية</string>
+    <string name="password_length_error">يجب أن تكون كلمة المرور مكونة من 12 حرفًا على الأقل</string>
+    <string name="password_current_incorrect_error">كلمة المرور الحالية غير صحيحة</string>
+    <string name="password_validation_error">كلمة المرور لا تفي بمتطلبات الأمان</string>
+    <string name="password_same_as_current_error">يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية</string>
+    <string name="password_personal_info_error">يجب ألا تحتوي كلمة المرور على معلومات شخصية</string>
+    <string name="password_confirm_mismatch_error">كلمات المرور غير متطابقة</string>
+    <string name="feature_settings_password">كلمة المرور</string>
+    <string name="password_too_many_attempts">محاولات فاشلة كثيرة. يرجى الانتظار قبل المحاولة مرة أخرى.</string>
+
+    <string name="password_update_success">تم تحديث كلمة المرور بنجاح</string>
+    <string name="password_update_success_message">تحتاج إلى تسجيل الدخول مرة أخرى لاستخدام خدمات التطبيق.</string>
+    <string name="password_update_failed">فشل تحديث كلمة المرور. حاول مرة أخرى</string>
+    <string name="password_update_dialog_button">سجل الدخول الآن</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">لم يتم العثور على أسئلة</string>
+    <string-array name="faq_qs">
+        <item>كيف أتقدم بطلب للحصول على حساب قرض جديد؟</item>
+        <item>أين يمكنني عرض معلومات ملفي الشخصي؟</item>
+        <item>أين يمكنني رؤية معاملات حسابات التوفير الخاصة بي؟</item>
+        <item>ما هو استخدام رمز الاستجابة السريعة (QR Code)؟</item>
+        <item>كيف أنشئ مستفيدًا باستخدام رمز الاستجابة السريعة؟</item>
+        <item>كيف أقوم بإجراء دفع لحساب قرض؟</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>لتقديم طلب للحصول على حساب قرض، انقر على "تقدم بطلب للحصول على قرض" الموجود في الشاشة الرئيسية.</item>
+        <item>يمكنك عرض معلومات ملفك الشخصي من خلال النقر على صورة المستخدم الموجودة في الشاشة الرئيسية.</item>
+        <item>لعرض معاملات حساب التوفير الخاص بك، انتقل إلى قسم الحسابات، انقر على حساب التوفير المطلوب، انقر على النقاط الثلاث الموجودة في الزاوية العلوية اليمنى واختر خيار المعاملات.</item>
+        <item>يمكن مشاركة رمز الاستجابة السريعة لأي حساب قرض أو حساب توفير مع مستخدمين آخرين مما سيتيح لهم إنشاء مستفيد.</item>
+        <item>لإنشاء مستفيد، انتقل إلى خيار المستفيد من الشاشة الرئيسية ثم انقر على الزر الدائري الموجود في الزاوية السفلية اليمنى، واختر خيار المسح الضوئي الذي يفتح كاميرا جهازك، وامسح رمز الاستجابة السريعة للشخص الآخر الذي تريد إنشاء مستفيد له، وبعد ملء التفاصيل المطلوبة الأخرى، ستتمكن من إنشاء مستفيد باستخدام رمز الاستجابة السريعة.</item>
+        <item>لإجراء دفع لحساب قرض، انتقل إلى قسم الحسابات، واختر القرض ثم افتح حساب القرض المطلوب وانقر على خيار إجراء الدفع.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">هل لا تزال لديك الشكوك؟</string>
+    <string name="feature_settings_faq_contact_us"> اتصل بنا</string>
+</resources>
