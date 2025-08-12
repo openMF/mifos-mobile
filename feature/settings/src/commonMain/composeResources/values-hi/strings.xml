@@ -9,6 +9,157 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <string name="feature_settings_language">भाषा</string>
-    <string name="feature_settings_change_language">भाषा बदलें</string>
+    <string name="change_app_theme">थीम बदलें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="change_passcode">पासकोड बदलें</string>
+    <string name="change_app_passcode">ऐप पासकोड बदलें</string>
+    <string name="change_password">पासवर्ड बदलें</string>
+    <string name="change_account_password">अपना खाता पासवर्ड बदलें</string>
+    <string name="language">भाषा</string>
+    <string name="choose_language">अपनी भाषा चुनें</string>
+    <string name="other">अन्य</string>
+    <string name="accounts">खाते</string>
+    <string name="theme">थीम</string>
+    <string name="pref_base_url_title">एंडपॉइंट अपडेट करें</string>
+    <string name="pref_base_url_desc">अपने एंडपॉइंट कॉन्फ़िगरेशन बदलने के लिए यहां क्लिक करें</string>
+    <string name="enter_base_url">बेस URL दर्ज करें</string>
+    <string name="enter_tenant">टेनेंट दर्ज करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="dialog_action_ok">ठीक है</string>
+    <string name="base_url_tenant_id_required">बेस URL और टेनेंट ID आवश्यक है</string>
+
+    <string name="feature_settings_action_profile">प्रोफ़ाइल</string>
+    <string name="feature_settings_action_profile_tip">अपना ईमेल, नाम, फ़ोन नंबर आदि बदलें</string>
+
+    <string name="feature_settings_action_password">पासवर्ड</string>
+    <string name="feature_settings_action_password_tip">अपना पुराना पासवर्ड बदलें</string>
+
+    <string name="feature_settings_action_auth_passcode">प्रमाणीकरण पासकोड</string>
+    <string name="feature_settings_action_auth_passcode_tip">प्रमाणीकरण के लिए लॉगिन पासकोड बदलें</string>
+
+    <string name="feature_settings_action_language">भाषा</string>
+    <string name="feature_settings_action_language_tip">अपनी ऐप भाषा चुनें</string>
+
+    <string name="feature_settings_action_theme">थीम</string>
+    <string name="feature_settings_action_theme_tip">अपनी ऐप थीम चुनें</string>
+
+    <string name="feature_settings_action_endpoint">एंडपॉइंट</string>
+    <string name="feature_settings_action_endpoint_tip">अपने एंडपॉइंट कॉन्फ़िगरेशन बदलें</string>
+
+    <string name="feature_settings_action_about_us">हमारे बारे में</string>
+    <string name="feature_settings_action_about_us_tip">हमारी पहल के बारे में अधिक जानें</string>
+
+    <string name="feature_settings_action_faq">सामान्य प्रश्न</string>
+    <string name="feature_settings_action_faq_tip">उपयोगकर्ताओं द्वारा पूछे गए सामान्य प्रश्न</string>
+
+    <string name="feature_settings_action_help">सहायता</string>
+    <string name="feature_settings_action_help_tip">हमारे कस्टमर सर्विस के साथ चैट करें</string>
+
+    <string name="feature_settings_action_app_info">ऐप की जानकारी</string>
+    <string name="feature_settings_action_app_info_tip">ऐप संस्करण विवरण खोजें</string>
+
+    <string name="feature_settings_action_logout">लॉगआउट</string>
+    <string name="feature_settings_action_logout_tip">सभी डिवाइस से लॉगआउट करें</string>
+
+    <string name="feature_settings_top_bar_title">सेटिंग्स</string>
+
+    <string name="feature_settings_error_fetching_client">ग्राहक जानकारी प्राप्त करने में विफल।</string>
+    <string name="feature_settings_error_fetching_profile_image">प्रोफ़ाइल चित्र प्राप्त करने में विफल।</string>
+    <string name="feature_settings_internet_not_connected">इंटरनेट कनेक्शन नहीं है।</string>
+    <string name="feature_settings_error_invalid_profile_image">अमान्य प्रोफ़ाइल चित्र प्रारूप।</string>
+    <string name="feature_settings_customer_account_no">ग्राहक खाता: %1$s</string>
+    <string name="feature_settings_logout_message">क्या आप लॉगआउट करने के लिए निश्चित हैं?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">हमारे बारे में</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos चित्र</string>
+    <string name="feature_settings_about_who_are_we">हम कौन हैं?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Mifos क्या करता है?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos एक गैर-लाभकारी संगठन है जो लोगों के लिए मौलिक वित्तीय सेवाओं तक पहुंच प्रदान करने का प्रयास करता है। यह एक ओपन सोर्स प्लेटफ़ॉर्म के माध्यम से ऐसा करता है।</string>
+    <string name="feature_settings_about_point_1">वित्तीय संस्थानों को आधुनिक वित्तीय सेवाएं प्रदान करने में मदद करता है</string>
+    <string name="feature_settings_about_point_2">लोगों को ऋण, बचत और अधिक प्राप्त करने में सक्षम बनाता है</string>
+    <string name="feature_settings_about_point_3">वित्तीय संस्थानों का समर्थन करता है जो दुनिया भर में लाखों लोगों की सेवा करते हैं</string>
+
+    <string name="feature_settings_doubt">सामान्य प्रश्नों में कई संदेहों का समाधान हो जाता है!</string>
+    <string name="feature_settings_doubt_message">नहीं, मैंने उनकी जांच नहीं की, मुझे वहां ले जाएं!</string>
+
+    <string name="feature_settings_still_have_doubt">क्या आपके पास अभी भी संदेह है?</string>
+    <string name="feature_settings_still_have_doubt_message">कोई समस्या है? बिल्कुल चिंता न करें!\nबस हमारी कस्टमर सर्विस से संपर्क करें।\nहम आपकी मदद के लिए यहां हैं, दिन और रात,\nसुनिश्चित करने के लिए कि सब कुछ सही काम कर रहा है!</string>
+    <string name="feature_settings_still_have_doubt_action">हमें कॉल करें</string>
+
+    <string name="feature_settings_still_have_issue">अपनी समस्याएं मेल के माध्यम से भेजें?</string>
+    <string name="feature_settings_still_have_issue_message">क्या आपको समर्थन की आवश्यकता है लेकिन लिखना पसंद करते हैं?\nहमें एक ईमेल भेजें, दिन या रात।\nहमारी टीम ध्यान से और तेज़ी से प्रतिक्रिया देगी,\nसुनिश्चित करने के लिए कि आपको आवश्यक सहायता मिले!</string>
+    <string name="feature_settings_still_have_issue_action">हमें मेल भेजें</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">ऐप की जानकारी</string>
+    <string name="feature_settings_appinfo_mobile">मोबाइल</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos चित्र</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos इलेक्ट्रॉनिक बैंकिंग</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">सर्वाधिकार सुरक्षित</string>
+    <string name="feature_settings_appinfo_version">संस्करण</string>
+    <string name="feature_settings_appinfo_privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_settings_appinfo_terms_conditions">नियम और शर्तें</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">पासकोड अपडेट करें</string>
+    <string name="feature_settings_old_passcode">पुराना पासकोड</string>
+    <string name="feature_settings_new_passcode">नया पासकोड</string>
+    <string name="feature_settings_confirm_new_passcode">नए पासकोड की पुष्टि करें</string>
+    <string name="feature_settings_authorization_passcode">प्रमाणीकरण पासकोड</string>
+    <string name="feature_settings_passcode_length_error">पासकोड 4 अंकों का होना चाहिए।</string>
+    <string name="feature_settings_passcode_empty_error">पासकोड खाली नहीं हो सकता।</string>
+    <string name="feature_settings_passcode_invalid_error">पासकोड में कोई अक्षर नहीं होना चाहिए।</string>
+    <string name="feature_settings_passcode_confirm_error">नया पासकोड और पुष्टि पासकोड मेल नहीं खाने चाहिए।</string>
+    <string name="feature_settings_passcode_old_passcode_error">पुराना पासकोड मान्य होना चाहिए।</string>
+    <string name="feature_settings_passcode_updated_successfully">पासकोड सफलतापूर्वक अपडेट किया गया।</string>
+    <string name="feature_settings_passcode_updated_message">ऐप सेवाओं का उपयोग करने के लिए आपको नया पासकोड दर्ज करना होगा।</string>
+    <string name="feature_settings_next">अगला</string>
+
+    <string name="feature_settings_update_password">पासवर्ड अपडेट करें</string>
+    <string name="feature_settings_old_password">पुराना पासवर्ड</string>
+    <string name="feature_settings_new_password">नया पासवर्ड</string>
+    <string name="feature_settings_confirm_new_password">नए पासवर्ड की पुष्टि करें</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">पासवर्ड खाली नहीं हो सकता</string>
+    <string name="password_empty_error_repeat">लगातार दोहराए गए अक्षरों की अनुमति नहीं है</string>
+    <string name="password_length_error">पासवर्ड कम से कम 12 अक्षरों का होना चाहिए</string>
+    <string name="password_current_incorrect_error">वर्तमान पासवर्ड गलत है</string>
+    <string name="password_validation_error">पासवर्ड सुरक्षा आवश्यकताओं को पूरा नहीं करता है</string>
+    <string name="password_same_as_current_error">नया पासवर्ड वर्तमान पासवर्ड से अलग होना चाहिए</string>
+    <string name="password_personal_info_error">पासवर्ड में व्यक्तिगत जानकारी नहीं होनी चाहिए</string>
+    <string name="password_confirm_mismatch_error">पासवर्ड मेल नहीं खाते</string>
+    <string name="feature_settings_password">पासवर्ड</string>
+    <string name="password_too_many_attempts">कई विफल प्रयास। कृपया फिर से प्रयास करने से पहले प्रतीक्षा करें।</string>
+
+    <string name="password_update_success">पासवर्ड सफलतापूर्वक अपडेट किया गया</string>
+    <string name="password_update_success_message">ऐप सेवाओं का उपयोग करने के लिए आपको फिर से लॉगिन करना होगा।</string>
+    <string name="password_update_failed">पासवर्ड अपडेट करने में विफल। पुनः प्रयास करें</string>
+    <string name="password_update_dialog_button">अब लॉगिन करें</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">कोई प्रश्न नहीं मिला</string>
+    <string-array name="faq_qs">
+        <item>मैं एक नया ऋण खाता कैसे आवेदन करूं?</item>
+        <item>मैं अपनी प्रोफ़ाइल जानकारी कहां देख सकता हूं?</item>
+        <item>मैं अपने बचत खाते के लेनदेन कहां देख सकता हूं?</item>
+        <item>QR कोड का उपयोग क्या है?</item>
+        <item>मैं QR कोड का उपयोग करके एक लाभार्थी कैसे बना सकता हूं?</item>
+        <item>मैं ऋण खाते के लिए भुगतान कैसे करूं?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>एक ऋण खाते के लिए आवेदन करने के लिए, मुख्य स्क्रीन पर "ऋण के लिए आवेदन करें" पर क्लिक करें।</item>
+        <item>आप मुख्य स्क्रीन पर उपयोगकर्ता चित्र पर क्लिक करके अपनी प्रोफ़ाइल जानकारी देख सकते हैं।</item>
+        <item>अपने बचत खाते के लेनदेन देखने के लिए, खाते अनुभाग पर जाएं, आवश्यक बचत खाते पर क्लिक करें, ऊपरी दाएं कोने में तीन बिंदुओं पर क्लिक करें और लेनदेन विकल्प चुनें।</item>
+        <item>किसी भी ऋण या बचत खाते के QR कोड को अन्य उपयोगकर्ताओं के साथ साझा किया जा सकता है, जिससे वे लाभार्थी बना सकें।</item>
+        <item>एक लाभार्थी बनाने के लिए, मुख्य स्क्रीन से लाभार्थी विकल्प पर जाएं फिर निचले दाएं कोने में गोल बटन पर क्लिक करें, स्कैन विकल्प चुनें जो आपके डिवाइस के कैमरे को खोलता है, दूसरे व्यक्ति के QR कोड को स्कैन करें जिसके लिए आप लाभार्थी बनाना चाहते हैं, और अन्य आवश्यक विवरण भरने के बाद, आप QR कोड का उपयोग करके लाभार्थी बना सकेंगे।</item>
+        <item>ऋण खाते के लिए भुगतान करने के लिए, खाते अनुभाग पर जाएं, ऋण चुनें फिर आवश्यक ऋण खाता खोलें और भुगतान विकल्प पर क्लिक करें।</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">क्या आपके पास अभी भी संदेह है?</string>
+    <string name="feature_settings_faq_contact_us"> हमें कॉल करें</string>
 </resources>

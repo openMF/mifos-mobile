@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Ubah tema</string>
+    <string name="settings">Pengaturan</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Ubah Kode Akses</string>
+    <string name="change_app_passcode">Ubah Kode Akses Aplikasi</string>
+    <string name="change_password">Ubah Kata Sandi</string>
+    <string name="change_account_password">Ubah Kata Sandi Akun Anda</string>
+    <string name="language">Bahasa</string>
+    <string name="choose_language">Pilih bahasa Anda</string>
+    <string name="other">Lainnya</string>
+    <string name="accounts">Akun</string>
+    <string name="theme">Tema</string>
+    <string name="pref_base_url_title">Perbarui Titik Akhir</string>
+    <string name="pref_base_url_desc">Klik di sini untuk mengubah Konfigurasi Titik Akhir Anda</string>
+    <string name="enter_base_url">Masukkan URL Dasar</string>
+    <string name="enter_tenant">Masukkan Tenant</string>
+    <string name="cancel">Batal</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">URL Dasar dan ID Tenant diperlukan</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>Bahasa Sistem</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Profil</string>
+    <string name="feature_settings_action_profile_tip">Ubah email, nama, nomor telepon, dll</string>
+
+    <string name="feature_settings_action_password">Kata Sandi</string>
+    <string name="feature_settings_action_password_tip">Ubah kata sandi lama Anda</string>
+
+    <string name="feature_settings_action_auth_passcode">Kode Akses Otentikasi</string>
+    <string name="feature_settings_action_auth_passcode_tip">Ubah kode akses otentikasi login Anda</string>
+
+    <string name="feature_settings_action_language">Bahasa</string>
+    <string name="feature_settings_action_language_tip">Pilih bahasa aplikasi Anda</string>
+
+    <string name="feature_settings_action_theme">Tema</string>
+    <string name="feature_settings_action_theme_tip">Pilih tema aplikasi Anda</string>
+
+    <string name="feature_settings_action_endpoint">Titik Akhir</string>
+    <string name="feature_settings_action_endpoint_tip">Ubah konfigurasi titik akhir Anda</string>
+
+    <string name="feature_settings_action_about_us">Tentang Kami</string>
+    <string name="feature_settings_action_about_us_tip">Cari tahu lebih lanjut tentang inisiatif kami</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">Pertanyaan yang sering diajukan oleh pengguna</string>
+
+    <string name="feature_settings_action_help">Bantuan</string>
+    <string name="feature_settings_action_help_tip">Chat dengan layanan pelanggan kami</string>
+
+    <string name="feature_settings_action_app_info">Info Aplikasi</string>
+    <string name="feature_settings_action_app_info_tip">Cari detail versi aplikasi</string>
+
+    <string name="feature_settings_action_logout">Keluar</string>
+    <string name="feature_settings_action_logout_tip">Keluar dari semua perangkat</string>
+
+    <string name="feature_settings_top_bar_title">Pengaturan</string>
+
+    <string name="feature_settings_error_fetching_client">Gagal mengambil informasi klien.</string>
+    <string name="feature_settings_error_fetching_profile_image">Gagal mengambil gambar profil.</string>
+    <string name="feature_settings_internet_not_connected">Tidak ada koneksi internet.</string>
+    <string name="feature_settings_error_invalid_profile_image">Format gambar profil tidak valid.</string>
+    <string name="feature_settings_customer_account_no">Akun Pelanggan: %1$s</string>
+    <string name="feature_settings_logout_message">Apakah Anda yakin ingin keluar?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">Tentang Kami</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Gambar Mifos</string>
+    <string name="feature_settings_about_who_are_we">Siapa kami?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Apa yang dilakukan Mifos?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos adalah organisasi nirlaba yang berusaha memberikan akses kepada orang-orang terhadap layanan keuangan dasar. Hal ini dilakukan melalui platform open-source.</string>
+    <string name="feature_settings_about_point_1">Ini membantu institusi keuangan menawarkan layanan keuangan modern</string>
+    <string name="feature_settings_about_point_2">Ini memungkinkan orang-orang untuk mendapatkan pinjaman, menabung, dan lainnya</string>
+    <string name="feature_settings_about_point_3">Ini mendukung institusi keuangan yang melayani jutaan orang di seluruh dunia</string>
+
+    <string name="feature_settings_doubt">Banyak Pertanyaan Terjawab di FAQ!</string>
+    <string name="feature_settings_doubt_message">Tidak, saya belum memeriksanya, bawa saya ke sana!</string>
+
+    <string name="feature_settings_still_have_doubt">Masih Ada Pertanyaan?</string>
+    <string name="feature_settings_still_have_doubt_message">Tidak, saya belum memeriksanya, bawa saya ke sana!</string>
+    <string name="feature_settings_still_have_doubt_action">Hubungi Kami</string>
+
+    <string name="feature_settings_still_have_issue">Kirim Masalah Anda Melalui Email?</string>
+    <string name="feature_settings_still_have_issue_message">Butuh dukungan tetapi lebih suka menulis?\nKirimkan email kepada kami, siang atau malam.\nTim kami akan merespons dengan perhatian dan kecepatan,\nMemastikan Anda mendapatkan bantuan yang dibutuhkan!</string>
+    <string name="feature_settings_still_have_issue_action">Email Kami</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">Info Aplikasi</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Gambar Mifos</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Perbankan Elektronik Mifos</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">Hak cipta dilindungi undang-undang</string>
+    <string name="feature_settings_appinfo_version">Versi</string>
+    <string name="feature_settings_appinfo_privacy_policy">Kebijakan Privasi</string>
+    <string name="feature_settings_appinfo_terms_conditions">Syarat dan Ketentuan</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Perbarui Kode Akses</string>
+    <string name="feature_settings_old_passcode">Kode Akses Lama</string>
+    <string name="feature_settings_new_passcode">Kode Akses Baru</string>
+    <string name="feature_settings_confirm_new_passcode">Konfirmasi Kode Akses Baru</string>
+    <string name="feature_settings_authorization_passcode">Kode Akses Otentikasi</string>
+    <string name="feature_settings_passcode_length_error">Kode akses harus terdiri dari 4 digit.</string>
+    <string name="feature_settings_passcode_empty_error">Kode akses tidak boleh kosong.</string>
+    <string name="feature_settings_passcode_invalid_error">Kode akses tidak boleh mengandung karakter.</string>
+    <string name="feature_settings_passcode_confirm_error">Kode akses baru dan konfirmasi harus sama.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Kode akses lama harus valid.</string>
+    <string name="feature_settings_passcode_updated_successfully">Kode akses berhasil diperbarui.</string>
+    <string name="feature_settings_passcode_updated_message">Anda perlu memasukkan kode akses baru untuk menggunakan layanan aplikasi.</string>
+    <string name="feature_settings_next">Berikutnya</string>
+
+    <string name="feature_settings_update_password">Perbarui Kata Sandi</string>
+    <string name="feature_settings_old_password">Kata Sandi Lama</string>
+    <string name="feature_settings_new_password">Kata Sandi Baru</string>
+    <string name="feature_settings_confirm_new_password">Konfirmasi Kata Sandi Baru</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Kata sandi tidak boleh kosong</string>
+    <string name="password_empty_error_repeat">Karakter berulang berturut-turut tidak diizinkan</string>
+    <string name="password_length_error">Kata sandi harus minimal 12 karakter</string>
+    <string name="password_current_incorrect_error">Kata sandi saat ini salah</string>
+    <string name="password_validation_error">Kata sandi tidak memenuhi persyaratan keamanan</string>
+    <string name="password_same_as_current_error">Kata sandi baru harus berbeda dari kata sandi saat ini</string>
+    <string name="password_personal_info_error">Kata sandi tidak boleh mengandung informasi pribadi</string>
+    <string name="password_confirm_mismatch_error">Kata sandi tidak cocok</string>
+    <string name="feature_settings_password">Kata Sandi</string>
+    <string name="password_too_many_attempts">Terlalu banyak percobaan gagal. Harap tunggu sebelum mencoba lagi.</string>
+
+    <string name="password_update_success">Kata sandi berhasil diperbarui</string>
+    <string name="password_update_success_message">Anda perlu login kembali untuk menggunakan layanan aplikasi.</string>
+    <string name="password_update_failed">Gagal memperbarui kata sandi. Coba Lagi</string>
+    <string name="password_update_dialog_button">Login Sekarang</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">Tidak ada pertanyaan yang ditemukan</string>
+    <string-array name="faq_qs">
+        <item>Bagaimana cara mengajukan akun pinjaman baru?</item>
+        <item>Di mana saya dapat melihat informasi profil saya?</item>
+        <item>Di mana saya dapat melihat transaksi akun tabungan saya?</item>
+        <item>Apa fungsi Kode QR?</item>
+        <item>Bagaimana cara membuat penerima manfaat menggunakan Kode QR?</item>
+        <item>Bagaimana cara melakukan pembayaran untuk akun pinjaman?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>Untuk mengajukan akun pinjaman, klik pada "Ajukan Pinjaman" yang ada di layar beranda.</item>
+        <item>Anda dapat melihat informasi profil dengan mengklik gambar pengguna di layar beranda.</item>
+        <item>Untuk melihat transaksi akun tabungan, navigasikan ke bagian Akun, klik pada akun tabungan yang diperlukan, klik tiga titik di pojok kanan atas dan pilih opsi Transaksi.</item>
+        <item>Kode QR untuk akun pinjaman atau tabungan dapat dibagikan dengan pengguna lain yang akan memungkinkan mereka membuat penerima manfaat.</item>
+        <item>Untuk membuat penerima manfaat, masuk ke opsi penerima manfaat dari layar beranda lalu klik tombol melingkar di pojok kanan bawah, pilih opsi Pindai yang membuka kamera perangkat Anda, pindai kode QR orang lain untuk membuat penerima manfaat, setelah mengisi detail yang diperlukan Anda akan dapat membuat penerima manfaat menggunakan kode QR.</item>
+        <item>Untuk melakukan pembayaran akun pinjaman, navigasikan ke bagian Akun, pilih PINJAMAN lalu buka akun pinjaman yang Anda perlukan dan klik opsi Lakukan Pembayaran.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Masih memiliki keraguan?</string>
+    <string name="feature_settings_faq_contact_us"> Hubungi Kami</string>
+    
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Bahasa</string>
+    <string name="feature_settings_change_language">Ubah Bahasa</string>
+</resources>

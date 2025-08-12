@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Téma módosítása</string>
+    <string name="settings">Beállítások</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Jelszó módosítása</string>
+    <string name="change_app_passcode">Alkalmazás jelszó módosítása</string>
+    <string name="change_password">Jelszó módosítása</string>
+    <string name="change_account_password">Fiók jelszavának módosítása</string>
+    <string name="language">Nyelv</string>
+    <string name="choose_language">Válasszon nyelvet</string>
+    <string name="other">Egyéb</string>
+    <string name="accounts">Fiókok</string>
+    <string name="theme">Téma</string>
+    <string name="pref_base_url_title">Végpont frissítése</string>
+    <string name="pref_base_url_desc">Kattintson ide a végpont konfiguráció módosításához</string>
+    <string name="enter_base_url">Adja meg az alap URL-t</string>
+    <string name="enter_tenant">Adja meg a bérlőt</string>
+    <string name="cancel">Mégse</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">Alap URL és bérlő ID szükséges</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>Rendszer nyelve</item>
+        <item>Angol</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Spanyol</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Lengyel</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Profil</string>
+    <string name="feature_settings_action_profile_tip">E-mail, név, telefonszám stb. módosítása</string>
+
+    <string name="feature_settings_action_password">Jelszó</string>
+    <string name="feature_settings_action_password_tip">Régi jelszó módosítása</string>
+
+    <string name="feature_settings_action_auth_passcode">Hitelesítési jelszó</string>
+    <string name="feature_settings_action_auth_passcode_tip">Bejelentkezési hitelesítési jelszó módosítása</string>
+
+    <string name="feature_settings_action_language">Nyelv</string>
+    <string name="feature_settings_action_language_tip">Válasszon alkalmazás nyelvet</string>
+
+    <string name="feature_settings_action_theme">Téma</string>
+    <string name="feature_settings_action_theme_tip">Válasszon alkalmazás témát</string>
+
+    <string name="feature_settings_action_endpoint">Végpont</string>
+    <string name="feature_settings_action_endpoint_tip">Végpont konfiguráció módosítása</string>
+
+    <string name="feature_settings_action_about_us">Rólunk</string>
+    <string name="feature_settings_action_about_us_tip">Tudjon meg többet kezdeményezésünkről</string>
+
+    <string name="feature_settings_action_faq">GYIK</string>
+    <string name="feature_settings_action_faq_tip">A felhasználók által gyakran ismételt kérdések</string>
+
+    <string name="feature_settings_action_help">Segítség</string>
+    <string name="feature_settings_action_help_tip">Csevegjen ügyfélszolgálatunkkal</string>
+
+    <string name="feature_settings_action_app_info">Alkalmazás információ</string>
+    <string name="feature_settings_action_app_info_tip">Alkalmazás verzió részleteinek megtekintése</string>
+
+    <string name="feature_settings_action_logout">Kijelentkezés</string>
+    <string name="feature_settings_action_logout_tip">Kijelentkezés minden eszközről</string>
+
+    <string name="feature_settings_top_bar_title">Beállítások</string>
+
+    <string name="feature_settings_error_fetching_client">Nem sikerült lekérni az ügyfél információkat.</string>
+    <string name="feature_settings_error_fetching_profile_image">Nem sikerült lekérni a profilképet.</string>
+    <string name="feature_settings_internet_not_connected">Nincs internetkapcsolat.</string>
+    <string name="feature_settings_error_invalid_profile_image">Érvénytelen profilkép formátum.</string>
+    <string name="feature_settings_customer_account_no">Ügyfélszámla: %1$s</string>
+    <string name="feature_settings_logout_message">Biztosan ki szeretne jelentkezni?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">Rólunk</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos kép</string>
+    <string name="feature_settings_about_who_are_we">Kik vagyunk?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Mit csinál a Mifos?</string>
+    <string name="feature_settings_about_who_are_we_desc">A Mifos egy non-profit szervezet, amely az alapvető pénzügyi szolgáltatásokhoz való hozzáférést kívánja biztosítani az emberek számára. Ezt nyílt forráskódú platformon keresztül teszi.</string>
+    <string name="feature_settings_about_point_1">Segíti a pénzügyi intézményeket modern pénzügyi szolgáltatások nyújtásában</string>
+    <string name="feature_settings_about_point_2">Lehetővé teszi az emberek számára a kölcsönök, megtakarítások és egyebek igénybevételét</string>
+    <string name="feature_settings_about_point_3">Támogatja a pénzügyi intézményeket, amelyek millió embereknek nyújtanak szolgáltatást világszerte</string>
+
+    <string name="feature_settings_doubt">Sok kérdés megválaszolásra kerül a GYIK-ban!</string>
+    <string name="feature_settings_doubt_message">Nem, még nem néztem meg őket, vigyen oda!</string>
+
+    <string name="feature_settings_still_have_doubt">Még mindig vannak kérdések?</string>
+    <string name="feature_settings_still_have_doubt_message">Problémája van? Ne aggódjon!\nCsak hívja ügyfélszolgálatunkat.\nItt vagyunk, hogy segítsünk, nappal és éjjel,\nHogy minden megfelelően működjön!</string>
+    <string name="feature_settings_still_have_doubt_action">Hívjon minket</string>
+
+    <string name="feature_settings_still_have_issue">Küldje e-mailben problémáit?</string>
+    <string name="feature_settings_still_have_issue_message">Támogatásra van szüksége, de írni szeretne?\nKüldjön nekünk egy e-mailt, nappal vagy éjjel.\nCsapatunk gondoskodással és gyorsan fog válaszolni,\nHogy biztosan megkapja a szükséges segítséget!</string>
+    <string name="feature_settings_still_have_issue_action">Küldjön e-mailt</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">Alkalmazás információ</string>
+    <string name="feature_settings_appinfo_mobile">Mobil</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos kép</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Elektronikus Bankolás</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">Minden jog fenntartva</string>
+    <string name="feature_settings_appinfo_version">Verzió</string>
+    <string name="feature_settings_appinfo_privacy_policy">Adatvédelmi irányelvek</string>
+    <string name="feature_settings_appinfo_terms_conditions">Felhasználási feltételek</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Jelszó frissítése</string>
+    <string name="feature_settings_old_passcode">Régi jelszó</string>
+    <string name="feature_settings_new_passcode">Új jelszó</string>
+    <string name="feature_settings_confirm_new_passcode">Új jelszó megerősítése</string>
+    <string name="feature_settings_authorization_passcode">Hitelesítési jelszó</string>
+    <string name="feature_settings_passcode_length_error">A jelszónak 4 számjegyűnek kell lennie.</string>
+    <string name="feature_settings_passcode_empty_error">A jelszó nem lehet üres.</string>
+    <string name="feature_settings_passcode_invalid_error">A jelszó nem tartalmazhat karaktereket.</string>
+    <string name="feature_settings_passcode_confirm_error">Az új és a megerősített jelszónak azonosnak kell lennie.</string>
+    <string name="feature_settings_passcode_old_passcode_error">A régi jelszónak érvényesnek kell lennie.</string>
+    <string name="feature_settings_passcode_updated_successfully">Jelszó sikeresen frissítve.</string>
+    <string name="feature_settings_passcode_updated_message">Az alkalmazás szolgáltatásainak használatához meg kell adnia az új jelszót.</string>
+    <string name="feature_settings_next">Következő</string>
+
+    <string name="feature_settings_update_password">Jelszó frissítése</string>
+    <string name="feature_settings_old_password">Régi jelszó</string>
+    <string name="feature_settings_new_password">Új jelszó</string>
+    <string name="feature_settings_confirm_new_password">Új jelszó megerősítése</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">A jelszó nem lehet üres</string>
+    <string name="password_empty_error_repeat">Egymás utáni ismétlődő karakterek nem engedélyezettek</string>
+    <string name="password_length_error">A jelszónak legalább 12 karakter hosszúnak kell lennie</string>
+    <string name="password_current_incorrect_error">A jelenlegi jelszó helytelen</string>
+    <string name="password_validation_error">A jelszó nem felel meg a biztonsági követelményeknek</string>
+    <string name="password_same_as_current_error">Az új jelszónak különbözőnek kell lennie a jelenlegi jelszótól</string>
+    <string name="password_personal_info_error">A jelszó nem tartalmazhat személyes információkat</string>
+    <string name="password_confirm_mismatch_error">A jelszavak nem egyeznek</string>
+    <string name="feature_settings_password">Jelszó</string>
+    <string name="password_too_many_attempts">Túl sok sikertelen próbálkozás. Kérjük, várjon, mielőtt újra próbálkozna.</string>
+
+    <string name="password_update_success">Jelszó sikeresen frissítve</string>
+    <string name="password_update_success_message">Az alkalmazás szolgáltatásainak használatához újra be kell jelentkeznie.</string>
+    <string name="password_update_failed">Nem sikerült frissíteni a jelszót. Próbálja újra</string>
+    <string name="password_update_dialog_button">Bejelentkezés most</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">Nem találhatók kérdések</string>
+    <string-array name="faq_qs">
+        <item>Hogyan tudok új kölcsönszámlát igényelni?</item>
+        <item>Hol tekinthetem meg a profilinformációimat?</item>
+        <item>Hol láthatom a megtakarítási számlám tranzakcióit?</item>
+        <item>Mire való a QR-kód?</item>
+        <item>Hogyan hozhatok létre kedvezményezettet QR-kód használatával?</item>
+        <item>Hogyan tudok fizetni egy kölcsönszámlára?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>Kölcsönszámla igényléséhez kattintson a "Kölcsön igénylése" gombra a főképernyőn.</item>
+        <item>A profilinformációit megtekintheti, ha a főképernyőn található felhasználói képre kattint.</item>
+        <item>A megtakarítási számla tranzakcióinak megtekintéséhez navigáljon a Fiókok szekcióhoz, kattintson a szükséges megtakarítási számlára, kattintson a jobb felső sarokban található három pontra, majd válassza a Tranzakciók opciót.</item>
+        <item>Bármely kölcsön vagy megtakarítási számla QR-kódja megosztható más felhasználókkal, akik így kedvezményezettet hozhatnak létre.</item>
+        <item>Kedvezményezett létrehozásához menjen a Kedvezményezett opcióhoz a főképernyőről, majd kattintson a jobb alsó sarokban található kör alakú gombra, válassza a Beolvasás opciót, amely megnyitja a kamera alkalmazást, olvassa be a másik személy QR-kódját, akinek kedvezményezettet szeretne létrehozni, töltse ki a többi szükséges adatot, és így létrehozhat egy kedvezményezettet QR-kód használatával.</item>
+        <item>Kölcsönszámlára történő fizetéshez navigáljon a Fiókok szekcióhoz, válassza a KÖLCSÖN opciót, nyissa meg a szükséges kölcsönszámlát, majd kattintson a Fizetés opcióra.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Még mindig van kérdése?</string>
+    <string name="feature_settings_faq_contact_us"> Lépjen kapcsolatba velünk</string>
+    
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Nyelv</string>
+    <string name="feature_settings_change_language">Nyelv módosítása</string>
+</resources>

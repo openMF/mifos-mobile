@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">ಥೀಮ್ ಬದಲಾಯಿಸಿ</string>
+    <string name="settings">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
+    <string name="change_passcode">ಪಾಸ್‌ಕೋಡ್ ಬದಲಾಯಿಸಿ</string>
+    <string name="change_app_passcode">ಆಪ್ ಪಾಸ್‌ಕೋಡ್ ಬದಲಾಯಿಸಿ</string>
+    <string name="change_password">ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ</string>
+    <string name="change_account_password">ನಿಮ್ಮ ಖಾತೆ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <string name="language">ಭಾಷೆ</string>
+    <string name="choose_language">ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="other">ಇತರೆ</string>
+    <string name="accounts">ಖಾತೆಗಳು</string>
+    <string name="theme">ಥೀಮ್</string>
+    <string name="pref_base_url_title">ಎಂಡ್‌ಪಾಯಿಂಟ್ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="pref_base_url_desc">ನಿಮ್ಮ ಎಂಡ್‌ಪಾಯಿಂಟ್ ಕಾನ್ಫಿಗರೇಶನ್‌ಗಳನ್ನು ಬದಲಾಯಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ</string>
+    <string name="enter_base_url">ಬೇಸ್ URL ಅನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="enter_tenant">ಟೆನೆಂಟ್ ಅನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="dialog_action_ok">ಸರಿ</string>
+    <string name="base_url_tenant_id_required">ಬೇಸ್ URL ಮತ್ತು ಟೆನೆಂಟ್ ID ಅಗತ್ಯವಿದೆ</string>
+
+    <string name="feature_settings_action_profile">ಪ್ರೊಫೈಲ್</string>
+    <string name="feature_settings_action_profile_tip">ನಿಮ್ಮ ಮೇಲ್, ಹೆಸರು, ಫೋನ್ ಸಂಖ್ಯೆ ಇತ್ಯಾದಿ ಬದಲಾಯಿಸಿ</string>
+
+    <string name="feature_settings_action_password">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_settings_action_password_tip">ನಿಮ್ಮ ಹಳೆಯ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
+
+    <string name="feature_settings_action_auth_passcode">ಪ್ರಮಾಣೀಕರಣ ಪಾಸ್‌ಕೋಡ್</string>
+    <string name="feature_settings_action_auth_passcode_tip">ನಿಮ್ಮ ಲಾಗಿನ್ ಪ್ರಮಾಣೀಕರಣ ಪಾಸ್‌ಕೋಡ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
+
+    <string name="feature_settings_action_language">ಭಾಷೆ</string>
+    <string name="feature_settings_action_language_tip">ನಿಮ್ಮ ಆಪ್ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+
+    <string name="feature_settings_action_theme">ಥೀಮ್</string>
+    <string name="feature_settings_action_theme_tip">ನಿಮ್ಮ ಆಪ್ ಥೀಮ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+
+    <string name="feature_settings_action_endpoint">ಎಂಡ್‌ಪಾಯಿಂಟ್</string>
+    <string name="feature_settings_action_endpoint_tip">ನಿಮ್ಮ ಎಂಡ್‌ಪಾಯಿಂಟ್ ಕಾನ್ಫಿಗರೇಶನ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
+
+    <string name="feature_settings_action_about_us">ನಮ್ಮ ಬಗ್ಗೆ</string>
+    <string name="feature_settings_action_about_us_tip">ನಮ್ಮ ಉದ್ಯಮದ ಬಗ್ಗೆ ಇನ್ನಷ್ಟು ತಿಳಿದುಕೊಳ್ಳಿ</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">ಬಳಕೆದಾರರಿಂದ ಸಾಮಾನ್ಯವಾಗಿ ಕೇಳಲಾದ ಪ್ರಶ್ನೆಗಳು</string>
+
+    <string name="feature_settings_action_help">ಸಹಾಯ</string>
+    <string name="feature_settings_action_help_tip">ನಮ್ಮ ಗ್ರಾಹಕ ಸಂರಕ್ಷಣೆಯೊಂದಿಗೆ ಚಾಟ್ ಮಾಡಿ</string>
+
+    <string name="feature_settings_action_app_info">ಆಪ್ ಮಾಹಿತಿ</string>
+    <string name="feature_settings_action_app_info_tip">ಆಪ್ ಆವೃತ್ತಿ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಿರಿ</string>
+
+    <string name="feature_settings_action_logout">ಲಾಗ್‌ಅವುಟ್</string>
+    <string name="feature_settings_action_logout_tip">ಎಲ್ಲಾ ಸಾಧನಗಳಿಂದ ಲಾಗ್‌ಅವುಟ್ ಮಾಡಿ</string>
+
+    <string name="feature_settings_top_bar_title">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
+
+    <string name="feature_settings_error_fetching_client">ಕ್ಲೈಂಟ್ ಮಾಹಿತಿಯನ್ನು ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ.</string>
+    <string name="feature_settings_error_fetching_profile_image">ಪ್ರೊಫೈಲ್ ಚಿತ್ರವನ್ನು ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ.</string>
+    <string name="feature_settings_internet_not_connected">ಅಂತರ್ಜಾಲ ಸಂಪರ್ಕವಿಲ್ಲ.</string>
+    <string name="feature_settings_error_invalid_profile_image">ಅಮಾನ್ಯ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ ಸ್ವರೂಪ.</string>
+    <string name="feature_settings_customer_account_no">ಗ್ರಾಹಕ ಖಾತೆ: %1$s</string>
+    <string name="feature_settings_logout_message">ಲಾಗ್‌ಅವುಟ್ ಮಾಡಲು ಖಚಿತವೆ?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">ನಮ್ಮ ಬಗ್ಗೆ</string>
+    <string name="feature_settings_about_mifos">ಮಿಫೋಸ್</string>
+    <string name="feature_settings_about_logo_content_description">ಮಿಫೋಸ್ ಚಿತ್ರ</string>
+    <string name="feature_settings_about_who_are_we">ನಾವು ಯಾರು?</string>
+    <string name="feature_settings_about_what_does_mifos_do">ಮಿಫೋಸ್ ಏನು ಮಾಡುತ್ತದೆ?</string>
+    <string name="feature_settings_about_who_are_we_desc">ಮಿಫೋಸ್ ಒಂದು ಲಾಭಾಸಕ್ತಿ ಸಂಸ್ಥೆಯಾಗಿದ್ದು, ಜನರಿಗೆ ಮೂಲಭೂತ ಹಣಕಾಸು ಸೇವೆಗಳನ್ನು ನೀಡಲು ಪ್ರಯತ್ನಿಸುತ್ತದೆ. ಇದು ಒಂದು ಉಚಿತ ಮೂಲ ವೇದಿಕೆಯನ್ನು ಮೂಲಕ ಅದನ್ನು ಮಾಡುತ್ತದೆ.</string>
+    <string name="feature_settings_about_point_1">ಅದು ಹಣಕಾಸು ಸಂಸ್ಥೆಗಳು ಆಧುನಿಕ ಹಣಕಾಸು ಸೇವೆಗಳನ್ನು ನೀಡಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ</string>
+    <string name="feature_settings_about_point_2">ಅದು ಜನರಿಗೆ ಸಾಲಗಳನ್ನು ಪಡೆಯಲು, ಹಣವನ್ನು ಉಳಿಸಿಕೊಳ್ಳಲು ಮತ್ತು ಇನ್ನಷ್ಟು ಮಾಡಲು ಸಕ್ಷಮಗೊಳಿಸುತ್ತದೆ</string>
+    <string name="feature_settings_about_point_3">ಅದು ವಿಶ್ವದಲ್ಲಿ ಮಿಲಿಯನ್ ಜನರನ್ನು ಸೇವೆ ಸಲ್ಲಿಸುವ ಹಣಕಾಸು ಸಂಸ್ಥೆಗಳನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ</string>
+
+    <string name="feature_settings_doubt">FAQ ಗಳಲ್ಲಿ ಹಲವು ಸಂಶಯಗಳನ್ನು ಪರಿಹರಿಸಲಾಗುತ್ತದೆ!</string>
+    <string name="feature_settings_doubt_message">ಇಲ್ಲ, ನಾನು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿಲ್ಲ, ಅಲ್ಲಿಗೆ ತೆಗೆದುಕೊಂಡು ಹೋಗಿ!</string>
+
+    <string name="feature_settings_still_have_doubt">ಇನ್ನೂ ಸಂಶಯಗಳಿವೆಯೆ?</string>
+    <string name="feature_settings_still_have_doubt_message">ಸಮಸ್ಯೆಯನ್ನು ಎದುರಿಸುತ್ತಿರುವಿರಾ? ಚಿಂತಿಸಬೇಡಿ!\nಕೇವಲ ನಮ್ಮ ಗ್ರಾಹಕ ಸಂರಕ್ಷಣೆಯನ್ನು ಕರೆ ಮಾಡಿ.\nದಿನವೂ ರಾತ್ರಿಯೂ ನಿಮಗಾಗಿ ನಾವು ಇಲ್ಲಿದ್ದೇವೆ,\nಪ್ರತಿಯೊಂದು ಕೆಲಸವೂ ಸರಿಯಾಗಿ ನಡೆಯುವಂತೆ ಖಚಿತಪಡಿಸಲು!</string>
+    <string name="feature_settings_still_have_doubt_action">ನಮ್ಮನ್ನು ಕರೆ ಮಾಡಿ</string>
+
+    <string name="feature_settings_still_have_issue">ನಿಮ್ಮ ಸಮಸ್ಯೆಗಳನ್ನು ಮೇಲ್ ಮಾಡಲೇ?</string>
+    <string name="feature_settings_still_have_issue_message">ಬೆಂಬಲವನ್ನು ಬೇಕಾಗಿದೆಯೆ ಆದರೆ ಬರೆಯಲು ಇಚ್ಛಿಸುವಿರಾ?\nಇಮೇಲ್ ಕಳುಹಿಸಿ, ದಿನವೂ ರಾತ್ರಿಯೂ.\nನಮ್ಮ ತಂಡ ಕೆಲಸವನ್ನು ಎಚ್ಚರದಿಂದ ಮತ್ತು ವೇಗವಾಗಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ,\nನಿಮಗೆ ಅಗತ್ಯವಿರುವ ಸಹಾಯವನ್ನು ನೀಡಲು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳುವುದು!</string>
+    <string name="feature_settings_still_have_issue_action">ನಮಗೆ ಮೇಲ್ ಮಾಡಿ</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">ಆಪ್ ಮಾಹಿತಿ</string>
+    <string name="feature_settings_appinfo_mobile">ಮೊಬೈಲ್</string>
+    <string name="feature_settings_appinfo_logo_content_description">ಮಿಫೋಸ್ ಚಿತ್ರ</string>
+    <string name="feature_settings_appinfo_app_name">ಮಿಫೋಸ್ ಮೊಬೈಲ್</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">ಮಿಫೋಸ್ ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಬ್ಯಾಂಕಿಂಗ್</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಮಾರ್ಜಿತವಾಗಿವೆ</string>
+    <string name="feature_settings_appinfo_version">ಆವೃತ್ತಿ</string>
+    <string name="feature_settings_appinfo_privacy_policy">ಗೌಪ್ಯತಾ ನೀತಿ</string>
+    <string name="feature_settings_appinfo_terms_conditions">ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">ಪಾಸ್‌ಕೋಡ್ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="feature_settings_old_passcode">ಹಳೆಯ ಪಾಸ್‌ಕೋಡ್</string>
+    <string name="feature_settings_new_passcode">ಹೊಸ ಪಾಸ್‌ಕೋಡ್</string>
+    <string name="feature_settings_confirm_new_passcode">ಹೊಸ ಪಾಸ್‌ಕೋಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ</string>
+    <string name="feature_settings_authorization_passcode">ಪ್ರಮಾಣೀಕರಣ ಪಾಸ್‌ಕೋಡ್</string>
+    <string name="feature_settings_passcode_length_error">ಪಾಸ್‌ಕೋಡ್ 4 ಅಂಕಿಗಳು ಉದ್ದವಾಗಿರಬೇಕು.</string>
+    <string name="feature_settings_passcode_empty_error">ಪಾಸ್‌ಕೋಡ್ ಖಾಲಿಯಾಗಿರುವುದಿಲ್ಲ.</string>
+    <string name="feature_settings_passcode_invalid_error">ಪಾಸ್‌ಕೋಡ್ ಯಾವುದೇ ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರುವುದಿಲ್ಲ.</string>
+    <string name="feature_settings_passcode_confirm_error">ಹೊಸ ಮತ್ತು ದೃಢೀಕರಣ ಪಾಸ್‌ಕೋಡ್ ಒಂದೇ ಆಗಿರಬೇಕು.</string>
+    <string name="feature_settings_passcode_old_passcode_error">ಹಳೆಯ ಪಾಸ್‌ಕೋಡ್ ಮಾನ್ಯವಾಗಿರಬೇಕು.</string>
+    <string name="feature_settings_passcode_updated_successfully">ಪಾಸ್‌ಕೋಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಡೇಟ್ ಮಾಡಲಾಗಿದೆ.</string>
+    <string name="feature_settings_passcode_updated_message">ಆಪ್ ಸೇವೆಗಳನ್ನು ಬಳಸಲು ನೀವು ಹೊಸ ಪಾಸ್‌ಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಬೇಕಾಗುತ್ತದೆ.</string>
+    <string name="feature_settings_next">ಮುಂದೆ</string>
+
+    <string name="feature_settings_update_password">ಪಾಸ್‌ವರ್ಡ್ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="feature_settings_old_password">ಹಳೆಯ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_settings_new_password">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="feature_settings_confirm_new_password">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">ಪಾಸ್‌ವರ್ಡ್ ಖಾಲಿಯಾಗಿರುವುದಿಲ್ಲ</string>
+    <string name="password_empty_error_repeat">ಸತತ ಪುನರಾವರ್ತನೆಯ ಅಕ್ಷರಗಳನ್ನು ಅನುಮತಿಸಲಾಗುವುದಿಲ್ಲ</string>
+    <string name="password_length_error">ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 12 ಅಕ್ಷರಗಳು ಉದ್ದವಾಗಿರಬೇಕು</string>
+    <string name="password_current_incorrect_error">ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ</string>
+    <string name="password_validation_error">ಪಾಸ್‌ವರ್ಡ್ ಭದ್ರತಾ ಅವಶ್ಯಕತೆಗಳನ್ನು ಪೂರೈಸುವುದಿಲ್ಲ</string>
+    <string name="password_same_as_current_error">ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಿಂದ ವಿಭಿನ್ನವಾಗಿರಬೇಕು</string>
+    <string name="password_personal_info_error">ಪಾಸ್‌ವರ್ಡ್ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿಯನ್ನು ಹೊಂದಿರುವುದಿಲ್ಲ</string>
+    <string name="password_confirm_mismatch_error">ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ</string>
+    <string name="feature_settings_password">ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="password_too_many_attempts">ಹಲವಾರು ವಿಫಲ ಪ್ರಯತ್ನಗಳು. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸುವ ಮೊದಲು ನಿರೀಕ್ಷಿಸಿ.</string>
+
+    <string name="password_update_success">ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಡೇಟ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="password_update_success_message">ಆಪ್ ಸೇವೆಗಳನ್ನು ಬಳಸಲು ನೀವು ಮತ್ತೆ ಲಾಗಿನ್ ಮಾಡಬೇಕಾಗುತ್ತದೆ.</string>
+    <string name="password_update_failed">ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="password_update_dialog_button">ಈಗ ಲಾಗಿನ್ ಮಾಡಿ</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">ಯಾವುದೇ ಪ್ರಶ್ನೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string-array name="faq_qs">
+        <item>ಹೊಸ ಸಾಲ ಖಾತೆಗಾಗಿ ಹೇಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸುವುದು?</item>
+        <item>ನನ್ನ ಪ್ರೊಫೈಲ್ ಮಾಹಿತಿಯನ್ನು ಎಲ್ಲಿದೆ ನೋಡಬಹುದು?</item>
+        <item>ನನ್ನ ಉಳಿತಾಯ ಖಾತೆಗಳ ವ್ಯವಹಾರಗಳನ್ನು ಎಲ್ಲಿದೆ ನೋಡಬಹುದು?</item>
+        <item>QR ಕೋಡ್ ನ ಬಳಕೆ ಏನು?</item>
+        <item>QR ಕೋಡ್ ಮೂಲಕ ಲಾಭಾರ್ಥಿಯನ್ನು ಹೇಗೆ ರಚಿಸುವುದು?</item>
+        <item>ಸಾಲ ಖಾತೆಗಾಗಿ ಪಾವತಿಯನ್ನು ಹೇಗೆ ಮಾಡುವುದು?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>ಸಾಲ ಖಾತೆಗಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಲು, ಹೋಮ್ ಸ್ಕ್ರೀನ್ ನಲ್ಲಿ ನೀಡಲಾದ "ಸಾಲಕ್ಕಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ" ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.</item>
+        <item>ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಮಾಹಿತಿಯನ್ನು ನೋಡಲು, ಹೋಮ್ ಸ್ಕ್ರೀನ್ ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಬಳಕೆದಾರ ಚಿತ್ರದ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ.</item>
+        <item>ನಿಮ್ಮ ಉಳಿತಾಯ ಖಾತೆಯ ವ್ಯವಹಾರಗಳನ್ನು ನೋಡಲು, ಖಾತೆಗಳ ವಿಭಾಗಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ, ಅಗತ್ಯವಿರುವ ಉಳಿತಾಯ ಖಾತೆಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ, ಮೇಲ್ಭಾಗದ ಬಲಕ್ಕೆ ಇರುವ ಮೂರು ಡಾಟ್ಸ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ವ್ಯವಹಾರಗಳ ಆಯ್ಕೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ.</item>
+        <item>ಯಾವುದೇ ಸಾಲ ಅಥವಾ ಉಳಿತಾಯ ಖಾತೆಗಳಿಗಾಗಿ QR ಕೋಡ್ ಅನ್ನು ಇತರ ಬಳಕೆದಾರರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಬಹುದು, ಇದು ಅವರು ಲಾಭಾರ್ಥಿಯನ್ನು ರಚಿಸಲು ಅನುಮತಿಸುತ್ತದೆ.</item>
+        <item>ಲಾಭಾರ್ಥಿಯನ್ನು ರಚಿಸಲು, ಹೋಮ್ ಸ್ಕ್ರೀನ್ ನಿಂದ ಲಾಭಾರ್ಥಿ ಆಯ್ಕೆಗೆ ಹೋಗಿ ನಂತರ ಕೆಳಗಿನ ಬಲಕ್ಕೆ ಇರುವ ವೃತ್ತಾಕಾರ ಗುಂಡಿಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ, ಸ್ಕ್ಯಾನ್ ಆಯ್ಕೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ ಇದು ನಿಮ್ಮ ಸಾಧನದ ಕ್ಯಾಮೆರಾವನ್ನು ತೆರೆಯುತ್ತದೆ, ಲಾಭಾರ್ಥಿಯನ್ನು ರಚಿಸಲು ಬಯಸುವ ಇತರ ವ್ಯಕ್ತಿಯ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ, ಇತರ ಅಗತ್ಯ ವಿವರಗಳನ್ನು ತುಂಬಿದ ನಂತರ QR ಕೋಡ್ ಮೂಲಕ ಲಾಭಾರ್ಥಿಯನ್ನು ರಚಿಸಲು ಸಕ್ಷಮವಾಗುತ್ತೀರಿ.</item>
+        <item>ಸಾಲ ಖಾತೆಗಾಗಿ ಪಾವತಿಯನ್ನು ಮಾಡಲು, ಖಾತೆಗಳ ವಿಭಾಗಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ, ಸಾಲವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ ನಂತರ ನಿಮಗೆ ಅಗತ್ಯವಿರುವ ಸಾಲ ಖಾತೆಯನ್ನು ತೆರೆಯಿರಿ ಮತ್ತು ಪಾವತಿ ಮಾಡಿ ಆಯ್ಕೆಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">ಇನ್ನೂ ಸಂಶಯವಿದೆಯೆ?</string>
+    <string name="feature_settings_faq_contact_us"> ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+
+    <!-- Missing strings added -->
+    <string name="password_key" translatable="false">Password</string>
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>System Language</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+    <string name="feature_settings_language">ಭಾಷೆ</string>
+    <string name="feature_settings_change_language">ಭಾಷೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
+</resources>

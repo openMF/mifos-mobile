@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Changer le thème</string>
+    <string name="settings">Paramètres</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Changer le code d\'accès</string>
+    <string name="change_app_passcode">Changer le code d\'accès de l\'application</string>
+    <string name="change_password">Changer le mot de passe</string>
+    <string name="change_account_password">Changer le mot de passe de votre compte</string>
+    <string name="language">Langue</string>
+    <string name="choose_language">Choisissez votre langue</string>
+    <string name="other">Autre</string>
+    <string name="accounts">Comptes</string>
+    <string name="theme">Thème</string>
+    <string name="pref_base_url_title">Mettre à jour le point de terminaison</string>
+    <string name="pref_base_url_desc">Cliquez ici pour modifier votre configuration de point de terminaison</string>
+    <string name="enter_base_url">Entrez l\'URL de base</string>
+    <string name="enter_tenant">Entrez le locataire</string>
+    <string name="cancel">Annuler</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">L\'URL de base et l\'ID du locataire sont requis</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>System Language</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Profil</string>
+    <string name="feature_settings_action_profile_tip">Modifier votre email, nom, numéro de téléphone, etc.</string>
+
+    <string name="feature_settings_action_password">Mot de passe</string>
+    <string name="feature_settings_action_password_tip">Modifier votre ancien mot de passe</string>
+
+    <string name="feature_settings_action_auth_passcode">Code d\'authentification</string>
+    <string name="feature_settings_action_auth_passcode_tip">Modifier le code d\'accès de connexion pour l\'authentification</string>
+
+    <string name="feature_settings_action_language">Langue</string>
+    <string name="feature_settings_action_language_tip">Choisissez la langue de votre application</string>
+
+    <string name="feature_settings_action_theme">Thème</string>
+    <string name="feature_settings_action_theme_tip">Choisissez le thème de votre application</string>
+
+    <string name="feature_settings_action_endpoint">Point de terminaison</string>
+    <string name="feature_settings_action_endpoint_tip">Modifier votre configuration de point de terminaison</string>
+
+    <string name="feature_settings_action_about_us">À propos de nous</string>
+    <string name="feature_settings_action_about_us_tip">En savoir plus sur notre initiative</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">Questions fréquemment posées par les utilisateurs</string>
+
+    <string name="feature_settings_action_help">Aide</string>
+    <string name="feature_settings_action_help_tip">Discutez avec notre service client</string>
+
+    <string name="feature_settings_action_app_info">Infos sur l\'application</string>
+    <string name="feature_settings_action_app_info_tip">Trouvez les détails de la version de l\'application</string>
+
+    <string name="feature_settings_action_logout">Déconnexion</string>
+    <string name="feature_settings_action_logout_tip">Déconnectez-vous de tous les appareils</string>
+
+    <string name="feature_settings_top_bar_title">Paramètres</string>
+
+    <string name="feature_settings_error_fetching_client">Échec de la récupération des informations du client.</string>
+    <string name="feature_settings_error_fetching_profile_image">Échec de la récupération de l\'image de profil.</string>
+    <string name="feature_settings_internet_not_connected">Pas de connexion Internet.</string>
+    <string name="feature_settings_error_invalid_profile_image">Format d\'image de profil invalide.</string>
+    <string name="feature_settings_customer_account_no">Compte client : %1$s</string>
+    <string name="feature_settings_logout_message">Êtes-vous sûr de vouloir vous déconnecter ?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">À propos de nous</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Image Mifos</string>
+    <string name="feature_settings_about_who_are_we">Qui sommes-nous ?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Que fait Mifos ?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos est une organisation à but non lucratif qui tente de fournir un accès aux services financiers essentiels pour les personnes via une plateforme open source.</string>
+    <string name="feature_settings_about_point_1">Aide les institutions financières à fournir des services financiers modernes</string>
+    <string name="feature_settings_about_point_2">Permet aux personnes d\'obtenir des prêts, des économies et plus encore</string>
+    <string name="feature_settings_about_point_3">Soutient les institutions financières qui servent des millions de personnes dans le monde</string>
+
+    <string name="feature_settings_doubt">Beaucoup de doutes sont résolus dans les questions fréquemment posées !</string>
+    <string name="feature_settings_doubt_message">Non, je ne les ai pas vérifiés, emmenez-moi là-bas !</string>
+
+    <string name="feature_settings_still_have_doubt">Avez-vous encore des doutes ?</string>
+    <string name="feature_settings_still_have_doubt_message">Un problème ? Ne vous inquiétez absolument pas !\nContactez simplement notre service client.\nNous sommes ici pour vous aider, jour et nuit,\nPour nous assurer que tout fonctionne correctement !</string>
+    <string name="feature_settings_still_have_doubt_action">Appelez-nous</string>
+
+    <string name="feature_settings_still_have_issue">Envoyez vos problèmes par email ?</string>
+    <string name="feature_settings_still_have_issue_message">Avez-vous besoin d\'assistance mais préférez écrire ?\nEnvoyez-nous un email, jour ou nuit.\nNotre équipe répondra attentivement et rapidement,\nPour s\'assurer que vous recevez l\'aide nécessaire !</string>
+    <string name="feature_settings_still_have_issue_action">Envoyez-nous un email</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">Infos sur l\'application</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Image Mifos</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Banque électronique Mifos</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">Tous droits réservés</string>
+    <string name="feature_settings_appinfo_version">Version</string>
+    <string name="feature_settings_appinfo_privacy_policy">Politique de confidentialité</string>
+    <string name="feature_settings_appinfo_terms_conditions">Termes et conditions</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Mettre à jour le code d\'accès</string>
+    <string name="feature_settings_old_passcode">Ancien code d\'accès</string>
+    <string name="feature_settings_new_passcode">Nouveau code d\'accès</string>
+    <string name="feature_settings_confirm_new_passcode">Confirmer le nouveau code d\'accès</string>
+    <string name="feature_settings_authorization_passcode">Code d\'authentification</string>
+    <string name="feature_settings_passcode_length_error">Le code d\'accès doit comporter 4 chiffres.</string>
+    <string name="feature_settings_passcode_empty_error">Le code d\'accès ne peut pas être vide.</string>
+    <string name="feature_settings_passcode_invalid_error">Le code d\'accès ne doit contenir aucune lettre.</string>
+    <string name="feature_settings_passcode_confirm_error">Le nouveau code d\'accès et le code de confirmation doivent correspondre.</string>
+    <string name="feature_settings_passcode_old_passcode_error">L\'ancien code d\'accès doit être valide.</string>
+    <string name="feature_settings_passcode_updated_successfully">Code d\'accès mis à jour avec succès.</string>
+    <string name="feature_settings_passcode_updated_message">Vous devrez saisir le nouveau code d\'accès pour utiliser les services de l\'application.</string>
+    <string name="feature_settings_next">Suivant</string>
+
+    <string name="feature_settings_update_password">Mettre à jour le mot de passe</string>
+    <string name="feature_settings_old_password">Ancien mot de passe</string>
+    <string name="feature_settings_new_password">Nouveau mot de passe</string>
+    <string name="feature_settings_confirm_new_password">Confirmer le nouveau mot de passe</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Le mot de passe ne peut pas être vide</string>
+    <string name="password_empty_error_repeat">Les caractères répétés consécutivement ne sont pas autorisés</string>
+    <string name="password_length_error">Le mot de passe doit comporter au moins 12 caractères</string>
+    <string name="password_current_incorrect_error">Le mot de passe actuel est incorrect</string>
+    <string name="password_validation_error">Le mot de passe ne répond pas aux exigences de sécurité</string>
+    <string name="password_same_as_current_error">Le nouveau mot de passe doit être différent du mot de passe actuel</string>
+    <string name="password_personal_info_error">Le mot de passe ne doit pas contenir d\'informations personnelles</string>
+    <string name="password_confirm_mismatch_error">Les mots de passe ne correspondent pas</string>
+    <string name="feature_settings_password">Mot de passe</string>
+    <string name="password_too_many_attempts">Trop de tentatives infructueuses. Veuillez attendre avant de réessayer.</string>
+
+    <string name="password_update_success">Mot de passe mis à jour avec succès</string>
+    <string name="password_update_success_message">Vous devrez vous reconnecter pour utiliser les services de l\'application.</string>
+    <string name="password_update_failed">Échec de la mise à jour du mot de passe. Réessayez</string>
+    <string name="password_update_dialog_button">Connectez-vous maintenant</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">Aucune question trouvée</string>
+    <string-array name="faq_qs">
+        <item>Comment demander un nouveau compte de prêt ?</item>
+        <item>Où puis-je voir les informations de mon profil ?</item>
+        <item>Où puis-je voir les transactions de mon compte d\'épargne ?</item>
+        <item>Quelle est l\'utilité du code QR ?</item>
+        <item>Comment créer un bénéficiaire en utilisant un code QR ?</item>
+        <item>Comment effectuer un paiement pour un compte de prêt ?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>Pour demander un compte de prêt, cliquez sur « Demander un prêt » sur l\'écran principal.</item>
+        <item>Vous pouvez voir les informations de votre profil en cliquant sur l\'image utilisateur sur l\'écran principal.</item>
+        <item>Pour voir les transactions de votre compte d\'épargne, allez dans la section des comptes, cliquez sur le compte d\'épargne requis, cliquez sur les trois points dans le coin supérieur droit et sélectionnez l\'option de transaction.</item>
+        <item>Le code QR de n\'importe quel compte de prêt ou d\'épargne peut être partagé avec d\'autres utilisateurs pour qu\'ils puissent créer un bénéficiaire.</item>
+        <item>Pour créer un bénéficiaire, allez dans l\'option Bénéficiaires depuis l\'écran principal, puis cliquez sur le bouton rond dans le coin inférieur droit, sélectionnez l\'option de scan qui ouvre la caméra de votre appareil, scannez le code QR de l\'autre personne pour laquelle vous souhaitez créer un bénéficiaire, et après avoir rempli les autres détails requis, vous pourrez créer un bénéficiaire en utilisant le code QR.</item>
+        <item>Pour effectuer un paiement pour un compte de prêt, allez dans la section des comptes, sélectionnez Prêts, puis ouvrez le compte de prêt requis et cliquez sur l\'option de paiement.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Avez-vous encore des doutes ?</string>
+    <string name="feature_settings_faq_contact_us"> Appelez-nous</string>
+    
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Langue</string>
+    <string name="feature_settings_change_language">Changer la langue</string>
+</resources>
