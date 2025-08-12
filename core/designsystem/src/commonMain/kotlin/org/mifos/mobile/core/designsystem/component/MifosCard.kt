@@ -54,6 +54,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.filled.Document
+import mifos_mobile.core.designsystem.generated.resources.Res
+import mifos_mobile.core.designsystem.generated.resources.feature_upload_id_remove_file
+import mifos_mobile.core.designsystem.generated.resources.feature_upload_id_select_new_file
+import mifos_mobile.core.designsystem.generated.resources.feature_upload_id_view_file
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
@@ -220,9 +225,6 @@ fun MifosUploadStateCardContent(
 
 @Composable
 fun MifosUploadedStateCard(
-    removeText: String,
-    selectText: String,
-    viewText: String,
     icon: ImageVector,
     label: String,
     fileName: String,
@@ -231,6 +233,9 @@ fun MifosUploadedStateCard(
     onViewClick: () -> Unit,
     onSelectNewClick: () -> Unit,
     modifier: Modifier = Modifier,
+    removeText: String = stringResource(Res.string.feature_upload_id_remove_file),
+    selectText: String = stringResource(Res.string.feature_upload_id_select_new_file),
+    viewText: String = stringResource(Res.string.feature_upload_id_view_file),
     height: Dp = 112.dp,
 ) {
     Box(modifier = modifier.fillMaxWidth()) {

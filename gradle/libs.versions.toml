@@ -83,6 +83,7 @@ kermit = "2.0.4"
 fileKit = "0.8.7"
 fileKitDialog = "0.10.0-beta04"
 wire = "5.0.0"
+zoomImage = "1.3.0"
 
 # Jetbrains CMP
 windowsSizeClass = "0.5.0"
@@ -103,8 +104,10 @@ materialVersion = "1.12.0"
 
 fluentui-icons = "1.0.0"
 material = "1.12.0"
+composeSignature = "1.0.1"
 
 [libraries]
+compose-signature = { module = "io.github.niyajali:compose-signature", version.ref = "composeSignature" }
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistVersion" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistVersion" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
@@ -241,6 +244,7 @@ coil-kt = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt.coil3", name = "coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+zoom-image = { module="io.github.panpf.zoomimage:zoomimage-compose-coil3", version.ref = "zoomImage" }
 
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 squareup-okio = { group = "com.squareup.okio", name = "okio", version.ref = "okioVersion" }

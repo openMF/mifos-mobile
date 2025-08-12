@@ -15,10 +15,12 @@ import org.mifos.mobile.feature.loan.application.confirmDetails.ConfirmDetailsVi
 import org.mifos.mobile.feature.loan.application.loanApplication.LoanApplyViewModel
 import org.mifos.mobile.feature.loan.application.loanProductDescription.LoanProductDetailsViewModel
 import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeViewModel
+import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsViewModel
 
 val loanApplicationModule = module {
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)
     viewModelOf(::LoanApplyViewModel)
+    viewModelOf(::UploadDocsViewModel)
     viewModelOf(::ConfirmDetailsViewModel)
 }
