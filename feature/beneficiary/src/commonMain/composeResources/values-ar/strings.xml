@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">فشل في جلب المستفيدين</string>
+    <string name="error_fetching_beneficiary_template">فشل في جلب قالب المستفيد</string>
+    <string name="error_fetching_template">فشل في جلب القالب</string>
+    <string name="error_creating_beneficiary">فشل في إنشاء المستفيد</string>
+    <string name="error_updating_beneficiary">فشل في تحديث المستفيد</string>
+    <string name="error_deleting_beneficiary">فشل في حذف المستفيد</string>
+    <string name="error_loan_account_withdraw">خطأ في سحب حساب القرض</string>
+    <string name="error_fetching_third_party_transfer_template">خطأ في جلب قالب التحويل من طرف ثالث</string>
+    <string name="no_beneficiary_found_please_add">حالياً، ليس لديك أي مستفيد. الرجاء إضافة مستفيد</string>
+    <string name="no_filtered_beneficiary_found">لم يتم العثور على مستفيد للتصفية المحددة</string>
+    <string name="beneficiary">المستفيد</string>
+    <string name="manage_beneficiaries">إدارة المستفيدين</string>
+    <string name="beneficiaries">المستفيدون</string>
+    <string name="beneficiary_detail">تفاصيل المستفيد</string>
+    <string name="beneficiary_name">اسم المستفيد</string>
+    <string name="account_type">نوع الحساب</string>
+    <string name="transfer_limit">حد التحويل</string>
+    <string name="add_beneficiary">إضافة مستفيد</string>
+    <string name="office_name">اسم المكتب</string>
+    <string name="select_account_type">حدد نوع الحساب*</string>
+    <string name="submit_beneficiary">إرسال المستفيد</string>
+    <string name="enter_office_name">أدخل اسم مكتب المستفيد</string>
+    <string name="enter_beneficiary_name">أدخل اسم المستفيد</string>
+    <string name="enter_transfer_limit">أدخل حد التحويل</string>
+    <string name="enter_account_number">أدخل رقم حساب المستفيد</string>
+    <string name="choose_account_type">حدد نوع الحساب من القائمة المنسدلة</string>
+    <string name="beneficiary_created_successfully">تم إنشاء المستفيد بنجاح</string>
+    <string name="beneficiary_updated_successfully">تم تحديث المستفيد بنجاح</string>
+    <string name="update_beneficiary">تحديث المستفيد</string>
+    <string name="delete_beneficiary">حذف المستفيد</string>
+    <string name="delete_beneficiary_confirmation">هل أنت متأكد أنك تريد حذف هذا المستفيد؟</string>
+    <string name="login_using_password_confirmation">هل أنت متأكد أنك تريد تسجيل الدخول باستخدام كلمة المرور؟</string>
+    <string name="delete">حذف</string>
+    <string name="beneficiary_deleted_successfully">تم حذف المستفيد بنجاح</string>
+    <string name="third_party_transfer">تحويل من طرف ثالث</string>
+    <string name="total_loan">إجمالي القرض</string>
+    <string name="total_saving">إجمالي التوفير</string>
+    <string name="accounts_overview">نظرة عامة على الحسابات</string>
+    <string name="show_hide_total_saving_amount">إظهار أو إخفاء إجمالي مبلغ التوفير</string>
+    <string name="show_hide_total_loan_amount">إظهار أو إخفاء إجمالي مبلغ القرض</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">الاستبيانات</string>
+    <string name="activation_date">تاريخ التفعيل</string>
+    <string name="groups">المجموعات</string>
+    <string name="user_details">تفاصيل المستخدم</string>
+    <string name="client_type">نوع العميل</string>
+    <string name="client_classification">تصنيف العميل</string>
+    <string name="select_mode">حدد الوضع</string>
+    <string name="add_beneficiary_option">أضف مستفيدين من طرف ثالث إلى حسابك.\nأدخل يدوياً أو امسح رمز QR للحساب</string>
+    <string name="invalid_amount">مبلغ غير صالح</string>
+    <string name="account_number">رقم الحساب</string>
+    <string name="client_name">اسم العميل</string>
+    <string name="cancel">إلغاء</string>
+    <string name="internet_not_connected">يرجى التأكد من اتصالك بالإنترنت</string>
+    <string name="add">إضافة</string>
+    <string name="scan">مسح</string>
+    <string name="upload_qr_code">تحميل QR</string>
+
+    <string name="beneficiary_name_label">اسم المستفيد</string>
+    <string name="office_label">المكتب</string>
+    <string name="account_type_label">نوع الحساب</string>
+    <string name="account_number_label">رقم الحساب</string>
+    <string name="transfer_limit_label">حد التحويل</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">توفير</string>
+    <string name="account_type_loan">قرض</string>
+    <string name="account_type_share">مشاركة</string>
+
+    <!-- Labels -->
+    <string name="validate_details">التحقق من التفاصيل</string>
+    <string name="confirm_details">تأكيد التفاصيل</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">فشل إنشاء المستفيد</string>
+    <string name="beneficiary_updation_failed">فشل تحديث المستفيد</string>
+    <string name="try_again">حاول مرة أخرى</string>
+    <string name="back_to_home">العودة إلى الصفحة الرئيسية</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">الفلاتر</string>
+    <string name="feature_savings_reset">إعادة تعيين</string>
+    <string name="feature_savings_apply">تطبيق</string>
+    <string name="feature_filters_count">%1$s محدد</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">نوع الحساب</string>
+    <string name="filter_loan_account">حساب قرض</string>
+    <string name="filter_savings_account">حساب توفير</string>
+    <string name="filter_linked_with">مرتبط مع</string>
+    <string name="filter_self">الذات</string>
+    <string name="filter_other_clients">عملاء آخرون</string>
+
+    <string name="beneficiary_created_successfully_account">
+        تم إنشاء المستفيد بنجاح للحساب %1$s للمستفيد المسمى %2$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        تم تحديث المستفيد بنجاح للمستفيد المسمى %1$s بحد تحويل %2$d.
+    </string>
+
+    <string name="skip_the_form">تخطي النموذج</string>
+    <string name="upload_or_scan_qr_code">تحميل أو مسح رمز QR</string>
+
+    <string name="filter">تصفية</string>
+    <string name="linked_with">مرتبط مع</string>
+    <string name="type_of_account">نوع الحساب</string>
+    <string name="selected_count">%1$d محدد</string>
+    <string name="filter_icon_description">رمز التصفية</string>
+</resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">ලාභයෝගීන් ලබා ගැනීමේ දෝෂයකි</string>
+    <string name="error_fetching_beneficiary_template">ලාභයෝගී අච්චුව ලබා ගැනීමේ දෝෂයකි</string>
+    <string name="error_fetching_template">අච්චුව ලබා ගැනීමේ දෝෂයකි</string>
+    <string name="error_creating_beneficiary">ලාභයෝගීන් නිර්මාණය කිරීමේ දෝෂයකි</string>
+    <string name="error_updating_beneficiary">ලාභයෝගීන් යාවත්කාලීන කිරීමේ දෝෂයකි</string>
+    <string name="error_deleting_beneficiary">ලාභයෝගීන් මකා දැමීමේ දෝෂයකි</string>
+    <string name="error_loan_account_withdraw">ණය ගිණුම ඉල්ලීමේ දෝෂයකි</string>
+    <string name="error_fetching_third_party_transfer_template">තෙවන පාර්ශව මාරුව අච්චුව ලබා ගැනීමේ දෝෂයකි</string>
+    <string name="no_beneficiary_found_please_add">ඔබ සතුව දැනට ලාභයෝගීන් නොමැත. කරුණාකර ලාභයෝගීන් එකතු කරන්න</string>
+    <string name="no_filtered_beneficiary_found">දක්වා ඇති පෙරහන සඳහා ලාභයෝගීන් හමු නොවිණි</string>
+    <string name="beneficiary">ලාභයෝගී</string>
+    <string name="manage_beneficiaries">ලාභයෝගීන් කළමනාකරණය කරන්න</string>
+    <string name="beneficiaries">ලාභයෝගීන්</string>
+    <string name="beneficiary_detail">ලාභයෝගී විස්තර</string>
+    <string name="beneficiary_name">ලාභයෝගී නම</string>
+    <string name="account_type">ගිණුම් වර්ගය</string>
+    <string name="transfer_limit">මාරුව සීමාව</string>
+    <string name="add_beneficiary">ලාභයෝගීන් එකතු කරන්න</string>
+    <string name="office_name">කාර්යාලයේ නම</string>
+    <string name="select_account_type">ගිණුම් වර්ගය තෝරන්න*</string>
+    <string name="submit_beneficiary">ලාභයෝගීන් ඉදිරිපත් කරන්න</string>
+    <string name="enter_office_name">ලාභයෝගී කාර්යාලයේ නම ඇතුළත් කරන්න</string>
+    <string name="enter_beneficiary_name">ලාභයෝගී නම ඇතුළත් කරන්න</string>
+    <string name="enter_transfer_limit">මාරුව සීමාව ඇතුළත් කරන්න</string>
+    <string name="enter_account_number">ලාභයෝගී ගිණුම් අංකය ඇතුළත් කරන්න</string>
+    <string name="choose_account_type">ඇදීමේ මෙනුවෙන් ගිණුම් වර්ගය තෝරන්න</string>
+    <string name="beneficiary_created_successfully">ලාභයෝගීන් සාර්ථකව නිර්මාණය කරන ලදී</string>
+    <string name="beneficiary_updated_successfully">ලාභයෝගීන් සාර්ථකව යාවත්කාලීන කරන ලදී</string>
+    <string name="update_beneficiary">ලාභයෝගීන් යාවත්කාලීන කරන්න</string>
+    <string name="delete_beneficiary">ලාභයෝගීන් මකන්න</string>
+    <string name="delete_beneficiary_confirmation">ඔබ මෙම ලාභයෝගීන් මකා දැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?</string>
+    <string name="login_using_password_confirmation">ඔබ මුරපදය භාවිතා කර පිවිසීමට අවශ්‍ය බව ඔබට විශ්වාසද?</string>
+    <string name="delete">මකන්න</string>
+    <string name="beneficiary_deleted_successfully">ලාභයෝගීන් සාර්ථකව මකා දමා ඇත</string>
+    <string name="third_party_transfer">තෙවන පාර්ශව මාරුව</string>
+    <string name="total_loan">මුළු ණයය</string>
+    <string name="total_saving">මුළු ඉතිරය</string>
+    <string name="accounts_overview">ගිණුම් අවලෝකනය</string>
+    <string name="show_hide_total_saving_amount">මුළු ඉතිර මුදල පෙන්වන්න හෝ සඟවන්න</string>
+    <string name="show_hide_total_loan_amount">මුළු ණය මුදල පෙන්වන්න හෝ සඟවන්න</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">සමීක්ෂණය</string>
+    <string name="activation_date">සක්‍රීය කරන දිනය</string>
+    <string name="groups">කණ්ඩායම්</string>
+    <string name="user_details">පරිශීලක විස්තර</string>
+    <string name="client_type">සේවාලාභී වර්ගය</string>
+    <string name="client_classification">සේවාලාභී වර්ගීකරණය</string>
+    <string name="select_mode">ප්‍රකාරය තෝරන්න</string>
+    <string name="add_beneficiary_option">ඔබේ ගිණුමට තෙවන පාර්ශව ලාභයෝගීන් එකතු කරන්න.\nඅතින් ඇතුළත් කරන්න හෝ ගිණුම් QR කේතය පරිලෝකනය කරන්න</string>
+    <string name="invalid_amount">වලංගු නොවන මුදල</string>
+    <string name="account_number">ගිණුම් අංකය</string>
+    <string name="client_name">සේවාලාභී නම</string>
+    <string name="cancel">අවලංගු කරන්න</string>
+    <string name="internet_not_connected">කරුණාකර ඔබ අන්තර්ජාලයට සම්බන්ධ වී ඇතැයි තහවුරු කරන්න</string>
+    <string name="add">එකතු කරන්න</string>
+    <string name="scan">පරිලෝකනය කරන්න</string>
+    <string name="upload_qr_code">QR කේතය උඩුගත කරන්න</string>
+
+    <string name="beneficiary_name_label">ලාභයෝගී නම</string>
+    <string name="office_label">කාර්යාලය</string>
+    <string name="account_type_label">ගිණුම් වර්ගය</string>
+    <string name="account_number_label">ගිණුම් අංකය</string>
+    <string name="transfer_limit_label">මාරුව සීමාව</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">ඉතිර</string>
+    <string name="account_type_loan">ණයය</string>
+    <string name="account_type_share">හවුල් කිරීම</string>
+
+    <!-- Labels -->
+    <string name="validate_details">විස්තර වලංගු කරන්න</string>
+    <string name="confirm_details">විස්තර තහවුරු කරන්න</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">ලාභයෝගීන් නිර්මාණය අසාර්ථකයි</string>
+    <string name="beneficiary_updation_failed">ලාභයෝගීන් යාවත්කාලීන කිරීම අසාර්ථකයි</string>
+    <string name="try_again">යලි උත්සාහ කරන්න</string>
+    <string name="back_to_home">මුල් පිටුවට යන්න</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">පෙරහන</string>
+    <string name="feature_savings_reset">යලි පිහිටුවන්න</string>
+    <string name="feature_savings_apply">යොදන්න</string>
+    <string name="feature_filters_count">%1$s තෝරාගනු ලැබීය</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">ගිණුම් වර්ගය</string>
+    <string name="filter_loan_account">ණය ගිණුම</string>
+    <string name="filter_savings_account">ඉතිර ගිණුම</string>
+    <string name="filter_linked_with">සම්බන්ධ වී ඇත්තේ</string>
+    <string name="filter_self">තමා</string>
+    <string name="filter_other_clients">වෙනත් සේවාලාභීන්</string>
+
+    <string name="beneficiary_created_successfully_account">
+        %1$s ගිණුම සඳහා %2$s ලාභයෝගීන් සාර්ථකව නිර්මාණය කරන ලදී.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        %2$d මාරුව සීමාව සමඟ %1$s ලාභයෝගීන් සාර්ථකව යාවත්කාලීන කරන ලදී.
+    </string>
+
+    <string name="skip_the_form">පෝරමය මඟ හරින්න</string>
+    <string name="upload_or_scan_qr_code">QR කේතය උඩුගත කරන්න හෝ පරිලෝකනය කරන්න</string>
+
+    <string name="filter">පෙරහන</string>
+    <string name="linked_with">සම්බන්ධ වී ඇත්තේ</string>
+    <string name="type_of_account">ගිණුම් වර්ගය</string>
+    <string name="selected_count">%1$d තෝරාගනු ලැබීය</string>
+    <string name="filter_icon_description">පෙරහන් නිරූපකය</string>
+</resources>

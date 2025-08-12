@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">ಪ್ರಯೋಜನಗಳನ್ನು ಪಡೆಯುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_fetching_beneficiary_template">ಪ್ರಯೋಜನಗಳ ಮೂಲವನ್ನು ಪಡೆಯುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_fetching_template">ಮೂಲವನ್ನು ಪಡೆಯುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_creating_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ರಚಿಸುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_updating_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ನವೀಕರಿಸುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_deleting_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ಅಳಿಸುವಲ್ಲಿ ವಿಫಲತೆ</string>
+    <string name="error_loan_account_withdraw">ಋಣ ಖಾತೆಯನ್ನು ವಾಪಸೆ ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
+    <string name="error_fetching_third_party_transfer_template">ಮೂರನೆಯ ವ್ಯಕ್ತಿ ವರ್ಗಾವಣೆಯ ಮೂಲವನ್ನು ಪಡೆಯುವಲ್ಲಿ ದೋಷ</string>
+    <string name="no_beneficiary_found_please_add">ನಿಮಗೆ ಯಾವುದೇ ಪ್ರಯೋಜನಗಳು ಇಲ್ಲ. ದಯವಿಟ್ಟು ಪ್ರಯೋಜನಗಳನ್ನು ಸೇರಿಸಿ</string>
+    <string name="no_filtered_beneficiary_found">ನೀಡಿದ ಫಿಲ್ಟರ್‌ಗೆ ಯಾವುದೇ ಪ್ರಯೋಜನಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="beneficiary">ಪ್ರಯೋಜನಗಳು</string>
+    <string name="manage_beneficiaries">ಪ್ರಯೋಜನಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="beneficiaries">ಪ್ರಯೋಜನಗಳು</string>
+    <string name="beneficiary_detail">ಪ್ರಯೋಜನಗಳ ವಿವರಗಳು</string>
+    <string name="beneficiary_name">ಪ್ರಯೋಜನಗಳ ಹೆಸರು</string>
+    <string name="account_type">ಖಾತೆಯ ಪ್ರಕಾರ</string>
+    <string name="transfer_limit">ವರ್ಗಾವಣೆಯ ಮಿತಿ</string>
+    <string name="add_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ಸೇರಿಸಿ</string>
+    <string name="office_name">ಕಚೇರಿಯ ಹೆಸರು</string>
+    <string name="select_account_type">ಖಾತೆಯ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ*</string>
+    <string name="submit_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ಸಲ್ಲಿಸಿ</string>
+    <string name="enter_office_name">ಪ್ರಯೋಜನಗಳ ಕಚೇರಿಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="enter_beneficiary_name">ಪ್ರಯೋಜನಗಳ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="enter_transfer_limit">ವರ್ಗಾವಣೆಯ ಮಿತಿಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="enter_account_number">ಪ್ರಯೋಜನಗಳ ಖಾತೆಯ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="choose_account_type">ಡ್ರಾಪ್‌ಡೌನ್‌ನಿಂದ ಖಾತೆಯ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="beneficiary_created_successfully">ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ</string>
+    <string name="beneficiary_updated_successfully">ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
+    <string name="update_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ನವೀಕರಿಸಿ</string>
+    <string name="delete_beneficiary">ಪ್ರಯೋಜನಗಳನ್ನು ಅಳಿಸಿ</string>
+    <string name="delete_beneficiary_confirmation">ನೀವು ಈ ಪ್ರಯೋಜನಗಳನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ?</string>
+    <string name="login_using_password_confirmation">ನೀವು ಪಾಸ್‌ವರ್ಡ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಲು ಬಯಸುವಿರಾ?</string>
+    <string name="delete">ಅಳಿಸಿ</string>
+    <string name="beneficiary_deleted_successfully">ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ</string>
+    <string name="third_party_transfer">ಮೂರನೆಯ ವ್ಯಕ್ತಿ ವರ್ಗಾವಣೆ</string>
+    <string name="total_loan">ಒಟ್ಟು ಋಣ</string>
+    <string name="total_saving">ಒಟ್ಟು ಉಳಿತಾಯ</string>
+    <string name="accounts_overview">ಖಾತೆಗಳ ಅವಲೋಕನ</string>
+    <string name="show_hide_total_saving_amount">ಒಟ್ಟು ಉಳಿತಾಯದ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ ಅಥವಾ ಮರೆಮಾಡಿ</string>
+    <string name="show_hide_total_loan_amount">ಒಟ್ಟು ಋಣದ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ ಅಥವಾ ಮರೆಮಾಡಿ</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">ಸಮೀಕ್ಷೆಗಳು</string>
+    <string name="activation_date">ಸಕ್ರಿಯಗೊಳಿಸುವ ದಿನಾಂಕ</string>
+    <string name="groups">ಗುಂಪುಗಳು</string>
+    <string name="user_details">ಬಳಕೆದಾರರ ವಿವರಗಳು</string>
+    <string name="client_type">ಕ್ಲೈಂಟ್ ಪ್ರಕಾರ</string>
+    <string name="client_classification">ಕ್ಲೈಂಟ್ ವರ್ಗೀಕರಣ</string>
+    <string name="select_mode">ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="add_beneficiary_option">ನಿಮ್ಮ ಖಾತೆಗೆ ಮೂರನೆಯ ವ್ಯಕ್ತಿ ಪ್ರಯೋಜನಗಳನ್ನು ಸೇರಿಸಿ.\nಕೈಯಾರೆ ನಮೂದಿಸಿ ಅಥವಾ ಖಾತೆ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="invalid_amount">ಅಮಾನ್ಯ ಮೊತ್ತ</string>
+    <string name="account_number">ಖಾತೆಯ ಸಂಖ್ಯೆ</string>
+    <string name="client_name">ಕ್ಲೈಂಟ್ ಹೆಸರು</string>
+    <string name="cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="internet_not_connected">ದಯವಿಟ್ಟು ನೀವು ಅಂತರ್ಜಾಲದೊಂದಿಗೆ ಸಂಪರ್ಕ ಹೊಂದಿದ್ದೀರೆಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ</string>
+    <string name="add">ಸೇರಿಸಿ</string>
+    <string name="scan">ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="upload_qr_code">QR ಕೋಡ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+
+    <string name="beneficiary_name_label">ಪ್ರಯೋಜನಗಳ ಹೆಸರು</string>
+    <string name="office_label">ಕಚೇರಿ</string>
+    <string name="account_type_label">ಖಾತೆಯ ಪ್ರಕಾರ</string>
+    <string name="account_number_label">ಖಾತೆಯ ಸಂಖ್ಯೆ</string>
+    <string name="transfer_limit_label">ವರ್ಗಾವಣೆಯ ಮಿತಿ</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">ಉಳಿತಾಯ</string>
+    <string name="account_type_loan">ಋಣ</string>
+    <string name="account_type_share">ಹಂಚಿಕೆ</string>
+
+    <!-- Labels -->
+    <string name="validate_details">ವಿವರಗಳನ್ನು ಮಾನ್ಯಗೊಳಿಸಿ</string>
+    <string name="confirm_details">ವಿವರಗಳನ್ನು ಖಚಿತಪಡಿಸಿ</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">ಪ್ರಯೋಜನಗಳ ರಚನೆ ವಿಫಲಗೊಂಡಿದೆ</string>
+    <string name="beneficiary_updation_failed">ಪ್ರಯೋಜನಗಳ ನವೀಕರಣ ವಿಫಲಗೊಂಡಿದೆ</string>
+    <string name="try_again">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="back_to_home">ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">ಫಿಲ್ಟರ್‌ಗಳು</string>
+    <string name="feature_savings_reset">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="feature_savings_apply">ಅನ್ವಯಿಸಿ</string>
+    <string name="feature_filters_count">%1$s ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">ಖಾತೆಯ ಪ್ರಕಾರ</string>
+    <string name="filter_loan_account">ಋಣ ಖಾತೆ</string>
+    <string name="filter_savings_account">ಉಳಿತಾಯ ಖಾತೆ</string>
+    <string name="filter_linked_with">ಜೊತೆಗೆ ಕೊಂಡಿಸಲಾದ</string>
+    <string name="filter_self">ಸ್ವತಃ</string>
+    <string name="filter_other_clients">ಇತರ ಕ್ಲೈಂಟ್‌ಗಳು</string>
+
+    <string name="beneficiary_created_successfully_account">
+        %1$s ಖಾತೆಗೆ %2$s ಹೆಸರಿನ ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        %2$d ವರ್ಗಾವಣೆಯ ಮಿತಿಯೊಂದಿಗೆ %1$s ಹೆಸರಿನ ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ.
+    </string>
+
+    <string name="skip_the_form">ಫಾರ್ಮ್ ಅನ್ನು ಬಿಟ್ಟುಬಿಡಿ</string>
+    <string name="upload_or_scan_qr_code">QR ಕೋಡ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಅಥವಾ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+
+    <string name="filter">ಫಿಲ್ಟರ್</string>
+    <string name="linked_with">ಜೊತೆಗೆ ಕೊಂಡಿಸಲಾದ</string>
+    <string name="type_of_account">ಖಾತೆಯ ಪ್ರಕಾರ</string>
+    <string name="selected_count">%1$d ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
+    <string name="filter_icon_description">ಫಿಲ್ಟರ್ ಐಕಾನ್</string>
+</resources>
