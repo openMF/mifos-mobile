@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Tiada Internet</string>
+    <string name="retry">Cuba semula</string>
+    <string name="no_data">Tiada data</string>
+    <string name="something_went_wrong">Ada sesuatu yang tidak kena</string>
+    <string name="core_common_working">Kerja Biasa Teras</string>
+
+    <string name="powered_by">Dikuasakan oleh</string>
+
+    <string name="password_checker_empty_error">Kata laluan tidak boleh kosong.</string>
+    <string name="password_checker_too_long_error">Kata laluan terlalu panjang. Panjang maksimum ialah 128 aksara.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">Kata laluan mestilah sekurang-kurangnya 12 aksara.</string>
+    <string name="password_checker_uppercase_feedback">Berikan sekurang-kurangnya satu huruf besar.</string>
+    <string name="password_checker_lowercase_feedback">Berikan sekurang-kurangnya satu huruf kecil.</string>
+    <string name="password_checker_digit_feedback">Berikan sekurang-kurangnya satu digit.</string>
+    <string name="password_checker_special_char_feedback">Berikan sekurang-kurangnya satu aksara khas.</string>
+    <string name="password_checker_strong_length_feedback">Gunakan sekurang-kurangnya 12 aksara untuk kata laluan yang kuat.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">Sangat Lemah</string>
+    <string name="password_strength_level_1">Lemah</string>
+    <string name="password_strength_level_2">Sederhana</string>
+    <string name="password_strength_level_3">Baik</string>
+    <string name="password_strength_level_4">Kuat</string>
+    <string name="password_strength_level_5">Sangat Kuat</string>
+    <string name="password_strength_none">Berikan kata laluan</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">Penunjuk kekuatan kata laluan</string>
+    <string name="password_strength_announcement">Kekuatan kata laluan: %1$s</string>
+    <string name="minimum_characters_requirement">Sekurang-kurangnya %1$d aksara</string>
+    <string name="minimum_characters_met">Keperluan aksara minimum dipenuhi</string>
+    <string name="minimum_characters_not_met">Keperluan aksara minimum tidak dipenuhi</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">Keperluan Kata Laluan</string>
+    <string name="password_feedback_title">Maklum Balas Kata Laluan</string>
+    <string name="password_feedback_all_good">Kata laluan anda memenuhi semua keperluan!</string>
+    <string name="character_count">%1$d aksara</string>
+    <string name="character_count_with_limit">%1$d / %2$d aksara</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">Alamat e-mel tidak boleh kosong</string>
+    <string name="validation_email_max_length_exceeded">Alamat e-mel melebihi panjang maksimum 254 aksara</string>
+    <string name="validation_email_missing_at_symbol">Alamat e-mel mestilah mengandungi simbol @</string>
+    <string name="validation_email_starts_with_at">Alamat e-mel tidak boleh bermula dengan @</string>
+    <string name="validation_email_ends_with_at">Alamat e-mel tidak boleh berakhir dengan @</string>
+    <string name="validation_email_multiple_at_symbols">Alamat e-mel tidak boleh mengandungi lebih daripada satu simbol @</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">Bahagian tempatan tidak boleh kosong</string>
+    <string name="validation_email_local_max_length">Bahagian tempatan melebihi panjang maksimum 64 aksara</string>
+    <string name="validation_email_local_starts_with_dot">Bahagian tempatan tidak boleh bermula dengan titik</string>
+    <string name="validation_email_local_ends_with_dot">Bahagian tempatan tidak boleh berakhir dengan titik</string>
+    <string name="validation_email_local_consecutive_dots">Bahagian tempatan tidak boleh mengandungi titik berturut-turut</string>
+    <string name="validation_email_local_invalid_characters">Bahagian tempatan mengandungi aksara tidak sah</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">Bahagian domain tidak boleh kosong</string>
+    <string name="validation_email_domain_max_length">Bahagian domain melebihi panjang maksimum 253 aksara</string>
+    <string name="validation_email_domain_missing_dot">Domain mestilah mengandungi sekurang-kurangnya satu titik</string>
+    <string name="validation_email_domain_starts_ends_with_dot">Domain tidak boleh bermula atau berakhir dengan titik</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">Domain tidak boleh bermula atau berakhir dengan tanda sengkang</string>
+    <string name="validation_email_domain_insufficient_parts">Domain mestilah mempunyai sekurang-kurangnya dua bahagian yang dipisahkan oleh titik</string>
+    <string name="validation_email_tld_invalid">Domain peringkat tinggi mestilah sekurang-kurangnya 2 aksara, hanya mengandungi huruf</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">Label domain tidak boleh kosong</string>
+    <string name="validation_email_label_max_length">Label domain melebihi panjang maksimum 63 aksara</string>
+    <string name="validation_email_label_starts_with_hyphen">Label domain tidak boleh bermula dengan tanda sengkang</string>
+    <string name="validation_email_label_ends_with_hyphen">Label domain tidak boleh berakhir dengan tanda sengkang</string>
+    <string name="validation_email_label_invalid_characters">Label domain mengandungi aksara tidak sah</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">Nombor telefon tidak boleh kosong</string>
+    <string name="validation_phone_too_short">Nombor telefon terlalu pendek</string>
+    <string name="validation_phone_too_long">Nombor telefon terlalu panjang</string>
+    <string name="validation_phone_invalid_characters">Nombor telefon mengandungi aksara tidak sah</string>
+    <string name="validation_phone_spanish_country_code_required">Gunakan kod negara Sepanyol (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Format nombor telefon Sepanyol tidak sah</string>
+
+    <string name="validation_phone_invalid_for_country">Nombor telefon tidak sah untuk negara yang dipilih</string>
+    <string name="validation_phone_no_valid_country_found">Tidak dapat mengenal pasti negara yang sah untuk format nombor telefon</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">Nama tidak boleh kosong</string>
+    <string name="validation_name_invalid_characters">Nama mengandungi aksara tidak sah</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">Medan ini diperlukan</string>
+    <string name="validation_format_invalid">Format tidak sah</string>
+    <string name="validation_length_exceeded">Panjang maksimum dilampaui</string>
+    <string name="validation_length_insufficient">Panjang minimum tidak mencukupi</string>
+
+    <string name="validation_amount_empty">Jumlah tidak boleh kosong</string>
+    <string name="validation_amount_invalid_format">Berikan format jumlah yang sah (cth. 99.99)</string>
+    <string name="validation_amount_invalid_number">Berikan nombor yang sah</string>
+    <string name="validation_amount_negative">Jumlah tidak boleh negatif</string>
+    <string name="validation_amount_too_small">Jumlah mestilah sekurang-kurangnya 0.01</string>
+    <string name="validation_amount_too_large">Jumlah tidak boleh melebihi 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">Jumlah mempunyai terlalu banyak tempat perpuluhan untuk mata wang ini</string>
+    <string name="validation_amount_invalid_increment">Jumlah mestilah dalam kenaikan yang sah untuk mata wang ini</string>
+
+    <string name="savings_account">Akaun Simpanan</string>
+    <string name="available_balance">Nama Pelanggan</string>
+    <string name="select_other_payment_account">Pilih akaun pembayaran lain</string>
+    <string name="available_balance_formatted">Baki yang ada - %1$s</string>
+
+    <string name="feature_savings_filter">Tapis</string>
+    <string name="feature_savings_reset">Tetapkan semula</string>
+    <string name="feature_savings_apply">Gunakan</string>
+</resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">ઇન્ટરનેટ નથી</string>
+    <string name="retry">ફરી પ્રયત્ન કરો</string>
+    <string name="no_data">કોઈ ડેટા નથી</string>
+    <string name="something_went_wrong">કંઈક ખોટું થયું</string>
+    <string name="core_common_working">કોર કૉમન વર્કિંગ</string>
+
+    <string name="powered_by">દ્વારા સમર્થિત</string>
+
+    <string name="password_checker_empty_error">પાસવર્ડ ખાલી હોઈ શકતો નથી.</string>
+    <string name="password_checker_too_long_error">પાસવર્ડ ખૂબ લાંબો છે. મહત્તમ લંબાઈ 128 અક્ષરો છે.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">પાસવર્ડ ઓછામાં ઓછો 12 અક્ષરોનો હોવો જોઈએ.</string>
+    <string name="password_checker_uppercase_feedback">ઓછામાં ઓછો એક કૅપિટલ અક્ષર દાખલ કરો.</string>
+    <string name="password_checker_lowercase_feedback">ઓછામાં ઓછો એક નાનો અક્ષર દાખલ કરો.</string>
+    <string name="password_checker_digit_feedback">ઓછામાં ઓછો એક આંકડો દાખલ કરો.</string>
+    <string name="password_checker_special_char_feedback">ઓછામાં ઓછો એક વિશેષ અક્ષર દાખલ કરો.</string>
+    <string name="password_checker_strong_length_feedback">મજબૂત પાસવર્ડ માટે ઓછામાં ઓછા 12 અક્ષરો વાપરો.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">ખૂબ જ નબળો</string>
+    <string name="password_strength_level_1">નબળો</string>
+    <string name="password_strength_level_2">સ્વીકાર્ય</string>
+    <string name="password_strength_level_3">સારો</string>
+    <string name="password_strength_level_4">મજબૂત</string>
+    <string name="password_strength_level_5">ખૂબ જ મજબૂત</string>
+    <string name="password_strength_none">પાસવર્ડ દાખલ કરો</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">પાસવર્ડ મજબૂતાઈ સૂચક</string>
+    <string name="password_strength_announcement">પાસવર્ડ મજબૂતાઈ: %1$s</string>
+    <string name="minimum_characters_requirement">ઓછામાં ઓછા %1$d અક્ષરો</string>
+    <string name="minimum_characters_met">ન્યૂનતમ અક્ષર જરૂરિયાત પૂર્ણ થઈ</string>
+    <string name="minimum_characters_not_met">ન્યૂનતમ અક્ષર જરૂરિયાત પૂર્ણ થઈ નથી</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">પાસવર્ડ જરૂરિયાતો</string>
+    <string name="password_feedback_title">પાસવર્ડ સૂચનો</string>
+    <string name="password_feedback_all_good">તમારો પાસવર્ડ તમામ જરૂરિયાતો પૂર્ણ કરે છે!</string>
+    <string name="character_count">%1$d અક્ષરો</string>
+    <string name="character_count_with_limit">%1$d / %2$d અક્ષરો</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">ઇમેઇલ સરનામું ખાલી હોઈ શકતું નથી</string>
+    <string name="validation_email_max_length_exceeded">ઇમેઇલ સરનામું મહત્તમ લંબાઈ 254 અક્ષરો કરતાં વધારે છે</string>
+    <string name="validation_email_missing_at_symbol">ઇમેઇલ સરનામામાં @ ચિહ્ન હોવું જરૂરી છે</string>
+    <string name="validation_email_starts_with_at">ઇમેઇલ સરનામું @ ચિહ્નથી શરૂ થઈ શકતું નથી</string>
+    <string name="validation_email_ends_with_at">ઇમેઇલ સરનામું @ ચિહ્નથી અંતે થઈ શકતું નથી</string>
+    <string name="validation_email_multiple_at_symbols">ઇમેઇલ સરનામામાં એકાધિક @ ચિહ્નો હોઈ શકતાં નથી</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">સ્થાનિક ભાગ ખાલી હોઈ શકતો નથી</string>
+    <string name="validation_email_local_max_length">સ્થાનિક ભાગ મહત્તમ લંબાઈ 64 અક્ષરો કરતાં વધારે છે</string>
+    <string name="validation_email_local_starts_with_dot">સ્થાનિક ભાગ બિંદુથી શરૂ થઈ શકતો નથી</string>
+    <string name="validation_email_local_ends_with_dot">સ્થાનિક ભાગ બિંદુથી અંતે થઈ શકતો નથી</string>
+    <string name="validation_email_local_consecutive_dots">સ્થાનિક ભાગમાં ક્રમિક બિંદુઓ હોઈ શકતાં નથી</string>
+    <string name="validation_email_local_invalid_characters">સ્થાનિક ભાગમાં અમાન્ય અક્ષરો છે</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">ડોમેઇન ભાગ ખાલી હોઈ શકતો નથી</string>
+    <string name="validation_email_domain_max_length">ડોમેઇન ભાગ મહત્તમ લંબાઈ 253 અક્ષરો કરતાં વધારે છે</string>
+    <string name="validation_email_domain_missing_dot">ડોમેઇનમાં ઓછામાં ઓછો એક બિંદુ હોવો જરૂરી છે</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ડોમેઇન બિંદુથી શરૂ અથવા અંતે થઈ શકતું નથી</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ડોમેઇન હાઇફનથી શરૂ અથવા અંતે થઈ શકતું નથી</string>
+    <string name="validation_email_domain_insufficient_parts">ડોમેઇનમાં બિંદુઓ વડે વિભાજિત ઓછામાં ઓછા બે ભાગો હોવા જરૂરી છે</string>
+    <string name="validation_email_tld_invalid">ટૉપ-લેવલ ડોમેઇન ઓછામાં ઓછા 2 અક્ષરોનો હોવો જરૂરી છે અને તેમાં ફક્ત અક્ષરો હોવા જરૂરી છે</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">ડોમેઇન લેબલ ખાલી હોઈ શકતું નથી</string>
+    <string name="validation_email_label_max_length">ડોમેઇન લેબલ મહત્તમ લંબાઈ 63 અક્ષરો કરતાં વધારે છે</string>
+    <string name="validation_email_label_starts_with_hyphen">ડોમેઇન લેબલ હાઇફનથી શરૂ થઈ શકતું નથી</string>
+    <string name="validation_email_label_ends_with_hyphen">ડોમેઇન લેબલ હાઇફનથી અંતે થઈ શકતું નથી</string>
+    <string name="validation_email_label_invalid_characters">ડોમેઇન લેબલમાં અમાન્ય અક્ષરો છે</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">ફોન નંબર ખાલી હોઈ શકતો નથી</string>
+    <string name="validation_phone_too_short">ફોન નંબર ખૂબ ટૂંકો છે</string>
+    <string name="validation_phone_too_long">ફોન નંબર ખૂબ લાંબો છે</string>
+    <string name="validation_phone_invalid_characters">ફોન નંબરમાં અમાન્ય અક્ષરો છે</string>
+    <string name="validation_phone_spanish_country_code_required">કૃપા કરીને સ્પેનિશ કંટ્રી કોડ (+34) વાપરો</string>
+    <string name="validation_phone_spanish_format_invalid">અમાન્ય સ્પેનિશ ફોન નંબર ફૉર્મેટ</string>
+
+    <string name="validation_phone_invalid_for_country">ફોન નંબર પસંદ કરેલા દેશ માટે અમાન્ય છે</string>
+    <string name="validation_phone_no_valid_country_found">ફોન નંબર ફૉર્મેટ કોઈપણ સમર્થિત દેશ માટે ઓળખાતો નથી</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">નામ ખાલી હોઈ શકતું નથી</string>
+    <string name="validation_name_invalid_characters">નામમાં અમાન્ય અક્ષરો છે</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">આ ક્ષેત્ર જરૂરી છે</string>
+    <string name="validation_format_invalid">અમાન્ય ફૉર્મેટ</string>
+    <string name="validation_length_exceeded">મહત્તમ લંબાઈ વધારે છે</string>
+    <string name="validation_length_insufficient">ન્યૂનતમ લંબાઈ પહોંચી નથી</string>
+
+    <string name="validation_amount_empty">રકમ ખાલી હોઈ શકતી નથી</string>
+    <string name="validation_amount_invalid_format">કૃપા કરીને માન્ય રકમ ફૉર્મેટ દાખલ કરો (ઉ. 99.99)</string>
+    <string name="validation_amount_invalid_number">કૃપા કરીને માન્ય નંબર દાખલ કરો</string>
+    <string name="validation_amount_negative">રકમ નકારાત્મક હોઈ શકતી નથી</string>
+    <string name="validation_amount_too_small">રકમ ઓછામાં ઓછી 0.01 હોવી જરૂરી છે</string>
+    <string name="validation_amount_too_large">રકમ 999,999,999.99 કરતાં વધારે હોઈ શકતી નથી</string>
+    <string name="validation_amount_invalid_decimal_places">આ ચલણ માટે રકમમાં વધારે દશાંશ સ્થાનો છે</string>
+    <string name="validation_amount_invalid_increment">આ ચલણ માટે રકમ માન્ય વધારામાં હોવી જરૂરી છે</string>
+
+    <string name="savings_account">બચત ખાતું</string>
+    <string name="available_balance">ગ્રાહકનું નામ</string>
+    <string name="select_other_payment_account">બીજું ચૂકવણી ખાતું પસંદ કરો</string>
+    <string name="available_balance_formatted">ઉપલબ્ધ શેષ - %1$s</string>
+
+    <string name="feature_savings_filter">ફિલ્ટર</string>
+    <string name="feature_savings_reset">રીસેટ કરો</string>
+    <string name="feature_savings_apply">લાગુ કરો</string>
+</resources>

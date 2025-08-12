@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Nincs internet</string>
+    <string name="retry">Újra</string>
+    <string name="no_data">Nincs adat</string>
+    <string name="something_went_wrong">Valami hiba történt</string>
+    <string name="core_common_working">Alapvető közös munka</string>
+
+    <string name="powered_by">Működteti</string>
+
+    <string name="password_checker_empty_error">A jelszó nem lehet üres.</string>
+    <string name="password_checker_too_long_error">A jelszó túl hosszú. A maximális hossz 128 karakter.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">A jelszónak legalább 12 karakter hosszúnak kell lennie.</string>
+    <string name="password_checker_uppercase_feedback">Legalább egy nagybetűt adjon meg.</string>
+    <string name="password_checker_lowercase_feedback">Legalább egy kisbetűt adjon meg.</string>
+    <string name="password_checker_digit_feedback">Legalább egy számot adjon meg.</string>
+    <string name="password_checker_special_char_feedback">Legalább egy speciális karaktert adjon meg.</string>
+    <string name="password_checker_strong_length_feedback">Legalább 12 karaktert használjon egy erősebb jelszóhoz.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">Nagyon gyenge</string>
+    <string name="password_strength_level_1">Gyenge</string>
+    <string name="password_strength_level_2">Elfogadható</string>
+    <string name="password_strength_level_3">Jó</string>
+    <string name="password_strength_level_4">Erős</string>
+    <string name="password_strength_level_5">Nagyon erős</string>
+    <string name="password_strength_none">Adjon meg egy jelszót</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">Jelszó erősség kijelző</string>
+    <string name="password_strength_announcement">Jelszó erőssége: %1$s</string>
+    <string name="minimum_characters_requirement">Legalább %1$d karakter</string>
+    <string name="minimum_characters_met">Minimális karakterkövetelmény teljesítve</string>
+    <string name="minimum_characters_not_met">Minimális karakterkövetelmény nem teljesült</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">Jelszó követelmények</string>
+    <string name="password_feedback_title">Jelszó javaslatok</string>
+    <string name="password_feedback_all_good">A jelszava megfelel minden követelménynek!</string>
+    <string name="character_count">%1$d karakter</string>
+    <string name="character_count_with_limit">%1$d / %2$d karakter</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">Az e-mail cím nem lehet üres</string>
+    <string name="validation_email_max_length_exceeded">Az e-mail cím meghaladja a maximális 254 karakter hosszúságot</string>
+    <string name="validation_email_missing_at_symbol">Az e-mail címnek tartalmaznia kell a @ szimbólumot</string>
+    <string name="validation_email_starts_with_at">Az e-mail cím nem kezdődhet a @ szimbólummal</string>
+    <string name="validation_email_ends_with_at">Az e-mail cím nem végződhet a @ szimbólummal</string>
+    <string name="validation_email_multiple_at_symbols">Az e-mail cím nem tartalmazhat több @ szimbólumot</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">A helyi rész nem lehet üres</string>
+    <string name="validation_email_local_max_length">A helyi rész meghaladja a maximális 64 karakter hosszúságot</string>
+    <string name="validation_email_local_starts_with_dot">A helyi rész nem kezdődhet ponttal</string>
+    <string name="validation_email_local_ends_with_dot">A helyi rész nem végződhet ponttal</string>
+    <string name="validation_email_local_consecutive_dots">A helyi rész nem tartalmazhat egymás utáni pontokat</string>
+    <string name="validation_email_local_invalid_characters">A helyi rész érvénytelen karaktereket tartalmaz</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">A domain rész nem lehet üres</string>
+    <string name="validation_email_domain_max_length">A domain rész meghaladja a maximális 253 karakter hosszúságot</string>
+    <string name="validation_email_domain_missing_dot">A domain legalább egy pontot kell tartalmazzon</string>
+    <string name="validation_email_domain_starts_ends_with_dot">A domain nem kezdődhet vagy végződhet ponttal</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">A domain nem kezdődhet vagy végződhet kötőjellel</string>
+    <string name="validation_email_domain_insufficient_parts">A domain legalább két, pontokkal elválasztott részt kell tartalmazzon</string>
+    <string name="validation_email_tld_invalid">A legfelső szintű domain legalább 2 betű hosszú kell legyen, és csak betűket tartalmazhat</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">A domain címke nem lehet üres</string>
+    <string name="validation_email_label_max_length">A domain címke meghaladja a maximális 63 karakter hosszúságot</string>
+    <string name="validation_email_label_starts_with_hyphen">A domain címke nem kezdődhet kötőjellel</string>
+    <string name="validation_email_label_ends_with_hyphen">A domain címke nem végződhet kötőjellel</string>
+    <string name="validation_email_label_invalid_characters">A domain címke érvénytelen karaktereket tartalmaz</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">A telefonszám nem lehet üres</string>
+    <string name="validation_phone_too_short">A telefonszám túl rövid</string>
+    <string name="validation_phone_too_long">A telefonszám túl hosszú</string>
+    <string name="validation_phone_invalid_characters">A telefonszám érvénytelen karaktereket tartalmaz</string>
+    <string name="validation_phone_spanish_country_code_required">Kérjük, használja a spanyol országkódot (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Érvénytelen spanyol telefonszám formátum</string>
+
+    <string name="validation_phone_invalid_for_country">A telefonszám érvénytelen a kiválasztott ország számára</string>
+    <string name="validation_phone_no_valid_country_found">A telefonszám formátuma nem ismerhető fel egyetlen támogatott ország számára sem</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">A név nem lehet üres</string>
+    <string name="validation_name_invalid_characters">A név érvénytelen karaktereket tartalmaz</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">Ez a mező kötelező</string>
+    <string name="validation_format_invalid">Érvénytelen formátum</string>
+    <string name="validation_length_exceeded">A maximális hossz túllépve</string>
+    <string name="validation_length_insufficient">A minimális hossz nem érhető el</string>
+
+    <string name="validation_amount_empty">Az összeg nem lehet üres</string>
+    <string name="validation_amount_invalid_format">Kérjük, adjon meg érvényes összeg formátumot (pl. 99,99)</string>
+    <string name="validation_amount_invalid_number">Kérjük, adjon meg érvényes számot</string>
+    <string name="validation_amount_negative">Az összeg nem lehet negatív</string>
+    <string name="validation_amount_too_small">Az összeg legalább 0,01 kell legyen</string>
+    <string name="validation_amount_too_large">Az összeg nem haladhatja meg a 999.999.999,99 értéket</string>
+    <string name="validation_amount_invalid_decimal_places">Az összeg túl sok tizedesjegyet tartalmaz ehhez a pénznemhez</string>
+    <string name="validation_amount_invalid_increment">Az összegnek érvényes lépésekben kell lennie ehhez a pénznemhez</string>
+
+    <string name="savings_account">Megtakarítási számla</string>
+    <string name="available_balance">Ügyfél neve</string>
+    <string name="select_other_payment_account">Másik fizetési számla kiválasztása</string>
+    <string name="available_balance_formatted">Elérhető egyenleg - %1$s</string>
+
+    <string name="feature_savings_filter">Szűrő</string>
+    <string name="feature_savings_reset">Visszaállítás</string>
+    <string name="feature_savings_apply">Alkalmaz</string>
+</resources>

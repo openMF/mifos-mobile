@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">कोई इंटरनेट नहीं</string>
+    <string name="retry">पुन: प्रयास करें</string>
+    <string name="no_data">कोई डेटा नहीं</string>
+    <string name="something_went_wrong">कुछ गलत हो गया</string>
+    <string name="core_common_working">कोर सामान्य कार्य</string>
+
+    <string name="powered_by">द्वारा संचालित</string>
+
+    <string name="password_checker_empty_error">पासवर्ड रिक्त नहीं हो सकता।</string>
+    <string name="password_checker_too_long_error">पासवर्ड बहुत लंबा है। अधिकतम लंबाई 128 अक्षर है।</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">पासवर्ड कम से कम 12 अक्षरों का होना चाहिए।</string>
+    <string name="password_checker_uppercase_feedback">कम से कम एक अपरकेस अक्षर डालें।</string>
+    <string name="password_checker_lowercase_feedback">कम से कम एक लोअरकेस अक्षर डालें।</string>
+    <string name="password_checker_digit_feedback">कम से कम एक अंक डालें।</string>
+    <string name="password_checker_special_char_feedback">कम से कम एक विशेष अक्षर डालें।</string>
+    <string name="password_checker_strong_length_feedback">मजबूत पासवर्ड के लिए कम से कम 12 अक्षरों का उपयोग करें।</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">बहुत कमजोर</string>
+    <string name="password_strength_level_1">कमजोर</string>
+    <string name="password_strength_level_2">स्वीकार्य</string>
+    <string name="password_strength_level_3">अच्छा</string>
+    <string name="password_strength_level_4">मजबूत</string>
+    <string name="password_strength_level_5">बहुत मजबूत</string>
+    <string name="password_strength_none">एक पासवर्ड दर्ज करें</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">पासवर्ड शक्ति संकेतक</string>
+    <string name="password_strength_announcement">पासवर्ड शक्ति: %1$s</string>
+    <string name="minimum_characters_requirement">कम से कम %1$d अक्षर</string>
+    <string name="minimum_characters_met">न्यूनतम अक्षर आवश्यकता पूरी हुई</string>
+    <string name="minimum_characters_not_met">न्यूनतम अक्षर आवश्यकता पूरी नहीं हुई</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">पासवर्ड आवश्यकताएं</string>
+    <string name="password_feedback_title">पासवर्ड सुझाव</string>
+    <string name="password_feedback_all_good">आपका पासवर्ड सभी आवश्यकताओं को पूरा करता है!</string>
+    <string name="character_count">%1$d अक्षर</string>
+    <string name="character_count_with_limit">%1$d / %2$d अक्षर</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">ईमेल पता रिक्त नहीं हो सकता</string>
+    <string name="validation_email_max_length_exceeded">ईमेल पता अधिकतम लंबाई 254 अक्षरों को पार कर जाता है</string>
+    <string name="validation_email_missing_at_symbol">ईमेल पते में @ प्रतीक होना चाहिए</string>
+    <string name="validation_email_starts_with_at">ईमेल पता @ प्रतीक से शुरू नहीं हो सकता</string>
+    <string name="validation_email_ends_with_at">ईमेल पता @ प्रतीक के साथ समाप्त नहीं हो सकता</string>
+    <string name="validation_email_multiple_at_symbols">ईमेल पते में एकाधिक @ प्रतीक नहीं हो सकते</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">स्थानीय भाग रिक्त नहीं हो सकता</string>
+    <string name="validation_email_local_max_length">स्थानीय भाग अधिकतम लंबाई 64 अक्षरों को पार कर जाता है</string>
+    <string name="validation_email_local_starts_with_dot">स्थानीय भाग बिंदु से शुरू नहीं हो सकता</string>
+    <string name="validation_email_local_ends_with_dot">स्थानीय भाग बिंदु के साथ समाप्त नहीं हो सकता</string>
+    <string name="validation_email_local_consecutive_dots">स्थानीय भाग में लगातार बिंदु नहीं हो सकते</string>
+    <string name="validation_email_local_invalid_characters">स्थानीय भाग में अमान्य अक्षर हैं</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">डोमेन भाग रिक्त नहीं हो सकता</string>
+    <string name="validation_email_domain_max_length">डोमेन भाग अधिकतम लंबाई 253 अक्षरों को पार कर जाता है</string>
+    <string name="validation_email_domain_missing_dot">डोमेन में कम से कम एक बिंदु होना चाहिए</string>
+    <string name="validation_email_domain_starts_ends_with_dot">डोमेन बिंदु से शुरू या समाप्त नहीं हो सकता</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">डोमेन हाइफ़न से शुरू या समाप्त नहीं हो सकता</string>
+    <string name="validation_email_domain_insufficient_parts">डोमेन में बिंदुओं द्वारा अलग किए गए कम से कम दो भाग होने चाहिए</string>
+    <string name="validation_email_tld_invalid">शीर्ष-स्तरीय डोमेन कम से कम 2 अक्षर लंबा होना चाहिए और केवल अक्षरों को शामिल करना चाहिए</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">डोमेन लेबल रिक्त नहीं हो सकता</string>
+    <string name="validation_email_label_max_length">डोमेन लेबल अधिकतम लंबाई 63 अक्षरों को पार कर जाता है</string>
+    <string name="validation_email_label_starts_with_hyphen">डोमेन लेबल हाइफ़न से शुरू नहीं हो सकता</string>
+    <string name="validation_email_label_ends_with_hyphen">डोमेन लेबल हाइफ़न के साथ समाप्त नहीं हो सकता</string>
+    <string name="validation_email_label_invalid_characters">डोमेन लेबल में अमान्य अक्षर हैं</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">फ़ोन नंबर रिक्त नहीं हो सकता</string>
+    <string name="validation_phone_too_short">फ़ोन नंबर बहुत छोटा है</string>
+    <string name="validation_phone_too_long">फ़ोन नंबर बहुत लंबा है</string>
+    <string name="validation_phone_invalid_characters">फ़ोन नंबर में अमान्य अक्षर हैं</string>
+    <string name="validation_phone_spanish_country_code_required">कृपया स्पेनिश देश कोड (+34) का उपयोग करें</string>
+    <string name="validation_phone_spanish_format_invalid">अमान्य स्पेनिश फ़ोन नंबर प्रारूप</string>
+
+    <string name="validation_phone_invalid_for_country">फ़ोन नंबर चयनित देश के लिए अमान्य है</string>
+    <string name="validation_phone_no_valid_country_found">फ़ोन नंबर प्रारूप किसी भी समर्थित देश के लिए पहचाना नहीं जाता है</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">नाम रिक्त नहीं हो सकता</string>
+    <string name="validation_name_invalid_characters">नाम में अमान्य अक्षर हैं</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">यह फ़ील्ड आवश्यक है</string>
+    <string name="validation_format_invalid">अमान्य प्रारूप</string>
+    <string name="validation_length_exceeded">अधिकतम लंबाई पार हो गई</string>
+    <string name="validation_length_insufficient">न्यूनतम लंबाई प्राप्त नहीं हुई</string>
+
+    <string name="validation_amount_empty">राशि रिक्त नहीं हो सकती</string>
+    <string name="validation_amount_invalid_format">कृपया एक मान्य राशि प्रारूप दर्ज करें (उदा. 99.99)</string>
+    <string name="validation_amount_invalid_number">कृपया एक मान्य संख्या दर्ज करें</string>
+    <string name="validation_amount_negative">राशि ऋणात्मक नहीं हो सकती</string>
+    <string name="validation_amount_too_small">राशि कम से कम 0.01 होनी चाहिए</string>
+    <string name="validation_amount_too_large">राशि 999,999,999.99 से अधिक नहीं हो सकती</string>
+    <string name="validation_amount_invalid_decimal_places">इस मुद्रा के लिए राशि में बहुत अधिक दशमलव स्थान हैं</string>
+    <string name="validation_amount_invalid_increment">राशि इस मुद्रा के लिए मान्य वृद्धि में होनी चाहिए</string>
+
+    <string name="savings_account">बचत खाता</string>
+    <string name="available_balance">ग्राहक का नाम</string>
+    <string name="select_other_payment_account">अन्य भुगतान खाता चुनें</string>
+    <string name="available_balance_formatted">उपलब्ध शेष - %1$s</string>
+
+    <string name="feature_savings_filter">फ़िल्टर</string>
+    <string name="feature_savings_reset">रीसेट</string>
+    <string name="feature_savings_apply">लागू करें</string>
+</resources>
