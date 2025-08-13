@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">සක්‍රීය</string>
+    <string name="feature_loan_account_filter_approval_pending">අනුමත කිරීම ඉඟියෙන්</string>
+    <string name="feature_loan_account_filter_closed">වසා ඇත</string>
+    <string name="feature_loan_account_filter_disburse">ගෙවීම ඉඟියෙන්</string>
+    <string name="feature_loan_account_filter_overpaid">අධික ගෙවීම</string>
+    <string name="feature_loan_account_filter_in_arrears">අපේක්ෂිත</string>
+    <string name="feature_loan_account_filter_withdrawn">ඉවත් කළ</string>
+    <string name="feature_loan_account_filter_matured">වූ ප්‍රථිපල</string>
+    <string name="feature_loan_account_filter_rejected">ප්‍රතික්ෂේප කළ</string>
+
+    <string name="feature_loan_account_filter_personal">පුද්ගලික</string>
+    <string name="feature_loan_account_filter_bronze">කඩම්බර</string>
+
+    <string name="feature_account_empty_loan_accounts">ඔබ සමඟ සම්බන්ධ වූ ණාණ ගිණුම් නොමැත</string>
+    <string name="feature_account_empty_filtered_loan_accounts">ඔබ තෝරාගත් පෙරහන සමඟ සම්බන්ධ වූ ණාණ ගිණුම් නොමැත</string>
+
+    <string name="feature_loan_account_dashboard">මුළු ණාණය</string>
+    <string name="feature_loan_account">ණාණ ගිණුම</string>
+    <string name="feature_loan_account_items">%1$d අයිතම</string>
+
+    <string name="feature_account_details_top_bar_title">ණාණ ගිණුම් විස්තර</string>
+    <string name="feature_account_details_action">ක්‍රියාමාර්ගය</string>
+    <string name="feature_account_action_make_payment">ගෙවීම සිදු කරන්න</string>
+    <string name="feature_account_action_make_payment_tip">ඔබගේ අපේක්ෂිත ගෙවීම සිදු කරන්න</string>
+    <string name="feature_account_action_loan_summary">ණාණ සාරාංශය</string>
+    <string name="feature_account_action_loan_summary_tip">ඔබගේ ණාණ විස්තර සාරාංශය</string>
+    <string name="feature_account_action_repayment_schedule">ගෙවීමේ කාල නියමිතය</string>
+    <string name="feature_account_action_repayment_schedule_tip">ගෙවීමේ කාල නියමිතය ප්‍රසංගය බලන්න</string>
+    <string name="feature_account_action_transactions">ගනුදෙනු</string>
+    <string name="feature_account_action_transactions_tip">මෙම ගිණුම සඳහා අලුත්ම ගනුදෙනු</string>
+    <string name="feature_account_action_charges">ගාස්තු</string>
+    <string name="feature_account_action_charges_tip">මෙම ගිණුම සඳහා ගාස්තු හෝ ගාස්තු</string>
+    <string name="feature_account_action_qr">QR කේතය</string>
+    <string name="feature_account_action_qr_tip">QR කේතය ජනනය කරන්න</string>
+
+    <string name="feature_loan_account_number_label">ගිණුම් අංකය</string>
+    <string name="feature_loan_outstanding_balance_label">අපේක්ෂිත ශේෂය</string>
+    <string name="feature_loan_product_type_label">නිෂ්පාදන වර්ගය</string>
+    <string name="feature_loan_currency_label">මුදල්</string>
+    <string name="feature_loan_next_installment_label">ඊළඟ කාල නියමිතය</string>
+    <string name="feature_loan_installment_amount_label">කාල නියමිතය මුදල</string>
+    <string name="feature_loan_due_date_label">අපේක්ෂිත දිනය</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">ගිණුම් විස්තර</string>
+    <string name="feature_loan_payoff_details_title">ගෙවීමේ විස්තර</string>
+    <string name="feature_loan_charges_title">ගාස්තු</string>
+    <string name="feature_loan_waivers_title">අවලංගු කිරීම්</string>
+    <string name="feature_loan_paid_off_details_title">ගෙවූ විස්තර</string>
+    <string name="feature_loan_outstanding_details_title">අපේක්ෂිත විස්තර</string>
+    <string name="feature_loan_installment_details_title">කාල නියමිතය විස්තර</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">ණාණ වර්ගය</string>
+    <string name="feature_loan_scheme_label">ණාණ යෝජනාව</string>
+    <string name="feature_loan_account_status_label">ගිණුම් තත්ත්වය</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">අපේක්ෂිත ගෙවීම</string>
+    <string name="feature_loan_interest_payoff_label">ප්‍රතිපූර්ණ පොලීය</string>
+    <string name="feature_loan_principal_label">ණාණ ප්‍රධාන</string>
+    <string name="feature_loan_interest_rate_label">පොලී අනුපාතය</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">ගාස්තු</string>
+    <string name="feature_loan_penalties_label">දඩ</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">පොලීය අවලංගු කළ</string>
+    <string name="feature_loan_penalty_waived_label">දඩ අවලංගු කළ</string>
+    <string name="feature_loan_fees_waived_label">ගාස්තු අවලංගු කළ</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">ගෙවූ පොලීය</string>
+    <string name="feature_loan_principal_paid_off_label">ගෙවූ ප්‍රධාන</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">අපේක්ෂිත පොලීය</string>
+    <string name="feature_loan_principal_outstanding_label">අපේක්ෂිත ප්‍රධාන</string>
+    <string name="feature_loan_total_outstanding_label">මුළු අපේක්ෂිතය</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">නිතර ගෙවීම</string>
+    <string name="feature_loan_next_payment_label">ඊළඟ ගෙවීම</string>
+    <string name="feature_loan_months_left_label">ඉතිරි මාස</string>
+    <string name="feature_loan_auto_debit_label">ස්වයංක්‍රීය ගෙවීම</string>
+    <string name="feature_loan_linked_account_label">සම්බන්ධිත ගිණුම</string>
+
+    <string name="repayment_schedule">ගෙවීමේ කාල නියමිතය</string>
+    <string name="feature_loan_disbursement_date_label">ගෙවීමේ දිනය</string>
+    <string name="feature_loan_installments_paid_label">ගෙවූ කාල නියමිතය</string>
+    <string name="feature_loan_installments_left_label">ඉතිරි කාල නියමිතය</string>
+    <string name="feature_loan_total_installments_label">මුළු කාල නියමිතය</string>
+
+    <string name="feature_loan_paid">ගෙවීම</string>
+    <string name="feature_loan_due">අපේක්ෂිතය</string>
+    <string name="feature_loan_pay">ගෙවන්න</string>
+</resources>

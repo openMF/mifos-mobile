@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Ativo</string>
+    <string name="feature_loan_account_filter_approval_pending">Aprovação Pendente</string>
+    <string name="feature_loan_account_filter_closed">Fechado</string>
+    <string name="feature_loan_account_filter_disburse">Aguardando Desembolso</string>
+    <string name="feature_loan_account_filter_overpaid">Pago em Excesso</string>
+    <string name="feature_loan_account_filter_in_arrears">Em Atraso</string>
+    <string name="feature_loan_account_filter_withdrawn">Retirado</string>
+    <string name="feature_loan_account_filter_matured">Vencido</string>
+    <string name="feature_loan_account_filter_rejected">Rejeitado</string>
+
+    <string name="feature_loan_account_filter_personal">Pessoal</string>
+    <string name="feature_loan_account_filter_bronze">Bronze</string>
+
+    <string name="feature_account_empty_loan_accounts">Nenhuma conta de empréstimo associada a você</string>
+    <string name="feature_account_empty_filtered_loan_accounts">Nenhuma conta de empréstimo associada ao filtro selecionado</string>
+
+    <string name="feature_loan_account_dashboard">Total de Empréstimos</string>
+    <string name="feature_loan_account">Conta de Empréstimo</string>
+    <string name="feature_loan_account_items">%1$d itens</string>
+
+    <string name="feature_account_details_top_bar_title">Detalhes da Conta de Empréstimo</string>
+    <string name="feature_account_details_action">Ação</string>
+    <string name="feature_account_action_make_payment">Fazer Pagamento</string>
+    <string name="feature_account_action_make_payment_tip">Pague o seu saldo pendente</string>
+    <string name="feature_account_action_loan_summary">Resumo do Empréstimo</string>
+    <string name="feature_account_action_loan_summary_tip">Resumo dos detalhes do seu empréstimo</string>
+    <string name="feature_account_action_repayment_schedule">Cronograma de Pagamento</string>
+    <string name="feature_account_action_repayment_schedule_tip">Veja o gráfico do cronograma de pagamento</string>
+    <string name="feature_account_action_transactions">Transações</string>
+    <string name="feature_account_action_transactions_tip">Transações recentes desta conta</string>
+    <string name="feature_account_action_charges">Cobranças</string>
+    <string name="feature_account_action_charges_tip">Taxas ou cobranças desta conta</string>
+    <string name="feature_account_action_qr">Código QR</string>
+    <string name="feature_account_action_qr_tip">Gerar código QR</string>
+
+    <string name="feature_loan_account_number_label">Número da Conta</string>
+    <string name="feature_loan_outstanding_balance_label">Saldo Pendente</string>
+    <string name="feature_loan_product_type_label">Tipo de Produto</string>
+    <string name="feature_loan_currency_label">Moeda</string>
+    <string name="feature_loan_next_installment_label">Próxima Parcela</string>
+    <string name="feature_loan_installment_amount_label">Valor da Parcela</string>
+    <string name="feature_loan_due_date_label">Data de Vencimento</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Detalhes da Conta</string>
+    <string name="feature_loan_payoff_details_title">Detalhes do Pagamento Final</string>
+    <string name="feature_loan_charges_title">Cobranças</string>
+    <string name="feature_loan_waivers_title">Isenções</string>
+    <string name="feature_loan_paid_off_details_title">Detalhes Pagos</string>
+    <string name="feature_loan_outstanding_details_title">Detalhes Pendentes</string>
+    <string name="feature_loan_installment_details_title">Detalhes da Parcela</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Tipo de Empréstimo</string>
+    <string name="feature_loan_scheme_label">Esquema de Empréstimo</string>
+    <string name="feature_loan_account_status_label">Status da Conta</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Pagamento Final Esperado</string>
+    <string name="feature_loan_interest_payoff_label">Pagamento de Juros</string>
+    <string name="feature_loan_principal_label">Principal do Empréstimo</string>
+    <string name="feature_loan_interest_rate_label">Taxa de Juros</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Taxas</string>
+    <string name="feature_loan_penalties_label">Multas</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Juros Isentos</string>
+    <string name="feature_loan_penalty_waived_label">Multas Isentas</string>
+    <string name="feature_loan_fees_waived_label">Taxas Isentas</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Juros Pagos</string>
+    <string name="feature_loan_principal_paid_off_label">Principal Pago</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Juros Pendentes</string>
+    <string name="feature_loan_principal_outstanding_label">Principal Pendente</string>
+    <string name="feature_loan_total_outstanding_label">Total Pendente</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Pagamento Regular</string>
+    <string name="feature_loan_next_payment_label">Próximo Pagamento</string>
+    <string name="feature_loan_months_left_label">Meses Restantes</string>
+    <string name="feature_loan_auto_debit_label">Débito Automático</string>
+    <string name="feature_loan_linked_account_label">Conta Vinculada</string>
+
+    <string name="repayment_schedule">Cronograma de Pagamento</string>
+    <string name="feature_loan_disbursement_date_label">Data de Desembolso</string>
+    <string name="feature_loan_installments_paid_label">Parcelas Pagas</string>
+    <string name="feature_loan_installments_left_label">Parcelas Restantes</string>
+    <string name="feature_loan_total_installments_label">Total de Parcelas</string>
+
+    <string name="feature_loan_paid">Pago</string>
+    <string name="feature_loan_due">Vencido</string>
+    <string name="feature_loan_pay">Pagar</string>
+</resources>

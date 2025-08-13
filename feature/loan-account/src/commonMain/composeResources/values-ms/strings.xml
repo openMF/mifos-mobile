@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Aktif</string>
+    <string name="feature_loan_account_filter_approval_pending">Kelulusan Menunggu</string>
+    <string name="feature_loan_account_filter_closed">Ditutup</string>
+    <string name="feature_loan_account_filter_disburse">Menunggu Pembayaran</string>
+    <string name="feature_loan_account_filter_overpaid">Lebih Bayar</string>
+    <string name="feature_loan_account_filter_in_arrears">Tunggakan</string>
+    <string name="feature_loan_account_filter_withdrawn">Ditarik Balik</string>
+    <string name="feature_loan_account_filter_matured">Matang</string>
+    <string name="feature_loan_account_filter_rejected">Ditolak</string>
+
+    <string name="feature_loan_account_filter_personal">Peribadi</string>
+    <string name="feature_loan_account_filter_bronze">Gangsa</string>
+
+    <string name="feature_account_empty_loan_accounts">Tiada akaun pinjaman yang berkaitan dengan anda</string>
+    <string name="feature_account_empty_filtered_loan_accounts">Tiada akaun pinjaman yang berkaitan dengan penapis yang anda pilih</string>
+
+    <string name="feature_loan_account_dashboard">Jumlah Pinjaman</string>
+    <string name="feature_loan_account">Akaun Pinjaman</string>
+    <string name="feature_loan_account_items">%1$d item</string>
+
+    <string name="feature_account_details_top_bar_title">Butiran Akaun Pinjaman</string>
+    <string name="feature_account_details_action">Tindakan</string>
+    <string name="feature_account_action_make_payment">Buat Pembayaran</string>
+    <string name="feature_account_action_make_payment_tip">Bayar baki anda</string>
+    <string name="feature_account_action_loan_summary">Ringkasan Pinjaman</string>
+    <string name="feature_account_action_loan_summary_tip">Ringkasan butiran pinjaman anda</string>
+    <string name="feature_account_action_repayment_schedule">Jadual Bayaran Balik</string>
+    <string name="feature_account_action_repayment_schedule_tip">Lihat carta jadual bayaran balik</string>
+    <string name="feature_account_action_transactions">Transaksi</string>
+    <string name="feature_account_action_transactions_tip">Transaksi terkini untuk akaun ini</string>
+    <string name="feature_account_action_charges">Caj</string>
+    <string name="feature_account_action_charges_tip">Yuran atau caj untuk akaun ini</string>
+    <string name="feature_account_action_qr">Kod QR</string>
+    <string name="feature_account_action_qr_tip">Hasilkan kod QR</string>
+
+    <string name="feature_loan_account_number_label">Nombor Akaun</string>
+    <string name="feature_loan_outstanding_balance_label">Baki Tunggakan</string>
+    <string name="feature_loan_product_type_label">Jenis Produk</string>
+    <string name="feature_loan_currency_label">Mata Wang</string>
+    <string name="feature_loan_next_installment_label">Bayaran Balik Seterusnya</string>
+    <string name="feature_loan_installment_amount_label">Jumlah Bayaran Balik</string>
+    <string name="feature_loan_due_date_label">Tarikh Akhir</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Butiran Akaun</string>
+    <string name="feature_loan_payoff_details_title">Butiran Pelunasan</string>
+    <string name="feature_loan_charges_title">Caj</string>
+    <string name="feature_loan_waivers_title">Pelepasan</string>
+    <string name="feature_loan_paid_off_details_title">Butiran Pelunasan</string>
+    <string name="feature_loan_outstanding_details_title">Butiran Tunggakan</string>
+    <string name="feature_loan_installment_details_title">Butiran Bayaran Balik</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Jenis Pinjaman</string>
+    <string name="feature_loan_scheme_label">Skim Pinjaman</string>
+    <string name="feature_loan_account_status_label">Status Akaun</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Pelunasan Dijangka</string>
+    <string name="feature_loan_interest_payoff_label">Pelunasan Faedah</string>
+    <string name="feature_loan_principal_label">Prinsipal Pinjaman</string>
+    <string name="feature_loan_interest_rate_label">Kadar Faedah</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Yuran</string>
+    <string name="feature_loan_penalties_label">Denda</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Faedah Dilepaskan</string>
+    <string name="feature_loan_penalty_waived_label">Denda Dilepaskan</string>
+    <string name="feature_loan_fees_waived_label">Yuran Dilepaskan</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Faedah Dibayar</string>
+    <string name="feature_loan_principal_paid_off_label">Prinsipal Dibayar</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Faedah Tunggakan</string>
+    <string name="feature_loan_principal_outstanding_label">Prinsipal Tunggakan</string>
+    <string name="feature_loan_total_outstanding_label">Jumlah Tunggakan</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Bayaran Biasa</string>
+    <string name="feature_loan_next_payment_label">Bayaran Seterusnya</string>
+    <string name="feature_loan_months_left_label">Bulan yang Tinggal</string>
+    <string name="feature_loan_auto_debit_label">Debit Automatik</string>
+    <string name="feature_loan_linked_account_label">Akaun Terpaut</string>
+
+    <string name="repayment_schedule">Jadual Bayaran Balik</string>
+    <string name="feature_loan_disbursement_date_label">Tarikh Pembayaran</string>
+    <string name="feature_loan_installments_paid_label">Bayaran Balik Dibayar</string>
+    <string name="feature_loan_installments_left_label">Bayaran Balik yang Tinggal</string>
+    <string name="feature_loan_total_installments_label">Jumlah Bayaran Balik</string>
+
+    <string name="feature_loan_paid">Dibayar</string>
+    <string name="feature_loan_due">Tempoh Akhir</string>
+    <string name="feature_loan_pay">Bayar</string>
+</resources>

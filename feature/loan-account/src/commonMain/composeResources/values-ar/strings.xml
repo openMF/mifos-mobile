@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">نشط</string>
+    <string name="feature_loan_account_filter_approval_pending">في انتظار الموافقة</string>
+    <string name="feature_loan_account_filter_closed">مغلق</string>
+    <string name="feature_loan_account_filter_disburse">في انتظار التوزيع</string>
+    <string name="feature_loan_account_filter_overpaid">مدفوع أكثر</string>
+    <string name="feature_loan_account_filter_in_arrears">متأخر</string>
+    <string name="feature_loan_account_filter_withdrawn">مسحوب</string>
+    <string name="feature_loan_account_filter_matured">ناضج</string>
+    <string name="feature_loan_account_filter_rejected">مرفوض</string>
+
+    <string name="feature_loan_account_filter_personal">شخصي</string>
+    <string name="feature_loan_account_filter_bronze">برونزي</string>
+
+    <string name="feature_account_empty_loan_accounts">لا يوجد حساب قرض مرتبط بك</string>
+    <string name="feature_account_empty_filtered_loan_accounts">لا يوجد حساب قرض مرتبط بالمرشحات التي اخترتها</string>
+
+    <string name="feature_loan_account_dashboard">إجمالي الاقتراض</string>
+    <string name="feature_loan_account">حساب القرض</string>
+    <string name="feature_loan_account_items">%1$d عناصر</string>
+
+    <string name="feature_account_details_top_bar_title">تفاصيل حساب القرض</string>
+    <string name="feature_account_details_action">إجراء</string>
+    <string name="feature_account_action_make_payment">إجراء الدفع</string>
+    <string name="feature_account_action_make_payment_tip">ادفع القسط المستحق الخاص بك</string>
+    <string name="feature_account_action_loan_summary">ملخص القرض</string>
+    <string name="feature_account_action_loan_summary_tip">عرض تفاصيل القرض الخاصة بك بشكل موجز</string>
+    <string name="feature_account_action_repayment_schedule">جدول السداد</string>
+    <string name="feature_account_action_repayment_schedule_tip">عرض مخطط جدول السداد</string>
+    <string name="feature_account_action_transactions">المعاملات</string>
+    <string name="feature_account_action_transactions_tip">المعاملات الأخيرة لهذا الحساب</string>
+    <string name="feature_account_action_charges">الرسوم</string>
+    <string name="feature_account_action_charges_tip">الرسوم أو الرسوم على هذا الحساب</string>
+    <string name="feature_account_action_qr">رمز QR</string>
+    <string name="feature_account_action_qr_tip">إنشاء رمز QR</string>
+
+    <string name="feature_loan_account_number_label">رقم الحساب</string>
+    <string name="feature_loan_outstanding_balance_label">الرصيد المستحق</string>
+    <string name="feature_loan_product_type_label">نوع المنتج</string>
+    <string name="feature_loan_currency_label">العملة</string>
+    <string name="feature_loan_next_installment_label">القسط التالي</string>
+    <string name="feature_loan_installment_amount_label">مبلغ القسط</string>
+    <string name="feature_loan_due_date_label">تاريخ الاستحقاق</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">تفاصيل الحساب</string>
+    <string name="feature_loan_payoff_details_title">تفاصيل السداد</string>
+    <string name="feature_loan_charges_title">الرسوم</string>
+    <string name="feature_loan_waivers_title">الإعفاءات</string>
+    <string name="feature_loan_paid_off_details_title">تفاصيل السداد</string>
+    <string name="feature_loan_outstanding_details_title">تفاصيل المستحق</string>
+    <string name="feature_loan_installment_details_title">تفاصيل القسط</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">نوع القرض</string>
+    <string name="feature_loan_scheme_label">مخطط القرض</string>
+    <string name="feature_loan_account_status_label">حالة الحساب</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">السداد المتوقع</string>
+    <string name="feature_loan_interest_payoff_label">سداد الفائدة</string>
+    <string name="feature_loan_principal_label">رأس المال</string>
+    <string name="feature_loan_interest_rate_label">المعدل</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">الرسوم</string>
+    <string name="feature_loan_penalties_label">الغرامات</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">الفائدة المعفاة</string>
+    <string name="feature_loan_penalty_waived_label">الغرامات المعفاة</string>
+    <string name="feature_loan_fees_waived_label">الرسوم المعفاة</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">الفائدة المدفوعة</string>
+    <string name="feature_loan_principal_paid_off_label">رأس المال المدفوع</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">الفائدة المستحقة</string>
+    <string name="feature_loan_principal_outstanding_label">رأس المال المستحق</string>
+    <string name="feature_loan_total_outstanding_label">إجمالي المستحق</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">الدفع المنتظم</string>
+    <string name="feature_loan_next_payment_label">الدفع التالي</string>
+    <string name="feature_loan_months_left_label">الأشهر المتبقية</string>
+    <string name="feature_loan_auto_debit_label">الخصم التلقائي</string>
+    <string name="feature_loan_linked_account_label">الحساب المرتبط</string>
+
+    <string name="repayment_schedule">جدول السداد</string>
+    <string name="feature_loan_disbursement_date_label">تاريخ التوزيع</string>
+    <string name="feature_loan_installments_paid_label">الأقساط المدفوعة</string>
+    <string name="feature_loan_installments_left_label">الأقساط المتبقية</string>
+    <string name="feature_loan_total_installments_label">إجمالي الأقساط</string>
+
+    <string name="feature_loan_paid">مدفوع</string>
+    <string name="feature_loan_due">مستحق</string>
+    <string name="feature_loan_pay">دفع</string>
+</resources>

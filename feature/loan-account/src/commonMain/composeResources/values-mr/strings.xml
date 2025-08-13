@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">सक्रिय</string>
+    <string name="feature_loan_account_filter_approval_pending">मंजुरी उर्वरित</string>
+    <string name="feature_loan_account_filter_closed">बंद</string>
+    <string name="feature_loan_account_filter_disburse">वितरणाची प्रतीक्षा</string>
+    <string name="feature_loan_account_filter_overpaid">अधिक भरलेले</string>
+    <string name="feature_loan_account_filter_in_arrears">बाकी रक्कम</string>
+    <string name="feature_loan_account_filter_withdrawn">रद्द केलेले</string>
+    <string name="feature_loan_account_filter_matured">परिपक्व</string>
+    <string name="feature_loan_account_filter_rejected">नाकारलेले</string>
+
+    <string name="feature_loan_account_filter_personal">वैयक्तिक</string>
+    <string name="feature_loan_account_filter_bronze">ब्रॉन्झ</string>
+
+    <string name="feature_account_empty_loan_accounts">तुमच्याशी संबंधित कोणतेही कर्ज खाते नाही</string>
+    <string name="feature_account_empty_filtered_loan_accounts">तुम्ही निवडलेल्या फिल्टरशी संबंधित कोणतेही कर्ज खाते नाही</string>
+
+    <string name="feature_loan_account_dashboard">एकूण कर्ज</string>
+    <string name="feature_loan_account">कर्ज खाते</string>
+    <string name="feature_loan_account_items">%1$d घटक</string>
+
+    <string name="feature_account_details_top_bar_title">कर्ज खाते तपशील</string>
+    <string name="feature_account_details_action">कृती</string>
+    <string name="feature_account_action_make_payment">भरणा करा</string>
+    <string name="feature_account_action_make_payment_tip">तुमची बाकी रक्कम भरा</string>
+    <string name="feature_account_action_loan_summary">कर्ज सारांश</string>
+    <string name="feature_account_action_loan_summary_tip">तुमचे कर्ज तपशील संक्षिप्त रूप</string>
+    <string name="feature_account_action_repayment_schedule">परत भरण्याचे वेळापत्रक</string>
+    <string name="feature_account_action_repayment_schedule_tip">परत भरण्याचे वेळापत्रक चार्ट पहा</string>
+    <string name="feature_account_action_transactions">व्यवहार</string>
+    <string name="feature_account_action_transactions_tip">या खात्याचे अलीकडील व्यवहार</string>
+    <string name="feature_account_action_charges">शुल्क</string>
+    <string name="feature_account_action_charges_tip">या खात्यावरील फी किंवा शुल्क</string>
+    <string name="feature_account_action_qr">QR कोड</string>
+    <string name="feature_account_action_qr_tip">QR कोड तयार करा</string>
+
+    <string name="feature_loan_account_number_label">खाते क्रमांक</string>
+    <string name="feature_loan_outstanding_balance_label">बाकी रक्कम</string>
+    <string name="feature_loan_product_type_label">उत्पादन प्रकार</string>
+    <string name="feature_loan_currency_label">चलन</string>
+    <string name="feature_loan_next_installment_label">पुढील हप्ता</string>
+    <string name="feature_loan_installment_amount_label">हप्ता रक्कम</string>
+    <string name="feature_loan_due_date_label">देय तारीख</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">खाते तपशील</string>
+    <string name="feature_loan_payoff_details_title">भरणा तपशील</string>
+    <string name="feature_loan_charges_title">शुल्क</string>
+    <string name="feature_loan_waivers_title">माफी</string>
+    <string name="feature_loan_paid_off_details_title">भरलेले तपशील</string>
+    <string name="feature_loan_outstanding_details_title">बाकी रक्कम तपशील</string>
+    <string name="feature_loan_installment_details_title">हप्ता तपशील</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">कर्ज प्रकार</string>
+    <string name="feature_loan_scheme_label">कर्ज योजना</string>
+    <string name="feature_loan_account_status_label">खाते स्थिती</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">अपेक्षित भरणा</string>
+    <string name="feature_loan_interest_payoff_label">व्याज भरणा</string>
+    <string name="feature_loan_principal_label">कर्ज मूळ</string>
+    <string name="feature_loan_interest_rate_label">व्याज दर</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">फी</string>
+    <string name="feature_loan_penalties_label">दंड</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">व्याज माफ केला</string>
+    <string name="feature_loan_penalty_waived_label">दंड माफ केला</string>
+    <string name="feature_loan_fees_waived_label">फी माफ केली</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">भरलेले व्याज</string>
+    <string name="feature_loan_principal_paid_off_label">भरलेले मूळ</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">बाकी व्याज</string>
+    <string name="feature_loan_principal_outstanding_label">बाकी मूळ</string>
+    <string name="feature_loan_total_outstanding_label">एकूण बाकी रक्कम</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">नियमित भरणा</string>
+    <string name="feature_loan_next_payment_label">पुढील भरणा</string>
+    <string name="feature_loan_months_left_label">उर्वरित महिने</string>
+    <string name="feature_loan_auto_debit_label">स्वयं डेबिट</string>
+    <string name="feature_loan_linked_account_label">लिंक केलेले खाते</string>
+
+    <string name="repayment_schedule">परत भरण्याचे वेळापत्रक</string>
+    <string name="feature_loan_disbursement_date_label">वितरण तारीख</string>
+    <string name="feature_loan_installments_paid_label">भरलेले हप्ते</string>
+    <string name="feature_loan_installments_left_label">उर्वरित हप्ते</string>
+    <string name="feature_loan_total_installments_label">एकूण हप्ते</string>
+
+    <string name="feature_loan_paid">भरलेले</string>
+    <string name="feature_loan_due">देय</string>
+    <string name="feature_loan_pay">भरणा करा</string>
+</resources>
