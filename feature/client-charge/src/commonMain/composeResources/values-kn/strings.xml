@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">ದಯವಿಟ್ಟು ನೀವು ಅಂತರ್ಜಾಲದೊಂದಿಗೆ ಸಂಪರ್ಕವಾಗಿದೆಯೆಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ</string>
+    <string name="client_charges">ಕ್ಲೈಂಟ್ ಶುಲ್ಕಗಳು</string>
+    <string name="loan_charges">ಸಾಲದ ಶುಲ್ಕಗಳು</string>
+    <string name="savings_charges">ಉಳಿತಾಯ ಶುಲ್ಕಗಳು</string>
+    <string name="charges">ಶುಲ್ಕಗಳು</string>
+    <string name="error_no_charge">ಯಾವುದೇ ಶುಲ್ಕಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="amount_due">ಬಾಕಿ:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">ಬಾಕಿ ಇರುವ:</string>
+    <string name="amount_waived">ತೊಡಗಿಸಲಾದ:</string>
+    <string name="amount_paid">ಪಾವತಿಸಲಾದ:</string>
+
+    <string name="charge_details">ಶುಲ್ಕ ವಿವರಗಳು</string>
+    <string name="paid_success_message">ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಂಪೂರ್ಣವಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ</string>
+    <string name="status_icon_description">ಸ್ಥಿತಿ ಐಕಾನ್</string>
+    <string name="ref_no">ಉಲ್ಲೇಖನ ಸಂಖ್ಯೆ %1$s</string>
+    <string name="paid_on">ಪಾವತಿಸಲಾದ ದಿನಾಂಕ: %1$s</string>
+    <string name="partial_amount_paid_on">ಆಂಶಿಕ ಮೊತ್ತ ಪಾವತಿಸಲಾದ ದಿನಾಂಕ: %1$s</string>
+    <string name="pay_outstanding">ಬಾಕಿ ಇರುವ ಮೊತ್ತ ಪಾವತಿಸಿ</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">ಶುಲ್ಕ ಶೀರ್ಷಿಕೆ</string>
+    <string name="date">ದಿನಾಂಕ</string>
+    <string name="due">ಬಾಕಿ</string>
+    <string name="paid">ಪಾವತಿಸಲಾದ</string>
+    <string name="waived">ತೊಡಗಿಸಲಾದ</string>
+    <string name="outstanding">ಬಾಕಿ ಇರುವ</string>
+
+</resources>

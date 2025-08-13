@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">നിങ്ങൾ ഇന്റർനെറ്റ് കണക്ടാണെന്ന് ഉറപ്പുവരുത്തുക</string>
+    <string name="client_charges">ക്ലയന്റ് ചാർജുകൾ</string>
+    <string name="loan_charges">ലോൺ ചാർജുകൾ</string>
+    <string name="savings_charges">സേവിംഗ്സ് ചാർജുകൾ</string>
+    <string name="charges">ചാർജുകൾ</string>
+    <string name="error_no_charge">ചാർജുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="amount_due">ബാക്കി:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">ബാക്കിയുള്ള:</string>
+    <string name="amount_waived">വായിവ്ഡ്:</string>
+    <string name="amount_paid">പെയ്ഡ്:</string>
+
+    <string name="charge_details">ചാർജ് വിശദാംശങ്ങൾ</string>
+    <string name="paid_success_message">നിങ്ങൾ ഈ ചാർജ് പൂർണ്ണമായി വിജയകരമായി അടച്ചുകഴിഞ്ഞു</string>
+    <string name="status_icon_description">സ്റ്റാറ്റസ് ഐക്കൺ</string>
+    <string name="ref_no">റഫ്. നോ. %1$s</string>
+    <string name="paid_on">പെയ്ഡ് ഓൺ: %1$s</string>
+    <string name="partial_amount_paid_on">പാർഷ്യൽ അമൗണ്ട് പെയ്ഡ് ഓൺ : %1$s</string>
+    <string name="pay_outstanding">പെയ് ഔട്ട്സ്റ്റാൻഡിംഗ്</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">ഫീ ടൈറ്റിൽ</string>
+    <string name="date">തീയതി</string>
+    <string name="due">ബാക്കി</string>
+    <string name="paid">പെയ്ഡ്</string>
+    <string name="waived">വായിവ്ഡ്</string>
+    <string name="outstanding">ബാക്കിയുള്ള</string>
+
+</resources>

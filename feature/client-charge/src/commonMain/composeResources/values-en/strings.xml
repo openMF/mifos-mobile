@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Please make sure you are connected to internet</string>
+    <string name="client_charges">Client Charges</string>
+    <string name="loan_charges">Loan Charges</string>
+    <string name="savings_charges">Saving Charges</string>
+    <string name="charges">Charges</string>
+    <string name="error_no_charge">No charges found</string>
+    <string name="amount_due">Due:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Outstanding:</string>
+    <string name="amount_waived">Waved:</string>
+    <string name="amount_paid">Paid:</string>
+
+    <string name="charge_details">Charge Details</string>
+    <string name="paid_success_message">You have successfully paid this charge completely</string>
+    <string name="status_icon_description">Status icon</string>
+    <string name="ref_no">Ref. No. %1$s</string>
+    <string name="paid_on">Paid On: %1$s</string>
+    <string name="partial_amount_paid_on">Partial Amount Paid On : %1$s</string>
+    <string name="pay_outstanding">Pay Outstanding</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Fee Title</string>
+    <string name="date">Date</string>
+    <string name="due">Due</string>
+    <string name="paid">Paid</string>
+    <string name="waived">Waived</string>
+    <string name="outstanding">Outstanding</string>
+
+</resources>

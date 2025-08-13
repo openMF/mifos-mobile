@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">कृपया सुनिश्चित करें कि आप इंटरनेट से जुड़े हुए हैं</string>
+    <string name="client_charges">ग्राहक शुल्क</string>
+    <string name="loan_charges">ऋण शुल्क</string>
+    <string name="savings_charges">बचत शुल्क</string>
+    <string name="charges">शुल्क</string>
+    <string name="error_no_charge">कोई शुल्क नहीं मिला</string>
+    <string name="amount_due">बकाया:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">बकाया:</string>
+    <string name="amount_waived">छूट दिया गया:</string>
+    <string name="amount_paid">भुगतान किया गया:</string>
+
+    <string name="charge_details">शुल्क विवरण</string>
+    <string name="paid_success_message">आपने इस शुल्क का सफलतापूर्वक पूरा भुगतान कर दिया है</string>
+    <string name="status_icon_description">स्थिति चिह्न</string>
+    <string name="ref_no">संदर्भ संख्या %1$s</string>
+    <string name="paid_on">भुगतान किया गया: %1$s</string>
+    <string name="partial_amount_paid_on">आंशिक राशि का भुगतान किया गया: %1$s</string>
+    <string name="pay_outstanding">बकाया राशि का भुगतान करें</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">शुल्क शीर्षक</string>
+    <string name="date">तिथि</string>
+    <string name="due">बकाया</string>
+    <string name="paid">भुगतान किया गया</string>
+    <string name="waived">छूट दिया गया</string>
+    <string name="outstanding">बकाया</string>
+
+</resources>
