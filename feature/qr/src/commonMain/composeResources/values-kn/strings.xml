@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">ಲಾಭಾರ್ಥಿಯನ್ನು ಸೇರಿಸಿ</string>
+    <string name="qr_code">QR ಕೋಡ್</string>
+    <string name="choose_option">ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ</string>
+    <string name="please_grant_us_storage_permissions">ದಯವಿಟ್ಟು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಮಗೆ ಸಂಗ್ರಹಣಾ ಅನುಮತಿಯನ್ನು ನೀಡಿ.</string>
+    <string name="permission_denied_storage">ಸಂಗ್ರಹಣೆಗಾಗಿ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
+    <string name="grant_permission">ಅನುಮತಿಯನ್ನು ನೀಡಿ</string>
+    <string name="deny">ನಿರಾಕರಿಸಿ</string>
+    <string name="no_image_selected_or_something_went_wrong">ಯಾವುದೇ ಚಿತ್ರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ ಅಥವಾ ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
+    <string name="selected_qr_image">ಆಯ್ಕೆ ಮಾಡಿದ QR ಚಿತ್ರ</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">ನೀವು ಸಂಗ್ರಹಣೆಗೆ ಬರೆಯುವ ಅನುಮತಿಯನ್ನು ನಿರಾಕರಿಸಿರುವಿರಿ. ಈ ಅನುಮತಿಯಿಲ್ಲದೆ, QR ಕೋಡ್ ಬಳಸಿಕೊಂಡು ಲಾಭಾರ್ಥಿಗಳನ್ನು ಸೇರಿಸಲು ನೀವು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ. ನೀವು ಈ ಅನುಮತಿಯನ್ನು ನಿರಾಕರಿಸಲು ಖಚಿತವೆ?</string>
+    <string name="proceed">ಮುಂದುವರಿಸಿ</string>
+    <string name="import_qr">QR ಕೋಡ್ ಆಮದು ಮಾಡಿ</string>
+    <string name="import_another_qr">ಮತ್ತೊಂದು QR ಕೋಡ್ ಆಮದು ಮಾಡಿ</string>
+    <string name="error_reading_qr">QR ಕೋಡ್ ಓದುವಲ್ಲಿ ದೋಷ, ನೀವು ಸರಿಯಾದ ಪ್ರದೇಶವನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರೆಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ</string>
+    <string name="invalid_qr">ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಕ್ರಮವನ್ನು ನಡೆಸಲು ಸಾಧ್ಯವಿಲ್ಲ, ದಯವಿಟ್ಟು ಇತರ ಬಳಕೆದಾರರ ಉಳಿತಾಯ ಮತ್ತು ಸಾಲದ ಖಾತೆಗಳ QRCode ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="scan_your_qr">ನಿಮ್ಮ QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="qr_scan_instruction">ಈ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡುವ ಮೂಲಕ ನಿಮ್ಮ ಆಪ್‌ನಲ್ಲಿ ಖಾತೆ ವಿವರಗಳನ್ನು ಆಮದು ಮಾಡಿ.</string>
+    <string name="qr_alignment_instruction">ಸ್ಕ್ಯಾನಿಂಗ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಗುರುತಿಸಲು ದಯವಿಟ್ಟು QR ಕೋಡ್ ಅನ್ನು ಫ್ರೇಮ್‌ನೊಳಗೆ ಹೊಂದಿಸಿ.</string>
+    <string name="generated_on">ರಚಿಸಲಾಗಿದೆ:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಕ್ರಮವನ್ನು ನಡೆಸಲು ಸಾಧ್ಯವಿಲ್ಲ, ದಯವಿಟ್ಟು ಇತರ ಬಳಕೆದಾರರ ಉಳಿತಾಯ ಮತ್ತು ಸಾಲದ ಖಾತೆಗಳ QRCode ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="feature_qr_error">QR ಕೋಡ್ ಓದುವಲ್ಲಿ ದೋಷ</string>
+    <string name="feature_qr_instruction">ಸ್ಕ್ಯಾನಿಂಗ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಗುರುತಿಸಲು ದಯವಿಟ್ಟು QR ಕೋಡ್ ಅನ್ನು ಫ್ರೇಮ್‌ನೊಳಗೆ ಹೊಂದಿಸಿ.</string>
+    <string name="feature_qr_warning_title">ಸಾಧ್ಯವಿರುವ ಎಚ್ಚರಿಕೆ</string>
+    <string name="feature_qr_warning_message">QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿದರೆ, ಇದು ನಿಮ್ಮ ವಯಕ್ತಿಕ ಮಾಹಿತಿಯನ್ನು, ಉದಾಹರಣೆಗೆ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಸಂಖ್ಯೆ ಅಥವಾ ಬಳಕೆದಾರ ಹೆಸರು ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಕಳ್ಳತನ ಮಾಡುವ ಫಿಶಿಂಗ್ ಜಾಲತಾಣಕ್ಕೆ ಕರೆದೊಯ್ಯಬಹುದು. ಇದು ನಿಮ್ಮ ಫೋನ್‌ಗೆ ಮಾಲ್ವೇರ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು ಮತ್ತು ಹ್ಯಾಕರ್‌ಗಳಿಗೆ ನಿಮ್ಮ ಸಾಧನಕ್ಕೆ ಪ್ರವೇಶ ನೀಡಬಹುದು.</string>
+    <string name="feature_qr_upload">QR ಕೋಡ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">إضافة مستفيد</string>
+    <string name="qr_code">رمز الاستجابة السريعة</string>
+    <string name="choose_option">اختر خيارًا</string>
+    <string name="please_grant_us_storage_permissions">يرجى منحنا إذن التخزين في الإعدادات.</string>
+    <string name="permission_denied_storage">تم رفض الإذن للتخزين</string>
+    <string name="grant_permission">منح الإذن</string>
+    <string name="deny">رفض</string>
+    <string name="no_image_selected_or_something_went_wrong">لم يتم تحديد صورة أو حدث خطأ ما</string>
+    <string name="selected_qr_image">صورة QR المحددة</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">لقد رفضت إذن الكتابة إلى التخزين، بدون هذا الإذن لن تتمكن من إضافة المستفيدين باستخدام رمز QR. هل أنت متأكد أنك تريد رفض هذا الإذن؟</string>
+    <string name="proceed"> proceed</string>
+    <string name="import_qr">استيراد QR</string>
+    <string name="import_another_qr">استيراد QR آخر</string>
+    <string name="error_reading_qr">خطأ أثناء قراءة QR، تأكد من تحديد المنطقة المناسبة</string>
+    <string name="invalid_qr">لا يمكنك اتخاذ إجراء في حسابك، يرجى مسح رمز QR لحسابات المستخدمين الآخرين في التوفير والقروض</string>
+    <string name="scan_your_qr">امسح رمز QR الخاص بك</string>
+    <string name="qr_scan_instruction">قم باستيراد تفاصيل الحساب في تطبيقك عن طريق مسح رمز QR هذا.</string>
+    <string name="qr_alignment_instruction">يرجى محاذاة رمز QR داخل الإطار لتسهيل عملية المسح.</string>
+    <string name="generated_on">تم إنشاؤه في:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">لا يمكنك اتخاذ إجراء في حسابك، يرجى مسح رمز QR لحسابات المستخدمين الآخرين في التوفير والقروض</string>
+    <string name="feature_qr_error">خطأ في قراءة رمز QR</string>
+    <string name="feature_qr_instruction">يرجى محاذاة رمز QR داخل الإطار لتسهيل عملية المسح.</string>
+    <string name="feature_qr_warning_title">تحذير محتمل</string>
+    <string name="feature_qr_warning_message">إذا قمت بمسح رمز QR، فقد يتم توجيهك إلى موقع ويب احتيالي يسرق معلوماتك الشخصية، مثل أرقام بطاقات الائتمان أو أسماء المستخدمين وكلمات المرور. كما يمكن أن يقوم بتنزيل برنامج ضار على هاتفك ويمنح القراصنة حق الوصول إلى جهازك.</string>
+    <string name="feature_qr_upload">تحميل رمز QR</string>
+</resources>

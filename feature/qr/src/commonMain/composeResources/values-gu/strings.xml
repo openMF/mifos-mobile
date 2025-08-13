@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">લાભાર્થી ઉમેરો</string>
+    <string name="qr_code">ક્યૂઆર કોડ</string>
+    <string name="choose_option">વિકલ્પ પસંદ કરો</string>
+    <string name="please_grant_us_storage_permissions">કૃપા કરીને સેટિંગ્સમાં અમને સ્ટોરેજ પરવાનગી આપો.</string>
+    <string name="permission_denied_storage">સ્ટોરેજની પરવાનગી નામંજૂર</string>
+    <string name="grant_permission">પરવાનગી આપો</string>
+    <string name="deny">નામંજૂર કરો</string>
+    <string name="no_image_selected_or_something_went_wrong">કોઈ છબી પસંદ કરવામાં આવી નથી અથવા કંઈક ખોટું થયું છે</string>
+    <string name="selected_qr_image">પસંદ કરેલ QR છબી</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">તમે સ્ટોરેજમાં લખવાની પરવાનગીનો ઇનકાર કર્યો છે, આ પરવાનગી વિના તમે QR કોડનો ઉપયોગ કરીને લાભાર્થીઓ ઉમેરી શકશો નહીં. શું તમે ખાતરી કરો છો કે તમે આ પરવાનગીનો ઇનકાર કરવા માંગો છો?</string>
+    <string name="proceed">આગળ વધો</string>
+    <string name="import_qr">QR આયાત કરો</string>
+    <string name="import_another_qr">બીજો QR આયાત કરો</string>
+    <string name="error_reading_qr">QR વાંચવામાં ક્ષતિ, ખાતરી કરો કે તમે યોગ્ય પ્રદેશ પસંદ કરો છો</string>
+    <string name="invalid_qr">તમે તમારા ખાતામાં ક્રિયા કરી શકતા નથી, કૃપા કરીને અન્ય વપરાશકર્તાના બચત અને લોન ખાતાનો QRCode સ્કેન કરો</string>
+    <string name="scan_your_qr">તમારા QR સ્કેન કરો</string>
+    <string name="qr_scan_instruction">આ QR કોડને સ્કેન કરીને તમારા એપ્લિકેશનમાં ખાતાની વિગતો આયાત કરો.</string>
+    <string name="qr_alignment_instruction">કૃપા કરીને, સ્કેનિંગને સરળતાથી શોધી શકાય તે માટે ફ્રેમ અંદર ક્યૂઆર કોડને સંરેખિત કરો.</string>
+    <string name="generated_on">પર પેદા કર્યો:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">તમે તમારા ખાતામાં ક્રિયા કરી શકતા નથી, કૃપા કરીને અન્ય વપરાશકર્તાના બચત અને લોન ખાતાનો QRCode સ્કેન કરો</string>
+    <string name="feature_qr_error">QR કોડ વાંચવામાં ક્ષતિ</string>
+    <string name="feature_qr_instruction">કૃપા કરીને, સ્કેનિંગને સરળતાથી શોધી શકાય તે માટે ફ્રેમ અંદર ક્યૂઆર કોડને સંરેખિત કરો.</string>
+    <string name="feature_qr_warning_title">સંભાવ્ય ચેતવણી</string>
+    <string name="feature_qr_warning_message">જો તમે QR કોડ સ્કેન કરો છો, તો તે તમને એવી ફિશિંગ વેબસાઇટ પર લઈ જઈ શકે છે જે તમારી વ્યક્તિગત માહિતી ચોરી જાય છે, જેમ કે ક્રેડિટ કાર્ડ નંબર અથવા વપરાશકર્તા નામ અને પાસવર્ડ. તે તમારા ફોન પર મેલવેર પણ ડાઉનલોડ કરી શકે છે અને હેકર્સને તમારા ડિવાઇસની ઍક્સેસ આપી શકે છે.</string>
+    <string name="feature_qr_upload">QR કોડ અપલોડ કરો</string>
+</resources>

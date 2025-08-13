@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">ලාභය ලබාගන්නා පුද්ගලයා එකතු කරන්න</string>
+    <string name="qr_code">QR කේතය</string>
+    <string name="choose_option">විකල්පය තෝරන්න</string>
+    <string name="please_grant_us_storage_permissions">කරුණාකර සැකසීම්හි අපට ගබඩා අවසර දෙන්න.</string>
+    <string name="permission_denied_storage">ගබඩා කිරීමට අවසර නැත</string>
+    <string name="grant_permission">අවසර දෙන්න</string>
+    <string name="deny">ප්‍රතික්ෂේප කරන්න</string>
+    <string name="no_image_selected_or_something_went_wrong">රූපයක් තෝරාගෙන නැත හෝ යමක් වැරදී ඇත</string>
+    <string name="selected_qr_image">තෝරාගත් QR රූපය</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">ඔබ ගබඩා කිරීමට අවසර ප්‍රතික්ෂේප කර ඇත. මෙම අවසරය නැතිවේ, QR කේතය භාවිතා කරමින් ලාභය ලබාගන්නා පුද්ගලයා එකතු කිරීමට ඔබට නොහැකි වේ. ඔබ මෙම අවසරය ප්‍රතික්ෂේප කිරීමට නිශ්චිත ද?</string>
+    <string name="proceed">ඉදිරියට යන්න</string>
+    <string name="import_qr">QR කේතය ආයාත කරන්න</string>
+    <string name="import_another_qr">වෙනත් QR කේතයක් ආයාත කරන්න</string>
+    <string name="error_reading_qr">QR කේතය කියවීමේ දෝෂයකි, ඔබ නිවැරදි ප්‍රදේශය තෝරාගෙන ඇත්දැයි පරීක්ෂා කරන්න</string>
+    <string name="invalid_qr">ඔබගේ ස්වයං ගිණුම මත ක්‍රියාවලියක් මෙහි දැක්විය නොහැක, කරුණාකර වෙනත් පරිශීලකයින්ගේ ඉතිරි කිරීම් සහ ණය ගිණුම් QRCode පරිලෝකනය කරන්න</string>
+    <string name="scan_your_qr">ඔබගේ QR පරිලෝකනය කරන්න</string>
+    <string name="qr_scan_instruction">ඔබගේ ඇප් හී ගිණුම් විස්තර ආයාත කිරීමට මෙම QR කේතය පරිලෝකනය කරන්න.</string>
+    <string name="qr_alignment_instruction">කරුණාකර පරිලෝකනය සඳහා පහසුවෙන් හඳුනාගැනීමට QR කේතය රාමුව තුළ සම්බන්ධ කරන්න.</string>
+    <string name="generated_on">ජනනය වූ දිනය:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">ඔබගේ ස්වයං ගිණුම මත ක්‍රියාවලියක් මෙහි දැක්විය නොහැක, කරුණාකර වෙනත් පරිශීලකයින්ගේ ඉතිරි කිරීම් සහ ණය ගිණුම් QRCode පරිලෝකනය කරන්න</string>
+    <string name="feature_qr_error">QR කේතය කියවීමේ දෝෂයකි</string>
+    <string name="feature_qr_instruction">කරුණාකර පරිලෝකනය සඳහා පහසුවෙන් හඳුනාගැනීමට QR කේතය රාමුව තුළ සම්බන්ධ කරන්න.</string>
+    <string name="feature_qr_warning_title">සීරුමාරු අනතුරු ඇඟවීම</string>
+    <string name="feature_qr_warning_message">ඔබ QR කේතයක් පරිලෝකනය කරන්නේ නම්, එය ඔබව ප්‍රවේශම් වෙබ් අඩවියකට ගෙනයා යා හැකි අතර එහි ඔබගේ පුද්ගලික තොරතුරු විශේෂයෙන්ම ණය පත්‍ර අංකය හෝ පරිශීලක නාමය සහ මුරපදය සොරකම් කර ගත හැකිය. එය ඔබගේ දුරකථනයේ මෘදුකාංග විෂය බීජ බාගත කර ගෙන ඔබගේ උපාංගයට ප්‍රවේශය ලබාදිය හැකිය.</string>
+    <string name="feature_qr_upload">QR කේතය උඩුගත කරන්න</string>
+</resources>

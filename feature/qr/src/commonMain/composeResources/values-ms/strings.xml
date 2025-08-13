@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Tambah Penerima Faedah</string>
+    <string name="qr_code">Kod QR</string>
+    <string name="choose_option">Pilih pilihan</string>
+    <string name="please_grant_us_storage_permissions">Sila berikan kami kebenaran storan dalam tetapan.</string>
+    <string name="permission_denied_storage">Kebenaran storan ditolak</string>
+    <string name="grant_permission">Beri kebenaran</string>
+    <string name="deny">Tolak</string>
+    <string name="no_image_selected_or_something_went_wrong">Tiada imej dipilih atau ada sesuatu yang tidak kena</string>
+    <string name="selected_qr_image">Imej QR Dipilih</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Anda telah menolak kebenaran untuk menulis ke storan. Tanpa kebenaran ini, anda tidak akan dapat menambah penerima faedah menggunakan kod QR. Adakah anda pasti ingin menolak kebenaran ini?</string>
+    <string name="proceed">Teruskan</string>
+    <string name="import_qr">Import Kod QR</string>
+    <string name="import_another_qr">Import Kod QR lain</string>
+    <string name="error_reading_qr">Ralat membaca kod QR, sila pastikan anda memilih kawasan yang betul</string>
+    <string name="invalid_qr">Anda tidak boleh melakukan sebarang tindakan pada akaun anda sendiri, sila imbas kod QR akaun simpanan dan pinjaman pengguna lain</string>
+    <string name="scan_your_qr">Imbas kod QR anda</string>
+    <string name="qr_scan_instruction">Imbas kod QR ini untuk mengimport butiran akaun ke dalam apl anda.</string>
+    <string name="qr_alignment_instruction">Sila sejajarkan kod QR dalam bingkai untuk membolehkan pengimbasan dikenali dengan mudah.</string>
+    <string name="generated_on">Dijana pada:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Anda tidak boleh melakukan sebarang tindakan pada akaun anda sendiri, sila imbas kod QR akaun simpanan dan pinjaman pengguna lain</string>
+    <string name="feature_qr_error">Ralat membaca kod QR</string>
+    <string name="feature_qr_instruction">Sila sejajarkan kod QR dalam bingkai untuk membolehkan pengimbasan dikenali dengan mudah.</string>
+    <string name="feature_qr_warning_title">Amaran Berpotensi</string>
+    <string name="feature_qr_warning_message">Jika anda mengimbas kod QR, ia boleh membawa anda ke laman web pemancingan yang boleh mencuri maklumat peribadi anda seperti nombor kad kredit atau nama pengguna dan kata laluan. Ia juga boleh memuat turun perisian hasad ke telefon anda dan memberikan penggodam akses ke peranti anda.</string>
+    <string name="feature_qr_upload">Muat naik Kod QR</string>
+</resources>

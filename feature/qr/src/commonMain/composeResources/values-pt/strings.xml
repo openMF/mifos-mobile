@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Adicionar Beneficiário</string>
+    <string name="qr_code">Código QR</string>
+    <string name="choose_option">Escolher opção</string>
+    <string name="please_grant_us_storage_permissions">Por favor, conceda-nos permissões de armazenamento nas configurações.</string>
+    <string name="permission_denied_storage">Permissão de armazenamento negada</string>
+    <string name="grant_permission">Conceder permissão</string>
+    <string name="deny">Negar</string>
+    <string name="no_image_selected_or_something_went_wrong">Nenhuma imagem selecionada ou algo deu errado</string>
+    <string name="selected_qr_image">Imagem QR Selecionada</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Você negou a permissão para gravar no armazenamento. Sem essa permissão, você não poderá adicionar beneficiários usando código QR. Tem certeza de que deseja negar essa permissão?</string>
+    <string name="proceed">Prosseguir</string>
+    <string name="import_qr">Importar Código QR</string>
+    <string name="import_another_qr">Importar Outro Código QR</string>
+    <string name="error_reading_qr">Erro ao ler o código QR, por favor verifique se você selecionou a área correta</string>
+    <string name="invalid_qr">Você não pode realizar ações em sua própria conta, por favor escaneie o QRCode de contas de poupança e empréstimo de outros usuários</string>
+    <string name="scan_your_qr">Escaneie seu QR</string>
+    <string name="qr_scan_instruction">Escaneie este código QR para importar os detalhes da conta para o seu aplicativo.</string>
+    <string name="qr_alignment_instruction">Por favor, alinhe o código QR no quadro para permitir que a digitalização seja reconhecida facilmente.</string>
+    <string name="generated_on">Gerado em:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Você não pode realizar ações em sua própria conta, por favor escaneie o QRCode de contas de poupança e empréstimo de outros usuários</string>
+    <string name="feature_qr_error">Erro ao ler o código QR</string>
+    <string name="feature_qr_instruction">Por favor, alinhe o código QR no quadro para permitir que a digitalização seja reconhecida facilmente.</string>
+    <string name="feature_qr_warning_title">Aviso Potencial</string>
+    <string name="feature_qr_warning_message">Se você escanear um código QR, ele pode levá-lo a um site de phishing que pode roubar suas informações pessoais, como números de cartão de crédito ou nome de usuário e senha. Ele também pode baixar malware para o seu telefone e conceder aos hackers acesso ao seu dispositivo.</string>
+    <string name="feature_qr_upload">Carregar Código QR</string>
+</resources>
