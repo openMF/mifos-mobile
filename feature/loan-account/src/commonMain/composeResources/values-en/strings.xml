@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Active</string>
+    <string name="feature_loan_account_filter_approval_pending">Approval Pending</string>
+    <string name="feature_loan_account_filter_closed">Closed</string>
+    <string name="feature_loan_account_filter_disburse">Waiting for Disburse</string>
+    <string name="feature_loan_account_filter_overpaid">Overpaid</string>
+    <string name="feature_loan_account_filter_in_arrears">In Arrears</string>
+    <string name="feature_loan_account_filter_withdrawn">Withdrawn</string>
+    <string name="feature_loan_account_filter_matured">Matured</string>
+    <string name="feature_loan_account_filter_rejected">Rejected</string>
+
+    <string name="feature_loan_account_filter_personal">Personal</string>
+    <string name="feature_loan_account_filter_bronze">Bronze</string>
+
+    <string name="feature_account_empty_loan_accounts">There is no LoanAccount associated with you</string>
+    <string name="feature_account_empty_filtered_loan_accounts">There is no LoanAccount associated with Filters you Selected</string>
+
+    <string name="feature_loan_account_dashboard">Total Borrowings</string>
+    <string name="feature_loan_account">Loan Account</string>
+    <string name="feature_loan_account_items">%1$d Items</string>
+
+    <string name="feature_account_details_top_bar_title">Loan Account Details</string>
+    <string name="feature_account_details_action">Action</string>
+    <string name="feature_account_action_make_payment">Make Payment</string>
+    <string name="feature_account_action_make_payment_tip">Pay your due installment</string>
+    <string name="feature_account_action_loan_summary">Loan Summary</string>
+    <string name="feature_account_action_loan_summary_tip">View your loan details briefly</string>
+    <string name="feature_account_action_repayment_schedule">Repayment Schedule</string>
+    <string name="feature_account_action_repayment_schedule_tip">View chart of repayment schedule</string>
+    <string name="feature_account_action_transactions">Transactions</string>
+    <string name="feature_account_action_transactions_tip">Recent transactions of this account</string>
+    <string name="feature_account_action_charges">Charges</string>
+    <string name="feature_account_action_charges_tip">Fees or charges on this account</string>
+    <string name="feature_account_action_qr">QR Code</string>
+    <string name="feature_account_action_qr_tip">Generate QR code</string>
+
+    <string name="feature_loan_account_number_label">Account Number</string>
+    <string name="feature_loan_outstanding_balance_label">Outstanding Balance</string>
+    <string name="feature_loan_product_type_label">Product Type</string>
+    <string name="feature_loan_currency_label">Currency</string>
+    <string name="feature_loan_next_installment_label">Next Installment</string>
+    <string name="feature_loan_installment_amount_label">Installment Amount</string>
+    <string name="feature_loan_due_date_label">Due Date</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Account Details</string>
+    <string name="feature_loan_payoff_details_title">Pay-off Details</string>
+    <string name="feature_loan_charges_title">Charges</string>
+    <string name="feature_loan_waivers_title">Waivers</string>
+    <string name="feature_loan_paid_off_details_title">Paid-off Details</string>
+    <string name="feature_loan_outstanding_details_title">Outstanding Details</string>
+    <string name="feature_loan_installment_details_title">Installment Details</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Loan Type</string>
+    <string name="feature_loan_scheme_label">Loan Scheme</string>
+    <string name="feature_loan_account_status_label">Account Status</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Expected Payoff</string>
+    <string name="feature_loan_interest_payoff_label">Interest Payoff</string>
+    <string name="feature_loan_principal_label">Debt Principal</string>
+    <string name="feature_loan_interest_rate_label">Rate</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Fees</string>
+    <string name="feature_loan_penalties_label">Penalties</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Interest Waived</string>
+    <string name="feature_loan_penalty_waived_label">Penalties Waived</string>
+    <string name="feature_loan_fees_waived_label">Fees Waived</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Interest Paid-off</string>
+    <string name="feature_loan_principal_paid_off_label">Principal Paid-off</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Interest Outstanding</string>
+    <string name="feature_loan_principal_outstanding_label">Principal Outstanding</string>
+    <string name="feature_loan_total_outstanding_label">Total Outstanding</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Regular Payment</string>
+    <string name="feature_loan_next_payment_label">Next Payment</string>
+    <string name="feature_loan_months_left_label">Months Left</string>
+    <string name="feature_loan_auto_debit_label">Auto Debit</string>
+    <string name="feature_loan_linked_account_label">Linked Account</string>
+
+    <string name="repayment_schedule">Repayment Schedule</string>
+    <string name="feature_loan_disbursement_date_label">Disbursement Date</string>
+    <string name="feature_loan_installments_paid_label">Installments Paid</string>
+    <string name="feature_loan_installments_left_label">Installments Left</string>
+    <string name="feature_loan_total_installments_label">Total Installments</string>
+
+    <string name="feature_loan_paid">Paid</string>
+    <string name="feature_loan_due">Due</string>
+    <string name="feature_loan_pay">Pay</string>
+</resources>

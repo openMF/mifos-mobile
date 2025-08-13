@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Aktiv</string>
+    <string name="feature_loan_account_filter_approval_pending">Genehmigung ausstehend</string>
+    <string name="feature_loan_account_filter_closed">Geschlossen</string>
+    <string name="feature_loan_account_filter_disburse">Warten auf Auszahlung</string>
+    <string name="feature_loan_account_filter_overpaid">Überzahlt</string>
+    <string name="feature_loan_account_filter_in_arrears">In Verzug</string>
+    <string name="feature_loan_account_filter_withdrawn">Zurückgezogen</string>
+    <string name="feature_loan_account_filter_matured">Ausgereift</string>
+    <string name="feature_loan_account_filter_rejected">Abgelehnt</string>
+
+    <string name="feature_loan_account_filter_personal">Persönlich</string>
+    <string name="feature_loan_account_filter_bronze">Bronze</string>
+
+    <string name="feature_account_empty_loan_accounts">Es ist kein Kreditkonto mit Ihnen verknüpft</string>
+    <string name="feature_account_empty_filtered_loan_accounts">Es ist kein Kreditkonto mit den von Ihnen ausgewählten Filtern verknüpft</string>
+
+    <string name="feature_loan_account_dashboard">Gesamtkredite</string>
+    <string name="feature_loan_account">Kreditkonto</string>
+    <string name="feature_loan_account_items">%1$d Artikel</string>
+
+    <string name="feature_account_details_top_bar_title">Kreditkontodetails</string>
+    <string name="feature_account_details_action">Aktion</string>
+    <string name="feature_account_action_make_payment">Zahlung vornehmen</string>
+    <string name="feature_account_action_make_payment_tip">Zahlen Sie Ihre fällige Rate</string>
+    <string name="feature_account_action_loan_summary">Kreditübersicht</string>
+    <string name="feature_account_action_loan_summary_tip">Kreditdetails kurz anzeigen</string>
+    <string name="feature_account_action_repayment_schedule">Tilgungsplan</string>
+    <string name="feature_account_action_repayment_schedule_tip">Diagramm des Tilgungsplans anzeigen</string>
+    <string name="feature_account_action_transactions">Transaktionen</string>
+    <string name="feature_account_action_transactions_tip">Aktuelle Transaktionen dieses Kontos</string>
+    <string name="feature_account_action_charges">Gebühren</string>
+    <string name="feature_account_action_charges_tip">Gebühren oder Entgelte für dieses Konto</string>
+    <string name="feature_account_action_qr">QR-Code</string>
+    <string name="feature_account_action_qr_tip">QR-Code generieren</string>
+
+    <string name="feature_loan_account_number_label">Kontonummer</string>
+    <string name="feature_loan_outstanding_balance_label">Offener Saldo</string>
+    <string name="feature_loan_product_type_label">Produkttyp</string>
+    <string name="feature_loan_currency_label">Währung</string>
+    <string name="feature_loan_next_installment_label">Nächste Rate</string>
+    <string name="feature_loan_installment_amount_label">Ratenbetrag</string>
+    <string name="feature_loan_due_date_label">Fälligkeitsdatum</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Kontodetails</string>
+    <string name="feature_loan_payoff_details_title">Tilgungsdetails</string>
+    <string name="feature_loan_charges_title">Gebühren</string>
+    <string name="feature_loan_waivers_title">Befreiungen</string>
+    <string name="feature_loan_paid_off_details_title">Tilgungsdetails</string>
+    <string name="feature_loan_outstanding_details_title">Details zum offenen Betrag</string>
+    <string name="feature_loan_installment_details_title">Ratendetails</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Kreditart</string>
+    <string name="feature_loan_scheme_label">Kreditschema</string>
+    <string name="feature_loan_account_status_label">Kontostatus</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Erwartete Tilgung</string>
+    <string name="feature_loan_interest_payoff_label">Zins Tilgung</string>
+    <string name="feature_loan_principal_label">Hauptforderung</string>
+    <string name="feature_loan_interest_rate_label">Rate</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Gebühren</string>
+    <string name="feature_loan_penalties_label">Strafen</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Zinsen erlassen</string>
+    <string name="feature_loan_penalty_waived_label">Strafen erlassen</string>
+    <string name="feature_loan_fees_waived_label">Gebühren erlassen</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Zinsen getilgt</string>
+    <string name="feature_loan_principal_paid_off_label">Hauptforderung getilgt</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Zinsen ausstehend</string>
+    <string name="feature_loan_principal_outstanding_label">Hauptforderung ausstehend</string>
+    <string name="feature_loan_total_outstanding_label">Gesamtausstehend</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Regelmäßige Zahlung</string>
+    <string name="feature_loan_next_payment_label">Nächste Zahlung</string>
+    <string name="feature_loan_months_left_label">Verbleibende Monate</string>
+    <string name="feature_loan_auto_debit_label">Automatische Belastung</string>
+    <string name="feature_loan_linked_account_label">Verknüpftes Konto</string>
+
+    <string name="repayment_schedule">Tilgungsplan</string>
+    <string name="feature_loan_disbursement_date_label">Auszahlungsdatum</string>
+    <string name="feature_loan_installments_paid_label">Bezahlte Raten</string>
+    <string name="feature_loan_installments_left_label">Verbleibende Raten</string>
+    <string name="feature_loan_total_installments_label">Gesamtraten</string>
+
+    <string name="feature_loan_paid">Bezahlt</string>
+    <string name="feature_loan_due">Fällig</string>
+    <string name="feature_loan_pay">Bezahlen</string>
+</resources>

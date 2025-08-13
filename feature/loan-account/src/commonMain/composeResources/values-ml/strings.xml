@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">സജീവം</string>
+    <string name="feature_loan_account_filter_approval_pending">അംഗീകാരം മന്ത്രിച്ചിരിക്കുന്നു</string>
+    <string name="feature_loan_account_filter_closed">അവസാനിപ്പിച്ചു</string>
+    <string name="feature_loan_account_filter_disburse">വിതരണം നടക്കാൻ കാത്തിരിക്കുന്നു</string>
+    <string name="feature_loan_account_filter_overpaid">അധികം അടച്ചു</string>
+    <string name="feature_loan_account_filter_in_arrears">ബാക്കിയുള്ള</string>
+    <string name="feature_loan_account_filter_withdrawn">പിൻവലിച്ചു</string>
+    <string name="feature_loan_account_filter_matured">പഴകിയത്</string>
+    <string name="feature_loan_account_filter_rejected">നിരസിച്ചു</string>
+
+    <string name="feature_loan_account_filter_personal">വ്യക്തിഗതം</string>
+    <string name="feature_loan_account_filter_bronze">ബ്രോൺസ്</string>
+
+    <string name="feature_account_empty_loan_accounts">നിങ്ങളുമായി ബന്ധപ്പെട്ട ലോൺ അക്കൗണ്ടുകൾ ഒന്നും ഇല്ല</string>
+    <string name="feature_account_empty_filtered_loan_accounts">നിങ്ങൾ തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകളുമായി ബന്ധപ്പെട്ട ലോൺ അക്കൗണ്ടുകൾ ഒന്നും ഇല്ല</string>
+
+    <string name="feature_loan_account_dashboard">ആകെ ലോൺ</string>
+    <string name="feature_loan_account">ലോൺ അക്കൗണ്ട്</string>
+    <string name="feature_loan_account_items">%1$d ഇനങ്ങൾ</string>
+
+    <string name="feature_account_details_top_bar_title">ലോൺ അക്കൗണ്ട് വിശദാംശങ്ങൾ</string>
+    <string name="feature_account_details_action">പ്രവർത്തനം</string>
+    <string name="feature_account_action_make_payment">പേയ്മെന്റ് നടത്തുക</string>
+    <string name="feature_account_action_make_payment_tip">നിങ്ങളുടെ ബാക്കിയുള്ള തവണ പാവപ്പെടുത്തുക</string>
+    <string name="feature_account_action_loan_summary">ലോൺ ചുരുക്കം</string>
+    <string name="feature_account_action_loan_summary_tip">നിങ്ങളുടെ ലോൺ വിശദാംശങ്ങൾ ചുരുക്കത്തിൽ കാണുക</string>
+    <string name="feature_account_action_repayment_schedule">പാവപ്പെടുത്തൽ ഷെഡ്യൂൾ</string>
+    <string name="feature_account_action_repayment_schedule_tip">പാവപ്പെടുത്തൽ ഷെഡ്യൂളിന്റെ ചാർട്ട് കാണുക</string>
+    <string name="feature_account_action_transactions">ഇടപാടുകൾ</string>
+    <string name="feature_account_action_transactions_tip">ഈ അക്കൗണ്ടിൽ നിന്നുള്ള പുതിയ ഇടപാടുകൾ</string>
+    <string name="feature_account_action_charges">ചാർജുകൾ</string>
+    <string name="feature_account_action_charges_tip">ഈ അക്കൗണ്ടിൽ നിലനിൽക്കുന്ന ഫീസ് അല്ലെങ്കിൽ ചാർജുകൾ</string>
+    <string name="feature_account_action_qr">QR കോഡ്</string>
+    <string name="feature_account_action_qr_tip">QR കോഡ് സൃഷ്ടിക്കുക</string>
+
+    <string name="feature_loan_account_number_label">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="feature_loan_outstanding_balance_label">ബാക്കിയുള്ള ബാലൻസ്</string>
+    <string name="feature_loan_product_type_label">പ്രൊഡക്ട് തരം</string>
+    <string name="feature_loan_currency_label">കറൻസി</string>
+    <string name="feature_loan_next_installment_label">അടുത്ത തവണ</string>
+    <string name="feature_loan_installment_amount_label">തവണ തുക</string>
+    <string name="feature_loan_due_date_label">അവസാന തീയതി</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">അക്കൗണ്ട് വിശദാംശങ്ങൾ</string>
+    <string name="feature_loan_payoff_details_title">പാവപ്പെടുത്തൽ വിശദാംശങ്ങൾ</string>
+    <string name="feature_loan_charges_title">ചാർജുകൾ</string>
+    <string name="feature_loan_waivers_title">വേഴ്ച്ചകൾ</string>
+    <string name="feature_loan_paid_off_details_title">പാവപ്പെടുത്തിയ വിശദാംശങ്ങൾ</string>
+    <string name="feature_loan_outstanding_details_title">ബാക്കിയുള്ള വിശദാംശങ്ങൾ</string>
+    <string name="feature_loan_installment_details_title">തവണ വിശദാംശങ്ങൾ</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">ലോൺ തരം</string>
+    <string name="feature_loan_scheme_label">ലോൺ പദ്ധതി</string>
+    <string name="feature_loan_account_status_label">അക്കൗണ്ട് നില</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">പ്രതീക്ഷിച്ച പാവപ്പെടുത്തൽ</string>
+    <string name="feature_loan_interest_payoff_label">പലിശ പാവപ്പെടുത്തൽ</string>
+    <string name="feature_loan_principal_label">ലോൺ മുതൽ</string>
+    <string name="feature_loan_interest_rate_label">പലിശ നിരക്ക്</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">ഫീസ്</string>
+    <string name="feature_loan_penalties_label">ശിക്ഷകൾ</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">പലിശ വേഴ്ച്ച ചെയ്തു</string>
+    <string name="feature_loan_penalty_waived_label">ശിക്ഷ വേഴ്ച്ച ചെയ്തു</string>
+    <string name="feature_loan_fees_waived_label">ഫീസ് വേഴ്ച്ച ചെയ്തു</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">പലിശ പാവപ്പെടുത്തി</string>
+    <string name="feature_loan_principal_paid_off_label">മുതൽ പാവപ്പെടുത്തി</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">ബാക്കിയുള്ള പലിശ</string>
+    <string name="feature_loan_principal_outstanding_label">ബാക്കിയുള്ള മുതൽ</string>
+    <string name="feature_loan_total_outstanding_label">ആകെ ബാക്കിയുള്ള തുക</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">സാധാരണ പേയ്മെന്റ്</string>
+    <string name="feature_loan_next_payment_label">അടുത്ത പേയ്മെന്റ്</string>
+    <string name="feature_loan_months_left_label">ബാക്കിയുള്ള മാസങ്ങൾ</string>
+    <string name="feature_loan_auto_debit_label">സ്വയം ഡെബിറ്റ്</string>
+    <string name="feature_loan_linked_account_label">ലിങ്ക് ചെയ്ത അക്കൗണ്ട്</string>
+
+    <string name="repayment_schedule">പാവപ്പെടുത്തൽ ഷെഡ്യൂൾ</string>
+    <string name="feature_loan_disbursement_date_label">വിതരണം നടക്കുന്ന തീയതി</string>
+    <string name="feature_loan_installments_paid_label">പാവപ്പെടുത്തിയ തവണകൾ</string>
+    <string name="feature_loan_installments_left_label">ബാക്കിയുള്ള തവണകൾ</string>
+    <string name="feature_loan_total_installments_label">ആകെ തവണകൾ</string>
+
+    <string name="feature_loan_paid">പാവപ്പെടുത്തി</string>
+    <string name="feature_loan_due">ബാക്കിയുള്ള</string>
+    <string name="feature_loan_pay">പേയ്മെന്റ് ചെയ്യുക</string>
+</resources>

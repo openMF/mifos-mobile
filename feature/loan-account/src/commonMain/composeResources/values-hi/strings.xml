@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">सक्रिय</string>
+    <string name="feature_loan_account_filter_approval_pending">अनुमोदन लंबित</string>
+    <string name="feature_loan_account_filter_closed">बंद</string>
+    <string name="feature_loan_account_filter_disburse">वितरण की प्रतीक्षा</string>
+    <string name="feature_loan_account_filter_overpaid">अधिभुगतान</string>
+    <string name="feature_loan_account_filter_in_arrears">बकाया</string>
+    <string name="feature_loan_account_filter_withdrawn">वापस लिया गया</string>
+    <string name="feature_loan_account_filter_matured">परिपक्व</string>
+    <string name="feature_loan_account_filter_rejected">अस्वीकृत</string>
+
+    <string name="feature_loan_account_filter_personal">व्यक्तिगत</string>
+    <string name="feature_loan_account_filter_bronze">ब्रोंज</string>
+
+    <string name="feature_account_empty_loan_accounts">आपके साथ कोई ऋण खाता संबद्ध नहीं है</string>
+    <string name="feature_account_empty_filtered_loan_accounts">आपके द्वारा चुने गए फ़िल्टर के साथ कोई ऋण खाता संबद्ध नहीं है</string>
+
+    <string name="feature_loan_account_dashboard">कुल उधार</string>
+    <string name="feature_loan_account">ऋण खाता</string>
+    <string name="feature_loan_account_items">%1$d आइटम</string>
+
+    <string name="feature_account_details_top_bar_title">ऋण खाता विवरण</string>
+    <string name="feature_account_details_action">कार्रवाई</string>
+    <string name="feature_account_action_make_payment">भुगतान करें</string>
+    <string name="feature_account_action_make_payment_tip">अपनी बकाया किस्त चुकाएं</string>
+    <string name="feature_account_action_loan_summary">ऋण सारांश</string>
+    <string name="feature_account_action_loan_summary_tip">अपने ऋण विवरण संक्षिप्त रूप में देखें</string>
+    <string name="feature_account_action_repayment_schedule">पुनर्भुगतान अनुसूची</string>
+    <string name="feature_account_action_repayment_schedule_tip">पुनर्भुगतान अनुसूची का चार्ट देखें</string>
+    <string name="feature_account_action_transactions">लेनदेन</string>
+    <string name="feature_account_action_transactions_tip">इस खाते के हाल के लेनदेन</string>
+    <string name="feature_account_action_charges">शुल्क</string>
+    <string name="feature_account_action_charges_tip">इस खाते पर शुल्क या चार्ज</string>
+    <string name="feature_account_action_qr">QR कोड</string>
+    <string name="feature_account_action_qr_tip">QR कोड उत्पन्न करें</string>
+
+    <string name="feature_loan_account_number_label">खाता संख्या</string>
+    <string name="feature_loan_outstanding_balance_label">बकाया राशि</string>
+    <string name="feature_loan_product_type_label">उत्पाद प्रकार</string>
+    <string name="feature_loan_currency_label">मुद्रा</string>
+    <string name="feature_loan_next_installment_label">अगली किस्त</string>
+    <string name="feature_loan_installment_amount_label">किस्त राशि</string>
+    <string name="feature_loan_due_date_label">नियत तारीख</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">खाता विवरण</string>
+    <string name="feature_loan_payoff_details_title">पूर्ण भुगतान विवरण</string>
+    <string name="feature_loan_charges_title">शुल्क</string>
+    <string name="feature_loan_waivers_title">छूट</string>
+    <string name="feature_loan_paid_off_details_title">पूर्ण भुगतान विवरण</string>
+    <string name="feature_loan_outstanding_details_title">बकाया विवरण</string>
+    <string name="feature_loan_installment_details_title">किस्त विवरण</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">ऋण प्रकार</string>
+    <string name="feature_loan_scheme_label">ऋण योजना</string>
+    <string name="feature_loan_account_status_label">खाता स्थिति</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">अपेक्षित पूर्ण भुगतान</string>
+    <string name="feature_loan_interest_payoff_label">ब्याज पूर्ण भुगतान</string>
+    <string name="feature_loan_principal_label">ऋण मूलधन</string>
+    <string name="feature_loan_interest_rate_label">दर</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">शुल्क</string>
+    <string name="feature_loan_penalties_label">जुर्माना</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">ब्याज माफ</string>
+    <string name="feature_loan_penalty_waived_label">जुर्माना माफ</string>
+    <string name="feature_loan_fees_waived_label">शुल्क माफ</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">ब्याज पूर्ण भुगतान</string>
+    <string name="feature_loan_principal_paid_off_label">मूलधन पूर्ण भुगतान</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">बकाया ब्याज</string>
+    <string name="feature_loan_principal_outstanding_label">बकाया मूलधन</string>
+    <string name="feature_loan_total_outstanding_label">कुल बकाया</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">नियमित भुगतान</string>
+    <string name="feature_loan_next_payment_label">अगला भुगतान</string>
+    <string name="feature_loan_months_left_label">शेष महीने</string>
+    <string name="feature_loan_auto_debit_label">स्वतः डेबिट</string>
+    <string name="feature_loan_linked_account_label">लिंक किया गया खाता</string>
+
+    <string name="repayment_schedule">पुनर्भुगतान अनुसूची</string>
+    <string name="feature_loan_disbursement_date_label">वितरण तिथि</string>
+    <string name="feature_loan_installments_paid_label">भुगतान की गई किस्तें</string>
+    <string name="feature_loan_installments_left_label">शेष किस्तें</string>
+    <string name="feature_loan_total_installments_label">कुल किस्तें</string>
+
+    <string name="feature_loan_paid">भुगतान किया गया</string>
+    <string name="feature_loan_due">बकाया</string>
+    <string name="feature_loan_pay">भुगतान करें</string>
+</resources>
