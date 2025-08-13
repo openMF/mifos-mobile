@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Aktif</string>
+    <string name="feature_account_approved">Disetujui</string>
+    <string name="feature_account_approval_pending">Persetujuan Tertunda</string>
+    <string name="feature_account_matured">Jatuh Tempo</string>
+    <string name="feature_account_closed">Ditutup</string>
+    <string name="feature_account_empty_savings_accounts">Tidak ada Rekening Tabungan yang terkait dengan Anda</string>
+    <string name="feature_account_submitted">Dikirim</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Rekening</string>
+    <string name="feature_savings_account_dashboard">Total Tabungan yang Tersedia</string>
+    <string name="feature_savings_account">Rekening Tabungan</string>
+    <string name="feature_savings_account_items">%1$d Item</string>
+
+    <string name="feature_common_error">Ada yang salah</string>
+
+    <string name="content_description_search">Cari</string>
+    <string name="content_description_filter">Filter</string>
+
+    <string name="feature_savings_filter_wallet_account">Rekening Dompet</string>
+    <string name="feature_savings_filter_bank_account">Rekening Bank</string>
+    <string name="feature_savings_filter_group_account">Rekening Kelompok</string>
+    <string name="feature_savings_filter_nb_account">Rekening NB</string>
+
+    <string name="feature_savings_filter_active_account">Aktif</string>
+    <string name="feature_savings_filter_pending_account">Persetujuan Tertunda</string>
+    <string name="feature_savings_filter_closed_account">Ditutup</string>
+    <string name="feature_savings_filter_matured_account">Jatuh Tempo</string>
+    <string name="feature_savings_filter_approved_account">Disetujui</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Detail Rekening Tabungan</string>
+    <string name="feature_account_action_update">Perbarui</string>
+    <string name="feature_account_action_withdraw">Tarik</string>
+    <string name="feature_account_action_deposit">Setor</string>
+    <string name="feature_account_action_deposit_tip">Mulai perjalanan setor Anda</string>
+    <string name="feature_account_action_transfer">Transfer</string>
+    <string name="feature_account_action_transfer_tip">Transfer dana Anda ke produk lain</string>
+    <string name="feature_account_details_account_number">Nomor Rekening</string>
+    <string name="feature_account_details_account_balance">Saldo Rekening</string>
+    <string name="feature_account_details_total_deposits">Total Setoran</string>
+    <string name="feature_account_details_last_trans">Transaksi Terakhir</string>
+    <string name="feature_account_details_made_on">Dibuat pada</string>
+    <string name="feature_account_details_min_required_balance">Saldo Min. yang Diperlukan</string>
+    <string name="feature_account_details_nominal_interest_rate">Suku Bunga Nominatif</string>
+    <string name="feature_account_details_account_status">Status Rekening</string>
+    <string name="feature_account_details_no_transaction">Tidak Ada Transaksi</string>
+    <string name="feature_account_details_transactions">Transaksi</string>
+    <string name="feature_account_details_no_withdrawals">Tidak ada penarikan</string>
+    <string name="feature_account_details_total_withdrawal">Total Penarikan</string>
+    <string name="feature_account_details_savings_charges">Biaya Tabungan</string>
+    <string name="feature_account_details_not_available">Tidak Tersedia</string>
+    <string name="feature_account_details_view_transactions">Lihat Transaksi</string>
+    <string name="feature_account_details_view_charges">Lihat Biaya</string>
+    <string name="feature_account_details_qr_code">Kode QR</string>
+    <string name="feature_account_details_share_qr_code">Bagikan Kode QR</string>
+    <string name="feature_account_details_view_qr_code">Lihat Kode QR untuk rekening ini</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Transaksi Rekening Tabungan</string>
+    <string name="feature_account_transaction_no_transaction_found">Tidak Ada Transaksi yang Ditemukan</string>
+    <string name="feature_account_transaction_date">Tanggal</string>
+    <string name="feature_account_transaction_four_weeks">4 Minggu</string>
+    <string name="feature_account_transaction_three_months">3 Bulan</string>
+    <string name="feature_account_transaction_six_months">6 Bulan</string>
+    <string name="feature_account_transaction_dividend_payout">Pembayaran Dividen</string>
+    <string name="feature_account_transaction_withdrawal">Penarikan</string>
+    <string name="feature_account_transaction_interest_posting">Posting Bunga</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Tarik Rekening Tabungan</string>
+    <string name="feature_savings_withdraw_amount">Jumlah</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Tanggal Penarikan</string>
+    <string name="feature_savings_withdraw_remark">Catatan</string>
+    <string name="feature_savings_withdraw_submit">Kirim</string>
+    <string name="feature_savings_withdraw_enter_amount">Masukkan Jumlah</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Jumlah harus lebih besar dari nol</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s tidak boleh kosong</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Perbarui Detail</string>
+    <string name="feature_savings_update_client_name_label">Nama Klien</string>
+    <string name="feature_savings_update_submission_date_label">Tanggal Pengajuan</string>
+    <string name="feature_savings_update_select_product_id">Pilih ID Produk</string>
+    <string name="feature_savings_update_submit">Kirim</string>
+    <string name="feature_savings_update_cancel">Batal</string>
+</resources>

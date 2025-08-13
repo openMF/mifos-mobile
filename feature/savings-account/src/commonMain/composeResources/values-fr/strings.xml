@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Actif</string>
+    <string name="feature_account_approved">Approuvé</string>
+    <string name="feature_account_approval_pending">En attente d\'approbation</string>
+    <string name="feature_account_matured">Arrivé à échéance</string>
+    <string name="feature_account_closed">Fermé</string>
+    <string name="feature_account_empty_savings_accounts">Aucun compte d\'épargne n\'est associé à vous</string>
+    <string name="feature_account_submitted">Soumis</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Comptes</string>
+    <string name="feature_savings_account_dashboard">Épargne totale disponible</string>
+    <string name="feature_savings_account">Compte d\'épargne</string>
+    <string name="feature_savings_account_items">%1$d éléments</string>
+
+    <string name="feature_common_error">Quelque chose s\'est mal passé</string>
+
+    <string name="content_description_search">Rechercher</string>
+    <string name="content_description_filter">Filtrer</string>
+
+    <string name="feature_savings_filter_wallet_account">Compte portefeuille</string>
+    <string name="feature_savings_filter_bank_account">Compte bancaire</string>
+    <string name="feature_savings_filter_group_account">Compte de groupe</string>
+    <string name="feature_savings_filter_nb_account">Compte NB</string>
+
+    <string name="feature_savings_filter_active_account">Actif</string>
+    <string name="feature_savings_filter_pending_account">En attente d\'approbation</string>
+    <string name="feature_savings_filter_closed_account">Fermé</string>
+    <string name="feature_savings_filter_matured_account">Arrivé à échéance</string>
+    <string name="feature_savings_filter_approved_account">Approuvé</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Détails du compte d\'épargne</string>
+    <string name="feature_account_action_update">Mettre à jour</string>
+    <string name="feature_account_action_withdraw">Retirer</string>
+    <string name="feature_account_action_deposit">Déposer</string>
+    <string name="feature_account_action_deposit_tip">Commencez votre voyage de dépôt</string>
+    <string name="feature_account_action_transfer">Transférer</string>
+    <string name="feature_account_action_transfer_tip">Transférez vos fonds vers un autre produit</string>
+    <string name="feature_account_details_account_number">Numéro de compte</string>
+    <string name="feature_account_details_account_balance">Solde du compte</string>
+    <string name="feature_account_details_total_deposits">Dépôts totaux</string>
+    <string name="feature_account_details_last_trans">Dernière transaction</string>
+    <string name="feature_account_details_made_on">Effectué le</string>
+    <string name="feature_account_details_min_required_balance">Solde min. requis</string>
+    <string name="feature_account_details_nominal_interest_rate">Taux d\'intérêt nominal</string>
+    <string name="feature_account_details_account_status">Statut du compte</string>
+    <string name="feature_account_details_no_transaction">Aucune transaction</string>
+    <string name="feature_account_details_transactions">Transactions</string>
+    <string name="feature_account_details_no_withdrawals">Aucun retrait</string>
+    <string name="feature_account_details_total_withdrawal">Retraits totaux</string>
+    <string name="feature_account_details_savings_charges">Frais d\'épargne</string>
+    <string name="feature_account_details_not_available">N/A</string>
+    <string name="feature_account_details_view_transactions">Voir les transactions</string>
+    <string name="feature_account_details_view_charges">Voir les frais</string>
+    <string name="feature_account_details_qr_code">Code QR</string>
+    <string name="feature_account_details_share_qr_code">Partager le code QR</string>
+    <string name="feature_account_details_view_qr_code">Voir le code QR pour ce compte</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Transaction de compte d\'épargne</string>
+    <string name="feature_account_transaction_no_transaction_found">Aucune transaction trouvée</string>
+    <string name="feature_account_transaction_date">Date</string>
+    <string name="feature_account_transaction_four_weeks">4 semaines</string>
+    <string name="feature_account_transaction_three_months">3 mois</string>
+    <string name="feature_account_transaction_six_months">6 mois</string>
+    <string name="feature_account_transaction_dividend_payout">Paiement des dividendes</string>
+    <string name="feature_account_transaction_withdrawal">Retrait</string>
+    <string name="feature_account_transaction_interest_posting">Publication des intérêts</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Retirer du compte d\'épargne</string>
+    <string name="feature_savings_withdraw_amount">Montant</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Date de retrait</string>
+    <string name="feature_savings_withdraw_remark">Remarque</string>
+    <string name="feature_savings_withdraw_submit">Soumettre</string>
+    <string name="feature_savings_withdraw_enter_amount">Entrez le montant</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Le montant doit être supérieur à zéro</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s ne peut pas être vide</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Mettre à jour les détails</string>
+    <string name="feature_savings_update_client_name_label">Nom du client</string>
+    <string name="feature_savings_update_submission_date_label">Date de soumission</string>
+    <string name="feature_savings_update_select_product_id">Sélectionnez l\'ID du produit</string>
+    <string name="feature_savings_update_submit">Soumettre</string>
+    <string name="feature_savings_update_cancel">Annuler</string>
+</resources>

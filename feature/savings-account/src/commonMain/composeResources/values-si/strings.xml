@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">සක්‍රීය</string>
+    <string name="feature_account_approved">අනුමත කරන ලද</string>
+    <string name="feature_account_approval_pending">අනුමත කිරීම ඉතිරිව ඇත</string>
+    <string name="feature_account_matured">ප්‍රීති ලද</string>
+    <string name="feature_account_closed">වසා ඇත</string>
+    <string name="feature_account_empty_savings_accounts">ඔබ සම්බන්ධ සුරැකීම් ගිණුම් කිසිවක් හමු නොවිණ</string>
+    <string name="feature_account_submitted">ඉදිරිපත් කරන ලද</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">ගිණුම්</string>
+    <string name="feature_savings_account_dashboard">එකතු ලබා දිය හැකි සුරැකීම්</string>
+    <string name="feature_savings_account">සුරැකීම් ගිණුම</string>
+    <string name="feature_savings_account_items">%1$d අයිතම</string>
+
+    <string name="feature_common_error">යමෙකු වැරදී ය</string>
+
+    <string name="content_description_search">සොයන්න</string>
+    <string name="content_description_filter">පෙරහන</string>
+
+    <string name="feature_savings_filter_wallet_account">පසුම්බි ගිණුම</string>
+    <string name="feature_savings_filter_bank_account">බැංකු ගිණුම</string>
+    <string name="feature_savings_filter_group_account">කණ්ඩායම් ගිණුම</string>
+    <string name="feature_savings_filter_nb_account">NB ගිණුම</string>
+
+    <string name="feature_savings_filter_active_account">සක්‍රීය</string>
+    <string name="feature_savings_filter_pending_account">අනුමත කිරීම ඉතිරිව ඇත</string>
+    <string name="feature_savings_filter_closed_account">වසා ඇත</string>
+    <string name="feature_savings_filter_matured_account">ප්‍රීති ලද</string>
+    <string name="feature_savings_filter_approved_account">අනුමත කරන ලද</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">සුරැකීම් ගිණුම් විස්තර</string>
+    <string name="feature_account_action_update">යාවත්කාලීන කරන්න</string>
+    <string name="feature_account_action_withdraw">ඉල්ලා ගන්න</string>
+    <string name="feature_account_action_deposit">ඇතුළු කරන්න</string>
+    <string name="feature_account_action_deposit_tip">ඔබගේ ඇතුළු කිරීමේ සංචාරකය ආරම්භ කරන්න</string>
+    <string name="feature_account_action_transfer">මාරු කරන්න</string>
+    <string name="feature_account_action_transfer_tip">ඔබගේ අරමුදල් වෙනත් නිෂ්පාදන වෙත මාරු කරන්න</string>
+    <string name="feature_account_details_account_number">ගිණුම් අංකය</string>
+    <string name="feature_account_details_account_balance">ගිණුම් ශේෂය</string>
+    <string name="feature_account_details_total_deposits">ඇතුළත් කළ එකතුව</string>
+    <string name="feature_account_details_last_trans">අවසන් ගනුදෙනුව</string>
+    <string name="feature_account_details_made_on">දිනය</string>
+    <string name="feature_account_details_min_required_balance">අවම අවශ්‍ය ශේෂය</string>
+    <string name="feature_account_details_nominal_interest_rate">නාමික පොලීස් අනුපාතය</string>
+    <string name="feature_account_details_account_status">ගිණුම් තත්ත්වය</string>
+    <string name="feature_account_details_no_transaction">ගනුදෙනු නොමැත</string>
+    <string name="feature_account_details_transactions">ගනුදෙනු</string>
+    <string name="feature_account_details_no_withdrawals">ඉල්ලා ගැනීම් නොමැත</string>
+    <string name="feature_account_details_total_withdrawal">ඉල්ලා ගැනීම් එකතුව</string>
+    <string name="feature_account_details_savings_charges">සුරැකීම් ගාස්තු</string>
+    <string name="feature_account_details_not_available">ලබා ගත නොහැක</string>
+    <string name="feature_account_details_view_transactions">ගනුදෙනු බලන්න</string>
+    <string name="feature_account_details_view_charges">ගාස්තු බලන්න</string>
+    <string name="feature_account_details_qr_code">QR කේතය</string>
+    <string name="feature_account_details_share_qr_code">QR කේතය බෙදා ගන්න</string>
+    <string name="feature_account_details_view_qr_code">මෙම ගිණුම සඳහා QR කේතය බලන්න</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">සුරැකීම් ගිණුම් ගනුදෙනු</string>
+    <string name="feature_account_transaction_no_transaction_found">ගනුදෙනු හමු නොවිණ</string>
+    <string name="feature_account_transaction_date">දිනය</string>
+    <string name="feature_account_transaction_four_weeks">සති 4</string>
+    <string name="feature_account_transaction_three_months">මාස 3</string>
+    <string name="feature_account_transaction_six_months">මාස 6</string>
+    <string name="feature_account_transaction_dividend_payout">ලාභ ගෙවීම</string>
+    <string name="feature_account_transaction_withdrawal">ඉල්ලා ගැනීම</string>
+    <string name="feature_account_transaction_interest_posting">පොලීස් ප්‍රකාශනය</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">සුරැකීම් ගිණුමෙන් ඉල්ලා ගන්න</string>
+    <string name="feature_savings_withdraw_amount">මුදල</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">ඉල්ලා ගැනීමේ දිනය</string>
+    <string name="feature_savings_withdraw_remark">සටහන</string>
+    <string name="feature_savings_withdraw_submit">ඉදිරිපත් කරන්න</string>
+    <string name="feature_savings_withdraw_enter_amount">මුදල ඇතුළත් කරන්න</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">මුදල බින්දුවට වඩා විශාල විය යුතුය</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s හිස් විය නොහැක</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">විස්තර යාවත්කාලීන කරන්න</string>
+    <string name="feature_savings_update_client_name_label">පාරිභෝගික නම</string>
+    <string name="feature_savings_update_submission_date_label">ඉදිරිපත් කළ දිනය</string>
+    <string name="feature_savings_update_select_product_id">නිෂ්පාදන ID තෝරන්න</string>
+    <string name="feature_savings_update_submit">ඉදිරිපත් කරන්න</string>
+    <string name="feature_savings_update_cancel">අවලංගු කරන්න</string>
+</resources>

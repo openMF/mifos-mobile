@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Active</string>
+    <string name="feature_account_approved">Approved</string>
+    <string name="feature_account_approval_pending">Approval Pending</string>
+    <string name="feature_account_matured">Matured</string>
+    <string name="feature_account_closed">Closed</string>
+    <string name="feature_account_empty_savings_accounts">There is no SavingsAccount associated with you</string>
+    <string name="feature_account_submitted">Submitted</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Accounts</string>
+    <string name="feature_savings_account_dashboard">Total Available Savings</string>
+    <string name="feature_savings_account">Savings Account</string>
+    <string name="feature_savings_account_items">%1$d Items</string>
+
+    <string name="feature_common_error">Something went wrong</string>
+
+    <string name="content_description_search">Search</string>
+    <string name="content_description_filter">Filter</string>
+
+    <string name="feature_savings_filter_wallet_account">Wallet Account</string>
+    <string name="feature_savings_filter_bank_account">Bank Account</string>
+    <string name="feature_savings_filter_group_account">Group Account</string>
+    <string name="feature_savings_filter_nb_account">NB Account</string>
+
+    <string name="feature_savings_filter_active_account">Active</string>
+    <string name="feature_savings_filter_pending_account">Pending Approval</string>
+    <string name="feature_savings_filter_closed_account">Closed</string>
+    <string name="feature_savings_filter_matured_account">Matured</string>
+    <string name="feature_savings_filter_approved_account">Approved</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Savings Account Details</string>
+    <string name="feature_account_action_update">Update</string>
+    <string name="feature_account_action_withdraw">Withdraw</string>
+    <string name="feature_account_action_deposit">Deposit</string>
+    <string name="feature_account_action_deposit_tip">Start your deposit journey</string>
+    <string name="feature_account_action_transfer">Transfer</string>
+    <string name="feature_account_action_transfer_tip">Transfer your funds to other product</string>
+    <string name="feature_account_details_account_number">Account Number</string>
+    <string name="feature_account_details_account_balance">Account Balance</string>
+    <string name="feature_account_details_total_deposits">Total Deposits</string>
+    <string name="feature_account_details_last_trans">Last Transaction</string>
+    <string name="feature_account_details_made_on">Made on</string>
+    <string name="feature_account_details_min_required_balance">Min. Required Bal.</string>
+    <string name="feature_account_details_nominal_interest_rate">Nominal Interest Rate</string>
+    <string name="feature_account_details_account_status">Account Status</string>
+    <string name="feature_account_details_no_transaction">No Transaction</string>
+    <string name="feature_account_details_transactions">Transactions</string>
+    <string name="feature_account_details_no_withdrawals">No withdrawals</string>
+    <string name="feature_account_details_total_withdrawal">Total Withdrawals</string>
+    <string name="feature_account_details_savings_charges">Savings Charges</string>
+    <string name="feature_account_details_not_available">NA</string>
+    <string name="feature_account_details_view_transactions">View Transactions</string>
+    <string name="feature_account_details_view_charges">View Charges</string>
+    <string name="feature_account_details_qr_code">QR Code</string>
+    <string name="feature_account_details_share_qr_code">Share QR Code</string>
+    <string name="feature_account_details_view_qr_code">View QR Code for this account</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Savings Account Transaction</string>
+    <string name="feature_account_transaction_no_transaction_found">No Transaction Found</string>
+    <string name="feature_account_transaction_date">Date</string>
+    <string name="feature_account_transaction_four_weeks">4 Weeks</string>
+    <string name="feature_account_transaction_three_months">3 Months</string>
+    <string name="feature_account_transaction_six_months">6 Months</string>
+    <string name="feature_account_transaction_dividend_payout">Dividend Payout</string>
+    <string name="feature_account_transaction_withdrawal">Withdrawal</string>
+    <string name="feature_account_transaction_interest_posting">Interest Posting</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Withdraw Savings Account</string>
+    <string name="feature_savings_withdraw_amount">Amount</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Withdrawal Date</string>
+    <string name="feature_savings_withdraw_remark">Remark</string>
+    <string name="feature_savings_withdraw_submit">Submit</string>
+    <string name="feature_savings_withdraw_enter_amount">Enter Amount</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Amount should be greater than zero</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s cannot be blank</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Update Details</string>
+    <string name="feature_savings_update_client_name_label">Client Name</string>
+    <string name="feature_savings_update_submission_date_label">Submission Date</string>
+    <string name="feature_savings_update_select_product_id">Select Product Id</string>
+    <string name="feature_savings_update_submit">Submit</string>
+    <string name="feature_savings_update_cancel">Cancel</string>
+</resources>
