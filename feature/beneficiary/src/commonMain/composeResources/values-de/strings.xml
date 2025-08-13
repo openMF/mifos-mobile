@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Fehler beim Abrufen der Begünstigten</string>
+    <string name="error_fetching_beneficiary_template">Fehler beim Abrufen der Begünstigten-Vorlage</string>
+    <string name="error_fetching_template">Fehler beim Abrufen der Vorlage</string>
+    <string name="error_creating_beneficiary">Fehler beim Erstellen des Begünstigten</string>
+    <string name="error_updating_beneficiary">Fehler beim Aktualisieren des Begünstigten</string>
+    <string name="error_deleting_beneficiary">Fehler beim Löschen des Begünstigten</string>
+    <string name="error_loan_account_withdraw">Fehler beim Zurückziehen des Kreditkontos</string>
+    <string name="error_fetching_third_party_transfer_template">Fehler beim Abrufen der Vorlage für Drittanbieter-Überweisungen</string>
+    <string name="no_beneficiary_found_please_add">Derzeit haben Sie keine Begünstigten. Bitte fügen Sie einen Begünstigten hinzu</string>
+    <string name="no_filtered_beneficiary_found">Keine Begünstigten für den angegebenen Filter gefunden</string>
+    <string name="beneficiary">Begünstigter</string>
+    <string name="manage_beneficiaries">Begünstigte verwalten</string>
+    <string name="beneficiaries">Begünstigte</string>
+    <string name="beneficiary_detail">Begünstigte Details</string>
+    <string name="beneficiary_name">Name des Begünstigten</string>
+    <string name="account_type">Kontotyp</string>
+    <string name="transfer_limit">Überweisungslimit</string>
+    <string name="add_beneficiary">Begünstigten hinzufügen</string>
+    <string name="office_name">Büro Name</string>
+    <string name="select_account_type">Kontotyp auswählen*</string>
+    <string name="submit_beneficiary">Begünstigten einreichen</string>
+    <string name="enter_office_name">Name des Begünstigtenbüros eingeben</string>
+    <string name="enter_beneficiary_name">Name des Begünstigten eingeben</string>
+    <string name="enter_transfer_limit">Überweisungslimit eingeben</string>
+    <string name="enter_account_number">Kontonummer des Begünstigten eingeben</string>
+    <string name="choose_account_type">Wählen Sie den Kontotyp aus der Dropdown-Liste</string>
+    <string name="beneficiary_created_successfully">Begünstigter erfolgreich erstellt</string>
+    <string name="beneficiary_updated_successfully">Begünstigter erfolgreich aktualisiert</string>
+    <string name="update_beneficiary">Begünstigten aktualisieren</string>
+    <string name="delete_beneficiary">Begünstigten löschen</string>
+    <string name="delete_beneficiary_confirmation">Sind Sie sicher, dass Sie diesen Begünstigten löschen möchten?</string>
+    <string name="login_using_password_confirmation">Sind Sie sicher, dass Sie sich mit einem Passwort anmelden möchten?</string>
+    <string name="delete">Löschen</string>
+    <string name="beneficiary_deleted_successfully">Begünstigter erfolgreich gelöscht</string>
+    <string name="third_party_transfer">Drittanbieter-Überweisung</string>
+    <string name="total_loan">Gesamtkredit</string>
+    <string name="total_saving">Gesamtersparnis</string>
+    <string name="accounts_overview">Kontoübersicht</string>
+    <string name="show_hide_total_saving_amount">Gesamtersparnisbetrag ein-/ausblenden</string>
+    <string name="show_hide_total_loan_amount">Gesamtkreditbetrag ein-/ausblenden</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Umfragen</string>
+    <string name="activation_date">Aktivierungsdatum</string>
+    <string name="groups">Gruppen</string>
+    <string name="user_details">Benutzerdetails</string>
+    <string name="client_type">Kundentyp</string>
+    <string name="client_classification">Kundenklassifizierung</string>
+    <string name="select_mode">Modus auswählen</string>
+    <string name="add_beneficiary_option">Fügen Sie Ihrem Konto Drittanbieter-Begünstigte hinzu.\nGeben Sie entweder manuell ein oder scannen Sie den QR-Code des Kontos</string>
+    <string name="invalid_amount">Ungültiger Betrag</string>
+    <string name="account_number">Kontonummer</string>
+    <string name="client_name">Kundenname</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="internet_not_connected">Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind</string>
+    <string name="add">Hinzufügen</string>
+    <string name="scan">Scannen</string>
+    <string name="upload_qr_code">QR hochladen</string>
+
+    <string name="beneficiary_name_label">Name des Begünstigten</string>
+    <string name="office_label">Büro</string>
+    <string name="account_type_label">Kontotyp</string>
+    <string name="account_number_label">Kontonummer</string>
+    <string name="transfer_limit_label">Überweisungslimit</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Ersparnisse</string>
+    <string name="account_type_loan">Kredit</string>
+    <string name="account_type_share">Teilen</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Details validieren</string>
+    <string name="confirm_details">Details bestätigen</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Erstellung des Begünstigten fehlgeschlagen</string>
+    <string name="beneficiary_updation_failed">Aktualisierung des Begünstigten fehlgeschlagen</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="back_to_home">Zurück zur Startseite</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filter</string>
+    <string name="feature_savings_reset">Zurücksetzen</string>
+    <string name="feature_savings_apply">Anwenden</string>
+    <string name="feature_filters_count">%1$s ausgewählt</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Kontotyp</string>
+    <string name="filter_loan_account">Kreditkonto</string>
+    <string name="filter_savings_account">Sparkonto</string>
+    <string name="filter_linked_with">Verknüpft mit</string>
+    <string name="filter_self">Selbst</string>
+    <string name="filter_other_clients">Andere Kunden</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Begünstigter erfolgreich erstellt für das Konto %1$s für den Begünstigten mit dem Namen %2$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Begünstigter erfolgreich aktualisiert für den Begünstigten mit dem Namen %1$s mit einem Überweisungslimit von %2$d.
+    </string>
+
+    <string name="skip_the_form">Formular überspringen</string>
+    <string name="upload_or_scan_qr_code">QR-Code hochladen oder scannen</string>
+
+    <string name="filter">Filter</string>
+    <string name="linked_with">Verknüpft mit</string>
+    <string name="type_of_account">Kontotyp</string>
+    <string name="selected_count">%1$d ausgewählt</string>
+    <string name="filter_icon_description">Filter-Symbol</string>
+</resources>

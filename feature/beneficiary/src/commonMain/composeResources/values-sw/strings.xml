@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Imeshindwa kupata Wanachama</string>
+    <string name="error_fetching_beneficiary_template">Imeshindwa kupata Kiolezo cha Mpokeji</string>
+    <string name="error_fetching_template">Imeshindwa kupata Kiolezo</string>
+    <string name="error_creating_beneficiary">Imeshindwa kuunda Mpokeji</string>
+    <string name="error_updating_beneficiary">Imeshindwa kusasisha Mpokeji</string>
+    <string name="error_deleting_beneficiary">Imeshindwa kufuta Mpokeji</string>
+    <string name="error_loan_account_withdraw">Hitilafu katika kuondoa akaunti ya mkopo</string>
+    <string name="error_fetching_third_party_transfer_template">Hitilafu katika kupata kiolezo cha uhamisho wa mtu wa tatu</string>
+    <string name="no_beneficiary_found_please_add">Hauna wanachama wowote kwa sasa. Tafadhali ongeza mpokeji</string>
+    <string name="no_filtered_beneficiary_found">Hakuna wanachama walio patikana kwa kichujio kilichotolewa</string>
+    <string name="beneficiary">Mpokeji</string>
+    <string name="manage_beneficiaries">Simamia Wanachama</string>
+    <string name="beneficiaries">Wanachama</string>
+    <string name="beneficiary_detail">Maelezo ya Mpokeji</string>
+    <string name="beneficiary_name">Jina la Mpokeji</string>
+    <string name="account_type">Akaunti Aina</string>
+    <string name="transfer_limit">Kikomo cha Uhamisho</string>
+    <string name="add_beneficiary">Ongeza Mpokeji</string>
+    <string name="office_name">Jina la Ofisi</string>
+    <string name="select_account_type">Chagua Akaunti Aina*</string>
+    <string name="submit_beneficiary">Wasilisha Mpokeji</string>
+    <string name="enter_office_name">Ingiza jina la ofisi ya mpokeji</string>
+    <string name="enter_beneficiary_name">Ingiza jina la mpokeji</string>
+    <string name="enter_transfer_limit">Ingiza kikomo cha uhamisho</string>
+    <string name="enter_account_number">Ingiza namba ya akaunti ya mpokeji</string>
+    <string name="choose_account_type">Chagua aina ya akaunti kutoka kwa orodha kunjuzi</string>
+    <string name="beneficiary_created_successfully">Mpokeji ameundwa kwa mafanikio</string>
+    <string name="beneficiary_updated_successfully">Mpokeji amesasishwa kwa mafanikio</string>
+    <string name="update_beneficiary">Sasisha Mpokeji</string>
+    <string name="delete_beneficiary">Futa Mpokeji</string>
+    <string name="delete_beneficiary_confirmation">Je, una uhakika unataka kufuta mpokeji huyu?</string>
+    <string name="login_using_password_confirmation">Je, una uhakika unataka kuingia kwa kutumia nenosiri?</string>
+    <string name="delete">Futa</string>
+    <string name="beneficiary_deleted_successfully">Mpokeji amefutwa kwa mafanikio</string>
+    <string name="third_party_transfer">Uhamisho wa Mtu wa Tatu</string>
+    <string name="total_loan">Jumla ya Mkopo</string>
+    <string name="total_saving">Jumla ya Akiba</string>
+    <string name="accounts_overview">Muhtasari wa Akaunti</string>
+    <string name="show_hide_total_saving_amount">Onyesha au ficha kiasi cha jumla ya akiba</string>
+    <string name="show_hide_total_loan_amount">Onyesha au ficha kiasi cha jumla ya mkopo</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Uchunguzi</string>
+    <string name="activation_date">Tarehe ya Uanzishaji</string>
+    <string name="groups">Vikundi</string>
+    <string name="user_details">Maelezo ya Mtumiaji</string>
+    <string name="client_type">Aina ya Mteja</string>
+    <string name="client_classification">Uainishaji wa Mteja</string>
+    <string name="select_mode">Chagua Hali</string>
+    <string name="add_beneficiary_option">Ongeza mpokeji wa mtu wa tatu kwa akaunti yako.\nIngiza kwa mkono au changanua msimbo wa QR wa akaunti</string>
+    <string name="invalid_amount">Kiasi Batili</string>
+    <string name="account_number">Namba ya Akaunti</string>
+    <string name="client_name">Jina la Mteja</string>
+    <string name="cancel">Ghairi</string>
+    <string name="internet_not_connected">Tafadhali hakikisha kwamba umeunganishwa kwa mtandao</string>
+    <string name="add">Ongeza</string>
+    <string name="scan">Changanua</string>
+    <string name="upload_qr_code">Pakia Msimbo wa QR</string>
+
+    <string name="beneficiary_name_label">Jina la Mpokeji</string>
+    <string name="office_label">Ofisi</string>
+    <string name="account_type_label">Akaunti Aina</string>
+    <string name="account_number_label">Namba ya Akaunti</string>
+    <string name="transfer_limit_label">Kikomo cha Uhamisho</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Akiba</string>
+    <string name="account_type_loan">Mkopo</string>
+    <string name="account_type_share">Shiriki</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Thibitisha Maelezo</string>
+    <string name="confirm_details">Thibitisha Maelezo</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Uundaji wa Mpokeji Umeshindwa</string>
+    <string name="beneficiary_updation_failed">Usasishaji wa Mpokeji Umeshindwa</string>
+    <string name="try_again">Jaribu tena</string>
+    <string name="back_to_home">Rudi Nyumbani</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Chuja</string>
+    <string name="feature_savings_reset">Weka upya</string>
+    <string name="feature_savings_apply">Tumia</string>
+    <string name="feature_filters_count">%1$s Imechaguliwa</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Akaunti Aina</string>
+    <string name="filter_loan_account">Akaunti ya Mkopo</string>
+    <string name="filter_savings_account">Akaunti ya Akiba</string>
+    <string name="filter_linked_with">Imeunganishwa Na</string>
+    <string name="filter_self">Mwenyewe</string>
+    <string name="filter_other_clients">Wateja Wengine</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Mpokeji %2$s ameundwa kwa mafanikio kwa akaunti %1$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Mpokeji %1$s amesasishwa kwa mafanikio na kikomo cha uhamisho %2$d.
+    </string>
+
+    <string name="skip_the_form">Ruka fomu</string>
+    <string name="upload_or_scan_qr_code">Pakia au changanua msimbo wa QR</string>
+
+    <string name="filter">Chuja</string>
+    <string name="linked_with">Imeunganishwa Na</string>
+    <string name="type_of_account">Akaunti Aina</string>
+    <string name="selected_count">%1$d Imechaguliwa</string>
+    <string name="filter_icon_description">Ikoni ya Kichujio</string>
+</resources>
