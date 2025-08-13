@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">No Internet</string>
+    <string name="retry">Retry</string>
+    <string name="no_data">No Data</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="core_common_working">Core Common Working</string>
+
+    <string name="powered_by">Powered by</string>
+
+    <string name="password_checker_empty_error">Password cannot be empty.</string>
+    <string name="password_checker_too_long_error">Password is too long. Maximum length is 128 characters.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">Password should be at least 12 characters long.</string>
+    <string name="password_checker_uppercase_feedback">Insert at least one uppercase letter.</string>
+    <string name="password_checker_lowercase_feedback">Insert at least one lowercase letter.</string>
+    <string name="password_checker_digit_feedback">Insert at least one digit.</string>
+    <string name="password_checker_special_char_feedback">Insert at least one special character.</string>
+    <string name="password_checker_strong_length_feedback">Use at least 12 characters for a stronger password.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">Very weak</string>
+    <string name="password_strength_level_1">Weak</string>
+    <string name="password_strength_level_2">Acceptable</string>
+    <string name="password_strength_level_3">Good</string>
+    <string name="password_strength_level_4">Strong</string>
+    <string name="password_strength_level_5">Very strong</string>
+    <string name="password_strength_none">Enter a password</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">Password strength indicator</string>
+    <string name="password_strength_announcement">Password strength: %1$s</string>
+    <string name="minimum_characters_requirement">At least %1$d characters</string>
+    <string name="minimum_characters_met">Minimum character requirement met</string>
+    <string name="minimum_characters_not_met">Minimum character requirement not met</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">Password Requirements</string>
+    <string name="password_feedback_title">Password Suggestions</string>
+    <string name="password_feedback_all_good">Your password meets all requirements!</string>
+    <string name="character_count">%1$d characters</string>
+    <string name="character_count_with_limit">%1$d / %2$d characters</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">Email address cannot be empty</string>
+    <string name="validation_email_max_length_exceeded">Email address exceeds maximum length of 254 characters</string>
+    <string name="validation_email_missing_at_symbol">Email address must contain the @ symbol</string>
+    <string name="validation_email_starts_with_at">Email address cannot start with the @ symbol</string>
+    <string name="validation_email_ends_with_at">Email address cannot end with the @ symbol</string>
+    <string name="validation_email_multiple_at_symbols">Email address cannot contain multiple @ symbols</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">Local part cannot be empty</string>
+    <string name="validation_email_local_max_length">Local part exceeds maximum length of 64 characters</string>
+    <string name="validation_email_local_starts_with_dot">Local part cannot start with a dot</string>
+    <string name="validation_email_local_ends_with_dot">Local part cannot end with a dot</string>
+    <string name="validation_email_local_consecutive_dots">Local part cannot contain consecutive dots</string>
+    <string name="validation_email_local_invalid_characters">Local part contains invalid characters</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">Domain part cannot be empty</string>
+    <string name="validation_email_domain_max_length">Domain part exceeds maximum length of 253 characters</string>
+    <string name="validation_email_domain_missing_dot">Domain must contain at least one dot</string>
+    <string name="validation_email_domain_starts_ends_with_dot">Domain cannot start or end with a dot</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">Domain cannot start or end with a hyphen</string>
+    <string name="validation_email_domain_insufficient_parts">Domain must have at least two parts separated by dots</string>
+    <string name="validation_email_tld_invalid">Top-level domain must be at least 2 letters long and contain only letters</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">Domain label cannot be empty</string>
+    <string name="validation_email_label_max_length">Domain label exceeds maximum length of 63 characters</string>
+    <string name="validation_email_label_starts_with_hyphen">Domain label cannot start with a hyphen</string>
+    <string name="validation_email_label_ends_with_hyphen">Domain label cannot end with a hyphen</string>
+    <string name="validation_email_label_invalid_characters">Domain label contains invalid characters</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">Phone number cannot be empty</string>
+    <string name="validation_phone_too_short">Phone number is too short</string>
+    <string name="validation_phone_too_long">Phone number is too long</string>
+    <string name="validation_phone_invalid_characters">Phone number contains invalid characters</string>
+    <string name="validation_phone_spanish_country_code_required">Please use the Spanish country code (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Invalid Spanish phone number format</string>
+
+    <string name="validation_phone_invalid_for_country">Phone number is invalid for the selected country</string>
+    <string name="validation_phone_no_valid_country_found">Phone number format is not recognized for any supported country</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">Name cannot be empty</string>
+    <string name="validation_name_invalid_characters">Name contains invalid characters</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">This field is required</string>
+    <string name="validation_format_invalid">Invalid format</string>
+    <string name="validation_length_exceeded">Maximum length exceeded</string>
+    <string name="validation_length_insufficient">Minimum length not reached</string>
+
+    <string name="validation_amount_empty">Amount cannot be empty</string>
+    <string name="validation_amount_invalid_format">Please enter a valid amount format (e.g. 99.99)</string>
+    <string name="validation_amount_invalid_number">Please enter a valid number</string>
+    <string name="validation_amount_negative">Amount cannot be negative</string>
+    <string name="validation_amount_too_small">Amount must be at least 0.01</string>
+    <string name="validation_amount_too_large">Amount cannot exceed 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">Amount has too many decimal places for this currency</string>
+    <string name="validation_amount_invalid_increment">Amount must be in valid increments for this currency</string>
+
+    <string name="savings_account">Savings Account</string>
+    <string name="available_balance">Customer Name</string>
+    <string name="select_other_payment_account">Select Other Payment Account</string>
+    <string name="available_balance_formatted">Available Balance - %1$s</string>
+
+    <string name="feature_savings_filter">Filter</string>
+    <string name="feature_savings_reset">Reset</string>
+    <string name="feature_savings_apply">Apply</string>
+</resources>

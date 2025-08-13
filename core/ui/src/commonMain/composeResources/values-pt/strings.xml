@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Sem Internet</string>
+    <string name="retry">Tentar novamente</string>
+    <string name="no_data">Sem dados</string>
+    <string name="something_went_wrong">Alguma coisa deu errado</string>
+    <string name="core_common_working">Trabalho Comum do Núcleo</string>
+
+    <string name="powered_by">Distribuído por</string>
+
+    <string name="password_checker_empty_error">A senha não pode estar vazia.</string>
+    <string name="password_checker_too_long_error">A senha é muito longa. O comprimento máximo é de 128 caracteres.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">A senha deve ter pelo menos 12 caracteres.</string>
+    <string name="password_checker_uppercase_feedback">Forneça pelo menos uma letra maiúscula.</string>
+    <string name="password_checker_lowercase_feedback">Forneça pelo menos uma letra minúscula.</string>
+    <string name="password_checker_digit_feedback">Forneça pelo menos um dígito.</string>
+    <string name="password_checker_special_char_feedback">Forneça pelo menos um caractere especial.</string>
+    <string name="password_checker_strong_length_feedback">Use pelo menos 12 caracteres para uma senha forte.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">Muito Fraca</string>
+    <string name="password_strength_level_1">Fraca</string>
+    <string name="password_strength_level_2">Aceitável</string>
+    <string name="password_strength_level_3">Boa</string>
+    <string name="password_strength_level_4">Forte</string>
+    <string name="password_strength_level_5">Muito Forte</string>
+    <string name="password_strength_none">Forneça uma senha</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">Indicador de força da senha</string>
+    <string name="password_strength_announcement">Força da senha: %1$s</string>
+    <string name="minimum_characters_requirement">Pelo menos %1$d caracteres</string>
+    <string name="minimum_characters_met">Requisito mínimo de caracteres atendido</string>
+    <string name="minimum_characters_not_met">Requisito mínimo de caracteres não atendido</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">Requisitos de Senha</string>
+    <string name="password_feedback_title">Feedback de Senha</string>
+    <string name="password_feedback_all_good">Sua senha atende a todos os requisitos!</string>
+    <string name="character_count">%1$d caracteres</string>
+    <string name="character_count_with_limit">%1$d / %2$d caracteres</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">O endereço de e-mail não pode estar vazio</string>
+    <string name="validation_email_max_length_exceeded">O endereço de e-mail excede o comprimento máximo de 254 caracteres</string>
+    <string name="validation_email_missing_at_symbol">O endereço de e-mail deve conter o símbolo @</string>
+    <string name="validation_email_starts_with_at">O endereço de e-mail não pode começar com @</string>
+    <string name="validation_email_ends_with_at">O endereço de e-mail não pode terminar com @</string>
+    <string name="validation_email_multiple_at_symbols">O endereço de e-mail não pode conter mais de um símbolo @</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">A parte local não pode estar vazia</string>
+    <string name="validation_email_local_max_length">A parte local excede o comprimento máximo de 64 caracteres</string>
+    <string name="validation_email_local_starts_with_dot">A parte local não pode começar com ponto</string>
+    <string name="validation_email_local_ends_with_dot">A parte local não pode terminar com ponto</string>
+    <string name="validation_email_local_consecutive_dots">A parte local não pode conter pontos consecutivos</string>
+    <string name="validation_email_local_invalid_characters">A parte local contém caracteres inválidos</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">A parte do domínio não pode estar vazia</string>
+    <string name="validation_email_domain_max_length">A parte do domínio excede o comprimento máximo de 253 caracteres</string>
+    <string name="validation_email_domain_missing_dot">O domínio deve conter pelo menos um ponto</string>
+    <string name="validation_email_domain_starts_ends_with_dot">O domínio não pode começar ou terminar com ponto</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">O domínio não pode começar ou terminar com hífen</string>
+    <string name="validation_email_domain_insufficient_parts">O domínio deve ter pelo menos duas partes separadas por pontos</string>
+    <string name="validation_email_tld_invalid">O domínio de nível superior deve ter pelo menos 2 caracteres, contendo apenas letras</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">O rótulo do domínio não pode estar vazio</string>
+    <string name="validation_email_label_max_length">O rótulo do domínio excede o comprimento máximo de 63 caracteres</string>
+    <string name="validation_email_label_starts_with_hyphen">O rótulo do domínio não pode começar com hífen</string>
+    <string name="validation_email_label_ends_with_hyphen">O rótulo do domínio não pode terminar com hífen</string>
+    <string name="validation_email_label_invalid_characters">O rótulo do domínio contém caracteres inválidos</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">O número de telefone não pode estar vazio</string>
+    <string name="validation_phone_too_short">O número de telefone é muito curto</string>
+    <string name="validation_phone_too_long">O número de telefone é muito longo</string>
+    <string name="validation_phone_invalid_characters">O número de telefone contém caracteres inválidos</string>
+    <string name="validation_phone_spanish_country_code_required">Use o código do país espanhol (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Formato de número de telefone espanhol inválido</string>
+
+    <string name="validation_phone_invalid_for_country">O número de telefone é inválido para o país selecionado</string>
+    <string name="validation_phone_no_valid_country_found">Não foi possível identificar um país válido para o formato do número de telefone</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">O nome não pode estar vazio</string>
+    <string name="validation_name_invalid_characters">O nome contém caracteres inválidos</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">Este campo é obrigatório</string>
+    <string name="validation_format_invalid">Formato inválido</string>
+    <string name="validation_length_exceeded">Comprimento máximo excedido</string>
+    <string name="validation_length_insufficient">Comprimento mínimo insuficiente</string>
+
+    <string name="validation_amount_empty">O valor não pode estar vazio</string>
+    <string name="validation_amount_invalid_format">Forneça um formato de valor válido (ex. 99.99)</string>
+    <string name="validation_amount_invalid_number">Forneça um número válido</string>
+    <string name="validation_amount_negative">O valor não pode ser negativo</string>
+    <string name="validation_amount_too_small">O valor deve ser pelo menos 0.01</string>
+    <string name="validation_amount_too_large">O valor não pode exceder 999.999.999,99</string>
+    <string name="validation_amount_invalid_decimal_places">O valor tem demasiadas casas decimais para esta moeda</string>
+    <string name="validation_amount_invalid_increment">O valor deve estar em incrementos válidos para esta moeda</string>
+
+    <string name="savings_account">Conta Poupança</string>
+    <string name="available_balance">Nome do Cliente</string>
+    <string name="select_other_payment_account">Selecione outra conta de pagamento</string>
+    <string name="available_balance_formatted">Saldo disponível - %1$s</string>
+
+    <string name="feature_savings_filter">Filtro</string>
+    <string name="feature_savings_reset">Reiniciar</string>
+    <string name="feature_savings_apply">Aplicar</string>
+</resources>

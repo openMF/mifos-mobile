@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">ഇന്റർനെറ്റ് ഇല്ല</string>
+    <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="no_data">ഡാറ്റ ഇല്ല</string>
+    <string name="something_went_wrong">എന്തോ കുറ്റം സംഭവിച്ചിരിക്കുന്നു</string>
+    <string name="core_common_working">കോർ പൊതുവായ പ്രവർത്തനം</string>
+
+    <string name="powered_by">പവേർഡ് ബൈ</string>
+
+    <string name="password_checker_empty_error">പാസ്‌വേഡ് ശൂന്യമായിരിക്കരുത്.</string>
+    <string name="password_checker_too_long_error">പാസ്‌വേഡ് വളരെ നീളമേറിയതാണ്. പരമാവധി നീളം 128 അക്ഷരങ്ങൾ ആണ്.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">പാസ്‌വേഡ് കുറഞ്ഞത് 12 അക്ഷരങ്ങൾ നീളമുള്ളതായിരിക്കണം.</string>
+    <string name="password_checker_uppercase_feedback">കുറഞ്ഞത് ഒരു അപ്പര്‍കേസ് അക്ഷരം നൽകുക.</string>
+    <string name="password_checker_lowercase_feedback">കുറഞ്ഞത് ഒരു ലോവർകേസ് അക്ഷരം നൽകുക.</string>
+    <string name="password_checker_digit_feedback">കുറഞ്ഞത് ഒരു അക്കം നൽകുക.</string>
+    <string name="password_checker_special_char_feedback">കുറഞ്ഞത് ഒരു പ്രത്യേക അക്ഷരം നൽകുക.</string>
+    <string name="password_checker_strong_length_feedback">ശക്തമായ പാസ്‌വേഡിനായി കുറഞ്ഞത് 12 അക്ഷരങ്ങൾ ഉപയോഗിക്കുക.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">വളരെ ദുർബലം</string>
+    <string name="password_strength_level_1">ദുർബലം</string>
+    <string name="password_strength_level_2">സ്വീകാര്യം</string>
+    <string name="password_strength_level_3">നല്ലത്</string>
+    <string name="password_strength_level_4">ശക്തം</string>
+    <string name="password_strength_level_5">വളരെ ശക്തം</string>
+    <string name="password_strength_none">പാസ്‌വേഡ് നൽകുക</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">പാസ്‌വേഡ് ശക്തി സൂചകം</string>
+    <string name="password_strength_announcement">പാസ്‌വേഡ് ശക്തി: %1$s</string>
+    <string name="minimum_characters_requirement">കുറഞ്ഞത് %1$d അക്ഷരങ്ങൾ</string>
+    <string name="minimum_characters_met">കുറഞ്ഞ അക്ഷര ആവശ്യകത പൂർത്തിയായി</string>
+    <string name="minimum_characters_not_met">കുറഞ്ഞ അക്ഷര ആവശ്യകത പൂർത്തിയായില്ല</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">പാസ്‌വേഡ് ആവശ്യകതകൾ</string>
+    <string name="password_feedback_title">പാസ്‌വേഡ് പ്രതികരണം</string>
+    <string name="password_feedback_all_good">നിങ്ങളുടെ പാസ്‌വേഡ് എല്ലാ ആവശ്യകതകളും പൂർത്തിയാക്കുന്നു!</string>
+    <string name="character_count">%1$d അക്ഷരങ്ങൾ</string>
+    <string name="character_count_with_limit">%1$d / %2$d അക്ഷരങ്ങൾ</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">ഇമെയിൽ വിലാസം ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_email_max_length_exceeded">ഇമെയിൽ വിലാസം പരമാവധി നീളം 254 അക്ഷരങ്ങൾ കവിയുന്നു</string>
+    <string name="validation_email_missing_at_symbol">ഇമെയിൽ വിലാസത്തിൽ @ ചിഹ്നം ഉണ്ടായിരിക്കണം</string>
+    <string name="validation_email_starts_with_at">ഇമെയിൽ വിലാസം @ ചിഹ്നത്തിൽ ആരംഭിക്കരുത്</string>
+    <string name="validation_email_ends_with_at">ഇമെയിൽ വിലാസം @ ചിഹ്നത്തിൽ അവസാനിക്കരുത്</string>
+    <string name="validation_email_multiple_at_symbols">ഇമെയിൽ വിലാസത്തിൽ ഒന്നിലധികം @ ചിഹ്നങ്ങൾ ഉണ്ടായിരിക്കരുത്</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">പ്രാദേശിക ഭാഗം ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_email_local_max_length">പ്രാദേശിക ഭാഗം പരമാവധി നീളം 64 അക്ഷരങ്ങൾ കവിയുന്നു</string>
+    <string name="validation_email_local_starts_with_dot">പ്രാദേശിക ഭാഗം ഒരു ഡോട്ടിൽ ആരംഭിക്കരുത്</string>
+    <string name="validation_email_local_ends_with_dot">പ്രാദേശിക ഭാഗം ഒരു ഡോട്ടിൽ അവസാനിക്കരുത്</string>
+    <string name="validation_email_local_consecutive_dots">പ്രാദേശിക ഭാഗത്ത് അടുത്തടുത്ത ഡോട്ടുകൾ ഉണ്ടായിരിക്കരുത്</string>
+    <string name="validation_email_local_invalid_characters">പ്രാദേശിക ഭാഗത്ത് അസാധുവായ അക്ഷരങ്ങൾ ഉണ്ട്</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">ഡൊമെയ്ൻ ഭാഗം ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_email_domain_max_length">ഡൊമെയ്ൻ ഭാഗം പരമാവധി നീളം 253 അക്ഷരങ്ങൾ കവിയുന്നു</string>
+    <string name="validation_email_domain_missing_dot">ഡൊമെയ്ൻ കുറഞ്ഞത് ഒരു ഡോട്ട് ഉണ്ടായിരിക്കണം</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ഡൊമെയ്ൻ ഒരു ഡോട്ടിൽ ആരംഭിക്കോ അവസാനിക്കോ പാടില്ല</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ഡൊമെയ്ൻ ഒരു ഹൈഫനിൽ ആരംഭിക്കോ അവസാനിക്കോ പാടില്ല</string>
+    <string name="validation_email_domain_insufficient_parts">ഡൊമെയ്ൻ ഡോട്ടുകൾ കൊണ്ട് വേർതിരിച്ച കുറഞ്ഞത് രണ്ട് ഭാഗങ്ങൾ ഉണ്ടായിരിക്കണം</string>
+    <string name="validation_email_tld_invalid">ടോപ്-ലെവൽ ഡൊമെയ്ൻ കുറഞ്ഞത് 2 അക്ഷരങ്ങൾ നീളമുള്ളതായിരിക്കണം, അക്ഷരങ്ങൾ മാത്രം ഉൾപ്പെടുത്തണം</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">ഡൊമെയ്ൻ ലേബൽ ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_email_label_max_length">ഡൊമെയ്ൻ ലേബൽ പരമാവധി നീളം 63 അക്ഷരങ്ങൾ കവിയുന്നു</string>
+    <string name="validation_email_label_starts_with_hyphen">ഡൊമെയ്ൻ ലേബൽ ഒരു ഹൈഫനിൽ ആരംഭിക്കരുത്</string>
+    <string name="validation_email_label_ends_with_hyphen">ഡൊമെയ്ൻ ലേബൽ ഒരു ഹൈഫനിൽ അവസാനിക്കരുത്</string>
+    <string name="validation_email_label_invalid_characters">ഡൊമെയ്ൻ ലേബലിൽ അസാധുവായ അക്ഷരങ്ങൾ ഉണ്ട്</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">ഫോൺ നമ്പർ ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_phone_too_short">ഫോൺ നമ്പർ വളരെ ചെറുതാണ്</string>
+    <string name="validation_phone_too_long">ഫോൺ നമ്പർ വളരെ നീളമേറിയതാണ്</string>
+    <string name="validation_phone_invalid_characters">ഫോൺ നമ്പറിൽ അസാധുവായ അക്ഷരങ്ങൾ ഉണ്ട്</string>
+    <string name="validation_phone_spanish_country_code_required">സ്പാനിഷ് രാജ്യ കോഡ് (+34) ഉപയോഗിക്കുക</string>
+    <string name="validation_phone_spanish_format_invalid">അസാധുവായ സ്പാനിഷ് ഫോൺ നമ്പർ ഫോർമാറ്റ്</string>
+
+    <string name="validation_phone_invalid_for_country">തിരഞ്ഞെടുത്ത രാജ്യത്തിനായി ഫോൺ നമ്പർ അസാധുവാണ്</string>
+    <string name="validation_phone_no_valid_country_found">ഫോൺ നമ്പർ ഫോർമാറ്റ് പിന്തുണയ്ക്കുന്ന രാജ്യങ്ങളിൽ ഒന്നിനെയും തിരിച്ചറിയാൻ കഴിയില്ല</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">പേര് ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_name_invalid_characters">പേരിൽ അസാധുവായ അക്ഷരങ്ങൾ ഉണ്ട്</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">ഈ ഫീൽഡ് ആവശ്യമാണ്</string>
+    <string name="validation_format_invalid">അസാധുവായ ഫോർമാറ്റ്</string>
+    <string name="validation_length_exceeded">പരമാവധി നീളം കവിഞ്ഞു</string>
+    <string name="validation_length_insufficient">കുറഞ്ഞ നീളം നിറവേറ്റിയില്ല</string>
+
+    <string name="validation_amount_empty">തുക ശൂന്യമായിരിക്കരുത്</string>
+    <string name="validation_amount_invalid_format">സാധുവായ തുക ഫോർമാറ്റ് നൽകുക (ഉദാ. 99.99)</string>
+    <string name="validation_amount_invalid_number">സാധുവായ നമ്പർ നൽകുക</string>
+    <string name="validation_amount_negative">തുക നെഗറ്റീവ് ആയിരിക്കരുത്</string>
+    <string name="validation_amount_too_small">തുക കുറഞ്ഞത് 0.01 ആയിരിക്കണം</string>
+    <string name="validation_amount_too_large">തുക 999,999,999.99 നേരത്തേ കവിയരുത്</string>
+    <string name="validation_amount_invalid_decimal_places">ഈ കറൻസിക്കായി തുകയിൽ വളരെയധികം ദശാംശ സ്ഥാനങ്ങൾ ഉണ്ട്</string>
+    <string name="validation_amount_invalid_increment">ഈ കറൻസിക്കായി തുക സാധുവായ വർദ്ധനവിൽ ഉണ്ടായിരിക്കണം</string>
+
+    <string name="savings_account">സേവിംഗ്സ് അക്കൗണ്ട്</string>
+    <string name="available_balance">കസ്റ്റമർ പേര്</string>
+    <string name="select_other_payment_account">മറ്റൊരു പേയ്‌മെന്റ് അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
+    <string name="available_balance_formatted">ലഭ്യമായ ബാലൻസ് - %1$s</string>
+
+    <string name="feature_savings_filter">ഫിൽട്ടർ</string>
+    <string name="feature_savings_reset">പുനഃക്രമീകരിക്കുക</string>
+    <string name="feature_savings_apply">പ്രയോഗിക്കുക</string>
+</resources>
