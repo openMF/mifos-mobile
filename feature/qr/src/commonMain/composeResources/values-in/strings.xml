@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Tambahkan Penerima Manfaat</string>
+    <string name="qr_code">Kode QR</string>
+    <string name="choose_option">Pilih Opsi</string>
+    <string name="please_grant_us_storage_permissions">Harap berikan kami izin penyimpanan di pengaturan.</string>
+    <string name="permission_denied_storage">Izin penyimpanan ditolak</string>
+    <string name="grant_permission">Berikan izin</string>
+    <string name="deny">Tolak</string>
+    <string name="no_image_selected_or_something_went_wrong">Tidak ada gambar yang dipilih atau terjadi kesalahan</string>
+    <string name="selected_qr_image">Gambar QR yang dipilih</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Anda telah menolak izin menulis ke penyimpanan. Tanpa izin ini, Anda tidak akan dapat menambahkan penerima manfaat menggunakan kode QR. Apakah Anda yakin ingin menolak izin ini?</string>
+    <string name="proceed">Lanjutkan</string>
+    <string name="import_qr">Impor Kode QR</string>
+    <string name="import_another_qr">Impor Kode QR Lainnya</string>
+    <string name="error_reading_qr">Kesalahan membaca kode QR, pastikan Anda memilih area yang benar</string>
+    <string name="invalid_qr">Anda tidak dapat melakukan tindakan pada akun Anda sendiri, harap pindai kode QR akun tabungan dan pinjaman pengguna lain</string>
+    <string name="scan_your_qr">Pindai Kode QR Anda</string>
+    <string name="qr_scan_instruction">Impor detail akun ke aplikasi Anda dengan memindai kode QR ini.</string>
+    <string name="qr_alignment_instruction">Harap sejajarkan kode QR di dalam bingkai agar mudah terdeteksi saat pemindaian.</string>
+    <string name="generated_on">Dihasilkan pada:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Anda tidak dapat melakukan tindakan pada akun Anda sendiri, harap pindai kode QR akun tabungan dan pinjaman pengguna lain</string>
+    <string name="feature_qr_error">Kesalahan membaca kode QR</string>
+    <string name="feature_qr_instruction">Harap sejajarkan kode QR di dalam bingkai agar mudah terdeteksi saat pemindaian.</string>
+    <string name="feature_qr_warning_title">Peringatan Potensial</string>
+    <string name="feature_qr_warning_message">Jika Anda memindai kode QR, ini dapat membawa Anda ke situs web phishing yang dapat mencuri informasi pribadi Anda seperti nomor kartu kredit, nama pengguna, dan kata sandi. Ini juga dapat mengunduh malware ke ponsel Anda dan memberikan akses peretas ke perangkat Anda.</string>
+    <string name="feature_qr_upload">Unggah Kode QR</string>
+</resources>

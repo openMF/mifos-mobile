@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">ആനുകൂല്യപ്രാപ്തനെ ചേർക്കുക</string>
+    <string name="qr_code">QR കോഡ്</string>
+    <string name="choose_option">ഒരു ഐച്ഛികം തിരഞ്ഞെടുക്കുക</string>
+    <string name="please_grant_us_storage_permissions">ക്രമീകരണങ്ങളിൽ സംഭരണ അനുമതി നൽകുക.</string>
+    <string name="permission_denied_storage">സംഭരണത്തിനായി അനുമതി നിഷേധിച്ചു</string>
+    <string name="grant_permission">അനുമതി നൽകുക</string>
+    <string name="deny">നിഷേധിക്കുക</string>
+    <string name="no_image_selected_or_something_went_wrong">ചിത്രം ഒന്നും തിരഞ്ഞെടുത്തിട്ടില്ല അല്ലെങ്കിൽ എന്തോ കുഴപ്പം സംഭവിച്ചിട്ടുണ്ട്</string>
+    <string name="selected_qr_image">തിരഞ്ഞെടുത്ത QR ചിത്രം</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">നിങ്ങൾ സംഭരണത്തിലേക്ക് എഴുതാനുള്ള അനുമതി നിഷേധിച്ചു. ഈ അനുമതിയില്ലാതെ, QR കോഡ് ഉപയോഗിച്ച് ആനുകൂല്യപ്രാപ്തനെ ചേർക്കാൻ നിങ്ങൾക്ക് കഴിയില്ല. ഈ അനുമതി നിഷേധിക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+    <string name="proceed">തുടരുക</string>
+    <string name="import_qr">QR കോഡ് ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="import_another_qr">മറ്റൊരു QR കോഡ് ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="error_reading_qr">QR കോഡ് വായിക്കുന്നതിൽ പിശക്, നിങ്ങൾ ശരിയായ പ്രദേശം തിരഞ്ഞെടുത്തിട്ടുണ്ടെന്ന് ഉറപ്പുവരുത്തുക</string>
+    <string name="invalid_qr">നിങ്ങളുടെ അക്കൗണ്ടിൽ പ്രവർത്തനം നടത്താൻ കഴിയില്ല, മറ്റ് ഉപയോക്താക്കളുടെ സേവിംഗ്സ്, ലോൺ അക്കൗണ്ടുകളുടെ QRCode സ്കാൻ ചെയ്യുക</string>
+    <string name="scan_your_qr">നിങ്ങളുടെ QR സ്കാൻ ചെയ്യുക</string>
+    <string name="qr_scan_instruction">ഈ QR കോഡ് സ്കാൻ ചെയ്ത് നിങ്ങളുടെ അപ്ലിക്കേഷനിലേക്ക് അക്കൗണ്ട് വിവരങ്ങൾ ഇറക്കുമതി ചെയ്യുക.</string>
+    <string name="qr_alignment_instruction">സ്കാനിംഗ് എളുപ്പത്തിൽ തിരിച്ചറിയാൻ ദയവായി QR കോഡ് ഫ്രെയിമിനുള്ളിൽ നിരത്തുക.</string>
+    <string name="generated_on">സൃഷ്ടിച്ചത്:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">നിങ്ങളുടെ അക്കൗണ്ടിൽ പ്രവർത്തനം നടത്താൻ കഴിയില്ല, മറ്റ് ഉപയോക്താക്കളുടെ സേവിംഗ്സ്, ലോൺ അക്കൗണ്ടുകളുടെ QRCode സ്കാൻ ചെയ്യുക</string>
+    <string name="feature_qr_error">QR കോഡ് വായിക്കുന്നതിൽ പിശക്</string>
+    <string name="feature_qr_instruction">സ്കാനിംഗ് എളുപ്പത്തിൽ തിരിച്ചറിയാൻ ദയവായി QR കോഡ് ഫ്രെയിമിനുള്ളിൽ നിരത്തുക.</string>
+    <string name="feature_qr_warning_title">സാധ്യതയുള്ള മുന്നറിയിപ്പ്</string>
+    <string name="feature_qr_warning_message">നിങ്ങൾ QR കോഡ് സ്കാൻ ചെയ്യുകയാണെങ്കിൽ, ഇത് നിങ്ങളെ ഫിഷിംഗ് വെബ്‌സൈറ്റിലേക്ക് കൊണ്ടുപോകാം, അത് നിങ്ങളുടെ വ്യക്തിഗത വിവരങ്ങൾ കള്ളപ്പണിക്കാരിൽ നിന്ന് നിരക്കാം, ഉദാഹരണത്തിന് ക്രെഡിറ്റ് കാർഡ് നമ്പറുകൾ അല്ലെങ്കിൽ ഉപയോക്തൃനാമങ്ങളും പാസ്‌വേഡുകളും. ഇത് നിങ്ങളുടെ ഫോൺ ഡൗൺലോഡ് ചെയ്യാനും ഹാക്കർമാർക്ക് നിങ്ങളുടെ ഉപകരണത്തിലേക്ക് പ്രവേശനം നൽകാനും കഴിയും.</string>
+    <string name="feature_qr_upload">QR കോഡ് അപ്‌ലോഡ് ചെയ്യുക</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Kedvezményezett hozzáadása</string>
+    <string name="qr_code">QR-kód</string>
+    <string name="choose_option">Válasszon opciót</string>
+    <string name="please_grant_us_storage_permissions">Kérjük, adjon nekünk tárhely engedélyt a beállításokban.</string>
+    <string name="permission_denied_storage">Tárhely engedély megtagadva</string>
+    <string name="grant_permission">Engedély megadása</string>
+    <string name="deny">Megtagadás</string>
+    <string name="no_image_selected_or_something_went_wrong">Nincs kiválasztva kép, vagy valami hiba történt</string>
+    <string name="selected_qr_image">Kiválasztott QR-kép</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Megtagadta a tárhelyre írási engedélyt. Enélkül az engedély nélkül nem fog tudni kedvezményezetteket hozzáadni QR-kód használatával. Biztos benne, hogy meg akarja tagadni ezt az engedélyt?</string>
+    <string name="proceed">Folytatás</string>
+    <string name="import_qr">QR-kód importálása</string>
+    <string name="import_another_qr">Másik QR-kód importálása</string>
+    <string name="error_reading_qr">Hiba történt a QR-kód olvasása közben, győződjön meg róla, hogy a megfelelő területet választotta ki</string>
+    <string name="invalid_qr">Nem tud műveletet végrehajtani a saját fiókjában, kérjük, olvasson be más felhasználó megtakarítási és kölcsönfiókjának QR-kódját</string>
+    <string name="scan_your_qr">Saját QR-kód beolvasása</string>
+    <string name="qr_scan_instruction">Importálja a fiókadatokat az alkalmazásba a QR-kód beolvasásával.</string>
+    <string name="qr_alignment_instruction">Kérjük, igazítsa a QR-kódot a keretbe, hogy a beolvasás könnyen érzékelhető legyen.</string>
+    <string name="generated_on">Létrehozva:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Nem tud műveletet végrehajtani a saját fiókjában, kérjük, olvasson be más felhasználó megtakarítási és kölcsönfiókjának QR-kódját</string>
+    <string name="feature_qr_error">Hiba történt a QR-kód olvasása közben</string>
+    <string name="feature_qr_instruction">Kérjük, igazítsa a QR-kódot a keretbe, hogy a beolvasás könnyen érzékelhető legyen.</string>
+    <string name="feature_qr_warning_title">Lehetséges figyelmeztetés</string>
+    <string name="feature_qr_warning_message">Ha beolvas egy QR-kódot, akkor adathalász webhelyre juthat, amely ellozza a személyes adatait, például hitelkártyaszámokat, felhasználóneveket és jelszavakat. Emellett kártevőt is letölthet a telefonjára, és hozzáférést biztosíthat a hackerek számára az eszközéhez.</string>
+    <string name="feature_qr_upload">QR-kód feltöltése</string>
+</resources>

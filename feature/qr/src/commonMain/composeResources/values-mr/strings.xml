@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">लाभार्थी जोडा</string>
+    <string name="qr_code">QR कोड</string>
+    <string name="choose_option">पर्याय निवडा</string>
+    <string name="please_grant_us_storage_permissions">कृपया सेटिंग्जमध्ये आम्हाला स्टोरेज परवानगी द्या.</string>
+    <string name="permission_denied_storage">स्टोरेजसाठी परवानगी नाकारली</string>
+    <string name="grant_permission">परवानगी द्या</string>
+    <string name="deny">नाकारा</string>
+    <string name="no_image_selected_or_something_went_wrong">कोणतेही चित्र निवडले नाही किंवा काहीतरी चूक झाली</string>
+    <string name="selected_qr_image">निवडलेली QR चित्र</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">आपण स्टोरेजवर लिहण्याची परवानगी नाकारली आहे. या परवानगीशिवाय, QR कोड वापरून लाभार्थी जोडण्यास आपण सक्षम असणार नाही. आपण खात्री आहात की आपण ही परवानगी नाकारू इच्छिता?</string>
+    <string name="proceed">पुढे जा</string>
+    <string name="import_qr">QR कोड आयात करा</string>
+    <string name="import_another_qr">दुसरा QR कोड आयात करा</string>
+    <string name="error_reading_qr">QR कोड वाचण्यात त्रुटी, कृपया आपण योग्य क्षेत्र निवडले आहे याची खात्री करा</string>
+    <string name="invalid_qr">आपण आपल्या खात्यावर कारवाई करू शकत नाही, कृपया इतर वापरकर्त्यांचे जतन आणि कर्ज खाते QRCode स्कॅन करा</string>
+    <string name="scan_your_qr">आपला QR स्कॅन करा</string>
+    <string name="qr_scan_instruction">हा QR कोड स्कॅन करून आपल्या अ‍ॅपमध्ये खाते तपशील आयात करा.</string>
+    <string name="qr_alignment_instruction">कृपया, स्कॅनिंगला सहजपणे ओळखण्यासाठी फ्रेममध्ये QR कोड संरेखित करा.</string>
+    <string name="generated_on">वर व्युत्पन्न केले:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">आपण आपल्या खात्यावर कारवाई करू शकत नाही, कृपया इतर वापरकर्त्यांचे जतन आणि कर्ज खाते QRCode स्कॅन करा</string>
+    <string name="feature_qr_error">QR कोड वाचण्यात त्रुटी</string>
+    <string name="feature_qr_instruction">कृपया, स्कॅनिंगला सहजपणे ओळखण्यासाठी फ्रेममध्ये QR कोड संरेखित करा.</string>
+    <string name="feature_qr_warning_title">संभाव्य चेतावणी</string>
+    <string name="feature_qr_warning_message">आपण QR कोड स्कॅन करत असल्यास, ते आपल्याला फिशिंग वेबसाइटवर नेऊ शकते जी आपली वैयक्तिक माहिती, जसे क्रेडिट कार्ड क्रमांक किंवा वापरकर्तानाव आणि संकेतशब्द चोरी करू शकते. हे आपल्या फोनवर मालवेअर डाउनलोड करू शकते आणि हॅकर्सना आपल्या डिव्हाइसवर प्रवेश देऊ शकते.</string>
+    <string name="feature_qr_upload">QR कोड अपलोड करा</string>
+</resources>
