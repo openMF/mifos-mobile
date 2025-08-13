@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Aktif</string>
+    <string name="feature_account_approved">Diluluskan</string>
+    <string name="feature_account_approval_pending">Kelulusan Menunggu</string>
+    <string name="feature_account_matured">Matang</string>
+    <string name="feature_account_closed">Tutup</string>
+    <string name="feature_account_empty_savings_accounts">Tiada akaun simpanan yang berkaitan dengan anda</string>
+    <string name="feature_account_submitted">Dihantar</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Akaun</string>
+    <string name="feature_savings_account_dashboard">Jumlah Simpanan yang Ada</string>
+    <string name="feature_savings_account">Akaun Simpanan</string>
+    <string name="feature_savings_account_items">%1$d item</string>
+
+    <string name="feature_common_error">Ada sesuatu yang tidak kena</string>
+
+    <string name="content_description_search">Cari</string>
+    <string name="content_description_filter">Tapis</string>
+
+    <string name="feature_savings_filter_wallet_account">Akaun Dompet</string>
+    <string name="feature_savings_filter_bank_account">Akaun Bank</string>
+    <string name="feature_savings_filter_group_account">Akaun Kumpulan</string>
+    <string name="feature_savings_filter_nb_account">Akaun NB</string>
+
+    <string name="feature_savings_filter_active_account">Aktif</string>
+    <string name="feature_savings_filter_pending_account">Kelulusan Menunggu</string>
+    <string name="feature_savings_filter_closed_account">Tutup</string>
+    <string name="feature_savings_filter_matured_account">Matang</string>
+    <string name="feature_savings_filter_approved_account">Diluluskan</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Butiran Akaun Simpanan</string>
+    <string name="feature_account_action_update">Kemas Kini</string>
+    <string name="feature_account_action_withdraw">Keluarkan</string>
+    <string name="feature_account_action_deposit">Deposit</string>
+    <string name="feature_account_action_deposit_tip">Mulakan perjalanan deposit anda</string>
+    <string name="feature_account_action_transfer">Pindah</string>
+    <string name="feature_account_action_transfer_tip">Pindahkan dana anda ke produk lain</string>
+    <string name="feature_account_details_account_number">Nombor Akaun</string>
+    <string name="feature_account_details_account_balance">Baki Akaun</string>
+    <string name="feature_account_details_total_deposits">Jumlah Deposit</string>
+    <string name="feature_account_details_last_trans">Transaksi Terakhir</string>
+    <string name="feature_account_details_made_on">Dibuat pada</string>
+    <string name="feature_account_details_min_required_balance">Baki Minimum Diperlukan</string>
+    <string name="feature_account_details_nominal_interest_rate">Kadar Faedah Nominal</string>
+    <string name="feature_account_details_account_status">Status Akaun</string>
+    <string name="feature_account_details_no_transaction">Tiada Transaksi</string>
+    <string name="feature_account_details_transactions">Transaksi</string>
+    <string name="feature_account_details_no_withdrawals">Tiada Pengeluaran</string>
+    <string name="feature_account_details_total_withdrawal">Jumlah Pengeluaran</string>
+    <string name="feature_account_details_savings_charges">Caj Simpanan</string>
+    <string name="feature_account_details_not_available">Tidak tersedia</string>
+    <string name="feature_account_details_view_transactions">Lihat Transaksi</string>
+    <string name="feature_account_details_view_charges">Lihat Caj</string>
+    <string name="feature_account_details_qr_code">Kod QR</string>
+    <string name="feature_account_details_share_qr_code">Kongsi Kod QR</string>
+    <string name="feature_account_details_view_qr_code">Lihat Kod QR untuk akaun ini</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Transaksi Akaun Simpanan</string>
+    <string name="feature_account_transaction_no_transaction_found">Tiada Transaksi Ditemui</string>
+    <string name="feature_account_transaction_date">Tarikh</string>
+    <string name="feature_account_transaction_four_weeks">4 minggu</string>
+    <string name="feature_account_transaction_three_months">3 bulan</string>
+    <string name="feature_account_transaction_six_months">6 bulan</string>
+    <string name="feature_account_transaction_dividend_payout">Pembayaran Dividen</string>
+    <string name="feature_account_transaction_withdrawal">Pengeluaran</string>
+    <string name="feature_account_transaction_interest_posting">Penyiaran Faedah</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Keluarkan dari Akaun Simpanan</string>
+    <string name="feature_savings_withdraw_amount">Jumlah</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Tarikh Pengeluaran</string>
+    <string name="feature_savings_withdraw_remark">Catatan</string>
+    <string name="feature_savings_withdraw_submit">Hantar</string>
+    <string name="feature_savings_withdraw_enter_amount">Masukkan Jumlah</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Jumlah mesti lebih besar daripada sifar</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s tidak boleh kosong</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Kemas Kini Butiran</string>
+    <string name="feature_savings_update_client_name_label">Nama Pelanggan</string>
+    <string name="feature_savings_update_submission_date_label">Tarikh Penyerahan</string>
+    <string name="feature_savings_update_select_product_id">Pilih ID Produk</string>
+    <string name="feature_savings_update_submit">Hantar</string>
+    <string name="feature_savings_update_cancel">Batal</string>
+</resources>

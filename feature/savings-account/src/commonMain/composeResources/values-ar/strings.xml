@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">نشيط</string>
+    <string name="feature_account_approved">موافق عليه</string>
+    <string name="feature_account_approval_pending">الموافقة معلقة</string>
+    <string name="feature_account_matured">ناضج</string>
+    <string name="feature_account_closed">مغلق</string>
+    <string name="feature_account_empty_savings_accounts">لا يوجد حساب توفير مرتبط بك</string>
+    <string name="feature_account_submitted">مقدم</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">الحسابات</string>
+    <string name="feature_savings_account_dashboard">إجمالي الودائع المتاحة</string>
+    <string name="feature_savings_account">حساب التوفير</string>
+    <string name="feature_savings_account_items">%1$d عناصر</string>
+
+    <string name="feature_common_error">حدث خطأ ما</string>
+
+    <string name="content_description_search">بحث</string>
+    <string name="content_description_filter">تصفية</string>
+
+    <string name="feature_savings_filter_wallet_account">حساب المحفظة</string>
+    <string name="feature_savings_filter_bank_account">الحساب البنكي</string>
+    <string name="feature_savings_filter_group_account">حساب المجموعة</string>
+    <string name="feature_savings_filter_nb_account">حساب NB</string>
+
+    <string name="feature_savings_filter_active_account">نشيط</string>
+    <string name="feature_savings_filter_pending_account">الموافقة معلقة</string>
+    <string name="feature_savings_filter_closed_account">مغلق</string>
+    <string name="feature_savings_filter_matured_account">ناضج</string>
+    <string name="feature_savings_filter_approved_account">موافق عليه</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">تفاصيل حساب التوفير</string>
+    <string name="feature_account_action_update">تحديث</string>
+    <string name="feature_account_action_withdraw">سحب</string>
+    <string name="feature_account_action_deposit">إيداع</string>
+    <string name="feature_account_action_deposit_tip">ابدأ رحلة الإيداع الخاصة بك</string>
+    <string name="feature_account_action_transfer">تحويل</string>
+    <string name="feature_account_action_transfer_tip">حول أموالك إلى منتج آخر</string>
+    <string name="feature_account_details_account_number">رقم الحساب</string>
+    <string name="feature_account_details_account_balance">رصيد الحساب</string>
+    <string name="feature_account_details_total_deposits">إجمالي الودائع</string>
+    <string name="feature_account_details_last_trans">آخر معاملة</string>
+    <string name="feature_account_details_made_on">تم في</string>
+    <string name="feature_account_details_min_required_balance">الحد الأدنى للرصيد المطلوب</string>
+    <string name="feature_account_details_nominal_interest_rate">معدل الفائدة الاسمي</string>
+    <string name="feature_account_details_account_status">حالة الحساب</string>
+    <string name="feature_account_details_no_transaction">لا توجد معاملات</string>
+    <string name="feature_account_details_transactions">المعاملات</string>
+    <string name="feature_account_details_no_withdrawals">لا توجد سحوبات</string>
+    <string name="feature_account_details_total_withdrawal">إجمالي السحوبات</string>
+    <string name="feature_account_details_savings_charges">رسوم التوفير</string>
+    <string name="feature_account_details_not_available">غير متوفر</string>
+    <string name="feature_account_details_view_transactions">عرض المعاملات</string>
+    <string name="feature_account_details_view_charges">عرض الرسوم</string>
+    <string name="feature_account_details_qr_code">رمز QR</string>
+    <string name="feature_account_details_share_qr_code">مشاركة رمز QR</string>
+    <string name="feature_account_details_view_qr_code">عرض رمز QR لهذا الحساب</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">معاملة حساب التوفير</string>
+    <string name="feature_account_transaction_no_transaction_found">لم يتم العثور على معاملات</string>
+    <string name="feature_account_transaction_date">التاريخ</string>
+    <string name="feature_account_transaction_four_weeks">4 أسابيع</string>
+    <string name="feature_account_transaction_three_months">3 أشهر</string>
+    <string name="feature_account_transaction_six_months">6 أشهر</string>
+    <string name="feature_account_transaction_dividend_payout">دفع الأرباح</string>
+    <string name="feature_account_transaction_withdrawal">السحب</string>
+    <string name="feature_account_transaction_interest_posting">نشر الفائدة</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">سحب حساب التوفير</string>
+    <string name="feature_savings_withdraw_amount">المبلغ</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">تاريخ السحب</string>
+    <string name="feature_savings_withdraw_remark">ملاحظة</string>
+    <string name="feature_savings_withdraw_submit">إرسال</string>
+    <string name="feature_savings_withdraw_enter_amount">أدخل المبلغ</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">يجب أن يكون المبلغ أكبر من صفر</string>
+    <string name="feature_savings_withdraw_error_validation_blank">لا يمكن أن يكون %1$s فارغًا</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">تحديث التفاصيل</string>
+    <string name="feature_savings_update_client_name_label">اسم العميل</string>
+    <string name="feature_savings_update_submission_date_label">تاريخ التقديم</string>
+    <string name="feature_savings_update_select_product_id">اختر معرف المنتج</string>
+    <string name="feature_savings_update_submit">إرسال</string>
+    <string name="feature_savings_update_cancel">إلغاء</string>
+</resources>
