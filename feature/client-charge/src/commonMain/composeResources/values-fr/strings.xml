@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Veuillez vous assurer que vous êtes connecté à Internet</string>
+    <string name="client_charges">Frais du client</string>
+    <string name="loan_charges">Frais de prêt</string>
+    <string name="savings_charges">Frais d'épargne</string>
+    <string name="charges">Frais</string>
+    <string name="error_no_charge">Aucun frais trouvé</string>
+    <string name="amount_due">Dû:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Impayé:</string>
+    <string name="amount_waived">Annulé:</string>
+    <string name="amount_paid">Payé:</string>
+
+    <string name="charge_details">Détails des frais</string>
+    <string name="paid_success_message">Vous avez payé ces frais complètement avec succès</string>
+    <string name="status_icon_description">Icône de statut</string>
+    <string name="ref_no">Réf. No. %1$s</string>
+    <string name="paid_on">Payé le: %1$s</string>
+    <string name="partial_amount_paid_on">Montant partiel payé le: %1$s</string>
+    <string name="pay_outstanding">Payer l'impayé</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Titre des frais</string>
+    <string name="date">Date</string>
+    <string name="due">Dû</string>
+    <string name="paid">Payé</string>
+    <string name="waived">Annulé</string>
+    <string name="outstanding">Impayé</string>
+
+</resources>

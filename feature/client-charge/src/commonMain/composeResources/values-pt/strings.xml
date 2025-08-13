@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Por favor, certifique-se de que está conectado à internet</string>
+    <string name="client_charges">Taxas do Cliente</string>
+    <string name="loan_charges">Taxas de Empréstimo</string>
+    <string name="savings_charges">Taxas de Poupança</string>
+    <string name="charges">Taxas</string>
+    <string name="error_no_charge">Nenhuma taxa encontrada</string>
+    <string name="amount_due">Vencido:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Em aberto:</string>
+    <string name="amount_waived">Dispensado:</string>
+    <string name="amount_paid">Pago:</string>
+
+    <string name="charge_details">Detalhes da Taxa</string>
+    <string name="paid_success_message">Você pagou esta taxa completamente com sucesso</string>
+    <string name="status_icon_description">Ícone de status</string>
+    <string name="ref_no">Ref. No. %1$s</string>
+    <string name="paid_on">Pago Em: %1$s</string>
+    <string name="partial_amount_paid_on">Valor Parcial Pago Em: %1$s</string>
+    <string name="pay_outstanding">Pagar Em Aberto</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Título da Taxa</string>
+    <string name="date">Data</string>
+    <string name="due">Vencido</string>
+    <string name="paid">Pago</string>
+    <string name="waived">Dispensado</string>
+    <string name="outstanding">Em aberto</string>
+
+</resources>

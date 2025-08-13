@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Sila pastikan anda disambungkan ke internet</string>
+    <string name="client_charges">Caj Pelanggan</string>
+    <string name="loan_charges">Caj Pinjaman</string>
+    <string name="savings_charges">Caj Simpanan</string>
+    <string name="charges">Caj</string>
+    <string name="error_no_charge">Tiada caj ditemui</string>
+    <string name="amount_due">Perlu dibayar:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Tunggakan:</string>
+    <string name="amount_waived">Dikecualikan:</string>
+    <string name="amount_paid">Dibayar:</string>
+
+    <string name="charge_details">Butiran Caj</string>
+    <string name="paid_success_message">Anda telah berjaya membayar caj ini sepenuhnya</string>
+    <string name="status_icon_description">Ikon status</string>
+    <string name="ref_no">No. Ruj. %1$s</string>
+    <string name="paid_on">Dibayar Pada: %1$s</string>
+    <string name="partial_amount_paid_on">Sebahagian Amaun Dibayar Pada: %1$s</string>
+    <string name="pay_outstanding">Bayar Tunggakan</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Tajuk Yuran</string>
+    <string name="date">Tarikh</string>
+    <string name="due">Perlu dibayar</string>
+    <string name="paid">Dibayar</string>
+    <string name="waived">Dikecualikan</string>
+    <string name="outstanding">Tunggakan</string>
+
+</resources>
