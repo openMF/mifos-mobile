@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.loan.application.uploadDocs
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.FileKitType
@@ -43,12 +42,12 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  */
 @Suppress("CyclomaticComplexMethod")
 @OptIn(ExperimentalEncodingApi::class)
-internal class UploadDocsViewModel
-    : BaseViewModel<UploadDocsState, UploadDocsEvent, UploadDocsAction>(
-    initialState = run {
-        UploadDocsState()
-    },
-) {
+internal class UploadDocsViewModel :
+    BaseViewModel<UploadDocsState, UploadDocsEvent, UploadDocsAction>(
+        initialState = run {
+            UploadDocsState()
+        },
+    ) {
     override fun handleAction(action: UploadDocsAction) {
         when (action) {
             is UploadDocsAction.OnNavigateBack -> {
