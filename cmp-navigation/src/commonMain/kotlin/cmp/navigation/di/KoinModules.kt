@@ -24,7 +24,6 @@ import org.mifos.mobile.feature.auth.di.AuthModule
 import org.mifos.mobile.feature.beneficiary.di.BeneficiaryModule
 import org.mifos.mobile.feature.charge.di.ChargeModule
 import org.mifos.mobile.feature.guarantor.di.GuarantorModule
-import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.application.di.loanApplicationModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
@@ -39,8 +38,6 @@ import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.status.di.StatusModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
-import org.mifos.mobile.feature.update.password.di.updatePasswordModule
-import org.mifos.mobile.feature.user.profile.di.ProfileModule
 
 object KoinModules {
     private val commonModules = module {
@@ -64,7 +61,6 @@ object KoinModules {
         includes(
             navigatorModule,
             AuthModule,
-            HelpModule,
             HomeModule,
             AccountsModule,
             savingsAccountModule,
@@ -75,12 +71,10 @@ object KoinModules {
             TransferProcessModule,
             SettingsModule,
             ThirdPartyTransferModule,
-            updatePasswordModule,
             BeneficiaryModule,
             QrModule,
             GuarantorModule,
             NotificationModule,
-            ProfileModule,
             SetOnboardingLanguageModule,
             PasscodeModule,
             StatusModule,
