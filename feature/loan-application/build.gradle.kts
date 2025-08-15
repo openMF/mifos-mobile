@@ -30,6 +30,15 @@ kotlin {
             api(projects.core.ui)
             api(projects.core.model)
             api(projects.core.common)
+
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
+            implementation(libs.filekit.dialog.compose)
+
+            implementation(libs.compose.signature)
+            implementation(libs.coil.kt.compose)
+            implementation(libs.coil.kt)
+            implementation(libs.zoom.image)
         }
     }
 }

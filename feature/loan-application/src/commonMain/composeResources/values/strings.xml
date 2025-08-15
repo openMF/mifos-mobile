@@ -29,6 +29,7 @@
     <string name="feature_apply_loan_button_ok">Ok</string>
     <string name="feature_apply_loan_button_cancel">Cancel</string>
     <string name="feature_apply_loan_button_apply">Apply Loan</string>
+    <string name="feature_button_next">Next</string>
 
     <!-- Applicant Name Validation -->
     <string name="feature_apply_loan_error_name_empty">Applicant name is required</string>
@@ -132,4 +133,24 @@
     <string name="feature_personal_loan_amendments_and_termination_details">The lender may, from time to time, revise or update these terms and conditions, subject to appropriate prior notice to the borrower. The loan agreement shall be considered terminated upon full repayment of the loan amount or through foreclosure procedures initiated due to default.</string>
     <string name="feature_personal_loan_jurisdiction_details">All disputes arising out of or in relation to the personal loan agreement shall fall under the exclusive jurisdiction of the courts at the location of the lender’s registered office, unless otherwise specified in the agreement.</string>
 
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Upload Bank Account Statements</string>
+    <string name="feature_upload_docs_collateral">Upload Collateral Documents</string>
+    <string name="feature_upload_docs_signature">Upload Signature</string>
+
+    <string name="feature_upload_file_error">Something Went Wrong! Unable to upload file</string>
+    <string name="feature_upload_statement_error">Please Upload a Bank Statement</string>
+    <string name="feature_upload_property_document_error">Please Upload a Property Document</string>
+    <string name="feature_upload_signature_error">Please Upload a Signature</string>
+    <string name="feature_upload_documents_success_title">Documents Uploaded Successfully!</string>
+
+    <string name="sign_here">Sign Here</string>
+    <string name="reset">Reset</string>
+    <string name="sign">Sign</string>
+    <string name="capture">Capture</string>
+    <string name="attach">Attach</string>
+    <string name="upload_signature">Upload Signature</string>
+    <string name="save_and_submit">Save &amp; Submit</string>
 </resources>

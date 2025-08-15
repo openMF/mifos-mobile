@@ -22,6 +22,7 @@ import org.mifos.mobile.feature.loan.application.loanProductDescription.loanProd
 import org.mifos.mobile.feature.loan.application.loanProductDescription.navigateToLoanProductDetailsScreen
 import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeRoute
 import org.mifos.mobile.feature.loan.application.loanType.selectLoanTypeDestination
+import org.mifos.mobile.feature.loan.application.uploadDocs.uploadDocsDestination
 
 @Serializable
 data object LoanApplicationNavGraph
@@ -61,6 +62,15 @@ fun NavGraphBuilder.loanApplicationNavGraph(
             navigateToApplyLoanScreen = { productId, productName ->
                 navController.navigateToLoanApplyScreen(productId ?: -1, productName)
             },
+//            navigateToApplyLoanScreen = { _, _ ->
+//                navController::navigateToUploadDocsScreen
+//            }
+        )
+
+        uploadDocsDestination(
+            navigateBack = navController::popBackStack,
+            navigateToNext = {},
+            navigateToPreviewDoc = {},
         )
     }
 }
