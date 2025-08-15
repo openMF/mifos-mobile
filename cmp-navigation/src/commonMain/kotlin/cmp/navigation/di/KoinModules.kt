@@ -24,25 +24,20 @@ import org.mifos.mobile.feature.auth.di.AuthModule
 import org.mifos.mobile.feature.beneficiary.di.BeneficiaryModule
 import org.mifos.mobile.feature.charge.di.ChargeModule
 import org.mifos.mobile.feature.guarantor.di.GuarantorModule
-import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.application.di.loanApplicationModule
-import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
 import org.mifos.mobile.feature.passcode.di.PasscodeModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
-import org.mifos.mobile.feature.savings.di.SavingsModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.settings.di.SettingsModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.status.di.StatusModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
-import org.mifos.mobile.feature.update.password.di.updatePasswordModule
-import org.mifos.mobile.feature.user.profile.di.ProfileModule
 
 object KoinModules {
     private val commonModules = module {
@@ -66,25 +61,20 @@ object KoinModules {
         includes(
             navigatorModule,
             AuthModule,
-            HelpModule,
             HomeModule,
             AccountsModule,
             savingsAccountModule,
             loanAccountModule,
             shareAccountModule,
             recentTransactionModule,
-            LoanModule,
-            SavingsModule,
             ChargeModule,
             TransferProcessModule,
             SettingsModule,
             ThirdPartyTransferModule,
-            updatePasswordModule,
             BeneficiaryModule,
             QrModule,
             GuarantorModule,
             NotificationModule,
-            ProfileModule,
             SetOnboardingLanguageModule,
             PasscodeModule,
             StatusModule,
