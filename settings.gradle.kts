@@ -57,8 +57,6 @@ include(":core:qrcode")
 //include(":core:testing")
 
 // Feature Modules
-include(":feature:loan")
-include(":feature:savings")
 include(":feature:beneficiary")
 include(":feature:savings")
 include(":feature:guarantor")

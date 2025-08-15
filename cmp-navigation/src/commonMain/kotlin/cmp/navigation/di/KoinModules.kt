@@ -27,14 +27,12 @@ import org.mifos.mobile.feature.guarantor.di.GuarantorModule
 import org.mifos.mobile.feature.help.di.HelpModule
 import org.mifos.mobile.feature.home.di.HomeModule
 import org.mifos.mobile.feature.loan.application.di.loanApplicationModule
-import org.mifos.mobile.feature.loan.di.LoanModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
 import org.mifos.mobile.feature.passcode.di.PasscodeModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
-import org.mifos.mobile.feature.savings.di.SavingsModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.settings.di.SettingsModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
@@ -73,8 +71,6 @@ object KoinModules {
             loanAccountModule,
             shareAccountModule,
             recentTransactionModule,
-            LoanModule,
-            SavingsModule,
             ChargeModule,
             TransferProcessModule,
             SettingsModule,

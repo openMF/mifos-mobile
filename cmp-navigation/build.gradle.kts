@@ -18,8 +18,6 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.feature.loan)
-            implementation(projects.feature.savings)
             implementation(projects.feature.auth)
             implementation(projects.feature.help)
             implementation(projects.feature.home)
