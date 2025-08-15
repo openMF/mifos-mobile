@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Inayotumika</string>
+    <string name="feature_loan_account_filter_approval_pending">Inasubiri Idhini</string>
+    <string name="feature_loan_account_filter_closed">Imefungwa</string>
+    <string name="feature_loan_account_filter_disburse">Inasubiri Malipo</string>
+    <string name="feature_loan_account_filter_overpaid">Imelipwa Zaidi</string>
+    <string name="feature_loan_account_filter_in_arrears">Inaombwa</string>
+    <string name="feature_loan_account_filter_withdrawn">Imeondolewa</string>
+    <string name="feature_loan_account_filter_matured">Imeiva</string>
+    <string name="feature_loan_account_filter_rejected">Imekataliwa</string>
+
+    <string name="feature_loan_account_filter_personal">Binafsi</string>
+    <string name="feature_loan_account_filter_bronze">Shaba</string>
+
+    <string name="feature_account_empty_loan_accounts">Hakuna akaunti za mkopo zinazohusiana na wewe</string>
+    <string name="feature_account_empty_filtered_loan_accounts">Hakuna akaunti za mkopo zinazohusiana na kichujio ulichochagua</string>
+
+    <string name="feature_loan_account_dashboard">Jumla ya Mikopo</string>
+    <string name="feature_loan_account">Akaunti ya Mkopo</string>
+    <string name="feature_loan_account_items">%1$d vipengee</string>
+
+    <string name="feature_account_details_top_bar_title">Maelezo ya Akaunti ya Mkopo</string>
+    <string name="feature_account_details_action">Kitendo</string>
+    <string name="feature_account_action_make_payment">Fanya Malipo</string>
+    <string name="feature_account_action_make_payment_tip">Lipa salio lako</string>
+    <string name="feature_account_action_loan_summary">Muhtasari wa Mkopo</string>
+    <string name="feature_account_action_loan_summary_tip">Muhtasari wa maelezo ya mkopo wako</string>
+    <string name="feature_account_action_repayment_schedule">Ratiba ya Malipo</string>
+    <string name="feature_account_action_repayment_schedule_tip">Tazama chati ya ratiba ya malipo</string>
+    <string name="feature_account_action_transactions">Shughuli</string>
+    <string name="feature_account_action_transactions_tip">Shughuli za hivi karibuni za akaunti hii</string>
+    <string name="feature_account_action_charges">Maslahi</string>
+    <string name="feature_account_action_charges_tip">Ada au maslahi ya akaunti hii</string>
+    <string name="feature_account_action_qr">Msimbo wa QR</string>
+    <string name="feature_account_action_qr_tip">Tengeneza msimbo wa QR</string>
+
+    <string name="feature_loan_account_number_label">Namba ya Akaunti</string>
+    <string name="feature_loan_outstanding_balance_label">Salio Inayobaki</string>
+    <string name="feature_loan_product_type_label">Aina ya Bidhaa</string>
+    <string name="feature_loan_currency_label">Sarafu</string>
+    <string name="feature_loan_next_installment_label">Kipindi cha Malipo Kijacho</string>
+    <string name="feature_loan_installment_amount_label">Kiasi cha Kipindi cha Malipo</string>
+    <string name="feature_loan_due_date_label">Tarehe ya Mwisho ya Malipo</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Maelezo ya Akaunti</string>
+    <string name="feature_loan_payoff_details_title">Maelezo ya Umalipo</string>
+    <string name="feature_loan_charges_title">Maslahi</string>
+    <string name="feature_loan_waivers_title">Ufunguo</string>
+    <string name="feature_loan_paid_off_details_title">Maelezo ya Umalipo</string>
+    <string name="feature_loan_outstanding_details_title">Maelezo ya Salio Inayobaki</string>
+    <string name="feature_loan_installment_details_title">Maelezo ya Kipindi cha Malipo</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Aina ya Mkopo</string>
+    <string name="feature_loan_scheme_label">Mpango wa Mkopo</string>
+    <string name="feature_loan_account_status_label">Hali ya Akaunti</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Umalipo Unaotarajiwa</string>
+    <string name="feature_loan_interest_payoff_label">Umalipo wa Riba</string>
+    <string name="feature_loan_principal_label">Mkopo Mkuu</string>
+    <string name="feature_loan_interest_rate_label">Kiwango cha Riba</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Ada</string>
+    <string name="feature_loan_penalties_label">Adhabu</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Riba Imesamehewa</string>
+    <string name="feature_loan_penalty_waived_label">Adhabu Imesamehewa</string>
+    <string name="feature_loan_fees_waived_label">Ada Imesamehewa</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Riba Imelipwa</string>
+    <string name="feature_loan_principal_paid_off_label">Mkuu Imelipwa</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Riba Inayobaki</string>
+    <string name="feature_loan_principal_outstanding_label">Mkuu Inayobaki</string>
+    <string name="feature_loan_total_outstanding_label">Jumla Inayobaki</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Malipo ya Kawaida</string>
+    <string name="feature_loan_next_payment_label">Malipo Yanayofuata</string>
+    <string name="feature_loan_months_left_label">Miezi Inayobaki</string>
+    <string name="feature_loan_auto_debit_label">Udebiti wa Kiotomatiki</string>
+    <string name="feature_loan_linked_account_label">Akaunti Imeunganishwa</string>
+
+    <string name="repayment_schedule">Ratiba ya Malipo</string>
+    <string name="feature_loan_disbursement_date_label">Tarehe ya Malipo</string>
+    <string name="feature_loan_installments_paid_label">Vipindi vya Malipo Vilivyolipwa</string>
+    <string name="feature_loan_installments_left_label">Vipindi vya Malipo Vinavyobaki</string>
+    <string name="feature_loan_total_installments_label">Jumla ya Vipindi vya Malipo</string>
+
+    <string name="feature_loan_paid">Imelipwa</string>
+    <string name="feature_loan_due">Inaombwa</string>
+    <string name="feature_loan_pay">Lipa</string>
+</resources>

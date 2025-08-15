@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">ಅಂತರ್ಜಾಲ ಇಲ್ಲ</string>
+    <string name="retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="no_data">ಡೇಟಾ ಇಲ್ಲ</string>
+    <string name="something_went_wrong">ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
+    <string name="core_common_working">ಕೋರ್ ಸಾಮಾನ್ಯ ಕೆಲಸ</string>
+
+    <string name="powered_by">ಇವರು ಒದಗಿಸಿದ್ದಾರೆ</string>
+
+    <string name="password_checker_empty_error">ಪಾಸ್‌ವರ್ಡ್ ಖಾಲಿಯಾಗಿರಬಾರದು.</string>
+    <string name="password_checker_too_long_error">ಪಾಸ್‌ವರ್ಡ್ ತುಂಬಾ ಉದ್ದವಾಗಿದೆ. ಗರಿಷ್ಠ ಉದ್ದ 128 ಅಕ್ಷರಗಳು.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 12 ಅಕ್ಷರಗಳಿರಬೇಕು.</string>
+    <string name="password_checker_uppercase_feedback">ಕನಿಷ್ಠ ಒಂದು ದೊಡ್ಡಕ್ಷರವನ್ನು ನಮೂದಿಸಿ.</string>
+    <string name="password_checker_lowercase_feedback">ಕನಿಷ್ಠ ಒಂದು ಸಣ್ಣಕ್ಷರವನ್ನು ನಮೂದಿಸಿ.</string>
+    <string name="password_checker_digit_feedback">ಕನಿಷ್ಠ ಒಂದು ಅಂಕೆಯನ್ನು ನಮೂದಿಸಿ.</string>
+    <string name="password_checker_special_char_feedback">ಕನಿಷ್ಠ ಒಂದು ವಿಶೇಷ ಅಕ್ಷರವನ್ನು ನಮೂದಿಸಿ.</string>
+    <string name="password_checker_strong_length_feedback">ಬಲವಾದ ಪಾಸ್‌ವರ್ಡ್‌ಗಾಗಿ ಕನಿಷ್ಠ 12 ಅಕ್ಷರಗಳನ್ನು ಬಳಸಿ.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">ತುಂಬಾ ದುರ್ಬಲ</string>
+    <string name="password_strength_level_1">ದುರ್ಬಲ</string>
+    <string name="password_strength_level_2">ಸ್ವೀಕಾರಾರ್ಹ</string>
+    <string name="password_strength_level_3">ಒಳ್ಳೆಯದು</string>
+    <string name="password_strength_level_4">ಬಲವಾದ</string>
+    <string name="password_strength_level_5">ತುಂಬಾ ಬಲವಾದ</string>
+    <string name="password_strength_none">ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">ಪಾಸ್‌ವರ್ಡ್ ಸಾಮರ್ಥ್ಯ ಸೂಚಕ</string>
+    <string name="password_strength_announcement">ಪಾಸ್‌ವರ್ಡ್ ಸಾಮರ್ಥ್ಯ: %1$s</string>
+    <string name="minimum_characters_requirement">ಕನಿಷ್ಠ %1$d ಅಕ್ಷರಗಳು</string>
+    <string name="minimum_characters_met">ಕನಿಷ್ಠ ಅಕ್ಷರ ಅವಶ್ಯಕತೆ ಪೂರೈಸಲಾಗಿದೆ</string>
+    <string name="minimum_characters_not_met">ಕನಿಷ್ಠ ಅಕ್ಷರ ಅವಶ್ಯಕತೆ ಪೂರೈಸಲಾಗಿಲ್ಲ</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">ಪಾಸ್‌ವರ್ಡ್ ಅವಶ್ಯಕತೆಗಳು</string>
+    <string name="password_feedback_title">ಪಾಸ್‌ವರ್ಡ್ ಪ್ರತಿಕ್ರಿಯೆ</string>
+    <string name="password_feedback_all_good">ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಎಲ್ಲಾ ಅವಶ್ಯಕತೆಗಳನ್ನು ಪೂರೈಸುತ್ತದೆ!</string>
+    <string name="character_count">%1$d ಅಕ್ಷರಗಳು</string>
+    <string name="character_count_with_limit">%1$d / %2$d ಅಕ್ಷರಗಳು</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">ಇಮೇಲ್ ವಿಳಾಸ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_email_max_length_exceeded">ಇಮೇಲ್ ವಿಳಾಸವು ಗರಿಷ್ಠ ಉದ್ದ 254 ಅಕ್ಷರಗಳನ್ನು ಮೀರುತ್ತದೆ</string>
+    <string name="validation_email_missing_at_symbol">ಇಮೇಲ್ ವಿಳಾಸದಲ್ಲಿ @ ಚಿಹ್ನೆಯಿರಬೇಕು</string>
+    <string name="validation_email_starts_with_at">ಇಮೇಲ್ ವಿಳಾಸವು @ ಚಿಹ್ನೆಯಿಂದ ಪ್ರಾರಂಭಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_ends_with_at">ಇಮೇಲ್ ವಿಳಾಸವು @ ಚಿಹ್ನೆಯೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_multiple_at_symbols">ಇಮೇಲ್ ವಿಳಾಸದಲ್ಲಿ ಬಹುಬೇರೆ @ ಚಿಹ್ನೆಗಳಿರಬಾರದು</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">ಸ್ಥಳೀಯ ಭಾಗ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_email_local_max_length">ಸ್ಥಳೀಯ ಭಾಗವು ಗರಿಷ್ಠ ಉದ್ದ 64 ಅಕ್ಷರಗಳನ್ನು ಮೀರುತ್ತದೆ</string>
+    <string name="validation_email_local_starts_with_dot">ಸ್ಥಳೀಯ ಭಾಗವು ಚುಕ್ಕೆಯಿಂದ ಪ್ರಾರಂಭಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_local_ends_with_dot">ಸ್ಥಳೀಯ ಭಾಗವು ಚುಕ್ಕೆಯೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_local_consecutive_dots">ಸ್ಥಳೀಯ ಭಾಗದಲ್ಲಿ ಸಂಪೃಕ್ತ ಚುಕ್ಕೆಗಳಿರಬಾರದು</string>
+    <string name="validation_email_local_invalid_characters">ಸ್ಥಳೀಯ ಭಾಗದಲ್ಲಿ ಅಮಾನ್ಯ ಅಕ್ಷರಗಳಿವೆ</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">ಡೊಮೇನ್ ಭಾಗ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_email_domain_max_length">ಡೊಮೇನ್ ಭಾಗವು ಗರಿಷ್ಠ ಉದ್ದ 253 ಅಕ್ಷರಗಳನ್ನು ಮೀರುತ್ತದೆ</string>
+    <string name="validation_email_domain_missing_dot">ಡೊಮೇನ್‌ನಲ್ಲಿ ಕನಿಷ್ಠ ಒಂದು ಚುಕ್ಕೆಯಿರಬೇಕು</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ಡೊಮೇನ್ ಚುಕ್ಕೆಯಿಂದ ಪ್ರಾರಂಭಗೊಳ್ಳಬಾರದು ಅಥವಾ ಚುಕ್ಕೆಯೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ಡೊಮೇನ್ ಹೈಫನ್‌ನಿಂದ ಪ್ರಾರಂಭಗೊಳ್ಳಬಾರದು ಅಥವಾ ಹೈಫನ್‌ನೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_domain_insufficient_parts">ಡೊಮೇನ್‌ನಲ್ಲಿ ಚುಕ್ಕೆಗಳಿಂದ ಬೇರ್ಪಡಿಸಲ್ಪಟ್ಟ ಕನಿಷ್ಠ ಎರಡು ಭಾಗಗಳಿರಬೇಕು</string>
+    <string name="validation_email_tld_invalid">ಅತ್ಯಂತ-ಮಟ್ಟದ ಡೊಮೇನ್ ಕನಿಷ್ಠ 2 ಅಕ್ಷರಗಳ ಉದ್ದವಾಗಿರಬೇಕು ಮತ್ತು ಅಕ್ಷರಗಳನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿರಬೇಕು</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">ಡೊಮೇನ್ ಲೇಬಲ್ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_email_label_max_length">ಡೊಮೇನ್ ಲೇಬಲ್ ಗರಿಷ್ಠ ಉದ್ದ 63 ಅಕ್ಷರಗಳನ್ನು ಮೀರುತ್ತದೆ</string>
+    <string name="validation_email_label_starts_with_hyphen">ಡೊಮೇನ್ ಲೇಬಲ್ ಹೈಫನ್‌ನಿಂದ ಪ್ರಾರಂಭಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_label_ends_with_hyphen">ಡೊಮೇನ್ ಲೇಬಲ್ ಹೈಫನ್‌ನೊಂದಿಗೆ ಕೊನೆಗೊಳ್ಳಬಾರದು</string>
+    <string name="validation_email_label_invalid_characters">ಡೊಮೇನ್ ಲೇಬಲ್‌ನಲ್ಲಿ ಅಮಾನ್ಯ ಅಕ್ಷರಗಳಿವೆ</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">ಫೋನ್ ಸಂಖ್ಯೆ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_phone_too_short">ಫೋನ್ ಸಂಖ್ಯೆ ತುಂಬಾ ಕಿರುದಾಗಿದೆ</string>
+    <string name="validation_phone_too_long">ಫೋನ್ ಸಂಖ್ಯೆ ತುಂಬಾ ಉದ್ದವಾಗಿದೆ</string>
+    <string name="validation_phone_invalid_characters">ಫೋನ್ ಸಂಖ್ಯೆಯಲ್ಲಿ ಅಮಾನ್ಯ ಅಕ್ಷರಗಳಿವೆ</string>
+    <string name="validation_phone_spanish_country_code_required">ದಯವಿಟ್ಟು ಸ್ಪ್ಯಾನಿಷ್ ದೇಶದ ಕೋಡ್ (+34) ಅನ್ನು ಬಳಸಿ</string>
+    <string name="validation_phone_spanish_format_invalid">ಅಮಾನ್ಯ ಸ್ಪ್ಯಾನಿಷ್ ಫೋನ್ ಸಂಖ್ಯೆ ಸ್ವರೂಪ</string>
+
+    <string name="validation_phone_invalid_for_country">ಆಯ್ಕೆಮಾಡಿದ ದೇಶಕ್ಕೆ ಫೋನ್ ಸಂಖ್ಯೆ ಅಮಾನ್ಯವಾಗಿದೆ</string>
+    <string name="validation_phone_no_valid_country_found">ಫೋನ್ ಸಂಖ್ಯೆ ಸ್ವರೂಪವು ಯಾವುದೇ ಬೆಂಬಲಿತ ದೇಶಕ್ಕೆ ಗುರುತಿಸಲಾಗುತ್ತಿಲ್ಲ</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">ಹೆಸರು ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_name_invalid_characters">ಹೆಸರಿನಲ್ಲಿ ಅಮಾನ್ಯ ಅಕ್ಷರಗಳಿವೆ</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">ಈ ಕ್ಷೇತ್ರವು ಅಗತ್ಯವಿದೆ</string>
+    <string name="validation_format_invalid">ಅಮಾನ್ಯ ಸ್ವರೂಪ</string>
+    <string name="validation_length_exceeded">ಗರಿಷ್ಠ ಉದ್ದವನ್ನು ಮೀರಿದೆ</string>
+    <string name="validation_length_insufficient">ಕನಿಷ್ಠ ಉದ್ದವನ್ನು ಪೂರೈಸಲಾಗಿಲ್ಲ</string>
+
+    <string name="validation_amount_empty">ಮೊತ್ತ ಖಾಲಿಯಾಗಿರಬಾರದು</string>
+    <string name="validation_amount_invalid_format">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊತ್ತದ ಸ್ವರೂಪವನ್ನು ನಮೂದಿಸಿ (ಉದಾ. 99.99)</string>
+    <string name="validation_amount_invalid_number">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="validation_amount_negative">ಮೊತ್ತವು ಋಣಾತ್ಮಕವಾಗಿರಬಾರದು</string>
+    <string name="validation_amount_too_small">ಮೊತ್ತವು ಕನಿಷ್ಠ 0.01 ಇರಬೇಕು</string>
+    <string name="validation_amount_too_large">ಮೊತ್ತವು 999,999,999.99 ಗಿಂತ ಹೆಚ್ಚಾಗಿರಬಾರದು</string>
+    <string name="validation_amount_invalid_decimal_places">ಈ ಕರೆನ್ಸಿಗಾಗಿ ಮೊತ್ತದಲ್ಲಿ ತುಂಬಾ ದಶಮಾಂಶ ಸ್ಥಳಗಳಿವೆ</string>
+    <string name="validation_amount_invalid_increment">ಮೊತ್ತವು ಈ ಕರೆನ್ಸಿಗಾಗಿ ಮಾನ್ಯವಾದ ಹೆಚ್ಚಳದಲ್ಲಿರಬೇಕು</string>
+
+    <string name="savings_account">ಉಳಿತಾಯ ಖಾತೆ</string>
+    <string name="available_balance">ಗ್ರಾಹಕರ ಹೆಸರು</string>
+    <string name="select_other_payment_account">ಇತರ ಪಾವತಿ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="available_balance_formatted">ಲಭ್ಯವಿರುವ ಶಿಲ್ಕು - %1$s</string>
+
+    <string name="feature_savings_filter">ಫಿಲ್ಟರ್</string>
+    <string name="feature_savings_reset">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="feature_savings_apply">ಅನ್ವಯಿಸಿ</string>
+</resources>

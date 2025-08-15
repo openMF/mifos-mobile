@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Ongeza Mpokeaji</string>
+    <string name="qr_code">Msimbo wa QR</string>
+    <string name="choose_option">Chagua chaguo</string>
+    <string name="please_grant_us_storage_permissions">Tafadhali turuhusu hifadhi katika mipangilio.</string>
+    <string name="permission_denied_storage">Ruhusa ya kuhifadhi imekataliwa</string>
+    <string name="grant_permission">Ruhusu</string>
+    <string name="deny">Kataa</string>
+    <string name="no_image_selected_or_something_went_wrong">Hakuna picha iliyochaguliwa au kuna kitu kilichokwenda vibaya</string>
+    <string name="selected_qr_image">Picha ya QR iliyochaguliwa</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Umekataa ruhusa ya kuandika kwenye hifadhi. Bila ruhusa hii, hutaweza kuongeza mpokeaji kwa kutumia msimbo wa QR. Je, una uhakika unataka kukataa ruhusa hii?</string>
+    <string name="proceed">Endelea</string>
+    <string name="import_qr">Ingiza Msimbo wa QR</string>
+    <string name="import_another_qr">Ingiza Msimbo mwingine wa QR</string>
+    <string name="error_reading_qr">Hitilafu katika kusoma msimbo wa QR, tafadhali hakikisha umechagua eneo sahihi</string>
+    <string name="invalid_qr">Huwezi kufanya kitendo chochote kwenye akaunti yako mwenyewe, tafadhali changanua msimbo wa QR wa akaunti za benki na mikopo ya watumiaji wengine</string>
+    <string name="scan_your_qr">Changanua msimbo wako wa QR</string>
+    <string name="qr_scan_instruction">Changanua msimbo huu wa QR ili kuagiza maelezo ya akaunti kwenye programu yako.</string>
+    <string name="qr_alignment_instruction">Tafadhali panga msimbo wa QR ndani ya fremu ili kuruhusu uscan iweze kutambuliwa kwa urahisi.</string>
+    <string name="generated_on">Imezalishwa:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Huwezi kufanya kitendo chochote kwenye akaunti yako mwenyewe, tafadhali changanua msimbo wa QR wa akaunti za benki na mikopo ya watumiaji wengine</string>
+    <string name="feature_qr_error">Hitilafu katika kusoma msimbo wa QR</string>
+    <string name="feature_qr_instruction">Tafadhali panga msimbo wa QR ndani ya fremu ili kuruhusu uscan iweze kutambuliwa kwa urahisi.</string>
+    <string name="feature_qr_warning_title">Onyo la Uwezekano</string>
+    <string name="feature_qr_warning_message">Ukichanganua msimbo wa QR, unaweza kusafirishwa kwenye tovuti ya ulaghai ambayo inaweza kuiba maelezo yako ya kibinafsi kama vile nambari za kadi ya mkopo au jina la mtumiaji na nenosiri. Pia inaweza kupakua programu hasidi kwenye simu yako na kumpa mjanja ufikiaji wa kifaa chako.</string>
+    <string name="feature_qr_upload">Pakia Msimbo wa QR</string>
+</resources>

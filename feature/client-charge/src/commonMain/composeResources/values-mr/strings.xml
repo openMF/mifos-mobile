@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">कृपया आपण इंटरनेटशी कनेक्ट असल्याची खात्री करा</string>
+    <string name="client_charges">क्लायंट चार्ज</string>
+    <string name="loan_charges">कर्ज चार्ज</string>
+    <string name="savings_charges">बचत चार्ज</string>
+    <string name="charges">चार्ज</string>
+    <string name="error_no_charge">कोणतेही चार्ज आढळले नाहीत</string>
+    <string name="amount_due">देय:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">बाकी:</string>
+    <string name="amount_waived">माफ केले:</string>
+    <string name="amount_paid">भरले:</string>
+
+    <string name="charge_details">चार्ज तपशील</string>
+    <string name="paid_success_message">तुम्ही हे चार्ज पूर्णपणे यशस्वीरित्या भरले आहे</string>
+    <string name="status_icon_description">स्थिती चिन्ह</string>
+    <string name="ref_no">संदर्भ क्रमांक %1$s</string>
+    <string name="paid_on">भरले: %1$s</string>
+    <string name="partial_amount_paid_on">आंशिक रक्कम भरली: %1$s</string>
+    <string name="pay_outstanding">बाकी रक्कम भरा</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">शुल्क शीर्षक</string>
+    <string name="date">तारीख</string>
+    <string name="due">देय</string>
+    <string name="paid">भरले</string>
+    <string name="waived">माफ केले</string>
+    <string name="outstanding">बाकी</string>
+
+</resources>

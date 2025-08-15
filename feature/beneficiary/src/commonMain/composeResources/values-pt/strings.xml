@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Falha ao buscar Beneficiários</string>
+    <string name="error_fetching_beneficiary_template">Falha ao buscar Modelo de Beneficiário</string>
+    <string name="error_fetching_template">Falha ao buscar Modelo</string>
+    <string name="error_creating_beneficiary">Falha ao criar Beneficiário</string>
+    <string name="error_updating_beneficiary">Falha ao atualizar Beneficiário</string>
+    <string name="error_deleting_beneficiary">Falha ao excluir Beneficiário</string>
+    <string name="error_loan_account_withdraw">Erro ao retirar conta de empréstimo</string>
+    <string name="error_fetching_third_party_transfer_template">Erro ao buscar modelo de transferência de terceiros</string>
+    <string name="no_beneficiary_found_please_add">Você não possui beneficiários no momento. Por favor, adicione um beneficiário</string>
+    <string name="no_filtered_beneficiary_found">Nenhum beneficiário encontrado para o filtro fornecido</string>
+    <string name="beneficiary">Beneficiário</string>
+    <string name="manage_beneficiaries">Gerenciar Beneficiários</string>
+    <string name="beneficiaries">Beneficiários</string>
+    <string name="beneficiary_detail">Detalhe do Beneficiário</string>
+    <string name="beneficiary_name">Nome do Beneficiário</string>
+    <string name="account_type">Tipo de Conta</string>
+    <string name="transfer_limit">Limite de Transferência</string>
+    <string name="add_beneficiary">Adicionar Beneficiário</string>
+    <string name="office_name">Nome do Escritório</string>
+    <string name="select_account_type">Selecione o Tipo de Conta*</string>
+    <string name="submit_beneficiary">Enviar Beneficiário</string>
+    <string name="enter_office_name">Digite o nome do escritório do beneficiário</string>
+    <string name="enter_beneficiary_name">Digite o nome do beneficiário</string>
+    <string name="enter_transfer_limit">Digite o limite de transferência</string>
+    <string name="enter_account_number">Digite o número da conta do beneficiário</string>
+    <string name="choose_account_type">Escolha o tipo de conta no menu suspenso</string>
+    <string name="beneficiary_created_successfully">Beneficiário criado com sucesso</string>
+    <string name="beneficiary_updated_successfully">Beneficiário atualizado com sucesso</string>
+    <string name="update_beneficiary">Atualizar Beneficiário</string>
+    <string name="delete_beneficiary">Excluir Beneficiário</string>
+    <string name="delete_beneficiary_confirmation">Tem certeza de que deseja excluir este beneficiário?</string>
+    <string name="login_using_password_confirmation">Tem certeza de que deseja fazer login usando senha?</string>
+    <string name="delete">Excluir</string>
+    <string name="beneficiary_deleted_successfully">Beneficiário excluído com sucesso</string>
+    <string name="third_party_transfer">Transferência de Terceiros</string>
+    <string name="total_loan">Empréstimo Total</string>
+    <string name="total_saving">Poupança Total</string>
+    <string name="accounts_overview">Visão Geral das Contas</string>
+    <string name="show_hide_total_saving_amount">Mostrar ou ocultar o valor total da poupança</string>
+    <string name="show_hide_total_loan_amount">Mostrar ou ocultar o valor total do empréstimo</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Pesquisa</string>
+    <string name="activation_date">Data de Ativação</string>
+    <string name="groups">Grupos</string>
+    <string name="user_details">Detalhes do Usuário</string>
+    <string name="client_type">Tipo de Cliente</string>
+    <string name="client_classification">Classificação do Cliente</string>
+    <string name="select_mode">Selecione o Modo</string>
+    <string name="add_beneficiary_option">Adicione um beneficiário de terceiros à sua conta.\nDigite manualmente ou escaneie o código QR da conta</string>
+    <string name="invalid_amount">Valor Inválido</string>
+    <string name="account_number">Número da Conta</string>
+    <string name="client_name">Nome do Cliente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="internet_not_connected">Por favor, verifique se você está conectado à internet</string>
+    <string name="add">Adicionar</string>
+    <string name="scan">Escanear</string>
+    <string name="upload_qr_code">Carregar Código QR</string>
+
+    <string name="beneficiary_name_label">Nome do Beneficiário</string>
+    <string name="office_label">Escritório</string>
+    <string name="account_type_label">Tipo de Conta</string>
+    <string name="account_number_label">Número da Conta</string>
+    <string name="transfer_limit_label">Limite de Transferência</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Poupança</string>
+    <string name="account_type_loan">Empréstimo</string>
+    <string name="account_type_share">Compartilhar</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Validar Detalhes</string>
+    <string name="confirm_details">Confirmar Detalhes</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Falha na Criação do Beneficiário</string>
+    <string name="beneficiary_updation_failed">Falha na Atualização do Beneficiário</string>
+    <string name="try_again">Tentar Novamente</string>
+    <string name="back_to_home">Voltar para a Página Inicial</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filtro</string>
+    <string name="feature_savings_reset">Redefinir</string>
+    <string name="feature_savings_apply">Aplicar</string>
+    <string name="feature_filters_count">%1$s Selecionado</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Tipo de Conta</string>
+    <string name="filter_loan_account">Conta de Empréstimo</string>
+    <string name="filter_savings_account">Conta de Poupança</string>
+    <string name="filter_linked_with">Vinculado Com</string>
+    <string name="filter_self">Próprio</string>
+    <string name="filter_other_clients">Outros Clientes</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Beneficiário %2$s criado com sucesso para a conta %1$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Beneficiário %1$s atualizado com sucesso com limite de transferência %2$d.
+    </string>
+
+    <string name="skip_the_form">Pular o formulário</string>
+    <string name="upload_or_scan_qr_code">Carregar ou escanear código QR</string>
+
+    <string name="filter">Filtro</string>
+    <string name="linked_with">Vinculado Com</string>
+    <string name="type_of_account">Tipo de Conta</string>
+    <string name="selected_count">%1$d Selecionado</string>
+    <string name="filter_icon_description">Ícone de Filtro</string>
+</resources>

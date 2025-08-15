@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Sikertelen kedvezményezettek lekérése</string>
+    <string name="error_fetching_beneficiary_template">Sikertelen kedvezményezett sablon lekérése</string>
+    <string name="error_fetching_template">Sikertelen sablon lekérése</string>
+    <string name="error_creating_beneficiary">Sikertelen kedvezményezett létrehozása</string>
+    <string name="error_updating_beneficiary">Sikertelen kedvezményezett frissítése</string>
+    <string name="error_deleting_beneficiary">Sikertelen kedvezményezett törlése</string>
+    <string name="error_loan_account_withdraw">Hiba a hitelszámla visszavonásakor</string>
+    <string name="error_fetching_third_party_transfer_template">Harmadik fél átviteli sablonjának lekérésekor hiba történt</string>
+    <string name="no_beneficiary_found_please_add">Jelenleg nincs kedvezményezettje. Kérjük, adjon hozzá kedvezményezettet</string>
+    <string name="no_filtered_beneficiary_found">Nem található kedvezményezett a megadott szűrőhöz</string>
+    <string name="beneficiary">Kedvezményezett</string>
+    <string name="manage_beneficiaries">Kedvezményezettek kezelése</string>
+    <string name="beneficiaries">Kedvezményezettek</string>
+    <string name="beneficiary_detail">Kedvezményezett részletei</string>
+    <string name="beneficiary_name">Kedvezményezett neve</string>
+    <string name="account_type">Számlatípus</string>
+    <string name="transfer_limit">Átviteli limit</string>
+    <string name="add_beneficiary">Kedvezményezett hozzáadása</string>
+    <string name="office_name">Iroda neve</string>
+    <string name="select_account_type">Válasszon számlatípust*</string>
+    <string name="submit_beneficiary">Kedvezményezett beküldése</string>
+    <string name="enter_office_name">Adja meg a kedvezményezett iroda nevét</string>
+    <string name="enter_beneficiary_name">Adja meg a kedvezményezett nevét</string>
+    <string name="enter_transfer_limit">Adja meg az átviteli limitet</string>
+    <string name="enter_account_number">Adja meg a kedvezményezett számlaszámát</string>
+    <string name="choose_account_type">Válasszon számlatípust a legördülő menüből</string>
+    <string name="beneficiary_created_successfully">Kedvezményezett sikeresen létrehozva</string>
+    <string name="beneficiary_updated_successfully">Kedvezményezett sikeresen frissítve</string>
+    <string name="update_beneficiary">Kedvezményezett frissítése</string>
+    <string name="delete_beneficiary">Kedvezményezett törlése</string>
+    <string name="delete_beneficiary_confirmation">Biztosan törölni szeretné ezt a kedvezményezettet?</string>
+    <string name="login_using_password_confirmation">Biztosan be szeretne jelentkezni jelszó használatával?</string>
+    <string name="delete">Törlés</string>
+    <string name="beneficiary_deleted_successfully">Kedvezményezett sikeresen törölve</string>
+    <string name="third_party_transfer">Harmadik fél átvitele</string>
+    <string name="total_loan">Összes hitel</string>
+    <string name="total_saving">Összes megtakarítás</string>
+    <string name="accounts_overview">Számlák áttekintése</string>
+    <string name="show_hide_total_saving_amount">Teljes megtakarítási összeg megjelenítése vagy elrejtése</string>
+    <string name="show_hide_total_loan_amount">Teljes hitelösszeg megjelenítése vagy elrejtése</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Felmérések</string>
+    <string name="activation_date">Aktiválás dátuma</string>
+    <string name="groups">Csoportok</string>
+    <string name="user_details">Felhasználói adatok</string>
+    <string name="client_type">Ügyfél típusa</string>
+    <string name="client_classification">Ügyfél besorolása</string>
+    <string name="select_mode">Mód kiválasztása</string>
+    <string name="add_beneficiary_option">Adjon hozzá harmadik fél kedvezményezetteket a számlájához.\nAdja meg kézzel vagy olvassa be a számla QR-kódját</string>
+    <string name="invalid_amount">Érvénytelen összeg</string>
+    <string name="account_number">Számlaszám</string>
+    <string name="client_name">Ügyfél neve</string>
+    <string name="cancel">Mégse</string>
+    <string name="internet_not_connected">Kérjük, győződjön meg róla, hogy csatlakozik az internethez</string>
+    <string name="add">Hozzáadás</string>
+    <string name="scan">Beolvasás</string>
+    <string name="upload_qr_code">QR-kód feltöltése</string>
+
+    <string name="beneficiary_name_label">Kedvezményezett neve</string>
+    <string name="office_label">Iroda</string>
+    <string name="account_type_label">Számlatípus</string>
+    <string name="account_number_label">Számlaszám</string>
+    <string name="transfer_limit_label">Átviteli limit</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Megtakarítás</string>
+    <string name="account_type_loan">Hitel</string>
+    <string name="account_type_share">Részvény</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Részletek érvényesítése</string>
+    <string name="confirm_details">Részletek megerősítése</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Kedvezményezett létrehozása sikertelen</string>
+    <string name="beneficiary_updation_failed">Kedvezményezett frissítése sikertelen</string>
+    <string name="try_again">Próbálja újra</string>
+    <string name="back_to_home">Vissza a főoldalra</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Szűrők</string>
+    <string name="feature_savings_reset">Visszaállítás</string>
+    <string name="feature_savings_apply">Alkalmaz</string>
+    <string name="feature_filters_count">%1$s kiválasztva</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Számlatípus</string>
+    <string name="filter_loan_account">Hitelszámla</string>
+    <string name="filter_savings_account">Megtakarítási számla</string>
+    <string name="filter_linked_with">Kapcsolódik ehhez:</string>
+    <string name="filter_self">Saját</string>
+    <string name="filter_other_clients">Más ügyfelek</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Kedvezményezett sikeresen létrehozva a %1$s számlához a %2$s nevű kedvezményezett számára.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Kedvezményezett sikeresen frissítve a %1$s nevű kedvezményezett számára %2$d átviteli limittel.
+    </string>
+
+    <string name="skip_the_form">Űrlap kihagyása</string>
+    <string name="upload_or_scan_qr_code">QR-kód feltöltése vagy beolvasása</string>
+
+    <string name="filter">Szűrő</string>
+    <string name="linked_with">Kapcsolódik ehhez:</string>
+    <string name="type_of_account">Számla típusa</string>
+    <string name="selected_count">%1$d kiválasztva</string>
+    <string name="filter_icon_description">Szűrő ikon</string>
+</resources>

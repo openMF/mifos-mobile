@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">කරුණාකර ඔබ අන්තර්ජාලයට සම්බන්ධ වී ඇතැයි සහතික කර ගන්න</string>
+    <string name="client_charges">සේවාදායක ගාස්තු</string>
+    <string name="loan_charges">ණය ගාස්තු</string>
+    <string name="savings_charges">ඉතිර ගාස්තු</string>
+    <string name="charges">ගාස්තු</string>
+    <string name="error_no_charge">ගාස්තු හමු නොවිණි</string>
+    <string name="amount_due">නියමිත:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">නොගෙවූ:</string>
+    <string name="amount_waived">අත්හැරුණු:</string>
+    <string name="amount_paid">ගෙවූ:</string>
+
+    <string name="charge_details">ගාස්තු විස්තර</string>
+    <string name="paid_success_message">ඔබ මෙම ගාස්තුව සාර්ථකව සම්පූර්ණයෙන් ගෙවා ඇත</string>
+    <string name="status_icon_description">තත්ත්ව නිරූපකය</string>
+    <string name="ref_no">යොමු අංකය %1$s</string>
+    <string name="paid_on">ගෙවූ දිනය: %1$s</string>
+    <string name="partial_amount_paid_on">අඩු මුදල ගෙවූ දිනය: %1$s</string>
+    <string name="pay_outstanding">නොගෙවූ මුදල ගෙවන්න</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">ගාස්තු මාතෘකාව</string>
+    <string name="date">දිනය</string>
+    <string name="due">නියමිත</string>
+    <string name="paid">ගෙවූ</string>
+    <string name="waived">අත්හැරුණු</string>
+    <string name="outstanding">නොගෙවූ</string>
+
+</resources>

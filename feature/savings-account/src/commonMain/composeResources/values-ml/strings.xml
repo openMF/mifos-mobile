@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">സജീവം</string>
+    <string name="feature_account_approved">അംഗീകരിച്ചു</string>
+    <string name="feature_account_approval_pending">അംഗീകാരം ശേഷിക്കുന്നു</string>
+    <string name="feature_account_matured">പഴകിയത്</string>
+    <string name="feature_account_closed">അടച്ചു</string>
+    <string name="feature_account_empty_savings_accounts">നിങ്ങളുമായി ബന്ധപ്പെട്ട സേവിംഗ്സ് അക്കൗണ്ടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_account_submitted">സമർപ്പിച്ചു</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">അക്കൗണ്ടുകൾ</string>
+    <string name="feature_savings_account_dashboard">മൊത്തം ലഭ്യമായ സേവിംഗ്സ്</string>
+    <string name="feature_savings_account">സേവിംഗ്സ് അക്കൗണ്ട്</string>
+    <string name="feature_savings_account_items">%1$d ഇനങ്ങൾ</string>
+
+    <string name="feature_common_error">എന്തോ കുഴപ്പം സംഭവിച്ചു</string>
+
+    <string name="content_description_search">തിരയുക</string>
+    <string name="content_description_filter">ഫിൽട്ടർ</string>
+
+    <string name="feature_savings_filter_wallet_account">വാലറ്റ് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_bank_account">ബാങ്ക് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_group_account">ഗ്രൂപ്പ് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_nb_account">NB അക്കൗണ്ട്</string>
+
+    <string name="feature_savings_filter_active_account">സജീവം</string>
+    <string name="feature_savings_filter_pending_account">അംഗീകാരം ശേഷിക്കുന്നു</string>
+    <string name="feature_savings_filter_closed_account">അടച്ചു</string>
+    <string name="feature_savings_filter_matured_account">പഴകിയത്</string>
+    <string name="feature_savings_filter_approved_account">അംഗീകരിച്ചു</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">സേവിംഗ്സ് അക്കൗണ്ട് വിശദാംശങ്ങൾ</string>
+    <string name="feature_account_action_update">അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="feature_account_action_withdraw">പിൻവലിക്കുക</string>
+    <string name="feature_account_action_deposit">ഡിപ്പോസിറ്റ് ചെയ്യുക</string>
+    <string name="feature_account_action_deposit_tip">നിങ്ങളുടെ ഡിപ്പോസിറ്റ് യാത്ര ആരംഭിക്കുക</string>
+    <string name="feature_account_action_transfer">ട്രാൻസ്ഫർ ചെയ്യുക</string>
+    <string name="feature_account_action_transfer_tip">നിങ്ങളുടെ ഫണ്ടുകൾ മറ്റൊരു പ്രോഡക്ടിലേക്ക് ട്രാൻസ്ഫർ ചെയ്യുക</string>
+    <string name="feature_account_details_account_number">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="feature_account_details_account_balance">അക്കൗണ്ട് ബാലൻസ്</string>
+    <string name="feature_account_details_total_deposits">ആകെ ഡിപ്പോസിറ്റുകൾ</string>
+    <string name="feature_account_details_last_trans">അവസാന ഇടപാട്</string>
+    <string name="feature_account_details_made_on">ചെയ്ത തീയതി</string>
+    <string name="feature_account_details_min_required_balance">ആവശ്യമായ കുറഞ്ഞ ബാലൻസ്</string>
+    <string name="feature_account_details_nominal_interest_rate">നാമമാത്ര പലിശ നിരക്ക്</string>
+    <string name="feature_account_details_account_status">അക്കൗണ്ട് സ്ഥിതി</string>
+    <string name="feature_account_details_no_transaction">ഇടപാടുകൾ ഒന്നും ഇല്ല</string>
+    <string name="feature_account_details_transactions">ഇടപാടുകൾ</string>
+    <string name="feature_account_details_no_withdrawals">പിൻവലിക്കലുകൾ ഒന്നും ഇല്ല</string>
+    <string name="feature_account_details_total_withdrawal">ആകെ പിൻവലിക്കൽ</string>
+    <string name="feature_account_details_savings_charges">സേവിംഗ്സ് ചാർജുകൾ</string>
+    <string name="feature_account_details_not_available">ലഭ്യമല്ല</string>
+    <string name="feature_account_details_view_transactions">ഇടപാടുകൾ കാണുക</string>
+    <string name="feature_account_details_view_charges">ചാർജുകൾ കാണുക</string>
+    <string name="feature_account_details_qr_code">QR കോഡ്</string>
+    <string name="feature_account_details_share_qr_code">QR കോഡ് പങ്കിടുക</string>
+    <string name="feature_account_details_view_qr_code">ഈ അക്കൗണ്ടിനായുള്ള QR കോഡ് കാണുക</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">സേവിംഗ്സ് അക്കൗണ്ട് ഇടപാടുകൾ</string>
+    <string name="feature_account_transaction_no_transaction_found">ഇടപാടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_account_transaction_date">തീയതി</string>
+    <string name="feature_account_transaction_four_weeks">4 ആഴ്ചകൾ</string>
+    <string name="feature_account_transaction_three_months">3 മാസങ്ങൾ</string>
+    <string name="feature_account_transaction_six_months">6 മാസങ്ങൾ</string>
+    <string name="feature_account_transaction_dividend_payout">ഡിവിഡൻഡ് പേയ്ഔട്ട്</string>
+    <string name="feature_account_transaction_withdrawal">പിൻവലിക്കൽ</string>
+    <string name="feature_account_transaction_interest_posting">പലിശ പോസ്റ്റിംഗ്</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">സേവിംഗ്സ് അക്കൗണ്ടിൽ നിന്ന് പിൻവലിക്കുക</string>
+    <string name="feature_savings_withdraw_amount">തുക</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">പിൻവലിക്കൽ തീയതി</string>
+    <string name="feature_savings_withdraw_remark">അഭിപ്രായം</string>
+    <string name="feature_savings_withdraw_submit">സമർപ്പിക്കുക</string>
+    <string name="feature_savings_withdraw_enter_amount">തുക നൽകുക</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">തുക പൂജ്യത്തേക്കാൾ കൂടുതലായിരിക്കണം</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s ശൂന്യമായിരിക്കരുത്</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="feature_savings_update_client_name_label">ക്ലയന്റ് പേര്</string>
+    <string name="feature_savings_update_submission_date_label">സമർപ്പണ തീയതി</string>
+    <string name="feature_savings_update_select_product_id">പ്രോഡക്ട് ഐഡി തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_savings_update_submit">സമർപ്പിക്കുക</string>
+    <string name="feature_savings_update_cancel">റദ്ദാക്കുക</string>
+</resources>

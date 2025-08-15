@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">අන්තර්ජාලය නැත</string>
+    <string name="retry">යලි උත්සාහ කරන්න</string>
+    <string name="no_data">දත්ත නැත</string>
+    <string name="something_went_wrong">යමක් වැරදී ඇත</string>
+    <string name="core_common_working">හරියටම නිවැරදි කොර් දේවල්</string>
+
+    <string name="powered_by">බලගෙන ඇති</string>
+
+    <string name="password_checker_empty_error">මුරපදය හිස්ව තියෙන්න බෑ.</string>
+    <string name="password_checker_too_long_error">මුරපදය දිග වැඩි ඉන්නවා. උපරිම දිග අක්ෂර 128 ක්.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">මුරපදය අවම වශයෙන් අක්ෂර 12 ක් විය යුතුය.</string>
+    <string name="password_checker_uppercase_feedback">අවම වශයෙන් එක් ලකුණු දැක්වීමක් සැපයිය යුතුය.</string>
+    <string name="password_checker_lowercase_feedback">අවම වශයෙන් එක් කුඩා අකුරක් සැපයිය යුතුය.</string>
+    <string name="password_checker_digit_feedback">අවම වශයෙන් එක් ඉලක්කමක් සැපයිය යුතුය.</string>
+    <string name="password_checker_special_char_feedback">අවම වශයෙන් එක් විශේෂ අකුරක් සැපයිය යුතුය.</string>
+    <string name="password_checker_strong_length_feedback">දැඩි මුරපදයක් සඳහා අවම වශයෙන් අක්ෂර 12 ක් භාවිතා කරන්න.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">ඉතා දුර්වලයි</string>
+    <string name="password_strength_level_1">දුර්වලයි</string>
+    <string name="password_strength_level_2">ප්‍රමාණවත්</string>
+    <string name="password_strength_level_3">හොඳයි</string>
+    <string name="password_strength_level_4">දැඩියි</string>
+    <string name="password_strength_level_5">ඉතා දැඩියි</string>
+    <string name="password_strength_none">මුරපදයක් සැපයිය යුතුය</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">මුරපද ශක්තිය දර්ශකය</string>
+    <string name="password_strength_announcement">මුරපද ශක්තිය: %1$s</string>
+    <string name="minimum_characters_requirement">අවම වශයෙන් අක්ෂර %1$d ක්</string>
+    <string name="minimum_characters_met">අවම අක්ෂර අවශ්‍යතාව සපුරා ඇත</string>
+    <string name="minimum_characters_not_met">අවම අක්ෂර අවශ්‍යතාව සපුරා නැත</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">මුරපද අවශ්‍යතා</string>
+    <string name="password_feedback_title">මුරපද ප්‍රතිපෝෂණ</string>
+    <string name="password_feedback_all_good">ඔබේ මුරපදය සියලුම අවශ්‍යතා සපුරා ඇත!</string>
+    <string name="character_count">අක්ෂර %1$d ක්</string>
+    <string name="character_count_with_limit">අක්ෂර %1$d / %2$d ක්</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">ඊමේල් ලිපිනය හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_email_max_length_exceeded">ඊමේල් ලිපිනය උපරිම දිග අක්ෂර 254 ක් ඉක්මවා ඇත</string>
+    <string name="validation_email_missing_at_symbol">ඊමේල් ලිපිනය තුළ @ ලකුණ අඩංගු විය යුතුය</string>
+    <string name="validation_email_starts_with_at">@ සමඟ ඊමේල් ලිපිනය ආරම්භ විය නොහැක</string>
+    <string name="validation_email_ends_with_at">@ සමඟ ඊමේල් ලිපිනය අවසන් විය නොහැක</string>
+    <string name="validation_email_multiple_at_symbols">ඊමේල් ලිපිනය තුළ @ ලකුණු එකකට වැඩි නොවිය යුතුය</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">ස්ථානීය කොටස හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_email_local_max_length">ස්ථානීය කොටස උපරිම දිග අක්ෂර 64 ක් ඉක්මවා ඇත</string>
+    <string name="validation_email_local_starts_with_dot">ස්ථානීය කොටස තිත් සමඟ ආරම්භ විය නොහැක</string>
+    <string name="validation_email_local_ends_with_dot">ස්ථානීය කොටස තිත් සමඟ අවසන් විය නොහැක</string>
+    <string name="validation_email_local_consecutive_dots">ස්ථානීය කොටස තුළ තිත් දෙකක් සමඟ නොවිය යුතුය</string>
+    <string name="validation_email_local_invalid_characters">ස්ථානීය කොටස තුළ වලංගු නොවන අකුරු අඩංගු වේ</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">වසම් කොටස හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_email_domain_max_length">වසම් කොටස උපරිම දිග අක්ෂර 253 ක් ඉක්මවා ඇත</string>
+    <string name="validation_email_domain_missing_dot">වසම් කොටස තුළ අවම වශයෙන් තිත් එකක් අඩංගු විය යුතුය</string>
+    <string name="validation_email_domain_starts_ends_with_dot">වසම් කොටස තිත් සමඟ ආරම්භ හෝ අවසන් විය නොහැක</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">වසම් කොටස ඉරුම් ලකුණු සමඟ ආරම්භ හෝ අවසන් විය නොහැක</string>
+    <string name="validation_email_domain_insufficient_parts">වසම් කොටස තුළ තිත් මගින් වෙන් කරන ලද අවම වශයෙන් කොටස් දෙකක් අඩංගු විය යුතුය</string>
+    <string name="validation_email_tld_invalid">ඉහළම වසම් කොටස අවම වශයෙන් අක්ෂර 2 ක් අඩංගු විය යුතුය, අකුරු පමණක් අඩංගු විය යුතුය</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">වසම් ලේබලය හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_email_label_max_length">වසම් ලේබලය උපරිම දිග අක්ෂර 63 ක් ඉක්මවා ඇත</string>
+    <string name="validation_email_label_starts_with_hyphen">වසම් ලේබලය ඉරුම් ලකුණු සමඟ ආරම්භ විය නොහැක</string>
+    <string name="validation_email_label_ends_with_hyphen">වසම් ලේබලය ඉරුම් ලකුණු සමඟ අවසන් විය නොහැක</string>
+    <string name="validation_email_label_invalid_characters">වසම් ලේබලය තුළ වලංගු නොවන අකුරු අඩංගු වේ</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">දුරකථන අංකය හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_phone_too_short">දුරකථන අංකය ඉතා කෙටියි</string>
+    <string name="validation_phone_too_long">දුරකථන අංකය ඉතා දිගයි</string>
+    <string name="validation_phone_invalid_characters">දුරකථන අංකය තුළ වලංගු නොවන අකුරු අඩංගු වේ</string>
+    <string name="validation_phone_spanish_country_code_required">ස්පාඤ්ඤ රට කේතය (+34) භාවිතා කරන්න</string>
+    <string name="validation_phone_spanish_format_invalid">ස්පාඤ්ඤ දුරකථන අංක ආකෘතිය වැරදියි</string>
+
+    <string name="validation_phone_invalid_for_country">තෝරාගත් රට සඳහා දුරකථන අංකය වලංගු නොවේ</string>
+    <string name="validation_phone_no_valid_country_found">දුරකථන අංක ආකෘතිය සඳහා වලංගු රටක් හඳුනාගත නොහැක</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">නම හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_name_invalid_characters">නම තුළ වලංගු නොවන අකුරු අඩංගු වේ</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">මෙම ක්ෂේත්‍රය අවශ්‍යයි</string>
+    <string name="validation_format_invalid">ආකෘතිය වැරදියි</string>
+    <string name="validation_length_exceeded">උපරිම දිග ඉක්මවා ඇත</string>
+    <string name="validation_length_insufficient">අවම දිග ප්‍රමාණවත් නොවේ</string>
+
+    <string name="validation_amount_empty">මුදල් ප්‍රමාණය හිස්ව තියෙන්න බෑ</string>
+    <string name="validation_amount_invalid_format">වලංගු මුදල් ප්‍රමාණ ආකෘතියක් සැපයිය යුතුය (උදාහරණයක්: 99.99)</string>
+    <string name="validation_amount_invalid_number">වලංගු අංකයක් සැපයිය යුතුය</string>
+    <string name="validation_amount_negative">මුදල් ප්‍රමාණය ඍණ විය නොහැක</string>
+    <string name="validation_amount_too_small">මුදල් ප්‍රමාණය අවම වශයෙන් 0.01 ක් විය යුතුය</string>
+    <string name="validation_amount_too_large">මුදල් ප්‍රමාණය රු. 999.999.999,99 ඉක්මවා නොවිය යුතුය</string>
+    <string name="validation_amount_invalid_decimal_places">මෙම කාසි වර්ගය සඳහා දශම ස්ථාන ඉතා වැඩියි</string>
+    <string name="validation_amount_invalid_increment">මුදල් ප්‍රමාණය මෙම කාසි වර්ගය සඳහා වලංගු වර්ධනයක් තුළ තියෙන්න යුතුය</string>
+
+    <string name="savings_account">ඉඩුම් ගිණුම</string>
+    <string name="available_balance">ප්‍රයෝජනය කළ හැකි ශේෂය</string>
+    <string name="select_other_payment_account">වෙනත් ගිණුමක් තෝරන්න</string>
+    <string name="available_balance_formatted">ප්‍රයෝජනය කළ හැකි ශේෂය - %1$s</string>
+
+    <string name="feature_savings_filter">පෙරහන</string>
+    <string name="feature_savings_reset">යලි පිහිටුවන්න</string>
+    <string name="feature_savings_apply">යොදන්න</string>
+</resources>

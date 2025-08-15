@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">ആനുകൂല്യങ്ങൾ ശേഖരിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_fetching_beneficiary_template">ആനുകൂല്യ ടെമ്പ്ലേറ്റ് ശേഖരിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_fetching_template">ടെമ്പ്ലേറ്റ് ശേഖരിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_creating_beneficiary">ആനുകൂല്യം സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_updating_beneficiary">ആനുകൂല്യം അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_deleting_beneficiary">ആനുകൂല്യം ഇല്ലാതാക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="error_loan_account_withdraw">ലോൺ അക്കൗണ്ട് വിതരണം ചെയ്യുന്നതിൽ പിശക്</string>
+    <string name="error_fetching_third_party_transfer_template">തേർഡ് പാർട്ടി ട്രാൻസ്ഫർ ടെമ്പ്ലേറ്റ് ശേഖരിക്കുന്നതിൽ പിശക്</string>
+    <string name="no_beneficiary_found_please_add">നിങ്ങൾക്ക് ഇപ്പോൾ ആനുകൂല്യങ്ങളൊന്നുമില്ല. ദയവായി ആനുകൂല്യങ്ങൾ ചേർക്കുക</string>
+    <string name="no_filtered_beneficiary_found">നൽകിയ ഫിൽട്ടറിന് ആനുകൂല്യങ്ങൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="beneficiary">ആനുകൂല്യം</string>
+    <string name="manage_beneficiaries">ആനുകൂല്യങ്ങൾ കൈകാര്യം ചെയ്യുക</string>
+    <string name="beneficiaries">ആനുകൂല്യങ്ങൾ</string>
+    <string name="beneficiary_detail">ആനുകൂല്യ വിശദാംശങ്ങൾ</string>
+    <string name="beneficiary_name">ആനുകൂല്യത്തിന്റെ പേര്</string>
+    <string name="account_type">അക്കൗണ്ട് തരം</string>
+    <string name="transfer_limit">ട്രാൻസ്ഫർ പരിധി</string>
+    <string name="add_beneficiary">ആനുകൂല്യം ചേർക്കുക</string>
+    <string name="office_name">ഓഫീസ് പേര്</string>
+    <string name="select_account_type">അക്കൗണ്ട് തരം തിരഞ്ഞെടുക്കുക*</string>
+    <string name="submit_beneficiary">ആനുകൂല്യം സമർപ്പിക്കുക</string>
+    <string name="enter_office_name">ആനുകൂല്യത്തിന്റെ ഓഫീസ് പേര് നൽകുക</string>
+    <string name="enter_beneficiary_name">ആനുകൂല്യത്തിന്റെ പേര് നൽകുക</string>
+    <string name="enter_transfer_limit">ട്രാൻസ്ഫർ പരിധി നൽകുക</string>
+    <string name="enter_account_number">ആനുകൂല്യത്തിന്റെ അക്കൗണ്ട് നമ്പർ നൽകുക</string>
+    <string name="choose_account_type">ഡ്രോപ്പ്ഡൗൺ ലിസ്റ്റിൽ നിന്ന് അക്കൗണ്ട് തരം തിരഞ്ഞെടുക്കുക</string>
+    <string name="beneficiary_created_successfully">ആനുകൂല്യം വിജയകരമായി സൃഷ്ടിച്ചു</string>
+    <string name="beneficiary_updated_successfully">ആനുകൂല്യം വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="update_beneficiary">ആനുകൂല്യം അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="delete_beneficiary">ആനുകൂല്യം ഇല്ലാതാക്കുക</string>
+    <string name="delete_beneficiary_confirmation">ഈ ആനുകൂല്യം ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
+    <string name="login_using_password_confirmation">പാസ്‌വേഡ് ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
+    <string name="delete">ഇല്ലാതാക്കുക</string>
+    <string name="beneficiary_deleted_successfully">ആനുകൂല്യം വിജയകരമായി ഇല്ലാതാക്കി</string>
+    <string name="third_party_transfer">തേർഡ് പാർട്ടി ട്രാൻസ്ഫർ</string>
+    <string name="total_loan">ആകെ ലോൺ</string>
+    <string name="total_saving">ആകെ സേവിംഗ്</string>
+    <string name="accounts_overview">അക്കൗണ്ടുകളുടെ അവലോകനം</string>
+    <string name="show_hide_total_saving_amount">ആകെ സേവിംഗ് തുക കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക</string>
+    <string name="show_hide_total_loan_amount">ആകെ ലോൺ തുക കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">സർവേ</string>
+    <string name="activation_date">സജീവമാക്കൽ തീയതി</string>
+    <string name="groups">ഗ്രൂപ്പുകൾ</string>
+    <string name="user_details">ഉപയോക്തൃ വിശദാംശങ്ങൾ</string>
+    <string name="client_type">ക്ലയന്റ് തരം</string>
+    <string name="client_classification">ക്ലയന്റ് വർഗ്ഗീകരണം</string>
+    <string name="select_mode">മോഡ് തിരഞ്ഞെടുക്കുക</string>
+    <string name="add_beneficiary_option">നിങ്ങളുടെ അക്കൗണ്ടിലേക്ക് തേർഡ് പാർട്ടി ആനുകൂല്യങ്ങൾ ചേർക്കുക.\nസ്വമേധയാ നൽകുക അല്ലെങ്കിൽ അക്കൗണ്ട് QR കോഡ് സ്കാൻ ചെയ്യുക</string>
+    <string name="invalid_amount">അസാധുവായ തുക</string>
+    <string name="account_number">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="client_name">ക്ലയന്റ് പേര്</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="internet_not_connected">ദയവായി നിങ്ങൾ ഇന്റർനെറ്റിലാണെന്ന് ഉറപ്പുവരുത്തുക</string>
+    <string name="add">ചേർക്കുക</string>
+    <string name="scan">സ്കാൻ ചെയ്യുക</string>
+    <string name="upload_qr_code">QR കോഡ് അപ്‌ലോഡ് ചെയ്യുക</string>
+
+    <string name="beneficiary_name_label">ആനുകൂല്യത്തിന്റെ പേര്</string>
+    <string name="office_label">ഓഫീസ്</string>
+    <string name="account_type_label">അക്കൗണ്ട് തരം</string>
+    <string name="account_number_label">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="transfer_limit_label">ട്രാൻസ്ഫർ പരിധി</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">സേവിംഗ്</string>
+    <string name="account_type_loan">ലോൺ</string>
+    <string name="account_type_share">ഷെയർ</string>
+
+    <!-- Labels -->
+    <string name="validate_details">വിശദാംശങ്ങൾ സാധൂകരിക്കുക</string>
+    <string name="confirm_details">വിശദാംശങ്ങൾ സ്ഥിരീകരിക്കുക</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">ആനുകൂല്യ സൃഷ്ടിക്കൽ പരാജയപ്പെട്ടു</string>
+    <string name="beneficiary_updation_failed">ആനുകൂല്യ അപ്ഡേറ്റ് ചെയ്യൽ പരാജയപ്പെട്ടു</string>
+    <string name="try_again">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="back_to_home">ഹോം പേജിലേക്ക് പോകുക</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">ഫിൽട്ടർ</string>
+    <string name="feature_savings_reset">പുനഃക്രമീകരിക്കുക</string>
+    <string name="feature_savings_apply">പ്രയോഗിക്കുക</string>
+    <string name="feature_filters_count">%1$s തിരഞ്ഞെടുത്തു</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">അക്കൗണ്ട് തരം</string>
+    <string name="filter_loan_account">ലോൺ അക്കൗണ്ട്</string>
+    <string name="filter_savings_account">സേവിംഗ് അക്കൗണ്ട്</string>
+    <string name="filter_linked_with">ബന്ധപ്പെടുത്തിയത്</string>
+    <string name="filter_self">സ്വയം</string>
+    <string name="filter_other_clients">മറ്റ് ക്ലയന്റുകൾ</string>
+
+    <string name="beneficiary_created_successfully_account">
+        %2$s പേരിനുള്ള ആനുകൂല്യം %1$s അക്കൗണ്ടിനായി വിജയകരമായി സൃഷ്ടിച്ചു.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        %2$d ട്രാൻസ്ഫർ പരിധിയുമായി %1$s പേരിനുള്ള ആനുകൂല്യം വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു.
+    </string>
+
+    <string name="skip_the_form">ഫോം ഒഴിവാക്കുക</string>
+    <string name="upload_or_scan_qr_code">QR കോഡ് അപ്‌ലോഡ് ചെയ്യുക അല്ലെങ്കിൽ സ്കാൻ ചെയ്യുക</string>
+
+    <string name="filter">ഫിൽട്ടർ</string>
+    <string name="linked_with">ബന്ധപ്പെടുത്തിയത്</string>
+    <string name="type_of_account">അക്കൗണ്ട് തരം</string>
+    <string name="selected_count">%1$d തിരഞ്ഞെടുത്തു</string>
+    <string name="filter_icon_description">ഫിൽട്ടർ ഐക്കൺ</string>
+</resources>

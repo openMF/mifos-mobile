@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Change theme</string>
+    <string name="settings">Settings</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Change Passcode</string>
+    <string name="change_app_passcode">Change App Passcode</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_account_password">Change your Account Password</string>
+    <string name="language">Language</string>
+    <string name="choose_language">Choose your language</string>
+    <string name="other">Other</string>
+    <string name="accounts">Accounts</string>
+    <string name="theme">Theme</string>
+    <string name="pref_base_url_title">Update Endpoint</string>
+    <string name="pref_base_url_desc">Click here to change your Endpoint Configurations</string>
+    <string name="enter_base_url">Enter the Base URL</string>
+    <string name="enter_tenant">Enter the Tenant</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">Base URL and Tenant ID are required</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>System Language</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Profile</string>
+    <string name="feature_settings_action_profile_tip">Change your mail, name, phone number etc</string>
+
+    <string name="feature_settings_action_password">Password</string>
+    <string name="feature_settings_action_password_tip">Change your old password</string>
+
+    <string name="feature_settings_action_auth_passcode">Auth Passcode</string>
+    <string name="feature_settings_action_auth_passcode_tip">Change your login authorization passcode</string>
+
+    <string name="feature_settings_action_language">Language</string>
+    <string name="feature_settings_action_language_tip">Choose your app language</string>
+
+    <string name="feature_settings_action_theme">Theme</string>
+    <string name="feature_settings_action_theme_tip">Choose your app theme</string>
+
+    <string name="feature_settings_action_endpoint">Endpoint</string>
+    <string name="feature_settings_action_endpoint_tip">Change your endpoint configuration</string>
+
+    <string name="feature_settings_action_about_us">About Us</string>
+    <string name="feature_settings_action_about_us_tip">Find more about our initiative</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">Frequently asked questions by users</string>
+
+    <string name="feature_settings_action_help">Help</string>
+    <string name="feature_settings_action_help_tip">Chat with our customer care</string>
+
+    <string name="feature_settings_action_app_info">App Info</string>
+    <string name="feature_settings_action_app_info_tip">Find the app version details</string>
+
+    <string name="feature_settings_action_logout">Logout</string>
+    <string name="feature_settings_action_logout_tip">Logout from all devices</string>
+
+    <string name="feature_settings_top_bar_title">Settings</string>
+
+    <string name="feature_settings_error_fetching_client">Failed to fetch client information.</string>
+    <string name="feature_settings_error_fetching_profile_image">Failed to fetch profile image.</string>
+    <string name="feature_settings_internet_not_connected">No internet connection.</string>
+    <string name="feature_settings_error_invalid_profile_image">Invalid profile image format.</string>
+    <string name="feature_settings_customer_account_no">Customer Account: %1$s</string>
+    <string name="feature_settings_logout_message">Are you sure to logout?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">About Us</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_about_who_are_we">Who are we?</string>
+    <string name="feature_settings_about_what_does_mifos_do">What does Mifos do?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos is a non-profit organization that seeks to provide people with access to basic financial services. It does so through an open-source platform.</string>
+    <string name="feature_settings_about_point_1">It helps financial institutions offer modern financial services</string>
+    <string name="feature_settings_about_point_2">It enables people to get loans, save money, and more</string>
+    <string name="feature_settings_about_point_3">It supports financial institutions that serve millions of people around the world</string>
+
+    <string name="feature_settings_doubt">Many Doubts Are Solved In FAQ's !</string>
+    <string name="feature_settings_doubt_message">No, I haven't checked them, take me there!</string>
+
+    <string name="feature_settings_still_have_doubt">Still Have Doubts?</string>
+    <string name="feature_settings_still_have_doubt_message">Facing an issue? Don't worry at all!\nJust give our customer care a call.\nWe're here to assist you, day and night,\nTo make sure everything's working right!</string>
+    <string name="feature_settings_still_have_doubt_action">Call Us</string>
+
+    <string name="feature_settings_still_have_issue">Mail Your Issues?</string>
+    <string name="feature_settings_still_have_issue_message">Need support but prefer to write?\nSend us an email, day or night.\nOur team will respond with care and speed,\nEnsuring you get the help you need!</string>
+    <string name="feature_settings_still_have_issue_action">Mail Us</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">App Info</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos Image</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Electronic Banking</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">All rights reserved</string>
+    <string name="feature_settings_appinfo_version">Version</string>
+    <string name="feature_settings_appinfo_privacy_policy">Privacy Policy</string>
+    <string name="feature_settings_appinfo_terms_conditions">Terms and Conditions</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Update Passcode</string>
+    <string name="feature_settings_old_passcode">Old Passcode</string>
+    <string name="feature_settings_new_passcode">New Passcode</string>
+    <string name="feature_settings_confirm_new_passcode">Confirm New Passcode</string>
+    <string name="feature_settings_authorization_passcode">Authorization Passcode</string>
+    <string name="feature_settings_passcode_length_error">Passcode must be 4 digit long.</string>
+    <string name="feature_settings_passcode_empty_error">Passcode cannot be empty.</string>
+    <string name="feature_settings_passcode_invalid_error">Passcode shouldn't contain any character.</string>
+    <string name="feature_settings_passcode_confirm_error">New and confirm passcode must be same.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Old passcode must be valid.</string>
+    <string name="feature_settings_passcode_updated_successfully">Passcode updated successfully.</string>
+    <string name="feature_settings_passcode_updated_message">You need to enter the new passcode to use the services of the app.</string>
+    <string name="feature_settings_next">Next</string>
+
+    <string name="feature_settings_update_password">Update Password</string>
+    <string name="feature_settings_old_password">Old Password</string>
+    <string name="feature_settings_new_password">New Password</string>
+    <string name="feature_settings_confirm_new_password">Confirm New Password</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Password cannot be empty</string>
+    <string name="password_empty_error_repeat">consecutive repeating characters not allowed</string>
+    <string name="password_length_error">Password must be at least 12 characters long</string>
+    <string name="password_current_incorrect_error">Current password is incorrect</string>
+    <string name="password_validation_error">Password does not meet security requirements</string>
+    <string name="password_same_as_current_error">New password must be different from current password</string>
+    <string name="password_personal_info_error">Password should not contain personal information</string>
+    <string name="password_confirm_mismatch_error">Passwords do not match</string>
+    <string name="feature_settings_password">Password</string>
+    <string name="password_too_many_attempts">Too many failed attempts. Please wait before trying again.</string>
+
+    <string name="password_update_success">Password updated successfully</string>
+    <string name="password_update_success_message">You need to login again to use the services of the app.</string>
+    <string name="password_update_failed">Failed to update password. Try Again</string>
+    <string name="password_update_dialog_button">Login Now</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">No questions found</string>
+    <string-array name="faq_qs">
+        <item>How do I apply for new loan account?</item>
+        <item>Where can I view my profile information?</item>
+        <item>Where can I see my Savings Accounts Transactions?</item>
+        <item>What is the use of QR Code?</item>
+        <item>How to create a beneficiary using QR Code?</item>
+        <item>How to make a payment for a Loan Account?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>To apply for loan account, click on "Apply for Loan" given on the Home Screen.</item>
+        <item>You can view your profile information by clicking on the User Image present on Home
+            Screen.</item>
+        <item>To view your savings account transactions, navigate to the Accounts Sections, click on
+            the required savings account, click on three dots present on top right and select
+            Transactions option.</item>
+        <item>QrCode for any loan or savings accounts can be shared with other users which will
+            allow them to create a beneficiary.</item>
+        <item>In order to create a Beneficiary, goto Beneficiary option from Home Screen then click
+            on the circular button present on bottom right, choose the option to Scan which opens
+            your device camera, scan the QR Code of other person for which you want to create a
+            beneficiary, after filling in the other required detail you will be able to create a
+            Beneficiary using QR Code.</item>
+        <item>To make a payment for a loan account, navigate to the Accounts Sections, choose LOAN
+            then open your required Loan Account and click on Make Payment option.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Still have a doubt?</string>
+    <string name="feature_settings_faq_contact_us"> Contact Us</string>
+
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Language</string>
+    <string name="feature_settings_change_language">Change Language</string>
+</resources>

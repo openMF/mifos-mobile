@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Gagal mengambil Penerima Manfaat</string>
+    <string name="error_fetching_beneficiary_template">Gagal mengambil template Penerima Manfaat</string>
+    <string name="error_fetching_template">Gagal mengambil template</string>
+    <string name="error_creating_beneficiary">Gagal membuat Penerima Manfaat</string>
+    <string name="error_updating_beneficiary">Gagal memperbarui Penerima Manfaat</string>
+    <string name="error_deleting_beneficiary">Gagal menghapus Penerima Manfaat</string>
+    <string name="error_loan_account_withdraw">Kesalahan saat menarik kembali rekening pinjaman</string>
+    <string name="error_fetching_third_party_transfer_template">Kesalahan saat mengambil template transfer pihak ketiga</string>
+    <string name="no_beneficiary_found_please_add">Saat ini Anda tidak memiliki penerima manfaat. Silakan tambahkan penerima manfaat</string>
+    <string name="no_filtered_beneficiary_found">Tidak ditemukan penerima manfaat untuk filter yang diberikan</string>
+    <string name="beneficiary">Penerima Manfaat</string>
+    <string name="manage_beneficiaries">Kelola Penerima Manfaat</string>
+    <string name="beneficiaries">Penerima Manfaat</string>
+    <string name="beneficiary_detail">Detail Penerima Manfaat</string>
+    <string name="beneficiary_name">Nama Penerima Manfaat</string>
+    <string name="account_type">Jenis Rekening</string>
+    <string name="transfer_limit">Batas Transfer</string>
+    <string name="add_beneficiary">Tambah Penerima Manfaat</string>
+    <string name="office_name">Nama Kantor</string>
+    <string name="select_account_type">Pilih Jenis Rekening*</string>
+    <string name="submit_beneficiary">Kirim Penerima Manfaat</string>
+    <string name="enter_office_name">Masukkan nama kantor penerima manfaat</string>
+    <string name="enter_beneficiary_name">Masukkan nama penerima manfaat</string>
+    <string name="enter_transfer_limit">Masukkan batas transfer</string>
+    <string name="enter_account_number">Masukkan nomor rekening penerima manfaat</string>
+    <string name="choose_account_type">Pilih jenis rekening dari dropdown</string>
+    <string name="beneficiary_created_successfully">Penerima Manfaat berhasil dibuat</string>
+    <string name="beneficiary_updated_successfully">Penerima Manfaat berhasil diperbarui</string>
+    <string name="update_beneficiary">Perbarui Penerima Manfaat</string>
+    <string name="delete_beneficiary">Hapus Penerima Manfaat</string>
+    <string name="delete_beneficiary_confirmation">Apakah Anda yakin ingin menghapus penerima manfaat ini?</string>
+    <string name="login_using_password_confirmation">Apakah Anda yakin ingin masuk menggunakan kata sandi?</string>
+    <string name="delete">Hapus</string>
+    <string name="beneficiary_deleted_successfully">Penerima Manfaat berhasil dihapus</string>
+    <string name="third_party_transfer">Transfer Pihak Ketiga</string>
+    <string name="total_loan">Total Pinjaman</string>
+    <string name="total_saving">Total Tabungan</string>
+    <string name="accounts_overview">Ikhtisar Rekening</string>
+    <string name="show_hide_total_saving_amount">Tampilkan atau sembunyikan jumlah total tabungan</string>
+    <string name="show_hide_total_loan_amount">Tampilkan atau sembunyikan jumlah total pinjaman</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Survei</string>
+    <string name="activation_date">Tanggal Aktivasi</string>
+    <string name="groups">Grup</string>
+    <string name="user_details">Detail Pengguna</string>
+    <string name="client_type">Jenis Klien</string>
+    <string name="client_classification">Klasifikasi Klien</string>
+    <string name="select_mode">Pilih Mode</string>
+    <string name="add_beneficiary_option">Tambahkan penerima manfaat pihak ketiga ke rekening Anda.\nMasukkan secara manual atau pindai kode QR rekening</string>
+    <string name="invalid_amount">Jumlah tidak valid</string>
+    <string name="account_number">Nomor Rekening</string>
+    <string name="client_name">Nama Klien</string>
+    <string name="cancel">Batal</string>
+    <string name="internet_not_connected">Pastikan Anda terhubung ke internet</string>
+    <string name="add">Tambah</string>
+    <string name="scan">Pindai</string>
+    <string name="upload_qr_code">Unggah Kode QR</string>
+
+    <string name="beneficiary_name_label">Nama penerima manfaat</string>
+    <string name="office_label">Kantor</string>
+    <string name="account_type_label">Jenis rekening</string>
+    <string name="account_number_label">Nomor rekening</string>
+    <string name="transfer_limit_label">Batas transfer</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Tabungan</string>
+    <string name="account_type_loan">Pinjaman</string>
+    <string name="account_type_share">Saham</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Validasi Detail</string>
+    <string name="confirm_details">Konfirmasi Detail</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Pembuatan Penerima Manfaat Gagal</string>
+    <string name="beneficiary_updation_failed">Pembaruan Penerima Manfaat Gagal</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="back_to_home">Kembali ke Beranda</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filter</string>
+    <string name="feature_savings_reset">Reset</string>
+    <string name="feature_savings_apply">Terapkan</string>
+    <string name="feature_filters_count">%1$s dipilih</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Jenis Rekening</string>
+    <string name="filter_loan_account">Rekening Pinjaman</string>
+    <string name="filter_savings_account">Rekening Tabungan</string>
+    <string name="filter_linked_with">Ditautkan dengan</string>
+    <string name="filter_self">Sendiri</string>
+    <string name="filter_other_clients">Klien Lain</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Penerima Manfaat berhasil dibuat untuk rekening %1$s untuk penerima manfaat bernama %2$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Penerima Manfaat berhasil diperbarui untuk penerima manfaat bernama %1$s dengan batas transfer %2$d.
+    </string>
+
+    <string name="skip_the_form">Lewati formulir</string>
+    <string name="upload_or_scan_qr_code">Unggah atau pindai kode QR</string>
+
+    <string name="filter">Filter</string>
+    <string name="linked_with">Ditautkan dengan</string>
+    <string name="type_of_account">Jenis rekening</string>
+    <string name="selected_count">%1$d dipilih</string>
+    <string name="filter_icon_description">Ikon filter</string>
+</resources>

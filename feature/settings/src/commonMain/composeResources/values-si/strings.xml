@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">තේමාව වෙනස් කරන්න</string>
+    <string name="settings">සැකසුම්</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">මුරපදය වෙනස් කරන්න</string>
+    <string name="change_app_passcode">යෙදුම් මුරපදය වෙනස් කරන්න</string>
+    <string name="change_password">මුරපදය වෙනස් කරන්න</string>
+    <string name="change_account_password">ඔබගේ ගිණුම් මුරපදය වෙනස් කරන්න</string>
+    <string name="language">භාෂාව</string>
+    <string name="choose_language">ඔබගේ භාෂාව තෝරන්න</string>
+    <string name="other">වෙනත්</string>
+    <string name="accounts">ගිණුම්</string>
+    <string name="theme">තේමාව</string>
+    <string name="pref_base_url_title">අවසන් ලක්‍ෂය යාවත්කාලීන කරන්න</string>
+    <string name="pref_base_url_desc">ඔබගේ අවසන් ලක්‍ෂය සැකසුම් වෙනස් කිරීමට මෙහි ක්ලික් කරන්න</string>
+    <string name="enter_base_url">මූලික URL ඇතුළත් කරන්න</string>
+    <string name="enter_tenant">කුලී නිවැසියන්ගේ නම ඇතුළත් කරන්න</string>
+    <string name="cancel">අවලංගු කරන්න</string>
+    <string name="dialog_action_ok">හරි</string>
+    <string name="base_url_tenant_id_required">මූලික URL සහ කුලී නිවැසියන්ගේ ID අවශ්‍යයි</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>පද්ධති භාෂාව</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">පැතිකඩ</string>
+    <string name="feature_settings_action_profile_tip">ඊමේල්, නම, දුරකථන අංකය යනාදිය වෙනස් කරන්න</string>
+
+    <string name="feature_settings_action_password">මුරපදය</string>
+    <string name="feature_settings_action_password_tip">ඔබගේ පැරණි මුරපදය වෙනස් කරන්න</string>
+
+    <string name="feature_settings_action_auth_passcode">සත්‍යාපන මුරපදය</string>
+    <string name="feature_settings_action_auth_passcode_tip">ඔබගේ පිවිසුම් මුරපදය වෙනස් කරන්න</string>
+
+    <string name="feature_settings_action_language">භාෂාව</string>
+    <string name="feature_settings_action_language_tip">ඔබගේ යෙදුම් භාෂාව තෝරන්න</string>
+
+    <string name="feature_settings_action_theme">තේමාව</string>
+    <string name="feature_settings_action_theme_tip">ඔබගේ යෙදුම් තේමාව තෝරන්න</string>
+
+    <string name="feature_settings_action_endpoint">අවසන් ලක්‍ෂය</string>
+    <string name="feature_settings_action_endpoint_tip">ඔබගේ අවසන් ලක්‍ෂය සැකසුම් වෙනස් කරන්න</string>
+
+    <string name="feature_settings_action_about_us">අප ගැන</string>
+    <string name="feature_settings_action_about_us_tip">අපගේ මූලධාරණ ගැන තවත් දැනගන්න</string>
+
+    <string name="feature_settings_action_faq">නිතර අසන ප්‍රශ්න</string>
+    <string name="feature_settings_action_faq_tip">පරිශීලකයන් විසින් නිතර අසන ප්‍රශ්න</string>
+
+    <string name="feature_settings_action_help">උදව්</string>
+    <string name="feature_settings_action_help_tip">අපගේ පාරිභෝගික සේවා කණ්ඩායම සමඟ කතා කරන්න</string>
+
+    <string name="feature_settings_action_app_info">යෙදුම් තොරතුරු</string>
+    <string name="feature_settings_action_app_info_tip">යෙදුම් අනුවාදය පිළිබඳ විස්තර දැනගන්න</string>
+
+    <string name="feature_settings_action_logout">නික්මීම</string>
+    <string name="feature_settings_action_logout_tip">සියලුම උපාංගවලින් නික්මීම</string>
+
+    <string name="feature_settings_top_bar_title">සැකසුම්</string>
+
+    <string name="feature_settings_error_fetching_client">පාරිභෝගික තොරතුරු ලබා ගැනීමට නොහැකි විය.</string>
+    <string name="feature_settings_error_fetching_profile_image">පැතිකඩ පින්තූරය ලබා ගැනීමට නොහැකි විය.</string>
+    <string name="feature_settings_internet_not_connected">අන්තර්ජාල සම්බන්දතාවක් නොමැත.</string>
+    <string name="feature_settings_error_invalid_profile_image">පැතිකඩ පින්තූරයේ ආකෘතිය වලංගු නොවේ.</string>
+    <string name="feature_settings_customer_account_no">පාරිභෝගික ගිණුම: %1$s</string>
+    <string name="feature_settings_logout_message">ඔබට නික්මීමට අවශ්‍ය බව විශ්වාසද?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">අප ගැන</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos පින්තූරය</string>
+    <string name="feature_settings_about_who_are_we">අපි කවුද?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Mifos කරන්නේ කුමක්ද?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos යනු පුද්ගලයන්ට මූලික මූල්‍ය සේවාවන් සඳහා ප්‍රවේශයක් සැලසුම් කරන ලාභය නොමැති සංවිධානයකි. එය එය විවෘත මූලාශ්‍ර වේදිකාවක් හරහා කරයි.</string>
+    <string name="feature_settings_about_point_1">එය මූලික මූල්‍ය සංස්ථා නවීන මූල්‍ය සේවාවන් පිරිනමීමට උපකාර කරයි</string>
+    <string name="feature_settings_about_point_2">එය පුද්ගලයන්ට ණය, බැඳීම සහ තවත් බොහෝ දේවල් සඳහා උපකාර කරයි</string>
+    <string name="feature_settings_about_point_3">එය ලෝකය පුරා මිලියන ගණන් පුද්ගලයන්ට සේවාවන් පිරිනමන මූලික මූල්‍ය සංස්ථා සඳහා සහය දක්වයි</string>
+
+    <string name="feature_settings_doubt">නිතර අසන ප්‍රශ්න වල බොහෝ ප්‍රශ්න වලට පිළිතුරු දී ඇත!</string>
+    <string name="feature_settings_doubt_message">නැහැ, මම තවම එය පරීක්ෂා කර නැත, මට එහි ගෙන යන්න!</string>
+
+    <string name="feature_settings_still_have_doubt">තවමත් ස doubts තිබේද?</string>
+    <string name="feature_settings_still_have_doubt_message">ගැටලුවක් තිබේද? එය පිළිබඳ විශ්වාසයක් නොවේ!\nඅපගේ පාරිභෝගික සේවා කණ්ඩායම සම්බන්ද කරගන්න.\nඅපි ඔබට උදව් කිරීමට දවස රාත්‍රිය පුරා මෙහි සිටීමට ඇත්තෙමු!\n</string>
+    <string name="feature_settings_still_have_doubt_action">අප සම්බන්ද කරගන්න</string>
+
+    <string name="feature_settings_still_have_issue">ඔබගේ ගැටලුව ඊමේල් මගින් යවන්න?</string>
+    <string name="feature_settings_still_have_issue_message">සහය අවශ්‍යයි නමුත් ලිපියක් ලිවීමට අභිමුඛ වෙයි?\nදවස හෝ රාත්‍රිය පුරා අපට ඊමේල් යවන්න.\nඅපගේ කණ්ඩායම දැනුවත්ව සහ වේගයෙන් ප්‍රතිචාර දක්වනු ඇත,\nඔබට අවශ්‍ය උදව් ලබා දීමට!</string>
+    <string name="feature_settings_still_have_issue_action">අපට ඊමේල් කරන්න</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">යෙදුම් තොරතුරු</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos පින්තූරය</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos විදුලි බැඳියාණුව</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">සියලුම හිමිකම් ඇවිරිණි</string>
+    <string name="feature_settings_appinfo_version">අනුවාදය</string>
+    <string name="feature_settings_appinfo_privacy_policy">රහස්‍යතා ප්‍රතිපත්තිය</string>
+    <string name="feature_settings_appinfo_terms_conditions">නියම සහ කොන්දේසි</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">මුරපදය යාවත්කාලීන කරන්න</string>
+    <string name="feature_settings_old_passcode">පැරණි මුරපදය</string>
+    <string name="feature_settings_new_passcode">නව මුරපදය</string>
+    <string name="feature_settings_confirm_new_passcode">නව මුරපදය තහවුරු කරන්න</string>
+    <string name="feature_settings_authorization_passcode">සත්‍යාපන මුරපදය</string>
+    <string name="feature_settings_passcode_length_error">මුරපදය අංක 4ක් විය යුතුය.</string>
+    <string name="feature_settings_passcode_empty_error">මුරපදය හිස් විය නොහැක.</string>
+    <string name="feature_settings_passcode_invalid_error">මුරපදයේ අක්ෂර අඩංගු විය නොහැක.</string>
+    <string name="feature_settings_passcode_confirm_error">නව මුරපදය සහ තහවුරු කිරීම එකම විය යුතුය.</string>
+    <string name="feature_settings_passcode_old_passcode_error">පැරණි මුරපදය වලංගු විය යුතුය.</string>
+    <string name="feature_settings_passcode_updated_successfully">මුරපදය සාර්ථකව යාවත්කාලීන කරන ලදී.</string>
+    <string name="feature_settings_passcode_updated_message">යෙදුම් සේවාවන් භාවිතා කිරීමට ඔබ නව මුරපදයක් ඇතුළත් කළ යුතුය.</string>
+    <string name="feature_settings_next">ඊළඟ</string>
+
+    <string name="feature_settings_update_password">මුරපදය යාවත්කාලීන කරන්න</string>
+    <string name="feature_settings_old_password">පැරණි මුරපදය</string>
+    <string name="feature_settings_new_password">නව මුරපදය</string>
+    <string name="feature_settings_confirm_new_password">නව මුරපදය තහවුරු කරන්න</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">මුරපදය හිස් විය නොහැක</string>
+    <string name="password_empty_error_repeat">අක්ෂර අඛණ්ඩව පැහැදිලි වීම අවසර නැත</string>
+    <string name="password_length_error">මුරපදය අවම වශයෙන් අක්ෂර 12ක් විය යුතුය</string>
+    <string name="password_current_incorrect_error">වත්මන් මුරපදය වැරදිය</string>
+    <string name="password_validation_error">මුරපදය ආරක්ෂක අවශ්‍යතාවලට නොමැති වේ</string>
+    <string name="password_same_as_current_error">නව මුරපදය වත්මන් මුරපදයට වෙනස් විය යුතුය</string>
+    <string name="password_personal_info_error">මුරපදයේ පුද්ගලික තොරතුරු අඩංගු විය නොහැක</string>
+    <string name="password_confirm_mismatch_error">මුරපදයන් නොගැලපේ</string>
+    <string name="feature_settings_password">මුරපදය</string>
+    <string name="password_too_many_attempts">අසාර්ථක උත්සාහ බොහෝ වාර ගණනක්. නැවත උත්සාහ කිරීමට පෙර රැඳී සිටින්න.</string>
+
+    <string name="password_update_success">මුරපදය සාර්ථකව යාවත්කාලීන කරන ලදී</string>
+    <string name="password_update_success_message">යෙදුම් සේවාවන් භාවිතා කිරීමට ඔබ නැවත පිවිසිය යුතුය.</string>
+    <string name="password_update_failed">මුරපදය යාවත්කාලීන කිරීමට නොහැකි විය. නැවත උත්සාහ කරන්න</string>
+    <string name="password_update_dialog_button">දැන් පිවිසීම</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">ප්‍රශ්න හමු නොවිණි</string>
+    <string-array name="faq_qs">
+        <item>නව ණය ගිණුමක් අයදුම් කරන්නේ කෙ‍සේද?</item>
+        <item>මගේ පැතිකඩ තොරතුරු මට පෙනී සිටීමට හැකි ස්ථානය කුමක්ද?</item>
+        <item>මගේ බැඳියාණු ගිණුමේ ගනුදෙනු මට පෙනී සිටීමට හැකි ස්ථානය කුමක්ද?</item>
+        <item>QR කේතයේ කාර්යය කුමක්ද?</item>
+        <item>QR කේතයක් භාවිතා කර ලාභය නිවැසියන්ගේ ගිණුම් නිර්මාණය කරන්නේ කෙ‍සේද?</item>
+        <item>ණය ගිණුමකට ගෙවීමක් කරන්නේ කෙ‍සේද?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>ණය ගිණුමක් අයදුම් කිරීමට, මූලික තිරයේ "ණය අයදුම් කරන්න" යන්න ක්ලික් කරන්න.</item>
+        <item>ඔබගේ පැතිකඩ තොරතුරු මූලික තිරයේ පරිශීලක පින්තූරය ක්ලික් කරමින් බලන්න.</item>
+        <item>බැඳියාණු ගිණුමේ ගනුදෙනු බැලීමට, ගිණුම් අංශයට යොමු වී, අවශ්‍ය බැඳියාණු ගිණුම ක්ලික් කරන්න, ඉහළ දකුණු කෙළවරේ තිත් 3ක් ක්ලික් කර ගනුදෙනු විකල්පය තෝරන්න.</item>
+        <item>ණය හෝ බැඳියාණු ගිණුම් සඳහා QR කේතයක් භාවිතා කර ලාභය නිවැසියන්ගේ ගිණුම් නිර්මාණය සඳහා අනෙකුන් සමඟ බෙදා ගත හැකිය.</item>
+        <item>ලාභය නිවැසියන්ගේ ගිණුමක් නිර්මාණය කිරීමට, මූලික තිරයෙන් ලාභය නිවැසියන්ගේ විකල්පයට යොමු වී පහත දකුණු කෙළවරේ කුණු බොත්තම ක්ලික් කරන්න, ඔබගේ උපාංගයේ කැමරාව විවෘත කරන සුපිරි විකල්පය තෝරන්න, අනෙක් පුද්ගලයෙකුගේ QR කේතය සුපිරි කර ලාභය නිවැසියන්ගේ ගිණුමක් නිර්මාණය කරන්න, අවශ්‍ය විස්තර පුරවා යාමෙන් පසු ඔබ QR කේතයක් භාවිතා කර ලාභය නිවැසියන්ගේ ගිණුමක් නිර්මාණය කළ හැකිය.</item>
+        <item>ණය ගිණුමකට ගෙවීමක් කිරීමට, ගිණුම් අංශයට යොමු වී, ණය තෝරන්න පසු අවශ්‍ය ණය ගිණුම විවෘත කර ගෙවීමේ විකල්පය ක්ලික් කරන්න.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">තවමත් ස doubts තිබේද?</string>
+    <string name="feature_settings_faq_contact_us"> අප සම්බන්ද කරගන්න</string>
+    
+    <!-- Change Language   -->
+    <string name="feature_settings_language">භාෂාව</string>
+    <string name="feature_settings_change_language">භාෂාව වෙනස් කරන්න</string>
+</resources>

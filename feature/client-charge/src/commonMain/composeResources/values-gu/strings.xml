@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">કૃપા કરીને ખાતરી કરો કે તમે ઇન્ટરનેટ સાથે જોડાયેલ છો</string>
+    <string name="client_charges">ક્લાઇન્ટ ચાર્જ</string>
+    <string name="loan_charges">લોન ચાર્જ</string>
+    <string name="savings_charges">બચત ચાર્જ</string>
+    <string name="charges">ચાર્જ</string>
+    <string name="error_no_charge">કોઈ ચાર્જ મળ્યા નથી</string>
+    <string name="amount_due">બાકી:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">બાકી:</string>
+    <string name="amount_waived">માફ કરેલ:</string>
+    <string name="amount_paid">ચૂકવણી કરેલ:</string>
+
+    <string name="charge_details">ચાર્જ વિગતો</string>
+    <string name="paid_success_message">તમે આ ચાર્જની સંપૂર્ણ ચૂકવણી સફળતાપૂર્વક કરી છે</string>
+    <string name="status_icon_description">સ્થિતિ ચિહ્ન</string>
+    <string name="ref_no">રેફ. નં. %1$s</string>
+    <string name="paid_on">ચૂકવણી કરેલ: %1$s</string>
+    <string name="partial_amount_paid_on">આંશિક રકમ ચૂકવણી કરેલ: %1$s</string>
+    <string name="pay_outstanding">બાકી રકમ ચૂકવો</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">ફી શીર્ષક</string>
+    <string name="date">તારીખ</string>
+    <string name="due">બાકી</string>
+    <string name="paid">ચૂકવણી કરેલ</string>
+    <string name="waived">માફ કરેલ</string>
+    <string name="outstanding">બાકી</string>
+
+</resources>

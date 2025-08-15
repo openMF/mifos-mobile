@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Hakuna Mtandao</string>
+    <string name="retry">Jaribu tena</string>
+    <string name="no_data">Hakuna Data</string>
+    <string name="something_went_wrong">Kuna kitu kilichokwenda vibaya</string>
+    <string name="core_common_working">Kazi ya Msingi ya Kawaida</string>
+
+    <string name="powered_by">Imewezeshwa na</string>
+
+    <string name="password_checker_empty_error">Nenosiri haliwezi kuwa tupu.</string>
+    <string name="password_checker_too_long_error">Nenosiri ni refu sana. Urefu wa juu ni herufi 128.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">Nenosiri lazima liwe na angalau herufi 12.</string>
+    <string name="password_checker_uppercase_feedback">Tafadhali toa angalau herufi moja kubwa.</string>
+    <string name="password_checker_lowercase_feedback">Tafadhali toa angalau herufi moja ndogo.</string>
+    <string name="password_checker_digit_feedback">Tafadhali toa angalau namba moja.</string>
+    <string name="password_checker_special_char_feedback">Tafadhali toa angalau herufi moja maalum.</string>
+    <string name="password_checker_strong_length_feedback">Tumia angalau herufi 12 kwa nenosiri lenye nguvu.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">Dhaifu Sana</string>
+    <string name="password_strength_level_1">Dhaifu</string>
+    <string name="password_strength_level_2">Inakubaliwa</string>
+    <string name="password_strength_level_3"> nzuri</string>
+    <string name="password_strength_level_4">Nyenyekevu</string>
+    <string name="password_strength_level_5">Nyenyekevu Sana</string>
+    <string name="password_strength_none">Tafadhali toa nenosiri</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">Kiashiria cha nguvu ya nenosiri</string>
+    <string name="password_strength_announcement">Nguvu ya nenosiri: %1$s</string>
+    <string name="minimum_characters_requirement">Angalau herufi %1$d</string>
+    <string name="minimum_characters_met">Mahitaji ya kiwango cha chini cha herufi yamepimwa</string>
+    <string name="minimum_characters_not_met">Mahitaji ya kiwango cha chini cha herufi hayajapimwa</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">Mahitaji ya Nenosiri</string>
+    <string name="password_feedback_title">Maoni ya Nenosiri</string>
+    <string name="password_feedback_all_good">Nenosiri lako linakidhi mahitaji yote!</string>
+    <string name="character_count">Herufi %1$d</string>
+    <string name="character_count_with_limit">Herufi %1$d / %2$d</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">Anwani ya barua pepe haiwezi kuwa tupu</string>
+    <string name="validation_email_max_length_exceeded">Anwani ya barua pepe imezidi kiwango cha juu cha herufi 254</string>
+    <string name="validation_email_missing_at_symbol">Anwani ya barua pepe inapaswa kuwa na alama ya @</string>
+    <string name="validation_email_starts_with_at">Anwani ya barua pepe haiwezi kuanza na @</string>
+    <string name="validation_email_ends_with_at">Anwani ya barua pepe haiwezi kuishia na @</string>
+    <string name="validation_email_multiple_at_symbols">Anwani ya barua pepe haiwezi kuwa na alama zaidi ya moja ya @</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">Sehemu ya ndani haiwezi kuwa tupu</string>
+    <string name="validation_email_local_max_length">Sehemu ya ndani imezidi kiwango cha juu cha herufi 64</string>
+    <string name="validation_email_local_starts_with_dot">Sehemu ya ndani haiwezi kuanza na kitone</string>
+    <string name="validation_email_local_ends_with_dot">Sehemu ya ndani haiwezi kuishia na kitone</string>
+    <string name="validation_email_local_consecutive_dots">Sehemu ya ndani haiwezi kuwa na vitone vyenye mfululizo</string>
+    <string name="validation_email_local_invalid_characters">Sehemu ya ndani ina herufi zisizofaa</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">Sehemu ya kikoa haiwezi kuwa tupu</string>
+    <string name="validation_email_domain_max_length">Sehemu ya kikoa imezidi kiwango cha juu cha herufi 253</string>
+    <string name="validation_email_domain_missing_dot">Kikoa kinapaswa kuwa na angalau kitone kimoja</string>
+    <string name="validation_email_domain_starts_ends_with_dot">Kikoa haiwezi kuanza au kuishia na kitone</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">Kikoa haiwezi kuanza au kuishia na kistari</string>
+    <string name="validation_email_domain_insufficient_parts">Kikoa kinapaswa kuwa na angalau sehemu mbili zilizotenganishwa na vitone</string>
+    <string name="validation_email_tld_invalid">Sehemu ya juu ya kikoa inapaswa kuwa na angalau herufi 2, zikiwa tu herufi</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">Lebo ya kikoa haiwezi kuwa tupu</string>
+    <string name="validation_email_label_max_length">Lebo ya kikoa imezidi kiwango cha juu cha herufi 63</string>
+    <string name="validation_email_label_starts_with_hyphen">Lebo ya kikoa haiwezi kuanza na kistari</string>
+    <string name="validation_email_label_ends_with_hyphen">Lebo ya kikoa haiwezi kuishia na kistari</string>
+    <string name="validation_email_label_invalid_characters">Lebo ya kikoa ina herufi zisizofaa</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">Nambari ya simu haiwezi kuwa tupu</string>
+    <string name="validation_phone_too_short">Nambari ya simu ni fupi sana</string>
+    <string name="validation_phone_too_long">Nambari ya simu ni ndefu sana</string>
+    <string name="validation_phone_invalid_characters">Nambari ya simu ina herufi zisizofaa</string>
+    <string name="validation_phone_spanish_country_code_required">Tumia msimbo wa nchi ya Uhispania (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Muundo wa nambari ya simu ya Uhispania si sahihi</string>
+
+    <string name="validation_phone_invalid_for_country">Nambari ya simu si sahihi kwa nchi iliyochaguliwa</string>
+    <string name="validation_phone_no_valid_country_found">Imeshindwa kutambua nchi sahihi kwa muundo wa nambari ya simu</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">Jina haiwezi kuwa tupu</string>
+    <string name="validation_name_invalid_characters">Jina lina herufi zisizofaa</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">Sehemu hii inahitajika</string>
+    <string name="validation_format_invalid">Muundo si sahihi</string>
+    <string name="validation_length_exceeded">Urefu wa juu umepitwa</string>
+    <string name="validation_length_insufficient">Urefu wa chini haujatosheka</string>
+
+    <string name="validation_amount_empty">Kiasi haiwezi kuwa tupu</string>
+    <string name="validation_amount_invalid_format">Tafadhali toa muundo sahihi wa kiasi (mf. 99.99)</string>
+    <string name="validation_amount_invalid_number">Tafadhali toa namba sahihi</string>
+    <string name="validation_amount_negative">Kiasi hakiwezi kuwa hasi</string>
+    <string name="validation_amount_too_small">Kiasi kinapaswa kuwa angalau 0.01</string>
+    <string name="validation_amount_too_large">Kiasi hakiwezi kuzidi 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">Kiasi kina sehemu za desimali nyingi sana kwa sarafu hii</string>
+    <string name="validation_amount_invalid_increment">Kiasi kinapaswa kuwa katika viwango sahihi vya sarafu hii</string>
+
+    <string name="savings_account">Akaunti ya Akiba</string>
+    <string name="available_balance">Jina la Mteja</string>
+    <string name="select_other_payment_account">Chagua akaunti nyingine ya malipo</string>
+    <string name="available_balance_formatted">Salio linalopatikana - %1$s</string>
+
+    <string name="feature_savings_filter">Chuja</string>
+    <string name="feature_savings_reset">Weka upya</string>
+    <string name="feature_savings_apply">Omba</string>
+</resources>

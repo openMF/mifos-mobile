@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Kérjük, ellenőrizze az internetkapcsolatot</string>
+    <string name="client_charges">Ügyfél díjak</string>
+    <string name="loan_charges">Hiteldíjak</string>
+    <string name="savings_charges">Megtakarítási díjak</string>
+    <string name="charges">Díjak</string>
+    <string name="error_no_charge">Nem található díj</string>
+    <string name="amount_due">Esedékes:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Fennálló:</string>
+    <string name="amount_waived">Elengedve:</string>
+    <string name="amount_paid">Fizetve:</string>
+
+    <string name="charge_details">Díj részletei</string>
+    <string name="paid_success_message">Sikeresen teljesen kifizette ezt a díjat</string>
+    <string name="status_icon_description">Állapot ikon</string>
+    <string name="ref_no">Ref. szám %1$s</string>
+    <string name="paid_on">Fizetve: %1$s</string>
+    <string name="partial_amount_paid_on">Részleges összeg kifizetve: %1$s</string>
+    <string name="pay_outstanding">Fennálló összeg kifizetése</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Díj címe</string>
+    <string name="date">Dátum</string>
+    <string name="due">Esedékes</string>
+    <string name="paid">Fizetve</string>
+    <string name="waived">Elengedve</string>
+    <string name="outstanding">Fennálló</string>
+
+</resources>

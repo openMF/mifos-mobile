@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">ಸಕ್ರಿಯ</string>
+    <string name="feature_loan_account_filter_approval_pending">ಅನುಮೋದನೆ ಬಾಕಿ ಇದೆ</string>
+    <string name="feature_loan_account_filter_closed">ಮುಚ್ಚಿದ</string>
+    <string name="feature_loan_account_filter_disburse">ಹಣ ನೀಡುವಿಕೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ</string>
+    <string name="feature_loan_account_filter_overpaid">ಹೆಚ್ಚು ಪಾವತಿಸಿದ</string>
+    <string name="feature_loan_account_filter_in_arrears">ಬಾಕಿ ಇರುವ</string>
+    <string name="feature_loan_account_filter_withdrawn">ರದ್ದುಗೊಳಿಸಿದ</string>
+    <string name="feature_loan_account_filter_matured">ಪರಿಪಕ್ವ</string>
+    <string name="feature_loan_account_filter_rejected">ತಿರಸ್ಕರಿಸಲಾಗಿದೆ</string>
+
+    <string name="feature_loan_account_filter_personal">ವೈಯಕ್ತಿಕ</string>
+    <string name="feature_loan_account_filter_bronze">ಕಂಚು</string>
+
+    <string name="feature_account_empty_loan_accounts">ನಿಮ್ಮೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದ ಯಾವುದೇ ಸಾಲದ ಖಾತೆಗಳಿಲ್ಲ</string>
+    <string name="feature_account_empty_filtered_loan_accounts">ನೀವು ಆಯ್ಕೆ ಮಾಡಿದ ಫಿಲ್ಟರ್‌ಗಳೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದ ಯಾವುದೇ ಸಾಲದ ಖಾತೆಗಳಿಲ್ಲ</string>
+
+    <string name="feature_loan_account_dashboard">ಒಟ್ಟು ಸಾಲ</string>
+    <string name="feature_loan_account">ಸಾಲದ ಖಾತೆ</string>
+    <string name="feature_loan_account_items">%1$d ಐಟಂಗಳು</string>
+
+    <string name="feature_account_details_top_bar_title">ಸಾಲದ ಖಾತೆ ವಿವರಗಳು</string>
+    <string name="feature_account_details_action">ಕ್ರಮೋನ್ನತಿ</string>
+    <string name="feature_account_action_make_payment">ಪಾವತಿ ಮಾಡಿ</string>
+    <string name="feature_account_action_make_payment_tip">ನಿಮ್ಮ ಬಾಕಿ ಇರುವ ಕಿಸ್ತಿಯನ್ನು ಪಾವತಿಸಿ</string>
+    <string name="feature_account_action_loan_summary">ಸಾಲದ ಸಾರಾಂಶ</string>
+    <string name="feature_account_action_loan_summary_tip">ನಿಮ್ಮ ಸಾಲದ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ನೋಡಿ</string>
+    <string name="feature_account_action_repayment_schedule">ಮರುಪಾವತಿ ವೇಳಾಪಟ್ಟಿ</string>
+    <string name="feature_account_action_repayment_schedule_tip">ಮರುಪಾವತಿ ವೇಳಾಪಟ್ಟಿಯ ನಕ್ಷೆಯನ್ನು ನೋಡಿ</string>
+    <string name="feature_account_action_transactions">ವ್ಯವಹಾರಗಳು</string>
+    <string name="feature_account_action_transactions_tip">ಈ ಖಾತೆಯ ಇತ್ತೀಚಿನ ವ್ಯವಹಾರಗಳು</string>
+    <string name="feature_account_action_charges">ಶುಲ್ಕಗಳು</string>
+    <string name="feature_account_action_charges_tip">ಈ ಖಾತೆಯಲ್ಲಿರುವ ಶುಲ್ಕಗಳು ಅಥವಾ ದಂಡಗಳು</string>
+    <string name="feature_account_action_qr">QR ಕೋಡ್</string>
+    <string name="feature_account_action_qr_tip">QR ಕೋಡ್ ಅನ್ನು ರಚಿಸಿ</string>
+
+    <string name="feature_loan_account_number_label">ಖಾತೆ ಸಂಖ್ಯೆ</string>
+    <string name="feature_loan_outstanding_balance_label">ಬಾಕಿ ಇರುವ ಸಮತೋಲನ</string>
+    <string name="feature_loan_product_type_label">ಉತ್ಪನ್ನ ಪ್ರಕಾರ</string>
+    <string name="feature_loan_currency_label">ಚಲಾವಣಾ ಮಾಧ್ಯಮ</string>
+    <string name="feature_loan_next_installment_label">ಮುಂದಿನ ಕಿಸ್ತಿ</string>
+    <string name="feature_loan_installment_amount_label">ಕಿಸ್ತಿ ಮೊತ್ತ</string>
+    <string name="feature_loan_due_date_label">ಬಾಕಿ ಇರುವ ದಿನಾಂಕ</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">ಖಾತೆ ವಿವರಗಳು</string>
+    <string name="feature_loan_payoff_details_title">ಪಾವತಿ ವಿವರಗಳು</string>
+    <string name="feature_loan_charges_title">ಶುಲ್ಕಗಳು</string>
+    <string name="feature_loan_waivers_title">ರದ್ದುಗೊಳಿಸುವಿಕೆಗಳು</string>
+    <string name="feature_loan_paid_off_details_title">ಪಾವತಿಸಿದ ವಿವರಗಳು</string>
+    <string name="feature_loan_outstanding_details_title">ಬಾಕಿ ಇರುವ ವಿವರಗಳು</string>
+    <string name="feature_loan_installment_details_title">ಕಿಸ್ತಿ ವಿವರಗಳು</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">ಸಾಲದ ಪ್ರಕಾರ</string>
+    <string name="feature_loan_scheme_label">ಸಾಲದ ಯೋಜನೆ</string>
+    <string name="feature_loan_account_status_label">ಖಾತೆಯ ಸ್ಥಿತಿ</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">ನಿರೀಕ್ಷಿತ ಪಾವತಿ</string>
+    <string name="feature_loan_interest_payoff_label">ಬಡ್ಡಿ ಪಾವತಿ</string>
+    <string name="feature_loan_principal_label">ಸಾಲದ ಮೊದಲ ಮೊತ್ತ</string>
+    <string name="feature_loan_interest_rate_label">ಬಡ್ಡಿ ದರ</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">ಶುಲ್ಕಗಳು</string>
+    <string name="feature_loan_penalties_label">ದಂಡಗಳು</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">ಬಡ್ಡಿಯನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="feature_loan_penalty_waived_label">ದಂಡವನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="feature_loan_fees_waived_label">ಶುಲ್ಕವನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">ಪಾವತಿಸಿದ ಬಡ್ಡಿ</string>
+    <string name="feature_loan_principal_paid_off_label">ಪಾವತಿಸಿದ ಮೊದಲ ಮೊತ್ತ</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">ಬಾಕಿ ಇರುವ ಬಡ್ಡಿ</string>
+    <string name="feature_loan_principal_outstanding_label">ಬಾಕಿ ಇರುವ ಮೊದಲ ಮೊತ್ತ</string>
+    <string name="feature_loan_total_outstanding_label">ಒಟ್ಟು ಬಾಕಿ ಇರುವ ಮೊತ್ತ</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">ನಿಯಮಿತ ಪಾವತಿ</string>
+    <string name="feature_loan_next_payment_label">ಮುಂದಿನ ಪಾವತಿ</string>
+    <string name="feature_loan_months_left_label">ಉಳಿದ ತಿಂಗಳುಗಳು</string>
+    <string name="feature_loan_auto_debit_label">ಸ್ವಯಂ ಡೆಬಿಟ್</string>
+    <string name="feature_loan_linked_account_label">ಸಂಪರ್ಕಿಸಲಾದ ಖಾತೆ</string>
+
+    <string name="repayment_schedule">ಮರುಪಾವತಿ ವೇಳಾಪಟ್ಟಿ</string>
+    <string name="feature_loan_disbursement_date_label">ಹಣ ನೀಡುವಿಕೆ ದಿನಾಂಕ</string>
+    <string name="feature_loan_installments_paid_label">ಪಾವತಿಸಿದ ಕಿಸ್ತಿಗಳು</string>
+    <string name="feature_loan_installments_left_label">ಉಳಿದ ಕಿಸ್ತಿಗಳು</string>
+    <string name="feature_loan_total_installments_label">ಒಟ್ಟು ಕಿಸ್ತಿಗಳು</string>
+
+    <string name="feature_loan_paid">ಪಾವತಿಸಲಾಗಿದೆ</string>
+    <string name="feature_loan_due">ಬಾಕಿ ಇದೆ</string>
+    <string name="feature_loan_pay">ಪಾವತಿಸಿ</string>
+</resources>

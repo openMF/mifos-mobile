@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">लाभार्थी मिळवण्यात अयशस्वी</string>
+    <string name="error_fetching_beneficiary_template">लाभार्थी टेम्पलेट मिळवण्यात अयशस्वी</string>
+    <string name="error_fetching_template">टेम्पलेट मिळवण्यात अयशस्वी</string>
+    <string name="error_creating_beneficiary">लाभार्थी तयार करण्यात अयशस्वी</string>
+    <string name="error_updating_beneficiary">लाभार्थी अपडेट करण्यात अयशस्वी</string>
+    <string name="error_deleting_beneficiary">लाभार्थी हटवण्यात अयशस्वी</string>
+    <string name="error_loan_account_withdraw">कर्ज खाते परत काढण्यात त्रुटी</string>
+    <string name="error_fetching_third_party_transfer_template">थर्ड पार्टी हस्तांतरण टेम्पलेट मिळवण्यात त्रुटी</string>
+    <string name="no_beneficiary_found_please_add">तुमच्याकडे सध्या कोणतेही लाभार्थी नाहीत. कृपया लाभार्थी जोडा</string>
+    <string name="no_filtered_beneficiary_found">दिलेल्या फिल्टरसाठी कोणतेही लाभार्थी आढळले नाहीत</string>
+    <string name="beneficiary">लाभार्थी</string>
+    <string name="manage_beneficiaries">लाभार्थी व्यवस्थापित करा</string>
+    <string name="beneficiaries">लाभार्थी</string>
+    <string name="beneficiary_detail">लाभार्थी तपशील</string>
+    <string name="beneficiary_name">लाभार्थी नाव</string>
+    <string name="account_type">खाते प्रकार</string>
+    <string name="transfer_limit">हस्तांतरण मर्यादा</string>
+    <string name="add_beneficiary">लाभार्थी जोडा</string>
+    <string name="office_name">कार्यालय नाव</string>
+    <string name="select_account_type">खाते प्रकार निवडा*</string>
+    <string name="submit_beneficiary">लाभार्थी सबमिट करा</string>
+    <string name="enter_office_name">लाभार्थी कार्यालयाचे नाव प्रविष्ट करा</string>
+    <string name="enter_beneficiary_name">लाभार्थी नाव प्रविष्ट करा</string>
+    <string name="enter_transfer_limit">हस्तांतरण मर्यादा प्रविष्ट करा</string>
+    <string name="enter_account_number">लाभार्थी खाते क्रमांक प्रविष्ट करा</string>
+    <string name="choose_account_type">ड्रॉपडाउनमधून खाते प्रकार निवडा</string>
+    <string name="beneficiary_created_successfully">लाभार्थी यशस्वीरित्या तयार केला</string>
+    <string name="beneficiary_updated_successfully">लाभार्थी यशस्वीरित्या अपडेट केला</string>
+    <string name="update_beneficiary">लाभार्थी अपडेट करा</string>
+    <string name="delete_beneficiary">लाभार्थी हटवा</string>
+    <string name="delete_beneficiary_confirmation">तुम्हाला खात्री आहे की तुम्ही हा लाभार्थी हटवू इच्छिता?</string>
+    <string name="login_using_password_confirmation">तुम्हाला खात्री आहे की तुम्ही पासवर्ड वापरून लॉगिन करू इच्छिता?</string>
+    <string name="delete">हटवा</string>
+    <string name="beneficiary_deleted_successfully">लाभार्थी यशस्वीरित्या हटवला</string>
+    <string name="third_party_transfer">थर्ड पार्टी हस्तांतरण</string>
+    <string name="total_loan">एकूण कर्ज</string>
+    <string name="total_saving">एकूण बचत</string>
+    <string name="accounts_overview">खाते अवलोकन</string>
+    <string name="show_hide_total_saving_amount">एकूण बचत रक्कम दाखवा किंवा लपवा</string>
+    <string name="show_hide_total_loan_amount">एकूण कर्ज रक्कम दाखवा किंवा लपवा</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">सर्व्हे</string>
+    <string name="activation_date">सक्रिय करण्याची तारीख</string>
+    <string name="groups">गट</string>
+    <string name="user_details">वापरकर्ता तपशील</string>
+    <string name="client_type">क्लाएंट प्रकार</string>
+    <string name="client_classification">क्लाएंट वर्गीकरण</string>
+    <string name="select_mode">मोड निवडा</string>
+    <string name="add_beneficiary_option">तुमच्या खात्यावर थर्ड पार्टी लाभार्थी जोडा.\nहाताने प्रविष्ट करा किंवा खाते QR कोड स्कॅन करा</string>
+    <string name="invalid_amount">अवैध रक्कम</string>
+    <string name="account_number">खाते क्रमांक</string>
+    <string name="client_name">क्लाएंट नाव</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="internet_not_connected">कृपया तुम्ही इंटरनेटशी कनेक्ट असल्याची खात्री करा</string>
+    <string name="add">जोडा</string>
+    <string name="scan">स्कॅन करा</string>
+    <string name="upload_qr_code">QR कोड अपलोड करा</string>
+
+    <string name="beneficiary_name_label">लाभार्थी नाव</string>
+    <string name="office_label">कार्यालय</string>
+    <string name="account_type_label">खाते प्रकार</string>
+    <string name="account_number_label">खाते क्रमांक</string>
+    <string name="transfer_limit_label">हस्तांतरण मर्यादा</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">बचत</string>
+    <string name="account_type_loan">कर्ज</string>
+    <string name="account_type_share">शेअर</string>
+
+    <!-- Labels -->
+    <string name="validate_details">तपशील प्रमाणित करा</string>
+    <string name="confirm_details">तपशील पुष्टी करा</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">लाभार्थी निर्माण अयशस्वी</string>
+    <string name="beneficiary_updation_failed">लाभार्थी अपडेट अयशस्वी</string>
+    <string name="try_again">पुन्हा प्रयत्न करा</string>
+    <string name="back_to_home">मुख्य पृष्ठावर परत जा</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">फिल्टर</string>
+    <string name="feature_savings_reset">रीसेट करा</string>
+    <string name="feature_savings_apply">लागू करा</string>
+    <string name="feature_filters_count">%1$s निवडले</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">खाते प्रकार</string>
+    <string name="filter_loan_account">कर्ज खाते</string>
+    <string name="filter_savings_account">बचत खाते</string>
+    <string name="filter_linked_with">याशी लिंक केलेले</string>
+    <string name="filter_self">स्वतः</string>
+    <string name="filter_other_clients">इतर क्लाएंट</string>
+
+    <string name="beneficiary_created_successfully_account">
+        %1$s खात्यासाठी %2$s नावाच्या लाभार्थी यशस्वीरित्या तयार केला.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        %2$d हस्तांतरण मर्यादेसह %1$s नावाच्या लाभार्थी यशस्वीरित्या अपडेट केला.
+    </string>
+
+    <string name="skip_the_form">फॉर्म वगळा</string>
+    <string name="upload_or_scan_qr_code">QR कोड अपलोड करा किंवा स्कॅन करा</string>
+
+    <string name="filter">फिल्टर</string>
+    <string name="linked_with">याशी लिंक केलेले</string>
+    <string name="type_of_account">खाते प्रकार</string>
+    <string name="selected_count">%1$d निवडले</string>
+    <string name="filter_icon_description">फिल्टर चिन्ह</string>
+</resources>

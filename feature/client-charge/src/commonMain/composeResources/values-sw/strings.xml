@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Tafadhali hakikisha uko mtandaoni</string>
+    <string name="client_charges">Malipo ya Mteja</string>
+    <string name="loan_charges">Malipo ya Mkopo</string>
+    <string name="savings_charges">Malipo ya Akiba</string>
+    <string name="charges">Malipo</string>
+    <string name="error_no_charge">Hakuna malipo yaliyopatikana</string>
+    <string name="amount_due">Inayostahili:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Inayobaki:</string>
+    <string name="amount_waived">Imesamehewa:</string>
+    <string name="amount_paid">Imelipwa:</string>
+
+    <string name="charge_details">Maelezo ya Malipo</string>
+    <string name="paid_success_message">Umefanikiwa kulipa malipo haya kikamilifu</string>
+    <string name="status_icon_description">Ikoni ya hali</string>
+    <string name="ref_no">Nambari ya Marejeo %1$s</string>
+    <string name="paid_on">Imelipwa Tarehe: %1$s</string>
+    <string name="partial_amount_paid_on">Kiasi cha Sehemu Kilicholipwa Tarehe: %1$s</string>
+    <string name="pay_outstanding">Lipa Kiasi Kinachobaki</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Kichwa cha Ada</string>
+    <string name="date">Tarehe</string>
+    <string name="due">Inayostahili</string>
+    <string name="paid">Imelipwa</string>
+    <string name="waived">Imesamehewa</string>
+    <string name="outstanding">Inayobaki</string>
+
+</resources>

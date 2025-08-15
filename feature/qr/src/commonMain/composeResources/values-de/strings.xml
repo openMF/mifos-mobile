@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_beneficiary">Begünstigten hinzufügen</string>
+    <string name="qr_code">QR-Code</string>
+    <string name="choose_option">Option auswählen</string>
+    <string name="please_grant_us_storage_permissions">Bitte erteilen Sie uns Speicherberechtigungen in den Einstellungen.</string>
+    <string name="permission_denied_storage">Speicherberechtigung verweigert</string>
+    <string name="grant_permission">Berechtigung erteilen</string>
+    <string name="deny">Ablehnen</string>
+    <string name="no_image_selected_or_something_went_wrong">Kein Bild ausgewählt oder etwas ist schiefgelaufen</string>
+    <string name="selected_qr_image">Ausgewähltes QR-Bild</string>
+    <string name="dialog_message_write_storage_permission_never_ask_again">Sie haben die Berechtigung zum Schreiben in den Speicher verweigert. Ohne diese Berechtigung können Sie keine Begünstigten über QR-Code hinzufügen. Sind Sie sicher, dass Sie diese Berechtigung verweigern möchten?</string>
+    <string name="proceed">Fortfahren</string>
+    <string name="import_qr">QR importieren</string>
+    <string name="import_another_qr">Weiteren QR importieren</string>
+    <string name="error_reading_qr">Fehler beim Lesen des QR-Codes, stellen Sie sicher, dass Sie den richtigen Bereich auswählen</string>
+    <string name="invalid_qr">Sie können keine Aktion in Ihrem Konto durchführen. Bitte scannen Sie den QR-Code eines anderen Benutzers für Sparkonten und Kredite.</string>
+    <string name="scan_your_qr">Scannen Sie Ihren QR-Code</string>
+    <string name="qr_scan_instruction">Importieren Sie die Kontodaten in Ihre App, indem Sie diesen QR-Code scannen.</string>
+    <string name="qr_alignment_instruction">Bitte richten Sie den QR-Code innerhalb des Rahmens aus, um das Scannen zu erleichtern.</string>
+    <string name="generated_on">Erstellt am:</string>
+
+    <!-- QR Code Scan   -->
+    <string name="feature_qr_invalid">Sie können keine Aktion in Ihrem Konto durchführen. Bitte scannen Sie den QR-Code eines anderen Benutzers für Sparkonten und Kredite.</string>
+    <string name="feature_qr_error">Fehler beim Lesen des QR-Codes</string>
+    <string name="feature_qr_instruction">Bitte richten Sie den QR-Code innerhalb des Rahmens aus, um das Scannen zu erleichtern.</string>
+    <string name="feature_qr_warning_title">Mögliche Warnung</string>
+    <string name="feature_qr_warning_message">Wenn Sie den QR-Code scannen, kann dieser Sie zu einer Phishing-Website führen, die Ihre persönlichen Daten wie Kreditkartennummern, Benutzernamen und Passwörter stiehlt. Es kann auch Malware auf Ihr Telefon herunterladen und Hackern Zugriff auf Ihr Gerät geben.</string>
+    <string name="feature_qr_upload">QR-Code hochladen</string>
+</resources>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">ಸಕ್ರಿಯ</string>
+    <string name="feature_account_approved">ಅನುಮೋದಿಸಲಾಗಿದೆ</string>
+    <string name="feature_account_approval_pending">ಅನುಮೋದನೆ ಬಾಕಿ ಇದೆ</string>
+    <string name="feature_account_matured">ಮುದಿರಿದ</string>
+    <string name="feature_account_closed">ಮುಚ್ಚಲಾಗಿದೆ</string>
+    <string name="feature_account_empty_savings_accounts">ನಿಮ್ಮೊಂದಿಗೆ ಯಾವುದೇ ಉಳಿತಾಯ ಖಾತೆಗಳು ಸಂಪರ್ಕವನ್ನು ಹೊಂದಿಲ್ಲ</string>
+    <string name="feature_account_submitted">ಸಲ್ಲಿಸಲಾಗಿದೆ</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">ಖಾತೆಗಳು</string>
+    <string name="feature_savings_account_dashboard">ಒಟ್ಟು ಲಭ್ಯ ಉಳಿತಾಯ</string>
+    <string name="feature_savings_account">ಉಳಿತಾಯ ಖಾತೆ</string>
+    <string name="feature_savings_account_items">%1$d ಐಟಂಗಳು</string>
+
+    <string name="feature_common_error">ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
+
+    <string name="content_description_search">ಹುಡುಕಾಟ</string>
+    <string name="content_description_filter">ಫಿಲ್ಟರ್</string>
+
+    <string name="feature_savings_filter_wallet_account">ವಾಲೆಟ್ ಖಾತೆ</string>
+    <string name="feature_savings_filter_bank_account">ಬ್ಯಾಂಕ್ ಖಾತೆ</string>
+    <string name="feature_savings_filter_group_account">ಗುಂಪು ಖಾತೆ</string>
+    <string name="feature_savings_filter_nb_account">NB ಖಾತೆ</string>
+
+    <string name="feature_savings_filter_active_account">ಸಕ್ರಿಯ</string>
+    <string name="feature_savings_filter_pending_account">ಅನುಮೋದನೆ ಬಾಕಿ ಇದೆ</string>
+    <string name="feature_savings_filter_closed_account">ಮುಚ್ಚಲಾಗಿದೆ</string>
+    <string name="feature_savings_filter_matured_account">ಮುದಿರಿದ</string>
+    <string name="feature_savings_filter_approved_account">ಅನುಮೋದಿಸಲಾಗಿದೆ</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">ಉಳಿತಾಯ ಖಾತೆ ವಿವರಗಳು</string>
+    <string name="feature_account_action_update">ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="feature_account_action_withdraw">ವಾಪಸು ಪಡೆಯಿರಿ</string>
+    <string name="feature_account_action_deposit">ಜಮಾ ಮಾಡಿ</string>
+    <string name="feature_account_action_deposit_tip">ನಿಮ್ಮ ಜಮಾ ಪ್ರಯಾಣವನ್ನು ಪ್ರಾರಂಭಿಸಿ</string>
+    <string name="feature_account_action_transfer">ವರ್ಗಾವಣೆ ಮಾಡಿ</string>
+    <string name="feature_account_action_transfer_tip">ಇತರ ಉತ್ಪನ್ನಗಳಿಗೆ ನಿಮ್ಮ ಹಣವನ್ನು ವರ್ಗಾವಣೆ ಮಾಡಿ</string>
+    <string name="feature_account_details_account_number">ಖಾತೆ ಸಂಖ್ಯೆ</string>
+    <string name="feature_account_details_account_balance">ಖಾತೆ ಸಮತೋಲನ</string>
+    <string name="feature_account_details_total_deposits">ಒಟ್ಟು ಜಮಾ ಮೊತ್ತ</string>
+    <string name="feature_account_details_last_trans">ಕೊನೆಯ ವ್ಯವಹಾರ</string>
+    <string name="feature_account_details_made_on">ಮಾಡಲಾಗಿದೆ</string>
+    <string name="feature_account_details_min_required_balance">ಅಗತ್ಯ ಕನಿಷ್ಠ ಸಮತೋಲನ</string>
+    <string name="feature_account_details_nominal_interest_rate">ಅಧಿಕೃತ ಬಡ್ಡಿ ದರ</string>
+    <string name="feature_account_details_account_status">ಖಾತೆ ಸ್ಥಿತಿ</string>
+    <string name="feature_account_details_no_transaction">ಯಾವುದೇ ವ್ಯವಹಾರಗಳಿಲ್ಲ</string>
+    <string name="feature_account_details_transactions">ವ್ಯವಹಾರಗಳು</string>
+    <string name="feature_account_details_no_withdrawals">ಯಾವುದೇ ವಾಪಸುಗಳಿಲ್ಲ</string>
+    <string name="feature_account_details_total_withdrawal">ಒಟ್ಟು ವಾಪಸು</string>
+    <string name="feature_account_details_savings_charges">ಉಳಿತಾಯ ಶುಲ್ಕಗಳು</string>
+    <string name="feature_account_details_not_available">ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="feature_account_details_view_transactions">ವ್ಯವಹಾರಗಳನ್ನು ವೀಕ್ಷಿಸಿ</string>
+    <string name="feature_account_details_view_charges">ಶುಲ್ಕಗಳನ್ನು ವೀಕ್ಷಿಸಿ</string>
+    <string name="feature_account_details_qr_code">QR ಕೋಡ್</string>
+    <string name="feature_account_details_share_qr_code">QR ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="feature_account_details_view_qr_code">ಈ ಖಾತೆಗಾಗಿ QR ಕೋಡ್ ವೀಕ್ಷಿಸಿ</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">ಉಳಿತಾಯ ಖಾತೆ ವ್ಯವಹಾರಗಳು</string>
+    <string name="feature_account_transaction_no_transaction_found">ಯಾವುದೇ ವ್ಯವಹಾರಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="feature_account_transaction_date">ದಿನಾಂಕ</string>
+    <string name="feature_account_transaction_four_weeks">4 ವಾರಗಳು</string>
+    <string name="feature_account_transaction_three_months">3 ತಿಂಗಳುಗಳು</string>
+    <string name="feature_account_transaction_six_months">6 ತಿಂಗಳುಗಳು</string>
+    <string name="feature_account_transaction_dividend_payout">ಲಾಭಾಂಶ ಪಾವತಿ</string>
+    <string name="feature_account_transaction_withdrawal">ವಾಪಸು</string>
+    <string name="feature_account_transaction_interest_posting">ಬಡ್ಡಿ ಪೋಸ್ಟಿಂಗ್</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">ಉಳಿತಾಯ ಖಾತೆಯಿಂದ ವಾಪಸು ಪಡೆಯಿರಿ</string>
+    <string name="feature_savings_withdraw_amount">ಮೊತ್ತ</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">ವಾಪಸು ದಿನಾಂಕ</string>
+    <string name="feature_savings_withdraw_remark">ಟಿಪ್ಪಣಿ</string>
+    <string name="feature_savings_withdraw_submit">ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_savings_withdraw_enter_amount">ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">ಮೊತ್ತವು ಶೂನ್ಯಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಿರಬೇಕು</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s ಖಾಲಿಯಾಗಿರುವುದಿಲ್ಲ</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">ವಿವರಗಳನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="feature_savings_update_client_name_label">ಬಾಹ್ಯ ಗ್ರಾಹಕನ ಹೆಸರು</string>
+    <string name="feature_savings_update_submission_date_label">ಸಲ್ಲಿಕೆ ದಿನಾಂಕ</string>
+    <string name="feature_savings_update_select_product_id">ಉತ್ಪನ್ನ ID ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="feature_savings_update_submit">ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_savings_update_cancel">ರದ್ದುಮಾಡಿ</string>
+</resources>

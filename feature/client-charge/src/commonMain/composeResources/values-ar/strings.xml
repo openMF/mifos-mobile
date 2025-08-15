@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">يرجى التأكد من اتصالك بالإنترنت</string>
+    <string name="client_charges">رسوم العميل</string>
+    <string name="loan_charges">رسوم القرض</string>
+    <string name="savings_charges">رسوم التوفير</string>
+    <string name="charges">الرسوم</string>
+    <string name="error_no_charge">لم يتم العثور على رسوم</string>
+    <string name="amount_due">المستحق:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">المستحق:</string>
+    <string name="amount_waived">تم التنازل عنها:</string>
+    <string name="amount_paid">مدفوع:</string>
+
+    <string name="charge_details">تفاصيل الرسوم</string>
+    <string name="paid_success_message">لقد دفعت هذه الرسوم بالكامل بنجاح</string>
+    <string name="status_icon_description">رمز الحالة</string>
+    <string name="ref_no">الرقم المرجعي %1$s</string>
+    <string name="paid_on">مدفوع في: %1$s</string>
+    <string name="partial_amount_paid_on">تم دفع مبلغ جزئي في: %1$s</string>
+    <string name="pay_outstanding">دفع المستحق</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">عنوان الرسوم</string>
+    <string name="date">التاريخ</string>
+    <string name="due">المستحق</string>
+    <string name="paid">مدفوع</string>
+    <string name="waived">تم التنازل عنها</string>
+    <string name="outstanding">المستحق</string>
+
+</resources>

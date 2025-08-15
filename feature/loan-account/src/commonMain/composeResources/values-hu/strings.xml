@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_loan_account_filter_active">Aktív</string>
+    <string name="feature_loan_account_filter_approval_pending">Jóváhagyás függőben</string>
+    <string name="feature_loan_account_filter_closed">Zárva</string>
+    <string name="feature_loan_account_filter_disburse">Diszperzálásra vár</string>
+    <string name="feature_loan_account_filter_overpaid">Túlfizetett</string>
+    <string name="feature_loan_account_filter_in_arrears">Késedelmes</string>
+    <string name="feature_loan_account_filter_withdrawn">Visszavonva</string>
+    <string name="feature_loan_account_filter_matured">Lejárt</string>
+    <string name="feature_loan_account_filter_rejected">Elutasítva</string>
+
+    <string name="feature_loan_account_filter_personal">Személyes</string>
+    <string name="feature_loan_account_filter_bronze">Bronz</string>
+
+    <string name="feature_account_empty_loan_accounts">Nincs Önhöz társított hitelszámla</string>
+    <string name="feature_account_empty_filtered_loan_accounts">Nincs Önhöz társított hitelszámla a kiválasztott szűrőkkel</string>
+
+    <string name="feature_loan_account_dashboard">Teljes hitelösszeg</string>
+    <string name="feature_loan_account">Hitelszámla</string>
+    <string name="feature_loan_account_items">%1$d elem</string>
+
+    <string name="feature_account_details_top_bar_title">Hitelszámla részletei</string>
+    <string name="feature_account_details_action">Művelet</string>
+    <string name="feature_account_action_make_payment">Fizetés</string>
+    <string name="feature_account_action_make_payment_tip">Fizesse ki esedékes törlesztését</string>
+    <string name="feature_account_action_loan_summary">Hitel összefoglaló</string>
+    <string name="feature_account_action_loan_summary_tip">Tekintse meg hiteladatait röviden</string>
+    <string name="feature_account_action_repayment_schedule">Törlesztési ütemterv</string>
+    <string name="feature_account_action_repayment_schedule_tip">Törlesztési ütemterv diagram megtekintése</string>
+    <string name="feature_account_action_transactions">Tranzakciók</string>
+    <string name="feature_account_action_transactions_tip">A számla legutóbbi tranzakciói</string>
+    <string name="feature_account_action_charges">Díjak</string>
+    <string name="feature_account_action_charges_tip">Díjak vagy terhelések ezen a számlán</string>
+    <string name="feature_account_action_qr">QR kód</string>
+    <string name="feature_account_action_qr_tip">QR kód generálása</string>
+
+    <string name="feature_loan_account_number_label">Számlaszám</string>
+    <string name="feature_loan_outstanding_balance_label">Fennálló egyenleg</string>
+    <string name="feature_loan_product_type_label">Terméktípus</string>
+    <string name="feature_loan_currency_label">Pénznem</string>
+    <string name="feature_loan_next_installment_label">Következő törlesztés</string>
+    <string name="feature_loan_installment_amount_label">Törlesztési összeg</string>
+    <string name="feature_loan_due_date_label">Esedékesség dátuma</string>
+
+    <!-- Account Summary -->
+    <string name="feature_loan_account_details_title">Számla részletei</string>
+    <string name="feature_loan_payoff_details_title">Kifizetési részletek</string>
+    <string name="feature_loan_charges_title">Díjak</string>
+    <string name="feature_loan_waivers_title">Engedmények</string>
+    <string name="feature_loan_paid_off_details_title">Kifizetett részletek</string>
+    <string name="feature_loan_outstanding_details_title">Fennálló részletek</string>
+    <string name="feature_loan_installment_details_title">Törlesztési részletek</string>
+
+    <!-- Account Details -->
+    <string name="feature_loan_type_label">Hiteltípus</string>
+    <string name="feature_loan_scheme_label">Hitel séma</string>
+    <string name="feature_loan_account_status_label">Számla státusza</string>
+
+    <!-- Pay-off Details -->
+    <string name="feature_loan_expected_payoff_label">Várható kifizetés</string>
+    <string name="feature_loan_interest_payoff_label">Kamat kifizetés</string>
+    <string name="feature_loan_principal_label">Tartozás tőkéje</string>
+    <string name="feature_loan_interest_rate_label">Kamatláb</string>
+
+    <!-- Charges -->
+    <string name="feature_loan_fees_label">Díjak</string>
+    <string name="feature_loan_penalties_label">Büntetések</string>
+
+    <!-- Waivers -->
+    <string name="feature_loan_interest_waived_label">Kamat elengedve</string>
+    <string name="feature_loan_penalty_waived_label">Büntetés elengedve</string>
+    <string name="feature_loan_fees_waived_label">Díj elengedve</string>
+
+    <!-- Paid-off Details -->
+    <string name="feature_loan_interest_paid_off_label">Kifizetett kamat</string>
+    <string name="feature_loan_principal_paid_off_label">Kifizetett tőke</string>
+
+    <!-- Outstanding Details -->
+    <string name="feature_loan_interest_outstanding_label">Fennálló kamat</string>
+    <string name="feature_loan_principal_outstanding_label">Fennálló tőke</string>
+    <string name="feature_loan_total_outstanding_label">Teljes fennálló összeg</string>
+
+    <!-- Installment Details -->
+    <string name="feature_loan_regular_payment_label">Rendszeres fizetés</string>
+    <string name="feature_loan_next_payment_label">Következő fizetés</string>
+    <string name="feature_loan_months_left_label">Hátralévő hónapok</string>
+    <string name="feature_loan_auto_debit_label">Automatikus terhelés</string>
+    <string name="feature_loan_linked_account_label">Kapcsolt számla</string>
+
+    <string name="repayment_schedule">Törlesztési ütemterv</string>
+    <string name="feature_loan_disbursement_date_label">Diszperzálás dátuma</string>
+    <string name="feature_loan_installments_paid_label">Kifizetett törlesztések</string>
+    <string name="feature_loan_installments_left_label">Hátralévő törlesztések</string>
+    <string name="feature_loan_total_installments_label">Teljes törlesztések</string>
+
+    <string name="feature_loan_paid">Kifizetve</string>
+    <string name="feature_loan_due">Esedékes</string>
+    <string name="feature_loan_pay">Fizetés</string>
+</resources>

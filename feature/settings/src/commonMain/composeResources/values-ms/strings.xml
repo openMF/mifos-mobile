@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">Tukar tema</string>
+    <string name="settings">Tetapan</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">Tukar Kod Laluan</string>
+    <string name="change_app_passcode">Tukar Kod Laluan Aplikasi</string>
+    <string name="change_password">Tukar Kata Laluan</string>
+    <string name="change_account_password">Tukar Kata Laluan Akaun Anda</string>
+    <string name="language">Bahasa</string>
+    <string name="choose_language">Pilih bahasa anda</string>
+    <string name="other">Lain-lain</string>
+    <string name="accounts">Akaun</string>
+    <string name="theme">Tema</string>
+    <string name="pref_base_url_title">Kemas Kini Titik Akhir</string>
+    <string name="pref_base_url_desc">Klik di sini untuk menukar Konfigurasi Titik Akhir Anda</string>
+    <string name="enter_base_url">Masukkan URL Asas</string>
+    <string name="enter_tenant">Masukkan Penyewa</string>
+    <string name="cancel">Batal</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="base_url_tenant_id_required">URL Asas dan ID Penyewa diperlukan</string>
+
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>Bahasa Sistem</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string name="feature_settings_action_profile">Profil</string>
+    <string name="feature_settings_action_profile_tip">Tukar emel, nama, nombor telefon, dll</string>
+
+    <string name="feature_settings_action_password">Kata Laluan</string>
+    <string name="feature_settings_action_password_tip">Tukar kata laluan lama anda</string>
+
+    <string name="feature_settings_action_auth_passcode">Kod Laluan Pengesahan</string>
+    <string name="feature_settings_action_auth_passcode_tip">Tukar kod laluan pengesahan log masuk anda</string>
+
+    <string name="feature_settings_action_language">Bahasa</string>
+    <string name="feature_settings_action_language_tip">Pilih bahasa aplikasi anda</string>
+
+    <string name="feature_settings_action_theme">Tema</string>
+    <string name="feature_settings_action_theme_tip">Pilih tema aplikasi anda</string>
+
+    <string name="feature_settings_action_endpoint">Titik Akhir</string>
+    <string name="feature_settings_action_endpoint_tip">Tukar konfigurasi titik akhir anda</string>
+
+    <string name="feature_settings_action_about_us">Tentang Kami</string>
+    <string name="feature_settings_action_about_us_tip">Ketahui lebih lanjut tentang inisiatif kami</string>
+
+    <string name="feature_settings_action_faq">FAQ</string>
+    <string name="feature_settings_action_faq_tip">Soalan yang kerap diajukan oleh pengguna</string>
+
+    <string name="feature_settings_action_help">Bantuan</string>
+    <string name="feature_settings_action_help_tip">Berbual dengan perkhidmatan pelanggan kami</string>
+
+    <string name="feature_settings_action_app_info">Maklumat Aplikasi</string>
+    <string name="feature_settings_action_app_info_tip">Cari butiran versi aplikasi</string>
+
+    <string name="feature_settings_action_logout">Log Keluar</string>
+    <string name="feature_settings_action_logout_tip">Log keluar daripada semua peranti</string>
+
+    <string name="feature_settings_top_bar_title">Tetapan</string>
+
+    <string name="feature_settings_error_fetching_client">Gagal mendapatkan maklumat pelanggan.</string>
+    <string name="feature_settings_error_fetching_profile_image">Gagal mendapatkan gambar profil.</string>
+    <string name="feature_settings_internet_not_connected">Tiada sambungan internet.</string>
+    <string name="feature_settings_error_invalid_profile_image">Format gambar profil tidak sah.</string>
+    <string name="feature_settings_customer_account_no">Akaun Pelanggan: %1$s</string>
+    <string name="feature_settings_logout_message">Adakah anda pasti ingin log keluar?</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">Tentang Kami</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Imej Mifos</string>
+    <string name="feature_settings_about_who_are_we">Siapa kami?</string>
+    <string name="feature_settings_about_what_does_mifos_do">Apa yang Mifos lakukan?</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos ialah organisasi bukan untung yang berusaha memberikan akses kepada orang ramai kepada perkhidmatan kewangan asas. Ia berbuat demikian melalui platform sumber terbuka.</string>
+    <string name="feature_settings_about_point_1">Ia membantu institusi kewangan menawarkan perkhidmatan kewangan moden</string>
+    <string name="feature_settings_about_point_2">Ia membolehkan orang ramai mendapat pinjaman, menyimpan wang, dan banyak lagi</string>
+    <string name="feature_settings_about_point_3">Ia menyokong institusi kewangan yang melayani berjuta-juta orang di seluruh dunia</string>
+
+    <string name="feature_settings_doubt">Banyak Soalan Dijawab dalam FAQ!</string>
+    <string name="feature_settings_doubt_message">Tidak, saya belum menyemaknya lagi, bawa saya ke sana!</string>
+
+    <string name="feature_settings_still_have_doubt">Masih Ada Soalan?</string>
+    <string name="feature_settings_still_have_doubt_message">Tidak, saya belum menyemaknya lagi, bawa saya ke sana!</string>
+
+    <string name="feature_settings_still_have_issue">Hantar Isu Anda Melalui Emel?</string>
+    <string name="feature_settings_still_have_issue_message">Perlukan sokongan tetapi lebih suka menulis?\nHantar emel kepada kami, siang atau malam.\nPasukan kami akan membalas dengan perhatian dan kelajuan,\nMemastikan anda mendapat bantuan yang diperlukan!</string>
+    <string name="feature_settings_still_have_issue_action">Emel Kami</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">Maklumat Aplikasi</string>
+    <string name="feature_settings_appinfo_mobile">Mobile</string>
+    <string name="feature_settings_appinfo_logo_content_description">Imej Mifos</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Perbankan Elektronik Mifos</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">Hak cipta terpelihara</string>
+    <string name="feature_settings_appinfo_version">Versi</string>
+    <string name="feature_settings_appinfo_privacy_policy">Dasar Privasi</string>
+    <string name="feature_settings_appinfo_terms_conditions">Terma dan Syarat</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">Kemas Kini Kod Laluan</string>
+    <string name="feature_settings_old_passcode">Kod Laluan Lama</string>
+    <string name="feature_settings_new_passcode">Kod Laluan Baharu</string>
+    <string name="feature_settings_confirm_new_passcode">Sahkan Kod Laluan Baharu</string>
+    <string name="feature_settings_authorization_passcode">Kod Laluan Pengesahan</string>
+    <string name="feature_settings_passcode_length_error">Kod laluan mestilah 4 digit.</string>
+    <string name="feature_settings_passcode_empty_error">Kod laluan tidak boleh kosong.</string>
+    <string name="feature_settings_passcode_invalid_error">Kod laluan tidak boleh mengandungi aksara.</string>
+    <string name="feature_settings_passcode_confirm_error">Kod laluan baharu dan pengesahan mestilah sama.</string>
+    <string name="feature_settings_passcode_old_passcode_error">Kod laluan lama mestilah sah.</string>
+    <string name="feature_settings_passcode_updated_successfully">Kod laluan berjaya dikemas kini.</string>
+    <string name="feature_settings_passcode_updated_message">Anda perlu masukkan kod laluan baharu untuk menggunakan perkhidmatan aplikasi.</string>
+    <string name="feature_settings_next">Seterusnya</string>
+
+    <string name="feature_settings_update_password">Kemas Kini Kata Laluan</string>
+    <string name="feature_settings_old_password">Kata Laluan Lama</string>
+    <string name="feature_settings_new_password">Kata Laluan Baharu</string>
+    <string name="feature_settings_confirm_new_password">Sahkan Kata Laluan Baharu</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">Kata laluan tidak boleh kosong</string>
+    <string name="password_empty_error_repeat">Aksara berulang berturut-turut tidak dibenarkan</string>
+    <string name="password_length_error">Kata laluan mestilah sekurang-kurangnya 12 aksara</string>
+    <string name="password_current_incorrect_error">Kata laluan semasa salah</string>
+    <string name="password_validation_error">Kata laluan tidak memenuhi syarat keselamatan</string>
+    <string name="password_same_as_current_error">Kata laluan baharu mestilah berbeza daripada kata laluan semasa</string>
+    <string name="password_personal_info_error">Kata laluan tidak boleh mengandungi maklumat peribadi</string>
+    <string name="password_confirm_mismatch_error">Kata laluan tidak sepadan</string>
+    <string name="feature_settings_password">Kata Laluan</string>
+    <string name="password_too_many_attempts">Terlalu banyak percubaan gagal. Sila tunggu sebelum cuba lagi.</string>
+
+    <string name="password_update_success">Kata laluan berjaya dikemas kini</string>
+    <string name="password_update_success_message">Anda perlu log masuk semula untuk menggunakan perkhidmatan aplikasi.</string>
+    <string name="password_update_failed">Gagal mengemas kini kata laluan. Cuba Lagi</string>
+    <string name="password_update_dialog_button">Log Masuk Sekarang</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">Tiada soalan ditemui</string>
+    <string-array name="faq_qs">
+        <item>Bagaimana cara memohon akaun pinjaman baharu?</item>
+        <item>Di mana saya boleh melihat maklumat profil saya?</item>
+        <item>Di mana saya boleh melihat transaksi akaun simpanan saya?</item>
+        <item>Apakah fungsi Kod QR?</item>
+        <item>Bagaimana cara mencipta penerima manfaat menggunakan Kod QR?</item>
+        <item>Bagaimana cara membuat pembayaran untuk akaun pinjaman?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>Untuk memohon akaun pinjaman, klik pada "Mohon Pinjaman" di skrin utama.</item>
+        <item>Anda boleh melihat maklumat profil dengan mengklik imej pengguna di skrin utama.</item>
+        <item>Untuk melihat transaksi akaun simpanan, navigasi ke bahagian Akaun, klik pada akaun simpanan yang diperlukan, klik tiga titik di sudut kanan atas dan pilih opsyen Transaksi.</item>
+        <item>Kod QR untuk akaun pinjaman atau simpanan boleh dikongsi dengan pengguna lain yang akan membolehkan mereka mencipta penerima manfaat.</item>
+        <item>Untuk mencipta penerima manfaat, masuk ke opsyen penerima manfaat dari skrin utama kemudian klik butang bulat di sudut kanan bawah, pilih opsyen Imbas yang membuka kamera peranti anda, imbas kod QR orang lain untuk mencipta penerima manfaat, selepas mengisi butiran yang diperlukan anda akan dapat mencipta penerima manfaat menggunakan kod QR.</item>
+        <item>Untuk membuat pembayaran akaun pinjaman, navigasi ke bahagian Akaun, pilih PINJAMAN kemudian buka akaun pinjaman yang anda perlukan dan klik opsyen Buat Pembayaran.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">Masih mempunyai keraguan?</string>
+    <string name="feature_settings_faq_contact_us"> Hubungi Kami</string>
+    
+    <!-- Change Language   -->
+    <string name="feature_settings_language">Bahasa</string>
+    <string name="feature_settings_change_language">Tukar Bahasa</string>
+</resources>

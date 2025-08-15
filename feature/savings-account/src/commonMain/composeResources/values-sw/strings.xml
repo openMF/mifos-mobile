@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Inayotumika</string>
+    <string name="feature_account_approved">Imeidhinishwa</string>
+    <string name="feature_account_approval_pending">Inasubiri Idhini</string>
+    <string name="feature_account_matured">Imeiva</string>
+    <string name="feature_account_closed">Imefungwa</string>
+    <string name="feature_account_empty_savings_accounts">Hakuna akaunti za akiba zilizohusishwa na wewe</string>
+    <string name="feature_account_submitted">Iliyowasilishwa</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Akaunti</string>
+    <string name="feature_savings_account_dashboard">Jumla ya Akiba Inayopatikana</string>
+    <string name="feature_savings_account">Akaunti ya Akiba</string>
+    <string name="feature_savings_account_items">Vipengee %1$d</string>
+
+    <string name="feature_common_error">Kuna hitilafu fulani iliyotokea</string>
+
+    <string name="content_description_search">Tafuta</string>
+    <string name="content_description_filter">Chuja</string>
+
+    <string name="feature_savings_filter_wallet_account">Akaunti ya Mkoba</string>
+    <string name="feature_savings_filter_bank_account">Akaunti ya Benki</string>
+    <string name="feature_savings_filter_group_account">Akaunti ya Kikundi</string>
+    <string name="feature_savings_filter_nb_account">Akaunti ya NB</string>
+
+    <string name="feature_savings_filter_active_account">Inayotumika</string>
+    <string name="feature_savings_filter_pending_account">Inasubiri Idhini</string>
+    <string name="feature_savings_filter_closed_account">Imefungwa</string>
+    <string name="feature_savings_filter_matured_account">Imeiva</string>
+    <string name="feature_savings_filter_approved_account">Imeidhinishwa</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Maelezo ya Akaunti ya Akiba</string>
+    <string name="feature_account_action_update">Sasisha</string>
+    <string name="feature_account_action_withdraw">Ondoa</string>
+    <string name="feature_account_action_deposit">Weka</string>
+    <string name="feature_account_action_deposit_tip">Anza safari yako ya kuweka</string>
+    <string name="feature_account_action_transfer">Hamisha</string>
+    <string name="feature_account_action_transfer_tip">Hamisha fedha zako kwa bidhaa zingine</string>
+    <string name="feature_account_details_account_number">Nambari ya Akaunti</string>
+    <string name="feature_account_details_account_balance">Salio la Akaunti</string>
+    <string name="feature_account_details_total_deposits">Jumla ya Kuweka</string>
+    <string name="feature_account_details_last_trans">Muamala wa Mwisho</string>
+    <string name="feature_account_details_made_on">Imefanywa</string>
+    <string name="feature_account_details_min_required_balance">Salio la Chini zaidi Inayohitajika</string>
+    <string name="feature_account_details_nominal_interest_rate">Kiwango cha Riba</string>
+    <string name="feature_account_details_account_status">Hali ya Akaunti</string>
+    <string name="feature_account_details_no_transaction">Hakuna Muamala</string>
+    <string name="feature_account_details_transactions">Miamala</string>
+    <string name="feature_account_details_no_withdrawals">Hakuna Uondoaji</string>
+    <string name="feature_account_details_total_withdrawal">Jumla ya Uondoaji</string>
+    <string name="feature_account_details_savings_charges">Ada za Akiba</string>
+    <string name="feature_account_details_not_available">Haipatikani</string>
+    <string name="feature_account_details_view_transactions">Tazama Miamala</string>
+    <string name="feature_account_details_view_charges">Tazama Ada</string>
+    <string name="feature_account_details_qr_code">Msimbo wa QR</string>
+    <string name="feature_account_details_share_qr_code">Shiriki Msimbo wa QR</string>
+    <string name="feature_account_details_view_qr_code">Tazama Msimbo wa QR wa akaunti hii</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Miamala ya Akaunti ya Akiba</string>
+    <string name="feature_account_transaction_no_transaction_found">Hakuna Miamala Iliyopatikana</string>
+    <string name="feature_account_transaction_date">Tarehe</string>
+    <string name="feature_account_transaction_four_weeks">Wiki 4</string>
+    <string name="feature_account_transaction_three_months">Miezi 3</string>
+    <string name="feature_account_transaction_six_months">Miezi 6</string>
+    <string name="feature_account_transaction_dividend_payout">Malipo ya Faida</string>
+    <string name="feature_account_transaction_withdrawal">Uondoaji</string>
+    <string name="feature_account_transaction_interest_posting">Uchapishaji wa Riba</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Ondoa Fedha kutoka Akaunti ya Akiba</string>
+    <string name="feature_savings_withdraw_amount">Kiasi</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Tarehe ya Uondoaji</string>
+    <string name="feature_savings_withdraw_remark">Maoni</string>
+    <string name="feature_savings_withdraw_submit">Wasilisha</string>
+    <string name="feature_savings_withdraw_enter_amount">Ingiza Kiasi</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Kiasi kinapaswa kuwa kikubwa kuliko sifuri</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s haiwezi kuwa tupu</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Sasisha Maelezo</string>
+    <string name="feature_savings_update_client_name_label">Jina la Mteja</string>
+    <string name="feature_savings_update_submission_date_label">Tarehe ya Uwasilishaji</string>
+    <string name="feature_savings_update_select_product_id">Chagua Kitambulisho cha Bidhaa</string>
+    <string name="feature_savings_update_submit">Wasilisha</string>
+    <string name="feature_savings_update_cancel">Ghairi</string>
+</resources>

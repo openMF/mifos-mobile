@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">Gagal mendapatkan Penerima Faedah</string>
+    <string name="error_fetching_beneficiary_template">Gagal mendapatkan Templat Penerima Faedah</string>
+    <string name="error_fetching_template">Gagal mendapatkan Templat</string>
+    <string name="error_creating_beneficiary">Gagal mencipta Penerima Faedah</string>
+    <string name="error_updating_beneficiary">Gagal mengemas kini Penerima Faedah</string>
+    <string name="error_deleting_beneficiary">Gagal memadam Penerima Faedah</string>
+    <string name="error_loan_account_withdraw">Ralat semasa menarik balik akaun pinjaman</string>
+    <string name="error_fetching_third_party_transfer_template">Ralat semasa mendapatkan templat pemindahan pihak ketiga</string>
+    <string name="no_beneficiary_found_please_add">Anda tidak mempunyai sebarang penerima faedah pada masa ini. Sila tambah penerima faedah</string>
+    <string name="no_filtered_beneficiary_found">Tiada penerima faedah dijumpai untuk penapis yang diberikan</string>
+    <string name="beneficiary">Penerima Faedah</string>
+    <string name="manage_beneficiaries">Urus Penerima Faedah</string>
+    <string name="beneficiaries">Penerima Faedah</string>
+    <string name="beneficiary_detail">Butiran Penerima Faedah</string>
+    <string name="beneficiary_name">Nama Penerima Faedah</string>
+    <string name="account_type">Jenis Akaun</string>
+    <string name="transfer_limit">Had Pemindahan</string>
+    <string name="add_beneficiary">Tambah Penerima Faedah</string>
+    <string name="office_name">Nama Pejabat</string>
+    <string name="select_account_type">Pilih Jenis Akaun*</string>
+    <string name="submit_beneficiary">Hantar Penerima Faedah</string>
+    <string name="enter_office_name">Masukkan nama pejabat penerima faedah</string>
+    <string name="enter_beneficiary_name">Masukkan nama penerima faedah</string>
+    <string name="enter_transfer_limit">Masukkan had pemindahan</string>
+    <string name="enter_account_number">Masukkan nombor akaun penerima faedah</string>
+    <string name="choose_account_type">Pilih jenis akaun daripada juntai bawah</string>
+    <string name="beneficiary_created_successfully">Penerima Faedah berjaya dicipta</string>
+    <string name="beneficiary_updated_successfully">Penerima Faedah berjaya dikemas kini</string>
+    <string name="update_beneficiary">Kemas Kini Penerima Faedah</string>
+    <string name="delete_beneficiary">Padam Penerima Faedah</string>
+    <string name="delete_beneficiary_confirmation">Adakah anda pasti ingin memadam penerima faedah ini?</string>
+    <string name="login_using_password_confirmation">Adakah anda pasti ingin log masuk menggunakan kata laluan?</string>
+    <string name="delete">Padam</string>
+    <string name="beneficiary_deleted_successfully">Penerima Faedah berjaya dipadamkan</string>
+    <string name="third_party_transfer">Pemindahan Pihak Ketiga</string>
+    <string name="total_loan">Jumlah Pinjaman</string>
+    <string name="total_saving">Jumlah Simpanan</string>
+    <string name="accounts_overview">Gambaran Keseluruhan Akaun</string>
+    <string name="show_hide_total_saving_amount">Tunjukkan atau sembunyikan jumlah simpanan</string>
+    <string name="show_hide_total_loan_amount">Tunjukkan atau sembunyikan jumlah pinjaman</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Tinjauan</string>
+    <string name="activation_date">Tarikh Pengaktifan</string>
+    <string name="groups">Kumpulan</string>
+    <string name="user_details">Butiran Pengguna</string>
+    <string name="client_type">Jenis Pelanggan</string>
+    <string name="client_classification">Klasifikasi Pelanggan</string>
+    <string name="select_mode">Pilih Mod</string>
+    <string name="add_beneficiary_option">Tambah penerima faedah pihak ketiga pada akaun anda.\nMasukkan secara manual atau imbas kod QR akaun</string>
+    <string name="invalid_amount">Amaun Tidak Sah</string>
+    <string name="account_number">Nombor Akaun</string>
+    <string name="client_name">Nama Pelanggan</string>
+    <string name="cancel">Batal</string>
+    <string name="internet_not_connected">Sila pastikan anda disambungkan ke internet</string>
+    <string name="add">Tambah</string>
+    <string name="scan">Imbas</string>
+    <string name="upload_qr_code">Muat Naik Kod QR</string>
+
+    <string name="beneficiary_name_label">Nama Penerima Faedah</string>
+    <string name="office_label">Pejabat</string>
+    <string name="account_type_label">Jenis Akaun</string>
+    <string name="account_number_label">Nombor Akaun</string>
+    <string name="transfer_limit_label">Had Pemindahan</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Simpanan</string>
+    <string name="account_type_loan">Pinjaman</string>
+    <string name="account_type_share">Kongsi</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Sahkan Butiran</string>
+    <string name="confirm_details">Sahkan Butiran</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Penciptaan Penerima Faedah Gagal</string>
+    <string name="beneficiary_updation_failed">Kemas Kini Penerima Faedah Gagal</string>
+    <string name="try_again">Cuba Lagi</string>
+    <string name="back_to_home">Kembali ke Laman Utama</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Tapis</string>
+    <string name="feature_savings_reset">Tetapkan Semula</string>
+    <string name="feature_savings_apply">Guna</string>
+    <string name="feature_filters_count">%1$s Dipilih</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Jenis Akaun</string>
+    <string name="filter_loan_account">Akaun Pinjaman</string>
+    <string name="filter_savings_account">Akaun Simpanan</string>
+    <string name="filter_linked_with">Dipautkan Dengan</string>
+    <string name="filter_self">Diri Sendiri</string>
+    <string name="filter_other_clients">Pelanggan Lain</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Penerima Faedah %2$s berjaya dicipta untuk akaun %1$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        Penerima Faedah %1$s berjaya dikemas kini dengan had pemindahan %2$d.
+    </string>
+
+    <string name="skip_the_form">Langkau borang</string>
+    <string name="upload_or_scan_qr_code">Muat naik atau imbas kod QR</string>
+
+    <string name="filter">Tapis</string>
+    <string name="linked_with">Dipautkan Dengan</string>
+    <string name="type_of_account">Jenis Akaun</string>
+    <string name="selected_count">%1$d Dipilih</string>
+    <string name="filter_icon_description">Ikon Tapis</string>
+</resources>

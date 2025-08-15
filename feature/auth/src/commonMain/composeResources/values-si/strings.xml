@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">අන්තර්ජාල සම්බන්ධතාවයක් නැත</string>
+    <string name="register">ලියාපදිංචි කරන්න</string>
+    <string name="login_failed">පිවිසීම අසාර්ථක විය, කරුණාකර පසුව නැවත උත්සාහ කරන්න.</string>
+    <string name="toast_welcome">සාදරයෙන් පිළිගනිමු %1$s</string>
+    <string name="password">මුරපදය</string>
+    <string name="login">පිවිසීම</string>
+    <string name="create_an_account">ගිණුමක් සාදන්න</string>
+    <string name="rb_mobile">ජංගම</string>
+    <string name="rb_email">ඊමේල්</string>
+    <string name="account_number">ගිණුම් අංකය</string>
+    <string name="username">පරිශීලක නාමය</string>
+    <string name="first_name">මුල් නම</string>
+    <string name="last_name">අවසන් නම</string>
+    <string name="phone_number">දුරකථන අංකය</string>
+    <string name="email">ඊමේල්</string>
+    <string name="confirm_password">මුරපදය තහවුරු කරන්න</string>
+    <string name="verification_mode">සත්‍යාපන ක්‍රමය</string>
+    <string name="dialog_cancel_registration_message">ඔබට නව ගිණුමක් ලියාපදිංචි කිරීම අවලංගු කිරීමට අවශ්‍යද?</string>
+    <string name="dialog_cancel_registration_title">ලියාපදිංචිය අවලංගු කරන්න</string>
+    <string name="request_id">ඉල්ලීම් හැඳුනුම්පත</string>
+    <string name="empty_requestid">ඉල්ලීම් හැඳුනුම්පත හිස් විය නොහැක</string>
+    <string name="authentication_token">සත්‍යාපන ටෝකනය</string>
+    <string name="empty_authentication_token">සත්‍යාපන ටෝකනය හිස් විය නොහැක</string>
+    <string name="verify">සත්‍යාපනය කරන්න</string>
+    <string name="verified">පරිශීලකයා සාර්ථකව සත්‍යාපනය කරන ලදී</string>
+    <string name="yes">ඔව්</string>
+    <string name="no">නැත</string>
+    <string name="could_not_register_user_error">පරිශීලකයා ලියාපදිංචි කළ නොහැක.</string>
+    <string name="password_strength_weak">දුර්වල</string>
+    <string name="password_strength_medium">මධ්‍යස්ථ</string>
+    <string name="password_strength_strong">ශක්තිමත්</string>
+    <string name="password_strength_very_strong">ඉතා ශක්තිමත්</string>
+    <string name="error_message_server">සේවාදායකයෙන් ප්‍රතිචාරය පූරණය කිරීමේ දෝෂයකි</string>
+    <string name="error_validation_blank">%1$s හිස් විය නොහැක</string>
+    <string name="error_validation_minimum_chars">%1$s අක්ෂර %2$d කට අඩු විය නොහැක</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s තුළ %2$s අඩංගු විය නොහැක</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s ඉදිරිපස හෝ පසුපස හිස් ඉඩක් සමඟ ආරම්භ හෝ අවසන් විය නොහැක</string>
+    <string name="error_username_greater_than_six">පරිශීලක නාමය අක්ෂර 6 කට වැඩි විය යුතුය</string>
+    <string name="not_contain_username">හිස් ඉඩ</string>
+    <string name="invalid_phn_number">දුරකථන අංකය වැරදිය</string>
+    <string name="error_invalid_password">මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය</string>
+    <string name="error_invalid_email">ඊමේල් අංකය වැරදිය</string>
+    <string name="error_password_not_match">මුරපදය නොගැලපේ</string>
+    <string name="error_enter_email">කරුණාකර වලංගු ඊමේල් ලිපිනයක් ඇතුළත් කරන්න</string>
+    <string name="error_mobile_length">දුරකථන අංකය ඉලක්කම් 10 ක් විය යුතුය</string>
+    <string name="error_enter_account_number">කරුණාකර ඔබේ ගිණුම් අංකය ඇතුළත් කරන්න</string>
+    <string name="error_enter_mobile_number">කරුණාකර ඔබේ ජංගම දුරකථන අංකය ඇතුළත් කරන්න</string>
+    <string name="error_enter_first_name">කරුණාකර ඔබේ මුල් නම ඇතුළත් කරන්න</string>
+    <string name="error_enter_last_name">කරුණාකර ඔබේ අවසන් නම ඇතුළත් කරන්න</string>
+    <string name="error_enter_user_name">කරුණාකර ඔබේ පරිශීලක නාමය ඇතුළත් කරන්න</string>
+    <string name="error_enter_country">කරුණාකර ඔබේ රට ඇතුළත් කරන්න</string>
+
+    <string name="feature_sign_in_title">පිවිසීම</string>
+    <string name="feature_sign_in_sub_title">පිවිසීමට ඔබේ ඊමේල් සහ මුරපදය ඇතුළත් කරන්න</string>
+    <string name="feature_sign_in_username_label">පරිශීලක නාමය හෝ ඊමේල්</string>
+    <string name="feature_sign_in_password_label">මුරපදය</string>
+    <string name="feature_sign_in_forgot_password">මුරපදය අමතක වියද?</string>
+    <string name="feature_sign_in_Sign_in">පිවිසීම</string>
+    <string name="feature_sign_in_dont_have_an_account">ගිණුමක් නැද්ද?</string>
+    <string name="feature_sign_in_sign_up">ලියාපදිංචි වන්න!</string>
+    <string name="feature_sign_in_username_error">ඊමේල් ලිපිනය හමු නොවිණි</string>
+    <string name="feature_sign_in_password_error">ඔබේ මුරපදය වැරදිය!</string>
+
+    <string name="feature_signup_title">ලියාපදිංචි වන්න</string>
+    <string name="feature_signup_sub_title">ඉදිරියට යාමට ගිණුමක් සාදන්න!</string>
+    <string name="feature_signup_first_name_label">මුල් නම</string>
+    <string name="feature_signup_middle_name_label">මධ්‍ය නම</string>
+    <string name="feature_signup_last_name_label">අවසන් නම</string>
+    <string name="feature_signup_email_label">ඊමේල්</string>
+    <string name="feature_signup_cell_phone_label">ජංගම දුරකථනය</string>
+    <string name="feature_signup_customer_account_label">පාරිභෝගික ගිණුම</string>
+    <string name="feature_signup_password_label">මුරපදය</string>
+    <string name="feature_signup_confirm_password_label">මුරපදය තහවුරු කරන්න</string>
+    <string name="feature_signup_submit">යොමු කරන්න</string>
+    <string name="feature_signup_already_have_an_account">දැනටමත් ගිණුමක් තිබේද?</string>
+    <string name="feature_signup_log_in">පිවිසීම!</string>
+    <string name="feature_signup_character_rules">අක්ෂර නීති</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">නම තුළ වැරදි අක්ෂරයක් අඩංගු වේ</string>
+    <string name="feature_signup_error_first_name_empty">මුල් නම හිස් විය නොහැක</string>
+    <string name="feature_signup_error_middle_name_empty">මධ්‍ය නම හිස් විය නොහැක</string>
+    <string name="feature_signup_error_last_name_empty">අවසන් නම හිස් විය නොහැක</string>
+    <string name="feature_signup_error_invalid_email">වැරදි ඊමේල් ලිපිනයකි</string>
+    <string name="feature_signup_error_invalid_mobile_number">වැරදි ජංගම දුරකථන අංකයකි</string>
+    <string name="feature_signup_error_customer_account_empty">පාරිභෝගික ගිණුම අවශ්‍යයි</string>
+    <string name="feature_signup_error_customer_account_not_valid">කරුණාකර වලංගු පාරිභෝගික ගිණුමක් සපයන්න</string>
+    <string name="feature_signup_error_password_required_error">මුරපදය අවශ්‍යයි</string>
+    <string name="feature_signup_error_password_short">මුරපදය අවම වශයෙන් අක්ෂර 6 ක් විය යුතුය</string>
+    <string name="feature_signup_error_password_mismatch">මුරපදයන් ගැලපෙන්නේ නැත</string>
+    <string name="feature_signup_error_name_contains_digits">නම තුළ ඉලක්කම් අඩංගු විය නොහැක</string>
+    <string name="feature_signup_error_name_contains_symbols">නම තුළ සංකේත සහ හිස් ඉඩ අඩංගු විය නොහැක</string>
+    <string name="feature_signup_error_name_contains_emoji">පෙළ තුළ ඉමෝජි හෝ වැරදි අක්ෂර අඩංගු විය නොහැක</string>
+    <string name="feature_signup_user_registered_successfully">පරිශීලකයා සාර්ථකව ලියාපදිංචි කරන ලදී</string>
+    <string name="feature_signup_user_registered_successfully_tip">දැන් ඔබට ඔබේ පරිශීලක නාමය (දුරකථන අංකය) සහ මුරපදය භාවිතා කර පිවිසීමට හැකිය.</string>
+    <string name="feature_signup_user_registered_failed">පරිශීලකයා ලියාපදිංචි කිරීම අසාර්ථක විය</string>
+    <string name="feature_signup_user_registered_failed_tip">පරිශීලකයා ලියාපදිංචි කිරීමේදී දෝෂයක් ඇති විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+
+    <string name="feature_upload_id_title">හැඳුනුම්පත උඩුගත කරන්න</string>
+    <string name="feature_upload_id_subtitle">සත්‍යාපනය සඳහා ඔබේ හැඳුනුම්පත් ලේඛනය සහ ඡායාරූපය උඩුගත කරන්න!</string>
+    <string name="feature_upload_id_upload_your_id">ඔබේ හැඳුනුම්පත උඩුගත කරන්න</string>
+    <string name="feature_upload_id_upload_your_photo">ඔබේ ඡායාරූපය උඩුගත කරන්න</string>
+    <string name="feature_upload_id_remove_file">ගොනුව ඉවත් කරන්න</string>
+    <string name="feature_upload_id_view_file">ගොනුව බලන්න</string>
+    <string name="feature_upload_id_select_new_file">නව ගොනුවක් තෝරන්න</string>
+    <string name="feature_upload_id_identification_doc_label">හැඳුනුම්පත් ලේඛනය</string>
+    <string name="feature_upload_id_profile_photo_label">පැතිකඩ ඡායාරූපය</string>
+    <string name="feature_upload_id_mobile_label">ජංගම දුරකථනය</string>
+    <string name="feature_upload_id_national_id_label">ජාතික හැඳුනුම්පත් අංකය</string>
+    <string name="feature_upload_id_dob_label">උපන් දිනය</string>
+    <string name="feature_upload_id_edit_prompt">ඔබේ පුද්ගලික තොරතුරු සංස්කරණය කිරීමට අවශ්‍යද?</string>
+    <string name="feature_upload_id_take_me_back">මාව නැවත ගෙනයන්න</string>
+    <string name="feature_upload_id_ok">හරි</string>
+    <string name="feature_upload_id_cancel">අවලංගු කරන්න</string>
+    <string name="feature_common_submit">යොමු කරන්න</string>
+
+    <string name="feature_upload_id_error_field_empty">මෙම ක්ෂේත්‍රය හිස් විය නොහැක</string>
+    <string name="feature_upload_id_error_mobile_not_valid">කරුණාකර වලංගු දුරකථන අංකයක් ඉලක්කම් 10 ක් ඇතුළත් කරන්න</string>
+    <string name="feature_upload_id_error_id_required">කරුණාකර ඔබේ හැඳුනුම්පත් ලේඛනය උඩුගත කරන්න</string>
+    <string name="feature_upload_id_error_photo_required">කරුණාකර ඔබේ ඡායාරූපය උඩුගත කරන්න</string>
+    <string name="feature_upload_id_error_dob_required">උපන් දිනය අවශ්‍යයි</string>
+    <string name="feature_upload_id_upload_success">ගොනුව සාර්ථකව උඩුගත කරන ලදී</string>
+    <string name="feature_upload_id_upload_failed">ගොනුව උඩුගත කිරීම අසාර්ථක විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+    <string name="feature_upload_id_error_invalid_dob">උපන් දිනය අද හෝ ඉදිරි දිනයක් විය නොහැක</string>
+    <string name="feature_upload_id_generic_error">යම් දෝෂයක් ඇති විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.</string>
+
+    <string name="feature_otp_title">OTP සත්‍යාපනය</string>
+    <string name="feature_otp_subtitle">ඔබේ ඊමේල් ලිපිනය සත්‍යාපනය කරන්න!</string>
+    <string name="feature_otp_message">ඔබේ ලියාපදිංචිය සම්පූර්ණ කිරීම සඳහා, ඔබේ ඊමේල් ලිපිනය සත්‍යාපනය කරන්න. ඔබ සත්‍යාපන කේතයක් ලබා ගෙන ඇති අතර (ඔබට ඊමේල් ලැබී නොහැකි නම්, නැවත යවන විකල්පය තෝරන්න). ඔබ එය පහත සැපයිය යුතුය.</string>
+    <string name="feature_otp_tip">කේතය ලැබී නැද්ද?</string>
+    <string name="feature_otp_action_tip">දැන් නැවත යවන්න</string>
+    <string name="feature_otp_authentication_code_label">සත්‍යාපන කේතය</string>
+    <string name="feature_otp_request_id_label">ඉල්ලීම් හැඳුනුම්පත</string>
+
+    <string name="feature_common_next">ඊළඟ</string>
+    <string name="feature_common_cancel">අවලංගු කරන්න</string>
+
+    <string name="feature_otp_required_error">OTP අවශ්‍යයි</string>
+    <string name="feature_otp_invalid_error">කරුණාකර වලංගු OTP එකක් ඇතුළත් කරන්න</string>
+    <string name="feature_otp_request_id_error">ඉල්ලීම් හැඳුනුම්පත අවශ්‍යයි</string>
+
+    <!--Set New Password-->
+    <string name="feature_set_new_password_title">මුරපදය සකසන්න</string>
+    <string name="feature_set_new_password_message">දැන් ඔබේ අභිරක්ෂිත නව මුරපදය සකසන්න!</string>
+    <string name="feature_set_new_password_new_password_label">නව මුරපදය</string>
+    <string name="feature_set_new_password_confirm_password_label">නව මුරපදය තහවුරු කරන්න</string>
+    <string name="feature_set_new_password_submit">යොමු කරන්න</string>
+    <string name="feature_set_new_password_tip">ඔබේ මුරපදය මතක තිබේද?</string>
+    <string name="feature_set_new_password_action_tip">පිවිසීම</string>
+
+    <string name="feature_common_error_password_required_error">මුරපදය අවශ්‍යයි</string>
+    <string name="feature_common_error_password_short">මුරපදය අවම වශයෙන් අක්ෂර 6 ක් විය යුතුය</string>
+    <string name="feature_common_error_password_mismatch">මුරපදයන් ගැලපෙන්නේ නැත</string>
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">දැන් ප්‍රතිසංස්කරණය කරන්න</string>
+    <string name="feature_recover_now_message">ඔබේ මුරපදය අමතක වියද, ප්‍රශ්නයක් නැත! අපි ඔබට උදව් කරන්න. දැන් ඔබේ මුරපදය ප්‍රතිසංස්කරණය කරන්න!</string>
+    <string name="feature_recover_now_phone_number_label">දුරකථන අංකය</string>
+    <string name="feature_recover_now_email_label">ඊමේල්</string>
+    <string name="feature_recover_now_verifying">සත්‍යාපනය කරමින්</string>
+    <string name="feature_recover_now_email_required">ඊමේල් අවශ්‍යයි</string>
+    <string name="feature_recover_now_phone_number_required">දුරකථන අංකය අවශ්‍යයි</string>
+    <string name="feature_recover_now_email_format_error">වැරදි ඊමේල් ලිපිනයකි</string>
+    <string name="feature_recover_now_phone_number_error">වැරදි දුරකථන අංකයකි</string>
+    <string name="feature_recover_now_invalid_phone_number_error">දුරකථන අංකය තුළ අක්ෂර හෝ සංකේත අඩංගු විය නොහැක</string>
+    <string name="feature_recover_now_remember_your_password">ඔබේ මුරපදය මතක තිබේද?</string>
+    <string name="feature_recover_now_log_in">පිවිසීම!</string>
+
+    <string name="feature_recover_now_recovered_successfully">මුරපදය ප්‍රතිසංස්කරණය සාර්ථකයි</string>
+    <string name="feature_recover_now_recovered_successfully_tip">දැන් ඔබට ඔබේ පරිශීලක නාමය (දුරකථන අංකය) සහ මුරපදය භාවිතා කර පිවිසීමට හැකිය.</string>
+    <string name="feature_recover_now_recovered_failed">මුරපදය ප්‍රතිසංස්කරණය අසාර්ථකයි</string>
+    <string name="feature_recover_now_registered_failed_tip">පරිශීලකයාගේ මුරපදය ප්‍රතිසංස්කරණය කිරීමේදී දෝෂයක් ඇති විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+</resources>

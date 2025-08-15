@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">सक्रिय</string>
+    <string name="feature_account_approved">अनुमोदित</string>
+    <string name="feature_account_approval_pending">अनुमोदन लंबित</string>
+    <string name="feature_account_matured">परिपक्व</string>
+    <string name="feature_account_closed">बंद</string>
+    <string name="feature_account_empty_savings_accounts">आपके साथ कोई बचत खाता जुड़ा नहीं है</string>
+    <string name="feature_account_submitted">प्रस्तुत</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">खाते</string>
+    <string name="feature_savings_account_dashboard">कुल उपलब्ध बचत</string>
+    <string name="feature_savings_account">बचत खाता</string>
+    <string name="feature_savings_account_items">%1$d आइटम</string>
+
+    <string name="feature_common_error">कुछ गलत हो गया</string>
+
+    <string name="content_description_search">खोजें</string>
+    <string name="content_description_filter">फ़िल्टर</string>
+
+    <string name="feature_savings_filter_wallet_account">वॉलेट खाता</string>
+    <string name="feature_savings_filter_bank_account">बैंक खाता</string>
+    <string name="feature_savings_filter_group_account">समूह खाता</string>
+    <string name="feature_savings_filter_nb_account">NB खाता</string>
+
+    <string name="feature_savings_filter_active_account">सक्रिय</string>
+    <string name="feature_savings_filter_pending_account">अनुमोदन लंबित</string>
+    <string name="feature_savings_filter_closed_account">बंद</string>
+    <string name="feature_savings_filter_matured_account">परिपक्व</string>
+    <string name="feature_savings_filter_approved_account">अनुमोदित</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">बचत खाता विवरण</string>
+    <string name="feature_account_action_update">अपडेट करें</string>
+    <string name="feature_account_action_withdraw">वापस लें</string>
+    <string name="feature_account_action_deposit">जमा करें</string>
+    <string name="feature_account_action_deposit_tip">अपनी जमा यात्रा शुरू करें</string>
+    <string name="feature_account_action_transfer">ट्रांसफर करें</string>
+    <string name="feature_account_action_transfer_tip">अपने धन को अन्य उत्पाद मेते ट्रांसफर करें</string>
+    <string name="feature_account_details_account_number">खाता संख्या</string>
+    <string name="feature_account_details_account_balance">खाता शेष</string>
+    <string name="feature_account_details_total_deposits">कुल जमा राशि</string>
+    <string name="feature_account_details_last_trans">अंतिम लेन-देन</string>
+    <string name="feature_account_details_made_on">इस तारीख को किया गया</string>
+    <string name="feature_account_details_min_required_balance">न्यूनतम आवश्यक शेष</string>
+    <string name="feature_account_details_nominal_interest_rate">नाममात्र ब्याज दर</string>
+    <string name="feature_account_details_account_status">खाता स्थिति</string>
+    <string name="feature_account_details_no_transaction">कोई लेन-देन नहीं</string>
+    <string name="feature_account_details_transactions">लेन-देन</string>
+    <string name="feature_account_details_no_withdrawals">कोई वापसी नहीं</string>
+    <string name="feature_account_details_total_withdrawal">कुल वापसी</string>
+    <string name="feature_account_details_savings_charges">बचत शुल्क</string>
+    <string name="feature_account_details_not_available">उपलब्ध नहीं है</string>
+    <string name="feature_account_details_view_transactions">लेन-देन देखें</string>
+    <string name="feature_account_details_view_charges">शुल्क देखें</string>
+    <string name="feature_account_details_qr_code">QR कोड</string>
+    <string name="feature_account_details_share_qr_code">QR कोड साझा करें</string>
+    <string name="feature_account_details_view_qr_code">इस खाते के लिए QR कोड देखें</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">बचत खाता लेन-देन</string>
+    <string name="feature_account_transaction_no_transaction_found">कोई लेन-देन नहीं मिला</string>
+    <string name="feature_account_transaction_date">तारीख</string>
+    <string name="feature_account_transaction_four_weeks">4 सप्ताह</string>
+    <string name="feature_account_transaction_three_months">3 महीने</string>
+    <string name="feature_account_transaction_six_months">6 महीने</string>
+    <string name="feature_account_transaction_dividend_payout">लाभांश भुगतान</string>
+    <string name="feature_account_transaction_withdrawal">वापसी</string>
+    <string name="feature_account_transaction_interest_posting">ब्याज पोस्टिंग</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">बचत खाता वापसी</string>
+    <string name="feature_savings_withdraw_amount">राशि</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">वापसी की तारीख</string>
+    <string name="feature_savings_withdraw_remark">टिप्पणी</string>
+    <string name="feature_savings_withdraw_submit">जमा करें</string>
+    <string name="feature_savings_withdraw_enter_amount">राशि दर्ज करें</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">राशि शून्य से अधिक होनी चाहिए</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s रिक्त नहीं हो सकता</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">विवरण अपडेट करें</string>
+    <string name="feature_savings_update_client_name_label">ग्राहक का नाम</string>
+    <string name="feature_savings_update_submission_date_label">प्रस्तुति तिथि</string>
+    <string name="feature_savings_update_select_product_id">उत्पाद आईडी चुनें</string>
+    <string name="feature_savings_update_submit">जमा करें</string>
+    <string name="feature_savings_update_cancel">रद्द करें</string>
+</resources>

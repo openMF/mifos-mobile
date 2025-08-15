@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_not_connected">Pastikan Anda terhubung ke internet</string>
+    <string name="client_charges">Biaya Klien</string>
+    <string name="loan_charges">Biaya Pinjaman</string>
+    <string name="savings_charges">Biaya Tabungan</string>
+    <string name="charges">Biaya</string>
+    <string name="error_no_charge">Tidak ada biaya yang ditemukan</string>
+    <string name="amount_due">Jatuh Tempo:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Tunggakan:</string>
+    <string name="amount_waived">Dihapus:</string>
+    <string name="amount_paid">Dibayar:</string>
+
+    <string name="charge_details">Detail Biaya</string>
+    <string name="paid_success_message">Anda telah berhasil membayar biaya ini sepenuhnya</string>
+    <string name="status_icon_description">Ikon status</string>
+    <string name="ref_no">No. Ref. %1$s</string>
+    <string name="paid_on">Dibayar Pada: %1$s</string>
+    <string name="partial_amount_paid_on">Jumlah Parsial Dibayar Pada: %1$s</string>
+    <string name="pay_outstanding">Bayar Tunggakan</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Judul Biaya</string>
+    <string name="date">Tanggal</string>
+    <string name="due">Jatuh Tempo</string>
+    <string name="paid">Dibayar</string>
+    <string name="waived">Dihapus</string>
+    <string name="outstanding">Tunggakan</string>
+
+</resources>

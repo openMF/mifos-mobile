@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_fetching_beneficiaries">લાભાર્થીઓ લાવવામાં નિષ્ફળતા</string>
+    <string name="error_fetching_beneficiary_template">લાભાર્થી ટેમ્પલેટ લાવવામાં નિષ્ફળતા</string>
+    <string name="error_fetching_template">ટેમ્પલેટ લાવવામાં નિષ્ફળતા</string>
+    <string name="error_creating_beneficiary">લાભાર્થી બનાવવામાં નિષ્ફળતા</string>
+    <string name="error_updating_beneficiary">લાભાર્થી અપડેટ કરવામાં નિષ્ફળતા</string>
+    <string name="error_deleting_beneficiary">લાભાર્થી કાઢી મકવામાં નિષ્ફળતા</string>
+    <string name="error_loan_account_withdraw">લોન એકાઉન્ટ રદ કરવામાં ક્ષતિ</string>
+    <string name="error_fetching_third_party_transfer_template">થર્ડ પાર્ટી ટ્રાન્સફર ટેમ્પલેટ લાવવામાં ક્ષતિ</string>
+    <string name="no_beneficiary_found_please_add">હાલ તમારી પાસે કોઈ લાભાર્થી નથી. કૃપા કરીને લાભાર્થી ઉમેરો</string>
+    <string name="no_filtered_beneficiary_found">આપેલ ફિલ્ટર માટે લાભાર્થી મળ્યો નથી</string>
+    <string name="beneficiary">લાભાર્થી</string>
+    <string name="manage_beneficiaries">લાભાર્થીઓ મેનેજ કરો</string>
+    <string name="beneficiaries">લાભાર્થીઓ</string>
+    <string name="beneficiary_detail">લાભાર્થી વિગત</string>
+    <string name="beneficiary_name">લાભાર્થી નામ</string>
+    <string name="account_type">એકાઉન્ટ પ્રકાર</string>
+    <string name="transfer_limit">ટ્રાન્સફર મર્યાદા</string>
+    <string name="add_beneficiary">લાભાર્થી ઉમેરો</string>
+    <string name="office_name">કચેરી નામ</string>
+    <string name="select_account_type">એકાઉન્ટ પ્રકાર પસંદ કરો*</string>
+    <string name="submit_beneficiary">લાભાર્થી સબમિટ કરો</string>
+    <string name="enter_office_name">લાભાર્થી કચેરી નામ દાખલ કરો</string>
+    <string name="enter_beneficiary_name">લાભાર્થી નામ દાખલ કરો</string>
+    <string name="enter_transfer_limit">ટ્રાન્સફર મર્યાદા દાખલ કરો</string>
+    <string name="enter_account_number">લાભાર્થી એકાઉન્ટ નંબર દાખલ કરો</string>
+    <string name="choose_account_type">ડ્રોપડાઉન માંથી એકાઉન્ટ પ્રકાર પસંદ કરો</string>
+    <string name="beneficiary_created_successfully">લાભાર્થી સફળતાપૂર્વક બનાવાયો</string>
+    <string name="beneficiary_updated_successfully">લાભાર્થી સફળતાપૂર્વક અપડેટ થયો</string>
+    <string name="update_beneficiary">લાભાર્થી અપડેટ કરો</string>
+    <string name="delete_beneficiary">લાભાર્થી કાઢી મકો</string>
+    <string name="delete_beneficiary_confirmation">શું તમે ખરેખર આ લાભાર્થીને કાઢી મકવા માંગતા હોય છો?</string>
+    <string name="login_using_password_confirmation">શું તમે ખરેખર પાસવર્ડ વડે લૉગિન કરવા માંગતા હોય છો?</string>
+    <string name="delete">કાઢી મકો</string>
+    <string name="beneficiary_deleted_successfully">લાભાર્થી સફળતાપૂર્વક કાઢી મકાયો</string>
+    <string name="third_party_transfer">થર્ડ પાર્ટી ટ્રાન્સફર</string>
+    <string name="total_loan">કુલ લોન</string>
+    <string name="total_saving">કુલ બચત</string>
+    <string name="accounts_overview">એકાઉન્ટ આઉટલાઇન</string>
+    <string name="show_hide_total_saving_amount">કુલ બચત રકમ બતાવો અથવા છુપાવો</string>
+    <string name="show_hide_total_loan_amount">કુલ લોન રકમ બતાવો અથવા છુપાવો</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">સર્વેક્ષણો</string>
+    <string name="activation_date">સક્રિય કરવાની તારીખ</string>
+    <string name="groups">જૂથો</string>
+    <string name="user_details">વપરાશકર્તા વિગતો</string>
+    <string name="client_type">ક્લાઇન્ટ પ્રકાર</string>
+    <string name="client_classification">ક્લાઇન્ટ વર્ગીકરણ</string>
+    <string name="select_mode">મોડ પસંદ કરો</string>
+    <string name="add_beneficiary_option">તમારા એકાઉન્ટમાં થર્ડ પાર્ટી લાભાર્થીઓ ઉમેરો.\nહાથથી દાખલ કરો અથવા એકાઉન્ટ QR કોડ સ્કેન કરો</string>
+    <string name="invalid_amount">અમાન્ય રકમ</string>
+    <string name="account_number">એકાઉન્ટ નંબર</string>
+    <string name="client_name">ક્લાઇન્ટ નામ</string>
+    <string name="cancel">રદ કરો</string>
+    <string name="internet_not_connected">કૃપા કરીને ખાતરી કરો કે તમે ઇન્ટરનેટ સાથે કનેક્ટ છો</string>
+    <string name="add">ઉમેરો</string>
+    <string name="scan">સ્કેન કરો</string>
+    <string name="upload_qr_code">QR અપલોડ કરો</string>
+
+    <string name="beneficiary_name_label">લાભાર્થીનું નામ</string>
+    <string name="office_label">કચેરી</string>
+    <string name="account_type_label">એકાઉન્ટ પ્રકાર</string>
+    <string name="account_number_label">એકાઉન્ટ નંબર</string>
+    <string name="transfer_limit_label">ટ્રાન્સફર મર્યાદા</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">બચત</string>
+    <string name="account_type_loan">લોન</string>
+    <string name="account_type_share">શેર</string>
+
+    <!-- Labels -->
+    <string name="validate_details">વિગતો માન્ય કરો</string>
+    <string name="confirm_details">વિગતો ખાતરી કરો</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">લાભાર્થી નિર્માણ નિષ્ફળ</string>
+    <string name="beneficiary_updation_failed">લાભાર્થી અપડેટ નિષ્ફળ</string>
+    <string name="try_again">ફરી પ્રયત્ન કરો</string>
+    <string name="back_to_home">હોમ પર પાછા જાઓ</string>
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">ફિલ્ટર્સ</string>
+    <string name="feature_savings_reset">રીસેટ કરો</string>
+    <string name="feature_savings_apply">લાગુ કરો</string>
+    <string name="feature_filters_count">%1$s પસંદ કરેલ</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">એકાઉન્ટ પ્રકાર</string>
+    <string name="filter_loan_account">લોન એકાઉન્ટ</string>
+    <string name="filter_savings_account">બચત એકાઉન્ટ</string>
+    <string name="filter_linked_with">સાથે લિંક થયેલ</string>
+    <string name="filter_self">સ્વયં</string>
+    <string name="filter_other_clients">અન્ય ક્લાઇન્ટ્સ</string>
+
+    <string name="beneficiary_created_successfully_account">
+        %1$s એકાઉન્ટ માટે લાભાર્થી સફળતાપૂર્વક બનાવાયો %2$s નામના લાભાર્થી માટે.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+        %1$s નામના લાભાર્થી માટે લાભાર્થી સફળતાપૂર્વક અપડેટ થયો %2$d ની ટ્રાન્સફર મર્યાદા સાથે.
+    </string>
+
+    <string name="skip_the_form">ફોર્મ છોડી દો</string>
+    <string name="upload_or_scan_qr_code">QR કોડ અપલોડ અથવા સ્કેન કરો</string>
+
+    <string name="filter">ફિલ્ટર</string>
+    <string name="linked_with">સાથે લિંક થયેલ</string>
+    <string name="type_of_account">એકાઉન્ટનો પ્રકાર</string>
+    <string name="selected_count">%1$d પસંદ કરેલ</string>
+    <string name="filter_icon_description">ફિલ્ટર આઇકૉન</string>
+</resources>

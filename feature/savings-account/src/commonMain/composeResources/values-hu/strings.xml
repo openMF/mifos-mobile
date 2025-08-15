@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_account_active">Aktív</string>
+    <string name="feature_account_approved">Jóváhagyott</string>
+    <string name="feature_account_approval_pending">Jóváhagyás függőben</string>
+    <string name="feature_account_matured">Lejárt</string>
+    <string name="feature_account_closed">Zárt</string>
+    <string name="feature_account_empty_savings_accounts">Nincs Önhöz társított megtakarítási számla</string>
+    <string name="feature_account_submitted">Beküldött</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Számlák</string>
+    <string name="feature_savings_account_dashboard">Összes rendelkezésre álló megtakarítás</string>
+    <string name="feature_savings_account">Megtakarítási számla</string>
+    <string name="feature_savings_account_items">%1$d elem</string>
+
+    <string name="feature_common_error">Valami hiba történt</string>
+
+    <string name="content_description_search">Keresés</string>
+    <string name="content_description_filter">Szűrés</string>
+
+    <string name="feature_savings_filter_wallet_account">Pénztárca számla</string>
+    <string name="feature_savings_filter_bank_account">Bankszámla</string>
+    <string name="feature_savings_filter_group_account">Csoport számla</string>
+    <string name="feature_savings_filter_nb_account">NB számla</string>
+
+    <string name="feature_savings_filter_active_account">Aktív</string>
+    <string name="feature_savings_filter_pending_account">Jóváhagyás függőben</string>
+    <string name="feature_savings_filter_closed_account">Zárt</string>
+    <string name="feature_savings_filter_matured_account">Lejárt</string>
+    <string name="feature_savings_filter_approved_account">Jóváhagyott</string>
+
+    <!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Megtakarítási számla részletei</string>
+    <string name="feature_account_action_update">Frissítés</string>
+    <string name="feature_account_action_withdraw">Visszavonás</string>
+    <string name="feature_account_action_deposit">Letét</string>
+    <string name="feature_account_action_deposit_tip">Indítsa el a letéti utazását</string>
+    <string name="feature_account_action_transfer">Átvitel</string>
+    <string name="feature_account_action_transfer_tip">Vigye át pénzét más termékre</string>
+    <string name="feature_account_details_account_number">Számlaszám</string>
+    <string name="feature_account_details_account_balance">Számlaegyenleg</string>
+    <string name="feature_account_details_total_deposits">Összes letét</string>
+    <string name="feature_account_details_last_trans">Utolsó tranzakció</string>
+    <string name="feature_account_details_made_on">Készült</string>
+    <string name="feature_account_details_min_required_balance">Min. szükséges egyenleg</string>
+    <string name="feature_account_details_nominal_interest_rate">Névleges kamatláb</string>
+    <string name="feature_account_details_account_status">Számla státusza</string>
+    <string name="feature_account_details_no_transaction">Nincs tranzakció</string>
+    <string name="feature_account_details_transactions">Tranzakciók</string>
+    <string name="feature_account_details_no_withdrawals">Nincs visszavonás</string>
+    <string name="feature_account_details_total_withdrawal">Összes visszavonás</string>
+    <string name="feature_account_details_savings_charges">Megtakarítási díjak</string>
+    <string name="feature_account_details_not_available">Nem elérhető</string>
+    <string name="feature_account_details_view_transactions">Tranzakciók megtekintése</string>
+    <string name="feature_account_details_view_charges">Díjak megtekintése</string>
+    <string name="feature_account_details_qr_code">QR kód</string>
+    <string name="feature_account_details_share_qr_code">QR kód megosztása</string>
+    <string name="feature_account_details_view_qr_code">QR kód megtekintése ehhez a számlához</string>
+
+    <!--    Savings Account Transaction Values-->
+
+    <string name="feature_account_transaction_topbar_title">Megtakarítási számla tranzakció</string>
+    <string name="feature_account_transaction_no_transaction_found">Nem található tranzakció</string>
+    <string name="feature_account_transaction_date">Dátum</string>
+    <string name="feature_account_transaction_four_weeks">4 hét</string>
+    <string name="feature_account_transaction_three_months">3 hónap</string>
+    <string name="feature_account_transaction_six_months">6 hónap</string>
+    <string name="feature_account_transaction_dividend_payout">Osztalék kifizetés</string>
+    <string name="feature_account_transaction_withdrawal">Visszavonás</string>
+    <string name="feature_account_transaction_interest_posting">Kamat közzététele</string>
+
+    <!--    Withdraw savings Account-->
+
+    <string name="feature_savings_withdraw_topbar_title">Megtakarítási számla visszavonása</string>
+    <string name="feature_savings_withdraw_amount">Összeg</string>
+    <string name="feature_savings_withdraw_one">1</string>
+    <string name="feature_savings_withdraw_two">2</string>
+    <string name="feature_savings_withdraw_three">3</string>
+    <string name="feature_savings_withdraw_four">4</string>
+    <string name="feature_savings_withdraw_withdrawal_date">Visszavonás dátuma</string>
+    <string name="feature_savings_withdraw_remark">Megjegyzés</string>
+    <string name="feature_savings_withdraw_submit">Beküldés</string>
+    <string name="feature_savings_withdraw_enter_amount">Adja meg az összeget</string>
+    <string name="feature_savings_withdraw_amount_greater_than_zero">Az összegnek nullánál nagyobbnak kell lennie</string>
+    <string name="feature_savings_withdraw_error_validation_blank">%1$s nem lehet üres</string>
+
+    <!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Részletek frissítése</string>
+    <string name="feature_savings_update_client_name_label">Ügyfél neve</string>
+    <string name="feature_savings_update_submission_date_label">Beküldés dátuma</string>
+    <string name="feature_savings_update_select_product_id">Válasszon termékazonosítót</string>
+    <string name="feature_savings_update_submit">Beküldés</string>
+    <string name="feature_savings_update_cancel">Mégse</string>
+</resources>

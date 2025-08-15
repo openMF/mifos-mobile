@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">لا يوجد إنترنت</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="no_data">لا توجد بيانات</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="core_common_working">العمل المشترك الأساسي</string>
+
+    <string name="powered_by">مدعوم من</string>
+
+    <string name="password_checker_empty_error">لا يمكن أن تكون كلمة المرور فارغة.</string>
+    <string name="password_checker_too_long_error">كلمة المرور طويلة جداً. الحد الأقصى هو 128 حرف.</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">يجب أن تكون كلمة المرور على الأقل 12 حرف.</string>
+    <string name="password_checker_uppercase_feedback">قم بتضمين حرف كبير واحد على الأقل.</string>
+    <string name="password_checker_lowercase_feedback">قم بتضمين حرف صغير واحد على الأقل.</string>
+    <string name="password_checker_digit_feedback">قم بتضمين رقم واحد على الأقل.</string>
+    <string name="password_checker_special_char_feedback">قم بتضمين حرف خاص واحد على الأقل.</string>
+    <string name="password_checker_strong_length_feedback">للحصول على كلمة مرور أقوى، استخدم 12 حرف على الأقل.</string>
+
+    <!-- PasswordStrength Labels (for UI components) -->
+    <string name="password_strength_level_0">ضعيفة جداً</string>
+    <string name="password_strength_level_1">ضعيفة</string>
+    <string name="password_strength_level_2">مقبولة</string>
+    <string name="password_strength_level_3">جيدة</string>
+    <string name="password_strength_level_4">قوية</string>
+    <string name="password_strength_level_5">قوية جداً</string>
+    <string name="password_strength_none">أدخل كلمة مرور</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">مؤشر قوة كلمة المرور</string>
+    <string name="password_strength_announcement">قوة كلمة المرور: %1$s</string>
+    <string name="minimum_characters_requirement">%1$d حرف كحد أدنى</string>
+    <string name="minimum_characters_met">تم تلبية متطلبات الحد الأدنى من الأحرف</string>
+    <string name="minimum_characters_not_met">لم يتم تلبية متطلبات الحد الأدنى من الأحرف</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">متطلبات كلمة المرور</string>
+    <string name="password_feedback_title">اقتراحات كلمة المرور</string>
+    <string name="password_feedback_all_good">كلمة المرور الخاصة بك تلبي جميع المتطلبات!</string>
+    <string name="character_count">%1$d حرف</string>
+    <string name="character_count_with_limit">%1$d / %2$d حرف</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">لا يمكن أن يكون عنوان البريد الإلكتروني فارغًا</string>
+    <string name="validation_email_max_length_exceeded">عنوان البريد الإلكتروني يتجاوز الحد الأقصى للطول وهو 254 حرفًا</string>
+    <string name="validation_email_missing_at_symbol">يجب أن يحتوي عنوان البريد الإلكتروني على رمز @</string>
+    <string name="validation_email_starts_with_at">لا يمكن أن يبدأ عنوان البريد الإلكتروني برمز @</string>
+    <string name="validation_email_ends_with_at">لا يمكن أن ينتهي عنوان البريد الإلكتروني برمز @</string>
+    <string name="validation_email_multiple_at_symbols">لا يمكن أن يحتوي عنوان البريد الإلكتروني على رموز @ متعددة</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">لا يمكن أن يكون الجزء المحلي فارغًا</string>
+    <string name="validation_email_local_max_length">الجزء المحلي يتجاوز الحد الأقصى للطول وهو 64 حرفًا</string>
+    <string name="validation_email_local_starts_with_dot">لا يمكن أن يبدأ الجزء المحلي بنقطة</string>
+    <string name="validation_email_local_ends_with_dot">لا يمكن أن ينتهي الجزء المحلي بنقطة</string>
+    <string name="validation_email_local_consecutive_dots">لا يمكن أن يحتوي الجزء المحلي على نقاط متتالية</string>
+    <string name="validation_email_local_invalid_characters">الجزء المحلي يحتوي على أحرف غير صالحة</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">لا يمكن أن يكون الجزء الخاص بالنطاق فارغًا</string>
+    <string name="validation_email_domain_max_length">الجزء الخاص بالنطاق يتجاوز الحد الأقصى للطول وهو 253 حرفًا</string>
+    <string name="validation_email_domain_missing_dot">يجب أن يحتوي النطاق على نقطة واحدة على الأقل</string>
+    <string name="validation_email_domain_starts_ends_with_dot">لا يمكن أن يبدأ النطاق أو ينتهي بنقطة</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">لا يمكن أن يبدأ النطاق أو ينتهي بشرطة</string>
+    <string name="validation_email_domain_insufficient_parts">يجب أن يكون للنطاق جزأين على الأقل مفصولين بنقطة</string>
+    <string name="validation_email_tld_invalid">يجب أن يكون المجال الأعلى طولًا حرفين على الأقل ويتكون فقط من الأحرف</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">لا يمكن أن يكون تسمية النطاق فارغة</string>
+    <string name="validation_email_label_max_length">تسمية النطاق تتجاوز الحد الأقصى للطول وهو 63 حرفًا</string>
+    <string name="validation_email_label_starts_with_hyphen">لا يمكن أن تبدأ تسمية النطاق بشرطة</string>
+    <string name="validation_email_label_ends_with_hyphen">لا يمكن أن تنتهي تسمية النطاق بشرطة</string>
+    <string name="validation_email_label_invalid_characters">تسمية النطاق تحتوي على أحرف غير صالحة</string>
+
+    <!-- Spanish Phone Number Validation -->
+    <string name="validation_phone_empty">لا يمكن أن يكون رقم الهاتف فارغًا</string>
+    <string name="validation_phone_too_short">رقم الهاتف قصير جداً</string>
+    <string name="validation_phone_too_long">رقم الهاتف طويل جداً</string>
+    <string name="validation_phone_invalid_characters">رقم الهاتف يحتوي على أحرف غير صالحة</string>
+    <string name="validation_phone_spanish_country_code_required">الرجاء استخدام رمز البلد الإسباني (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">تنسيق رقم الهاتف الإسباني غير صحيح</string>
+
+    <string name="validation_phone_invalid_for_country">رقم الهاتف غير صحيح للبلد المحدد</string>
+    <string name="validation_phone_no_valid_country_found">تنسيق رقم الهاتف غير معروف لأي بلد مدعوم</string>
+
+    <!-- Name Validation Messages -->
+    <string name="validation_name_empty">لا يمكن أن يكون الاسم فارغًا</string>
+    <string name="validation_name_invalid_characters">الاسم يحتوي على أحرف غير صالحة</string>
+
+    <!-- General Validation Messages -->
+    <string name="validation_field_required">هذا الحقل مطلوب</string>
+    <string name="validation_format_invalid">تنسيق غير صحيح</string>
+    <string name="validation_length_exceeded">تم تجاوز الحد الأقصى للطول</string>
+    <string name="validation_length_insufficient">لم يتم تلبية الحد الأدنى للطول</string>
+
+    <string name="validation_amount_empty">لا يمكن أن يكون المبلغ فارغًا</string>
+    <string name="validation_amount_invalid_format">الرجاء إدخال تنسيق مبلغ صحيح (مثل، 99.99)</string>
+    <string name="validation_amount_invalid_number">الرجاء إدخال رقم صحيح</string>
+    <string name="validation_amount_negative">لا يمكن أن يكون المبلغ سالبًا</string>
+    <string name="validation_amount_too_small">يجب أن يكون المبلغ على الأقل 0.01</string>
+    <string name="validation_amount_too_large">لا يمكن أن يتجاوز المبلغ 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">المبلغ يحتوي على عدد كبير جداً من الأرقام العشرية لهذه العملة</string>
+    <string name="validation_amount_invalid_increment">يجب أن يكون المبلغ في زيادات صحيحة لهذه العملة</string>
+
+    <string name="savings_account">حساب التوفير</string>
+    <string name="available_balance">اسم العميل</string>
+    <string name="select_other_payment_account">اختر حساب دفع آخر</string>
+    <string name="available_balance_formatted">الرصيد المتاح - %1$s</string>
+
+    <string name="feature_savings_filter">الفلاتر</string>
+    <string name="feature_savings_reset">إعادة تعيين</string>
+    <string name="feature_savings_apply">تطبيق</string>
+</resources>
