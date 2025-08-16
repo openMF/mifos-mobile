@@ -373,9 +373,11 @@ internal class SavingsApplyViewModel(
 
         mutableStateFlow.update {
             it.copy(
-                savingsProductError = if (savingsProductResult is ValidationResult.Error)
+                savingsProductError = if (savingsProductResult is ValidationResult.Error) {
                     savingsProductResult.message
-                else null,
+                } else {
+                    null
+                },
             )
         }
 

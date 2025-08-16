@@ -18,11 +18,9 @@
 
     <!-- Labels -->
     <string name="feature_apply_savings_label_applicant_name">Applicant Name</string>
-    <string name="feature_apply_savings_label_savings_product">Savings Product</string>
+    <string name="feature_apply_savings_label_savings_product">Product Name</string>
     <string name="feature_apply_savings_label_field_officer">Field Officer</string>
-    <string name="feature_apply_savings_label_disbursement_date">Disbursement Date</string>
-    <string name="feature_apply_savings_label_principal_amount">Principal Amount</string>
-    <string name="feature_apply_savings_label_currency">Currency</string>
+    <string name="feature_apply_savings_label_submission_date">Submission Date</string>
 
     <!-- Buttons -->
     <string name="feature_apply_savings_button_continue">Continue</string>

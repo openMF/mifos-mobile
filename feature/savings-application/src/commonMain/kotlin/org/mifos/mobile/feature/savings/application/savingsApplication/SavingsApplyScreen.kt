@@ -29,10 +29,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_button_continue
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_applicant_name
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_disbursement_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_field_officer
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_savings_product
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_section_fill_details
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -137,7 +137,7 @@ internal fun SavingsAccountContent(
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(SavingsApplicationAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_apply_savings_section_fill_details),
+        topBarTitle = stringResource(Res.string.feature_apply_savings_title),
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -169,7 +169,7 @@ internal fun SavingsAccountContent(
                 MifosOutlinedTextField(
                     value = state.submittedOnDate,
                     onValueChange = { },
-                    label = stringResource(Res.string.feature_apply_savings_label_disbursement_date),
+                    label = stringResource(Res.string.feature_apply_savings_label_submission_date),
                     config = MifosTextFieldConfig(
                         showClearIcon = false,
                         enabled = false,
