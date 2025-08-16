@@ -89,6 +89,7 @@ import fluent.ui.system.icons.filled.QrCode
 import fluent.ui.system.icons.filled.QuestionCircle
 import fluent.ui.system.icons.filled.Receipt
 import fluent.ui.system.icons.filled.ReceiptMoney
+import fluent.ui.system.icons.filled.Savings
 import fluent.ui.system.icons.filled.SignOut
 import fluent.ui.system.icons.filled.TableCellEdit
 import fluent.ui.system.icons.filled.Wallet
@@ -191,6 +192,7 @@ object MifosIcons {
     val LoanAccount = FluentIcons.Filled.CoinMultiple
     val ShareAccount = FluentIcons.Filled.DataWhisker
     val ApplyForLoan = FluentIcons.Filled.Receipt
+    val ApplyForSavings = FluentIcons.Filled.Savings
     val TransactionHistory = FluentIcons.Filled.ChatHistory
     val Charges = FluentIcons.Filled.Feed
     val Beneficiary = FluentIcons.Filled.ContactCardRibbon

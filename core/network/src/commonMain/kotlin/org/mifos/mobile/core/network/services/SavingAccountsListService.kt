@@ -47,6 +47,12 @@ interface SavingAccountsListService {
         @Query("clientId") clientId: Long?,
     ): Flow<SavingsAccountTemplate>
 
+    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
+    fun getSavingsAccountApplicationTemplateByProduct(
+        @Query("clientId") clientId: Long?,
+        @Query("productId") productId: Long?,
+    ): Flow<SavingsAccountTemplate>
+
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS)
     suspend fun submitSavingAccountApplication(
         @Body payload: SavingsAccountApplicationPayload?,

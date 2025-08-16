@@ -38,6 +38,7 @@ kotlin {
             implementation(projects.feature.passcode)
             implementation(projects.feature.status)
             implementation(projects.feature.loanApplication)
+            implementation(projects.feature.savingsApplication)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

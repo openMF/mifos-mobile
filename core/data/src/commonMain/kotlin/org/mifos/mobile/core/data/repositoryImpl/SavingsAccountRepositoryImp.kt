@@ -49,6 +49,16 @@ class SavingsAccountRepositoryImp(
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
+    override fun getSavingAccountApplicationTemplateByProduct(
+        clientId: Long?,
+        productId: Long?,
+    ): Flow<DataState<SavingsAccountTemplate>> {
+        return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplateByProduct(
+            clientId,
+            productId,
+        ).asDataStateFlow().flowOn(ioDispatcher)
+    }
+
     override suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
     ): DataState<String> {

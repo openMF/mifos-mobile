@@ -27,6 +27,11 @@ interface SavingsAccountRepository {
 
     fun getSavingAccountApplicationTemplate(clientId: Long?): Flow<DataState<SavingsAccountTemplate>>
 
+    fun getSavingAccountApplicationTemplateByProduct(
+        clientId: Long?,
+        productId: Long?,
+    ): Flow<DataState<SavingsAccountTemplate>>
+
     suspend fun submitSavingAccountApplication(payload: SavingsAccountApplicationPayload?): DataState<String>
 
     suspend fun updateSavingsAccount(
