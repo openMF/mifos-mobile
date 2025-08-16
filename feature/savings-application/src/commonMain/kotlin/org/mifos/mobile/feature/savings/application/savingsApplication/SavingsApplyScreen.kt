@@ -21,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import org.mifos.mobile.core.ui.utils.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -49,6 +48,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
 internal fun SavingsApplyScreen(

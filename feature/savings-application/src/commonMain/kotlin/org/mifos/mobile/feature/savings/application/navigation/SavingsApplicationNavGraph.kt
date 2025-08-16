@@ -33,6 +33,5 @@ fun NavGraphBuilder.savingsApplicationNavGraph(
         savingsApplyDestination(
             navigateBack = navController::popBackStack,
         )
-
     }
 }

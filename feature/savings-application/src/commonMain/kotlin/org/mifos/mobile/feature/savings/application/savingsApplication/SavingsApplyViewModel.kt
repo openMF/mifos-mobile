@@ -107,7 +107,6 @@ internal class SavingsApplyViewModel(
      */
     override fun handleAction(action: SavingsApplicationAction) {
         when (action) {
-
             is SavingsApplicationAction.FieldOfficerChange -> {
                 onFieldOfficerChange(action.fieldOfficer)
             }
@@ -374,7 +373,9 @@ internal class SavingsApplyViewModel(
 
         mutableStateFlow.update {
             it.copy(
-                savingsProductError = if (savingsProductResult is ValidationResult.Error) savingsProductResult.message else null,
+                savingsProductError = if (savingsProductResult is ValidationResult.Error)
+                    savingsProductResult.message
+                else null,
             )
         }
 
@@ -509,8 +510,8 @@ internal data class SavingsApplicationState(
      */
     val isFormValid: Boolean
         get() = savingsProductError == null &&
-                applicantName.isNotBlank() &&
-                selectedSavingsProduct.isNotBlank()
+            applicantName.isNotBlank() &&
+            selectedSavingsProduct.isNotBlank()
 
     /**
      * A map of savings product IDs to their names, derived from `productOptions`.
@@ -617,7 +618,7 @@ internal sealed interface SavingsApplicationAction {
          * @property template The [DataState] containing the savings template data.
          */
         data class ReceiveSavingsTemplate(
-            val template: DataState<SavingsAccountTemplate?>
+            val template: DataState<SavingsAccountTemplate?>,
         ) : Internal
 
         /**
@@ -625,7 +626,7 @@ internal sealed interface SavingsApplicationAction {
          * @property template The [DataState] containing the savings template data.
          */
         data class ReceiveSavingsFieldOfficers(
-            val template: DataState<SavingsAccountTemplate?>
+            val template: DataState<SavingsAccountTemplate?>,
         ) : Internal
     }
 }

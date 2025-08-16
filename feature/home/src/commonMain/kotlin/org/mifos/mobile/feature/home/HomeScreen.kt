@@ -73,9 +73,12 @@ internal fun HomeScreen(
         when (event) {
             is HomeEvent.Navigate -> {
                 when (event.route) {
-                    Constants.SAVINGS_ACCOUNT -> onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SAVINGS_ACCOUNT))
-                    Constants.LOAN_ACCOUNT -> onNavigate(HomeNavigationDestination.AccountsWithType(Constants.LOAN_ACCOUNT))
-                    Constants.SHARE_ACCOUNTS -> onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SHARE_ACCOUNTS))
+                    Constants.SAVINGS_ACCOUNT ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SAVINGS_ACCOUNT))
+                    Constants.LOAN_ACCOUNT ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.LOAN_ACCOUNT))
+                    Constants.SHARE_ACCOUNTS ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SHARE_ACCOUNTS))
                     Constants.APPLY_LOAN -> onNavigate(HomeNavigationDestination.ApplyLoan)
                     Constants.APPLY_SAVINGS -> onNavigate(HomeNavigationDestination.ApplySavings)
                     Constants.TRANSACTIONS -> onNavigate(HomeNavigationDestination.Transaction)
