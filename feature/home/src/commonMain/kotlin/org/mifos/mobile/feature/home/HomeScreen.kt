@@ -19,9 +19,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -58,17 +58,12 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
+import org.mifos.mobile.feature.home.navigation.HomeNavigator
 
 @Composable
 internal fun HomeScreen(
-//    navigateToDestinationScreen: (String) -> Unit,
-    navigateToChargeScreen: () -> Unit,
-    navigateToFaqScreen: () -> Unit,
-    navigateToBeneficiaryScreen: () -> Unit,
-    navigateToTransactionScreen: () -> Unit,
-    navigateToAccountsScreen: (String) -> Unit,
-    navigateToNotificationScreen: () -> Unit,
-    navigateToApplyLoanScreen: () -> Unit,
+    onNavigate: HomeNavigator,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
@@ -77,23 +72,22 @@ internal fun HomeScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is HomeEvent.Navigate -> {
-                when {
-                    event.route == Constants.SAVINGS_ACCOUNT ->
-                        navigateToAccountsScreen(Constants.SAVINGS_ACCOUNT)
-                    event.route == Constants.LOAN_ACCOUNT ->
-                        navigateToAccountsScreen(Constants.LOAN_ACCOUNT)
-                    event.route == Constants.SHARE_ACCOUNTS ->
-                        navigateToAccountsScreen(Constants.SHARE_ACCOUNTS)
-                    event.route == Constants.CHARGES ->
-                        navigateToChargeScreen()
-                    event.route == Constants.APPLY_LOAN -> navigateToApplyLoanScreen.invoke()
-                    event.route == Constants.BENEFICIARY -> navigateToBeneficiaryScreen.invoke()
-                    event.route == Constants.TRANSACTIONS -> navigateToTransactionScreen.invoke()
-                    event.route == Constants.HELP -> navigateToFaqScreen.invoke()
+                when (event.route) {
+                    Constants.SAVINGS_ACCOUNT ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SAVINGS_ACCOUNT))
+                    Constants.LOAN_ACCOUNT ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.LOAN_ACCOUNT))
+                    Constants.SHARE_ACCOUNTS ->
+                        onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SHARE_ACCOUNTS))
+                    Constants.APPLY_LOAN -> onNavigate(HomeNavigationDestination.ApplyLoan)
+                    Constants.APPLY_SAVINGS -> onNavigate(HomeNavigationDestination.ApplySavings)
+                    Constants.TRANSACTIONS -> onNavigate(HomeNavigationDestination.Transaction)
+                    Constants.CHARGES -> onNavigate(HomeNavigationDestination.Charge)
+                    Constants.BENEFICIARY -> onNavigate(HomeNavigationDestination.Beneficiary)
+                    Constants.HELP -> onNavigate(HomeNavigationDestination.Faq)
                 }
             }
-
-            is HomeEvent.NavigateToNotification -> navigateToNotificationScreen.invoke()
+            is HomeEvent.NavigateToNotification -> onNavigate(HomeNavigationDestination.Notification)
         }
     }
 
@@ -195,10 +189,11 @@ internal fun ServiceBox(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(4),
-        verticalItemSpacing = DesignToken.spacing.medium,
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(4),
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+        modifier = modifier,
         content = {
             items(items) { item ->
                 ServiceItemCard(
@@ -208,7 +203,6 @@ internal fun ServiceBox(
                 )
             }
         },
-        modifier = modifier,
     )
 }
 

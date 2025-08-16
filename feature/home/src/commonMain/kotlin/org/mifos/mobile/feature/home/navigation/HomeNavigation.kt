@@ -24,26 +24,26 @@ data object HomeRoute
 fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
     navigate(HomeRoute, navOptions)
 
+sealed class HomeNavigationDestination {
+    object Notification : HomeNavigationDestination()
+    object Charge : HomeNavigationDestination()
+    object Faq : HomeNavigationDestination()
+    object Beneficiary : HomeNavigationDestination()
+    object Transaction : HomeNavigationDestination()
+    object ApplyLoan : HomeNavigationDestination()
+    object ApplySavings : HomeNavigationDestination()
+    data class AccountsWithType(val type: String) : HomeNavigationDestination()
+    // Add more as needed
+}
+
+typealias HomeNavigator = (HomeNavigationDestination) -> Unit
+
 fun NavGraphBuilder.homeDestination(
-//    navigateToDestinationScreen: (route: String) -> Unit,
-    navigateToChargeScreen: () -> Unit,
-    navigateToFaqScreen: () -> Unit,
-    navigateToBeneficiaryScreen: () -> Unit,
-    navigateToTransactionScreen: () -> Unit,
-    navigateToAccountsScreen: (String) -> Unit,
-    navigateToNotificationScreen: () -> Unit,
-    navigateToApplyLoanScreen: () -> Unit,
+    onNavigate: HomeNavigator,
 ) {
     composableWithStayTransitions<HomeRoute> {
         HomeScreen(
-//            navigateToDestinationScreen = navigateToDestinationScreen,
-            navigateToAccountsScreen = navigateToAccountsScreen,
-            navigateToNotificationScreen = navigateToNotificationScreen,
-            navigateToChargeScreen = navigateToChargeScreen,
-            navigateToFaqScreen = navigateToFaqScreen,
-            navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
-            navigateToTransactionScreen = navigateToTransactionScreen,
-            navigateToApplyLoanScreen = navigateToApplyLoanScreen,
+            onNavigate = onNavigate,
         )
     }
 }

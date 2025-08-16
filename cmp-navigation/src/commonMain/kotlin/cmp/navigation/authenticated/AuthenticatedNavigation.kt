@@ -34,6 +34,7 @@ import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavG
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
+import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
 import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
@@ -48,8 +49,12 @@ import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.savings.application.navigation.navigateToSavingsApplicationGraph
+import org.mifos.mobile.feature.savings.application.navigation.savingsApplicationNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
+import org.mifos.mobile.feature.settings.faq.faqDestination
+import org.mifos.mobile.feature.settings.faq.navigateToFaq
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
@@ -72,22 +77,44 @@ internal fun NavGraphBuilder.authenticatedGraph(
     navigation<AuthenticatedGraphRoute>(
         startDestination = AuthenticatedNavbarRoute,
     ) {
-        authenticatedNavbarGraph(
-            navigateToNotificationScreen = navController::navigateToNotificationScreen,
-            navigateToAccountsScreen = {
-                when (it) {
-                    Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT, Constants.SHARE_ACCOUNTS ->
-                        navController.navigateToAccountsScreen(it)
-                    else -> Unit
+        authenticatedNavbarGraph { destination ->
+            when (destination) {
+                is HomeNavigationDestination.AccountsWithType -> {
+                    if (destination.type in listOf(
+                            Constants.SAVINGS_ACCOUNT,
+                            Constants.LOAN_ACCOUNT,
+                            Constants.SHARE_ACCOUNTS,
+                        )
+                    ) {
+                        navController.navigateToAccountsScreen(destination.type)
+                    }
                 }
-            },
-            navigateToChargeScreen = navController::navigateToChargeGraph,
-            navigateToBeneficiaryScreen = navController::navigateToBeneficiaryNavGraph,
-            navigateToTransactionScreen = {
-                navController.navigateToAccountTransactionsScreen(Constants.RECENT_TRANSACTIONS, -1L)
-            },
-            navigateToApplyLoanScreen = navController::navigateToLoanApplicationGraph,
-        )
+
+                is HomeNavigationDestination.Notification ->
+                    navController.navigateToNotificationScreen()
+
+                is HomeNavigationDestination.Charge ->
+                    navController.navigateToChargeGraph()
+
+                is HomeNavigationDestination.Faq ->
+                    navController.navigateToFaq()
+
+                is HomeNavigationDestination.Beneficiary ->
+                    navController.navigateToBeneficiaryNavGraph()
+
+                is HomeNavigationDestination.Transaction ->
+                    navController.navigateToAccountTransactionsScreen(
+                        Constants.RECENT_TRANSACTIONS,
+                        -1L,
+                    )
+
+                is HomeNavigationDestination.ApplyLoan ->
+                    navController.navigateToLoanApplicationGraph()
+
+                is HomeNavigationDestination.ApplySavings ->
+                    navController.navigateToSavingsApplicationGraph()
+            }
+        }
 
         notificationDestination(
             navigateBack = navController::popBackStack,
@@ -157,6 +184,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
 
+        savingsApplicationNavGraph(
+            navController = navController,
+        )
+
         passcodeDestination(
             onPasscodeConfirm = navController::popBackStack,
         )
@@ -220,6 +251,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
         )
+
+        faqDestination(onBackClick = navController::popBackStack, contact = {})
     }
 }
 

@@ -13,7 +13,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import mifos_mobile.feature.home.generated.resources.Res
-import mifos_mobile.feature.home.generated.resources.feature_home_apply_for_loan
+import mifos_mobile.feature.home.generated.resources.apply_for_loan
+import mifos_mobile.feature.home.generated.resources.apply_for_savings
 import mifos_mobile.feature.home.generated.resources.feature_home_beneficiary
 import mifos_mobile.feature.home.generated.resources.feature_home_charges
 import mifos_mobile.feature.home.generated.resources.feature_home_faq
@@ -49,9 +50,15 @@ internal sealed class ServiceItem(
     )
 
     data object ApplyForLoan : ServiceItem(
-        title = Res.string.feature_home_apply_for_loan,
+        title = Res.string.apply_for_loan,
         icon = MifosIcons.ApplyForLoan,
         route = Constants.APPLY_LOAN,
+    )
+
+    data object ApplyForSavings : ServiceItem(
+        title = Res.string.apply_for_savings,
+        icon = MifosIcons.ApplyForSavings,
+        route = Constants.APPLY_SAVINGS,
     )
 
     data object TransactionHistory : ServiceItem(
@@ -84,6 +91,7 @@ internal val serviceCards: ImmutableList<ServiceItem> = persistentListOf(
     ServiceItem.LoanAccount,
     ServiceItem.ShareAccount,
     ServiceItem.ApplyForLoan,
+    ServiceItem.ApplyForSavings,
     ServiceItem.TransactionHistory,
     ServiceItem.Charges,
     ServiceItem.Beneficiary,

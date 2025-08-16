@@ -32,6 +32,7 @@ import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModu
 import org.mifos.mobile.feature.passcode.di.PasscodeModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
+import org.mifos.mobile.feature.savings.application.di.savingsApplicationModule
 import org.mifos.mobile.feature.savingsaccount.di.savingsAccountModule
 import org.mifos.mobile.feature.settings.di.SettingsModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
@@ -79,6 +80,7 @@ object KoinModules {
             PasscodeModule,
             StatusModule,
             loanApplicationModule,
+            savingsApplicationModule,
         )
     }
 

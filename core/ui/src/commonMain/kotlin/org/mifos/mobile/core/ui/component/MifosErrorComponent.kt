@@ -35,7 +35,9 @@ import mifos_mobile.core.ui.generated.resources.retry
 import mifos_mobile.core.ui.generated.resources.something_went_wrong
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
 @Composable
@@ -103,26 +105,25 @@ fun EmptyDataComponent(
     onRetry: () -> Unit = {},
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .padding(DesignToken.padding.large),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             modifier = Modifier
-                .size(100.dp)
-                .padding(bottom = 12.dp),
-            imageVector = MifosIcons.Info,
+                .size(DesignToken.sizes.avatarMedium),
+            imageVector = MifosIcons.ErrorCircle,
             contentDescription = "Info Icon",
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
             text = message ?: if (isEmptyData) {
                 stringResource(Res.string.no_data)
             } else {
                 stringResource(Res.string.something_went_wrong)
             },
-            style = TextStyle(fontSize = 20.sp),
+            style = MifosTypography.bodySmallEmphasized,
             textAlign = TextAlign.Center,
         )
 

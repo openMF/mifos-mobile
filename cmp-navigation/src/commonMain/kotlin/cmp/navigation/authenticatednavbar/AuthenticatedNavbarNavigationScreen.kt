@@ -40,10 +40,10 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.home.navigation.HomeNavigator
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
-import org.mifos.mobile.feature.settings.faq.navigateToFaq
 import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
 import org.mifos.mobile.feature.settings.navigation.settingsGraph
 import org.mifos.mobile.navigation.generated.resources.Res
@@ -51,12 +51,7 @@ import org.mifos.mobile.navigation.generated.resources.not_connected
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
-    navigateToNotificationScreen: () -> Unit,
-    navigateToAccountsScreen: (String) -> Unit,
-    navigateToChargeScreen: () -> Unit,
-    navigateToBeneficiaryScreen: () -> Unit,
-    navigateToTransactionScreen: () -> Unit,
-    navigateToApplyLoanScreen: () -> Unit,
+    homeNavigator: HomeNavigator,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -107,24 +102,14 @@ internal fun AuthenticatedNavbarNavigationScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
-        navigateToNotificationScreen = navigateToNotificationScreen,
-        navigateToAccountsScreen = { navigateToAccountsScreen(it) },
-        navigateToChargeScreen = navigateToChargeScreen,
-        navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
-        navigateToTransactionScreen = navigateToTransactionScreen,
-        navigateToApplyLoanScreen = navigateToApplyLoanScreen,
+        homeNavigator = homeNavigator,
     )
 }
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
-    navigateToNotificationScreen: () -> Unit,
-    navigateToAccountsScreen: (String) -> Unit,
-    navigateToChargeScreen: () -> Unit,
-    navigateToBeneficiaryScreen: () -> Unit,
-    navigateToTransactionScreen: () -> Unit,
-    navigateToApplyLoanScreen: () -> Unit,
+    homeNavigator: HomeNavigator,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -175,21 +160,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
             popExitTransition = RootTransitionProviders.Exit.fadeOut,
         ) {
             // TODO Add top level destination screens
-
-            homeDestination(
-//                navigateToDestinationScreen = {
-//                    navController.navigate(
-//                        it
-//                    )
-//                },
-                navigateToAccountsScreen = { navigateToAccountsScreen(it) },
-                navigateToChargeScreen = navigateToChargeScreen,
-                navigateToNotificationScreen = navigateToNotificationScreen,
-                navigateToFaqScreen = navController::navigateToFaq,
-                navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
-                navigateToTransactionScreen = navigateToTransactionScreen,
-                navigateToApplyLoanScreen = navigateToApplyLoanScreen,
-            )
+            homeDestination(onNavigate = homeNavigator)
 
             settingsGraph(
                 navController = navController,

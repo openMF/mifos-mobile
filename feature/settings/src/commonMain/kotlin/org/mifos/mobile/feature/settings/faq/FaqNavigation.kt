@@ -15,7 +15,7 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
-internal fun NavGraphBuilder.faqDestination(
+fun NavGraphBuilder.faqDestination(
     onBackClick: () -> Unit,
     contact: () -> Unit,
 ) {

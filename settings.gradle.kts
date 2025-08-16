@@ -78,6 +78,7 @@ include(":feature:onboarding-language")
 include(":feature:passcode")
 include(":feature:status")
 include(":feature:loan-application")
+include(":feature:savings-application")
 
 // Lint Modules
 //include(":lint")

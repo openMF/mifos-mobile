@@ -16,6 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
+import org.mifos.mobile.feature.home.navigation.HomeNavigator
 
 @Serializable
 data object AuthenticatedNavbarRoute
@@ -25,21 +26,11 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
 }
 
 internal fun NavGraphBuilder.authenticatedNavbarGraph(
-    navigateToNotificationScreen: () -> Unit,
-    navigateToAccountsScreen: (String) -> Unit,
-    navigateToChargeScreen: () -> Unit,
-    navigateToBeneficiaryScreen: () -> Unit,
-    navigateToTransactionScreen: () -> Unit,
-    navigateToApplyLoanScreen: () -> Unit,
+    homeNavigator: HomeNavigator,
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
         AuthenticatedNavbarNavigationScreen(
-            navigateToNotificationScreen = navigateToNotificationScreen,
-            navigateToAccountsScreen = { navigateToAccountsScreen(it) },
-            navigateToChargeScreen = navigateToChargeScreen,
-            navigateToBeneficiaryScreen = navigateToBeneficiaryScreen,
-            navigateToTransactionScreen = navigateToTransactionScreen,
-            navigateToApplyLoanScreen = navigateToApplyLoanScreen,
+            homeNavigator = homeNavigator,
         )
     }
 }

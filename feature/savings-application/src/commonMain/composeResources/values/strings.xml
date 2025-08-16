@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_savings_title">Saving Application Details</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_savings_section_fill_details">Fill Application Details</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_savings_label_applicant_name">Applicant Name</string>
+    <string name="feature_apply_savings_label_savings_product">Product Name</string>
+    <string name="feature_apply_savings_label_field_officer">Field Officer</string>
+    <string name="feature_apply_savings_label_submission_date">Submission Date</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_savings_button_continue">Continue</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Cancel</string>
+    <string name="feature_apply_savings_button_apply">Apply Savings</string>
+    <string name="feature_button_next">Next</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_savings_error_name_empty">Applicant name is required</string>
+    <string name="feature_apply_savings_error_name_too_short">Applicant name must be at least 4 characters</string>
+    <string name="feature_apply_savings_error_name_too_long">Applicant name cannot exceed 100 characters</string>
+    <string name="feature_apply_savings_error_name_invalid_format">Applicant name contains invalid characters</string>
+
+    <!-- Savings Product Validation -->
+    <string name="feature_apply_savings_error_product_empty">Savings product is required</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_savings_error_amount_empty">Principal amount is required</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Please enter a valid amount format</string>
+    <string name="feature_apply_savings_error_amount_too_small">Principal amount is too small</string>
+    <string name="feature_apply_savings_error_amount_too_large">Principal amount exceeds maximum limit</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Amount has too many decimal places for selected currency</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_savings_error_date_empty">Disbursement date is required</string>
+    <string name="feature_apply_savings_error_date_invalid_format">Please enter a valid date format (DD/MM/YYYY)</string>
+    <string name="feature_apply_savings_error_date_future">Disbursement date must be in the future</string>
+    <string name="feature_apply_savings_error_date_out_of_range">Disbursement date is too far in the future (max 10 years)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_savings_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
+    <string name="feature_apply_savings_error_submit_failed">Failed to submit savings application. Please try again.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_savings_success_submit">Savings application submitted successfully!</string>
+    <string name="feature_apply_savings_success_draft_saved">Application draft saved successfully</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_savings_unsaved_changes_title">Unsaved Changes!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
+
+    <string name="feature_apply_loan_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+    <string name="feature_apply_loan_error_name_empty">Applicant name is required</string>
+    <string name="feature_apply_loan_error_name_too_short">Applicant name must be at least 4 characters</string>
+    <string name="feature_apply_loan_error_name_too_long">Applicant name cannot exceed 100 characters</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Applicant name contains invalid characters</string>
+    <string name="feature_apply_loan_error_product_empty">Loan product is required</string>
+    <string name="feature_apply_loan_error_amount_too_small">Principal amount is too small</string>
+    <string name="feature_apply_loan_error_amount_too_large">Principal amount exceeds maximum limit</string>
+    <string name="feature_apply_loan_error_date_empty">Disbursement date is required</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
+    <string name="feature_apply_loan_error_submit_failed">Failed to submit loan application. Please try again.</string>
+    <string name="feature_apply_loan_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
+</resources>
