@@ -47,8 +47,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
@@ -56,6 +54,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
@@ -102,6 +101,7 @@ internal fun HomeScreen(
 
     HomeScreenDialog(
         dialogState = state.dialogState,
+        networkStatus = state.networkStatus,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -252,18 +252,27 @@ internal fun ServiceItemCard(
 @Composable
 private fun HomeScreenDialog(
     dialogState: HomeState.DialogState?,
+    networkStatus: Boolean,
     onAction: (HomeAction) -> Unit,
 ) {
     when (dialogState) {
-        is HomeState.DialogState.Error -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                message = dialogState.message,
-            ),
-            onDismissRequest = { onAction(HomeAction.OnDismissDialog) },
-        )
+        is HomeState.DialogState.Error -> {
+            MifosErrorComponent(
+                isRetryEnabled = true,
+                message = stringResource(dialogState.message),
+                onRetry = { onAction(HomeAction.Retry) },
+            )
+        }
 
         is HomeState.DialogState.Loading -> {
             MifosProgressIndicator()
+        }
+
+        is HomeState.DialogState.Network -> {
+            MifosErrorComponent(
+                isNetworkConnected = networkStatus,
+                isRetryEnabled = false,
+            )
         }
 
         null -> Unit

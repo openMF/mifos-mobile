@@ -59,4 +59,7 @@
 
     <string name="feature_home_common_error">Something went wrong</string>
 
+    <string name="feature_server_error">An unexpected error occurred on our server. Please try again later.</string>
+
+
 </resources>
