@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
-import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout
 import mifos_mobile.feature.settings.generated.resources.feature_settings_customer_account_no
+import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_message
 import mifos_mobile.feature.settings.generated.resources.feature_settings_top_bar_title
 import org.jetbrains.compose.resources.stringResource
@@ -53,6 +53,8 @@ import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
+import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
 @Composable
@@ -104,14 +106,17 @@ private fun SettingsDialog(
 
         SettingsState.DialogState.Loading -> MifosProgressIndicator()
 
-        SettingsState.DialogState.Logout -> {
-            MifosBasicDialog(
-                visibilityState = BasicDialogState.Shown(
-                    title = stringResource(Res.string.feature_settings_action_logout),
-                    message = stringResource(Res.string.feature_settings_logout_message),
+        is SettingsState.DialogState.Logout -> {
+            MifosLogoutDialog(
+                visibilityState = LogoutDialogState.Shown(
+                    description = state.dialogState.message,
+                    title = state.dialogState.title,
+                    message = Res.string.feature_settings_logout_message,
+                    messageActionText = Res.string.feature_settings_logout_action,
+                    onLogout = { onAction(SettingsAction.Logout) },
+                    onNavigateToHome = { onAction(SettingsAction.OnNavigateBack) },
+                    onDismiss = { onAction(SettingsAction.DismissDialog) },
                 ),
-                onDismissRequest = { onAction(SettingsAction.DismissDialog) },
-                onConfirm = { onAction(SettingsAction.Logout) },
             )
         }
 
