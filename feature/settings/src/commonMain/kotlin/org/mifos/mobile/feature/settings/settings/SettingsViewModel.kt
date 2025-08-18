@@ -17,9 +17,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_client
+import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
+import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
+import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -44,7 +47,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 internal class SettingsViewModel(
     private val homeRepositoryImpl: HomeRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
-//    private val userDataRepositoryImpl: UserDataRepository,
+    private val userDataRepositoryImpl: UserDataRepository,
 ) : BaseViewModel<SettingsState, SettingsEvents, SettingsAction>(
     initialState = run {
         SettingsState(
@@ -85,8 +88,8 @@ internal class SettingsViewModel(
         when (action) {
             SettingsAction.OnNavigateBack -> sendEvent(SettingsEvents.NavigateBack)
             SettingsAction.DismissDialog -> setDialogState(null)
-            SettingsAction.LogoutDialog -> setDialogState(SettingsState.DialogState.Logout)
-            SettingsAction.Logout -> handleLogout()
+            SettingsAction.LogoutDialog -> handleLogout()
+            SettingsAction.Logout -> handleInternalLogOut()
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
             is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
@@ -96,14 +99,42 @@ internal class SettingsViewModel(
     /**
      * Handles the user logout process.
      *
-     * This function would typically perform the following actions:
-     * 1. Clear user-specific data, such as authentication tokens and client information, from the repository.
-     * 2. Reset the application state to its initial, logged-out state.
-     * 3. Send a navigation event to redirect the user to the login or welcome screen.
+     * This function initiates the logout flow by updating the state to show a confirmation dialog.
+     * The actual logout logic (clearing data, navigating) is handled by a separate function
+     * after the user confirms the action.
+     *
+     * This function sets the dialog state to a [SettingsState.DialogState.Logout] with
+     * a title and a descriptive message to prompt user confirmation.
      */
     private fun handleLogout() {
+        mutableStateFlow.update {
+            it.copy(
+                dialogState = SettingsState.DialogState.Logout(
+                    title = Res.string.feature_settings_logout_title,
+                    message = Res.string.feature_settings_logout_description,
+                ),
+            )
+        }
+    }
+
+    /**
+     * Executes the internal logout logic.
+     *
+     * This function first dismisses any active dialog by setting the dialog state to null.
+     * It then triggers the actual logout operation on the `userDataRepository`. This includes
+     * clearing user-specific data and tokens from the repository, which is a critical
+     * step in securely logging out the user.
+     *
+     * The commented-out code `userDataRepository.logout(...)` represents the intended
+     * functionality to be implemented. The `reason` parameter provides context for the logout event.
+     */
+    private fun handleInternalLogOut() {
+        mutableStateFlow.update {
+            it.copy(dialogState = null)
+        }
+
         viewModelScope.launch {
-            userPreferencesRepositoryImpl.logOut()
+            userDataRepositoryImpl.logOut()
         }
     }
 
@@ -239,7 +270,10 @@ internal data class SettingsState(
         data object Loading : DialogState
 
         /** Represents a logout dialog. */
-        data object Logout : DialogState
+        data class Logout(
+            val title: StringResource,
+            val message: StringResource,
+        ) : DialogState
     }
 }
 
