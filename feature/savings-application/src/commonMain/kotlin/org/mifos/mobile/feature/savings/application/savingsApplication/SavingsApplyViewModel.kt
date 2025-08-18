@@ -31,8 +31,8 @@ import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.entity.templates.savings.ProductOptions
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 /**
@@ -108,7 +108,7 @@ internal class SavingsApplyViewModel(
     override fun handleAction(action: SavingsApplicationAction) {
         when (action) {
             is SavingsApplicationAction.FieldOfficerChange -> {
-                onFieldOfficerChange(action.fieldOfficer)
+                onFieldOfficerChange(action.fieldOfficerId, action.fieldOfficeName)
             }
 
             is SavingsApplicationAction.SavingsProductChange -> {
@@ -340,12 +340,14 @@ internal class SavingsApplyViewModel(
     /**
      * Handles changes to the field officer selection.
      *
-     * @param newValue The new value of the field officer selection.
+     * @param id The new id of the field officer selection.
+     * @param name The new name of the field officer selection.
      */
-    private fun onFieldOfficerChange(newValue: String) {
+    private fun onFieldOfficerChange(id: Long, name: String) {
         mutableStateFlow.update {
             it.copy(
-                selectedFieldOfficer = newValue,
+                selectedFieldOfficerId = id,
+                selectedFieldOfficer = name,
                 hasChanges = true,
             )
         }
@@ -407,7 +409,7 @@ internal class SavingsApplyViewModel(
                     )
                 }
                 submitAttempts = 0
-                sendEvent(SavingsApplicationEvent.NavigateToConfirmDetailsScreen)
+                sendEvent(SavingsApplicationEvent.NavigateToFillDetailsScreen)
             } catch (e: Exception) {
                 submitAttempts++
                 showErrorDialog(Res.string.feature_apply_savings_error_submit_failed)
@@ -494,12 +496,12 @@ internal class SavingsApplyViewModel(
 internal data class SavingsApplicationState(
     val clientId: Long,
     val applicantName: String,
-    val productOptions: List<ProductOptions> = emptyList(),
+    val productOptions: List<SavingsProduct> = emptyList(),
     val selectedSavingsProduct: String = "",
     val selectedSavingsProductId: Long = 0,
     val savingsFieldOfficer: Map<Long, String> = emptyMap(),
     val selectedFieldOfficer: String = "",
-    val selectedFieldOfficerId: Int = 0,
+    val selectedFieldOfficerId: Long = 0,
     val savingsApplicationDialogState: SavingsApplicationDialogState? = null,
     val savingsProductTemplate: SavingsAccountTemplate? = null,
     val savingsProductError: StringResource? = null,
@@ -511,20 +513,20 @@ internal data class SavingsApplicationState(
      * This is based on the absence of errors and non-empty fields.
      */
     val isFormValid: Boolean
-        get() = savingsProductError == null &&
+        get() = selectedSavingsProductId != 0L &&
+            selectedFieldOfficerId != 0L &&
+            savingsProductError == null &&
             applicantName.isNotBlank() &&
             selectedSavingsProduct.isNotBlank()
 
     /**
      * A map of savings product IDs to their names, derived from `productOptions`.
      */
-    val productOptionsMap: Map<Long, String> = productOptions
-        .mapNotNull { option ->
-            val id = option.id?.toLong()
-            val name = option.name
-            if (id != null && name != null) id to name else null
-        }
-        .toMap()
+    val productOptionsMap: Map<Long, String> = productOptions.associate { option ->
+        val id = option.id.toLong()
+        val name = option.name
+        id to name
+    }
 
     val submittedOnDate: String
         get() {
@@ -567,8 +569,8 @@ internal sealed interface SavingsApplicationEvent {
     /** Navigates back from the current screen. */
     data object NavigateBack : SavingsApplicationEvent
 
-    /** Navigates to the confirmation details screen. */
-    data object NavigateToConfirmDetailsScreen : SavingsApplicationEvent
+    /** Navigates to the Filling Application details screen. */
+    data object NavigateToFillDetailsScreen : SavingsApplicationEvent
 }
 
 /**
@@ -597,9 +599,13 @@ internal sealed interface SavingsApplicationAction {
 
     /**
      * User action when the field officer selection changes.
-     * @property fieldOfficer The new value of the field officer selection.
+     * @property fieldOfficerId The new value of the field officer id selection.
+     * @property fieldOfficeName The new value of the field officer name selection.
      */
-    data class FieldOfficerChange(val fieldOfficer: String) : SavingsApplicationAction
+    data class FieldOfficerChange(
+        val fieldOfficerId: Long,
+        val fieldOfficeName: String,
+    ) : SavingsApplicationAction
 
     /** User action to get the field officer options for the selected product. */
     data object GetFieldOfficer : SavingsApplicationAction

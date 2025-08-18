@@ -24,11 +24,13 @@ fun NavController.navigateToSavingsApplyScreen(
     navigate(SavingsApplyRoute, navOptions)
 
 fun NavGraphBuilder.savingsApplyDestination(
+    navigateToFillDetailsScreen: (Long, Long, String) -> Unit,
     navigateBack: () -> Unit,
 ) {
     composableWithSlideTransitions<SavingsApplyRoute> {
         SavingsApplyScreen(
             navigateBack = navigateBack,
+            navigateToFillDetailsScreen = navigateToFillDetailsScreen,
         )
     }
 }

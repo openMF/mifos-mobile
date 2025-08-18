@@ -53,6 +53,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun SavingsApplyScreen(
     navigateBack: () -> Unit,
+    navigateToFillDetailsScreen: (Long, Long, String) -> Unit,
     viewModel: SavingsApplyViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -61,15 +62,12 @@ internal fun SavingsApplyScreen(
         when (event) {
             is SavingsApplicationEvent.NavigateBack -> navigateBack.invoke()
 
-            is SavingsApplicationEvent.NavigateToConfirmDetailsScreen -> {
-//                navigateToConfirmDetailsScreen(
-//                    state.selectedSavingsProductId,
-//                    state.applicantName,
-//                    state.selectedSavingsProduct,
-//                    state.selectedFieldOfficer,
-//                    state.submittedOnDate,
-//                )
-            }
+            is SavingsApplicationEvent.NavigateToFillDetailsScreen ->
+                navigateToFillDetailsScreen.invoke(
+                    state.selectedSavingsProductId,
+                    state.selectedFieldOfficerId,
+                    state.selectedFieldOfficer,
+                )
         }
     }
 
@@ -199,7 +197,7 @@ internal fun SavingsAccountContent(
                     items = state.savingsFieldOfficer,
                     enabled = state.selectedSavingsProduct.isNotBlank(),
                     onItemSelected = { id, officer ->
-                        onAction(SavingsApplicationAction.FieldOfficerChange(officer))
+                        onAction(SavingsApplicationAction.FieldOfficerChange(id, officer))
                     },
                     label = stringResource(Res.string.feature_apply_savings_label_field_officer),
                 )

@@ -9,20 +9,52 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.savings
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
+@Serializable
 @Parcelize
 data class SavingsAccountApplicationPayload(
 
-    val submittedOnDate: String? = null,
-
+    // Mandatory
     val clientId: Int? = null,
-
     val productId: Int? = null,
+    val submittedOnDate: String? = null,
+    val locale: String,
+    val dateFormat: String,
+    val monthDayFormat: String,
 
-    val locale: String = "en",
+    // Optional
+    val accountNo: String? = null,
+    val externalId: String? = null,
+    val fieldOfficerId: Int? = null,
 
-    val dateFormat: String = "dd MMMM yyyy",
+    // Override fields (inherited from Product if not provided)
+    val nominalAnnualInterestRate: Double? = null,
+    val interestCompoundingPeriodType: Int? = null,
+    val interestPostingPeriodType: Int? = null,
+    val interestCalculationType: Int? = null,
+    val interestCalculationDaysInYearType: Int? = null,
+    val minRequiredOpeningBalance: Double? = null,
+    val lockinPeriodFrequency: Int? = null,
+    val lockinPeriodFrequencyType: Int? = null,
+    val withdrawalFeeForTransfers: Boolean? = null,
+    val allowOverdraft: Boolean? = null,
+    val overdraftLimit: Double? = null,
+    val nominalAnnualInterestRateOverdraft: Double? = null,
+    val minOverdraftForInterestCalculation: Double? = null,
+    val enforceMinRequiredBalance: Boolean? = null,
+    val withHoldTax: Boolean? = null,
 
+    // Charges
+    val charges: List<SavingsChargePayload>? = null,
+
+) : Parcelable
+
+@Serializable
+@Parcelize
+data class SavingsChargePayload(
+    val chargeId: Int,
+    val amount: Double,
 ) : Parcelable

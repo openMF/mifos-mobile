@@ -21,6 +21,15 @@
     <string name="feature_apply_savings_label_savings_product">Product Name</string>
     <string name="feature_apply_savings_label_field_officer">Field Officer</string>
     <string name="feature_apply_savings_label_submission_date">Submission Date</string>
+    <string name="feature_apply_savings_label_fill_application_details">Fill Application Details</string>
+    <string name="feature_apply_savings_label_details">Details</string>
+    <string name="feature_apply_savings_label_currency">Currency</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Minimum Opening Balance</string>
+    <string name="feature_apply_savings_label_lock_in_period">Lock-in Period</string>
+    <string name="feature_apply_savings_label_frequency">Frequency</string>
+    <string name="feature_apply_savings_label_frequency_type">Frequency Type</string>
+    <string name="feature_apply_savings_label_overdraft">Overdraft</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Request to allow overdraft</string>
 
     <!-- Buttons -->
     <string name="feature_apply_savings_button_continue">Continue</string>
@@ -29,15 +38,6 @@
     <string name="feature_apply_savings_button_apply">Apply Savings</string>
     <string name="feature_button_next">Next</string>
 
-    <!-- Applicant Name Validation -->
-    <string name="feature_apply_savings_error_name_empty">Applicant name is required</string>
-    <string name="feature_apply_savings_error_name_too_short">Applicant name must be at least 4 characters</string>
-    <string name="feature_apply_savings_error_name_too_long">Applicant name cannot exceed 100 characters</string>
-    <string name="feature_apply_savings_error_name_invalid_format">Applicant name contains invalid characters</string>
-
-    <!-- Savings Product Validation -->
-    <string name="feature_apply_savings_error_product_empty">Savings product is required</string>
-
     <!-- Principal Amount Validation -->
     <string name="feature_apply_savings_error_amount_empty">Principal amount is required</string>
     <string name="feature_apply_savings_error_amount_invalid_format">Please enter a valid amount format</string>
@@ -45,11 +45,9 @@
     <string name="feature_apply_savings_error_amount_too_large">Principal amount exceeds maximum limit</string>
     <string name="feature_apply_savings_error_amount_invalid_decimal">Amount has too many decimal places for selected currency</string>
 
-    <!-- Disbursement Date Validation -->
-    <string name="feature_apply_savings_error_date_empty">Disbursement date is required</string>
-    <string name="feature_apply_savings_error_date_invalid_format">Please enter a valid date format (DD/MM/YYYY)</string>
-    <string name="feature_apply_savings_error_date_future">Disbursement date must be in the future</string>
-    <string name="feature_apply_savings_error_date_out_of_range">Disbursement date is too far in the future (max 10 years)</string>
+
+    <!-- Savings Product Validation -->
+    <string name="feature_apply_savings_error_product_empty">Savings product is required</string>
 
     <!-- Error Dialogs -->
     <string name="feature_apply_savings_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
@@ -64,16 +62,21 @@
     <string name="feature_apply_savings_unsaved_changes_title">Unsaved Changes!</string>
     <string name="feature_apply_savings_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
 
-    <string name="feature_apply_loan_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
-    <string name="feature_apply_loan_error_name_empty">Applicant name is required</string>
-    <string name="feature_apply_loan_error_name_too_short">Applicant name must be at least 4 characters</string>
-    <string name="feature_apply_loan_error_name_too_long">Applicant name cannot exceed 100 characters</string>
-    <string name="feature_apply_loan_error_name_invalid_format">Applicant name contains invalid characters</string>
-    <string name="feature_apply_loan_error_product_empty">Loan product is required</string>
-    <string name="feature_apply_loan_error_amount_too_small">Principal amount is too small</string>
-    <string name="feature_apply_loan_error_amount_too_large">Principal amount exceeds maximum limit</string>
-    <string name="feature_apply_loan_error_date_empty">Disbursement date is required</string>
-    <string name="feature_apply_loan_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
-    <string name="feature_apply_loan_error_submit_failed">Failed to submit loan application. Please try again.</string>
-    <string name="feature_apply_loan_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
+
+    <string name="feature_apply_savings_label_next">Next</string>
+
+    <string name="feature_apply_savings_error_currency_required">Currency is required</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Minimum opening balance is required</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Lock-in period is required</string>
+    <string name="feature_apply_savings_error_frequency_required">Frequency is required</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Enter a valid frequency</string>
+
+    <string name="feature_apply_savings_status_success">Applied Successful!</string>
+    <string name="feature_apply_savings_status_success_tip">You have successfully applied for a saving account under %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Back To Home</string>
+
+    <string name="feature_apply_savings_status_failure">Application Failed To Submit</string>
+    <string name="feature_apply_savings_status_failure_tip">Failed to apply for a saving account under %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Try Again</string>
+
 </resources>
