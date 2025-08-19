@@ -172,8 +172,6 @@ internal fun ShareApplicationContent(
     }
 }
 
-
-
 @Composable
 internal fun ShareApplicationForm(
     state: ShareApplicationState,
@@ -240,4 +238,3 @@ internal fun ShareApplicationForm(
         }
     }
 }
-

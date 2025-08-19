@@ -14,21 +14,21 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.feature.share.application.shareApplication.SavingsApplyRoute
+import org.mifos.mobile.feature.share.application.shareApplication.ShareApplyRoute
 import org.mifos.mobile.feature.share.application.shareApplication.shareApplyDestination
 
 @Serializable
-data object SavingsApplicationNavGraph
+data object ShareApplicationNavGraph
 
 fun NavController.navigateToShareApplicationGraph(navOptions: NavOptions? = null) {
-    this.navigate(SavingsApplicationNavGraph, navOptions)
+    this.navigate(ShareApplicationNavGraph, navOptions)
 }
 
 fun NavGraphBuilder.shareApplicationNavGraph(
     navController: NavController,
 ) {
-    navigation<SavingsApplicationNavGraph>(
-        startDestination = SavingsApplyRoute,
+    navigation<ShareApplicationNavGraph>(
+        startDestination = ShareApplyRoute,
     ) {
         shareApplyDestination(
             navigateBack = navController::popBackStack,

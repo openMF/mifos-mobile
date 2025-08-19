@@ -1,8 +1,16 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.model.entity.templates.shareProduct
 
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
-
 
 @kotlinx.serialization.Serializable
 @Parcelize
@@ -25,7 +33,5 @@ data class ShareDetails(
     val minimumActivePeriod: Int? = null,
     val minimumActivePeriodForDividendsTypeEnum: MinimumActivePeriodForDividendsTypeEnum? = null,
     val accountingRule: AccountingRule? = null,
-    val accountingMappings: AccountingMappings? = null
+    val accountingMappings: AccountingMappings? = null,
 ) : Parcelable
-
-

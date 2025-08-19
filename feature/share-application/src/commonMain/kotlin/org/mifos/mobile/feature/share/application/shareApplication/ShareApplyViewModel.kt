@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_submit_failed
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_unsaved_changes_message
-import mifos_mobile.feature.share_application.generated.resources.Res
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -352,7 +352,7 @@ internal data class ShareApplicationState(
      */
     val isFormValid: Boolean
         get() = applicantName.isNotBlank() &&
-                selectedShareProduct.isNotBlank()
+            selectedShareProduct.isNotBlank()
 
     /**
      * A map of savings product IDs to their names, derived from `productOptions`.

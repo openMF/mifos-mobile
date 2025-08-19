@@ -16,17 +16,17 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
-data object SavingsApplyRoute
+data object ShareApplyRoute
 
 fun NavController.navigateToShareApplyScreen(
     navOptions: NavOptions? = null,
 ) =
-    navigate(SavingsApplyRoute, navOptions)
+    navigate(ShareApplyRoute, navOptions)
 
 fun NavGraphBuilder.shareApplyDestination(
     navigateBack: () -> Unit,
 ) {
-    composableWithSlideTransitions<SavingsApplyRoute> {
+    composableWithSlideTransitions<ShareApplyRoute> {
         ShareApplyScreen(
             navigateBack = navigateBack,
         )
