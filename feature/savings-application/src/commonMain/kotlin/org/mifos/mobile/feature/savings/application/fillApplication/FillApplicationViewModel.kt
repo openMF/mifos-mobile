@@ -443,8 +443,11 @@ internal class SavingsFillApplicationViewModel(
 
         mutableStateFlow.update {
             it.copy(
-                minOpeningBalanceError = if (minOpeningBalanceResult is ValidationResult.Error)
-                    minOpeningBalanceResult.message else null,
+                minOpeningBalanceError = if (minOpeningBalanceResult is ValidationResult.Error) {
+                    minOpeningBalanceResult.message
+                } else {
+                    null
+                },
                 frequencyError = if (frequencyResult is ValidationResult.Error) frequencyResult.message else null,
             )
         }
