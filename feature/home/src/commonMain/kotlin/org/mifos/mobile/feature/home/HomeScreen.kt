@@ -81,6 +81,7 @@ internal fun HomeScreen(
                         onNavigate(HomeNavigationDestination.AccountsWithType(Constants.SHARE_ACCOUNTS))
                     Constants.APPLY_LOAN -> onNavigate(HomeNavigationDestination.ApplyLoan)
                     Constants.APPLY_SAVINGS -> onNavigate(HomeNavigationDestination.ApplySavings)
+                    Constants.APPLY_SHARE -> onNavigate(HomeNavigationDestination.ApplyShare)
                     Constants.TRANSACTIONS -> onNavigate(HomeNavigationDestination.Transaction)
                     Constants.CHARGES -> onNavigate(HomeNavigationDestination.Charge)
                     Constants.BENEFICIARY -> onNavigate(HomeNavigationDestination.Beneficiary)

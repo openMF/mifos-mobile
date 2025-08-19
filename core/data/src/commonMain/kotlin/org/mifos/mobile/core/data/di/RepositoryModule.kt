@@ -24,6 +24,7 @@ import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.data.repository.UserAuthRepository
@@ -41,6 +42,7 @@ import org.mifos.mobile.core.data.repositoryImpl.NotificationRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.RecentTransactionRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.ReviewLoanApplicationRepositoryImpl
 import org.mifos.mobile.core.data.repositoryImpl.SavingsAccountRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.ShareAccountRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.ThirdPartyTransferRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.TransferRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.UserAuthRepositoryImp
@@ -70,6 +72,7 @@ val RepositoryModule = module {
     single<TransferRepository> { TransferRepositoryImp(get(), get(ioDispatcher)) }
     single<UserAuthRepository> { UserAuthRepositoryImp(get(), get(ioDispatcher)) }
     single<UserDetailRepository> { UserDetailRepositoryImp(get(), get(ioDispatcher)) }
+    single<ShareAccountRepository> { ShareAccountRepositoryImp(get(), get(ioDispatcher)) }
     includes(platformModule)
     single<PlatformDependentDataModule> { getPlatformDataModule }
     single<NetworkMonitor> { getPlatformDataModule.networkMonitor }

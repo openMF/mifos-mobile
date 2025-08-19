@@ -14,6 +14,8 @@ object ApiEndPoints {
     const val AUTHENTICATION = "authentication"
     const val CLIENTS = "clients"
     const val SAVINGS_ACCOUNTS = "savingsaccounts"
+    const val SHARE_ACCOUNTS = "shareaccounts"
+    const val SHARE = "share"
     const val LOAN_ACCOUNTS = "loanAccounts"
     const val RECURRING_ACCOUNTS = "recurringdepositaccounts"
     const val LOANS = "loans"
@@ -22,4 +24,5 @@ object ApiEndPoints {
     const val REGISTRATION = "registration"
     const val DEVICE = "device"
     const val USER = "user"
+    const val PRODUCTS = "products"
 }

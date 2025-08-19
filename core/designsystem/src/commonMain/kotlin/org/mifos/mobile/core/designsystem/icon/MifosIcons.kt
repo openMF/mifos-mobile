@@ -69,6 +69,7 @@ import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
 import fluent.ui.system.icons.filled.DarkTheme
+import fluent.ui.system.icons.filled.DataHistogram
 import fluent.ui.system.icons.filled.DataWhisker
 import fluent.ui.system.icons.filled.Delete
 import fluent.ui.system.icons.filled.Document
@@ -193,6 +194,7 @@ object MifosIcons {
     val ShareAccount = FluentIcons.Filled.DataWhisker
     val ApplyForLoan = FluentIcons.Filled.Receipt
     val ApplyForSavings = FluentIcons.Filled.Savings
+    val ApplyForShare = FluentIcons.Filled.DataHistogram
     val TransactionHistory = FluentIcons.Filled.ChatHistory
     val Charges = FluentIcons.Filled.Feed
     val Beneficiary = FluentIcons.Filled.ContactCardRibbon

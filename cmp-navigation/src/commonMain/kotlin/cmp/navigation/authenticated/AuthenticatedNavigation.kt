@@ -55,6 +55,8 @@ import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.faq.navigateToFaq
+import org.mifos.mobile.feature.share.application.navigation.navigateToShareApplicationGraph
+import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
@@ -113,6 +115,9 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                 is HomeNavigationDestination.ApplySavings ->
                     navController.navigateToSavingsApplicationGraph()
+
+                is HomeNavigationDestination.ApplyShare ->
+                    navController.navigateToShareApplicationGraph()
             }
         }
 
@@ -188,6 +193,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+        )
+
+        shareApplicationNavGraph(
+            navController = navController,
         )
 
         passcodeDestination(
