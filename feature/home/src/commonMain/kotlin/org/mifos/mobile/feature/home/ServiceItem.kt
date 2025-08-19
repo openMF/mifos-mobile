@@ -15,6 +15,7 @@ import kotlinx.collections.immutable.persistentListOf
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.apply_for_loan
 import mifos_mobile.feature.home.generated.resources.apply_for_savings
+import mifos_mobile.feature.home.generated.resources.apply_for_share
 import mifos_mobile.feature.home.generated.resources.feature_home_beneficiary
 import mifos_mobile.feature.home.generated.resources.feature_home_charges
 import mifos_mobile.feature.home.generated.resources.feature_home_faq
@@ -61,6 +62,12 @@ internal sealed class ServiceItem(
         route = Constants.APPLY_SAVINGS,
     )
 
+    data object ApplyForShare : ServiceItem(
+        title = Res.string.apply_for_share,
+        icon = MifosIcons.ApplyForShare,
+        route = Constants.APPLY_SHARE,
+    )
+
     data object TransactionHistory : ServiceItem(
         title = Res.string.feature_home_transaction_history,
         icon = MifosIcons.TransactionHistory,
@@ -92,6 +99,7 @@ internal val serviceCards: ImmutableList<ServiceItem> = persistentListOf(
     ServiceItem.ShareAccount,
     ServiceItem.ApplyForLoan,
     ServiceItem.ApplyForSavings,
+    ServiceItem.ApplyForShare,
     ServiceItem.TransactionHistory,
     ServiceItem.Charges,
     ServiceItem.Beneficiary,

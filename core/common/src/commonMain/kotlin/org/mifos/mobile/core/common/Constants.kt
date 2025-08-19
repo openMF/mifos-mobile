@@ -113,4 +113,5 @@ object Constants {
     const val NAVIGATE_BACK_TO_LOAN = "navigate_back_to_loan"
 
     const val APPLY_SAVINGS = "apply_savings"
+    const val APPLY_SHARE = "apply_share"
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Top Bar -->
+    <string name="feature_share_title">Share Application Details</string>
+    <string name="feature_share_navigation_back">Back</string>
+
+    <!-- Form Labels -->
+    <string name="feature_share_label_applicant_name">Applicant Name</string>
+    <string name="feature_share_label_submission_date">Submission Date</string>
+    <string name="feature_share_label_product_name">Product Name</string>
+
+    <!-- Buttons -->
+    <string name="feature_share_button_next">Next</string>
+
+    <string name="feature_apply_share_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+    <string name="feature_apply_share_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
+    <string name="feature_apply_share_error_submit_failed">Failed to submit savings application. Please try again.</string>
+
+    <string name="feature_apply_share_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
+    <string name="feature_share_no_products_available">No Share Products Available for applying share account</string>
+</resources>

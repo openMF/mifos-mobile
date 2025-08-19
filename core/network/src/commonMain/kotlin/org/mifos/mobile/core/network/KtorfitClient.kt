@@ -23,6 +23,7 @@ import org.mifos.mobile.core.network.services.createRegistrationService
 import org.mifos.mobile.core.network.services.createSavingAccountsListService
 import org.mifos.mobile.core.network.services.createThirdPartyTransferService
 import org.mifos.mobile.core.network.services.createUserDetailsService
+import org.mifos.mobile.core.network.services.createShareAccountService
 import org.mifos.mobile.core.network.utils.FlowConverterFactory
 
 class KtorfitClient(
@@ -52,6 +53,8 @@ class KtorfitClient(
     internal val userDetailsApi by lazy { ktorfit.createUserDetailsService() }
 
     internal val guarantorApi by lazy { ktorfit.createGuarantorService() }
+
+    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
 
     class Builder internal constructor() {
         private lateinit var baseURL: String

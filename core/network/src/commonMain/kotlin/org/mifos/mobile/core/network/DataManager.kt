@@ -36,4 +36,6 @@ class DataManager(
     val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
 
     val guarantorApi by lazy { ktorfitClient.guarantorApi }
+
+    val shareAccountApi by lazy { ktorfitClient.shareAccountApi }
 }
