@@ -35,7 +35,7 @@ data class SavingsAccountTemplate(
     val withHoldTax: Boolean? = null,
     val isDormancyTrackingActive: Boolean? = null,
     val charges: List<ChargeOptions>? = null,
-    val productOptions: ArrayList<ProductOptions> = arrayListOf(),
+    val productOptions: ArrayList<SavingsProduct> = arrayListOf(),
     val fieldOfficerOptions: List<FieldOfficerOptions> = emptyList(),
     val interestCompoundingPeriodTypeOptions: List<SavingsOptions> = emptyList(),
     val interestPostingPeriodTypeOptions: List<SavingsOptions> = emptyList(),

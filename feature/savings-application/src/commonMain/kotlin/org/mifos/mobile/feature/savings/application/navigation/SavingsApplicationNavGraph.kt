@@ -14,6 +14,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.savings.application.fillApplication.navigateToSavingsFillApplicationScreen
+import org.mifos.mobile.feature.savings.application.fillApplication.savingsFillApplicationDestination
 import org.mifos.mobile.feature.savings.application.savingsApplication.SavingsApplyRoute
 import org.mifos.mobile.feature.savings.application.savingsApplication.savingsApplyDestination
 
@@ -26,11 +28,20 @@ fun NavController.navigateToSavingsApplicationGraph(navOptions: NavOptions? = nu
 
 fun NavGraphBuilder.savingsApplicationNavGraph(
     navController: NavController,
+    navigateToAuthenticateScreen: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     navigation<SavingsApplicationNavGraph>(
         startDestination = SavingsApplyRoute,
     ) {
         savingsApplyDestination(
+            navigateBack = navController::popBackStack,
+            navigateToFillDetailsScreen = navController::navigateToSavingsFillApplicationScreen,
+        )
+
+        savingsFillApplicationDestination(
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
+            navigateToStatusScreen = navigateToStatusScreen,
             navigateBack = navController::popBackStack,
         )
     }

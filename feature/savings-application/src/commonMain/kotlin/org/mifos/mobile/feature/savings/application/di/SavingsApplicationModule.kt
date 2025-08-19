@@ -11,8 +11,10 @@ package org.mifos.mobile.feature.savings.application.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.mobile.feature.savings.application.fillApplication.SavingsFillApplicationViewModel
 import org.mifos.mobile.feature.savings.application.savingsApplication.SavingsApplyViewModel
 
 val savingsApplicationModule = module {
     viewModelOf(::SavingsApplyViewModel)
+    viewModelOf(::SavingsFillApplicationViewModel)
 }

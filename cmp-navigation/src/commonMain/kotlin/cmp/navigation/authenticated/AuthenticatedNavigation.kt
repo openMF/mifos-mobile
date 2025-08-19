@@ -186,6 +186,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         savingsApplicationNavGraph(
             navController = navController,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
         passcodeDestination(
