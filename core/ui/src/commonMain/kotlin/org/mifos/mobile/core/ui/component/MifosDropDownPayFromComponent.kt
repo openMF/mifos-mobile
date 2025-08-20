@@ -24,9 +24,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.available_balance
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
@@ -53,13 +52,13 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.core.designsystem.utils.onClick
 
 @Composable
 fun MifosPayFromDropdownUI(
     accounts: List<Pair<String, String>>,
-    modifier: Modifier = Modifier,
     onAccountSelected: (String, String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: String = stringResource(Res.string.select_other_payment_account),
 ) {
     var selectedAccount by rememberSaveable { mutableStateOf("") }
     var selectedBalance by rememberSaveable { mutableStateOf("") }
@@ -68,6 +67,7 @@ fun MifosPayFromDropdownUI(
             accountNumber = selectedAccount,
             availableBalance = selectedBalance,
             modifier = modifier,
+            label = label,
         )
         AccountDropdownList(
             accounts = accounts,
@@ -85,12 +85,13 @@ fun MifosPayFromDropdownUI(
 fun MifosDropDownPayFromComponent(
     accountNumber: String,
     availableBalance: String,
+    label: String,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.padding(top = DesignToken.padding.small)) {
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(DesignToken.shapes.large)
                 .height(128.dp)
                 .fillMaxWidth(),
         ) {
@@ -140,16 +141,18 @@ fun MifosDropDownPayFromComponent(
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 16.dp, y = (-8).dp)
+                .offset(x = 16.dp, y = (-DesignToken.padding.small))
+                .zIndex(1f)
                 .background(
                     color = MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = DesignToken.shapes.medium,
                 )
                 .padding(horizontal = DesignToken.padding.small),
         ) {
             Text(
-                text = "Pay From",
+                text = label,
                 style = MifosTypography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
@@ -194,7 +197,6 @@ fun AccountDropdownList(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
             .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
             .background(MaterialTheme.colorScheme.tertiary),
     ) {
@@ -259,16 +261,22 @@ fun AccountDropdownList(
 @Composable
 private fun MifosDropDownPayFromComponentPreview() {
     MifosMobileTheme {
-        MifosPayFromDropdownUI(
-            accounts = listOf(
-                "267282972" to "$ 23,786.00",
-                "6572992762" to "$ 123,786.00",
-                "52682926" to "$ 78,786.00",
-                "678292726" to "$ 923,786.00",
-            ),
-            onAccountSelected = {
-                    _, _ ->
-            },
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(DesignToken.padding.large),
+        ) {
+            MifosPayFromDropdownUI(
+                accounts = listOf(
+                    "267282972" to "$ 23,786.00",
+                    "6572992762" to "$ 123,786.00",
+                    "52682926" to "$ 78,786.00",
+                    "678292726" to "$ 923,786.00",
+                ),
+                onAccountSelected = {
+                        _, _ ->
+                },
+            )
+        }
     }
 }

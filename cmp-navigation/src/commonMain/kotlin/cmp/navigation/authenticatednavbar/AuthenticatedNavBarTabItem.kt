@@ -16,9 +16,11 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.settings.navigation.SettingsNavGraphRoute
+import org.mifos.mobile.feature.third.party.transfer.navigation.ThirdPartyTransferNavGraphRoute
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.home
 import org.mifos.mobile.navigation.generated.resources.profile
+import org.mifos.mobile.navigation.generated.resources.transfer
 
 sealed class AuthenticatedNavBarTabItem : NavigationItem {
 
@@ -41,22 +43,22 @@ sealed class AuthenticatedNavBarTabItem : NavigationItem {
 
     // TODO Add Top level destinations here
 
-//    data object TransferTab : AuthenticatedNavBarTabItem() {
-//        override val iconResSelected: ImageVector
-//            get() = MifosIcons.TransferTab
-//        override val iconRes: ImageVector
-//            get() = MifosIcons.TransferTab
-//        override val labelRes: StringResource
-//            get() = Res.string.transfer
-//        override val contentDescriptionRes: StringResource
-//            get() = Res.string.transfer
-//        override val graphRoute: String
-//            get() = transferNavRoute.toObjectNavigationRoute()
-//        override val startDestinationRoute: String
-//            get() = transferNavRoute.toObjectNavigationRoute()
-//        override val testTag: String
-//            get() = "TransferTab"
-//    }
+    data object TransferTab : AuthenticatedNavBarTabItem() {
+        override val iconResSelected: ImageVector
+            get() = MifosIcons.MoneyHand
+        override val iconRes: ImageVector
+            get() = MifosIcons.MoneyHand
+        override val labelRes: StringResource
+            get() = Res.string.transfer
+        override val contentDescriptionRes: StringResource
+            get() = Res.string.transfer
+        override val graphRoute: String
+            get() = ThirdPartyTransferNavGraphRoute.toObjectNavigationRoute()
+        override val startDestinationRoute: String
+            get() = ThirdPartyTransferNavGraphRoute.toObjectNavigationRoute()
+        override val testTag: String
+            get() = "TransferTab"
+    }
 
     data object ProfileTab : AuthenticatedNavBarTabItem() {
         override val iconResSelected: ImageVector

@@ -13,4 +13,5 @@ enum class TransferSuccessDestination {
     SAVINGS_ACCOUNT,
     LOAN_ACCOUNT,
     HOME,
+    TRANSFER_TAB,
 }

@@ -22,6 +22,7 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
@@ -59,7 +60,7 @@ import org.mifos.mobile.feature.share.application.navigation.navigateToShareAppl
 import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
-import org.mifos.mobile.feature.third.party.transfer.navigation.thirdPartyTransferNavGraph
+import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
@@ -72,6 +73,7 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
+@Suppress("CyclomaticComplexMethod")
 @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
@@ -79,47 +81,66 @@ internal fun NavGraphBuilder.authenticatedGraph(
     navigation<AuthenticatedGraphRoute>(
         startDestination = AuthenticatedNavbarRoute,
     ) {
-        authenticatedNavbarGraph { destination ->
-            when (destination) {
-                is HomeNavigationDestination.AccountsWithType -> {
-                    if (destination.type in listOf(
-                            Constants.SAVINGS_ACCOUNT,
-                            Constants.LOAN_ACCOUNT,
-                            Constants.SHARE_ACCOUNTS,
+        authenticatedNavbarGraph(
+            homeNavigator = { destination ->
+                when (destination) {
+                    is HomeNavigationDestination.AccountsWithType -> {
+                        if (destination.type in listOf(
+                                Constants.SAVINGS_ACCOUNT,
+                                Constants.LOAN_ACCOUNT,
+                                Constants.SHARE_ACCOUNTS,
+                            )
+                        ) {
+                            navController.navigateToAccountsScreen(destination.type)
+                        }
+                    }
+
+                    is HomeNavigationDestination.Notification ->
+                        navController.navigateToNotificationScreen()
+
+                    is HomeNavigationDestination.Charge ->
+                        navController.navigateToChargeGraph()
+
+                    is HomeNavigationDestination.Faq ->
+                        navController.navigateToFaq()
+
+                    is HomeNavigationDestination.Beneficiary ->
+                        navController.navigateToBeneficiaryNavGraph()
+
+                    is HomeNavigationDestination.Transaction ->
+                        navController.navigateToAccountTransactionsScreen(
+                            Constants.RECENT_TRANSACTIONS,
+                            -1L,
                         )
-                    ) {
-                        navController.navigateToAccountsScreen(destination.type)
+
+                    is HomeNavigationDestination.ApplyLoan ->
+                        navController.navigateToLoanApplicationGraph()
+
+                    is HomeNavigationDestination.ApplySavings ->
+                        navController.navigateToSavingsApplicationGraph()
+
+                    is HomeNavigationDestination.ApplyShare ->
+                        navController.navigateToShareApplicationGraph()
+                }
+            },
+
+            tptNavigator = { destination ->
+                when (destination) {
+                    TptNavigationDestination.Notification -> navController.navigateToNotificationScreen()
+
+                    is TptNavigationDestination.TransferProcess -> {
+                        navController.navigateToTransferProcessScreen(
+                            destination.payload,
+                            TransferType.TPT,
+                            TransferSuccessDestination.TRANSFER_TAB.name,
+                        )
+                    }
+                    else -> {
+                        navController.navigateToManualBeneficiaryAddScreen()
                     }
                 }
-
-                is HomeNavigationDestination.Notification ->
-                    navController.navigateToNotificationScreen()
-
-                is HomeNavigationDestination.Charge ->
-                    navController.navigateToChargeGraph()
-
-                is HomeNavigationDestination.Faq ->
-                    navController.navigateToFaq()
-
-                is HomeNavigationDestination.Beneficiary ->
-                    navController.navigateToBeneficiaryNavGraph()
-
-                is HomeNavigationDestination.Transaction ->
-                    navController.navigateToAccountTransactionsScreen(
-                        Constants.RECENT_TRANSACTIONS,
-                        -1L,
-                    )
-
-                is HomeNavigationDestination.ApplyLoan ->
-                    navController.navigateToLoanApplicationGraph()
-
-                is HomeNavigationDestination.ApplySavings ->
-                    navController.navigateToSavingsApplicationGraph()
-
-                is HomeNavigationDestination.ApplyShare ->
-                    navController.navigateToShareApplicationGraph()
-            }
-        }
+            },
+        )
 
         notificationDestination(
             navigateBack = navController::popBackStack,
@@ -242,19 +263,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
                         TransferSuccessDestination.SAVINGS_ACCOUNT -> Constants.NAVIGATE_BACK_TO_SAVINGS
                         TransferSuccessDestination.LOAN_ACCOUNT -> Constants.NAVIGATE_BACK_TO_LOAN
                         TransferSuccessDestination.HOME -> ""
+                        TransferSuccessDestination.TRANSFER_TAB -> Constants.TRANSFER_TAB
                     },
-                )
-            },
-        )
-
-        thirdPartyTransferNavGraph(
-            navigateBack = navController::popBackStack,
-            addBeneficiary = { },
-            reviewTransfer = { transferPayload, transferType, transferDestination ->
-                navController.navigateToTransferProcessScreen(
-                    transferPayload,
-                    transferType,
-                    transferDestination.name,
                 )
             },
         )

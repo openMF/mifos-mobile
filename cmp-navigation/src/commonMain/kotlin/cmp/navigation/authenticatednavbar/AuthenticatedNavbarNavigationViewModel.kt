@@ -38,11 +38,17 @@ internal class AuthenticatedNavbarNavigationViewModel(
             is AuthenticatedNavBarAction.Internal -> handleInternalAction(action)
 
             AuthenticatedNavBarAction.ProfileTabClick -> handleProfileTabClicked()
+
+            AuthenticatedNavBarAction.TransferTabClick -> handleTransferTabClicked()
         }
     }
 
     private fun handleVaultTabClicked() {
         sendEvent(AuthenticatedNavBarEvent.NavigateToHomeScreen)
+    }
+
+    private fun handleTransferTabClicked() {
+        sendEvent(AuthenticatedNavBarEvent.NavigateToThirdPartyTransferScreen)
     }
 
     private fun handleProfileTabClicked() {
@@ -65,6 +71,8 @@ internal sealed class AuthenticatedNavBarAction {
 
     data object ProfileTabClick : AuthenticatedNavBarAction()
 
+    data object TransferTabClick : AuthenticatedNavBarAction()
+
     sealed class Internal : AuthenticatedNavBarAction() {
         data class UserStateUpdateReceive(val appSettings: AppSettings?) : Internal()
     }
@@ -76,6 +84,10 @@ internal sealed class AuthenticatedNavBarEvent {
 
     data object NavigateToHomeScreen : AuthenticatedNavBarEvent() {
         override val tab: AuthenticatedNavBarTabItem = AuthenticatedNavBarTabItem.HomeTab
+    }
+
+    data object NavigateToThirdPartyTransferScreen : AuthenticatedNavBarEvent() {
+        override val tab: AuthenticatedNavBarTabItem = AuthenticatedNavBarTabItem.TransferTab
     }
 
     data object NavigateToUserProfileScreen : AuthenticatedNavBarEvent() {
