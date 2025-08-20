@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 @Serializable
@@ -29,10 +30,12 @@ fun NavController.navigateToLoanRepaymentScreen(
 
 fun NavGraphBuilder.loanAccountRepaymentDestination(
     navigateBack: () -> Unit,
+    navigateToMakePaymentScreen: (AccountDetails) -> Unit,
 ) {
     composableWithSlideTransitions<RepaymentScheduleRoute> {
         ChargeDetailScreen(
             navigateBack = navigateBack,
+            navigateToMakePaymentScreen = navigateToMakePaymentScreen,
         )
     }
 }

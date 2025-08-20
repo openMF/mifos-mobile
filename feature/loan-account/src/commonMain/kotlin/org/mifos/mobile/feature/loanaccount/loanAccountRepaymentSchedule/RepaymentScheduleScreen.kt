@@ -31,10 +31,14 @@ import mifos_mobile.feature.loan_account.generated.resources.repayment_schedule
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -45,6 +49,7 @@ import org.mifos.mobile.feature.loanaccount.component.RepaymentScheduleItem
 @Composable
 internal fun ChargeDetailScreen(
     navigateBack: () -> Unit,
+    navigateToMakePaymentScreen: (AccountDetails) -> Unit,
     viewModel: RepaymentScheduleViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -60,6 +65,7 @@ internal fun ChargeDetailScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+        navigateToMakePaymentScreen = navigateToMakePaymentScreen,
     )
 
     RepaymentDialogs(
@@ -74,6 +80,7 @@ internal fun ChargeDetailScreen(
 internal fun RepaymentScreenContent(
     state: RepaymentScheduleState,
     onAction: (RepaymentScheduleAction) -> Unit,
+    navigateToMakePaymentScreen: (AccountDetails) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
@@ -112,6 +119,15 @@ internal fun RepaymentScreenContent(
                     currencyCode = state.loanWithAssociations?.currency?.code ?: "",
                     maxDigits = state.loanWithAssociations?.currency?.decimalPlaces?.toInt(),
                     onPayClick = { period ->
+                        // Create AccountDetails for the payment
+                        val accountDetails = AccountDetails(
+                            accountId = state.accountId ?: 0L,
+                            outstandingBalance = period.totalDueForPeriod ?: 0.0,
+                            transferType = Constants.TRANSFER_PAY_TO,
+                            transferTarget = TransferType.SELF,
+                            transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
+                        )
+                        navigateToMakePaymentScreen(accountDetails)
                     },
                 )
             }
@@ -174,6 +190,7 @@ private fun Repayment_Preview() {
             RepaymentScreenContent(
                 state = RepaymentScheduleState(dialogState = null),
                 onAction = {},
+                navigateToMakePaymentScreen = {},
             )
         }
     }
