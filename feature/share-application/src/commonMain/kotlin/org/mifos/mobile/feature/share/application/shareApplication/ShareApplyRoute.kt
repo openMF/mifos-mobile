@@ -24,11 +24,13 @@ fun NavController.navigateToShareApplyScreen(
     navigate(ShareApplyRoute, navOptions)
 
 fun NavGraphBuilder.shareApplyDestination(
+    navigateToFillDetailsScreen: (Long) -> Unit,
     navigateBack: () -> Unit,
 ) {
     composableWithSlideTransitions<ShareApplyRoute> {
         ShareApplyScreen(
             navigateBack = navigateBack,
+            navigateToFillDetailsScreen = navigateToFillDetailsScreen,
         )
     }
 }

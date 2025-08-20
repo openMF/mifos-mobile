@@ -28,4 +28,38 @@
 
     <string name="feature_apply_share_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
     <string name="feature_share_no_products_available">No Share Products Available for applying share account</string>
+
+
+    <string name="feature_apply_share_label_terms">Terms</string>
+    <string name="feature_apply_share_label_currency">Currency</string>
+    <string name="feature_apply_share_label_current_price">Current Price</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Total Number of Shares</string>
+    <string name="feature_apply_share_label_default_savings_account">Default Savings Account</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Minimum Active Period</string>
+    <string name="feature_apply_share_section_minimum_active_period">Minimum Active Period</string>
+    <string name="feature_apply_share_label_minimum_frequency">Frequency</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Frequency Type</string>
+
+    <string name="feature_apply_share_label_lockin_period">Lock-in Period</string>
+    <string name="feature_apply_share_section_lockin_period">Lock-in Period</string>
+    <string name="feature_apply_share_label_lockin_frequency">Frequency</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Frequency Type</string>
+
+    <string name="feature_apply_share_error_frequency_required">Frequency is required</string>
+    <string name="feature_apply_share_frequency_invalid">Please enter a valid frequency</string>
+
+    <string name="feature_apply_share_error_shares_required">Shares are required</string>
+    <string name="feature_apply_share_shares_invalid">Please enter valid shares</string>
+
+    <string name="feature_apply_share_error_price_required">Frequency is required</string>
+    <string name="feature_apply_share_price_invalid">Please enter a valid frequency</string>
+
+    <string name="feature_apply_share_status_failure">Application Failed To Submit</string>
+    <string name="feature_apply_share_status_failure_tip">Failed to apply a share account under %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Try Again</string>
+
+    <string name="feature_apply_share_status_success">Applied Successful!</string>
+    <string name="feature_apply_share_status_success_tip">You have successfully applied for a share account under %1$s</string>
+    <string name="feature_apply_share_status_success_action">Back To Home</string>
 </resources>

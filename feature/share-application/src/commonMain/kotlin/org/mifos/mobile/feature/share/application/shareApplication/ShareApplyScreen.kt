@@ -55,6 +55,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun ShareApplyScreen(
     navigateBack: () -> Unit,
+    navigateToFillDetailsScreen: (Long) -> Unit,
     viewModel: ShareApplyViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -64,13 +65,9 @@ internal fun ShareApplyScreen(
             is ShareApplicationEvent.NavigateBack -> navigateBack.invoke()
 
             is ShareApplicationEvent.NavigateToConfirmDetailsScreen -> {
-//                navigateToConfirmDetailsScreen(
-//                    state.selectedSavingsProductId,
-//                    state.applicantName,
-//                    state.selectedSavingsProduct,
-//                    state.selectedFieldOfficer,
-//                    state.submittedOnDate,
-//                )
+                navigateToFillDetailsScreen(
+                    state.selectedShareProductId,
+                )
             }
         }
     }

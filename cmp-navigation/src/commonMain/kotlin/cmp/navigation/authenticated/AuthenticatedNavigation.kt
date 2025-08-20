@@ -197,6 +197,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         shareApplicationNavGraph(
             navController = navController,
+            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
         passcodeDestination(
