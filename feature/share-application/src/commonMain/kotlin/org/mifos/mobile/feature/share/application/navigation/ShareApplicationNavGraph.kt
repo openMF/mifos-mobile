@@ -14,6 +14,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.share.application.fillApplication.navigateToShareFillApplicationScreen
+import org.mifos.mobile.feature.share.application.fillApplication.shareFillApplicationDestination
 import org.mifos.mobile.feature.share.application.shareApplication.ShareApplyRoute
 import org.mifos.mobile.feature.share.application.shareApplication.shareApplyDestination
 
@@ -26,11 +28,20 @@ fun NavController.navigateToShareApplicationGraph(navOptions: NavOptions? = null
 
 fun NavGraphBuilder.shareApplicationNavGraph(
     navController: NavController,
+    navigateToAuthenticateScreen: () -> Unit,
+    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
 ) {
     navigation<ShareApplicationNavGraph>(
         startDestination = ShareApplyRoute,
     ) {
         shareApplyDestination(
+            navigateBack = navController::popBackStack,
+            navigateToFillDetailsScreen = navController::navigateToShareFillApplicationScreen,
+        )
+
+        shareFillApplicationDestination(
+            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
+            navigateToStatusScreen = navigateToStatusScreen,
             navigateBack = navController::popBackStack,
         )
     }

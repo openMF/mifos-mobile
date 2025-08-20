@@ -11,8 +11,10 @@ package org.mifos.mobile.feature.share.application.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.mobile.feature.share.application.fillApplication.ShareFillApplicationViewModel
 import org.mifos.mobile.feature.share.application.shareApplication.ShareApplyViewModel
 
 val shareApplicationModule = module {
     viewModelOf(::ShareApplyViewModel)
+    viewModelOf(::ShareFillApplicationViewModel)
 }
