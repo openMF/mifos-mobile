@@ -88,14 +88,14 @@ internal fun ShareFillApplicationScreen(
         }
     }
 
-    SavingsFillApplicationContent(
+    ShareFillApplicationContent(
         state = state,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
     )
 
-    SavingsFillApplicationDialog(
+    ShareFillApplicationDialog(
         dialogState = state.dialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
@@ -104,7 +104,7 @@ internal fun ShareFillApplicationScreen(
 }
 
 @Composable
-internal fun SavingsFillApplicationDialog(
+internal fun ShareFillApplicationDialog(
     dialogState: ShareApplicationDialogState?,
     onAction: (ShareApplicationAction) -> Unit,
 ) {
@@ -130,7 +130,7 @@ internal fun SavingsFillApplicationDialog(
 }
 
 @Composable
-internal fun SavingsFillApplicationContent(
+internal fun ShareFillApplicationContent(
     state: ShareApplicationState,
     onAction: (ShareApplicationAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -336,7 +336,7 @@ internal fun ShareFillApplicationForm(
 @Composable
 private fun Share_Application_Success_Preview() {
     MifosMobileTheme {
-        SavingsFillApplicationContent(
+        ShareFillApplicationContent(
             state = ShareApplicationState(
                 uiState = ShareApplicationUiState.Success,
                 clientId = 1L,
@@ -351,7 +351,7 @@ private fun Share_Application_Success_Preview() {
 @Composable
 private fun Share_Application_Error_Preview() {
     MifosMobileTheme {
-        SavingsFillApplicationContent(
+        ShareFillApplicationContent(
             state = ShareApplicationState(
                 uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
                 clientId = 1L,
