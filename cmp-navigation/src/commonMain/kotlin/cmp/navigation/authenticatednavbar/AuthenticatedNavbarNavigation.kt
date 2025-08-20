@@ -17,6 +17,7 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithStayTransitions
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
+import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 
 @Serializable
 data object AuthenticatedNavbarRoute
@@ -27,10 +28,13 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
 
 internal fun NavGraphBuilder.authenticatedNavbarGraph(
     homeNavigator: HomeNavigator,
+    tptNavigator: TptNavigator,
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
         AuthenticatedNavbarNavigationScreen(
             homeNavigator = homeNavigator,
+            tptNavigator = tptNavigator,
+
         )
     }
 }

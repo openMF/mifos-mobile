@@ -9,8 +9,10 @@
  */
 package org.mifos.mobile.core.model.entity.payload
 
+import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 
+@Serializable
 data class ReviewTransferPayload(
     val payToAccount: AccountOption? = null,
     val payFromAccount: AccountOption? = null,

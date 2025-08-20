@@ -46,12 +46,16 @@ import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
 import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
 import org.mifos.mobile.feature.settings.navigation.settingsGraph
+import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
+import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToTptGraph
+import org.mifos.mobile.feature.third.party.transfer.navigation.tptGraphDestination
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.not_connected
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
     homeNavigator: HomeNavigator,
+    tptNavigator: TptNavigator,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -69,6 +73,12 @@ internal fun AuthenticatedNavbarNavigationScreen(
                 AuthenticatedNavBarEvent.NavigateToHomeScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
                         navigateToHomeScreen(navOptions = it)
+                    }
+                }
+
+                AuthenticatedNavBarEvent.NavigateToThirdPartyTransferScreen -> {
+                    navigateToTabOrRoot(tabToNavigateTo = event.tab) {
+                        navigateToTptGraph(navOptions = it)
                     }
                 }
 
@@ -103,6 +113,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
             { viewModel.trySendAction(it) }
         },
         homeNavigator = homeNavigator,
+        tptNavigator = tptNavigator,
     )
 }
 
@@ -110,6 +121,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
     homeNavigator: HomeNavigator,
+    tptNavigator: TptNavigator,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -117,6 +129,7 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val navigationItems = persistentListOf<NavigationItem>(
         AuthenticatedNavBarTabItem.HomeTab,
+        AuthenticatedNavBarTabItem.TransferTab,
         AuthenticatedNavBarTabItem.ProfileTab,
     )
 
@@ -136,6 +149,10 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 
                     is AuthenticatedNavBarTabItem.ProfileTab -> {
                         onAction(AuthenticatedNavBarAction.ProfileTabClick)
+                    }
+
+                    is AuthenticatedNavBarTabItem.TransferTab -> {
+                        onAction(AuthenticatedNavBarAction.TransferTabClick)
                     }
                 }
             },
@@ -161,6 +178,10 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
         ) {
             // TODO Add top level destination screens
             homeDestination(onNavigate = homeNavigator)
+
+            tptGraphDestination(
+                onNavigate = tptNavigator,
+            )
 
             settingsGraph(
                 navController = navController,

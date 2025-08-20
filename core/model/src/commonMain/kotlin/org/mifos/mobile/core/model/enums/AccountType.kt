@@ -14,11 +14,11 @@ package org.mifos.mobile.core.model.enums
  * On 24/03/17.
  */
 
-enum class AccountType {
+enum class AccountType(val value: String) {
 
-    SAVINGS,
+    SAVINGS("Savings Account"),
 
-    LOAN,
+    LOAN("Loan Account"),
 
-    SHARE,
+    SHARE("Share Account"),
 }

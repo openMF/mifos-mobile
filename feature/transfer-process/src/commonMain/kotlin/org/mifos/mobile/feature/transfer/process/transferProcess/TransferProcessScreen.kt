@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.enums.TransferType
@@ -159,13 +162,24 @@ private fun TransferProcessContent(
             ),
         )
 
-        MifosButton(
+        MifosOutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            text = { Text(text = stringResource(Res.string.cancel)) },
-            onClick = { onAction(TransferProcessAction.OnNavigate) },
-        )
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = MaterialTheme.colorScheme.primary,
+            ),
+            onClick = {
+                onAction(TransferProcessAction.OnNavigate)
+            },
+            shape = DesignToken.shapes.medium,
+        ) {
+            Text(
+                text = stringResource(Res.string.cancel),
+                style = MaterialTheme.typography.labelLarge,
+            )
+        }
 
         MifosButton(
             modifier = Modifier
