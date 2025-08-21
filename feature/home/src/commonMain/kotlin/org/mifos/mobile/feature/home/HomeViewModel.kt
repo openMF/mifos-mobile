@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.home
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -27,6 +28,7 @@ import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.NetworkBannerState
 
 /**
  * `ViewModel` for the Home screen.
@@ -48,8 +50,9 @@ internal class HomeViewModel(
     initialState = HomeState(
         clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
         username = requireNotNull(userPreferencesRepositoryImpl.userInfo.value.userName),
-        dialogState = HomeState.DialogState.Loading,
         items = serviceCards,
+        uiState = HomeScreenState.Loading,
+        networkBanner = NetworkBannerState.None,
     ),
 ) {
 
@@ -99,29 +102,62 @@ internal class HomeViewModel(
     }
 
     /**
-     * Handles changes in network connectivity.
+     * Handles changes in the network status and updates the UI state accordingly.
      *
-     * If the network is online, it dismisses any network-related dialogs and
-     * triggers the fetching of notifications and client account details.
-     * If offline, it shows a network error dialog.
+     * This function is crucial for managing the application's behavior when the device
+     * goes offline or comes back online. It performs the following actions:
      *
-     * @param isOnline A boolean indicating the current network status.
+     * 1. **Updates the `networkStatus` in the UI state:** This immediately reflects the
+     * current network connectivity.
+     *
+     * 2. **Handles "Offline" state:**
+     * - If the app is launched for the first time while offline (`isFirstLaunch`),
+     * the `uiState` is set to `HomeScreenState.Network` to show a network-related
+     * message to the user.
+     * - The `networkBanner` state is set to `NetworkBannerState.Offline`, which
+     * triggers the display of the "You are offline" banner.
+     *
+     * 3. **Handles "Online" state:**
+     * - When the app comes back online, it triggers two essential data-loading functions:
+     * `unreadNotificationsCount()` and `loadClientAccountDetails()`. This ensures the UI
+     * is refreshed with the latest information.
+     * - If the app was previously offline (and it's not the first launch), it
+     * temporarily sets the `networkBanner` to `NetworkBannerState.BackOnline`
+     * to show a brief "Back online" message.
+     * - A 2-second delay is introduced before hiding the banner by setting the
+     * `networkBanner` state to `NetworkBannerState.None`, providing a smooth
+     * user experience.
+     *
+     * @param isOnline A `Boolean` indicating the current network connectivity status.
+     *
+     * @see HomeScreenState
+     * @see NetworkBannerState
      */
     private fun handleNetworkStatus(isOnline: Boolean) {
-        mutableStateFlow.update {
-            it.copy(
-                networkStatus = isOnline,
-                dialogState = if (!isOnline) {
-                    HomeState.DialogState.Network
-                } else {
-                    null
-                },
-            )
-        }
+        val wasOnline = state.networkStatus
+        val isFirstLaunch = state.uiState == HomeScreenState.Loading
 
-        if (isOnline) {
-            unreadNotificationsCount()
-            loadClientAccountDetails()
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    current.copy(
+                        uiState = if (isFirstLaunch) HomeScreenState.Network else current.uiState,
+                        networkBanner = NetworkBannerState.Offline,
+                    )
+                }
+            } else {
+                unreadNotificationsCount()
+                loadClientAccountDetails()
+
+                if (!wasOnline && !isFirstLaunch) {
+                    updateState { it.copy(networkBanner = NetworkBannerState.BackOnline) }
+                    delay(2000)
+                }
+
+                updateState { it.copy(networkBanner = NetworkBannerState.None) }
+            }
         }
     }
 
@@ -133,7 +169,7 @@ internal class HomeViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(dialogState = HomeState.DialogState.Network) }
+                updateState { it.copy(uiState = HomeScreenState.Network) }
             } else {
                 unreadNotificationsCount()
                 loadClientAccountDetails()
@@ -163,12 +199,14 @@ internal class HomeViewModel(
      * Fetches the client's account details from the repository.
      */
     private fun loadClientAccountDetails() {
-        updateState { it.copy(dialogState = HomeState.DialogState.Loading) }
+        updateState { it.copy(uiState = HomeScreenState.Loading) }
+
         viewModelScope.launch {
             homeRepositoryImpl.clientAccounts(clientId = state.clientId ?: 0)
                 .catch {
-                    updateState { it.copy(dialogState = HomeState.DialogState.Error(Res.string.feature_server_error)) }
-                }.collect { clientAccounts ->
+                    updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+                }
+                .collect { clientAccounts ->
                     sendAction(HomeAction.Internal.ReceiveClientAccounts(clientAccounts))
                 }
         }
@@ -191,7 +229,7 @@ internal class HomeViewModel(
                 )
             }
 
-            DataState.Loading -> updateState { it.copy(dialogState = HomeState.DialogState.Loading) }
+            DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
 
             is DataState.Success -> {
                 val hasLoans = dataState.data.loanAccounts.isNotEmpty()
@@ -209,7 +247,7 @@ internal class HomeViewModel(
                     updateState {
                         it.copy(
                             clientAccounts = dataState.data,
-                            dialogState = null,
+                            uiState = HomeScreenState.Success,
                             currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol
                                 ?: dataState.data.savingsAccounts?.firstOrNull()?.currency?.displaySymbol,
                         )
@@ -219,6 +257,7 @@ internal class HomeViewModel(
                         it.copy(
                             dialogState = null,
                             isLoanApplied = false,
+                            uiState = HomeScreenState.Success,
                         )
                     }
                 }
@@ -294,6 +333,8 @@ internal class HomeViewModel(
  * @property dialogState The state of any dialog to be shown on the screen.
  * @property items An immutable list of service card items to display on the home screen.
  * @property networkStatus A boolean indicating the current network connectivity status.
+ * @property uiState The current state of the Home screen, which can be loading, success, error, or network-related.
+ * @property networkBanner The state of the network banner, which can indicate online, offline, or back online.
  */
 @Immutable
 internal data class HomeState(
@@ -306,9 +347,12 @@ internal data class HomeState(
     val loanAmount: Double = 0.0,
     val savingsAmount: Double = 0.0,
     val isAmountVisible: Boolean = false,
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
     val items: ImmutableList<ServiceItem>,
-    val networkStatus: Boolean = false,
+    val networkStatus: Boolean = true,
+    val uiState: HomeScreenState?,
+    val networkBanner: NetworkBannerState?,
+
 ) {
     /**
      * A sealed interface representing the different types of dialogs that can be
@@ -320,13 +364,27 @@ internal data class HomeState(
          * @property message The [StringResource] for the error message.
          */
         data class Error(val message: StringResource) : DialogState
-
-        /** Represents a full-screen loading state. */
-        data object Loading : DialogState
-
-        /** Represents a network connectivity error state. */
-        data object Network : DialogState
     }
+}
+
+sealed interface HomeScreenState {
+    /**
+     * Represents the initial loading state of the Home screen.
+     */
+    data object Loading : HomeScreenState
+
+    /**
+     * Represents the state when the Home screen has successfully loaded.
+     */
+    data object Success : HomeScreenState
+
+    /**
+     * Represents an error state on the Home screen.
+     * @property message The [StringResource] for the error message.
+     */
+    data class Error(val message: StringResource) : HomeScreenState
+
+    data object Network : HomeScreenState
 }
 
 /**

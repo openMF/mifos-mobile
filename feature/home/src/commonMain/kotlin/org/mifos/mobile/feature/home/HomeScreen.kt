@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -42,6 +43,7 @@ import mifos_mobile.feature.home.generated.resources.feature_home_greet
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
+import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -57,6 +59,8 @@ import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.NetworkBanner
+import org.mifos.mobile.core.ui.utils.NetworkBannerState
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
 
@@ -101,7 +105,6 @@ internal fun HomeScreen(
 
     HomeScreenDialog(
         dialogState = state.dialogState,
-        networkStatus = state.networkStatus,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -138,48 +141,75 @@ internal fun HomeContent(
                 )
             }
         },
+        utilityBar = {
+            NetworkBanner(
+                bannerState = state.networkBanner,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .padding(DesignToken.padding.large),
-            ) {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-
-                Text(
-                    text = stringResource(Res.string.feature_home_greet, state.username),
-                    style = MifosTypography.titleLarge,
-                    color = AppColors.customBlack,
-                )
-
-                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
-
-                MifosDashboardCard(
-                    isLoanApplied = state.isLoanApplied,
-                    savingsAccount = Res.string.feature_home_total_available_savings,
-                    loanAccount = Res.string.feature_home_total_available_loan,
-                    loanAmount = state.loanAmount,
-                    savingsAmount = state.savingsAmount,
-                    isVisible = state.isAmountVisible,
-                    onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
-                    currency = state.currency,
-                )
-
-                Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
-
-                Text(
-                    text = stringResource(Res.string.feature_home_services),
-                    style = MifosTypography.titleMediumEmphasized,
-                    color = AppColors.customBlack,
-                )
-
-                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
-
-                ServiceBox(
-                    items = state.items,
-                    onAction = onAction,
+        when (state.uiState) {
+            is HomeScreenState.Error -> {
+                MifosErrorComponent(
+                    message = stringResource(Res.string.feature_server_error),
+                    isRetryEnabled = true,
+                    onRetry = { onAction(HomeAction.Retry) },
                 )
             }
+
+            HomeScreenState.Loading -> MifosProgressIndicator()
+
+            HomeScreenState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(HomeAction.Retry) },
+                )
+            }
+
+            HomeScreenState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(DesignToken.padding.large),
+                ) {
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+
+                    Text(
+                        text = stringResource(Res.string.feature_home_greet, state.username),
+                        style = MifosTypography.titleLarge,
+                        color = AppColors.customBlack,
+                    )
+
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+
+                    MifosDashboardCard(
+                        isLoanApplied = state.isLoanApplied,
+                        savingsAccount = Res.string.feature_home_total_available_savings,
+                        loanAccount = Res.string.feature_home_total_available_loan,
+                        loanAmount = state.loanAmount,
+                        savingsAmount = state.savingsAmount,
+                        isVisible = state.isAmountVisible,
+                        onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
+                        currency = state.currency,
+                    )
+
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
+
+                    Text(
+                        text = stringResource(Res.string.feature_home_services),
+                        style = MifosTypography.titleMediumEmphasized,
+                        color = AppColors.customBlack,
+                    )
+
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+
+                    ServiceBox(
+                        items = state.items,
+                        onAction = onAction,
+                    )
+                }
+            }
+            null -> {}
         }
     }
 }
@@ -252,7 +282,6 @@ internal fun ServiceItemCard(
 @Composable
 private fun HomeScreenDialog(
     dialogState: HomeState.DialogState?,
-    networkStatus: Boolean,
     onAction: (HomeAction) -> Unit,
 ) {
     when (dialogState) {
@@ -261,17 +290,6 @@ private fun HomeScreenDialog(
                 isRetryEnabled = true,
                 message = stringResource(dialogState.message),
                 onRetry = { onAction(HomeAction.Retry) },
-            )
-        }
-
-        is HomeState.DialogState.Loading -> {
-            MifosProgressIndicator()
-        }
-
-        is HomeState.DialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = networkStatus,
-                isRetryEnabled = false,
             )
         }
 
@@ -284,7 +302,12 @@ private fun HomeScreenDialog(
 private fun HomeScreenPreview() {
     MifosMobileTheme {
         HomeContent(
-            state = HomeState(dialogState = null, items = serviceCards),
+            state = HomeState(
+                dialogState = null,
+                items = serviceCards,
+                uiState = HomeScreenState.Success,
+                networkBanner = NetworkBannerState.None,
+            ),
             onAction = {},
             modifier = Modifier,
         )

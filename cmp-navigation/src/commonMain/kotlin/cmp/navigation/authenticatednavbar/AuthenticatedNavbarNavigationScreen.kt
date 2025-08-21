@@ -10,11 +10,9 @@
 package cmp.navigation.authenticatednavbar
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material3.SnackbarDuration.Indefinite
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,8 +32,6 @@ import cmp.navigation.ui.MifosScaffold
 import cmp.navigation.ui.ScaffoldNavigationData
 import cmp.navigation.ui.rememberMifosNavController
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
@@ -49,8 +45,6 @@ import org.mifos.mobile.feature.settings.navigation.settingsGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToTptGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.tptGraphDestination
-import org.mifos.mobile.navigation.generated.resources.Res
-import org.mifos.mobile.navigation.generated.resources.not_connected
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
@@ -62,9 +56,9 @@ internal fun AuthenticatedNavbarNavigationScreen(
     ),
     viewModel: AuthenticatedNavbarNavigationViewModel = koinViewModel(),
 ) {
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
+//    val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
 
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         navController.apply {
@@ -91,19 +85,20 @@ internal fun AuthenticatedNavbarNavigationScreen(
         }
     }
 
-    val message = stringResource(Res.string.not_connected)
-    LaunchedEffect(isOffline) {
-        if (isOffline) {
-            scope.launch {
-                snackbarHostState.showSnackbar(
-                    message = message,
-                    duration = Indefinite,
-                )
-            }
-        } else {
-            snackbarHostState.currentSnackbarData?.dismiss()
-        }
-    }
+    // TODO Commented this as we ares showing banner on top
+//    val message = stringResource(Res.string.not_connected)
+//    LaunchedEffect(isOffline) {
+//        if (isOffline) {
+//            scope.launch {
+//                snackbarHostState.showSnackbar(
+//                    message = message,
+//                    duration = Indefinite,
+//                )
+//            }
+//        } else {
+//            snackbarHostState.currentSnackbarData?.dismiss()
+//        }
+//    }
 
     AuthenticatedNavbarNavigationScreenContent(
         navController = navController,
