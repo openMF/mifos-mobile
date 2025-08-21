@@ -9,6 +9,10 @@
  */
 package cmp.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,6 +21,7 @@ import cmp.navigation.rootnav.RootNavScreen
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.NetworkBanner
 
 @Composable
 fun ComposeApp(
@@ -41,9 +46,16 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        RootNavScreen(
-            modifier = modifier,
-            onSplashScreenRemoved = onSplashScreenRemoved,
-        )
+        Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
+            NetworkBanner(
+                bannerState = uiState.networkBanner,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            RootNavScreen(
+                modifier = Modifier,
+                onSplashScreenRemoved = onSplashScreenRemoved,
+            )
+        }
     }
 }

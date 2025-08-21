@@ -94,6 +94,7 @@ import fluent.ui.system.icons.filled.Savings
 import fluent.ui.system.icons.filled.SignOut
 import fluent.ui.system.icons.filled.TableCellEdit
 import fluent.ui.system.icons.filled.Wallet
+import fluent.ui.system.icons.filled.WifiOff
 import fluent.ui.system.icons.regular.Alert
 import fluent.ui.system.icons.regular.ArrowCounterclockwise
 import fluent.ui.system.icons.regular.ArrowExportUp
@@ -152,10 +153,11 @@ object MifosIcons {
     val FlashOff = Icons.Default.FlashOff
     val Add = Icons.Filled.Add
     val Search = Icons.Filled.Search
-    val WifiOff = Icons.Filled.WifiOff
     val Error = Icons.Filled.Error
     val Notifications = Icons.Filled.Notifications
     val NavigationDrawer = Icons.Default.Menu
+
+    val WifiOff = FluentIcons.Filled.WifiOff
 
     // Recently added
     val Back = Icons.AutoMirrored.Outlined.ArrowBack

@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +34,7 @@ import mifos_mobile.core.ui.generated.resources.no_internet
 import mifos_mobile.core.ui.generated.resources.retry
 import mifos_mobile.core.ui.generated.resources.something_went_wrong
 import org.jetbrains.compose.resources.stringResource
+import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -75,22 +76,31 @@ fun NoInternetComponent(
     ) {
         Icon(
             modifier = Modifier
-                .size(50.dp)
-                .padding(bottom = 12.dp),
+                .size(DesignToken.sizes.avatarMedium),
             imageVector = MifosIcons.WifiOff,
             contentDescription = "Wifi Icon",
         )
 
         Text(
             text = stringResource(Res.string.no_internet),
-            style = TextStyle(fontSize = 20.sp),
+            style = MifosTypography.titleSmallEmphasized,
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
         if (isRetryEnabled) {
-            FilledTonalButton(onClick = { onRetry.invoke() }) {
-                Text(text = stringResource(Res.string.retry))
+            MifosButton(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .height(DesignToken.sizes.buttonHeight)
+                    .align(Alignment.CenterHorizontally),
+                onClick = { onRetry.invoke() },
+                shape = DesignToken.shapes.medium,
+            ) {
+                Text(
+                    text = stringResource(Res.string.retry),
+                    style = MifosTypography.titleMedium,
+                )
             }
         }
     }
@@ -123,16 +133,25 @@ fun EmptyDataComponent(
             } else {
                 stringResource(Res.string.something_went_wrong)
             },
-            style = MifosTypography.bodySmallEmphasized,
+            style = MifosTypography.titleSmallEmphasized,
             textAlign = TextAlign.Center,
         )
 
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
         if (isRetryEnabled) {
-            FilledTonalButton(
-                modifier = Modifier.padding(top = 8.dp),
+            MifosButton(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .height(DesignToken.sizes.inputHeight)
+                    .align(Alignment.CenterHorizontally),
                 onClick = { onRetry.invoke() },
+                shape = DesignToken.shapes.medium,
             ) {
-                Text(text = stringResource(Res.string.retry))
+                Text(
+                    text = stringResource(Res.string.retry),
+                    style = MaterialTheme.typography.labelLarge,
+                )
             }
         }
     }
