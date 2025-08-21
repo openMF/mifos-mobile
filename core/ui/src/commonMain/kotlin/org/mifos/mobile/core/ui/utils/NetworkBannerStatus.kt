@@ -25,6 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.core.ui.generated.resources.back_online
+import mifos_mobile.core.ui.generated.resources.no_internet
+import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -40,11 +44,11 @@ fun NetworkBanner(
     when (bannerState) {
         NetworkBannerState.Offline -> {
             bannerColor = MaterialTheme.colorScheme.error
-            bannerText = "No internet connection"
+            bannerText = stringResource(Res.string.no_internet)
         }
         NetworkBannerState.BackOnline -> {
             bannerColor = AppColors.customEnable
-            bannerText = "Back online"
+            bannerText = stringResource(Res.string.back_online)
         }
         NetworkBannerState.None, null -> return
     }

@@ -54,9 +54,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
     ),
     viewModel: AuthenticatedNavbarNavigationViewModel = koinViewModel(),
 ) {
-//    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-//    val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
 
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         navController.apply {
@@ -82,21 +80,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
             }
         }
     }
-
-    // TODO Commented this as we ares showing banner on top
-//    val message = stringResource(Res.string.not_connected)
-//    LaunchedEffect(isOffline) {
-//        if (isOffline) {
-//            scope.launch {
-//                snackbarHostState.showSnackbar(
-//                    message = message,
-//                    duration = Indefinite,
-//                )
-//            }
-//        } else {
-//            snackbarHostState.currentSnackbarData?.dismiss()
-//        }
-//    }
 
     AuthenticatedNavbarNavigationScreenContent(
         navController = navController,

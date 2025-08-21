@@ -9,7 +9,8 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <string name="no_internet">No Internet</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="back_online">Back Online</string>
     <string name="retry">Retry</string>
     <string name="no_data">No Data</string>
     <string name="something_went_wrong">Something went wrong</string>
