@@ -208,7 +208,6 @@ fun MifosElevatedScaffold(
     onNavigateBack: () -> Unit,
     topBarTitle: String,
     modifier: Modifier = Modifier,
-    utilityBar: @Composable () -> Unit = {},
     brandIcon: DrawableResource? = null,
     bottomBar: @Composable () -> Unit = {},
     floatingActionButtonContent: FloatingActionButtonContent? = null,
@@ -250,29 +249,26 @@ fun MifosElevatedScaffold(
                     .imePadding()
                     .navigationBarsPadding(),
             ) {
-                Column {
-                    utilityBar()
-                    val internalPullToRefreshState = rememberPullToRefreshState()
-                    Box(
-                        modifier = Modifier
-                            .windowInsetsPadding(insets = contentWindowInsets)
-                            .pullToRefresh(
-                                state = internalPullToRefreshState,
-                                isRefreshing = pullToRefreshState.isRefreshing,
-                                onRefresh = pullToRefreshState.onRefresh,
-                                enabled = pullToRefreshState.isEnabled,
-                            ),
-                    ) {
-                        content()
-
-                        PullToRefreshDefaults.Indicator(
-                            modifier = Modifier.align(Alignment.TopCenter),
-                            isRefreshing = pullToRefreshState.isRefreshing,
+                val internalPullToRefreshState = rememberPullToRefreshState()
+                Box(
+                    modifier = Modifier
+                        .windowInsetsPadding(insets = contentWindowInsets)
+                        .pullToRefresh(
                             state = internalPullToRefreshState,
-                            containerColor = MaterialTheme.colorScheme.tertiary,
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                    }
+                            isRefreshing = pullToRefreshState.isRefreshing,
+                            onRefresh = pullToRefreshState.onRefresh,
+                            enabled = pullToRefreshState.isEnabled,
+                        ),
+                ) {
+                    content()
+
+                    PullToRefreshDefaults.Indicator(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        isRefreshing = pullToRefreshState.isRefreshing,
+                        state = internalPullToRefreshState,
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
                 }
             }
         },

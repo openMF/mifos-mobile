@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.home
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -28,7 +27,6 @@ import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.ui.utils.NetworkBannerState
 
 /**
  * `ViewModel` for the Home screen.
@@ -52,7 +50,6 @@ internal class HomeViewModel(
         username = requireNotNull(userPreferencesRepositoryImpl.userInfo.value.userName),
         items = serviceCards,
         uiState = HomeScreenState.Loading,
-        networkBanner = NetworkBannerState.None,
     ),
 ) {
 
@@ -102,39 +99,25 @@ internal class HomeViewModel(
     }
 
     /**
-     * Handles changes in the network status and updates the UI state accordingly.
+     * Manages UI state changes based on network connectivity.
      *
-     * This function is crucial for managing the application's behavior when the device
-     * goes offline or comes back online. It performs the following actions:
+     * This function updates the application's state to reflect whether the device is online or offline.
      *
-     * 1. **Updates the `networkStatus` in the UI state:** This immediately reflects the
-     * current network connectivity.
+     * When the app is **offline**:
+     * - It immediately updates the `networkStatus` in the state to `false`.
+     * - If this is the **first time the app is launched**, the `uiState` is set to `HomeScreenState.Network`
+     * to inform the user that a network connection is required.
      *
-     * 2. **Handles "Offline" state:**
-     * - If the app is launched for the first time while offline (`isFirstLaunch`),
-     * the `uiState` is set to `HomeScreenState.Network` to show a network-related
-     * message to the user.
-     * - The `networkBanner` state is set to `NetworkBannerState.Offline`, which
-     * triggers the display of the "You are offline" banner.
-     *
-     * 3. **Handles "Online" state:**
-     * - When the app comes back online, it triggers two essential data-loading functions:
-     * `unreadNotificationsCount()` and `loadClientAccountDetails()`. This ensures the UI
-     * is refreshed with the latest information.
-     * - If the app was previously offline (and it's not the first launch), it
-     * temporarily sets the `networkBanner` to `NetworkBannerState.BackOnline`
-     * to show a brief "Back online" message.
-     * - A 2-second delay is introduced before hiding the banner by setting the
-     * `networkBanner` state to `NetworkBannerState.None`, providing a smooth
-     * user experience.
+     * When the app is **online**:
+     * - It immediately updates the `networkStatus` in the state to `true`.
+     * - It then triggers essential functions to **refresh data** and ensure the UI is up-to-date,
+     * specifically by calling `unreadNotificationsCount()` and `loadClientAccountDetails()`.
      *
      * @param isOnline A `Boolean` indicating the current network connectivity status.
      *
      * @see HomeScreenState
-     * @see NetworkBannerState
      */
     private fun handleNetworkStatus(isOnline: Boolean) {
-        val wasOnline = state.networkStatus
         val isFirstLaunch = state.uiState == HomeScreenState.Loading
 
         updateState { it.copy(networkStatus = isOnline) }
@@ -144,19 +127,11 @@ internal class HomeViewModel(
                 updateState { current ->
                     current.copy(
                         uiState = if (isFirstLaunch) HomeScreenState.Network else current.uiState,
-                        networkBanner = NetworkBannerState.Offline,
                     )
                 }
             } else {
                 unreadNotificationsCount()
                 loadClientAccountDetails()
-
-                if (!wasOnline && !isFirstLaunch) {
-                    updateState { it.copy(networkBanner = NetworkBannerState.BackOnline) }
-                    delay(2000)
-                }
-
-                updateState { it.copy(networkBanner = NetworkBannerState.None) }
             }
         }
     }
@@ -225,7 +200,7 @@ internal class HomeViewModel(
         when (dataState) {
             is DataState.Error -> updateState {
                 it.copy(
-                    dialogState = HomeState.DialogState.Error(Res.string.feature_server_error),
+                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
                 )
             }
 
@@ -351,7 +326,6 @@ internal data class HomeState(
     val items: ImmutableList<ServiceItem>,
     val networkStatus: Boolean = true,
     val uiState: HomeScreenState?,
-    val networkBanner: NetworkBannerState?,
 
 ) {
     /**
