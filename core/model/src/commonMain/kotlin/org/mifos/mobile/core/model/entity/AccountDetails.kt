@@ -17,8 +17,10 @@ import org.mifos.mobile.core.model.enums.TransferType
 @Serializable
 data class AccountDetails(
     val accountId: Long,
+    val accountNo: String = "",
     val outstandingBalance: Double? = null,
     val transferType: String,
+    val amount: Double? = null,
     val transferTarget: TransferType,
     val transferSuccessDestination: TransferSuccessDestination,
 )

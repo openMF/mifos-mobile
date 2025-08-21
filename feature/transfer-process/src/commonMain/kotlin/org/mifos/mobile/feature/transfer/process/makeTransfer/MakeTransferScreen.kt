@@ -70,6 +70,10 @@ internal fun MakeTransferScreen(
             is MakeTransferEvent.NavigateToTransferScreen -> {
                 navigateToTransferScreen(event.reviewTransferPayload, event.transferType, event.destination)
             }
+
+            is MakeTransferEvent.OnGetDataFromNavigation -> {
+                MakeTransferAction.OnGetDataFromNavigation(event.amount, event.accountNo)
+            }
         }
     }
 
@@ -122,21 +126,35 @@ internal fun MakeTransferScreenContent(
                     ),
                 verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
             ) {
-                MifosDropDownDoubleTextField(
-                    optionsList = state.toAccountOptions.map
-                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
-                    selectedOption = state.toAccount?.accountNo ?: "",
-                    isEnabled = true,
-                    labelResId = Res.string.pay_to,
-                    onClick = { index, _ ->
-                        onAction(
-                            MakeTransferAction.OnToAccountSelected(
-                                state.toAccountOptions[index].accountNo ?: "",
-                            ),
-                        )
-                    },
-                )
-
+                if (state.accountNo.isEmpty()) {
+                    MifosDropDownDoubleTextField(
+                        optionsList = state.toAccountOptions.map
+                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                        selectedOption = state.toAccount?.accountNo ?: "",
+                        isEnabled = true,
+                        labelResId = Res.string.pay_to,
+                        onClick = { index, _ ->
+                            onAction(
+                                MakeTransferAction.OnToAccountSelected(
+                                    state.toAccountOptions[index].accountNo ?: "",
+                                ),
+                            )
+                        },
+                    )
+                } else {
+                    onAction(MakeTransferAction.OnToAccountSelected(accountNo = state.accountNo))
+                    MifosOutlinedTextField(
+                        value = state.accountNo,
+                        onValueChange = { },
+                        label = stringResource(Res.string.pay_to),
+                        config = MifosTextFieldConfig(
+                            enabled = false,
+                            readOnly = true,
+                        ),
+                        shape = DesignToken.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                    )
+                }
                 MifosPayFromDropdownUI(
                     accounts = state.fromAccountOptions.map
                         { Pair(it.accountNo ?: "", it.clientName ?: "") },

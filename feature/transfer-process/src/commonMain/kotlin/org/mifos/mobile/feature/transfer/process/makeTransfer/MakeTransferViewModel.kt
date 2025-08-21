@@ -52,8 +52,10 @@ internal class MakeTransferViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<MakeTransferRoute>()
         MakeTransferState(
+            accountNo = route.accountNo,
             accountId = route.accountId,
             outstandingBalance = route.outstandingBalance,
+            amount = route.amount.toString(),
             transferTarget = if (route.transferTarget != null) {
                 enumValueOf<TransferType>(route.transferTarget)
             } else {
@@ -119,10 +121,20 @@ internal class MakeTransferViewModel(
                 it.copy(remarks = action.remarks)
             }
 
-            MakeTransferAction.OnMakeTransferClicked -> {
-                val isError = state.amount.any {
-                    !it.isDigit()
+            is MakeTransferAction.OnGetDataFromNavigation -> {
+                sendEvent(
+                    MakeTransferEvent.OnGetDataFromNavigation(amount = action.amount, accountNo = action.accountNo),
+                )
+                updateState {
+                    it.copy(
+                        accountNo = action.accountNo,
+                        amount = action.amount,
+                    )
                 }
+            }
+
+            MakeTransferAction.OnMakeTransferClicked -> {
+                val isError = state.amount.isEmpty()
                 updateState {
                     it.copy(amountError = isError)
                 }
@@ -350,6 +362,7 @@ internal class MakeTransferViewModel(
  * @property isEnabled Computed property indicating if the transfer button should be enabled.
  */
 internal data class MakeTransferState(
+    val accountNo: String = "",
     val accountId: Long = -1L,
     val clientId: Long = -1L,
     val outstandingBalance: Double? = null,
@@ -405,6 +418,9 @@ internal sealed interface MakeTransferAction {
     /** Action triggered when the transfer amount is changed. @param amount The new amount string. */
     data class OnAmountChanged(val amount: String) : MakeTransferAction
 
+    /** Action for getting data from Navigation Args */
+    data class OnGetDataFromNavigation(val amount: String, val accountNo: String) : MakeTransferAction
+
     /** Action triggered when the remarks are changed. @param remarks The new remarks string. */
     data class OnRemarksChanged(val remarks: String) : MakeTransferAction
 
@@ -444,6 +460,8 @@ internal sealed interface MakeTransferAction {
 internal sealed interface MakeTransferEvent {
     /** Event to navigate back from the current screen. */
     data object NavigateBack : MakeTransferEvent
+
+    data class OnGetDataFromNavigation(val amount: String, val accountNo: String) : MakeTransferEvent
 
     /**
      * Event to navigate to the transfer review screen.
