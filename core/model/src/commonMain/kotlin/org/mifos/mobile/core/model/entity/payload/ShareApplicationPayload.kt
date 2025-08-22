@@ -19,7 +19,7 @@ data class ShareApplicationPayload(
     val submittedDate: String,
     val savingsAccountId: Int,
     val applicationDate: String,
-    val locale: String = "en",
-    val dateFormat: String = "dd MMMM yyyy",
+    val locale: String,
+    val dateFormat: String,
     val clientId: Long,
 )

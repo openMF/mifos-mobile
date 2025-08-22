@@ -35,4 +35,12 @@ data class ShareProductDetails(
     val minimumActivePeriodForDividendsTypeEnum: EnumOption? = null,
     val accountingRule: EnumOption? = null,
     val accountingMappings: AccountingMappings? = null,
+    val clientSavingsAccounts: List<SavingsAccountSummary>? = emptyList(),
+) : Parcelable
+
+@Serializable
+@Parcelize
+data class SavingsAccountSummary(
+    val id: Int? = null,
+    val savingsProductName: String? = null,
 ) : Parcelable

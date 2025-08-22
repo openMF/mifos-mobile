@@ -13,7 +13,9 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
@@ -32,7 +34,9 @@ class ShareAccountRepositoryImp(
 
     override fun getShareProducts(clientId: Long?): Flow<DataState<Page<ShareProduct>>> {
         return dataManager.shareAccountApi.getShareProducts(clientId)
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .map { response -> DataState.Success(response) }
+            .catch { exception -> DataState.Error(exception, exception.message) }
+            .flowOn(ioDispatcher)
     }
 
     override fun getShareProductById(

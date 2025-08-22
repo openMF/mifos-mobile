@@ -15,6 +15,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,16 +39,20 @@ import mifos_mobile.feature.share_application.generated.resources.feature_apply_
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_unsaved_changes_message
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
-import org.mifos.mobile.core.model.entity.accounts.savings.Currency
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.AccountingItem
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.AccountingMappings
+import org.mifos.mobile.core.model.entity.templates.shareProductDetails.Currency
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.EnumOption
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.ui.utils.AmountValidationResult
@@ -72,6 +77,7 @@ private const val DEFAULT_IN_MULTIPLES_OF = 1.0
  *
  * @param userPreferencesRepositoryImpl The repository for user preferences.
  * @param shareAccountRepositoryImpl The repository for share account operations.
+ * @param accountsRepositoryImpl The repository for fetching savings accounts
  * @param networkMonitor The utility to monitor network connectivity.
  * @param resultNavigator The navigator to handle results from other screens, like authentication.
  * @param savedStateHandle The handle to access saved state from the navigation route.
@@ -80,6 +86,7 @@ private const val DEFAULT_IN_MULTIPLES_OF = 1.0
 internal class ShareFillApplicationViewModel(
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val shareAccountRepositoryImpl: ShareAccountRepository,
+    private val accountsRepositoryImpl: AccountsRepository,
     private val networkMonitor: NetworkMonitor,
     private val resultNavigator: ResultNavigator,
     savedStateHandle: SavedStateHandle,
@@ -112,7 +119,7 @@ internal class ShareFillApplicationViewModel(
         when (action) {
             is ShareApplicationAction.CurrentPriceChange -> onCurrentPriceChange(action.price)
 
-            is ShareApplicationAction.TotalNumberOfSharesChange -> onTotalSharesChange(action.frequency)
+            is ShareApplicationAction.TotalNumberOfSharesChange -> onTotalSharesChange(action.shares)
 
             is ShareApplicationAction.DefaultSavingsAccountChange -> onDefaultSavingsAccountChange(
                 action.defaultSavingsAccountId,
@@ -136,6 +143,12 @@ internal class ShareFillApplicationViewModel(
             is ShareApplicationAction.Internal.ReceiveShareApplicationResult -> {
                 viewModelScope.launch { handleShareApplicationResult(action.result) }
             }
+
+            is ShareApplicationAction.Internal.ReceiveClientSavingsAccounts -> {
+                viewModelScope.launch { handleClientAccountResult(action.accounts) }
+            }
+
+            is ShareApplicationAction.Internal.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
 
             is ShareApplicationAction.NavigateToAuthentication -> validateAndSubmit()
 
@@ -171,14 +184,46 @@ internal class ShareFillApplicationViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            uiState = if (!isOnline) ShareApplicationUiState.Network else null,
-                        )
-                    }
-                    if (isOnline) fetchShareTemplateByProduct()
+                    sendAction(ShareApplicationAction.Internal.ReceiveNetworkResult(isOnline))
                 }
+        }
+    }
+
+    /**
+     * Manages UI state changes based on network connectivity.
+     *
+     * This function updates the application's state to reflect whether the device is online or offline.
+     *
+     * When the app is **offline**:
+     * - It immediately updates the `networkStatus` in the state to `false`.
+     * to inform the user that a network connection is required.
+     *
+     * When the app is **online**:
+     * - It immediately updates the `networkStatus` in the state to `true`.
+     * - It then triggers essential functions to **refresh data** and ensure the UI is up-to-date,
+     * specifically by calling `unreadNotificationsCount()` and `loadClientAccountDetails()`.
+     *
+     * @param isOnline A `Boolean` indicating the current network connectivity status.
+     *
+     */
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ShareApplicationUiState.Error ||
+                        current.uiState is ShareApplicationUiState.Network
+                    ) {
+                        current.copy(uiState = ShareApplicationUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchSavingsAccounts()
+                fetchShareTemplateByProduct()
+            }
         }
     }
 
@@ -226,6 +271,60 @@ internal class ShareFillApplicationViewModel(
         }
     }
 
+    private fun fetchSavingsAccounts() {
+        viewModelScope.launch {
+            accountsRepositoryImpl.loadAccounts(
+                clientId = state.clientId,
+                accountType = Constants.SAVINGS_ACCOUNTS,
+            ).catch {
+                mutableStateFlow.update {
+                    it.copy(
+                        uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
+                    )
+                }
+            }.collect { clientAccounts ->
+                sendAction(
+                    ShareApplicationAction.Internal.ReceiveClientSavingsAccounts(
+                        accounts = clientAccounts,
+                    ),
+                )
+            }
+        }
+    }
+
+    /**
+     * Handles the result of the `loadAccounts` API call.
+     *
+     * Updates the UI state based on whether the result is loading, an error, or a success.
+     * If successful, it populates the state with the received data.
+     *
+     * @param response The `DataState` containing the `ClientAccounts`.
+     */
+    private fun handleClientAccountResult(response: DataState<ClientAccounts>) {
+        when (response) {
+            is DataState.Loading -> showLoading()
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        uiState = ShareApplicationUiState.Error(
+                            Res.string.feature_apply_share_error_server,
+                        ),
+                    )
+                }
+            }
+            is DataState.Success -> {
+                val shareTemplate = response.data
+                println(shareTemplate)
+                updateState {
+                    it.copy(
+                        defaultAccounts = shareTemplate.savingsAccounts ?: emptyList(),
+                        uiState = ShareApplicationUiState.Success,
+                    )
+                }
+            }
+        }
+    }
+
     /**
      * Handles the result of the `getShareProductById` API call.
      *
@@ -248,10 +347,12 @@ internal class ShareFillApplicationViewModel(
             }
             is DataState.Success -> {
                 val shareTemplate = template.data ?: return
+                println(shareTemplate)
+                println(shareTemplate.accountingMappings?.toAccountList())
                 updateState {
                     it.copy(
+                        currency = shareTemplate.currency ?: Currency(),
                         shareProductName = shareTemplate.name ?: "",
-                        defaultAccounts = shareTemplate.accountingMappings?.toAccountList() ?: emptyList(),
                         mapFrequencyType = listOfNotNull(
                             EnumOption(
                                 id = shareTemplate.minimumActivePeriodForDividendsTypeEnum?.id,
@@ -535,20 +636,11 @@ internal class ShareFillApplicationViewModel(
      */
     private fun submitShareAccountApplication() {
         updateState { it.copy(uiState = ShareApplicationUiState.Loading) }
-//        viewModelScope.launch {
-//            val response = shareAccountRepositoryImpl.submitShareApplication(
-//                payload = state.toShareApplicationPayload(),
-//            )
-//            sendAction(ShareApplicationAction.Internal.ReceiveShareApplicationResult(response))
-//        }
-        // TODO after creating share product call api
         viewModelScope.launch {
-            delay(3000)
-            sendAction(
-                ShareApplicationAction.Internal.ReceiveShareApplicationResult(
-                    DataState.Success(""),
-                ),
+            val response = shareAccountRepositoryImpl.submitShareApplication(
+                payload = state.toShareApplicationPayload(),
             )
+            sendAction(ShareApplicationAction.Internal.ReceiveShareApplicationResult(response))
         }
     }
 
@@ -634,15 +726,15 @@ internal class ShareFillApplicationViewModel(
     @Suppress("UnusedPrivateMember")
     private fun ShareApplicationState.toShareApplicationPayload(): ShareApplicationPayload {
         return ShareApplicationPayload(
-            clientId = state.clientId,
             productId = state.shareProductId.toInt(),
-            submittedDate = state.currentDate,
-            applicationDate = state.currentDate,
-            requestedShares = totalNumberOfShares.toIntOrNull() ?: 0,
             unitPrice = currentPrice.toDoubleOrNull() ?: 0.0,
+            requestedShares = totalNumberOfShares.toIntOrNull() ?: 0,
+            submittedDate = state.currentDate,
             savingsAccountId = defaultSavingsAccountId.toInt(),
+            applicationDate = state.currentDate,
             locale = "en",
-            dateFormat = "dd MMMM yyyy",
+            dateFormat = "dd MMM yyyy",
+            clientId = state.clientId,
         )
     }
 
@@ -700,7 +792,10 @@ internal data class ShareApplicationState(
     val totalNumberOfShares: String = "",
     val defaultSavingsAccountId: Long = 0L,
     val defaultSavingsAccountName: String = "",
-    val defaultAccounts: List<AccountingItem> = emptyList(),
+    // TODO we have to receive savings accounts from share product API it self but not getting
+    //  from api call but in the web we are able to receive
+//    val defaultAccounts: List<AccountingItem> = emptyList(),
+    val defaultAccounts: List<SavingAccount> = emptyList(),
     val mapFrequencyType: List<EnumOption> = emptyList(),
     val mapFrequency: String = "",
     val selectedMapFrequencyTypeName: String = "",
@@ -728,7 +823,8 @@ internal data class ShareApplicationState(
      * A computed property that returns true if the form is valid for submission.
      */
     val isFormValid: Boolean
-        get() = currentPrice.isNotBlank() &&
+        get() = networkStatus &&
+            currentPrice.isNotBlank() &&
             totalNumberOfShares.isNotBlank() &&
             selectedMapFrequencyTypeName.isNotBlank() &&
             selectedLipFrequencyTypeName.isNotBlank() &&
@@ -738,10 +834,14 @@ internal data class ShareApplicationState(
             lipFrequencyError == null
 
     /**
-     * A map of account IDs to their names for easy lookup.
+     * A map of account IDs to a display-friendly string like "000000029 - WALLET".
      */
     val accountIdNameMap: Map<Long, String> =
-        defaultAccounts.associate { acc -> (acc.id?.toLong() ?: -1L) to (acc.name ?: "Unknown") }
+        defaultAccounts
+            .filter { acc -> acc.status?.active == true }
+            .associate { acc ->
+                acc.id to "${acc.accountNo ?: "-"} - ${acc.productName ?: "Unknown"}"
+            }
 
     /**
      * A map of MAP frequency IDs to their names.
@@ -905,9 +1005,9 @@ internal sealed interface ShareApplicationAction {
     /**
      * Action triggered when the "total number of shares" input field changes.
      *
-     * @property frequency The new string value of the input field.
+     * @property shares The new string value of the input field.
      */
-    data class TotalNumberOfSharesChange(val frequency: String) : ShareApplicationAction
+    data class TotalNumberOfSharesChange(val shares: String) : ShareApplicationAction
 
     /**
      * Action triggered when the default savings account selection changes.
@@ -973,12 +1073,26 @@ internal sealed interface ShareApplicationAction {
      * by the ViewModel's internal logic, such as network responses, and are not directly initiated by the UI.
      */
     sealed interface Internal : ShareApplicationAction {
+
+        /**
+         * Internal Action triggered by network status observation.
+         * @property isOnline A boolean indicating if the device is online.
+         */
+        data class ReceiveNetworkResult(val isOnline: Boolean) : Internal
+
         /**
          * Action to handle the result of fetching a share product template.
          *
          * @property template The [DataState] containing the fetched template details.
          */
         data class ReceiveShareTemplate(val template: DataState<ShareProductDetails?>) : Internal
+
+        /**
+         * Action to handle the result of fetching a share product template.
+         *
+         * @property accounts The [DataState] containing the fetched template details.
+         */
+        data class ReceiveClientSavingsAccounts(val accounts: DataState<ClientAccounts>) : Internal
 
         /**
          * Action to handle the result of an authentication event.
