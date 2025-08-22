@@ -32,9 +32,11 @@ import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_currency
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_current_price
+import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_default_savings_account
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_lockin_frequency
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_lockin_frequency_type
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_minimum_frequency
+import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_minimum_frequency_type
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_terms
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_label_total_number_of_shares
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_section_lockin_period
@@ -226,7 +228,7 @@ internal fun ShareFillApplicationForm(
 
         MifosOutlinedTextField(
             value = state.totalNumberOfShares,
-            onValueChange = { onAction(ShareApplicationAction.CurrentPriceChange(it)) },
+            onValueChange = { onAction(ShareApplicationAction.TotalNumberOfSharesChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_total_number_of_shares),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
@@ -243,14 +245,14 @@ internal fun ShareFillApplicationForm(
         MifosOutlineDropdown(
             selectedText = state.defaultSavingsAccountName,
             items = state.accountIdNameMap,
-            enabled = false,
+            enabled = state.defaultAccounts.isNotEmpty(),
             onItemSelected = { id, value ->
                 onAction(
                     ShareApplicationAction.DefaultSavingsAccountChange
                         (id, value),
                 )
             },
-            label = stringResource(Res.string.feature_apply_share_label_currency),
+            label = stringResource(Res.string.feature_apply_share_label_default_savings_account),
         )
 
         Text(
@@ -278,11 +280,10 @@ internal fun ShareFillApplicationForm(
         MifosOutlineDropdown(
             selectedText = state.selectedMapFrequencyTypeName,
             items = state.mapFrequencyMap,
-            enabled = false,
             onItemSelected = { id, value ->
                 onAction(ShareApplicationAction.MapFrequencyTypeChange(id, value))
             },
-            label = stringResource(Res.string.feature_apply_share_label_currency),
+            label = stringResource(Res.string.feature_apply_share_label_minimum_frequency_type),
         )
 
         Text(
@@ -293,7 +294,7 @@ internal fun ShareFillApplicationForm(
 
         MifosOutlinedTextField(
             value = state.lipFrequency,
-            onValueChange = { onAction(ShareApplicationAction.MapFrequencyChange(it)) },
+            onValueChange = { onAction(ShareApplicationAction.LipFrequencyChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_lockin_frequency),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,

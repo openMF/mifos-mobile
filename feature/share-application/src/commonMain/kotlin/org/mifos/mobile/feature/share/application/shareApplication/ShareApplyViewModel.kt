@@ -29,9 +29,9 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.core.model.entity.templates.shares.SharePageItem
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+
 /**
  * `ViewModel` for the savings application screen, responsible for handling user input,
  * business logic, and UI state management.
@@ -77,22 +77,46 @@ internal class ShareApplyViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            uiState = if (!isOnline) {
-                                ShareApplicationUiState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
+                    sendAction(ShareApplicationAction.Internal.ReceiveNetworkResult(isOnline))
+                }
+        }
+    }
 
-                    if (isOnline) {
-                        fetchClient()
-                        fetchShareTemplate()
+    /**
+     * Manages UI state changes based on network connectivity.
+     *
+     * This function updates the application's state to reflect whether the device is online or offline.
+     *
+     * When the app is **offline**:
+     * - It immediately updates the `networkStatus` in the state to `false`.
+     * to inform the user that a network connection is required.
+     *
+     * When the app is **online**:
+     * - It immediately updates the `networkStatus` in the state to `true`.
+     * - It then triggers essential functions to **refresh data** and ensure the UI is up-to-date,
+     * specifically by calling `unreadNotificationsCount()` and `loadClientAccountDetails()`.
+     *
+     * @param isOnline A `Boolean` indicating the current network connectivity status.
+     *
+     */
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ShareApplicationUiState.Error ||
+                        current.uiState is ShareApplicationUiState.Network
+                    ) {
+                        current.copy(uiState = ShareApplicationUiState.Network)
+                    } else {
+                        current
                     }
                 }
+            } else {
+                fetchClient()
+                fetchShareTemplate()
+            }
         }
     }
 
@@ -104,7 +128,7 @@ internal class ShareApplyViewModel(
         viewModelScope.launch {
             homeRepositoryImpl.currentClient(state.clientId)
                 .catch {
-                    showErrorDialog(Res.string.feature_apply_share_error_server)
+                    showErrorState(Res.string.feature_apply_share_error_server)
                 }
                 .collect { response ->
                     updateState {
@@ -121,6 +145,7 @@ internal class ShareApplyViewModel(
      * savings product options and currency information.
      */
     private fun fetchShareTemplate() {
+        showLoading()
         viewModelScope.launch {
             shareAccountRepositoryImpl.getShareProducts(state.clientId)
                 .collect { result ->
@@ -140,7 +165,7 @@ internal class ShareApplyViewModel(
         when (template) {
             is DataState.Loading -> showLoading()
             is DataState.Success -> {
-                val products = template.data.pageItems.flatMap { it.pageItems ?: emptyList() }
+                val products = template.data.pageItems
 
                 updateState {
                     it.copy(
@@ -150,13 +175,12 @@ internal class ShareApplyViewModel(
                         } else {
                             ShareApplicationUiState.Success
                         },
-                        dialogState = null,
                     )
                 }
             }
 
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_share_error_server)
+                showErrorState(Res.string.feature_apply_share_error_server)
             }
         }
     }
@@ -208,7 +232,7 @@ internal class ShareApplyViewModel(
      *
      * @param error The [StringResource] for the error message to display.
      */
-    private fun showErrorDialog(error: StringResource) {
+    private fun showErrorState(error: StringResource) {
         updateState { it.copy(uiState = ShareApplicationUiState.Error(error)) }
     }
 
@@ -246,6 +270,8 @@ internal class ShareApplyViewModel(
             is ShareApplicationAction.DismissDialog -> dismissDialog()
 
             is ShareApplicationAction.Internal.ReceiveShareTemplate -> handleShareTemplate(action.template)
+
+            is ShareApplicationAction.Internal.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
 
             ShareApplicationAction.Retry -> retry()
         }
@@ -289,11 +315,12 @@ internal class ShareApplyViewModel(
                     it.copy(
                         hasChanges = false,
                         dialogState = null,
+                        uiState = ShareApplicationUiState.Success,
                     )
                 }
                 sendEvent(ShareApplicationEvent.NavigateToConfirmDetailsScreen)
             } catch (e: Exception) {
-                showErrorDialog(Res.string.feature_apply_share_error_submit_failed)
+                showErrorState(Res.string.feature_apply_share_error_submit_failed)
             }
         }
     }
@@ -337,7 +364,7 @@ internal class ShareApplyViewModel(
 internal data class ShareApplicationState(
     val clientId: Long,
     val applicantName: String,
-    val productOptions: List<SharePageItem> = emptyList(),
+    val productOptions: List<ShareProduct> = emptyList(),
     val selectedShareProduct: String = "",
     val selectedShareProductId: Long = 0,
     val dialogState: ShareApplicationDialogState? = null,
@@ -351,7 +378,8 @@ internal data class ShareApplicationState(
      * This is based on the absence of errors and non-empty fields.
      */
     val isFormValid: Boolean
-        get() = applicantName.isNotBlank() &&
+        get() = networkStatus &&
+            applicantName.isNotBlank() &&
             selectedShareProduct.isNotBlank()
 
     /**
@@ -453,6 +481,12 @@ internal sealed interface ShareApplicationAction {
      * A sealed interface for internal actions, which are not triggered directly by the UI.
      */
     sealed interface Internal : ShareApplicationAction {
+
+        /**
+         * Internal Action triggered by network status observation.
+         * @property isOnline A boolean indicating if the device is online.
+         */
+        data class ReceiveNetworkResult(val isOnline: Boolean) : ShareApplicationAction
 
         /**
          * An internal action to handle the result of fetching a savings template.
