@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -184,6 +185,11 @@ class SavingsAccountViewmodel(
             is DataState.Success -> {
                 val allSavings = dataState.data.savingsAccounts.orEmpty()
                 val filtered = filterAccounts(selectedFilters, allSavings)
+                mutableStateFlow.update {
+                    it.copy(
+                        decimals = filtered.firstOrNull()?.currency?.decimalPlaces ?: 2,
+                    )
+                }
                 getTotalSavingAmount(dataState.data.savingsAccounts)
                 mutableStateFlow.update {
                     it.copy(
@@ -236,9 +242,14 @@ class SavingsAccountViewmodel(
                 items++
             }
         }
+        val balance = CurrencyFormatter.format(
+            amount,
+            accounts?.firstOrNull()?.currency?.code,
+            state.decimals,
+        )
 
         mutableStateFlow.update {
-            it.copy(totalSavingAmount = amount, items = items)
+            it.copy(totalSavingAmount = balance, items = items)
         }
     }
 }
@@ -255,10 +266,13 @@ data class SavingsAccountState(
     val items: Int? = 0,
 
     /** Total savings amount computed from accounts */
-    val totalSavingAmount: Double? = 0.0,
+    val totalSavingAmount: String? = "",
 
     /** Currency symbol (e.g., ₹, $, etc.) */
     val currency: String? = "",
+
+    /** Decimals to display amount*/
+    val decimals: Int? = 2,
 
     /** Network connectivity status */
     val networkConnection: Boolean? = true,
