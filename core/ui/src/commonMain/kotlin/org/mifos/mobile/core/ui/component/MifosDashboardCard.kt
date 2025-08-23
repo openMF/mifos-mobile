@@ -58,9 +58,9 @@ fun MifosDashboardCard(
     onLoanApplyClick: () -> Unit = {},
     isSingleLine: Boolean = false,
     loanAccount: StringResource? = null,
-    loanAmount: Double? = null,
+    loanAmount: String? = null,
     savingsAccount: StringResource? = null,
-    savingsAmount: Double? = null,
+    savingsAmount: String? = null,
     currency: String? = null,
     onVisibilityToggle: () -> Unit = {},
 ) {
@@ -109,7 +109,7 @@ fun MifosDashboardCard(
                                 label = "Loan Amount Animation",
                             ) { visible ->
                                 Text(
-                                    text = if (visible) "$currency $loanAmount" else "$currency •••••••••",
+                                    text = if (visible) "$loanAmount" else "$currency •••••••••",
                                     style = MifosTypography.titleMediumEmphasized,
                                     color = AppColors.customWhite,
                                 )
@@ -133,7 +133,7 @@ fun MifosDashboardCard(
                                 label = "Savings Amount Animation",
                             ) { visible ->
                                 Text(
-                                    text = if (visible) "$currency $savingsAmount" else "$currency •••••••••",
+                                    text = if (visible) "$savingsAmount" else "$currency •••••••••",
                                     style = MifosTypography.titleMediumEmphasized,
                                     color = AppColors.customWhite,
                                 )
@@ -185,8 +185,8 @@ private fun MifosDashboardCard() {
                 isVisible = true,
                 loanAccount = Res.string.powered_by,
                 savingsAccount = Res.string.powered_by,
-                loanAmount = 900.00,
-                savingsAmount = 1000.00,
+                loanAmount = "900.00",
+                savingsAmount = "1000.00",
                 currency = "$",
                 onVisibilityToggle = {},
             )
@@ -195,7 +195,7 @@ private fun MifosDashboardCard() {
                 isSingleLine = true,
                 isVisible = true,
                 loanAccount = Res.string.powered_by,
-                loanAmount = 900.00,
+                loanAmount = "900.00",
                 currency = "$",
                 onVisibilityToggle = {},
             )
@@ -204,8 +204,8 @@ private fun MifosDashboardCard() {
                 isVisible = false,
                 loanAccount = Res.string.powered_by,
                 savingsAccount = Res.string.powered_by,
-                loanAmount = 900.00,
-                savingsAmount = 1000.00,
+                loanAmount = "900.00",
+                savingsAmount = "1000.00",
                 currency = "$",
                 onVisibilityToggle = {},
             )
@@ -214,7 +214,7 @@ private fun MifosDashboardCard() {
                 isSingleLine = true,
                 isVisible = false,
                 loanAccount = Res.string.powered_by,
-                loanAmount = 900.00,
+                loanAmount = "900.00",
                 currency = "$",
                 onVisibilityToggle = {},
             )

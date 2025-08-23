@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -171,15 +172,18 @@ class ShareAccountsViewmodel(
             is DataState.Success -> {
                 val shareAccounts = dataState.data.shareAccounts
                 val filtered = filterAccounts(selectedFilters, shareAccounts)
+                mutableStateFlow.update {
+                    it.copy(
+                        decimals = filtered.firstOrNull()?.currency?.decimalPlaces ?: 2,
+                    )
+                }
                 getTotalShareAmount(shareAccounts)
-
                 mutableStateFlow.update {
                     it.copy(
                         items = filtered.size,
                         isEmpty = filtered.isEmpty(),
                         shareAccounts = filtered,
                         originalAccounts = shareAccounts,
-                        currency = shareAccounts.firstOrNull()?.currency?.displaySymbol,
                         dialogState = null,
                         selectedFilters = selectedFilters,
                     )
@@ -220,10 +224,15 @@ class ShareAccountsViewmodel(
         var amount = 0.0
         var items = 0
 
+        val balance = CurrencyFormatter.format(
+            amount,
+            accounts?.firstOrNull()?.currency?.code,
+            state.decimals,
+        )
         // Future logic to calculate approved share amount can be added here
 
         mutableStateFlow.update {
-            it.copy(totalLoanAmount = amount, items = items)
+            it.copy(totalLoanAmount = balance, items = items)
         }
     }
 }
@@ -241,10 +250,13 @@ data class ShareAccountsState(
     val items: Int? = 0,
 
     /** Total share amount computed from accounts */
-    val totalLoanAmount: Double? = 0.0,
+    val totalLoanAmount: String? = "",
 
     /** Currency symbol (e.g., ₹, $, etc.) */
     val currency: String? = "",
+
+    /** Decimals to display amount*/
+    val decimals: Int? = 2,
 
     /** Network connectivity status */
     val networkConnection: Boolean? = true,

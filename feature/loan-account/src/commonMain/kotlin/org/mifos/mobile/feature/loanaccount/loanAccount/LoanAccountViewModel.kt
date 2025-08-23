@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -184,6 +185,11 @@ class LoanAccountsViewmodel(
             is DataState.Success -> {
                 val loanAccounts = dataState.data.loanAccounts
                 val filtered = filterAccounts(selectedFilters, loanAccounts)
+                mutableStateFlow.update {
+                    it.copy(
+                        decimals = filtered.firstOrNull()?.currency?.decimalPlaces?.toInt() ?: 2,
+                    )
+                }
                 getTotalLoanAmount(dataState.data.loanAccounts)
                 mutableStateFlow.update {
                     it.copy(
@@ -192,7 +198,6 @@ class LoanAccountsViewmodel(
                         isFilteredEmpty = filtered.isEmpty(),
                         loanAccounts = filtered,
                         originalAccounts = loanAccounts,
-                        currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
                         dialogState = null,
                         selectedFilters = selectedFilters,
                     )
@@ -238,8 +243,14 @@ class LoanAccountsViewmodel(
             }
         }
 
+        val balance = CurrencyFormatter.format(
+            amount,
+            accounts?.firstOrNull()?.currency?.code,
+            state.decimals,
+        )
+
         mutableStateFlow.update {
-            it.copy(totalLoanAmount = amount, items = items)
+            it.copy(totalLoanAmount = balance, items = items)
         }
     }
 }
@@ -258,10 +269,13 @@ data class LoanAccountsState(
     val items: Int? = 0,
 
     /** Total loan amount computed from accounts */
-    val totalLoanAmount: Double? = 0.0,
+    val totalLoanAmount: String? = "",
 
     /** Currency symbol (e.g., ₹, $, etc.) */
     val currency: String? = "",
+
+    /** Decimals to display amount*/
+    val decimals: Int? = 2,
 
     /** Network connectivity status */
     val networkConnection: Boolean? = true,

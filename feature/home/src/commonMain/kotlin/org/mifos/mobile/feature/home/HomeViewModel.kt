@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -210,6 +211,12 @@ internal class HomeViewModel(
                 val hasLoans = dataState.data.loanAccounts.isNotEmpty()
                 val hasSavings = dataState.data.savingsAccounts?.isNotEmpty() ?: false
 
+                val decimals = dataState.data.loanAccounts.firstOrNull()?.currency?.decimalPlaces?.toInt()
+                    ?: dataState.data.savingsAccounts?.firstOrNull()?.currency?.decimalPlaces
+                    ?: 2
+
+                updateState { it.copy(decimals = decimals) }
+
                 if (hasLoans) {
                     getLoanAccountDetails(dataState.data.loanAccounts)
                 }
@@ -275,8 +282,13 @@ internal class HomeViewModel(
         for (loanAccount in loanAccountList) {
             totalAmount += loanAccount.loanBalance
         }
+        val balance = CurrencyFormatter.format(
+            totalAmount,
+            loanAccountList.firstOrNull()?.currency?.code,
+            state.decimals,
+        )
 
-        updateState { it.copy(loanAmount = totalAmount) }
+        updateState { it.copy(loanAmount = balance) }
     }
 
     /**
@@ -289,7 +301,13 @@ internal class HomeViewModel(
         for (savingAccount in savingAccountList!!) {
             totalAmount += savingAccount.accountBalance
         }
-        updateState { it.copy(savingsAmount = totalAmount) }
+        val balance = CurrencyFormatter.format(
+            totalAmount,
+            savingAccountList.firstOrNull()?.currency?.code,
+            state.decimals,
+        )
+
+        updateState { it.copy(savingsAmount = balance) }
     }
 }
 
@@ -309,18 +327,18 @@ internal class HomeViewModel(
  * @property items An immutable list of service card items to display on the home screen.
  * @property networkStatus A boolean indicating the current network connectivity status.
  * @property uiState The current state of the Home screen, which can be loading, success, error, or network-related.
- * @property networkBanner The state of the network banner, which can indicate online, offline, or back online.
  */
 @Immutable
 internal data class HomeState(
     val clientId: Long? = 0,
     val currency: String? = "",
+    val decimals: Int = 2,
     val isLoanApplied: Boolean = true,
     val username: String = "",
     val clientAccounts: ClientAccounts? = null,
     val notificationCount: Int = 0,
-    val loanAmount: Double = 0.0,
-    val savingsAmount: Double = 0.0,
+    val loanAmount: String = "",
+    val savingsAmount: String = "",
     val isAmountVisible: Boolean = false,
     val dialogState: DialogState? = null,
     val items: ImmutableList<ServiceItem>,
