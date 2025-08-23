@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -32,6 +33,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_cancel
@@ -280,6 +283,10 @@ internal fun LoanAccountContent(
                     config = MifosTextFieldConfig(
                         isError = state.principalAmountError != null,
                         errorText = state.principalAmountError?.let { stringResource(it) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
                     ),
                     shape = DesignToken.shapes.medium,
                 )
