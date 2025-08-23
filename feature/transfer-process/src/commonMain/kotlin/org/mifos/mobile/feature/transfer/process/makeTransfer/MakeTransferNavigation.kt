@@ -24,6 +24,8 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 @Serializable
 data class MakeTransferRoute(
     val accountId: Long = -1L,
+    val accountNo: String? = null,
+    val amount: Double? = null,
     val outstandingBalance: Double? = null,
     val transferType: String? = null,
     val transferTarget: String? = null,
@@ -34,6 +36,7 @@ fun NavController.navigateToMakeTransferScreen(transferPayload: AccountDetails, 
     navigate(
         MakeTransferRoute(
             accountId = transferPayload.accountId,
+            accountNo = transferPayload.accountNo,
             outstandingBalance = transferPayload.outstandingBalance,
             transferType = transferPayload.transferType,
             transferTarget = transferPayload.transferTarget.name,

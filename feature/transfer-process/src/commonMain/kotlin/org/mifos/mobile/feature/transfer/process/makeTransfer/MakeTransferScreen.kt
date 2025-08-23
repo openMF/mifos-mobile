@@ -156,7 +156,7 @@ internal fun MakeTransferScreenContent(
                         optionsList = state.toAccountOptions.map
                             { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         selectedOption = state.toAccount?.accountNo ?: "",
-                        isEnabled = true,
+                        isEnabled = state.outstandingBalance == null,
                         labelResId = Res.string.pay_to,
                         onClick = { index, _ ->
                             onAction(
@@ -182,6 +182,7 @@ internal fun MakeTransferScreenContent(
                         shape = DesignToken.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
+                            enabled = state.outstandingBalance == null,
                             isError = state.amountError != null,
                             errorText = state.amountError?.let { stringResource(it) },
                             trailingIcon = if (state.amountError != null) {

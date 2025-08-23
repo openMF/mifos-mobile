@@ -61,6 +61,7 @@ fun NavGraphBuilder.loanNavGraph(
 
         loanAccountRepaymentDestination(
             navigateBack = navController::popBackStack,
+            navigateToMakePaymentScreen = navigateToMakePaymentScreen,
         )
     }
 }
