@@ -17,11 +17,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,10 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_due
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_installment_number
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_paid
-import mifos_mobile.feature.loan_account.generated.resources.feature_loan_pay
+import mifos_mobile.feature.loan_account.generated.resources.feature_loan_repayment_pay
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -54,8 +57,12 @@ fun RepaymentScheduleItem(
     onPayClick: () -> Unit = {},
 ) {
     val isPaid = period.complete == true
+    val dueDateMillis = DateHelper.getDateAsLongFromList(period.dueDate)
     val dueDate = DateHelper.getDateAsString(period.dueDate)
     val amount = CurrencyFormatter.format(period.totalDueForPeriod, currencyCode, maxDigits)
+
+    val todayMillis = Clock.System.now().toEpochMilliseconds()
+    val canPay = !isPaid && (dueDateMillis?.let { it <= todayMillis } ?: false)
 
     MifosCustomCard(
         variant = CardVariant.OUTLINED,
@@ -82,7 +89,7 @@ fun RepaymentScheduleItem(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = period.period?.toString()?.padStart(2, '0') ?: "--",
+                    text = period.period?.toString() ?: "-",
                     color = Color.White,
                     style = MifosTypography.labelMedium,
                 )
@@ -93,63 +100,65 @@ fun RepaymentScheduleItem(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = dueDate,
-                    style = MifosTypography.labelSmallEmphasized,
-                    color = MaterialTheme.colorScheme.outline,
-                )
-                Text(
-                    text = amount,
-                    style = MifosTypography.titleSmallEmphasized,
-                    color = AppColors.customBlack,
-
-                )
-                Text(
-                    text = if (isPaid) {
-                        stringResource(Res.string.feature_loan_paid)
-                    } else {
-                        stringResource(
-                            Res.string.feature_loan_due,
-                        )
-                    },
-                    style = MifosTypography.labelSmall.copy(
-                        color = if (isPaid) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                    text = stringResource(
+                        Res.string.feature_loan_installment_number,
+                        period.period?.let {
+                            "$it${if (it % 100 in 11..13) {
+                                "th"
+                            } else {
+                                when (it % 10) {
+                                    1 -> "st"
+                                    2 -> "nd"
+                                    3 -> "rd"
+                                    else -> "th"
+                                }
+                            }}"
+                        } ?: "-",
                     ),
+                    color = MaterialTheme.colorScheme.outline,
+                    style = MifosTypography.labelMediumEmphasized,
+                )
+
+                Text(
+                    text = dueDate,
+                    style = MifosTypography.labelLargeEmphasized,
+                    color = AppColors.customBlack,
                 )
             }
-
-            MifosButton(
-                modifier = Modifier
-                    .border(
-                        1.dp,
-                        MaterialTheme.colorScheme.secondaryContainer,
-                        DesignToken.shapes.medium,
-                    ),
-                onClick = onPayClick,
-                enabled = !isPaid,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isPaid) {
-                        MaterialTheme.colorScheme.onPrimary
-                    } else {
-                        MaterialTheme
-                            .colorScheme.onPrimary
+            if (canPay) {
+                MifosButton(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .height(DesignToken.sizes.buttonHeight),
+                    onClick = onPayClick,
+                    text = {
+                        Text(
+                            text = stringResource(Res.string.feature_loan_repayment_pay, amount),
+                            style = MifosTypography.titleMedium,
+                        )
                     },
-                    contentColor = if (isPaid) {
-                        MaterialTheme.colorScheme.onSurface
-                    } else {
-                        MaterialTheme.colorScheme.primary
-                    },
-                ),
-                shape = DesignToken.shapes.medium,
-            ) {
-                Text(
-                    text = if (isPaid) {
-                        stringResource(Res.string.feature_loan_paid)
-                    } else {
-                        stringResource(Res.string.feature_loan_pay)
-                    },
-                    style = MifosTypography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
                 )
+            } else {
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    modifier = Modifier.wrapContentWidth(),
+                ) {
+                    Text(
+                        text = if (isPaid) {
+                            stringResource(Res.string.feature_loan_paid)
+                        } else {
+                            stringResource(Res.string.feature_loan_due)
+                        },
+                        style = MifosTypography.labelSmall.copy(
+                            color = if (isPaid) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                        ),
+                    )
+                    Text(
+                        text = amount,
+                        style = MifosTypography.titleSmallEmphasized,
+                        color = if (isPaid) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                    )
+                }
             }
         }
     }

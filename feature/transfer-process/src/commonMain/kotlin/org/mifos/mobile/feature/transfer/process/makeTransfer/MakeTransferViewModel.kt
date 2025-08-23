@@ -407,11 +407,33 @@ internal class MakeTransferViewModel(
                 }
             }
             is DataState.Success -> {
-                updateState {
-                    it.copy(
-                        accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = dataState.data.fromAccountOptions,
-                        toAccountOptions = dataState.data.toAccountOptions,
+                updateState { current ->
+                    val template = dataState.data
+
+                    val matchedToAccount =
+                        if (current.outstandingBalance != null) {
+                            template.toAccountOptions.firstOrNull { option ->
+                                option.accountId?.toLong() == current.accountId
+                            }
+                        } else {
+                            current.toAccount
+                        }
+
+                    val updatedFromAccountOptions =
+                        if (current.outstandingBalance != null) {
+                            template.fromAccountOptions.filterNot { option ->
+                                option.accountId?.toLong() == current.accountId
+                            }
+                        } else {
+                            template.fromAccountOptions
+                        }
+
+                    current.copy(
+                        accountOptionsTemplate = template,
+                        fromAccountOptions = updatedFromAccountOptions,
+                        toAccountOptions = template.toAccountOptions,
+                        toAccount = matchedToAccount,
+                        amount = current.outstandingBalance?.toString() ?: "",
                         uiState = MakeTransferState.MakeTransferScreenState.Success,
                     )
                 }
@@ -543,7 +565,7 @@ internal class MakeTransferViewModel(
  * @property toAccount The currently selected account to transfer to.
  * @property dialogState The current state of any dialogs to be shown (e.g., loading, error).
  * @property isEnabled Computed property indicating if the transfer button should be enabled.
- * @property screenState The current state of the screen, such as loading or error states.
+ * @property uiState The current state of the screen, such as loading or error states.
  */
 internal data class MakeTransferState(
     val accountId: Long = -1L,

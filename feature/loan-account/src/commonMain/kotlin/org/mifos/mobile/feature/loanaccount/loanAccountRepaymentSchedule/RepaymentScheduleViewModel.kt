@@ -29,7 +29,10 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.loan.Periods
+import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 internal class RepaymentScheduleViewModel(
@@ -64,6 +67,18 @@ internal class RepaymentScheduleViewModel(
 
             is RepaymentScheduleAction.Internal.ReceivedRepaymentSchedule ->
                 handleRepaymentScheduleResult(action.dataState)
+
+            is RepaymentScheduleAction.OnPayInstallment -> {
+                sendEvent(
+                    RepaymentScheduleEvent.PayInstallment(
+                        action.accountId,
+                        action.outStandingBalance,
+                        action.transferTyp,
+                        action.transferTarget,
+                        action.transferSuccessDestination,
+                    ),
+                )
+            }
         }
     }
 
@@ -106,6 +121,7 @@ internal class RepaymentScheduleViewModel(
 
             is DataState.Success -> {
                 val result = dataState.data
+                println("from success ${ result?.repaymentSchedule?.periods}")
                 val currencyCode = result?.currency?.code
                 val maxDigits = result?.currency?.decimalPlaces?.toInt()
                 val basicDetails = mapOf(
@@ -147,6 +163,7 @@ internal class RepaymentScheduleViewModel(
 internal data class RepaymentScheduleState(
     val accountId: Long? = null,
     val loanWithAssociations: LoanWithAssociations? = null,
+    val periods: List<Periods> = emptyList(),
     val basicDetails: Map<StringResource, String?> = emptyMap(),
     val dialogState: DialogState?,
     val isOnline: Boolean = false,
@@ -156,15 +173,38 @@ internal data class RepaymentScheduleState(
 
         data class Error(val message: String) : DialogState
     }
+
+    val getPeriods =
+        loanWithAssociations
+            ?.repaymentSchedule
+            ?.periods
+            .orEmpty()
+            .filter { it.period != null }
 }
 
 sealed interface RepaymentScheduleEvent {
     data object NavigateBack : RepaymentScheduleEvent
+
+    data class PayInstallment(
+        val accountId: Long,
+        val outStandingBalance: Double?,
+        val transferTyp: String,
+        val transferTarget: TransferType,
+        val transferSuccessDestination: TransferSuccessDestination,
+    ) : RepaymentScheduleEvent
 }
 
 sealed interface RepaymentScheduleAction {
     data object RetryClicked : RepaymentScheduleAction
     data object OnNavigateBack : RepaymentScheduleAction
+
+    data class OnPayInstallment(
+        val accountId: Long,
+        val outStandingBalance: Double?,
+        val transferTyp: String,
+        val transferTarget: TransferType,
+        val transferSuccessDestination: TransferSuccessDestination,
+    ) : RepaymentScheduleAction
 
     sealed interface Internal : RepaymentScheduleAction {
         data class ReceivedRepaymentSchedule(val dataState: DataState<LoanWithAssociations?>) :
