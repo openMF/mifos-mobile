@@ -31,6 +31,7 @@ import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -120,6 +121,7 @@ internal class RepaymentScheduleViewModel(
 
             is DataState.Success -> {
                 val result = dataState.data
+                println("from success ${ result?.repaymentSchedule?.periods}")
                 val currencyCode = result?.currency?.code
                 val maxDigits = result?.currency?.decimalPlaces?.toInt()
                 val basicDetails = mapOf(
@@ -161,6 +163,7 @@ internal class RepaymentScheduleViewModel(
 internal data class RepaymentScheduleState(
     val accountId: Long? = null,
     val loanWithAssociations: LoanWithAssociations? = null,
+    val periods: List<Periods> = emptyList(),
     val basicDetails: Map<StringResource, String?> = emptyMap(),
     val dialogState: DialogState?,
     val isOnline: Boolean = false,
@@ -170,6 +173,13 @@ internal data class RepaymentScheduleState(
 
         data class Error(val message: String) : DialogState
     }
+
+    val getPeriods =
+        loanWithAssociations
+            ?.repaymentSchedule
+            ?.periods
+            .orEmpty()
+            .filter { it.period != null }
 }
 
 sealed interface RepaymentScheduleEvent {

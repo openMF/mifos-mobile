@@ -105,7 +105,8 @@
     <string name="feature_loan_installments_paid_label">Installments Paid</string>
     <string name="feature_loan_installments_left_label">Installments Left</string>
     <string name="feature_loan_total_installments_label">Total Installments</string>
-
+    <string name="feature_loan_installment_number">%1$s Installment</string>
+    <string name="feature_loan_repayment_pay">Pay %1$s</string>
     <string name="feature_loan_paid">Paid</string>
     <string name="feature_loan_due">Due</string>
     <string name="feature_loan_pay">Pay</string>

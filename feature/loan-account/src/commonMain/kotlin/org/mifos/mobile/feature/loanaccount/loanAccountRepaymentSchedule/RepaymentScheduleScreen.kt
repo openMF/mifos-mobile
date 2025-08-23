@@ -125,7 +125,7 @@ internal fun RepaymentScreenContent(
                 Spacer(Modifier.height(DesignToken.padding.large))
 
                 RepaymentScheduleList(
-                    periods = state.loanWithAssociations?.repaymentSchedule?.periods.orEmpty(),
+                    periods = state.getPeriods,
                     currencyCode = state.loanWithAssociations?.currency?.code ?: "",
                     maxDigits = state.loanWithAssociations?.currency?.decimalPlaces?.toInt(),
                     onPayClick = { period ->
