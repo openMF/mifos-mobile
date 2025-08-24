@@ -230,15 +230,58 @@ internal data class LoanAccountDetailsState(
         data object Loading : DialogState
     }
 
-    val shouldShowAction: Boolean
-        get() = accountStatus !in setOf(
-            LoanStatus.SUBMIT_AND_PENDING_APPROVAL,
-            LoanStatus.REJECTED
+}
+
+val LoanStatus.allowedActions: Set<LoanActionItems>
+    get() = when (this) {
+        LoanStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
+            LoanActionItems.LoanSummary,
         )
 
-    val canMakeTransfer: Boolean
-        get() = accountStatus in setOf(LoanStatus.ACTIVE, LoanStatus.DISBURSED)
-}
+        LoanStatus.APPROVED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Charges,
+        )
+
+        LoanStatus.DISBURSED,
+        LoanStatus.ACTIVE,
+        -> setOf(
+            LoanActionItems.MakePayment,
+            LoanActionItems.LoanSummary,
+            LoanActionItems.RepaymentSchedule,
+            LoanActionItems.Transactions,
+            LoanActionItems.Charges,
+            LoanActionItems.QrCode,
+
+        )
+
+        LoanStatus.MATURED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.RepaymentSchedule,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.CLOSED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.CLOSED_OBLIGATIONS_MET -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.REJECTED,
+        LoanStatus.WITHDRAWN,
+        -> setOf(
+            LoanActionItems.LoanSummary,
+        )
+
+        LoanStatus.OVERPAID -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+    }
 
 /**
  * One-time navigation or effect events for the Loan Account Details screen.

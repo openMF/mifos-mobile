@@ -149,7 +149,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_expected_payoff_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.totalExpectedRepayment,
+                    loan?.summary?.totalExpectedRepayment ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -157,7 +157,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_interest_payoff_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.interestCharged,
+                    loan?.summary?.interestCharged ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -165,7 +165,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_principal_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.principalDisbursed,
+                    loan?.summary?.principalDisbursed ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -184,7 +184,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_fees_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.feeChargesCharged,
+                    loan?.summary?.feeChargesCharged ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -192,7 +192,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_penalties_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.penaltyChargesCharged,
+                    loan?.summary?.penaltyChargesCharged ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -203,7 +203,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_interest_waived_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.interestWaived,
+                    loan?.summary?.interestWaived ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -211,7 +211,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_penalty_waived_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.penaltyChargesWaived,
+                    loan?.summary?.penaltyChargesWaived ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -219,7 +219,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_fees_waived_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.feeChargesWaived,
+                    loan?.summary?.feeChargesWaived ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -230,7 +230,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_interest_paid_off_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.interestPaid,
+                    loan?.summary?.interestPaid ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -238,7 +238,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_principal_paid_off_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.principalPaid,
+                    loan?.summary?.principalPaid ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
@@ -266,7 +266,7 @@ internal class LoanAccountSummaryViewModel(
             LabelValueItem(
                 Res.string.feature_loan_total_outstanding_label,
                 CurrencyFormatter.format(
-                    loan?.summary?.totalOutstanding,
+                    loan?.summary?.totalOutstanding ?: 0.0,
                     currencyCode,
                     maxDigits,
                 ),
