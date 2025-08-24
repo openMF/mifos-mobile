@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_action
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_top_bar_title
@@ -163,14 +162,14 @@ internal fun LoanAccountDetailsContent(
                     )
                 }
 
-                if (state.isActive) {
-                    SavingsAccountActions(
-                        items = state.items,
-                        onActionClick = {
-                            onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
-                        },
-                    )
-                }
+                val visibleActions = state.accountStatus?.allowedActions ?: emptySet()
+
+                SavingsAccountActions(
+                    visibleActions = visibleActions,
+                    onActionClick = {
+                        onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
+                    },
+                )
             }
         }
     }
@@ -222,8 +221,7 @@ internal fun AccountDetailsGrid(
 
 @Composable
 internal fun SavingsAccountActions(
-    items: ImmutableList<LoanActionItems>,
-//    onAction: (LoanAccountDetailsAction) -> Unit,
+    visibleActions: Set<LoanActionItems>,
     onActionClick: (String) -> Unit,
 ) {
     Column(
@@ -237,16 +235,15 @@ internal fun SavingsAccountActions(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items.forEach { item ->
-                MifosActionCard(
-                    title = item.title,
-                    subTitle = item.subTitle,
-                    icon = item.icon,
-                    onClick = {
-                        onActionClick(item.route)
-                    },
-                )
-            }
+            visibleActions
+                .forEach { item ->
+                    MifosActionCard(
+                        title = item.title,
+                        subTitle = item.subTitle,
+                        icon = item.icon,
+                        onClick = { onActionClick(item.route) },
+                    )
+                }
         }
     }
 }

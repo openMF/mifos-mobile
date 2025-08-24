@@ -14,6 +14,8 @@ enum class LoanStatus(val status: String) {
 
     CLOSED("Closed"),
 
+    CLOSED_OBLIGATIONS_MET("Closed (obligations met)"),
+
     MATURED("Matured"),
 
     APPROVED("Approved"),
@@ -25,4 +27,12 @@ enum class LoanStatus(val status: String) {
     REJECTED("Rejected"),
 
     WITHDRAWN("Withdrawn by applicant"),
+
+    OVERPAID("Overpaid"),
+    ;
+
+    companion object {
+        fun fromStatus(value: String?): LoanStatus? =
+            entries.firstOrNull { it.status.equals(value, ignoreCase = true) }
+    }
 }

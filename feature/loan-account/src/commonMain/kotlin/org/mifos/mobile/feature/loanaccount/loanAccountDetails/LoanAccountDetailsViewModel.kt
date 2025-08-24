@@ -178,7 +178,7 @@ internal class LoanAccountDetailsViewModel(
         mutableStateFlow.update {
             it.copy(
                 accountId = loan?.id?.toLong() ?: -1L,
-                isActive = loan?.status?.value == LoanStatus.ACTIVE.status,
+                accountStatus = loan?.status?.loanStatus,
                 accountNumber = loan?.accountNo,
                 clientName = loan?.clientName,
                 product = loan?.loanProductName,
@@ -198,7 +198,7 @@ internal class LoanAccountDetailsViewModel(
  * @property accountId Unique ID for the loan account.
  * @property displayItems List of account metadata to be displayed.
  * @property transactionList List of most recent transaction details.
- * @property isActive True if the loan is active.
+ * @property accountStatus True if the loan is active.
  * @property items List of quick action items (e.g., Repay, Foreclose).
  * @property isUpdatable Whether the loan is editable (e.g., in a pending state).
  * @property dialogState State representing UI dialogs like loading or error.
@@ -214,7 +214,7 @@ internal data class LoanAccountDetailsState(
     val product: String? = "",
     val displayItems: List<LabelValueItem> = emptyList(),
     val transactionList: List<LabelValueItem>? = emptyList(),
-    val isActive: Boolean = false,
+    val accountStatus: LoanStatus? = LoanStatus.ACTIVE,
     val items: ImmutableList<LoanActionItems>,
     val isUpdatable: Boolean = false,
     val dialogState: DialogState?,
@@ -230,6 +230,57 @@ internal data class LoanAccountDetailsState(
         data object Loading : DialogState
     }
 }
+
+val LoanStatus.allowedActions: Set<LoanActionItems>
+    get() = when (this) {
+        LoanStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
+            LoanActionItems.LoanSummary,
+        )
+
+        LoanStatus.APPROVED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Charges,
+        )
+
+        LoanStatus.DISBURSED,
+        LoanStatus.ACTIVE,
+        -> setOf(
+            LoanActionItems.MakePayment,
+            LoanActionItems.LoanSummary,
+            LoanActionItems.RepaymentSchedule,
+            LoanActionItems.Transactions,
+            LoanActionItems.Charges,
+            LoanActionItems.QrCode,
+
+        )
+
+        LoanStatus.MATURED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.RepaymentSchedule,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.CLOSED -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.CLOSED_OBLIGATIONS_MET -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+
+        LoanStatus.REJECTED,
+        LoanStatus.WITHDRAWN,
+        -> setOf(
+            LoanActionItems.LoanSummary,
+        )
+
+        LoanStatus.OVERPAID -> setOf(
+            LoanActionItems.LoanSummary,
+            LoanActionItems.Transactions,
+        )
+    }
 
 /**
  * One-time navigation or effect events for the Loan Account Details screen.
