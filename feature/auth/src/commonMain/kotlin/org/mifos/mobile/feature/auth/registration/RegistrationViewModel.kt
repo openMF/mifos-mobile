@@ -22,7 +22,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
-import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
