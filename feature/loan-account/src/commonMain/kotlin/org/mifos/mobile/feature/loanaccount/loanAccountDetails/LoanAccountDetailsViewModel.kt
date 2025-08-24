@@ -178,7 +178,7 @@ internal class LoanAccountDetailsViewModel(
         mutableStateFlow.update {
             it.copy(
                 accountId = loan?.id?.toLong() ?: -1L,
-                isActive = loan?.status?.value == LoanStatus.ACTIVE.status,
+                accountStatus = loan?.status?.loanStatus,
                 accountNumber = loan?.accountNo,
                 clientName = loan?.clientName,
                 product = loan?.loanProductName,
@@ -198,7 +198,7 @@ internal class LoanAccountDetailsViewModel(
  * @property accountId Unique ID for the loan account.
  * @property displayItems List of account metadata to be displayed.
  * @property transactionList List of most recent transaction details.
- * @property isActive True if the loan is active.
+ * @property accountStatus True if the loan is active.
  * @property items List of quick action items (e.g., Repay, Foreclose).
  * @property isUpdatable Whether the loan is editable (e.g., in a pending state).
  * @property dialogState State representing UI dialogs like loading or error.
@@ -214,7 +214,7 @@ internal data class LoanAccountDetailsState(
     val product: String? = "",
     val displayItems: List<LabelValueItem> = emptyList(),
     val transactionList: List<LabelValueItem>? = emptyList(),
-    val isActive: Boolean = false,
+    val accountStatus: LoanStatus? = LoanStatus.ACTIVE,
     val items: ImmutableList<LoanActionItems>,
     val isUpdatable: Boolean = false,
     val dialogState: DialogState?,
@@ -229,6 +229,15 @@ internal data class LoanAccountDetailsState(
         /** Shown during loading state. */
         data object Loading : DialogState
     }
+
+    val shouldShowAction: Boolean
+        get() = accountStatus !in setOf(
+            LoanStatus.SUBMIT_AND_PENDING_APPROVAL,
+            LoanStatus.REJECTED
+        )
+
+    val canMakeTransfer: Boolean
+        get() = accountStatus in setOf(LoanStatus.ACTIVE, LoanStatus.DISBURSED)
 }
 
 /**

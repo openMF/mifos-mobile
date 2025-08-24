@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_account_action_make_payment
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_action
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_top_bar_title
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_next_installment_label
@@ -45,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -163,8 +165,9 @@ internal fun LoanAccountDetailsContent(
                     )
                 }
 
-                if (state.isActive) {
+                if (state.shouldShowAction) {
                     SavingsAccountActions(
+                        canMakeTransfer = state.canMakeTransfer,
                         items = state.items,
                         onActionClick = {
                             onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
@@ -222,6 +225,7 @@ internal fun AccountDetailsGrid(
 
 @Composable
 internal fun SavingsAccountActions(
+    canMakeTransfer: Boolean,
     items: ImmutableList<LoanActionItems>,
 //    onAction: (LoanAccountDetailsAction) -> Unit,
     onActionClick: (String) -> Unit,
@@ -237,14 +241,16 @@ internal fun SavingsAccountActions(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items.forEach { item ->
+            items
+                .filter { item ->
+                    !(item.title == Res.string.feature_account_action_make_payment && !canMakeTransfer)
+                }
+                .forEach { item ->
                 MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,
-                    onClick = {
-                        onActionClick(item.route)
-                    },
+                    onClick = { onActionClick(item.route) },
                 )
             }
         }

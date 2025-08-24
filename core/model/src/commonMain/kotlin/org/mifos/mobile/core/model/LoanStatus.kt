@@ -24,5 +24,10 @@ enum class LoanStatus(val status: String) {
 
     REJECTED("Rejected"),
 
-    WITHDRAWN("Withdrawn by applicant"),
+    WITHDRAWN("Withdrawn by applicant");
+
+    companion object {
+        fun fromStatus(value: String?): LoanStatus? =
+            entries.firstOrNull { it.status.equals(value, ignoreCase = true) }
+    }
 }

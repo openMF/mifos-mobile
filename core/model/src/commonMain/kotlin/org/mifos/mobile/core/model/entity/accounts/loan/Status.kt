@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.model.entity.accounts.loan
 
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.Parcelable
 import org.mifos.mobile.core.model.Parcelize
 
@@ -39,6 +40,9 @@ data class Status(
     val overpaid: Boolean? = null,
 
 ) : Parcelable {
+
+    val loanStatus: LoanStatus?
+        get() = LoanStatus.fromStatus(value)
 
     fun isLoanTypeWithdrawn(): Boolean {
         return !(
