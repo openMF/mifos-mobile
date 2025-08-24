@@ -187,16 +187,15 @@ class RegistrationViewModel(
      */
     @Suppress("ReturnCount")
     private fun validateName(name: String, nameType: String): ValidationResult? {
-        if (name.isEmpty()) {
+        if (name.isEmpty() && nameType != "middle") {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
-                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
         }
 
-        if (!ValidationHelper.isValidName(name)) {
+        if (name.isNotEmpty() && !ValidationHelper.isValidName(name)) {
             return ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
         }
 
@@ -625,10 +624,11 @@ data class SignUpState(
     /**
      * Whether the submit button should be enabled based on required fields.
      */
+    // TODO Uncomment if middle name field is mandatory
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
-            middleName.isNotBlank() &&
+//            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&
