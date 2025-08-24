@@ -26,6 +26,7 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -96,6 +97,8 @@ internal class HomeViewModel(
             is HomeAction.Internal.ReceiveClientAccounts -> handleClientAccounts(
                 action.dataState,
             )
+
+            is HomeAction.Internal.ReceiveClientDetails -> handleClientDetails(action.dataState)
         }
     }
 
@@ -127,10 +130,19 @@ internal class HomeViewModel(
             if (!isOnline) {
                 updateState { current ->
                     current.copy(
-                        uiState = if (isFirstLaunch) HomeScreenState.Network else current.uiState,
+                        uiState = if (isFirstLaunch ||
+                            current.uiState is HomeScreenState.Loading ||
+                            current.uiState is HomeScreenState.Error ||
+                            current.uiState is HomeScreenState.Network
+                        ) {
+                            HomeScreenState.Network
+                        } else {
+                            current.uiState
+                        },
                     )
                 }
             } else {
+                fetchCurrentClient()
                 unreadNotificationsCount()
                 loadClientAccountDetails()
             }
@@ -172,11 +184,56 @@ internal class HomeViewModel(
     }
 
     /**
+     * Fetches the current client's details from the repository.
+     */
+    private fun fetchCurrentClient() {
+        updateState { it.copy(uiState = HomeScreenState.Loading) }
+
+        viewModelScope.launch {
+            homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
+                .catch {
+                    updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+                }
+                .collect { client ->
+                    sendAction(HomeAction.Internal.ReceiveClientDetails(client))
+                }
+        }
+    }
+
+    /**
+     * Handles the result of fetching client details.
+     *
+     * This function updates the UI state based on the data fetch operation's outcome:
+     * - **Success:** Updates the state with the client's first name.
+     * - **Loading:** Sets the UI state to a loading screen.
+     * - **Error:** Sets the UI state to an error screen.
+     *
+     * @param dataState The result of the client data fetch, encapsulated in a [DataState].
+     */
+    private fun handleClientDetails(dataState: DataState<Client>) {
+        when (dataState) {
+            is DataState.Error -> updateState {
+                it.copy(
+                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
+                )
+            }
+
+            DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
+
+            is DataState.Success -> {
+                updateState {
+                    it.copy(
+                        firstName = dataState.data.firstname,
+                    )
+                }
+            }
+        }
+    }
+
+    /**
      * Fetches the client's account details from the repository.
      */
     private fun loadClientAccountDetails() {
-        updateState { it.copy(uiState = HomeScreenState.Loading) }
-
         viewModelScope.launch {
             homeRepositoryImpl.clientAccounts(clientId = state.clientId ?: 0)
                 .catch {
@@ -315,6 +372,7 @@ internal class HomeViewModel(
  * Represents the UI state for the Home screen.
  *
  * @property clientId The ID of the current client.
+ * @property firstName The first name of the client, or an empty string.
  * @property currency The currency symbol for the client's accounts, or `null`.
  * @property isLoanApplied A boolean indicating if the client has any active loans.
  * @property username The username of the currently logged-in user.
@@ -331,6 +389,7 @@ internal class HomeViewModel(
 @Immutable
 internal data class HomeState(
     val clientId: Long? = 0,
+    val firstName: String? = "",
     val currency: String? = "",
     val decimals: Int = 2,
     val isLoanApplied: Boolean = true,
@@ -433,6 +492,14 @@ sealed interface HomeAction {
          */
         data class ReceiveClientAccounts(
             val dataState: DataState<ClientAccounts>,
+        ) : Internal
+
+        /**
+         * An internal action to handle the result of fetching client details.
+         * @property dataState The [DataState] containing the client data.
+         */
+        data class ReceiveClientDetails(
+            val dataState: DataState<Client>,
         ) : Internal
     }
 }

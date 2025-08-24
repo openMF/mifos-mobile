@@ -166,7 +166,10 @@ internal fun HomeContent(
                     Spacer(modifier = Modifier.height(DesignToken.spacing.small))
 
                     Text(
-                        text = stringResource(Res.string.feature_home_greet, state.username),
+                        text = stringResource(
+                            Res.string.feature_home_greet,
+                            state.firstName.toString(),
+                        ),
                         style = MifosTypography.titleLarge,
                         color = AppColors.customBlack,
                     )
