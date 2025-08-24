@@ -229,7 +229,6 @@ internal data class LoanAccountDetailsState(
         /** Shown during loading state. */
         data object Loading : DialogState
     }
-
 }
 
 val LoanStatus.allowedActions: Set<LoanActionItems>
