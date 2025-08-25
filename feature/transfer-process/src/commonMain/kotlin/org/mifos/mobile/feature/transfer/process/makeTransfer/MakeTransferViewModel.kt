@@ -30,7 +30,7 @@ import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
@@ -70,11 +70,7 @@ internal class MakeTransferViewModel(
                 null
             },
             transferType = route.transferType,
-            transferSuccessDestination = if (route.transferSuccessDestination != null) {
-                enumValueOf<TransferSuccessDestination>(route.transferSuccessDestination)
-            } else {
-                null
-            },
+            transferSuccessDestination = route.transferSuccessDestination ?: StatusNavigationDestination.HOME.name,
             uiState = MakeTransferState.MakeTransferScreenState.Loading,
         )
     },
@@ -527,8 +523,7 @@ internal class MakeTransferViewModel(
             MakeTransferEvent.NavigateToTransferScreen(
                 reviewTransferPayload = payload,
                 transferType = state.transferTarget ?: TransferType.SELF,
-                destination = state.transferSuccessDestination
-                    ?: TransferSuccessDestination.HOME,
+                destination = state.transferSuccessDestination,
             ),
         )
     }
@@ -573,7 +568,7 @@ internal data class MakeTransferState(
     val outstandingBalance: Double? = null,
     val transferType: String? = null,
     val transferTarget: TransferType? = null,
-    val transferSuccessDestination: TransferSuccessDestination? = null,
+    val transferSuccessDestination: String = "",
     val amount: String = "",
     val amountError: StringResource? = null,
     val remark: String = "",
@@ -700,7 +695,7 @@ internal sealed interface MakeTransferEvent {
     data class NavigateToTransferScreen(
         val reviewTransferPayload: ReviewTransferPayload,
         val transferType: TransferType,
-        val destination: TransferSuccessDestination,
+        val destination: String,
     ) : MakeTransferEvent
 }
 

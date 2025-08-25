@@ -44,8 +44,8 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.AccountDetails
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosActionCard
@@ -89,7 +89,7 @@ internal fun LoanAccountDetailsScreen(
                             outstandingBalance = uiState.totalOutStandingBalance ?: 1.00,
                             transferType = TRANSFER_PAY_TO,
                             transferTarget = TransferType.SELF,
-                            transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
+                            transferSuccessDestination = StatusNavigationDestination.LOAN_ACCOUNT.name,
                         )
                         navigateToMakePaymentScreen(transferArgs)
                     }

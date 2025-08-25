@@ -19,9 +19,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.serializer
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
@@ -45,6 +42,7 @@ import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.accounts.savings.Currency
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
@@ -55,7 +53,6 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.ui.utils.observe
-import org.mifos.mobile.feature.savings.application.navigation.SavingsApplicationNavGraph
 import kotlin.String
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
@@ -548,7 +545,6 @@ internal class SavingsFillApplicationViewModel(
      *
      * @param response The [DataState] containing the result of the submission.
      */
-    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private suspend fun handleSavingsApplicationResult(response: DataState<String>) {
         dismissDialog()
         when (response) {
@@ -556,7 +552,7 @@ internal class SavingsFillApplicationViewModel(
                 sendEvent(
                     SavingsApplicationEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
-                        eventDestination = SavingsApplicationNavGraph::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_savings_status_failure),
                         subtitle = getString(
                             Res.string.feature_apply_savings_status_failure_tip,
@@ -571,7 +567,7 @@ internal class SavingsFillApplicationViewModel(
                 sendEvent(
                     SavingsApplicationEvent.NavigateToStatus(
                         eventType = EventType.SUCCESS.name,
-                        eventDestination = SavingsApplicationNavGraph::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.SAVINGS_APPLICATION.name,
                         title = getString(Res.string.feature_apply_savings_status_success),
                         subtitle = getString(
                             Res.string.feature_apply_savings_status_success_tip,

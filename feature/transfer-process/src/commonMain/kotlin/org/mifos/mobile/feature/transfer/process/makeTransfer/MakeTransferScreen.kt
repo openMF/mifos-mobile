@@ -47,7 +47,6 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
@@ -61,7 +60,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 @Composable
 internal fun MakeTransferScreen(
     navigateBack: () -> Unit,
-    navigateToTransferScreen: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
+    navigateToTransferScreen: (ReviewTransferPayload, TransferType, String) -> Unit,
     viewModel: MakeTransferViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()

@@ -14,6 +14,7 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
@@ -21,10 +22,12 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
+import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
+import org.mifos.mobile.feature.accounts.accounts.AccountNavRoute
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
@@ -36,6 +39,7 @@ import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
+import org.mifos.mobile.feature.loan.application.confirmDetails.ConfirmDetailsRoute
 import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
 import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
@@ -63,6 +67,7 @@ import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.TransferProcessRoute
 import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
@@ -73,7 +78,7 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
-@Suppress("CyclomaticComplexMethod")
+@Suppress("CyclomaticComplexMethod", "LongMethod")
 @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 internal fun NavGraphBuilder.authenticatedGraph(
     navController: NavController,
@@ -132,7 +137,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                         navController.navigateToTransferProcessScreen(
                             destination.payload,
                             TransferType.TPT,
-                            TransferSuccessDestination.TRANSFER_TAB.name,
+                            StatusNavigationDestination.THIRD_PARTY_TRANSFER.name,
                         )
                     }
                     else -> {
@@ -171,6 +176,41 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     Constants.LOGIN -> {
                         navController.navigateToLoginScreen()
                     }
+
+                    StatusNavigationDestination.SAVINGS_APPLICATION.name -> {
+                        navController.navigateToAccountFromStatus(Constants.SAVINGS_ACCOUNT)
+                    }
+
+                    StatusNavigationDestination.LOAN_APPLICATION.name -> {
+                        navController.navigateToAccountFromStatus(Constants.LOAN_ACCOUNT)
+                    }
+
+                    StatusNavigationDestination.SHARE_APPLICATION.name -> {
+                        navController.navigateToAccountFromStatus(Constants.SHARE_ACCOUNTS)
+                    }
+
+                    StatusNavigationDestination.PREVIOUS_SCREEN.name -> {
+                        navController.popScreens()
+                    }
+
+                    StatusNavigationDestination.THIRD_PARTY_TRANSFER.name -> {
+                        navController.navigateToHomeAfterStatus()
+                    }
+
+                    StatusNavigationDestination.SAVINGS_ACCOUNT.name -> {
+                        repeat(3) { navController.popBackStack() }
+                    }
+
+                    StatusNavigationDestination.LOAN_ACCOUNT.name -> {
+                        repeat(3) { navController.popBackStack() }
+                    }
+
+                    StatusNavigationDestination.SAVINGS_UPDATE.name,
+                    StatusNavigationDestination.SAVINGS_WITHDRAW.name,
+                    -> {
+                        repeat(2) { navController.popBackStack() }
+                    }
+
                     else -> {
                         navController.navigateToHomeAfterStatus()
                     }
@@ -181,7 +221,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
         savingsNavGraph(
             navController = navController,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
             navigateToTransferScreen = {
                 navController.navigateToMakeTransferScreen(it)
@@ -207,18 +247,18 @@ internal fun NavGraphBuilder.authenticatedGraph(
         loanApplicationNavGraph(
             navController = navController,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreen,
         )
 
         savingsApplicationNavGraph(
             navController = navController,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreen,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
         shareApplicationNavGraph(
             navController = navController,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreen,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
@@ -235,7 +275,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
         beneficiaryNavGraph(
             navController = navController,
             navigateToQR = navController::navigateToQrReaderScreen,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreen,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
         )
 
@@ -259,12 +299,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                 navController.navigateToTransferProcessScreen(
                     transferPayload = transferPayload,
                     transferType = transferType,
-                    transferSuccessDestination = when (transferDestination) {
-                        TransferSuccessDestination.SAVINGS_ACCOUNT -> Constants.NAVIGATE_BACK_TO_SAVINGS
-                        TransferSuccessDestination.LOAN_ACCOUNT -> Constants.NAVIGATE_BACK_TO_LOAN
-                        TransferSuccessDestination.HOME -> ""
-                        TransferSuccessDestination.TRANSFER_TAB -> Constants.TRANSFER_TAB
-                    },
+                    transferSuccessDestination = transferDestination,
                 )
             },
         )
@@ -272,7 +307,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
         transferProcessDestination(
             navigateBack = navController::popBackStack,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
-            navigateToStatusScreen = navController::navigateToStatusAfterUpdate,
+            navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
         )
 
         faqDestination(onBackClick = navController::popBackStack, contact = {})
@@ -328,7 +363,7 @@ fun NavController.navigateToStatusScreenPasscodeFlow(
     }
 }
 
-fun NavController.navigateToStatusAfterUpdate(
+fun NavController.navigateToStatusScreen(
     eventType: String,
     eventDestination: String,
     title: String,
@@ -344,10 +379,51 @@ fun NavController.navigateToStatusAfterUpdate(
             buttonText = buttonText,
         ),
     ) {
-        popUpTo(AuthenticatedGraphRoute) {
-            inclusive = true
+        if (eventType == EventType.SUCCESS.name) {
+            popUpTo(AuthenticatedGraphRoute) {
+                inclusive = true
+            }
+            launchSingleTop = true
         }
-        launchSingleTop = true
+    }
+}
+
+fun NavController.navigateToStatusScreenWithoutPopUpTo(
+    eventType: String,
+    eventDestination: String,
+    title: String,
+    subtitle: String,
+    buttonText: String,
+) {
+    if (eventDestination == StatusNavigationDestination.THIRD_PARTY_TRANSFER.name) {
+        this.navigate(
+            StatusNavigationRoute(
+                eventType = eventType,
+                eventDestination = eventDestination,
+                title = title,
+                subtitle = subtitle,
+                buttonText = buttonText,
+            ),
+        ) {
+            if (eventType == EventType.SUCCESS.name) {
+                popUpTo(AuthenticatedGraphRoute) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        }
+    } else {
+        this.navigate(
+            StatusNavigationRoute(
+                eventType = eventType,
+                eventDestination = eventDestination,
+                title = title,
+                subtitle = subtitle,
+                buttonText = buttonText,
+            ),
+        ) {
+            launchSingleTop = true
+        }
     }
 }
 
@@ -358,4 +434,36 @@ fun NavController.navigateToHomeAfterStatus() {
         }
         launchSingleTop = true
     }
+}
+
+fun NavController.navigateToAccountFromStatus(
+    accountType: String,
+) {
+    this.navigate(AuthenticatedNavbarRoute) {
+        popUpTo(StatusNavigationRoute::class) {
+            inclusive = true
+        }
+        launchSingleTop = true
+    }
+
+    this.navigate(AccountNavRoute(accountType)) {
+        launchSingleTop = true
+    }
+}
+
+fun NavController.popScreens(
+    popRules: Map<String, Int> = mapOf(
+        ConfirmDetailsRoute::class.qualifiedName.orEmpty() to 2,
+        TransferProcessRoute::class.qualifiedName.orEmpty() to 2,
+    ),
+) {
+    val lastEntry = previousBackStackEntry?.destination?.route
+
+    val pops = popRules.entries
+        .firstOrNull { (route, _) ->
+            lastEntry?.startsWith(route) == true
+        }
+        ?.value ?: 1
+
+    repeat(pops) { popBackStack() }
 }

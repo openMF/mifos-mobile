@@ -16,8 +16,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants.TRANSFER_PAY_FROM
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.AccountDetails
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
@@ -49,7 +49,7 @@ fun NavGraphBuilder.savingsAccountDetailsDestination(
                     accountId = it,
                     transferType = TRANSFER_PAY_FROM,
                     transferTarget = TransferType.SELF,
-                    transferSuccessDestination = TransferSuccessDestination.SAVINGS_ACCOUNT,
+                    transferSuccessDestination = StatusNavigationDestination.SAVINGS_ACCOUNT.name,
                 )
                 navigateToTransferScreen(args)
             },
