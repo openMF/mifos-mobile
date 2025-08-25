@@ -395,16 +395,35 @@ fun NavController.navigateToStatusScreenWithoutPopUpTo(
     subtitle: String,
     buttonText: String,
 ) {
-    this.navigate(
-        StatusNavigationRoute(
-            eventType = eventType,
-            eventDestination = eventDestination,
-            title = title,
-            subtitle = subtitle,
-            buttonText = buttonText,
-        ),
-    ) {
-        launchSingleTop = true
+    if (eventDestination == StatusNavigationDestination.THIRD_PARTY_TRANSFER.name) {
+        this.navigate(
+            StatusNavigationRoute(
+                eventType = eventType,
+                eventDestination = eventDestination,
+                title = title,
+                subtitle = subtitle,
+                buttonText = buttonText,
+            ),
+        ) {
+            if (eventType == EventType.SUCCESS.name) {
+                popUpTo(AuthenticatedGraphRoute) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        }
+    } else {
+        this.navigate(
+            StatusNavigationRoute(
+                eventType = eventType,
+                eventDestination = eventDestination,
+                title = title,
+                subtitle = subtitle,
+                buttonText = buttonText,
+            ),
+        ) {
+            launchSingleTop = true
+        }
     }
 }
 
