@@ -21,7 +21,7 @@ data class AccountDetails(
     val outstandingBalance: Double? = null,
     val transferType: String,
     val transferTarget: TransferType,
-    val transferSuccessDestination: TransferSuccessDestination,
+    val transferSuccessDestination: String,
 )
 
 @Serializable

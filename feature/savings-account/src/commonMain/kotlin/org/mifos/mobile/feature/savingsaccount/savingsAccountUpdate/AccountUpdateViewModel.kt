@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.serializer
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_account_number_label
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_client_name_label
@@ -34,13 +33,13 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.observe
-import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountRoute
 
 /**
  * ViewModel responsible for handling the logic of updating a savings account product.
@@ -219,7 +218,7 @@ internal class AccountUpdateViewModel(
                 sendEvent(
                     AccountUpdateEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
-                        eventDestination = SavingsAccountRoute::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_savings_update_request_failed),
                         subtitle = getString(Res.string.feature_savings_update_request_failed_message),
                         buttonText = getString(Res.string.feature_savings_update_request_try_again),
@@ -231,7 +230,7 @@ internal class AccountUpdateViewModel(
                 sendEvent(
                     AccountUpdateEvent.NavigateToStatus(
                         eventType = EventType.SUCCESS.name,
-                        eventDestination = SavingsAccountRoute::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.SAVINGS_UPDATE.name,
                         title = getString(Res.string.feature_savings_update_request_successful),
                         subtitle = getString(Res.string.feature_savings_update_request_successful_message),
                         buttonText = getString(Res.string.feature_savings_update_request_back_to_home),

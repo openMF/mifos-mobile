@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.serializer
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_frequency_required
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
@@ -47,6 +46,7 @@ import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
@@ -61,7 +61,6 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.ui.utils.observe
-import org.mifos.mobile.feature.share.application.navigation.ShareApplicationNavGraph
 import kotlin.String
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
@@ -640,6 +639,7 @@ internal class ShareFillApplicationViewModel(
             val response = shareAccountRepositoryImpl.submitShareApplication(
                 payload = state.toShareApplicationPayload(),
             )
+
             sendAction(ShareApplicationAction.Internal.ReceiveShareApplicationResult(response))
         }
     }
@@ -653,12 +653,12 @@ internal class ShareFillApplicationViewModel(
      */
     @OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
     private suspend fun handleShareApplicationResult(response: DataState<String>) {
-        dismissDialog()
+        updateState { it.copy(uiState = ShareApplicationUiState.Success) }
         when (response) {
             is DataState.Error -> sendEvent(
                 ShareApplicationEvent.NavigateToStatus(
                     eventType = EventType.FAILURE.name,
-                    eventDestination = ShareApplicationNavGraph::class.serializer().descriptor.serialName,
+                    eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                     title = getString(Res.string.feature_apply_share_status_failure),
                     subtitle = getString(
                         Res.string.feature_apply_share_status_failure_tip,
@@ -671,7 +671,7 @@ internal class ShareFillApplicationViewModel(
             is DataState.Success -> sendEvent(
                 ShareApplicationEvent.NavigateToStatus(
                     eventType = EventType.SUCCESS.name,
-                    eventDestination = ShareApplicationNavGraph::class.serializer().descriptor.serialName,
+                    eventDestination = StatusNavigationDestination.SHARE_APPLICATION.name,
                     title = getString(Res.string.feature_apply_share_status_success),
                     subtitle = getString(
                         Res.string.feature_apply_share_status_success_tip,

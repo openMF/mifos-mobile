@@ -75,7 +75,7 @@ internal class RepaymentScheduleViewModel(
                         action.outStandingBalance,
                         action.transferTyp,
                         action.transferTarget,
-                        action.transferSuccessDestination,
+                        action.transferSuccessDestination.name,
                     ),
                 )
             }
@@ -190,7 +190,7 @@ sealed interface RepaymentScheduleEvent {
         val outStandingBalance: Double?,
         val transferTyp: String,
         val transferTarget: TransferType,
-        val transferSuccessDestination: TransferSuccessDestination,
+        val transferSuccessDestination: String,
     ) : RepaymentScheduleEvent
 }
 

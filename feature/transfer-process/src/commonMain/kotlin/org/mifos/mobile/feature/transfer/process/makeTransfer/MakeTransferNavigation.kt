@@ -16,7 +16,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.AccountDetails
-import org.mifos.mobile.core.model.entity.TransferSuccessDestination
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
@@ -40,14 +39,14 @@ fun NavController.navigateToMakeTransferScreen(transferPayload: AccountDetails, 
             outstandingBalance = transferPayload.outstandingBalance,
             transferType = transferPayload.transferType,
             transferTarget = transferPayload.transferTarget.name,
-            transferSuccessDestination = transferPayload.transferSuccessDestination.name,
+            transferSuccessDestination = transferPayload.transferSuccessDestination,
         ),
         navOptions,
     )
 
 fun NavGraphBuilder.makeTransferDestination(
     navigateBack: () -> Unit,
-    navigateToTransferScreen: (ReviewTransferPayload, TransferType, TransferSuccessDestination) -> Unit,
+    navigateToTransferScreen: (ReviewTransferPayload, TransferType, String) -> Unit,
 ) {
     composableWithSlideTransitions<MakeTransferRoute> {
         MakeTransferScreen(

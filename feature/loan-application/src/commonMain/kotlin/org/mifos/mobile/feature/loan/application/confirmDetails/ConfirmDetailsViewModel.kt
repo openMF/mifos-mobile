@@ -14,9 +14,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.serializer
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_server
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_applicant_name
@@ -37,6 +34,7 @@ import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.enums.LoanState
@@ -44,7 +42,6 @@ import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.observe
-import org.mifos.mobile.feature.loan.application.navigation.LoanApplicationNavGraph
 
 /**
  * `ViewModel` for the confirm details screen of the loan application process.
@@ -256,6 +253,7 @@ internal class ConfirmDetailsViewModel(
                 getLoanPayload(),
                 loanId = -1,
             )
+            dismissDialog()
             sendAction(ConfirmDetailsAction.Internal.ReceiveLoanApplyStatus(response))
         }
     }
@@ -267,14 +265,13 @@ internal class ConfirmDetailsViewModel(
      *
      * @param status The [DataState] containing the status of the loan submission.
      */
-    @OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
     private suspend fun handleLoanApplyStatus(status: DataState<String>) {
         when (status) {
             is DataState.Error -> {
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
-                        eventDestination = LoanApplicationNavGraph::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_loan_status_failure),
                         subtitle = getString(Res.string.feature_apply_loan_status_failure_tip),
                         buttonText = getString(Res.string.feature_apply_loan_status_failure_action),
@@ -286,7 +283,7 @@ internal class ConfirmDetailsViewModel(
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
                         eventType = EventType.SUCCESS.name,
-                        eventDestination = LoanApplicationNavGraph::class.serializer().descriptor.serialName,
+                        eventDestination = StatusNavigationDestination.LOAN_APPLICATION.name,
                         title = getString(Res.string.feature_apply_loan_status_success),
                         subtitle = getString(Res.string.feature_apply_loan_status_success_tip),
                         buttonText = getString(Res.string.feature_apply_loan_status_success_action),

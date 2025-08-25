@@ -27,6 +27,7 @@ import org.mifos.mobile.core.common.DateHelper.currentDate
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.AuthResult
@@ -64,6 +65,7 @@ internal class TransferProcessViewModel(
             currentDate.monthNumber,
             currentDate.year,
         )
+        println("TransferProcessViewModel: route = ${route.transferSuccessDestination}")
         TransferProcessState(
             transferDestination = route.transferSuccessDestination,
             transferType = enumValueOf<TransferType>(route.transferType),
@@ -185,12 +187,17 @@ internal class TransferProcessViewModel(
      * @param response The [DataState] containing the result of the transfer operation.
      */
     private suspend fun processTransferResult(response: DataState<String>) {
+        updateState {
+            it.copy(
+                dialogState = null,
+            )
+        }
         when (response) {
             is DataState.Error -> {
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
-                        eventDestination = state.transferDestination ?: "",
+                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.transfer_failed),
                         subtitle = response.message,
                         buttonText = getString(Res.string.back_to_accounts),
