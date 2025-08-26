@@ -35,6 +35,7 @@ import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
@@ -176,12 +177,15 @@ internal class MakeTransferViewModel(
      * @param toAccountNo The account number of the newly selected `to` account.
      */
     private fun handleToAccountChange(toAccountNo: String) {
-        val accountNo = toAccountNo
         val toAccountSelected = state.accountOptionsTemplate.toAccountOptions
-            .find { it.accountNo == accountNo }
-        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions.filter {
-            it.accountNo != accountNo
-        }
+            .find { it.accountNo == toAccountNo }
+
+        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
+            .filter {
+                it.accountType?.value == AccountType.SAVINGS.value &&
+                    it.accountNo != toAccountNo
+            }
+
         updateState {
             it.copy(
                 toAccount = toAccountSelected,
@@ -201,12 +205,13 @@ internal class MakeTransferViewModel(
      * @param fromAccountNo The account number of the newly selected `from` account.
      */
     private fun handleFromAccountChange(fromAccountNo: String) {
-        val accountNo = fromAccountNo
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
-            .find { it.accountNo == accountNo }
-        val toAccounts = state.accountOptionsTemplate.toAccountOptions.filter {
-            it.accountNo != accountNo
-        }
+            .filter { it.accountType?.value == AccountType.SAVINGS.value }
+            .find { it.accountNo == fromAccountNo }
+
+        val toAccounts = state.accountOptionsTemplate.toAccountOptions
+            .filter { it.accountNo != fromAccountNo }
+
         updateState {
             it.copy(
                 fromAccount = fromAccountSelected,
@@ -402,36 +407,65 @@ internal class MakeTransferViewModel(
                     )
                 }
             }
+
             is DataState.Success -> {
                 updateState { current ->
                     val template = dataState.data
 
-                    val matchedToAccount =
-                        if (current.outstandingBalance != null) {
-                            template.toAccountOptions.firstOrNull { option ->
-                                option.accountId?.toLong() == current.accountId
+                    when (current.transferSuccessDestination) {
+                        StatusNavigationDestination.SAVINGS_ACCOUNT.name,
+                        StatusNavigationDestination.LOAN_ACCOUNT.name,
+                        -> {
+                            val savingsFromAccounts = template.fromAccountOptions.filter {
+                                it.accountType?.value == AccountType.SAVINGS.value
                             }
-                        } else {
-                            current.toAccount
-                        }
 
-                    val updatedFromAccountOptions =
-                        if (current.outstandingBalance != null) {
-                            template.fromAccountOptions.filterNot { option ->
-                                option.accountId?.toLong() == current.accountId
+                            val prepopulatedFromAccount = when (current.transferSuccessDestination) {
+                                StatusNavigationDestination.SAVINGS_ACCOUNT.name,
+                                StatusNavigationDestination.LOAN_ACCOUNT.name,
+                                -> {
+                                    savingsFromAccounts.firstOrNull { it.accountId?.toLong() == current.accountId }
+                                }
+                                else -> current.fromAccount
                             }
-                        } else {
-                            template.fromAccountOptions
-                        }
 
-                    current.copy(
-                        accountOptionsTemplate = template,
-                        fromAccountOptions = updatedFromAccountOptions,
-                        toAccountOptions = template.toAccountOptions,
-                        toAccount = matchedToAccount,
-                        amount = current.outstandingBalance?.toString() ?: "",
-                        uiState = MakeTransferState.MakeTransferScreenState.Success,
-                    )
+                            val prepopulatedToAccount = when (current.transferSuccessDestination) {
+                                StatusNavigationDestination.LOAN_ACCOUNT.name -> {
+                                    template.toAccountOptions.firstOrNull {
+                                        it.accountId?.toLong() == current.accountId
+                                    }
+                                }
+                                else -> current.toAccount
+                            }
+
+                            val amount = current.outstandingBalance?.toString() ?: current.amount
+
+                            val filteredFromAccounts = savingsFromAccounts.filter {
+                                it.accountNo != prepopulatedToAccount?.accountNo
+                            }
+                            val filteredToAccounts = template.toAccountOptions.filter {
+                                it.accountNo != prepopulatedFromAccount?.accountNo
+                            }
+
+                            current.copy(
+                                accountOptionsTemplate = template,
+                                fromAccountOptions = filteredFromAccounts,
+                                toAccountOptions = filteredToAccounts,
+                                fromAccount = prepopulatedFromAccount,
+                                toAccount = prepopulatedToAccount,
+                                amount = amount,
+                                uiState = MakeTransferState.MakeTransferScreenState.Success,
+                            )
+                        }
+                        else -> {
+                            current.copy(
+                                accountOptionsTemplate = template,
+                                fromAccountOptions = template.fromAccountOptions,
+                                toAccountOptions = template.toAccountOptions,
+                                uiState = MakeTransferState.MakeTransferScreenState.Success,
+                            )
+                        }
+                    }
                 }
             }
         }
