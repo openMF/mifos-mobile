@@ -42,6 +42,7 @@ import androidx.compose.ui.zIndex
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.available_balance
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
+import mifos_mobile.core.ui.generated.resources.pay_from
 import mifos_mobile.core.ui.generated.resources.savings_account
 import mifos_mobile.core.ui.generated.resources.select_other_payment_account
 import org.jetbrains.compose.resources.painterResource
@@ -58,23 +59,21 @@ fun MifosPayFromDropdownUI(
     accounts: List<Pair<String, String>>,
     onAccountSelected: (String, String) -> Unit,
     modifier: Modifier = Modifier,
-    label: String = stringResource(Res.string.select_other_payment_account),
+    selectedAccountNo: String = "",
+    selectedAccountName: String = "",
+    label: String = stringResource(Res.string.pay_from),
 ) {
-    var selectedAccount by rememberSaveable { mutableStateOf("") }
-    var selectedBalance by rememberSaveable { mutableStateOf("") }
     Column {
         MifosDropDownPayFromComponent(
-            accountNumber = selectedAccount,
-            availableBalance = selectedBalance,
+            accountNumber = selectedAccountNo,
+            customerName = selectedAccountName,
             modifier = modifier,
             label = label,
         )
         AccountDropdownList(
             accounts = accounts,
-            selectedAccount = selectedAccount,
+            selectedAccount = selectedAccountNo,
             onAccountSelected = { accountNumber, balance ->
-                selectedAccount = accountNumber
-                selectedBalance = balance
                 onAccountSelected(accountNumber, balance)
             },
         )
@@ -84,7 +83,7 @@ fun MifosPayFromDropdownUI(
 @Composable
 fun MifosDropDownPayFromComponent(
     accountNumber: String,
-    availableBalance: String,
+    customerName: String,
     label: String,
     modifier: Modifier = Modifier,
 ) {
@@ -130,7 +129,7 @@ fun MifosDropDownPayFromComponent(
                         color = AppColors.customWhite.copy(alpha = 0.5f),
                     )
                     Text(
-                        text = availableBalance,
+                        text = customerName,
                         style = MifosTypography.titleMediumEmphasized,
                         color = AppColors.customWhite,
                     )

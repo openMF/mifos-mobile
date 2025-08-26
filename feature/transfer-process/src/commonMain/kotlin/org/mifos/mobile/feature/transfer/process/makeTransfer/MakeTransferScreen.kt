@@ -172,6 +172,8 @@ internal fun MakeTransferScreenContent(
                         onAccountSelected = { account, balance ->
                             onAction(MakeTransferAction.OnFromAccountSelected(account))
                         },
+                        selectedAccountNo = state.fromAccount?.accountNo ?: "",
+                        selectedAccountName = state.fromAccount?.clientName ?: "",
                     )
 
                     MifosOutlinedTextField(

@@ -196,6 +196,8 @@ internal fun TptForm(
                 onAction(TptAction.OnFromAccountSelected(account))
             },
             label = stringResource(Res.string.feature_tpt_label_origin_account),
+            selectedAccountNo = state.fromAccount?.accountNo ?: "",
+            selectedAccountName = state.fromAccount?.clientName ?: "",
         )
 
         MifosDropDownDoubleTextField(
