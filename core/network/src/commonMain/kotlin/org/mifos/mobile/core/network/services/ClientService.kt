@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.network.services
 
 import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Headers
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
@@ -28,6 +29,7 @@ interface ClientService {
     fun getClientForId(@Path(CLIENT_ID) clientId: Long): Flow<Client>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
+    @Headers("Accept: */*")
     fun getClientImage(@Path(CLIENT_ID) clientId: Long): Flow<HttpResponse>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
