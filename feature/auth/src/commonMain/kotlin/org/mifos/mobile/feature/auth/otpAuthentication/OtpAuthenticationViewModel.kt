@@ -34,6 +34,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
 internal class OtpAuthenticationViewModel(
@@ -145,7 +146,7 @@ internal class OtpAuthenticationViewModel(
         viewModelScope.launch {
             mutableStateFlow.update {
                 it.copy(
-                    dialogState = OtpAuthState.DialogState.Loading,
+                    showOverlay = true,
                 )
             }
             delay(3000)
@@ -174,7 +175,7 @@ internal class OtpAuthenticationViewModel(
 //                ),
 //            )
 //        }
-        mutableStateFlow.update { it.copy(dialogState = OtpAuthState.DialogState.Loading) }
+        mutableStateFlow.update { it.copy(showOverlay = true) }
         viewModelScope.launch {
             val result = userAuthRepositoryImpl.verifyUser(state.otp, state.requestId)
             sendAction(OtpAuthAction.Internal.ReceiveOtpResult(result))
@@ -187,6 +188,7 @@ internal class OtpAuthenticationViewModel(
             is DataState.Error -> {
                 mutableStateFlow.update {
                     it.copy(
+                        showOverlay = false,
                         dialogState = OtpAuthState.DialogState.Error(action.message),
                     )
                 }
@@ -204,7 +206,7 @@ internal class OtpAuthenticationViewModel(
             DataState.Loading -> {
                 mutableStateFlow.update {
                     it.copy(
-                        dialogState = OtpAuthState.DialogState.Loading,
+                        showOverlay = true,
                     )
                 }
             }
@@ -252,17 +254,17 @@ internal data class OtpAuthState(
     val requestId: String = "",
     val requestIdError: StringResource? = null,
 
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
 
         data class Error(val message: String) : DialogState
-
-        data object Loading : DialogState
     }
 
     val isNextButtonEnabled
-        get() = otp.isNotBlank() && requestId.isNotBlank()
+        get() = otp.isNotBlank()
 }
 
 internal sealed interface OtpAuthAction {

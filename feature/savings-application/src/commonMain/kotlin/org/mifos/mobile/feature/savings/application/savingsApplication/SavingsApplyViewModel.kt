@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_product_empty
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
@@ -34,6 +33,8 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * A `ViewModel` for the savings application screen, responsible for handling user input,
@@ -528,6 +529,7 @@ internal data class SavingsApplicationState(
         id to name
     }
 
+    @OptIn(ExperimentalTime::class)
     val submittedOnDate: String
         get() {
             val todayMillis = Clock.System.now().toEpochMilliseconds()

@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_large
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_small
@@ -44,6 +43,8 @@ import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 /**
@@ -696,6 +697,7 @@ internal data class LoanApplicationState(
     /**
      * The current time in milliseconds, used for date pickers.
      */
+    @OptIn(ExperimentalTime::class)
     val currentDate: Long
         get() = Clock.System.now().toEpochMilliseconds()
 
@@ -735,6 +737,7 @@ internal data class LoanApplicationState(
      * The effective submission date, which is the later of today's date or the
      * client's activation date.
      */
+    @OptIn(ExperimentalTime::class)
     val submittedOnDate: String
         get() {
             val todayMillis = Clock.System.now().toEpochMilliseconds()

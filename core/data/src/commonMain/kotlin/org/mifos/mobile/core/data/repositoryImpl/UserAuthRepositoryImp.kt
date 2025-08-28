@@ -73,8 +73,9 @@ class UserAuthRepositoryImp(
                     DataState.Error(Exception("Invalid Credentials"), null)
                 }
             }
-        } catch (e: Exception) {
-            DataState.Error(e, null)
+        } catch (e: ClientRequestException) {
+            val errorMessage = extractErrorMessage(e.response)
+            DataState.Error(Exception(errorMessage), null)
         }
     }
 

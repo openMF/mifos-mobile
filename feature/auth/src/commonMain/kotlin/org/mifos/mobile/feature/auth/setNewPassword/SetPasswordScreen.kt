@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,10 +45,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -58,7 +55,9 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
 import org.mifos.mobile.core.ui.PasswordStrengthIndicator
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun SetPasswordScreen(
@@ -112,10 +111,6 @@ private fun SetPasswordDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is SetPasswordState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
         null -> Unit
     }
 }
@@ -136,34 +131,44 @@ internal fun SetPasswordScreen(
             }
         },
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(top = DesignToken.padding.large)
-                .padding(DesignToken.padding.large)
-                .statusBarsPadding(),
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_set_new_password_title),
-                style = MifosTypography.headlineMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(top = DesignToken.padding.large)
+                        .padding(DesignToken.padding.large)
+                        .statusBarsPadding(),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.feature_set_new_password_title),
+                        style = MifosTypography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
 
-            Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-            Text(
-                text = stringResource(Res.string.feature_set_new_password_message),
-                style = MifosTypography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
+                    Text(
+                        text = stringResource(Res.string.feature_set_new_password_message),
+                        style = MifosTypography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
 
-            Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
 
-            SetPasswordInputBox(
-                state = state,
-                onAction = onAction,
-            )
+                    SetPasswordInputBox(
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> { }
         }
     }
 }
@@ -193,11 +198,6 @@ internal fun SetPasswordInputBox(
                 showPasswordChange = {
                     onAction(SetPasswordAction.OnTogglePassword)
                 },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    errorBorderColor = MaterialTheme.colorScheme.error,
-                ),
                 isError = state.passwordError != null,
                 hint = state.passwordError?.let { stringResource(it) },
             )
@@ -234,11 +234,6 @@ internal fun SetPasswordInputBox(
             showPasswordChange = {
                 onAction(SetPasswordAction.OnToggleConfirmPassword)
             },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             isError = state.confirmPasswordError != null,
             hint = state.confirmPasswordError?.let { stringResource(it) },
             keyboardType = KeyboardType.Password,

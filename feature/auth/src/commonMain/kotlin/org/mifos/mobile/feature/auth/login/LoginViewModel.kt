@@ -23,18 +23,16 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.UserData
-import org.mifos.mobile.core.model.IgnoredOnParcel
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 class LoginViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
-    initialState = LoginState(dialogState = null),
+    initialState = LoginState(uiState = ScreenUiState.Success),
 ) {
 
     private var loginJob: Job? = null
@@ -92,12 +90,12 @@ class LoginViewModel(
     private fun handleLoginResult(action: LoginAction.Internal.ReceiveLoginResult) {
         when (action.loginResult) {
             is DataState.Error -> {
-                val message = action.loginResult.exception.message ?: "Error logging in"
                 updateState {
                     it.copy(
-                        dialogState = null,
                         isError = true,
-                        errorMsg = message,
+                        uiState = ScreenUiState.Success,
+                        showOverlay = false,
+                        dialogState = LoginState.DialogState.Error(action.loginResult.message),
                         userNameError = Res.string.feature_sign_in_username_error,
                         passwordError = Res.string.feature_sign_in_password_error,
                     )
@@ -105,11 +103,11 @@ class LoginViewModel(
             }
 
             is DataState.Loading -> {
-                updateState { it.copy(dialogState = LoginState.DialogState.Loading) }
+                updateState { it.copy(showOverlay = true) }
             }
 
             is DataState.Success -> {
-                updateState { it.copy(dialogState = null) }
+                updateState { it.copy(showOverlay = false) }
                 val user = action.loginResult.data
                 val userData = UserData(
                     userId = user.userId,
@@ -139,7 +137,7 @@ class LoginViewModel(
     ) {
         loginJob?.cancel()
 
-        updateState { it.copy(dialogState = LoginState.DialogState.Loading) }
+        updateState { it.copy(showOverlay = true) }
 
         loginJob = viewModelScope.launch {
             delay(300)
@@ -150,27 +148,20 @@ class LoginViewModel(
     }
 }
 
-@Parcelize
 data class LoginState(
     val username: String = "",
-    @IgnoredOnParcel
     val password: String = "",
     val isPasswordVisible: Boolean = false,
     val clientName: String = "",
     val isError: Boolean = false,
-    @IgnoredOnParcel
     val userNameError: StringResource? = null,
-    @IgnoredOnParcel
     val passwordError: StringResource? = null,
-    val errorMsg: String = "",
-    val dialogState: DialogState?,
-) : Parcelable {
-    sealed interface DialogState : Parcelable {
-        @Parcelize
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState?,
+    val showOverlay: Boolean = false,
+) {
+    sealed interface DialogState {
         data class Error(val message: String) : DialogState
-
-        @Parcelize
-        data object Loading : DialogState
     }
 
     val isLoginButtonEnabled: Boolean

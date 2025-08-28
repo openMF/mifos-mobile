@@ -26,7 +26,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,10 +46,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
@@ -58,7 +55,9 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun RecoverPasswordScreen(
@@ -115,34 +114,44 @@ internal fun RecoverPasswordScreen(
             }
         },
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.large)
-                .statusBarsPadding(),
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_recover_now_title),
-                style = MifosTypography.headlineMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.large)
+                        .statusBarsPadding(),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.feature_recover_now_title),
+                        style = MifosTypography.headlineMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
 
-            Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-            Text(
-                text = stringResource(Res.string.feature_recover_now_message),
-                style = MifosTypography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
+                    Text(
+                        text = stringResource(Res.string.feature_recover_now_message),
+                        style = MifosTypography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
 
-            Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
 
-            ForgotPasswordInputBox(
-                state = state,
-                onAction = onAction,
-            )
+                    ForgotPasswordInputBox(
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> { }
         }
     }
 }
@@ -163,11 +172,6 @@ internal fun ForgotPasswordInputBox(
             label = stringResource(Res.string.feature_recover_now_phone_number_label),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             config = MifosTextFieldConfig(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Phone,
@@ -196,11 +200,6 @@ internal fun ForgotPasswordInputBox(
             label = stringResource(Res.string.feature_recover_now_email_label),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             config = MifosTextFieldConfig(
                 isError = state.emailError != null,
                 errorText = state.emailError?.let { stringResource(it) },
@@ -260,12 +259,6 @@ private fun RecoverPasswordDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is RecoverPasswordState.DialogState.Loading -> {
-            MifosLoadingDialog(
-                visibilityState = LoadingDialogState.Shown,
-            )
-        }
-
         is RecoverPasswordState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
