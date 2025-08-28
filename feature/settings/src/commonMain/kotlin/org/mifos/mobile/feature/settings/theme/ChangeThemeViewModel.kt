@@ -32,12 +32,23 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
+/**
+ * ViewModel for managing the theme selection in the application.
+ *
+ * This ViewModel handles user interactions related to theme settings, such as selecting a new theme
+ * and saving the preference. It observes changes to the user's theme preference from a
+ * [UserPreferencesRepository] and updates the UI state accordingly.
+ *
+ * @param repository The repository for accessing and updating user theme preferences.
+ */
 internal class ChangeThemeViewModel(
     private val repository: UserPreferencesRepository,
 ) : BaseViewModel<ThemeState, ThemeEvent, ThemeAction>(
     ThemeState(MifosThemeConfig.FOLLOW_SYSTEM),
 ) {
+
     init {
+        // Observe the user's dark theme configuration from the repository.
         repository.observeDarkThemeConfig
             .onEach { theme ->
                 trySendAction(ThemeAction.Internal.LoadTheme(theme))
@@ -45,12 +56,15 @@ internal class ChangeThemeViewModel(
             .launchIn(viewModelScope)
     }
 
+    /**
+     * Handles incoming actions from the UI.
+     *
+     * @param action The [ThemeAction] to be processed.
+     */
     override fun handleAction(action: ThemeAction) {
         when (action) {
             is ThemeAction.SetTheme -> handleSetTheme()
-
             is ThemeAction.ThemeSelection -> handleThemeSelection(action.theme)
-
             ThemeAction.NavigateBack -> {
                 sendEvent(ThemeEvent.OnNavigateBack)
             }
@@ -58,6 +72,14 @@ internal class ChangeThemeViewModel(
         }
     }
 
+    /**
+     * Updates the current theme selection in the UI state.
+     *
+     * This method does not persist the theme to the repository; it only updates the ViewModel's state.
+     * The theme is persisted when [handleSetTheme] is called.
+     *
+     * @param theme The [MifosThemeConfig] selected by the user.
+     */
     private fun handleThemeSelection(theme: MifosThemeConfig) {
         mutableStateFlow.update {
             it.copy(
@@ -66,17 +88,31 @@ internal class ChangeThemeViewModel(
         }
     }
 
+    /**
+     * Persists the currently selected theme to the [UserPreferencesRepository].
+     *
+     * This method launches a coroutine to save the theme preference and updates the UI state
+     * to reflect the new theme.
+     */
     private fun handleSetTheme() {
         viewModelScope.launch {
-            println("in viewModel ${state.currentTheme}")
             repository.updateTheme(state.currentTheme)
             mutableStateFlow.update {
                 it.copy(currentTheme = state.currentTheme)
             }
-//            sendEvent(ThemeEvent.OnNavigateBack)
+
+            sendEvent(ThemeEvent.OnNavigateBack)
         }
     }
 
+    /**
+     * Handles the loading of a theme from the repository.
+     *
+     * This method is triggered by the [repository.observeDarkThemeConfig] flow. It updates the
+     * ViewModel's state with the loaded theme.
+     *
+     * @param action The [ThemeAction.Internal.LoadTheme] containing the theme from the repository.
+     */
     private fun handleLoadTheme(action: ThemeAction.Internal.LoadTheme) {
         mutableStateFlow.update {
             it.copy(currentTheme = action.theme)
@@ -84,9 +120,17 @@ internal class ChangeThemeViewModel(
     }
 }
 
+/**
+ * Represents the UI state for the theme selection screen.
+ *
+ * @property currentTheme The currently selected theme configuration.
+ */
 internal data class ThemeState(
     val currentTheme: MifosThemeConfig,
 ) {
+    /**
+     * A list of all available theme options and their corresponding string resource IDs.
+     */
     val themeOptions
         get() = listOf(
             MifosThemeConfig.FOLLOW_SYSTEM to Res.string.feature_settings_theme_system,
@@ -95,16 +139,46 @@ internal data class ThemeState(
         )
 }
 
+/**
+ * Represents events that can be sent from the ViewModel to the UI.
+ */
 internal sealed interface ThemeEvent {
+    /**
+     * An event indicating that the UI should navigate back.
+     */
     data object OnNavigateBack : ThemeEvent
 }
 
+/**
+ * Represents actions that can be sent from the UI to the ViewModel.
+ */
 internal sealed interface ThemeAction {
+    /**
+     * An action to set and save the currently selected theme.
+     */
     data object SetTheme : ThemeAction
 
+    /**
+     * An action to update the theme selection in the UI state.
+     *
+     * @property theme The [MifosThemeConfig] selected by the user.
+     */
     data class ThemeSelection(val theme: MifosThemeConfig) : ThemeAction
+
+    /**
+     * An action to trigger navigation back from the theme settings screen.
+     */
     data object NavigateBack : ThemeAction
+
+    /**
+     * Actions that are internal to the ViewModel and should not be sent from the UI.
+     */
     sealed interface Internal : ThemeAction {
+        /**
+         * An internal action to load a theme into the ViewModel's state.
+         *
+         * @property theme The [MifosThemeConfig] loaded from the repository.
+         */
         data class LoadTheme(val theme: MifosThemeConfig) : Internal
     }
 }
