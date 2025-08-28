@@ -14,12 +14,11 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import org.mifos.mobile.core.designsystem.theme.AppColors
 
 @Composable
 fun MifosBottomBar(
@@ -30,8 +29,8 @@ fun MifosBottomBar(
     windowInsets: WindowInsets = BottomAppBarDefaults.windowInsets,
 ) {
     BottomAppBar(
-        containerColor = AppColors.customWhite,
-        contentColor = Color.Unspecified,
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         windowInsets = windowInsets,
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +39,7 @@ fun MifosBottomBar(
 //                spotColor = Color(0xFF5D5D5D),
 //                ambientColor = Color.Black,
 //            )
-            .background(AppColors.customWhite),
+            .background(MaterialTheme.colorScheme.surface),
         tonalElevation = 0.dp,
     ) {
         navigationItems.forEach { navigationItem ->

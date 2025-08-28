@@ -24,6 +24,7 @@ import org.mifos.mobile.feature.settings.passcode.updatePasscodeDestination
 import org.mifos.mobile.feature.settings.password.changePasswordDestination
 import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
+import org.mifos.mobile.feature.settings.theme.themeDestination
 
 @Serializable
 data object SettingsNavGraphRoute
@@ -65,6 +66,9 @@ fun NavGraphBuilder.settingsGraph(
         )
         changePasswordDestination(
             onBackClick = navController::popBackStack,
+        )
+        themeDestination(
+            navigateBack = navController::popBackStack,
         )
     }
 }

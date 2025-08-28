@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -231,7 +230,7 @@ private fun QrCodeReaderContent(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_qr_upload),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MifosTypography.titleMedium,
                 )
             }
         }

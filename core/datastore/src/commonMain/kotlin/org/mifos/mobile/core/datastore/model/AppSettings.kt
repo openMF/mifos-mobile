@@ -10,8 +10,8 @@
 package org.mifos.mobile.core.datastore.model
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 
 @Serializable
 data class AppSettings(
@@ -19,11 +19,10 @@ data class AppSettings(
     val tenant: String,
     val baseUrl: String,
     val passcode: String,
-    val appTheme: AppTheme,
+    val appTheme: MifosThemeConfig,
     val sentTokenToServer: Boolean = false,
     val gcmToken: String? = null,
     val useDynamicColor: Boolean,
-    val darkThemeConfig: DarkThemeConfig,
     val isAuthenticated: Boolean,
     val isUnlocked: Boolean,
     val language: LanguageConfig,
@@ -35,14 +34,13 @@ data class AppSettings(
             userId = "",
             tenant = "default",
             baseUrl = "https://tt.mifos.community/",
-            appTheme = AppTheme.SYSTEM,
+            appTheme = MifosThemeConfig.FOLLOW_SYSTEM,
             sentTokenToServer = false,
             gcmToken = null,
             language = LanguageConfig.DEFAULT,
             showOnboarding = true,
             firstTimeState = true,
             useDynamicColor = false,
-            darkThemeConfig = DarkThemeConfig.FOLLOW_SYSTEM,
             isAuthenticated = false,
             passcode = "",
             isUnlocked = false,

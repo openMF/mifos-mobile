@@ -128,12 +128,12 @@ private fun FaqContent(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_settings_faq_doubt),
-                    style = MifosTypography.bodyLarge,
+                    style = MifosTypography.bodySmall,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(Res.string.feature_settings_faq_contact_us),
-                    style = MifosTypography.bodyLarge,
+                    style = MifosTypography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         onAction(FaqAction.NavigateToHelp)

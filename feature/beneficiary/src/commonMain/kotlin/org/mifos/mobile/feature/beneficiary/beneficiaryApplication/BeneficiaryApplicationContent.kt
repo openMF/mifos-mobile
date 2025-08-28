@@ -147,7 +147,9 @@ internal fun BeneficiaryApplicationContent(
         Spacer(Modifier.height(DesignToken.padding.large))
 
         MifosButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(DesignToken.sizes.buttonHeight),
             text = { Text(text = stringResource(Res.string.submit_beneficiary)) },
             onClick = {
                 onAction(

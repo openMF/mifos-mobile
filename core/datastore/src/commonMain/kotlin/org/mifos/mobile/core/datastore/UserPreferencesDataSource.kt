@@ -24,10 +24,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import okio.ByteString.Companion.encodeUtf8
 import org.mifos.mobile.core.datastore.model.AppSettings
-import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
-import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 
 private const val USER_DATA = "userData"
 private const val APP_SETTINGS = "appSettings"
@@ -81,8 +80,8 @@ class UserPreferencesDataSource(
     val observeDynamicColorPreference: Flow<Boolean>
         get() = _settingsInfo.map { it.useDynamicColor }
 
-    val observeDarkThemeConfig: Flow<DarkThemeConfig>
-        get() = _settingsInfo.map { it.darkThemeConfig }
+    val observeDarkThemeConfig: Flow<MifosThemeConfig>
+        get() = _settingsInfo.map { it.appTheme }
 
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
@@ -130,16 +129,11 @@ class UserPreferencesDataSource(
         }
     }
 
-    suspend fun updateTheme(theme: AppTheme) {
+    suspend fun updateTheme(theme: MifosThemeConfig) {
         withContext(dispatcher) {
-            settings.putSettingsPreference(
-                AppSettings.DEFAULT.copy(
-                    appTheme = theme,
-                ),
-            )
-            _settingsInfo.value = AppSettings.DEFAULT.copy(
-                appTheme = theme,
-            )
+            val newPreference = settings.getSettingsPreference().copy(appTheme = theme)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
         }
     }
 

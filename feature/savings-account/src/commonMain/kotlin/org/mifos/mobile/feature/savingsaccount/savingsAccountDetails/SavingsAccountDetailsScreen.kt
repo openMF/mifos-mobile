@@ -234,7 +234,7 @@ internal fun AccountDetailsGrid(
             Text(
                 text = label,
                 style = MifosTypography.labelLargeEmphasized,
-                color = AppColors.customBlack,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
         if (details != null) {
@@ -276,7 +276,7 @@ internal fun SavingsAccountActions(
         Text(
             text = "Actions",
             style = MifosTypography.labelLargeEmphasized,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
         )
         FlowRow(
             modifier = Modifier.fillMaxWidth(),

@@ -79,7 +79,6 @@ import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -208,7 +207,7 @@ private fun RegistrationScreenContent(
             Text(
                 text = stringResource(Res.string.feature_signup_title),
                 style = MifosTypography.headlineMedium,
-                color = AppColors.customBlack,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
 
@@ -238,7 +237,7 @@ private fun RegistrationScreenContent(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_signup_submit),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MifosTypography.titleMedium,
                 )
             }
         }

@@ -61,7 +61,6 @@ import mifos_mobile.core.designsystem.generated.resources.feature_upload_id_view
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -181,7 +180,8 @@ fun MifosUploadStateCard(
             defaultElevation = DesignToken.elevation.none,
         ),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ),
         borderStroke = BorderStroke(
             1.dp,
@@ -309,7 +309,7 @@ fun MifosUploadedCardContent(
             Image(
                 imageVector = icon,
                 contentDescription = "file icon",
-                colorFilter = ColorFilter.tint(Color.White),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .size(DesignToken.sizes.iconMedium)
                     .align(Alignment.Center),
@@ -322,7 +322,7 @@ fun MifosUploadedCardContent(
             Text(
                 text = fileName,
                 style = MifosTypography.titleSmallEmphasized,
-                color = AppColors.customBlack,
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Text(
@@ -388,7 +388,8 @@ fun MifosExploreCard(
         variant = CardVariant.OUTLINED,
         onClick = onClick,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ),
     ) {
         Row(
@@ -400,6 +401,7 @@ fun MifosExploreCard(
                 imageVector = icon,
                 contentDescription = text,
                 modifier = Modifier.size(DesignToken.sizes.iconMedium),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
             )
 
             Text(
@@ -491,7 +493,8 @@ private fun Upload_Card_Preview() {
                         },
                     ),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White,
+                        containerColor = Color.Transparent,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
                     ),
                     borderStroke = BorderStroke(
                         1.dp,

@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
@@ -143,6 +144,7 @@ internal fun TprContent(
                     modifier = Modifier.clickable {
                         onAction(TptAction.OnNotificationClicked)
                     },
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                 )
             }
         },

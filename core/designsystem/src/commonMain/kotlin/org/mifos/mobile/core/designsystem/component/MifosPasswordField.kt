@@ -26,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -91,7 +90,12 @@ fun MifosPasswordField(
             keyboardActions = keyboardActions,
             errorText = hint,
             trailingIcon = {
-                val color = if (isError) MaterialTheme.colorScheme.error else Color.Unspecified
+                val color = if (isError) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme
+                        .colorScheme.onSurface
+                }
                 IconButton(
                     onClick = { showPasswordChange.invoke(!showPassword) },
                 ) {

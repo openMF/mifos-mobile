@@ -240,7 +240,7 @@ fun MifosElevatedScaffold(
         bottomBar = bottomBar,
         snackbarHost = snackbarHost,
         contentWindowInsets = WindowInsets(0.dp),
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.surface,
         content = { paddingValues ->
             Box(
                 modifier = Modifier
@@ -286,7 +286,7 @@ fun MifosScaffold(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    containerColor: Color = Color.White,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     contentWindowInsets: WindowInsets = ScaffoldDefaults
         .contentWindowInsets

@@ -256,7 +256,7 @@ private fun SignatureContent(
                     ) {
                         Text(
                             text = stringResource(Res.string.reset),
-                            style = MaterialTheme.typography.labelLarge,
+                            style = MifosTypography.titleMedium,
                         )
                     }
 
@@ -280,7 +280,7 @@ private fun SignatureContent(
                     ) {
                         Text(
                             text = stringResource(Res.string.save_and_submit),
-                            style = MaterialTheme.typography.labelLarge,
+                            style = MifosTypography.titleMedium,
                         )
                     }
                 }

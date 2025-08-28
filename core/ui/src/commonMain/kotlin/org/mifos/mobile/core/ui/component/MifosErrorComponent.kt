@@ -150,7 +150,7 @@ fun EmptyDataComponent(
             ) {
                 Text(
                     text = stringResource(Res.string.retry),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MifosTypography.titleMedium,
                 )
             }
         }
