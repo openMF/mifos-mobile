@@ -63,10 +63,10 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loan.application.component.ApplyLoanBottomBar
 import org.mifos.mobile.feature.loan.application.component.LoanCard
 import org.mifos.mobile.feature.loan.application.component.TermsAndConditionItem
-import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeState
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 @Composable
@@ -109,24 +109,12 @@ internal fun LoanProductDetailsDialog(
     onAction: (LoanProductDetailsAction) -> Unit,
 ) {
     when (state.dialogState) {
-        LoanProductDetailsState.DialogState.Loading -> MifosProgressIndicator()
-
         is LoanProductDetailsState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = stringResource(state.dialogState.error),
                 ),
                 onDismissRequest = { onAction(LoanProductDetailsAction.NavigateBack) },
-            )
-        }
-
-        SelectLoanTypeState.DialogState.Loading -> MifosProgressIndicator()
-
-        is LoanProductDetailsState.DialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.networkStatus,
-                isRetryEnabled = true,
-                onRetry = { onAction(LoanProductDetailsAction.Retry) },
             )
         }
 
@@ -146,18 +134,22 @@ internal fun LoanProductDetailsScreenContent(
         onNavigateBack = { onAction(LoanProductDetailsAction.NavigateBack) },
         bottomBar = {
             Column {
-                if (state.dialogState == null) {
-                    ApplyLoanBottomBar(
-                        modifier = Modifier,
-                        checked = state.checked,
-                        isEnabled = state.isEnabled,
-                        onCheckedChange = {
-                            onAction(LoanProductDetailsAction.OnChecked(it))
-                        },
-                        onApplyClick = {
-                            onAction(LoanProductDetailsAction.ApplyLoan)
-                        },
-                    )
+                when (state.uiState) {
+                    ScreenUiState.Success -> {
+                        ApplyLoanBottomBar(
+                            modifier = Modifier,
+                            checked = state.checked,
+                            isEnabled = state.isEnabled,
+                            onCheckedChange = {
+                                onAction(LoanProductDetailsAction.OnChecked(it))
+                            },
+                            onApplyClick = {
+                                onAction(LoanProductDetailsAction.ApplyLoan)
+                            },
+                        )
+                    }
+
+                    else -> { }
                 }
 
                 Surface {
@@ -170,90 +162,111 @@ internal fun LoanProductDetailsScreenContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(DesignToken.padding.large)
-                    .padding(top = DesignToken.padding.large),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-            ) {
-                item {
-                    LoanCard(
-                        cardImage = UiRes.drawable.ic_icon_dashboard,
-                        title = stringResource(Res.string.feature_loan_get_loan, state.productName),
-                        amount = stringResource(Res.string.feature_loan_up_to, state.principalText),
-                        interestRate = stringResource(
-                            Res.string.feature_loan_interest_rate_in_numbers,
-                            state.minInterest,
-                            state.maxInterest,
-                        ),
-                    )
-                }
+        when (state.uiState) {
+            ScreenUiState.Loading -> MifosProgressIndicator()
 
-                item {
-                    Text(
-                        text = stringResource(Res.string.feature_loan_terms_and_conditions),
-                        style = MifosTypography.titleMediumEmphasized,
-                    )
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
-                    ) {
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_sanction_and_disbursement,
-                            description = Res.string
-                                .feature_personal_loan_sanction_and_disbursement_details,
-                        )
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(LoanProductDetailsAction.Retry) },
+                )
+            }
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_interest_rate,
-                            description = Res.string.feature_personal_loan_interest_rate_description,
-                        )
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(LoanProductDetailsAction.Retry) },
+                )
+            }
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_repayment,
-                            description = Res.string.feature_personal_loan_repayment_details,
+            ScreenUiState.Success -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.large),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    item {
+                        LoanCard(
+                            cardImage = UiRes.drawable.ic_icon_dashboard,
+                            title = stringResource(Res.string.feature_loan_get_loan, state.productName),
+                            amount = stringResource(Res.string.feature_loan_up_to, state.principalText),
+                            interestRate = stringResource(
+                                Res.string.feature_loan_interest_rate_in_numbers,
+                                state.minInterest,
+                                state.maxInterest,
+                            ),
                         )
+                    }
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_security_and_collateral,
-                            description = Res.string.feature_personal_loan_security_and_collateral_details,
+                    item {
+                        Text(
+                            text = stringResource(Res.string.feature_loan_terms_and_conditions),
+                            style = MifosTypography.titleMediumEmphasized,
                         )
+                        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+                        ) {
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_sanction_and_disbursement,
+                                description = Res.string
+                                    .feature_personal_loan_sanction_and_disbursement_details,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_insurance,
-                            description = Res.string.feature_personal_loan_insurance_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_interest_rate,
+                                description = Res.string.feature_personal_loan_interest_rate_description,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_default,
-                            description = Res.string.feature_personal_loan_default_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_repayment,
+                                description = Res.string.feature_personal_loan_repayment_details,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_documentation,
-                            description = Res.string.feature_personal_loan_documentation_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_security_and_collateral,
+                                description = Res.string.feature_personal_loan_security_and_collateral_details,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_continue_legal_compliance,
-                            description = Res.string.feature_personal_loan_continue_legal_compliance_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_insurance,
+                                description = Res.string.feature_personal_loan_insurance_details,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_amendments_and_termination,
-                            description = Res.string.feature_personal_loan_amendments_and_termination_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_default,
+                                description = Res.string.feature_personal_loan_default_details,
+                            )
 
-                        TermsAndConditionItem(
-                            title = Res.string.feature_loan_jurisdiction,
-                            description = Res.string.feature_personal_loan_jurisdiction_details,
-                        )
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_documentation,
+                                description = Res.string.feature_personal_loan_documentation_details,
+                            )
+
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_continue_legal_compliance,
+                                description = Res.string.feature_personal_loan_continue_legal_compliance_details,
+                            )
+
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_amendments_and_termination,
+                                description = Res.string.feature_personal_loan_amendments_and_termination_details,
+                            )
+
+                            TermsAndConditionItem(
+                                title = Res.string.feature_loan_jurisdiction,
+                                description = Res.string.feature_personal_loan_jurisdiction_details,
+                            )
+                        }
                     }
                 }
             }
+            else -> { }
         }
     }
 }
