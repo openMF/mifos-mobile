@@ -29,7 +29,6 @@ interface ClientService {
     fun getClientForId(@Path(CLIENT_ID) clientId: Long): Flow<Client>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
-    @Headers("Accept: */*")
     fun getClientImage(@Path(CLIENT_ID) clientId: Long): Flow<HttpResponse>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
