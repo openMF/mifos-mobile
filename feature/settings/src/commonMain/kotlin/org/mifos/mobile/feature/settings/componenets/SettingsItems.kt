@@ -31,6 +31,8 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password_tip
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme_tip
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
@@ -76,13 +78,13 @@ sealed class SettingsItems(
     )
 
 //    TODO : uncomment once ui/ux team provide a valid colours for dark theme
-//    @Serializable
-//    data object Theme : SettingsItems(
-//        title = Res.string.feature_settings_action_theme,
-//        subTitle = Res.string.feature_settings_action_theme_tip,
-//        icon = MifosIcons.DarkTheme,
-//        route = Constants.THEME,
-//    )
+    @Serializable
+    data object Theme : SettingsItems(
+        title = Res.string.feature_settings_action_theme,
+        subTitle = Res.string.feature_settings_action_theme_tip,
+        icon = MifosIcons.DarkTheme,
+        route = Constants.THEME,
+    )
 //    TODO: once ui/ux team gives this screen uncomment and implement it
 //    @Serializable
 //    data object Endpoint : SettingsItems(
@@ -138,7 +140,7 @@ internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
     SettingsItems.Password,
     SettingsItems.AuthPasscode,
     SettingsItems.Language,
-//    SettingsItems.Theme,
+    SettingsItems.Theme,
 //    SettingsItems.Endpoint,
     SettingsItems.AboutUs,
     SettingsItems.FAQ,

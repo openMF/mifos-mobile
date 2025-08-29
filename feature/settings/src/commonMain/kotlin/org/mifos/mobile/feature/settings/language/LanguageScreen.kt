@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosRadioButton
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -111,6 +113,12 @@ internal fun LanguageSelectionContent(
                 onClick = {
                     onSetLanguage(it)
                 },
+                selectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
+                    color = AppColors.primaryBlue,
+                ),
+                unselectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
+                    MaterialTheme.colorScheme.onSurface,
+                ),
             )
         }
     }

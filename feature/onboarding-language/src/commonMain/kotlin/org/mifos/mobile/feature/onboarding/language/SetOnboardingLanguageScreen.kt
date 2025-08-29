@@ -17,11 +17,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +30,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -76,7 +75,30 @@ internal fun OnboardingLanguageScreenContent(
     onAction: (OnboardingLanguageAction) -> Unit,
 ) {
     var selectedLanguage by rememberSaveable { mutableStateOf(uiState.currentLanguage) }
-    MifosScaffold {
+    MifosScaffold(
+        bottomBar = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
+            ) {
+                MifosButton(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(DesignToken.padding.large)
+                        .height(DesignToken.sizes.buttonHeight),
+                    shape = DesignToken.shapes.medium,
+                    onClick = { onAction(OnboardingLanguageAction.SetLanguage(selectedLanguage)) },
+                ) {
+                    Text(
+                        text = stringResource(Res.string.feature_onboarding_submit),
+                        style = MifosTypography.titleMedium,
+                    )
+                }
+                MifosPoweredCard()
+            }
+        },
+    ) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -85,7 +107,6 @@ internal fun OnboardingLanguageScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 50.dp)
                     .padding(horizontal = DesignToken.padding.large),
             ) {
                 Image(
@@ -101,7 +122,7 @@ internal fun OnboardingLanguageScreenContent(
                 Text(
                     text = stringResource(Res.string.feature_onboarding_choose_your_app_language),
                     style = MifosTypography.headlineMedium,
-                    color = AppColors.customBlack,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
@@ -116,42 +137,11 @@ internal fun OnboardingLanguageScreenContent(
 
                 Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                ) {
-                    LanguageSelectionContent(
-                        selectedLanguage = selectedLanguage,
-                        onSetLanguage = { selectedLanguage = it },
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-                MifosButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(DesignToken.sizes.buttonHeight),
-                    shape = DesignToken.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = AppColors.customWhite,
-                    ),
-                    text = {
-                        Text(
-                            text = stringResource(Res.string.feature_onboarding_submit),
-                        )
-                    },
-                    onClick = { onAction(OnboardingLanguageAction.SetLanguage(selectedLanguage)) },
+                LanguageSelectionContent(
+                    selectedLanguage = selectedLanguage,
+                    onSetLanguage = { selectedLanguage = it },
                 )
             }
-
-            MifosPoweredCard(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-            )
         }
     }
 }
@@ -174,6 +164,12 @@ internal fun LanguageSelectionContent(
                 onClick = {
                     onSetLanguage(it)
                 },
+                selectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
+                    color = AppColors.primaryBlue,
+                ),
+                unselectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
+                    MaterialTheme.colorScheme.onSurface,
+                ),
             )
         }
     }

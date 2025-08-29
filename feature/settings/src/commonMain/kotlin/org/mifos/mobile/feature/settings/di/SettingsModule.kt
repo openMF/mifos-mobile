@@ -16,6 +16,7 @@ import org.mifos.mobile.feature.settings.language.LanguageViewModel
 import org.mifos.mobile.feature.settings.passcode.UpdatePasscodeViewModel
 import org.mifos.mobile.feature.settings.password.ChangePasswordViewModel
 import org.mifos.mobile.feature.settings.settings.SettingsViewModel
+import org.mifos.mobile.feature.settings.theme.ChangeThemeViewModel
 
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel)
@@ -24,4 +25,5 @@ val SettingsModule = module {
     viewModelOf(::UpdatePasscodeViewModel)
     viewModelOf(::FaqViewModel)
     viewModelOf(::LanguageViewModel)
+    viewModelOf(::ChangeThemeViewModel)
 }

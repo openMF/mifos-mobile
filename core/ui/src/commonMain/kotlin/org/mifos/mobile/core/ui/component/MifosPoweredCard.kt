@@ -32,7 +32,6 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -48,11 +47,11 @@ fun MifosPoweredCard(
             .shadow(
                 elevation = DesignToken.elevation.elevation,
                 shape = DesignToken.shapes.bottomSheet,
-                ambientColor = AppColors.customBlack,
-                spotColor = AppColors.customBlack,
+                ambientColor = MaterialTheme.colorScheme.onSurface,
+                spotColor = MaterialTheme.colorScheme.onSurface,
                 clip = false,
             )
-            .background(AppColors.customWhite, shape = DesignToken.shapes.bottomSheet),
+            .background(MaterialTheme.colorScheme.surface, shape = DesignToken.shapes.bottomSheet),
     ) {
         Row(
             modifier = Modifier

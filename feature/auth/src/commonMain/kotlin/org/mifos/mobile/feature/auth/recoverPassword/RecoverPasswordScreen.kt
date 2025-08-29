@@ -227,7 +227,7 @@ internal fun ForgotPasswordInputBox(
         ) {
             Text(
                 text = stringResource(Res.string.feature_recover_now_title),
-                style = MaterialTheme.typography.labelLarge,
+                style = MifosTypography.titleMedium,
             )
         }
 

@@ -241,7 +241,7 @@ private fun RegistrationScreenContent(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_signup_submit),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MifosTypography.titleMedium,
                 )
             }
         }

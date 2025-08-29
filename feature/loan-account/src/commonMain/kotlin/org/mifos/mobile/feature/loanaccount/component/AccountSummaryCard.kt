@@ -86,7 +86,7 @@ fun AccountSummaryCard(
                 Text(
                     text = title,
                     style = MifosTypography.titleSmallEmphasized,
-                    color = AppColors.customBlack,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Icon(
                     modifier = Modifier.size(DesignToken.sizes.iconSmall),

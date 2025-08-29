@@ -113,15 +113,18 @@ internal fun AboutScreenContent(
                     Text(
                         text = stringResource(Res.string.feature_settings_about_who_are_we),
                         style = MifosTypography.titleSmallEmphasized,
+                        color = AppColors.customBlack,
                     )
                     Text(
                         text = stringResource(Res.string.feature_settings_about_who_are_we_desc),
                         style = MifosTypography.bodySmall,
+                        color = AppColors.customBlack,
                     )
 
                     Text(
                         text = stringResource(Res.string.feature_settings_about_what_does_mifos_do),
                         style = MifosTypography.titleSmallEmphasized,
+                        color = AppColors.customBlack,
                         modifier = Modifier.padding(top = DesignToken.padding.small),
                     )
 
@@ -134,6 +137,7 @@ internal fun AboutScreenContent(
                             Text(
                                 text = "• $point",
                                 style = MifosTypography.bodySmall,
+                                color = AppColors.customBlack,
                                 modifier = Modifier.padding(vertical = 2.dp),
                             )
                         }
@@ -143,7 +147,7 @@ internal fun AboutScreenContent(
                     painter =
                     painterResource(Res.drawable.ic_icon_money_transfer),
                     contentDescription = null,
-                    Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }

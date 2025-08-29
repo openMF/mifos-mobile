@@ -19,6 +19,8 @@ import androidx.core.view.WindowCompat
 import cmp.shared.SharedApp
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.ui.utils.ShareUtils
@@ -42,6 +44,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        runBlocking {
+            val userThemeConfig = userPreferencesRepository.observeDarkThemeConfig.first()
+            AppCompatDelegate.setDefaultNightMode(userThemeConfig.osValue)
+        }
+
         var shouldShowSplashScreen = true
         installSplashScreen().setKeepOnScreenCondition { shouldShowSplashScreen }
 

@@ -50,7 +50,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -132,6 +131,7 @@ internal fun HomeContent(
                 Image(
                     imageVector = MifosIcons.Alert,
                     contentDescription = null,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                     modifier = Modifier.clickable {
                         onAction(HomeAction.OnNotificationClick)
                     },
@@ -171,7 +171,7 @@ internal fun HomeContent(
                             state.firstName.toString(),
                         ),
                         style = MifosTypography.titleLarge,
-                        color = AppColors.customBlack,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.large))
@@ -192,7 +192,7 @@ internal fun HomeContent(
                     Text(
                         text = stringResource(Res.string.feature_home_services),
                         style = MifosTypography.titleMediumEmphasized,
-                        color = AppColors.customBlack,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.large))
@@ -267,7 +267,7 @@ internal fun ServiceItemCard(
         Text(
             text = stringResource(title),
             style = MifosTypography.bodySmallEmphasized,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         )
     }

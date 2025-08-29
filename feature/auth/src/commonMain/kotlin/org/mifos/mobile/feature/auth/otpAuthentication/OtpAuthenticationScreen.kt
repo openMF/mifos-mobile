@@ -296,7 +296,7 @@ internal fun OtpInputForm(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_common_next),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MifosTypography.titleMedium,
                 )
             }
         }

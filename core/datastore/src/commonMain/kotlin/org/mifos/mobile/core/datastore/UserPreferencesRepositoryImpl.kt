@@ -18,10 +18,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
-import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
-import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 
 class UserPreferencesRepositoryImpl(
     private val preferenceManager: UserPreferencesDataSource,
@@ -36,10 +35,10 @@ class UserPreferencesRepositoryImpl(
     override val settingsInfo: StateFlow<AppSettings>
         get() = preferenceManager.settingsInfo
 
-    override val appTheme: StateFlow<AppTheme>
+    override val appTheme: StateFlow<MifosThemeConfig>
         get() = preferenceManager.appTheme.stateIn(
             scope = unconfinedScope,
-            initialValue = AppTheme.SYSTEM,
+            initialValue = MifosThemeConfig.FOLLOW_SYSTEM,
             started = SharingStarted.Eagerly,
         )
     override val token: StateFlow<String?>
@@ -70,7 +69,7 @@ class UserPreferencesRepositoryImpl(
     override val observeLanguage: Flow<LanguageConfig>
         get() = preferenceManager.observeLanguage
 
-    override val observeDarkThemeConfig: Flow<DarkThemeConfig>
+    override val observeDarkThemeConfig: Flow<MifosThemeConfig>
         get() = preferenceManager.observeDarkThemeConfig
 
     override val observeDynamicColorPreference: Flow<Boolean>
@@ -88,7 +87,7 @@ class UserPreferencesRepositoryImpl(
         }
     }
 
-    override suspend fun updateTheme(theme: AppTheme): DataState<Unit> {
+    override suspend fun updateTheme(theme: MifosThemeConfig): DataState<Unit> {
         return try {
             val result = preferenceManager.updateTheme(theme)
             DataState.Success(result)

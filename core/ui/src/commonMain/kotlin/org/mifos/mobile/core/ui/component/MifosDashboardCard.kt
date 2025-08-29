@@ -165,7 +165,7 @@ fun MifosDashboardCard(
                 content = {
                     Text(
                         text = "Apply Loan",
-                        style = MifosTypography.bodySmall,
+                        style = MifosTypography.titleMedium,
                     )
                 },
             )

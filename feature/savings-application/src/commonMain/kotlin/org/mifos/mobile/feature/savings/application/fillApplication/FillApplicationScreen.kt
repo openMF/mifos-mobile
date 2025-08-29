@@ -174,7 +174,7 @@ internal fun SavingsFillApplicationContent(
                 Text(
                     text = stringResource(Res.string.feature_apply_savings_label_details),
                     style = MifosTypography.labelLargeEmphasized,
-                    color = AppColors.customBlack,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 MifosOutlineDropdown(
@@ -204,7 +204,7 @@ internal fun SavingsFillApplicationContent(
                 Text(
                     text = stringResource(Res.string.feature_apply_savings_label_lock_in_period),
                     style = MifosTypography.labelLargeEmphasized,
-                    color = AppColors.customBlack,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 MifosOutlinedTextField(
@@ -236,7 +236,7 @@ internal fun SavingsFillApplicationContent(
                     Text(
                         text = stringResource(Res.string.feature_apply_savings_label_overdraft),
                         style = MifosTypography.labelLargeEmphasized,
-                        color = AppColors.customBlack,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
 
                     Row(
@@ -271,7 +271,7 @@ internal fun SavingsFillApplicationContent(
                 ) {
                     Text(
                         text = stringResource(Res.string.feature_button_next),
-                        style = MaterialTheme.typography.labelLarge,
+                        style = MifosTypography.titleMedium,
                     )
                 }
             }

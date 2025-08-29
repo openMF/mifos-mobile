@@ -28,13 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
@@ -64,7 +62,7 @@ fun MifosTopBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = AppColors.customWhite,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
         actions = actions,
         modifier = modifier,
@@ -100,7 +98,7 @@ fun MifosTopBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = AppColors.customWhite,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
         actions = actions,
         modifier = modifier,
@@ -152,18 +150,18 @@ fun MifosRoundedTopAppBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = AppColors.customWhite,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
         modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = DesignToken.elevation.elevation,
                 shape = DesignToken.shapes.topBar,
-                spotColor = Color(0xFF5D5D5D),
-                ambientColor = AppColors.customBlack,
+                spotColor = MaterialTheme.colorScheme.onSurface,
+                ambientColor = MaterialTheme.colorScheme.onSurface,
             )
             .clip(DesignToken.shapes.topBar)
-            .background(AppColors.customWhite),
+            .background(MaterialTheme.colorScheme.surface),
     )
 }
 
