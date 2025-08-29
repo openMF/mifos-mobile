@@ -117,6 +117,7 @@
     <string name="savings_account">Savings Account</string>
     <string name="available_balance">Client Name</string>
     <string name="select_other_payment_account">Select other payment account</string>
+    <string name="pay_from">Pay from</string>
     <string name="available_balance_formatted">Available Balance - %1$s</string>
 
     <string name="feature_savings_filter">Filters</string>

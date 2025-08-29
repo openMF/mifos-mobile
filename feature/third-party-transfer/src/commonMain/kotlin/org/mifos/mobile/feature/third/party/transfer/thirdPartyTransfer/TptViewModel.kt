@@ -28,7 +28,6 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 /**
@@ -165,6 +164,7 @@ internal class TptViewModel(
      * @param fromAccount The account number of the selected 'from' account.
      */
     private fun handleFromAccountChange(fromAccount: String) {
+        println("From Account Selected: $fromAccount")
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
             .find { it.accountNo == fromAccount }
 
@@ -194,7 +194,7 @@ internal class TptViewModel(
             .find { it.accountNo == toAccount }
 
         val fromAccounts = state.accountOptionsTemplate.fromAccountOptions.filter {
-            it.accountNo != toAccount && it.accountType?.value == AccountType.SAVINGS.value
+            it.accountNo != toAccount
         }
 
         updateState {
@@ -409,14 +409,10 @@ internal class TptViewModel(
             }
 
             is DataState.Success -> {
-                val savingsAccounts = dataState.data.fromAccountOptions.filter { acc ->
-                    acc.accountType?.value == AccountType.SAVINGS.value
-                }
-
                 updateState {
                     it.copy(
                         accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = savingsAccounts,
+                        fromAccountOptions = dataState.data.fromAccountOptions,
                         toAccountOptions = dataState.data.toAccountOptions,
                         uiState = TptState.TptScreenState.Success,
                     )
