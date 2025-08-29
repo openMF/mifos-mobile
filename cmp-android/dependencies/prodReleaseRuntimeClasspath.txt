@@ -186,8 +186,8 @@ com.russhwolf:multiplatform-settings-serialization:1.2.0
 com.russhwolf:multiplatform-settings:1.2.0
 com.squareup.okhttp3:okhttp-sse:4.12.0
 com.squareup.okhttp3:okhttp:4.12.0
-com.squareup.okio:okio-jvm:3.11.0
-com.squareup.okio:okio:3.11.0
+com.squareup.okio:okio-jvm:3.15.0
+com.squareup.okio:okio:3.15.0
 de.jensklingenberg.ktorfit:ktorfit-annotations-android:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-annotations:2.2.0
 de.jensklingenberg.ktorfit:ktorfit-lib-android:2.2.0
@@ -211,6 +211,14 @@ io.coil-kt.coil3:coil-network-ktor3:3.0.4
 io.coil-kt.coil3:coil-svg-android:3.0.4
 io.coil-kt.coil3:coil-svg:3.0.4
 io.coil-kt.coil3:coil:3.2.0
+io.github.alexzhirkevich:compottie-core-android:2.0.0-rc05
+io.github.alexzhirkevich:compottie-core:2.0.0-rc05
+io.github.alexzhirkevich:compottie-lite-android:2.0.0-rc05
+io.github.alexzhirkevich:compottie-lite:2.0.0-rc05
+io.github.alexzhirkevich:compottie-resources-android:2.0.0-rc05
+io.github.alexzhirkevich:compottie-resources:2.0.0-rc05
+io.github.alexzhirkevich:keight-core-android:0.0.02
+io.github.alexzhirkevich:keight-core:0.0.02
 io.github.alexzhirkevich:qrose-android:1.0.1
 io.github.alexzhirkevich:qrose-core-android:1.0.1
 io.github.alexzhirkevich:qrose-core:1.0.1
@@ -330,6 +338,8 @@ org.jetbrains.kotlin:kotlin-reflect:2.1.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20
 org.jetbrains.kotlin:kotlin-stdlib:2.1.21
+org.jetbrains.kotlinx:atomicfu-jvm:0.23.2
+org.jetbrains.kotlinx:atomicfu:0.23.2
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.8
 org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
@@ -337,8 +347,8 @@ org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.10.2
-org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.6.2
-org.jetbrains.kotlinx:kotlinx-datetime:0.6.2
+org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.7.1-0.6.x-compat
+org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat
 org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm:0.7.0
 org.jetbrains.kotlinx:kotlinx-io-bytestring:0.7.0
 org.jetbrains.kotlinx:kotlinx-io-core-jvm:0.7.0
