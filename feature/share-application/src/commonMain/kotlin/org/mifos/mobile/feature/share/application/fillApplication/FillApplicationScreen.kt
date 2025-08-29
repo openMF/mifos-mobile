@@ -52,7 +52,6 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -199,7 +198,7 @@ internal fun ShareFillApplicationForm(
         Text(
             text = stringResource(Res.string.feature_apply_share_label_terms),
             style = MifosTypography.labelLargeEmphasized,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         MifosOutlineDropdown(
@@ -258,7 +257,7 @@ internal fun ShareFillApplicationForm(
         Text(
             text = stringResource(Res.string.feature_apply_share_section_minimum_active_period),
             style = MifosTypography.labelLargeEmphasized,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         MifosOutlinedTextField(
@@ -289,7 +288,7 @@ internal fun ShareFillApplicationForm(
         Text(
             text = stringResource(Res.string.feature_apply_share_section_lockin_period),
             style = MifosTypography.labelLargeEmphasized,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         MifosOutlinedTextField(
@@ -327,7 +326,7 @@ internal fun ShareFillApplicationForm(
         ) {
             Text(
                 text = stringResource(Res.string.feature_share_button_next),
-                style = MaterialTheme.typography.labelLarge,
+                style = MifosTypography.titleMedium,
             )
         }
     }

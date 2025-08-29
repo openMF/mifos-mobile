@@ -24,6 +24,7 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
  * `ViewModel` for the Loan Product Details screen.
@@ -51,7 +52,6 @@ internal class LoanProductDetailsViewModel(
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
             productId = route.productId,
             productName = route.productName,
-            dialogState = LoanProductDetailsState.DialogState.Loading,
         )
     },
 ) {
@@ -69,20 +69,7 @@ internal class LoanProductDetailsViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            dialogState = if (!isOnline) {
-                                LoanProductDetailsState.DialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-
-                    if (isOnline) {
-                        fetchLoanTemplateByProduct()
-                    }
+                    sendAction(LoanProductDetailsAction.ReceiveNetworkStatus(isOnline))
                 }
         }
     }
@@ -107,6 +94,8 @@ internal class LoanProductDetailsViewModel(
                 }
             }
 
+            is LoanProductDetailsAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             LoanProductDetailsAction.NavigateBack -> {
                 sendEvent(LoanProductDetailsEvent.NavigateBack)
             }
@@ -118,13 +107,44 @@ internal class LoanProductDetailsViewModel(
     }
 
     /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchLoanTemplateByProduct()
+            }
+        }
+    }
+
+    /**
      * Retries the data fetching process. If the network is unavailable, it shows
      * a network error dialog. Otherwise, it triggers the `fetchLoanTemplate` function.
      */
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(dialogState = LoanProductDetailsState.DialogState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
                 fetchLoanTemplateByProduct()
             }
@@ -144,7 +164,7 @@ internal class LoanProductDetailsViewModel(
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(dialogState = LoanProductDetailsState.DialogState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
@@ -152,6 +172,7 @@ internal class LoanProductDetailsViewModel(
      *
      * @param error The [StringResource] for the error message to display.
      */
+    @Suppress("UnusedPrivateMember")
     private fun showErrorDialog(error: StringResource) {
         updateState { it.copy(dialogState = LoanProductDetailsState.DialogState.Error(error)) }
     }
@@ -160,6 +181,7 @@ internal class LoanProductDetailsViewModel(
      * Fetches the loan template data for the specific loan product from the repository.
      */
     private fun fetchLoanTemplateByProduct() {
+        showLoading()
         viewModelScope.launch {
             loanAccountRepositoryImpl.getLoanTemplateByProduct(state.clientId, state.productId)
                 .collect { result ->
@@ -193,13 +215,17 @@ internal class LoanProductDetailsViewModel(
                         principalText = principalText,
                         minInterest = minInterest.toString(),
                         maxInterest = maxInterest.toString(),
-                        dialogState = null,
+                        uiState = ScreenUiState.Success,
                     )
                 }
             }
 
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_loan_error_server)
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Error(Res.string.feature_apply_loan_error_server),
+                    )
+                }
             }
         }
     }
@@ -239,10 +265,12 @@ internal data class LoanProductDetailsState(
     val productId: Int,
     val productName: String,
     val networkStatus: Boolean = true,
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
     val principalText: String = "",
     val minInterest: String = "",
     val maxInterest: String = "",
+
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * A boolean indicating if the "Apply Loan" button should be enabled.
@@ -255,17 +283,11 @@ internal data class LoanProductDetailsState(
      * shown on the Loan Product Details screen.
      */
     sealed interface DialogState {
-        /** Represents a full-screen loading state. */
-        data object Loading : DialogState
-
         /**
          * Represents a generic error dialog with a message.
          * @property error The [StringResource] for the error message.
          */
         data class Error(val error: StringResource) : DialogState
-
-        /** Represents a network connectivity error state. */
-        data object Network : DialogState
     }
 }
 
@@ -304,6 +326,9 @@ internal sealed interface LoanProductDetailsAction {
 
     /** Action to retry fetching data after an error or network issue. */
     data object Retry : LoanProductDetailsAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanProductDetailsAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.

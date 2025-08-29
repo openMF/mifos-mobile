@@ -187,6 +187,7 @@ private fun ClearIconButton(
             Icon(
                 imageVector = clearIcon,
                 contentDescription = "trailingIcon",
+                tint = MaterialTheme.colorScheme.onSurface,
             )
         }
     }

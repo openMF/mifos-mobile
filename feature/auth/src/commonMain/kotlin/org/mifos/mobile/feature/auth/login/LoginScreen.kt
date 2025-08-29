@@ -26,7 +26,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -56,21 +55,20 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun LoginScreen(
@@ -132,11 +130,21 @@ private fun LoginScreen(
             }
         },
     ) {
-        LoginScreenContent(
-            modifier = modifier,
-            state = state,
-            onAction = onAction,
-        )
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                LoginScreenContent(
+                    modifier = modifier,
+                    state = state,
+                    onAction = onAction,
+                )
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> {}
+        }
     }
 }
 
@@ -151,10 +159,6 @@ private fun LoginDialogs(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
-        )
-
-        is LoginState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
         )
 
         null -> Unit
@@ -212,7 +216,7 @@ fun LogoBox(
         Text(
             text = stringResource(Res.string.feature_sign_in_title),
             style = MifosTypography.headlineMedium,
-            color = AppColors.customBlack,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
@@ -243,11 +247,6 @@ fun InputBox(
             label = stringResource(Res.string.feature_sign_in_username_label),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             config = MifosTextFieldConfig(
                 isError = state.isError,
                 errorText = state.userNameError.takeIf { state.isError }?.let { stringResource(it) },
@@ -277,11 +276,6 @@ fun InputBox(
             showPasswordChange = {
                 onAction(LoginAction.TogglePasswordVisibility)
             },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             isError = state.isError,
             hint = state.passwordError.takeIf { state.isError }?.let { stringResource(it) },
         )
@@ -307,7 +301,7 @@ fun InputBox(
         ) {
             Text(
                 text = stringResource(Res.string.feature_sign_in_Sign_in),
-                style = MaterialTheme.typography.labelLarge,
+                style = MifosTypography.titleMedium,
             )
         }
 
@@ -342,7 +336,7 @@ fun InputBox(
 private fun LoanScreenPreview() {
     MifosMobileTheme {
         LoginScreen(
-            state = LoginState(dialogState = null),
+            state = LoginState(uiState = ScreenUiState.Success),
             onAction = {},
         )
     }

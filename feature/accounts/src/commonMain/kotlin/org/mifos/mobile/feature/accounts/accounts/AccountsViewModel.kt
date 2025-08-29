@@ -202,7 +202,8 @@ internal class AccountsViewModel(
  * UI state for the Accounts screen, containing filter options, dialog visibility,
  * current account type, and refresh signals.
  */
-internal data class AccountsState(
+internal data class AccountsState
+constructor(
     val isRefreshing: Boolean = false,
 
     /** Current filter checkboxes shown in the dialog */

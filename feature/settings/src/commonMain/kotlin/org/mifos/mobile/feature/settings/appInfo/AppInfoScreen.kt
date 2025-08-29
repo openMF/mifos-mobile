@@ -126,16 +126,19 @@ internal fun AppInfoContent(
                         Text(
                             text = stringResource(Res.string.feature_settings_appinfo_mifos_electonic_banking),
                             style = MifosTypography.titleMediumEmphasized,
+                            color = AppColors.customBlack,
                         )
                         Text(
                             text = stringResource(Res.string.feature_settings_appinfo_all_rights_reserved),
                             style = MifosTypography.bodySmall,
+                            color = AppColors.customBlack,
                         )
 
                         Text(
                             text = stringResource(Res.string.feature_settings_appinfo_app_name),
                             style = MifosTypography.titleMediumEmphasized,
                             modifier = Modifier.padding(top = DesignToken.padding.small),
+                            color = AppColors.customBlack,
                         )
 
                         Column {
@@ -149,6 +152,7 @@ internal fun AppInfoContent(
                                     modifier = Modifier.padding(
                                         vertical = DesignToken.padding.small,
                                     ),
+                                    color = AppColors.customBlack,
                                 )
                             }
                         }

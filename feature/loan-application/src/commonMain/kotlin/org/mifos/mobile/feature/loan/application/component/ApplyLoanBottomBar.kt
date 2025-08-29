@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -75,7 +74,7 @@ fun ApplyLoanBottomBar(
         ) {
             Text(
                 text = stringResource(Res.string.feature_apply_loan_title),
-                style = MaterialTheme.typography.labelLarge,
+                style = MifosTypography.titleMedium,
             )
         }
     }

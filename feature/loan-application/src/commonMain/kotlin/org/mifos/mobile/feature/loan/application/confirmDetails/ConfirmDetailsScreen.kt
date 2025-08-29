@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,12 +35,14 @@ import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import kotlin.time.ExperimentalTime
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun ConfirmDetailsScreen(
@@ -84,7 +85,7 @@ internal fun ConfirmDetailsScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ConfirmDetailsDialog(
     dialogState: ConfirmDetailsDialogState?,
@@ -99,10 +100,6 @@ internal fun ConfirmDetailsDialog(
                 onDismissRequest = { onAction(ConfirmDetailsAction.DismissDialog) },
             )
         }
-
-        ConfirmDetailsDialogState.Loading -> MifosProgressIndicator()
-
-        ConfirmDetailsDialogState.OverlayLoading -> MifosProgressIndicatorOverlay()
 
         null -> {}
     }
@@ -127,27 +124,52 @@ internal fun ConfirmDetailsScreenContent(
             }
         },
     ) {
-        Column(
-            modifier = modifier
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.medium)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraLarge),
-        ) {
-            MifosDetailsCard(state.details)
-
-            MifosButton(
-                modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                onClick = {
-                    onAction(ConfirmDetailsAction.NavigateToAuthenticate)
-                },
-                shape = DesignToken.shapes.medium,
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_apply_loan_title),
-                    style = MaterialTheme.typography.labelLarge,
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = false,
+                    message = stringResource(state.uiState.message),
                 )
             }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = false,
+                    isRetryEnabled = false,
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = modifier
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.medium)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraLarge),
+                ) {
+                    MifosDetailsCard(state.details)
+
+                    MifosButton(
+                        modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+                        onClick = {
+                            onAction(ConfirmDetailsAction.NavigateToAuthenticate)
+                        },
+                        shape = DesignToken.shapes.medium,
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_apply_loan_title),
+                            style = MifosTypography.titleMedium,
+                        )
+                    }
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+            else -> { }
         }
     }
 }

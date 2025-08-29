@@ -22,7 +22,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
-import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
@@ -34,6 +33,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 
 /**
@@ -186,16 +186,15 @@ class RegistrationViewModel(
      */
     @Suppress("ReturnCount")
     private fun validateName(name: String, nameType: String): ValidationResult? {
-        if (name.isEmpty()) {
+        if (name.isEmpty() && nameType != "middle") {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
-                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
         }
 
-        if (!ValidationHelper.isValidName(name)) {
+        if (name.isNotEmpty() && !ValidationHelper.isValidName(name)) {
             return ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
         }
 
@@ -523,7 +522,7 @@ class RegistrationViewModel(
 //
 //            sendEvent(SignUpEvent.NavigateToUploadDocuments)
 //        }
-        updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
+        updateState { it.copy(showOverlay = true) }
         viewModelScope.launch {
             val response = userAuthRepositoryImpl.registerUser(
                 accountNumber = state.customerAccount,
@@ -549,7 +548,7 @@ class RegistrationViewModel(
     private fun handleRegisterResult(action: SignUpAction.Internal.ReceiveRegisterResult) {
         when (val result = action.registerResult) {
             is DataState.Success -> {
-                updateState { it.copy(dialogState = null) }
+                updateState { it.copy(dialogState = null, showOverlay = false) }
                 sendEvent(
                     SignUpEvent.NavigateToUploadDocuments,
                 )
@@ -558,17 +557,13 @@ class RegistrationViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = null,
-                    )
-                }
-                updateState {
-                    it.copy(
+                        showOverlay = false,
                         dialogState = SignUpState.SignUpDialog.Error(result.message),
                     )
                 }
             }
 
-            DataState.Loading -> updateState { it.copy(dialogState = SignUpState.SignUpDialog.Loading) }
+            DataState.Loading -> updateState { it.copy(showOverlay = true) }
         }
     }
 
@@ -599,6 +594,8 @@ data class SignUpState(
     val mobileNumber: String = "",
 
     val dialogState: SignUpDialog? = null,
+    val uiState: ScreenUiState = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
 
     val isPasswordChanged: Boolean = false,
     val isPasswordVisible: Boolean = false,
@@ -620,8 +617,6 @@ data class SignUpState(
      * Dialogs to show loading or error states during sign-up.
      */
     sealed interface SignUpDialog {
-        data object Loading : SignUpDialog
-
         data class Error(val message: String) : SignUpDialog
     }
 
@@ -631,7 +626,6 @@ data class SignUpState(
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
-            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&

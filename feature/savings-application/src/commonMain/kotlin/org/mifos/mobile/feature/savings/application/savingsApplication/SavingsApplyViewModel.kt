@@ -531,6 +531,7 @@ internal data class SavingsApplicationState(
     val submittedOnDate: String
         get() {
             val todayMillis = Clock.System.now().toEpochMilliseconds()
+            println(todayMillis)
             return DateHelper.getDateMonthYearString(todayMillis)
         }
 }

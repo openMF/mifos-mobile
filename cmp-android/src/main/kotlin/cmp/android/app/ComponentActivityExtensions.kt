@@ -9,28 +9,25 @@
  */
 package cmp.android.app
 
-import android.content.res.Configuration
-import android.graphics.Color
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.util.Consumer
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.channels.awaitClose
+import cmp.android.app.util.isSystemInDarkModeFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import org.mifos.mobile.core.model.DarkThemeConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 
 @ColorInt
-private val SCRIM_COLOR: Int = Color.TRANSPARENT
+private val SCRIM_COLOR: Int = Color.Transparent.toArgb()
 
 /**
  * Helper method to handle edge-to-edge logic for dark mode.
@@ -40,7 +37,7 @@ private val SCRIM_COLOR: Int = Color.TRANSPARENT
  */
 @Suppress("MaxLineLength")
 fun ComponentActivity.setupEdgeToEdge(
-    appThemeFlow: Flow<DarkThemeConfig>,
+    appThemeFlow: Flow<MifosThemeConfig>,
 ) {
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
@@ -48,7 +45,18 @@ fun ComponentActivity.setupEdgeToEdge(
                 isSystemInDarkModeFlow(),
                 appThemeFlow,
             ) { isSystemDarkMode, appTheme ->
-                AppCompatDelegate.setDefaultNightMode(appTheme.osValue)
+
+                val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+                if (currentNightMode != appTheme.osValue) {
+                    AppCompatDelegate.setDefaultNightMode(appTheme.osValue)
+                }
+
+                when (appTheme.osValue) {
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> isSystemDarkMode
+                    AppCompatDelegate.MODE_NIGHT_YES -> true
+                    AppCompatDelegate.MODE_NIGHT_NO -> false
+                    else -> isSystemDarkMode
+                }
             }
                 .distinctUntilChanged()
                 .collect { isDarkMode ->
@@ -58,28 +66,10 @@ fun ComponentActivity.setupEdgeToEdge(
                     val style = SystemBarStyle.auto(
                         darkScrim = SCRIM_COLOR,
                         lightScrim = SCRIM_COLOR,
-                        // Disabling Dark Mode for this app
-                        detectDarkMode = { false },
+                        detectDarkMode = { isDarkMode },
                     )
                     enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
                 }
         }
     }
 }
-
-/**
- * Adds a configuration change listener to retrieve whether system is in
- * dark theme or not. This will emit current status immediately and then
- * will emit changes as needed.
- */
-private fun ComponentActivity.isSystemInDarkModeFlow(): Flow<Boolean> =
-    callbackFlow {
-        channel.trySend(element = resources.configuration.isSystemInDarkMode)
-        val listener = Consumer<Configuration> {
-            channel.trySend(element = it.isSystemInDarkMode)
-        }
-        addOnConfigurationChangedListener(listener = listener)
-        awaitClose { removeOnConfigurationChangedListener(listener = listener) }
-    }
-        .distinctUntilChanged()
-        .conflate()

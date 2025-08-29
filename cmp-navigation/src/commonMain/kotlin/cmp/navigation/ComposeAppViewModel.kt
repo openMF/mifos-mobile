@@ -20,8 +20,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.NetworkBannerState
 
@@ -33,6 +33,7 @@ class ComposeAppViewModel(
         darkTheme = false,
         isAndroidTheme = false,
         isDynamicColorsEnabled = false,
+        themeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
     ),
 ) {
     val networkStatus = networkMonitor.isOnline
@@ -134,6 +135,8 @@ class ComposeAppViewModel(
             is AppAction.Internal.ThemeUpdate -> handleAppThemeUpdated(action)
 
             is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
+
+            is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
         }
     }
 
@@ -144,10 +147,28 @@ class ComposeAppViewModel(
     }
 
     private fun handleAppThemeUpdated(action: AppAction.Internal.ThemeUpdate) {
+        val isDark = when (action.theme) {
+            MifosThemeConfig.FOLLOW_SYSTEM -> {
+                mutableStateFlow.value.darkTheme
+            }
+            MifosThemeConfig.DARK -> true
+            MifosThemeConfig.LIGHT -> false
+        }
+
         mutableStateFlow.update {
-            it.copy(darkTheme = action.theme == DarkThemeConfig.DARK)
+            it.copy(
+                darkTheme = isDark,
+                themeConfig = action.theme,
+            )
         }
         sendEvent(AppEvent.UpdateAppTheme(osValue = action.theme.osValue))
+    }
+
+    private fun handleSystemThemeUpdate(action: AppAction.Internal.SystemThemeUpdate) {
+        val currentState = mutableStateFlow.value
+        if (currentState.themeConfig == MifosThemeConfig.FOLLOW_SYSTEM) {
+            mutableStateFlow.update { it.copy(darkTheme = action.isSystemDark) }
+        }
     }
 
     private fun handleDynamicColorsUpdate(action: AppAction.Internal.DynamicColorsUpdate) {
@@ -160,6 +181,7 @@ data class AppState(
     val isAndroidTheme: Boolean,
     val isDynamicColorsEnabled: Boolean,
     val networkBanner: NetworkBannerState = NetworkBannerState.None,
+    val themeConfig: MifosThemeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
 )
 
 sealed interface AppEvent {
@@ -180,11 +202,13 @@ sealed interface AppAction {
     sealed class Internal : AppAction {
 
         data class ThemeUpdate(
-            val theme: DarkThemeConfig,
+            val theme: MifosThemeConfig,
         ) : Internal()
 
         data class DynamicColorsUpdate(
             val isDynamicColorsEnabled: Boolean,
         ) : Internal()
+
+        data class SystemThemeUpdate(val isSystemDark: Boolean) : Internal()
     }
 }

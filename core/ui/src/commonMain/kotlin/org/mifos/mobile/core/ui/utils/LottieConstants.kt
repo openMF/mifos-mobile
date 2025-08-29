@@ -7,9 +7,8 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package cmp.android.app
+package org.mifos.mobile.core.ui.utils
 
-import android.content.res.Configuration
-
-val Configuration.isSystemInDarkMode
-    get() = (uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+object LottieConstants {
+    const val LOADING_ANIMATION = "files/loading_animation.json"
+}

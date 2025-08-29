@@ -203,4 +203,10 @@
     <!-- Change Language   -->
     <string name="feature_settings_language">Language</string>
     <string name="feature_settings_change_language">Change Language</string>
+
+    <!--  Theme  -->
+    <string name="feature_settings_theme_light">Light Theme</string>
+    <string name="feature_settings_theme_dark">Dark Theme</string>
+    <string name="feature_settings_theme_system">Default System Theme</string>
+    <string name="feature_settings_apply_theme">Apply Theme</string>
 </resources>

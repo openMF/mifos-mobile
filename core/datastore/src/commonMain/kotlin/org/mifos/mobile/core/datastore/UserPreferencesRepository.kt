@@ -13,10 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
-import org.mifos.mobile.core.datastore.model.AppTheme
 import org.mifos.mobile.core.datastore.model.UserData
-import org.mifos.mobile.core.model.DarkThemeConfig
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosThemeConfig
 
 interface UserPreferencesRepository {
     val userInfo: StateFlow<UserData>
@@ -27,7 +26,7 @@ interface UserPreferencesRepository {
 
     val clientId: StateFlow<Long?>
 
-    val appTheme: StateFlow<AppTheme>
+    val appTheme: StateFlow<MifosThemeConfig>
 
     val profileImage: String?
 
@@ -37,7 +36,7 @@ interface UserPreferencesRepository {
 
     val observeLanguage: Flow<LanguageConfig>
 
-    val observeDarkThemeConfig: Flow<DarkThemeConfig>
+    val observeDarkThemeConfig: Flow<MifosThemeConfig>
 
     val observeDynamicColorPreference: Flow<Boolean>
 
@@ -45,7 +44,7 @@ interface UserPreferencesRepository {
 
     suspend fun updateToken(password: String): DataState<Unit>
 
-    suspend fun updateTheme(theme: AppTheme): DataState<Unit>
+    suspend fun updateTheme(theme: MifosThemeConfig): DataState<Unit>
 
     suspend fun updateUser(user: UserData): DataState<Unit>
 

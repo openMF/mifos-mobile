@@ -122,7 +122,7 @@ fun RepaymentScheduleItem(
                 Text(
                     text = dueDate,
                     style = MifosTypography.labelLargeEmphasized,
-                    color = AppColors.customBlack,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
             if (canPay) {

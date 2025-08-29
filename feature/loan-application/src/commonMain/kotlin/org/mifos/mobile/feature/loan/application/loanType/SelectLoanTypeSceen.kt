@@ -42,6 +42,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun SelectLoanTypeScreen(
@@ -91,16 +92,6 @@ internal fun SelectLoanTypeDialog(
             )
         }
 
-        SelectLoanTypeState.DialogState.Loading -> MifosProgressIndicator()
-
-        is SelectLoanTypeState.DialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.networkStatus,
-                isRetryEnabled = true,
-                onRetry = { onAction(SelectLoanTypeAction.Retry) },
-            )
-        }
-
         null -> {}
     }
 }
@@ -127,51 +118,75 @@ internal fun SelectLoanTypeScreenContent(
             }
         },
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.large),
-        ) {
-            if (state.dialogState == null) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+        when (state.uiState) {
+            ScreenUiState.Empty -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(Res.string.feature_select_loan_type_empty),
+                    onRetry = { onAction(SelectLoanTypeAction.Retry) },
+                )
+            }
+
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(SelectLoanTypeAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SelectLoanTypeAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.large),
                 ) {
-                    val productOptions = state.productOptions ?: emptyList()
-                    if (productOptions.isNotEmpty()) {
-                        Text(
-                            text = stringResource(Res.string.feature_select_loan_type_choose_loan),
-                            style = MifosTypography.labelLargeEmphasized,
-                        )
-                        LazyVerticalStaggeredGrid(
-                            columns = StaggeredGridCells.Fixed(2),
-                            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                            content = {
-                                items(productOptions) { loanType ->
-                                    MifosExploreCard(
-                                        icon = MifosIcons.Money,
-                                        text = loanType.name ?: "",
-                                        onClick = {
-                                            onAction(
-                                                SelectLoanTypeAction.NavigateTo(
-                                                    loanType.id ?: -1,
-                                                    loanType.name ?: "",
-                                                ),
-                                            )
-                                        },
-                                    )
-                                }
-                            },
-                        )
-                    } else if (state.isEmpty) {
-                        MifosErrorComponent(
-                            isEmptyData = true,
-                            isRetryEnabled = false,
-                            message = stringResource(Res.string.feature_select_loan_type_empty),
-                        )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                    ) {
+                        val productOptions = state.productOptions ?: emptyList()
+                        if (productOptions.isNotEmpty()) {
+                            Text(
+                                text = stringResource(Res.string.feature_select_loan_type_choose_loan),
+                                style = MifosTypography.labelLargeEmphasized,
+                            )
+                            LazyVerticalStaggeredGrid(
+                                columns = StaggeredGridCells.Fixed(2),
+                                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                                content = {
+                                    items(productOptions) { loanType ->
+                                        MifosExploreCard(
+                                            icon = MifosIcons.Money,
+                                            text = loanType.name ?: "",
+                                            onClick = {
+                                                onAction(
+                                                    SelectLoanTypeAction.NavigateTo(
+                                                        loanType.id ?: -1,
+                                                        loanType.name ?: "",
+                                                    ),
+                                                )
+                                            },
+                                        )
+                                    }
+                                },
+                            )
+                        }
                     }
                 }
             }
+
+            else -> { }
         }
     }
 }

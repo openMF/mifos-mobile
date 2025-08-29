@@ -47,7 +47,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -201,7 +200,7 @@ fun NumericKeyboard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(AppColors.customWhite)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(DesignToken.padding.large),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
