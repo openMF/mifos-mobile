@@ -24,6 +24,7 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.model.entity.templates.loans.ProductOptions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
  * `ViewModel` for the Select Loan Type screen.
@@ -47,8 +48,6 @@ internal class SelectLoanTypeViewModel(
             SelectLoanTypeState(
                 clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
                 productOptions = null,
-                dialogState = SelectLoanTypeState.DialogState.Loading,
-                isEmpty = false,
             )
         },
     ) {
@@ -66,20 +65,7 @@ internal class SelectLoanTypeViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    updateState {
-                        it.copy(
-                            networkStatus = isOnline,
-                            dialogState = if (!isOnline) {
-                                SelectLoanTypeState.DialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-
-                    if (isOnline) {
-                        fetchLoanTemplate()
-                    }
+                    sendAction(SelectLoanTypeAction.ReceiveNetworkStatus(isOnline))
                 }
         }
     }
@@ -102,9 +88,42 @@ internal class SelectLoanTypeViewModel(
 
             is SelectLoanTypeAction.Internal.ReceiveLoanTemplate -> handleLoanTemplate(action.template)
 
+            is SelectLoanTypeAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             SelectLoanTypeAction.DismissDialog -> handleDismissDialog()
 
             SelectLoanTypeAction.Retry -> retry()
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchLoanTemplate()
+            }
         }
     }
 
@@ -124,7 +143,7 @@ internal class SelectLoanTypeViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(dialogState = SelectLoanTypeState.DialogState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
                 fetchLoanTemplate()
             }
@@ -144,7 +163,7 @@ internal class SelectLoanTypeViewModel(
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(dialogState = SelectLoanTypeState.DialogState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
@@ -152,6 +171,7 @@ internal class SelectLoanTypeViewModel(
      *
      * @param error The [StringResource] for the error message to display.
      */
+    @Suppress("UnusedPrivateMember")
     private fun showErrorDialog(error: StringResource) {
         updateState { it.copy(dialogState = SelectLoanTypeState.DialogState.Error(error)) }
     }
@@ -161,6 +181,7 @@ internal class SelectLoanTypeViewModel(
      * loan product options and currency information.
      */
     private fun fetchLoanTemplate() {
+        showLoading()
         viewModelScope.launch {
             loanAccountRepositoryImpl.template(state.clientId)
                 .collect { result ->
@@ -184,20 +205,25 @@ internal class SelectLoanTypeViewModel(
                 val loanTemplate = template.data
                 if (loanTemplate?.productOptions?.isEmpty() == true) {
                     updateState {
-                        it.copy(isEmpty = true, dialogState = null)
+                        it.copy(
+                            uiState = ScreenUiState.Empty,
+                        )
                     }
                     return
                 }
                 updateState {
                     it.copy(
-                        isEmpty = false,
+                        uiState = ScreenUiState.Success,
                         productOptions = loanTemplate?.productOptions,
-                        dialogState = null,
                     )
                 }
             }
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_loan_error_server)
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Error(Res.string.feature_apply_loan_error_server),
+                    )
+                }
             }
         }
     }
@@ -207,35 +233,30 @@ internal class SelectLoanTypeViewModel(
  * Represents the UI state for the Select Loan Type screen.
  *
  * @property clientId The ID of the current client.
- * @property isEmpty A boolean indicating if the list of loan products is empty.
- * @property productOptions The list of available loan product options, or `null`.
+ * @property productOptions The list of available loan product options, or `null` if not yet loaded.
  * @property dialogState The state of any dialog to be shown on the screen.
  * @property networkStatus A boolean indicating the current network connectivity status.
+ * @property uiState The generic screen UI state, such as
+ * [ScreenUiState.Loading], [ScreenUiState.Success], or [ScreenUiState.Error].
  */
 @Immutable
 internal data class SelectLoanTypeState(
     val clientId: Long,
-    val isEmpty: Boolean = false,
     val productOptions: List<ProductOptions>? = null,
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
     val networkStatus: Boolean = true,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * A sealed interface representing the different types of dialogs that can be
      * shown on the Select Loan Type screen.
      */
     sealed interface DialogState {
-        /** Represents a full-screen loading state. */
-        data object Loading : DialogState
-
         /**
          * Represents a generic error dialog with a message.
          * @property error The [StringResource] for the error message.
          */
         data class Error(val error: StringResource) : DialogState
-
-        /** Represents a network connectivity error state. */
-        data object Network : DialogState
     }
 }
 
@@ -249,7 +270,9 @@ internal sealed interface SelectLoanTypeEvent {
 
     /**
      * Event to navigate to the loan application screen for a specific loan type.
-     * @property loanType The selected [ProductOptions] to pass to the next screen.
+     *
+     * @property productId The ID of the selected loan product to pass to the next screen.
+     * @property productName The name of the selected loan product.
      */
     data class NavigateTo(val productId: Int, val productName: String) : SelectLoanTypeEvent
 }
@@ -269,8 +292,16 @@ internal sealed interface SelectLoanTypeAction {
     data object NavigateBack : SelectLoanTypeAction
 
     /**
+     * An action to receive and handle the network connectivity status.
+     * @property isOnline A boolean indicating whether the network is available.
+     */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : SelectLoanTypeAction
+
+    /**
      * Action to navigate to the loan application screen for a specific loan type.
-     * @property loanType The selected [ProductOptions].
+     *
+     * @property productId The ID of the selected loan product.
+     * @property productName The name of the selected loan product.
      */
     data class NavigateTo(val productId: Int, val productName: String) : SelectLoanTypeAction
 

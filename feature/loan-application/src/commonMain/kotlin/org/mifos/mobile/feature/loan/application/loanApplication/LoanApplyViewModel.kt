@@ -16,6 +16,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -32,6 +33,7 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_submit_failed
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_message
+import okio.IOException
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -39,10 +41,12 @@ import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.templates.loans.Currency
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
@@ -81,7 +85,6 @@ internal class LoanApplyViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<LoanApplyRoute>()
         LoanApplicationState(
-            loanApplicationDialogState = LoanApplicationDialogState.Loading,
             clientId = requireNotNull(userPreferencesRepository.clientId.value),
             applicantName = "",
             principalAmount = "",
@@ -106,22 +109,7 @@ internal class LoanApplyViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            loanApplicationDialogState = if (!isOnline) {
-                                LoanApplicationDialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-
-                    if (isOnline) {
-                        fetchClient()
-                        fetchLoanTemplate()
-                        fetchLoanPurpose()
-                    }
+                    sendAction(LoanApplicationAction.ReceiveNetworkStatus(isOnline))
                 }
         }
     }
@@ -154,6 +142,8 @@ internal class LoanApplyViewModel(
                 onDisbursementDateChange(action.disbursementDate)
             }
 
+            is LoanApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is LoanApplicationAction.NavigateToConfirmDetails -> validateAndSubmit()
 
             is LoanApplicationAction.OnNavigateBack -> navigateBack()
@@ -166,14 +156,142 @@ internal class LoanApplyViewModel(
 
             is LoanApplicationAction.DismissDialog -> dismissDialog()
 
-            is LoanApplicationAction.GetLoanPurpose -> fetchLoanPurpose()
-
-            is LoanApplicationAction.Internal.ReceiveLoanTemplate -> handleLoanTemplate(action.template)
-
-            is LoanApplicationAction.Internal.ReceiveLoanPurposeOptions ->
-                handleLoanPurpose(action.template)
+            is LoanApplicationAction.Internal.ReceiveClientAndTemplateResult ->
+                handleClientAndTemplateResult(
+                    client = action.client,
+                    template = action.template,
+                    purpose = action.purpose,
+                )
 
             LoanApplicationAction.Retry -> retry()
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                getClientDataAndTemplate()
+            }
+        }
+    }
+
+    /**
+     * Fetches client data, a generic loan template, and a product-specific loan purpose template
+     * from the repositories.
+     * The results are combined and handled in a single flow to manage loading and error states.
+     */
+    private fun getClientDataAndTemplate() {
+        showLoading()
+        viewModelScope.launch {
+            combine(
+                homeRepositoryImpl.currentClient(state.clientId),
+                loanAccountRepositoryImp.template(state.clientId),
+                loanAccountRepositoryImp.getLoanTemplateByProduct(state.clientId, state.loanProductId),
+            ) { client, template, purpose ->
+                Triple(client, template, purpose)
+            }
+                .catch { throwable ->
+
+                    updateState {
+                        it.copy(
+                            uiState = if (throwable.cause is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_apply_loan_error_server)
+                            },
+                        )
+                    }
+                }
+                .collect { (client, template, purpose) ->
+                    sendAction(
+                        LoanApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                            client,
+                            template,
+                            purpose,
+                        ),
+                    )
+                }
+        }
+    }
+
+    /**
+     * Handles the result of the combined data fetching operation for client and loan templates.
+     * It updates the UI state based on whether the data fetching was successful, loading, or failed.
+     *
+     * @param client The [DataState] of the client data.
+     * @param template The [DataState] of the generic loan template.
+     * @param purpose The [DataState] of the product-specific loan purpose template.
+     */
+    private fun handleClientAndTemplateResult(
+        client: DataState<Client?>,
+        template: DataState<LoanTemplate?>,
+        purpose: DataState<LoanTemplate?>,
+    ) {
+        when {
+            listOf(client, template, purpose).any { it is DataState.Loading } -> {
+                showLoading()
+            }
+
+            client is DataState.Success && template is DataState.Success && purpose is DataState.Success -> {
+                val mappedLoanPurposeOptions: Map<Long, String> = purpose.data?.loanPurposeOptions
+                    ?.mapNotNull { option ->
+                        val id = option.id?.toLong()
+                        val name = option.name
+                        if (id != null && name != null) id to name else null
+                    }
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.toMap()
+                    ?: fallbackLoanPurposeMap
+
+                client.data?.activationDate?.let { activationDate ->
+                    updateState {
+                        it.copy(
+                            activationDate = DateHelper.getDateAsString(activationDate),
+                        )
+                    }
+                }
+
+                updateState {
+                    it.copy(
+                        currency = template.data?.currency ?: Currency(
+                            code = "USD",
+                            name = "US Dollar",
+                            decimalPlaces = 2.0,
+                            inMultiplesOf = 0,
+                            displaySymbol = "$",
+                            nameCode = "currency.USD",
+                            displayLabel = "US Dollar ($)",
+                        ),
+                        loanPurposeOptions = mappedLoanPurposeOptions,
+                        uiState = ScreenUiState.Success,
+                    )
+                }
+            }
+
+            else -> updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_apply_loan_error_server)) }
         }
     }
 
@@ -185,11 +303,9 @@ internal class LoanApplyViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(loanApplicationDialogState = LoanApplicationDialogState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
-                fetchClient()
-                fetchLoanTemplate()
-                fetchLoanPurpose()
+                getClientDataAndTemplate()
             }
         }
     }
@@ -204,73 +320,10 @@ internal class LoanApplyViewModel(
     }
 
     /**
-     * Fetches the current client's details, specifically the activation date,
-     * from the repository.
-     */
-    private fun fetchClient() {
-        viewModelScope.launch {
-            homeRepositoryImpl.currentClient(state.clientId)
-                .catch {
-                    showErrorDialog(Res.string.feature_apply_loan_error_server)
-                    viewModelScope.launch {
-                        delay(1500)
-                        sendEvent(LoanApplicationEvent.NavigateBack)
-                    }
-                }
-                .collect { response ->
-                    response.data?.activationDate?.let { activationDateList ->
-                        updateState {
-                            it.copy(
-                                activationDate = DateHelper.getDateAsString(activationDateList),
-                            )
-                        }
-                    }
-                }
-        }
-    }
-
-    /**
-     * Fetches the loan template data from the repository. The template contains
-     * loan product options and currency information.
-     */
-    private fun fetchLoanTemplate() {
-        viewModelScope.launch {
-            loanAccountRepositoryImp.template(state.clientId)
-                .collect { result ->
-                    sendAction(LoanApplicationAction.Internal.ReceiveLoanTemplate(result))
-                }
-        }
-    }
-
-    /**
-     * Fetches loan purpose options based on the currently selected loan product.
-     * Shows a loading overlay while the data is being fetched.
-     */
-    private fun fetchLoanPurpose() {
-        showOverlayLoading()
-        viewModelScope.launch {
-            loanAccountRepositoryImp.getLoanTemplateByProduct(
-                state.clientId,
-                state.loanProductId,
-            )
-                .collect { result ->
-                    sendAction(LoanApplicationAction.Internal.ReceiveLoanPurposeOptions(result))
-                }
-        }
-    }
-
-    /**
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(loanApplicationDialogState = LoanApplicationDialogState.Loading) }
-    }
-
-    /**
-     * Sets the dialog state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(loanApplicationDialogState = LoanApplicationDialogState.OverlayLoading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
@@ -280,77 +333,6 @@ internal class LoanApplyViewModel(
      */
     private fun showErrorDialog(error: StringResource) {
         updateState { it.copy(loanApplicationDialogState = LoanApplicationDialogState.Error(error)) }
-    }
-
-    /**
-     * Handles the result of the `fetchLoanTemplate` network call.
-     * Updates the state with product options and currency on success,
-     * or displays an error and navigates back on failure.
-     *
-     * @param template The [DataState] containing the loan template data.
-     */
-    private fun handleLoanTemplate(template: DataState<LoanTemplate?>) {
-        when (template) {
-            is DataState.Loading -> showLoading()
-            is DataState.Success -> {
-                val loanTemplate = template.data
-                updateState {
-                    it.copy(
-                        currency = loanTemplate?.currency ?: Currency(
-                            code = "USD",
-                            name = "US Dollar",
-                            decimalPlaces = 2.0,
-                            inMultiplesOf = 0,
-                            displaySymbol = "$",
-                            nameCode = "currency.USD",
-                            displayLabel = "US Dollar ($)",
-                        ),
-                        loanApplicationDialogState = null,
-                    )
-                }
-            }
-
-            is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_loan_error_server)
-            }
-        }
-    }
-
-    /**
-     * Handles the result of the `fetchLoanPurpose` network call.
-     * On success, it maps the loan purpose options and updates the state.
-     * On failure, it shows an error dialog and navigates back.
-     *
-     * @param template The [DataState] containing the loan template data,
-     * including loan purpose options.
-     */
-    private fun handleLoanPurpose(template: DataState<LoanTemplate?>) {
-        when (template) {
-            is DataState.Loading -> showOverlayLoading()
-            is DataState.Success -> {
-                val mappedLoanPurposeOptions: Map<Long, String> = template.data?.loanPurposeOptions
-                    ?.mapNotNull { option ->
-                        val id = option.id?.toLong()
-                        val name = option.name
-                        if (id != null && name != null) id to name else null
-                    }
-                    ?.takeIf { it.isNotEmpty() }
-                    ?.toMap()
-                    ?: fallbackLoanPurposeMap
-
-                updateState {
-                    it.copy(
-                        loanProductTemplate = template.data,
-                        loanPurposeOptions = mappedLoanPurposeOptions,
-                        loanApplicationDialogState = null,
-                    )
-                }
-            }
-
-            is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_loan_error_server)
-            }
-        }
     }
 
     /**
@@ -556,7 +538,6 @@ internal class LoanApplyViewModel(
      * and sends an event to navigate to the confirmation screen.
      */
     private fun handleSubmit() {
-        showOverlayLoading()
         viewModelScope.launch {
             try {
                 updateState {
@@ -621,12 +602,7 @@ internal class LoanApplyViewModel(
     private fun toggleDatePicker() {
         mutableStateFlow.update {
             it.copy(
-                loanApplicationDialogState =
-                if (it.loanApplicationDialogState is LoanApplicationDialogState.ShowDatePicker) {
-                    null
-                } else {
-                    LoanApplicationDialogState.ShowDatePicker(it.currentDate)
-                },
+                showDatePicker = !state.showDatePicker,
             )
         }
     }
@@ -692,6 +668,9 @@ internal data class LoanApplicationState(
     val disbursementDateError: StringResource? = null,
     val hasChanges: Boolean = false,
     val networkStatus: Boolean = false,
+
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
+    val showDatePicker: Boolean = false,
 ) {
     /**
      * The current time in milliseconds, used for date pickers.
@@ -772,26 +751,11 @@ internal data class LoanApplicationState(
  * shown on the loan application screen.
  */
 internal sealed interface LoanApplicationDialogState {
-    /** Represents an overlay loading state. */
-    data object OverlayLoading : LoanApplicationDialogState
-
-    /** Represents a full-screen loading state. */
-    data object Loading : LoanApplicationDialogState
-
-    /** Represents a network error state. */
-    data object Network : LoanApplicationDialogState
-
     /**
      * Represents a generic error dialog with a message.
      * @property message The [StringResource] for the error message.
      */
     data class Error(val message: StringResource) : LoanApplicationDialogState
-
-    /**
-     * Represents a date picker dialog.
-     * @property currentDate The current date in milliseconds to pre-select in the picker.
-     */
-    data class ShowDatePicker(val currentDate: Long) : LoanApplicationDialogState
 
     /**
      * Represents a dialog to confirm navigation with unsaved changes.
@@ -816,6 +780,10 @@ internal sealed interface LoanApplicationEvent {
  * ViewModel needs to handle.
  */
 internal sealed interface LoanApplicationAction {
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanApplicationAction
+
     /** User action to navigate back. */
     data object OnNavigateBack : LoanApplicationAction
 
@@ -852,9 +820,6 @@ internal sealed interface LoanApplicationAction {
      */
     data class PrincipalAmountChange(val principalAmount: String) : LoanApplicationAction
 
-    /** User action to get the loan purpose options for the selected product. */
-    data object GetLoanPurpose : LoanApplicationAction
-
     /** User action to toggle the visibility of the date picker. */
     data object ToggleDatePicker : LoanApplicationAction
 
@@ -870,16 +835,21 @@ internal sealed interface LoanApplicationAction {
     sealed interface Internal : LoanApplicationAction {
 
         /**
-         * An internal action to handle the result of fetching a loan template.
-         * @property template The [DataState] containing the loan template data.
+         * An internal action to handle the combined results of fetching client, generic loan template,
+         * and product-specific loan purpose data.
+         *
+         * The ViewModel uses this action to process the asynchronous results from the repositories
+         * and update the UI state based on the success, loading, or error state of each data fetch.
+         *
+         * @property client The [DataState] of the client data.
+         * @property template The [DataState] of the generic loan template.
+         * @property purpose The [DataState] of the product-specific loan purpose template.
          */
-        data class ReceiveLoanTemplate(val template: DataState<LoanTemplate?>) : Internal
-
-        /**
-         * An internal action to handle the result of fetching loan purpose options.
-         * @property template The [DataState] containing the loan template data.
-         */
-        data class ReceiveLoanPurposeOptions(val template: DataState<LoanTemplate?>) : Internal
+        data class ReceiveClientAndTemplateResult(
+            val client: DataState<Client?>,
+            val template: DataState<LoanTemplate?>,
+            val purpose: DataState<LoanTemplate?>,
+        ) : LoanApplicationAction
     }
 }
 

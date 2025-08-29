@@ -23,6 +23,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -63,6 +64,7 @@ import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun LoanApplyScreen(
@@ -97,7 +99,6 @@ internal fun LoanApplyScreen(
     )
 
     LoanAccountDialog(
-        state = state,
         dialogState = state.loanApplicationDialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
@@ -108,7 +109,6 @@ internal fun LoanApplyScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDialog(
-    state: LoanApplicationState,
     dialogState: LoanApplicationDialogState?,
     onAction: (LoanApplicationAction) -> Unit,
 ) {
@@ -122,59 +122,6 @@ internal fun LoanAccountDialog(
             )
         }
 
-        LoanApplicationDialogState.Loading -> MifosProgressIndicator()
-
-        LoanApplicationDialogState.OverlayLoading -> MifosProgressIndicator()
-
-        is LoanApplicationDialogState.ShowDatePicker -> {
-            val today = Clock.System.now().toEpochMilliseconds()
-            val activationMillis = DateHelper.getDateAsLongFromList(
-                DateHelper.getDateAsList(state.activationDate),
-            ) ?: 0L
-
-            val datePickerState = rememberDatePickerState(
-                initialSelectedDateMillis = state.currentDate,
-                selectableDates = object : SelectableDates {
-                    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                        return utcTimeMillis in activationMillis..today
-                    }
-                },
-            )
-
-            DatePickerDialog(
-                onDismissRequest = {
-                    onAction(LoanApplicationAction.ToggleDatePicker)
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            onAction(LoanApplicationAction.ToggleDatePicker)
-                            datePickerState.selectedDateMillis?.let {
-                                onAction(
-                                    LoanApplicationAction.DisbursementDateChange(
-                                        DateHelper.getDateMonthYearString(it),
-                                    ),
-                                )
-                            }
-                        },
-                    ) {
-                        Text(stringResource(Res.string.feature_apply_loan_button_ok))
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            onAction(LoanApplicationAction.ToggleDatePicker)
-                        },
-                    ) {
-                        Text(stringResource(Res.string.feature_apply_loan_button_cancel))
-                    }
-                },
-            ) {
-                DatePicker(state = datePickerState)
-            }
-        }
-
         is LoanApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -185,18 +132,11 @@ internal fun LoanAccountDialog(
             )
         }
 
-        is LoanApplicationDialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.networkStatus,
-                isRetryEnabled = true,
-                onRetry = { onAction(LoanApplicationAction.Retry) },
-            )
-        }
-
         null -> {}
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountContent(
     state: LoanApplicationState,
@@ -216,93 +156,164 @@ internal fun LoanAccountContent(
             }
         },
     ) {
-        if (state.loanApplicationDialogState == null) {
-            Column(
-                modifier = Modifier
-                    .padding(DesignToken.padding.large)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-            ) {
-                MifosOutlinedTextField(
-                    value = state.applicantName,
-                    onValueChange = { onAction(LoanApplicationAction.ApplicantNameChange(it)) },
-                    label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
-                    shape = DesignToken.shapes.medium,
-                    textStyle = MifosTypography.bodyLarge,
-                    config = MifosTextFieldConfig(
-                        isError = state.applicantNameError != null,
-                        errorText = state.applicantNameError?.let { stringResource(it) },
-                    ),
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(LoanApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlineDropdown(
-                    selectedText = state.loanProductName,
-                    items = emptyMap(),
-                    enabled = false,
-                    onItemSelected = { _, _ -> },
-                    label = stringResource(Res.string.feature_apply_loan_label_loan_product),
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(LoanApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlineDropdown(
-                    selectedText = state.selectedLoanPurpose,
-                    items = state.loanPurposeOptions,
-                    onItemSelected = { id, product ->
-                        onAction(LoanApplicationAction.PurposeOfLoanChange(product))
-                    },
-                    label = stringResource(Res.string.feature_apply_loan_label_purpose),
-                )
-
-                MifosOutlinedTextField(
-                    value = state.disbursementDate,
-                    onValueChange = { },
-                    label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
-                    config = MifosTextFieldConfig(
-                        isError = state.disbursementDateError != null,
-                        errorText = state.disbursementDateError?.let { stringResource(it) },
-                        showClearIcon = false,
-                        readOnly = true,
-                        trailingIcon = {
-                            Icon(
-                                modifier = Modifier.clickable {
-                                    onAction(LoanApplicationAction.ToggleDatePicker)
-                                },
-                                imageVector = MifosIcons.Calendar,
-                                contentDescription = "Open Date Picker",
-                            )
-                        },
-                    ),
-                    shape = DesignToken.shapes.medium,
-                )
-
-                MifosOutlinedTextField(
-                    value = state.principalAmount,
-                    onValueChange = { onAction(LoanApplicationAction.PrincipalAmountChange(it)) },
-                    label = stringResource(Res.string.feature_apply_loan_label_principal_amount),
-                    config = MifosTextFieldConfig(
-                        isError = state.principalAmountError != null,
-                        errorText = state.principalAmountError?.let { stringResource(it) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done,
-                        ),
-                    ),
-                    shape = DesignToken.shapes.medium,
-                )
-
-                MifosButton(
-                    modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                    enabled = state.isFormValid,
-                    onClick = {
-                        onAction(LoanApplicationAction.NavigateToConfirmDetails)
-                    },
-                    shape = DesignToken.shapes.medium,
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(DesignToken.padding.large)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
                 ) {
-                    Text(
-                        text = stringResource(Res.string.feature_apply_loan_button_continue),
-                        style = MifosTypography.titleMedium,
+                    MifosOutlinedTextField(
+                        value = state.applicantName,
+                        onValueChange = { onAction(LoanApplicationAction.ApplicantNameChange(it)) },
+                        label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
+                        shape = DesignToken.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                        config = MifosTextFieldConfig(
+                            isError = state.applicantNameError != null,
+                            errorText = state.applicantNameError?.let { stringResource(it) },
+                        ),
                     )
+
+                    MifosOutlineDropdown(
+                        selectedText = state.loanProductName,
+                        items = emptyMap(),
+                        enabled = false,
+                        onItemSelected = { _, _ -> },
+                        label = stringResource(Res.string.feature_apply_loan_label_loan_product),
+                    )
+
+                    MifosOutlineDropdown(
+                        selectedText = state.selectedLoanPurpose,
+                        items = state.loanPurposeOptions,
+                        onItemSelected = { id, product ->
+                            onAction(LoanApplicationAction.PurposeOfLoanChange(product))
+                        },
+                        label = stringResource(Res.string.feature_apply_loan_label_purpose),
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.disbursementDate,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
+                        config = MifosTextFieldConfig(
+                            isError = state.disbursementDateError != null,
+                            errorText = state.disbursementDateError?.let { stringResource(it) },
+                            showClearIcon = false,
+                            readOnly = true,
+                            trailingIcon = {
+                                Icon(
+                                    modifier = Modifier.clickable {
+                                        onAction(LoanApplicationAction.ToggleDatePicker)
+                                    },
+                                    imageVector = MifosIcons.Calendar,
+                                    contentDescription = "Open Date Picker",
+                                )
+                            },
+                        ),
+                        shape = DesignToken.shapes.medium,
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.principalAmount,
+                        onValueChange = { onAction(LoanApplicationAction.PrincipalAmountChange(it)) },
+                        label = stringResource(Res.string.feature_apply_loan_label_principal_amount),
+                        config = MifosTextFieldConfig(
+                            isError = state.principalAmountError != null,
+                            errorText = state.principalAmountError?.let { stringResource(it) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done,
+                            ),
+                        ),
+                        shape = DesignToken.shapes.medium,
+                    )
+
+                    MifosButton(
+                        modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+                        enabled = state.isFormValid,
+                        onClick = {
+                            onAction(LoanApplicationAction.NavigateToConfirmDetails)
+                        },
+                        shape = DesignToken.shapes.medium,
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_apply_loan_button_continue),
+                            style = MaterialTheme.typography.labelLarge,
+                        )
+                    }
+
+                    if (state.showDatePicker) {
+                        val today = Clock.System.now().toEpochMilliseconds()
+                        val activationMillis = DateHelper.getDateAsLongFromList(
+                            DateHelper.getDateAsList(state.activationDate),
+                        ) ?: 0L
+
+                        val datePickerState = rememberDatePickerState(
+                            initialSelectedDateMillis = state.currentDate,
+                            selectableDates = object : SelectableDates {
+                                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                                    return utcTimeMillis in activationMillis..today
+                                }
+                            },
+                        )
+
+                        DatePickerDialog(
+                            onDismissRequest = {
+                                onAction(LoanApplicationAction.ToggleDatePicker)
+                            },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        onAction(LoanApplicationAction.ToggleDatePicker)
+                                        datePickerState.selectedDateMillis?.let {
+                                            onAction(
+                                                LoanApplicationAction.DisbursementDateChange(
+                                                    DateHelper.getDateMonthYearString(it),
+                                                ),
+                                            )
+                                        }
+                                    },
+                                ) {
+                                    Text(stringResource(Res.string.feature_apply_loan_button_ok))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(
+                                    onClick = {
+                                        onAction(LoanApplicationAction.ToggleDatePicker)
+                                    },
+                                ) {
+                                    Text(stringResource(Res.string.feature_apply_loan_button_cancel))
+                                }
+                            },
+                        ) {
+                            DatePicker(state = datePickerState)
+                        }
+                    }
                 }
             }
+
+            else -> { }
         }
     }
 }

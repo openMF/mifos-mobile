@@ -27,6 +27,7 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_action
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_tip
+import okio.IOException
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
@@ -41,6 +42,7 @@ import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
 
 /**
@@ -122,14 +124,14 @@ internal class ConfirmDetailsViewModel(
      */
     @Suppress("UnusedPrivateMember")
     private fun showLoading() {
-        updateState { it.copy(dialogState = ConfirmDetailsDialogState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
      * Sets the dialog state to an overlay loading spinner.
      */
     private fun showOverlayLoading() {
-        updateState { it.copy(dialogState = ConfirmDetailsDialogState.OverlayLoading) }
+        updateState { it.copy(showOverlay = !state.showOverlay) }
     }
 
     /**
@@ -137,6 +139,7 @@ internal class ConfirmDetailsViewModel(
      *
      * @param error The [StringResource] for the error message to display.
      */
+    @Suppress("UnusedPrivateMember")
     private fun showErrorDialog(error: StringResource) {
         updateState { it.copy(dialogState = ConfirmDetailsDialogState.Error(error)) }
     }
@@ -230,13 +233,23 @@ internal class ConfirmDetailsViewModel(
             is DataState.Success -> {
                 updateState {
                     it.copy(
+                        showOverlay = false,
                         loanTemplate = template.data,
                     )
                 }
                 sendAction(ConfirmDetailsAction.Internal.ApplyLoan)
             }
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_loan_error_server)
+                updateState {
+                    it.copy(
+                        showOverlay = false,
+                        uiState = if (template.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_apply_loan_error_server)
+                        },
+                    )
+                }
             }
         }
     }
@@ -268,6 +281,9 @@ internal class ConfirmDetailsViewModel(
     private suspend fun handleLoanApplyStatus(status: DataState<String>) {
         when (status) {
             is DataState.Error -> {
+                updateState {
+                    it.copy(showOverlay = false)
+                }
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
@@ -343,7 +359,10 @@ internal data class ConfirmDetailsState(
     val principalAmount: String,
     val details: Map<StringResource, String> = emptyMap(),
     val loanTemplate: LoanTemplate? = null,
+
+    val showOverlay: Boolean = false,
     val dialogState: ConfirmDetailsDialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
 )
 
 /**
@@ -435,12 +454,6 @@ sealed interface ConfirmDetailsAction {
  * shown on the confirm details screen.
  */
 internal sealed interface ConfirmDetailsDialogState {
-    /** Represents an overlay loading state. */
-    data object OverlayLoading : ConfirmDetailsDialogState
-
-    /** Represents a full-screen loading state. */
-    data object Loading : ConfirmDetailsDialogState
-
     /**
      * Represents a generic error dialog with a message.
      * @property message The [StringResource] for the error message.
