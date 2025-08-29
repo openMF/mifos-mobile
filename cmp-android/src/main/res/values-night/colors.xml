@@ -9,6 +9,7 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
+    <color name="ic_launcher_background">#000000</color>
     <color name="splash_background">#121212</color>
     <color name="background">#000000</color>
 </resources>
