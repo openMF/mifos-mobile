@@ -41,7 +41,6 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import kotlin.time.ExperimentalTime
 
 @Composable
 internal fun ConfirmDetailsScreen(
@@ -84,7 +83,7 @@ internal fun ConfirmDetailsScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ConfirmDetailsDialog(
     dialogState: ConfirmDetailsDialogState?,

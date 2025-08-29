@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.datetime.Clock
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_cancel
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_continue
@@ -63,8 +64,6 @@ import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 @Composable
 internal fun LoanApplyScreen(
@@ -107,7 +106,7 @@ internal fun LoanApplyScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDialog(
     state: LoanApplicationState,

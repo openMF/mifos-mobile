@@ -51,6 +51,7 @@ import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
+
 /**
  * ViewModel for managing the state and logic of the account transactions screen.
  *

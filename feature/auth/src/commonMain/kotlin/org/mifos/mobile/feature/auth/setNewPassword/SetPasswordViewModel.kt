@@ -31,6 +31,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
 internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswordEvent, SetPasswordAction>(
@@ -181,9 +182,9 @@ internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswor
     @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private fun handleSubmit() {
         viewModelScope.launch {
-            mutableStateFlow.update { it.copy(dialogState = SetPasswordState.DialogState.Loading) }
+            mutableStateFlow.update { it.copy(showOverlay = true) }
             delay(3000)
-            dismissDialog()
+            mutableStateFlow.update { it.copy(showOverlay = false) }
             sendEvent(
                 SetPasswordEvent.NavigateToStatus(
                     eventType = EventType.SUCCESS.name,
@@ -232,12 +233,12 @@ internal data class SetPasswordState(
     val passwordFeedback: List<StringResource> = emptyList(),
     val passwordStrengthState: PasswordStrengthState = PasswordStrengthState.NONE,
 
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-
-        data object Loading : DialogState
     }
 
     val isSubmitButtonEnabled: Boolean

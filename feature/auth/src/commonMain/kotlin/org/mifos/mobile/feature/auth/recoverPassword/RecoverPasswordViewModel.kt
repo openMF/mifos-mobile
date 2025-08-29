@@ -25,6 +25,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_n
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_required
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.feature.auth.setNewPassword.SetPasswordRoute
 
@@ -138,9 +139,9 @@ internal class RecoverPasswordViewModel :
     @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     private fun requestRecoveryCode() {
         viewModelScope.launch {
-            mutableStateFlow.update { it.copy(dialogState = RecoverPasswordState.DialogState.Loading) }
+            mutableStateFlow.update { it.copy(showOverlay = true) }
             delay(3000)
-            dismissDialog()
+            mutableStateFlow.update { it.copy(showOverlay = false) }
             sendEvent(
                 RecoverPasswordEvent.NavigateToOtpAuth(
                     nextRoute = SetPasswordRoute::class.serializer().descriptor.serialName,
@@ -166,10 +167,10 @@ data class RecoverPasswordState(
     var emailError: StringResource? = null,
 
     val dialogState: DialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
-        data object Loading : DialogState
-
         data class Error(val message: String) : DialogState
     }
 

@@ -29,7 +29,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -70,23 +68,22 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
 import org.mifos.mobile.core.ui.PasswordStrengthIndicator
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun RegistrationScreen(
@@ -143,10 +140,6 @@ private fun SignUpDialog(
             onDismissRequest = onDismissRequest,
         )
 
-        is SignUpState.SignUpDialog.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
         null -> Unit
     }
 }
@@ -166,11 +159,21 @@ private fun RegistrationScreen(
             }
         },
     ) {
-        RegistrationScreenContent(
-            state = state,
-            onAction = onAction,
-            modifier = modifier,
-        )
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                RegistrationScreenContent(
+                    state = state,
+                    onAction = onAction,
+                    modifier = modifier,
+                )
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> {}
+        }
     }
 }
 
@@ -208,7 +211,7 @@ private fun RegistrationScreenContent(
             Text(
                 text = stringResource(Res.string.feature_signup_title),
                 style = MifosTypography.headlineMedium,
-                color = AppColors.customBlack,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
 
@@ -306,7 +309,7 @@ fun MifosInputField(
                         tint = if (config.errorText != null) {
                             MaterialTheme.colorScheme.error
                         } else {
-                            Color.Unspecified
+                            MaterialTheme.colorScheme.onSurface
                         },
                     )
                 }
@@ -341,11 +344,6 @@ fun MifosInputField(
                 showPasswordChange = {
                     config.onTogglePasswordVisibility?.invoke()
                 },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    errorBorderColor = MaterialTheme.colorScheme.error,
-                ),
                 isError = config.errorText != null,
                 hint = config.errorText?.let { stringResource(it) },
             )
@@ -379,11 +377,6 @@ fun MifosInputField(
             label = stringResource(config.labelRes),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             config = MifosTextFieldConfig(
                 isError = config.errorText != null,
                 errorText = config.errorText?.let { stringResource(it) },

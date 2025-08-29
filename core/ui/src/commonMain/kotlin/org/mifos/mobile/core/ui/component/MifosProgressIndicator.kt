@@ -9,53 +9,95 @@
  */
 package org.mifos.mobile.core.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.mifos.mobile.core.designsystem.theme.DesignToken
-import org.mifos.mobile.core.ui.utils.DevicePreview
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import mifos_mobile.core.ui.generated.resources.Res
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.utils.LottieConstants
 
-@DevicePreview
 @Composable
 fun MifosProgressIndicator(
     modifier: Modifier = Modifier.fillMaxSize(),
 ) {
-    Column(
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
+        )
+    }
+    val progress by animateLottieCompositionAsState(composition)
+
+    Box(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator()
+        Image(
+            painter = rememberLottiePainter(
+                composition = composition,
+                progress = { progress },
+            ),
+            contentDescription = "Lottie animation",
+        )
     }
 }
 
-@DevicePreview
 @Composable
 fun MifosProgressIndicatorOverlay(
     modifier: Modifier = Modifier.fillMaxSize(),
 ) {
-    Column(
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes("files/loading_animation.json").decodeToString(),
+        )
+    }
+    val progress by animateLottieCompositionAsState(composition)
+
+    Box(
         modifier = modifier
-            .padding(DesignToken.padding.large)
             .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f))
             .clickable(
                 enabled = false,
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
             ) { },
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator()
+        Image(
+            painter = rememberLottiePainter(
+                composition = composition,
+                progress = { progress },
+            ),
+            contentDescription = "Loading animation",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun Loading_Preview() {
+    MifosMobileTheme {
+        MifosProgressIndicator()
+    }
+}
+
+@Preview
+@Composable
+private fun Overlay_Loading_Preview() {
+    MifosMobileTheme {
+        MifosProgressIndicatorOverlay()
     }
 }

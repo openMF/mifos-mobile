@@ -25,7 +25,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,10 +50,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
@@ -64,7 +61,9 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun OtpAuthenticationScreen(
@@ -127,10 +126,6 @@ private fun OtpAuthDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is OtpAuthState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
         null -> Unit
     }
 }
@@ -150,41 +145,51 @@ internal fun OptAuthScreenContent(
             }
         },
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.large)
-                .statusBarsPadding(),
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.large)
+                        .statusBarsPadding(),
 
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_otp_title),
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MifosTypography.headlineMedium,
-            )
+                ) {
+                    Text(
+                        text = stringResource(Res.string.feature_otp_title),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MifosTypography.headlineMedium,
+                    )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
-            Text(
-                text = stringResource(Res.string.feature_otp_subtitle),
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MifosTypography.titleSmallEmphasized,
-            )
+                    Text(
+                        text = stringResource(Res.string.feature_otp_subtitle),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MifosTypography.titleSmallEmphasized,
+                    )
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
-            Text(
-                text = stringResource(Res.string.feature_otp_message),
-                color = MaterialTheme.colorScheme.secondary,
-                style = MifosTypography.bodySmall,
-            )
+                    Text(
+                        text = stringResource(Res.string.feature_otp_message),
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MifosTypography.bodySmall,
+                    )
 
-            Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
 
-            OtpInputForm(
-                state = state,
-                onAction = onAction,
-            )
+                    OtpInputForm(
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> { }
         }
     }
 }
@@ -208,11 +213,6 @@ internal fun OtpInputForm(
                 label = stringResource(Res.string.feature_otp_request_id_label),
                 shape = DesignToken.shapes.medium,
                 textStyle = MifosTypography.bodyLarge,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                    errorBorderColor = MaterialTheme.colorScheme.error,
-                ),
                 config = MifosTextFieldConfig(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
@@ -242,11 +242,6 @@ internal fun OtpInputForm(
             label = stringResource(Res.string.feature_otp_authentication_code_label),
             shape = DesignToken.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-            ),
             config = MifosTextFieldConfig(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
