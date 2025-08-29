@@ -18,6 +18,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
@@ -53,8 +54,6 @@ import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
@@ -693,7 +692,6 @@ internal data class SavingsApplicationState(
     /**
      * The current date as a formatted string.
      */
-    @OptIn(ExperimentalTime::class)
     val currentDate: String
         get() = DateHelper.getDateMonthYearString(Clock.System.now().toEpochMilliseconds())
 

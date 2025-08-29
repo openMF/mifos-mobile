@@ -28,6 +28,7 @@ import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import mifos_mobile.core.ui.generated.resources.Res
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.utils.LottieConstants
 
 @Composable
 fun MifosProgressIndicator(
@@ -35,7 +36,7 @@ fun MifosProgressIndicator(
 ) {
     val composition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(
-            Res.readBytes("files/loading_animation.json").decodeToString(),
+            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
         )
     }
     val progress by animateLottieCompositionAsState(composition)

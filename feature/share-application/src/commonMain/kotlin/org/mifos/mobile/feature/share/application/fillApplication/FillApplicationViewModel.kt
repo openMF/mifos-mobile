@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import mifos_mobile.feature.share_application.generated.resources.Res
@@ -61,8 +62,6 @@ import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
@@ -817,7 +816,6 @@ internal data class ShareApplicationState(
     /**
      * The current date formatted as a string.
      */
-    @OptIn(ExperimentalTime::class)
     val currentDate: String
         get() = DateHelper.getDateMonthYearString(Clock.System.now().toEpochMilliseconds())
 

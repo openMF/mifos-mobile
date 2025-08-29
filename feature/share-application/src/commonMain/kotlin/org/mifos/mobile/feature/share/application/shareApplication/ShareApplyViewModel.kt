@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_submit_failed
@@ -30,8 +31,6 @@ import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 /**
  * `ViewModel` for the savings application screen, responsible for handling user input,
@@ -394,7 +393,6 @@ internal data class ShareApplicationState(
         }
         .toMap()
 
-    @OptIn(ExperimentalTime::class)
     val submittedOnDate: String
         get() {
             val todayMillis = Clock.System.now().toEpochMilliseconds()
