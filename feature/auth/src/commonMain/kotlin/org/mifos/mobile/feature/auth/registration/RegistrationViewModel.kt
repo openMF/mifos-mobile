@@ -623,11 +623,9 @@ data class SignUpState(
     /**
      * Whether the submit button should be enabled based on required fields.
      */
-    // TODO Uncomment if middle name field is mandatory
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
-//            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&
