@@ -22,7 +22,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
-import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
@@ -187,16 +186,15 @@ class RegistrationViewModel(
      */
     @Suppress("ReturnCount")
     private fun validateName(name: String, nameType: String): ValidationResult? {
-        if (name.isEmpty()) {
+        if (name.isEmpty() && nameType != "middle") {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
-                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
         }
 
-        if (!ValidationHelper.isValidName(name)) {
+        if (name.isNotEmpty() && !ValidationHelper.isValidName(name)) {
             return ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
         }
 
@@ -628,7 +626,6 @@ data class SignUpState(
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
-            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&
