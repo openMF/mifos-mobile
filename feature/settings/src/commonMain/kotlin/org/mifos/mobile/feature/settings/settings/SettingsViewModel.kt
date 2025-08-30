@@ -221,16 +221,16 @@ internal class SettingsViewModel(
     private fun setUserProfile(image: String?) {
         if (image.isNullOrBlank()) return
 
-        // Extract the base64 part, removing any data URI prefix
-        val base64String = image.substringAfter(",", image)
-
-        // Basic validation for a base64 string
-        if (!base64String.matches(Regex("^[A-Za-z0-9+/=]+$"))) return
-
+        // Extract the Base64 payload after the standard data URL prefix (more robust than first comma)
+        val afterPrefix = image.substringAfter("base64,", image)
+        // Remove any whitespace/newlines that can appear in API responses
+        val cleaned = afterPrefix.replace(Regex("\\s+"), "")
         try {
-            val decodedBytes = Base64.decode(base64String)
-            val bitmap = ImageUtil.compressImage(decodedBytes)
-            updateState { it.copy(profileImage = bitmap) }
+            val decodedBytes = Base64.decode(cleaned)
+            val compressedImageBytes = ImageUtil.compressImage(decodedBytes)
+            if (compressedImageBytes.isNotEmpty()) {
+                updateState { it.copy(profileImage = compressedImageBytes) }
+            }
         } catch (e: Exception) {
             // Log the error but fail silently in the UI
             println(e.message)

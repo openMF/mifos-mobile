@@ -30,6 +30,7 @@ class KtorInterceptor(
             scope.requestPipeline.intercept(HttpRequestPipeline.State) {
                 context.header(CONTENT_TYPE, "application/json")
                 context.header("Accept", "application/json")
+                context.header("Accept", "*/*")
                 context.header(HEADER_TENANT, DEFAULT)
 
                 plugin.getToken()?.let { token ->
