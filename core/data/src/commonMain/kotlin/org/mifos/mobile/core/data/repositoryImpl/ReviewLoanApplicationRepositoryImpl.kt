@@ -10,8 +10,10 @@
 package org.mifos.mobile.core.data.repositoryImpl
 
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
@@ -46,6 +48,10 @@ class ReviewLoanApplicationRepositoryImpl(
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
                 DataState.Error(Exception(errorMessage), null)
+            } catch (e: IOException) {
+                DataState.Error(Exception("Network error: ${e.message ?: "Please check your connection"}"), null)
+            } catch (e: ServerResponseException) {
+                DataState.Error(Exception("Server error: ${e.message}"), null)
             }
         }
     }

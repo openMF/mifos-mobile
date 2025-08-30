@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,8 +30,10 @@ import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.component.MifosAlertDialog
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun BeneficiaryDetailScreen(
@@ -43,13 +44,9 @@ internal fun BeneficiaryDetailScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.trySendAction(BeneficiaryDetailAction.OnRefresh)
-    }
-
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
-            BeneficiaryDetailEvent.Navigate -> navigateBack.invoke()
+            BeneficiaryDetailEvent.NavigateBack -> navigateBack.invoke()
             is BeneficiaryDetailEvent.UpdateBeneficiary -> {
                 updateBeneficiary(event.beneficiaryId)
             }
@@ -63,35 +60,42 @@ internal fun BeneficiaryDetailScreen(
             { viewModel.trySendAction(it) }
         },
     )
+
+    BeneficiaryDialogs(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
 }
 
 @Composable
 private fun BeneficiaryDialogs(
     state: BeneficiaryDetailState,
-    onDismissRequest: () -> Unit,
-    onConfirmDelete: () -> Unit,
+    onAction: (BeneficiaryDetailAction) -> Unit,
 ) {
     when (state.beneficiaryDialog) {
-        BeneficiaryDetailState.DialogState.Loading -> MifosProgressIndicator()
         is BeneficiaryDetailState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = state.beneficiaryDialog.message,
+                    message = stringResource(state.beneficiaryDialog.message),
                 ),
-                onDismissRequest = onDismissRequest,
+                onDismissRequest = { onAction(BeneficiaryDetailAction.ErrorDialogDismiss) },
             )
         }
+
         is BeneficiaryDetailState.DialogState.Confirmation -> {
             MifosAlertDialog(
-                onDismissRequest = onDismissRequest,
+                onDismissRequest = { onAction(BeneficiaryDetailAction.ErrorDialogDismiss) },
                 dismissText = stringResource(Res.string.cancel),
-                onConfirmation = onConfirmDelete,
+                onConfirmation = { onAction(BeneficiaryDetailAction.DeleteBeneficiary) },
                 confirmationText = stringResource(Res.string.delete),
                 dialogTitle = stringResource(Res.string.delete_beneficiary),
                 dialogText = state.beneficiaryDialog.message,
                 icon = MifosIcons.Delete,
             )
         }
+
         null -> Unit
     }
 }
@@ -110,19 +114,36 @@ private fun BeneficiaryDetailScreen(
         Box(
             modifier = Modifier,
         ) {
-            if (state.beneficiary != null && state.beneficiaryDialog == null) {
-                BeneficiaryDetailContent(
-                    state = state,
-                    onAction = onAction,
-                )
+            when (state.uiState) {
+                is ScreenUiState.Error -> {
+                    MifosErrorComponent(
+                        isRetryEnabled = true,
+                        message = stringResource(state.uiState.message),
+                        onRetry = { onAction(BeneficiaryDetailAction.OnRefresh) },
+                    )
+                }
+
+                ScreenUiState.Loading -> MifosProgressIndicator()
+
+                ScreenUiState.Network -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = state.networkStatus,
+                        isRetryEnabled = true,
+                        onRetry = { onAction(BeneficiaryDetailAction.OnRefresh) },
+                    )
+                }
+
+                ScreenUiState.Success -> {
+                    BeneficiaryDetailContent(
+                        state = state,
+                        onAction = onAction,
+                    )
+                }
+
+                else -> { }
             }
         }
     }
-    BeneficiaryDialogs(
-        state = state,
-        onDismissRequest = { onAction(BeneficiaryDetailAction.ErrorDialogDismiss) },
-        onConfirmDelete = { onAction(BeneficiaryDetailAction.DeleteBeneficiary) },
-    )
 }
 
 @Composable

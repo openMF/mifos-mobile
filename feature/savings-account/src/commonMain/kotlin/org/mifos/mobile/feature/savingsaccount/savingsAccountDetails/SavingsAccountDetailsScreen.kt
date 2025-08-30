@@ -56,6 +56,7 @@ import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 
@@ -138,39 +139,61 @@ internal fun SavingsAccountDetailsContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(DesignToken.padding.large),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-            ) {
-                ActionBar(
-                    isUpdatable = state.isUpdatable,
-                    onAction = onAction,
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(SavingsAccountDetailsAction.OnRetry) },
                 )
+            }
 
-                AccountDetailsGrid(
-                    details = state.displayItems,
-                    isActive = state.isActive,
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsAccountDetailsAction.OnRetry) },
                 )
-
-                AccountDetailsGrid(
-                    label = "Last Transactions",
-                    details = state.transactionList,
-                    isActive = state.isActive,
-                )
-
-                if (state.isActive) {
-                    SavingsAccountActions(
-                        items = state.items,
-                        onActionClick = {
-                            onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
-                        },
+            }
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(DesignToken.padding.large),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                ) {
+                    ActionBar(
+                        isUpdatable = state.isUpdatable,
+                        onAction = onAction,
                     )
+
+                    AccountDetailsGrid(
+                        details = state.displayItems,
+                        isActive = state.isActive,
+                    )
+
+                    if (state.isActive) {
+                        AccountDetailsGrid(
+                            label = "Last Transactions",
+                            details = state.transactionList,
+                            isActive = state.isActive,
+                        )
+                    }
+
+                    if (state.isActive) {
+                        SavingsAccountActions(
+                            items = state.items,
+                            onActionClick = {
+                                onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
+                            },
+                        )
+                    }
                 }
             }
+            else -> { }
         }
     }
 }
@@ -307,10 +330,6 @@ internal fun SavingsAccountDialogs(
                 onRetry = { onAction(SavingsAccountDetailsAction.OnRetry) },
                 isRetryEnabled = true,
             )
-        }
-
-        is SavingsAccountDetailsState.DialogState.Loading -> {
-            MifosProgressIndicator()
         }
 
         null -> Unit

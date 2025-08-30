@@ -20,4 +20,7 @@
     <string name="feature_share_account_dashboard">Total Borrowings</string>
     <string name="feature_share_account">Share Account</string>
     <string name="feature_share_account_items">%1$d Items</string>
+
+    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+
 </resources>

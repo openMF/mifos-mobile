@@ -26,4 +26,6 @@ enum class StatusNavigationDestination {
 
     SAVINGS_UPDATE,
     SAVINGS_WITHDRAW,
+
+    BENEFICIARY,
 }

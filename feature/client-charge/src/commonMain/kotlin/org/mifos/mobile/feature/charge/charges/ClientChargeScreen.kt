@@ -38,9 +38,11 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
 
 @Composable
@@ -105,20 +107,44 @@ private fun ClientChargeScreen(
             }
         },
     ) {
-        if (state.isEmpty) {
-            EmptyDataView(
-                modifier = Modifier.fillMaxSize(),
-                image = Res.drawable.database_warning,
-                error = Res.string.error_no_charge,
-            )
-        } else {
-            ClientChargeContent(
-                modifier = Modifier.padding(DesignToken.padding.large),
-                chargesList = state.charges,
-                onChargeClick = {
-                    onAction(ClientChargeAction.OnChargeClick(it))
-                },
-            )
+        when (state.uiState) {
+            ScreenUiState.Empty -> {
+                EmptyDataView(
+                    modifier = Modifier.fillMaxSize(),
+                    image = Res.drawable.database_warning,
+                    error = Res.string.error_no_charge,
+
+                )
+            }
+
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(ClientChargeAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(ClientChargeAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                ClientChargeContent(
+                    modifier = Modifier.padding(DesignToken.padding.large),
+                    chargesList = state.charges,
+                    onChargeClick = {
+                        onAction(ClientChargeAction.OnChargeClick(it))
+                    },
+                )
+            }
+            else -> { }
         }
     }
 }
@@ -144,8 +170,6 @@ private fun ClientChargeDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is ClientChargeState.DialogState.Loading -> MifosProgressIndicator()
-
         is ClientChargeState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(

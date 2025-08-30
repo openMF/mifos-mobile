@@ -59,7 +59,9 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun SavingsFillApplicationScreen(
@@ -119,10 +121,6 @@ internal fun SavingsFillApplicationDialog(
             )
         }
 
-        SavingsApplicationDialogState.Loading -> MifosProgressIndicator()
-
-        SavingsApplicationDialogState.OverlayLoading -> MifosProgressIndicator()
-
         is SavingsApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -130,14 +128,6 @@ internal fun SavingsFillApplicationDialog(
                 ),
                 onDismissRequest = { onAction(SavingsApplicationAction.DismissDialog) },
                 onConfirm = { onAction(SavingsApplicationAction.ConfirmNavigation) },
-            )
-        }
-
-        is SavingsApplicationDialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.networkStatus,
-                isRetryEnabled = true,
-                onRetry = { onAction(SavingsApplicationAction.Retry) },
             )
         }
 
@@ -164,117 +154,144 @@ internal fun SavingsFillApplicationContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .padding(DesignToken.padding.large)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_apply_savings_label_details),
-                    style = MifosTypography.labelLargeEmphasized,
-                    color = MaterialTheme.colorScheme.onSurface,
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    message = stringResource(state.uiState.message),
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlineDropdown(
-                    selectedText = state.currency.displayLabel ?: "",
-                    items = emptyMap(),
-                    enabled = false,
-                    onItemSelected = { _, _ -> },
-                    label = stringResource(Res.string.feature_apply_savings_label_currency),
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlinedTextField(
-                    value = state.minOpeningBalance,
-                    onValueChange = { onAction(SavingsApplicationAction.MinimumOpeningBalanceChange(it)) },
-                    label = stringResource(Res.string.feature_apply_savings_label_minimum_opening_balance),
-                    shape = DesignToken.shapes.medium,
-                    textStyle = MifosTypography.bodyLarge,
-                    config = MifosTextFieldConfig(
-                        isError = state.minOpeningBalanceError != null,
-                        errorText = state.minOpeningBalanceError?.let { stringResource(it) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done,
-                        ),
-                    ),
-                )
-
-                Text(
-                    text = stringResource(Res.string.feature_apply_savings_label_lock_in_period),
-                    style = MifosTypography.labelLargeEmphasized,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-
-                MifosOutlinedTextField(
-                    value = state.frequency,
-                    onValueChange = { onAction(SavingsApplicationAction.FrequencyChange(it)) },
-                    label = stringResource(Res.string.feature_apply_savings_label_frequency),
-                    shape = DesignToken.shapes.medium,
-                    textStyle = MifosTypography.bodyLarge,
-                    config = MifosTextFieldConfig(
-                        isError = state.frequencyError != null,
-                        errorText = state.frequencyError?.let { stringResource(it) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done,
-                        ),
-                    ),
-                )
-
-                MifosOutlineDropdown(
-                    selectedText = state.selectedFrequencyTypeName,
-                    items = state.getFrequencyTypeMap,
-                    onItemSelected = { id, product ->
-                        onAction(SavingsApplicationAction.FrequencyTypeChange(id, product))
-                    },
-                    label = stringResource(Res.string.feature_apply_savings_label_frequency_type),
-                )
-
-                if (state.isOverDraftAllowed) {
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(DesignToken.padding.large)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                ) {
                     Text(
-                        text = stringResource(Res.string.feature_apply_savings_label_overdraft),
+                        text = stringResource(Res.string.feature_apply_savings_label_details),
                         style = MifosTypography.labelLargeEmphasized,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .onClick { onAction(SavingsApplicationAction.OnChecked(!state.checked)) },
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Checkbox(
-                            checked = state.checked,
-                            onCheckedChange = {
-                                onAction(SavingsApplicationAction.OnChecked(it))
-                            },
-                            colors = CheckboxDefaults.colors(
-                                checkedColor = AppColors.primaryBlue,
+                    MifosOutlineDropdown(
+                        selectedText = state.currency.displayLabel ?: "",
+                        items = emptyMap(),
+                        enabled = false,
+                        onItemSelected = { _, _ -> },
+                        label = stringResource(Res.string.feature_apply_savings_label_currency),
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.minOpeningBalance,
+                        onValueChange = { onAction(SavingsApplicationAction.MinimumOpeningBalanceChange(it)) },
+                        label = stringResource(Res.string.feature_apply_savings_label_minimum_opening_balance),
+                        shape = DesignToken.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                        config = MifosTextFieldConfig(
+                            isError = state.minOpeningBalanceError != null,
+                            errorText = state.minOpeningBalanceError?.let { stringResource(it) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done,
                             ),
-                        )
+                        ),
+                    )
+
+                    Text(
+                        text = stringResource(Res.string.feature_apply_savings_label_lock_in_period),
+                        style = MifosTypography.labelLargeEmphasized,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.frequency,
+                        onValueChange = { onAction(SavingsApplicationAction.FrequencyChange(it)) },
+                        label = stringResource(Res.string.feature_apply_savings_label_frequency),
+                        shape = DesignToken.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                        config = MifosTextFieldConfig(
+                            isError = state.frequencyError != null,
+                            errorText = state.frequencyError?.let { stringResource(it) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done,
+                            ),
+                        ),
+                    )
+
+                    MifosOutlineDropdown(
+                        selectedText = state.selectedFrequencyTypeName,
+                        items = state.getFrequencyTypeMap,
+                        onItemSelected = { id, product ->
+                            onAction(SavingsApplicationAction.FrequencyTypeChange(id, product))
+                        },
+                        label = stringResource(Res.string.feature_apply_savings_label_frequency_type),
+                    )
+
+                    if (state.isOverDraftAllowed) {
                         Text(
-                            text = stringResource(Res.string.feature_apply_savings_label_request_to_allow_overdraft),
-                            style = MifosTypography.labelMediumEmphasized,
+                            text = stringResource(Res.string.feature_apply_savings_label_overdraft),
+                            style = MifosTypography.labelLargeEmphasized,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .onClick { onAction(SavingsApplicationAction.OnChecked(!state.checked)) },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Checkbox(
+                                checked = state.checked,
+                                onCheckedChange = {
+                                    onAction(SavingsApplicationAction.OnChecked(it))
+                                },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = AppColors.primaryBlue,
+                                ),
+                            )
+                            Text(
+                                text =
+                                stringResource(Res.string.feature_apply_savings_label_request_to_allow_overdraft),
+                                style = MifosTypography.labelMediumEmphasized,
+                            )
+                        }
+                    }
+
+                    MifosButton(
+                        modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+                        enabled = state.isFormValid,
+                        onClick = {
+                            onAction(SavingsApplicationAction.NavigateToAuthentication)
+                        },
+                        shape = DesignToken.shapes.medium,
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_button_next),
+                            style = MifosTypography.titleMedium,
                         )
                     }
                 }
 
-                MifosButton(
-                    modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                    enabled = state.isFormValid,
-                    onClick = {
-                        onAction(SavingsApplicationAction.NavigateToAuthentication)
-                    },
-                    shape = DesignToken.shapes.medium,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_button_next),
-                        style = MifosTypography.titleMedium,
-                    )
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
                 }
             }
+
+            else -> { }
         }
     }
 }

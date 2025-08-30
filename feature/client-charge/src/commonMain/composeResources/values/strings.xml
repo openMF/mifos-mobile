@@ -37,4 +37,6 @@
     <string name="waived">Waived</string>
     <string name="outstanding">Outstanding</string>
 
+    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+
 </resources>

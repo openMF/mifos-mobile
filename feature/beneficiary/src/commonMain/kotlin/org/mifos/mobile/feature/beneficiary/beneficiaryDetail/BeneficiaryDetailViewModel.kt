@@ -12,31 +12,76 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary_confirmation
+import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 internal class BeneficiaryDetailViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
+    private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<BeneficiaryDetailState, BeneficiaryDetailEvent, BeneficiaryDetailAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryDetailNavRoute>()
         BeneficiaryDetailState(
             beneficiaryId = route.beneficiaryId,
-            beneficiaryDialog = null,
         )
     },
 ) {
 
     init {
-        loadBeneficiary()
+        observeNetwork()
+    }
+
+    /**
+     * Observe network and dispatch status changes into actions
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(BeneficiaryDetailAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handle network state changes like LoanAccountDetailsViewModel
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(
+                            uiState = ScreenUiState.Network,
+                        )
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                loadBeneficiary()
+            }
+        }
     }
 
     private fun updateState(update: (BeneficiaryDetailState) -> BeneficiaryDetailState) {
@@ -50,7 +95,7 @@ internal class BeneficiaryDetailViewModel(
     private fun loadBeneficiary() {
         updateState {
             it.copy(
-                beneficiaryDialog = BeneficiaryDetailState.DialogState.Loading,
+                uiState = ScreenUiState.Loading,
             )
         }
         viewModelScope.launch {
@@ -63,19 +108,29 @@ internal class BeneficiaryDetailViewModel(
     private fun handleResponse(beneficiary: DataState<List<Beneficiary>>) {
         when (beneficiary) {
             DataState.Loading -> {
-                setDialogState(BeneficiaryDetailState.DialogState.Loading)
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Loading,
+                    )
+                }
             }
+
             is DataState.Error -> {
-                setDialogState(
-                    BeneficiaryDetailState.DialogState.Error(
-                        beneficiary.message,
-                    ),
-                )
+                updateState {
+                    it.copy(
+                        uiState = if (beneficiary.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
+                }
             }
+
             is DataState.Success -> {
                 updateState { currentState ->
                     currentState.copy(
-                        beneficiaryDialog = null,
+                        uiState = ScreenUiState.Success,
                         beneficiary = beneficiary.data.find { it.id == currentState.beneficiaryId },
                     )
                 }
@@ -85,7 +140,11 @@ internal class BeneficiaryDetailViewModel(
 
     private fun deleteBeneficiary(beneficiaryId: Long?) {
         viewModelScope.launch {
-            setDialogState(BeneficiaryDetailState.DialogState.Loading)
+            updateState {
+                it.copy(
+                    showOverlay = true,
+                )
+            }
             val response = beneficiaryRepositoryImp.deleteBeneficiary(beneficiaryId)
             sendAction(
                 BeneficiaryDetailAction
@@ -99,18 +158,26 @@ internal class BeneficiaryDetailViewModel(
         viewModelScope.launch {
             when (response) {
                 DataState.Loading -> {
-                    setDialogState(BeneficiaryDetailState.DialogState.Loading)
+                    updateState {
+                        it.copy(
+                            showOverlay = true,
+                        )
+                    }
                 }
                 is DataState.Error -> {
+                    updateState {
+                        it.copy(
+                            showOverlay = false,
+                        )
+                    }
                     setDialogState(
                         BeneficiaryDetailState.DialogState.Error(
-                            response.message,
+                            Res.string.feature_generic_error_server,
                         ),
                     )
                 }
                 is DataState.Success -> {
-                    sendEvent(BeneficiaryDetailEvent.Navigate)
-                    setDialogState(null)
+                    sendEvent(BeneficiaryDetailEvent.NavigateBack)
                 }
             }
         }
@@ -118,17 +185,26 @@ internal class BeneficiaryDetailViewModel(
 
     override fun handleAction(action: BeneficiaryDetailAction) {
         when (action) {
+            is BeneficiaryDetailAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is BeneficiaryDetailAction.DeleteBeneficiary -> deleteBeneficiary(state.beneficiaryId)
+
             is BeneficiaryDetailAction.OnUpdateBeneficiary -> sendEvent(
                 BeneficiaryDetailEvent.UpdateBeneficiary(state.beneficiaryId),
             )
-            BeneficiaryDetailAction.OnNavigate -> sendEvent(BeneficiaryDetailEvent.Navigate)
+
+            BeneficiaryDetailAction.OnNavigate -> sendEvent(BeneficiaryDetailEvent.NavigateBack)
+
             is BeneficiaryDetailAction.ErrorDialogDismiss -> updateState { it.copy(beneficiaryDialog = null) }
+
             BeneficiaryDetailAction.ShowDeleteConfirmation -> showDeleteConfirmation()
+
             BeneficiaryDetailAction.OnRefresh -> loadBeneficiary()
+
             is BeneficiaryDetailAction.Internal.ReceiveBeneficiaryResult -> {
                 handleResponse(action.result)
             }
+
             is BeneficiaryDetailAction.Internal.ReceiveDeleteBeneficiary -> {
                 processDeleteBeneficiaryResult(action.result)
             }
@@ -150,19 +226,21 @@ internal class BeneficiaryDetailViewModel(
 data class BeneficiaryDetailState(
     val beneficiaryId: Long = -1L,
     val beneficiary: Beneficiary? = null,
-    val beneficiaryDialog: DialogState?,
+    val beneficiaryDialog: DialogState? = null,
+
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState = ScreenUiState.Loading,
+    val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
-        data class Error(val message: String) : DialogState
-
-        data object Loading : DialogState
+        data class Error(val message: StringResource) : DialogState
 
         data class Confirmation(val message: String) : DialogState
     }
 }
 
 sealed interface BeneficiaryDetailEvent {
-    data object Navigate : BeneficiaryDetailEvent
+    data object NavigateBack : BeneficiaryDetailEvent
     data class UpdateBeneficiary(val beneficiaryId: Long) : BeneficiaryDetailEvent
 }
 
@@ -173,6 +251,7 @@ sealed interface BeneficiaryDetailAction {
     data object OnNavigate : BeneficiaryDetailAction
     data object ErrorDialogDismiss : BeneficiaryDetailAction
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryDetailAction
 
     sealed interface Internal : BeneficiaryDetailAction {
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal

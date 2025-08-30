@@ -48,7 +48,6 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
 @Composable
@@ -130,10 +129,6 @@ internal fun ShareApplicationContent(
                 MifosProgressIndicator()
             }
 
-            is ShareApplicationUiState.OverlayLoading -> {
-                MifosProgressIndicatorOverlay()
-            }
-
             is ShareApplicationUiState.Empty -> {
                 MifosErrorComponent(
                     isEmptyData = true,
@@ -163,7 +158,7 @@ internal fun ShareApplicationContent(
                 ShareApplicationForm(state, onAction, modifier)
             }
 
-            null -> {}
+            else -> {}
         }
     }
 }

@@ -63,6 +63,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 
@@ -102,10 +103,9 @@ internal fun TransactionScreenContent(
     onAction: (AccountTransactionAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isRefreshing = state.isRefreshing
     val pullToRefreshState = rememberMifosPullToRefreshState(
         isEnabled = true,
-        isRefreshing = isRefreshing,
+        isRefreshing = state.isRefreshing,
         onRefresh = {
             onAction(AccountTransactionAction.Refresh)
         },
@@ -127,60 +127,81 @@ internal fun TransactionScreenContent(
             }
         },
     ) {
-        if (state.isEmpty) {
-            EmptyDataView(
-                error = Res.string.feature_no_transactions_found,
-                icon = MifosIcons.Info,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
-
-        if (state.isFilteredRecordsEmpty && !state.isEmpty) {
-            EmptyDataView(
-                error = Res.string.feature_no__filtered_transactions_found,
-                icon = MifosIcons.Info,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
-
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large),
-        ) {
-            if (state.data.isNotEmpty()) {
-                ActionBar(
-                    onAction = onAction,
+        when (state.uiState) {
+            ScreenUiState.Empty -> {
+                EmptyDataView(
+                    error = Res.string.feature_no_transactions_found,
+                    icon = MifosIcons.Info,
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
-            if (state.dialogState == null) {
-                LazyColumn {
-                    state.filteredData.forEach { (date, transactions) ->
-                        item {
-                            Text(
-                                text = date,
-                                style = MifosTypography.labelLargeEmphasized,
-                                modifier = Modifier.padding(vertical = DesignToken.padding.medium),
-                            )
-                        }
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(AccountTransactionAction.Refresh) },
+                )
+            }
+            ScreenUiState.Loading -> MifosProgressIndicator()
 
-                        items(transactions.size) { index ->
-                            val transaction = transactions[index]
-                            TransactionScreenItem(
-                                title = transaction.typeValue ?: "",
-                                date = DateHelper.getDateAsString(transaction.date),
-                                time = "",
-                                transactionAmount = CurrencyFormatter.format(
-                                    balance = transaction.amount,
-                                    currencyCode = transaction.currency,
-                                    maximumFractionDigits = 3,
-                                ),
-                                isCredited = transaction.isCredit == true,
-                            )
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(AccountTransactionAction.Refresh) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.large),
+                ) {
+                    if (state.data.isNotEmpty()) {
+                        ActionBar(
+                            onAction = onAction,
+                        )
+                    }
+
+                    if (state.isFilteredRecordsEmpty) {
+                        EmptyDataView(
+                            error = Res.string.feature_no__filtered_transactions_found,
+                            icon = MifosIcons.Info,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    } else {
+                        LazyColumn {
+                            state.filteredData.forEach { (date, transactions) ->
+                                item {
+                                    Text(
+                                        text = date,
+                                        style = MifosTypography.labelLargeEmphasized,
+                                        modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                                    )
+                                }
+
+                                items(transactions.size) { index ->
+                                    val transaction = transactions[index]
+                                    TransactionScreenItem(
+                                        title = transaction.typeValue ?: "",
+                                        date = DateHelper.getDateAsString(transaction.date),
+                                        time = "",
+                                        transactionAmount = CurrencyFormatter.format(
+                                            balance = transaction.amount,
+                                            currencyCode = transaction.currency,
+                                            maximumFractionDigits = 3,
+                                        ),
+                                        isCredited = transaction.isCredit == true,
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
+
+            else -> { }
         }
     }
 }
@@ -189,7 +210,6 @@ internal fun TransactionScreenContent(
 internal fun AccountTransactionsDialog(
     state: AccountTransactionState,
     onAction: (AccountTransactionAction) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     when (state.dialogState) {
         is AccountTransactionState.DialogState.Error -> {
@@ -200,21 +220,14 @@ internal fun AccountTransactionsDialog(
                 onDismissRequest = { onAction(AccountTransactionAction.DismissDialog) },
             )
         }
+
         AccountTransactionState.DialogState.Filters -> {
             TransactionFilters(
                 state = state,
                 onAction = onAction,
             )
         }
-        AccountTransactionState.DialogState.Loading -> {
-            MifosProgressIndicator(modifier = modifier.fillMaxSize())
-        }
-        AccountTransactionState.DialogState.Network ->
-            MifosErrorComponent(
-                isNetworkConnected = !state.networkUnavailable,
-                isRetryEnabled = true,
-                onRetry = { onAction(AccountTransactionAction.Refresh) },
-            )
+
         null -> {}
     }
 }

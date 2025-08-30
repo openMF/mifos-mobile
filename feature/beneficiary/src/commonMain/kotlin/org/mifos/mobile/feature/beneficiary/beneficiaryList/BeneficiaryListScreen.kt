@@ -49,7 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
-import mifos_mobile.feature.beneficiary.generated.resources.error_fetching_beneficiaries
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.filter
 import mifos_mobile.feature.beneficiary.generated.resources.ic_error_black_24dp
 import mifos_mobile.feature.beneficiary.generated.resources.linked_with
@@ -74,6 +74,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun BeneficiaryListScreen(
@@ -118,27 +119,14 @@ private fun BeneficiaryListDialog(
     onAction: (BeneficiaryListAction) -> Unit,
 ) {
     when (state.dialogState) {
-        BeneficiaryListState.DialogState.Loading -> MifosProgressIndicator()
-        is BeneficiaryListState.DialogState.Error -> {
-            MifosErrorComponent(
-                isNetworkConnected = !state.networkUnavailable,
-                isRetryEnabled = true,
-                onRetry = {
-                    onAction(
-                        BeneficiaryListAction.RefreshBeneficiaries,
-                    )
-                },
-                message = stringResource(Res.string.error_fetching_beneficiaries),
-            )
-        }
-
         BeneficiaryListState.DialogState.Filters -> {
             BeneficiaryFilters(
                 state = state,
                 onAction = onAction,
             )
         }
-        null -> Unit
+
+        else -> Unit
     }
 }
 
@@ -182,13 +170,28 @@ fun BeneficiaryListContent(
             .padding(top = DesignToken.padding.small),
         verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
     ) {
-        if (state.beneficiaries.isNotEmpty()) {
-            ActionBar(
-                onAction = onAction,
-            )
-        }
-        if (state.dialogState == null) {
-            if (state.isEmpty) {
+        when (state.uiState) {
+            is ScreenUiState.Loading -> {
+                MifosProgressIndicator()
+            }
+
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(BeneficiaryListAction.RefreshBeneficiaries) },
+                )
+            }
+
+            is ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(BeneficiaryListAction.RefreshBeneficiaries) },
+                )
+            }
+
+            is ScreenUiState.Empty -> {
                 Box(
                     Modifier.fillMaxSize().padding(horizontal = DesignToken.padding.large),
                     contentAlignment = Alignment.Center,
@@ -212,26 +215,40 @@ fun BeneficiaryListContent(
                     }
                 }
             }
-            if (state.isFilteredEmpty) {
-                EmptyDataView(
-                    modifier = Modifier.fillMaxSize(),
-                    image = Res.drawable.ic_error_black_24dp,
-                    error = Res.string.no_filtered_beneficiary_found,
-                )
-            }
-        }
-        LazyColumn(modifier = Modifier) {
-            items(state.filteredBeneficiaries) { beneficiary ->
-                MifosBeneficiariesCard(
-                    beneficiary = beneficiary,
-                    onBeneficiaryClick = {
-                        onAction(
-                            BeneficiaryListAction
-                                .OnBeneficiaryItemClick(beneficiary.id ?: -1L),
+
+            is ScreenUiState.Success -> {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
+                ) {
+                    if (state.beneficiaries.isNotEmpty()) {
+                        ActionBar(onAction = onAction)
+                    }
+
+                    if (state.isFilteredEmpty) {
+                        EmptyDataView(
+                            modifier = Modifier.fillMaxSize(),
+                            image = Res.drawable.ic_error_black_24dp,
+                            error = Res.string.no_filtered_beneficiary_found,
                         )
-                    },
-                )
+                    } else {
+                        LazyColumn {
+                            items(state.filteredBeneficiaries) { beneficiary ->
+                                MifosBeneficiariesCard(
+                                    beneficiary = beneficiary,
+                                    onBeneficiaryClick = {
+                                        onAction(
+                                            BeneficiaryListAction
+                                                .OnBeneficiaryItemClick(beneficiary.id ?: -1L),
+                                        )
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
             }
+
+            else -> { }
         }
     }
 }

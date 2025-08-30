@@ -44,15 +44,15 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_top_ba
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosActionCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosUserImage
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
@@ -95,17 +95,6 @@ private fun SettingsDialog(
     onAction: (SettingsAction) -> Unit,
 ) {
     when (state.dialogState) {
-        is SettingsState.DialogState.Error -> {
-            MifosBasicDialog(
-                visibilityState = BasicDialogState.Shown(
-                    message = stringResource(state.dialogState.message),
-                ),
-                onDismissRequest = { onAction(SettingsAction.DismissDialog) },
-            )
-        }
-
-        SettingsState.DialogState.Loading -> MifosProgressIndicator()
-
         is SettingsState.DialogState.Logout -> {
             MifosLogoutDialog(
                 visibilityState = LogoutDialogState.Shown(
@@ -135,37 +124,50 @@ internal fun SettingsScreenContent(
         onNavigateBack = { onAction(SettingsAction.OnNavigateBack) },
         topBarTitle = stringResource(Res.string.feature_settings_top_bar_title),
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .padding(vertical = DesignToken.padding.large)
-                    .verticalScroll(rememberScrollState()),
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = DesignToken.padding.large)
+                        .verticalScroll(rememberScrollState()),
 
-            ) {
-                if (state.client != null) {
-                    Column(
-                        modifier = Modifier.padding(DesignToken.padding.extraLarge),
-                    ) {
-                        SettingsProfileCard(
-                            state = state,
-                        )
+                ) {
+                    when {
+                        state.isUserLoading -> {
+                            MifosProgressIndicator()
+                        }
+
+                        state.isUserLoaded -> {
+                            SettingsProfileCard(state = state)
+                        }
+
+                        else -> {
+                            MifosErrorComponent(
+                                isRetryEnabled = true,
+                                message = "Failed to load user. Please try again.",
+                                onRetry = { onAction(SettingsAction.Retry) },
+                            )
+                        }
                     }
-                }
-                Column {
-                    HorizontalDivider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(0.99997.dp),
-                    )
-                    SettingsActions(state.settingsItems) {
-                        if (it.route == Constants.LOGOUT) {
-                            onAction(SettingsAction.LogoutDialog)
-                        } else {
-                            onAction(SettingsAction.NavigateTo(it))
+
+                    Column {
+                        HorizontalDivider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(0.99997.dp),
+                        )
+                        SettingsActions(state.settingsItems) {
+                            if (it.route == Constants.LOGOUT) {
+                                onAction(SettingsAction.LogoutDialog)
+                            } else {
+                                onAction(SettingsAction.NavigateTo(it))
+                            }
                         }
                     }
                 }
             }
+
+            else -> { }
         }
     }
 }
@@ -176,7 +178,7 @@ internal fun SettingsProfileCard(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(DesignToken.padding.extraLarge),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(

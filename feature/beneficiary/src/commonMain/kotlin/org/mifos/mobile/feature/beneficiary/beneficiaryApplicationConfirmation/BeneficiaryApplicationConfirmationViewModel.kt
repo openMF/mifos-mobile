@@ -13,7 +13,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.beneficiary.generated.resources.Res
@@ -41,12 +40,14 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.EventType
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
 
 /**
@@ -66,7 +67,6 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
         BeneficiaryApplicationConfirmationState(
-            dialogState = null,
             beneficiaryId = route.beneficiaryId,
             beneficiaryState = enumValueOf<BeneficiaryState>(route.beneficiaryState),
             name = route.name,
@@ -84,9 +84,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
      */
     init {
         viewModelScope.launch {
-            initializeMapDetails()
-            observeNetworkStatus()
+            observeNetwork()
             observeAuthResult()
+            initializeMapDetails()
             getTopBarTitle()
         }
     }
@@ -98,13 +98,6 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         update: (BeneficiaryApplicationConfirmationState) -> BeneficiaryApplicationConfirmationState,
     ) {
         mutableStateFlow.update(update)
-    }
-
-    /**
-     * Updates only the dialog state in the ViewModel.
-     */
-    private fun setDialogState(dialogState: BeneficiaryApplicationConfirmationState.DialogState?) {
-        updateState { it.copy(dialogState = dialogState) }
     }
 
     /**
@@ -138,6 +131,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                 }
             }
 
+            is BeneficiaryApplicationConfirmationAction.ReceiveNetworkStatus ->
+                handleNetworkStatus(action.isOnline)
+
             BeneficiaryApplicationConfirmationAction.SubmitBeneficiary -> {
                 sendEvent(BeneficiaryApplicationConfirmationEvent.NavigateToAuthenticate())
             }
@@ -155,7 +151,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
      * Initiates the API call to create a new beneficiary and handles success or failure events.
      */
     private fun createBeneficiary(payload: BeneficiaryPayload?) {
-        setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
+        updateState {
+            it.copy(showOverlay = true)
+        }
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.createBeneficiary(payload)
             sendAction(
@@ -170,11 +168,13 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
-                    setDialogState(null)
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.FAILURE.name,
-                            eventDestination = "",
+                            eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_creation_failed),
                             subtitle = response.message,
                             buttonText = getString(Res.string.try_again),
@@ -182,14 +182,18 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     )
                 }
 
-                DataState.Loading -> setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
+                DataState.Loading -> updateState {
+                    it.copy(showOverlay = true)
+                }
 
                 is DataState.Success -> {
-                    setDialogState(null)
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.SUCCESS.name,
-                            eventDestination = "",
+                            eventDestination = StatusNavigationDestination.BENEFICIARY.name,
                             title = getString(Res.string.beneficiary_created_successfully),
                             subtitle = getString(
                                 Res.string.beneficiary_created_successfully_account,
@@ -209,7 +213,9 @@ internal class BeneficiaryApplicationConfirmationViewModel(
      * Currently not called in logic but reserved for future use.
      */
     private fun updateBeneficiary(beneficiaryId: Long?, payload: BeneficiaryUpdatePayload?) {
-        setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
+        updateState {
+            it.copy(showOverlay = true)
+        }
         viewModelScope.launch {
             val response = beneficiaryRepositoryImp.updateBeneficiary(beneficiaryId, payload)
             sendAction(
@@ -224,24 +230,34 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         viewModelScope.launch {
             when (response) {
                 is DataState.Error -> {
-                    setDialogState(null)
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.FAILURE.name,
-                            eventDestination = "",
+                            eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_updation_failed),
                             subtitle = response.message,
                             buttonText = getString(Res.string.try_again),
                         ),
                     )
                 }
-                DataState.Loading -> setDialogState(BeneficiaryApplicationConfirmationState.DialogState.Loading)
+
+                DataState.Loading -> {
+                    updateState {
+                        it.copy(showOverlay = true)
+                    }
+                }
+
                 is DataState.Success -> {
-                    setDialogState(null)
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.SUCCESS.name,
-                            eventDestination = "",
+                            eventDestination = StatusNavigationDestination.BENEFICIARY.name,
                             title = getString(Res.string.beneficiary_updated_successfully),
                             subtitle = getString(
                                 Res.string.beneficiary_updated_successfully_account,
@@ -273,25 +289,39 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     }
 
     /**
-     * Observes network connectivity status and updates UI accordingly.
+     * Observe network and dispatch status changes into actions
      */
-    private fun observeNetworkStatus() {
+    private fun observeNetwork() {
         viewModelScope.launch {
             networkMonitor.isOnline
-                .map(Boolean::not)
                 .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
-                        it.copy(
-                            networkUnavailable = isOffline,
-                            dialogState = if (isOffline) {
-                                BeneficiaryApplicationConfirmationState.DialogState.Network
-                            } else {
-                                null
-                            },
+                .collect { isOnline ->
+                    sendAction(BeneficiaryApplicationConfirmationAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handle network state changes like LoanAccountDetailsViewModel
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(
+                            uiState = ScreenUiState.Network,
                         )
+                    } else {
+                        current
                     }
                 }
+            }
         }
     }
 
@@ -344,10 +374,13 @@ data class BeneficiaryApplicationConfirmationState(
     val transferLimit: Int,
     val networkUnavailable: Boolean = false,
     val beneficiaryState: BeneficiaryState = BeneficiaryState.CREATE_MANUAL,
-    val dialogState: DialogState?,
+
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
+    val networkStatus: Boolean = false,
 ) {
     sealed interface DialogState {
-        data object Loading : DialogState
 
         data object Network : DialogState
     }
@@ -370,6 +403,8 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
 sealed interface BeneficiaryApplicationConfirmationAction {
 
     data object SubmitBeneficiary : BeneficiaryApplicationConfirmationAction
+
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationConfirmationAction
 
     data object OnNavigate : BeneficiaryApplicationConfirmationAction
 

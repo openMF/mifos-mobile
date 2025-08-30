@@ -124,4 +124,6 @@
     <string name="type_of_account">Type of Account</string>
     <string name="selected_count">%1$d selected</string>
     <string name="filter_icon_description">Filter icon</string>
+
+    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
 </resources>

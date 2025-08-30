@@ -56,8 +56,8 @@ import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPayFromDropdownUI
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
-import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 
@@ -150,11 +150,9 @@ internal fun TprContent(
         },
     ) {
         when (state.uiState) {
-            TptState.TptScreenState.Loading -> MifosProgressIndicator()
+            ScreenUiState.Loading -> MifosProgressIndicator()
 
-            TptState.TptScreenState.OverlayLoading -> MifosProgressIndicatorOverlay()
-
-            is TptState.TptScreenState.Error -> {
+            is ScreenUiState.Error -> {
                 MifosErrorComponent(
                     message = stringResource(Res.string.feature_tpt_error_server),
                     isRetryEnabled = true,
@@ -162,7 +160,7 @@ internal fun TprContent(
                 )
             }
 
-            TptState.TptScreenState.Network -> {
+            ScreenUiState.Network -> {
                 MifosErrorComponent(
                     isNetworkConnected = state.networkStatus,
                     isRetryEnabled = true,
@@ -170,11 +168,11 @@ internal fun TprContent(
                 )
             }
 
-            TptState.TptScreenState.Success -> {
+            ScreenUiState.Success -> {
                 TptForm(state, onAction)
             }
 
-            null -> { }
+            else -> { }
         }
     }
 }

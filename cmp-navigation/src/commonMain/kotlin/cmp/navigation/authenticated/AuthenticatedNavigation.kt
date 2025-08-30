@@ -33,6 +33,8 @@ import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
+import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.BeneficiaryApplicationConfirmationNavRoute
+import org.mifos.mobile.feature.beneficiary.navigation.BeneficiaryNavRoute
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
 import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
@@ -187,6 +189,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                     StatusNavigationDestination.SHARE_APPLICATION.name -> {
                         navController.navigateToAccountFromStatus(Constants.SHARE_ACCOUNTS)
+                    }
+
+                    StatusNavigationDestination.BENEFICIARY.name -> {
+                        navController.navigateToBeneficiaryFromStatus()
                     }
 
                     StatusNavigationDestination.PREVIOUS_SCREEN.name -> {
@@ -451,10 +457,24 @@ fun NavController.navigateToAccountFromStatus(
     }
 }
 
+fun NavController.navigateToBeneficiaryFromStatus() {
+    this.navigate(AuthenticatedNavbarRoute) {
+        popUpTo(StatusNavigationRoute::class) {
+            inclusive = true
+        }
+        launchSingleTop = true
+    }
+
+    this.navigate(BeneficiaryNavRoute) {
+        launchSingleTop = true
+    }
+}
+
 fun NavController.popScreens(
     popRules: Map<String, Int> = mapOf(
         ConfirmDetailsRoute::class.qualifiedName.orEmpty() to 2,
         TransferProcessRoute::class.qualifiedName.orEmpty() to 2,
+        BeneficiaryApplicationConfirmationNavRoute::class.qualifiedName.orEmpty() to 2,
     ),
 ) {
     val lastEntry = previousBackStackEntry?.destination?.route

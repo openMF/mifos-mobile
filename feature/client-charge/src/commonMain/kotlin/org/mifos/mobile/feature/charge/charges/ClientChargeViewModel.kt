@@ -12,16 +12,17 @@ package org.mifos.mobile.feature.charge.charges
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.charges
 import mifos_mobile.feature.client_charge.generated.resources.client_charges
-import mifos_mobile.feature.client_charge.generated.resources.internet_not_connected
+import mifos_mobile.feature.client_charge.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -30,6 +31,7 @@ import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
  * ViewModel responsible for managing the state of client, loan, and savings charges.
@@ -62,7 +64,6 @@ internal class ClientChargeViewModel(
         }
 
         ClientChargeState(
-            dialogState = ClientChargeState.DialogState.Loading,
             chargeType = ChargeType.valueOf(chargeRoute.chargeType),
             chargeTypeId = chargeRoute.chargeTypeId,
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
@@ -73,24 +74,23 @@ internal class ClientChargeViewModel(
 ) {
 
     init {
-        // Observe network connectivity
-        viewModelScope.launch {
-            val message = getString(Res.string.internet_not_connected)
-            networkMonitor.isOnline.collect { isConnected ->
-                updateState { it.copy(isOnline = isConnected) }
-                if (!isConnected) {
-                    sendEvent(ClientChargeEvent.ShowToast(message))
-                    updateState {
-                        it.copy(
-                            dialogState = ClientChargeState.DialogState.Error(message),
-                        )
-                    }
-                }
-            }
-        }
+        observeNetworkStatus()
+    }
 
-        // Load initial data
-        loadCharges()
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * If the network is unavailable, it sets the `networkStatus` flag in the state
+     * and shows a network-related dialog.
+     */
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+
+                    sendAction(ClientChargeAction.ReceiveNetworkResult(isOnline = isOnline))
+                }
+        }
     }
 
     /**
@@ -106,13 +106,53 @@ internal class ClientChargeViewModel(
     override fun handleAction(action: ClientChargeAction) {
         when (action) {
             is ClientChargeAction.RefreshCharges -> refreshCharges()
+
             is ClientChargeAction.OnNavigate -> sendEvent(ClientChargeEvent.Navigate)
+
             is ClientChargeAction.OnDismissDialog -> dismissDialog()
+
             is ClientChargeAction.OnChargeClick -> sendEvent(ClientChargeEvent.OnChargeClick(action.charge))
+
+            is ClientChargeAction.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
+
+            is ClientChargeAction.Retry -> retry()
+
             is ClientChargeAction.Internal.ReceiveClientChargesResult ->
                 handleClientChargesResult(action.result)
+
             is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult ->
                 handleLoanOrSavingsChargesResult(action.result)
+        }
+    }
+
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState {
+            it.copy(networkStatus = isOnline)
+        }
+        if (!isOnline) {
+            updateState { current ->
+                if (current.uiState is ScreenUiState.Loading ||
+                    current.uiState is ScreenUiState.Error ||
+                    current.uiState is ScreenUiState.Empty ||
+                    current.uiState is ScreenUiState.Network
+                ) {
+                    current.copy(uiState = ScreenUiState.Network)
+                } else {
+                    current
+                }
+            }
+        } else {
+            loadCharges()
+        }
+    }
+
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                loadCharges()
+            }
         }
     }
 
@@ -131,22 +171,24 @@ internal class ClientChargeViewModel(
     private fun handleLoanOrSavingsChargesResult(result: DataState<List<Charge>>) {
         when (result) {
             is DataState.Loading -> updateState {
-                it.copy(dialogState = ClientChargeState.DialogState.Loading)
+                it.copy(uiState = ScreenUiState.Loading)
             }
 
             is DataState.Error -> updateState {
                 it.copy(
-                    dialogState = ClientChargeState.DialogState.Error(
-                        result.exception.message ?: "An Error Occurred",
-                    ),
+                    uiState = if (result.exception.cause is IOException) {
+                        ScreenUiState.Network
+                    } else {
+                        ScreenUiState.Error(Res.string.feature_generic_error_server)
+                    },
                 )
             }
 
             is DataState.Success -> updateState {
                 if (result.data.isEmpty()) {
-                    it.copy(isEmpty = true, dialogState = null)
+                    it.copy(uiState = ScreenUiState.Empty)
                 } else {
-                    it.copy(charges = result.data, dialogState = null)
+                    it.copy(uiState = ScreenUiState.Success)
                 }
             }
         }
@@ -158,23 +200,24 @@ internal class ClientChargeViewModel(
     private fun handleClientChargesResult(result: DataState<Page<Charge>>) {
         when (result) {
             is DataState.Loading -> updateState {
-                it.copy(dialogState = ClientChargeState.DialogState.Loading)
+                it.copy(uiState = ScreenUiState.Loading)
             }
 
             is DataState.Error -> updateState {
                 it.copy(
-                    dialogState = ClientChargeState.DialogState.Error(
-                        result.exception.message ?: "An Error Occurred",
-                    ),
+                    uiState = if (result.exception.cause is IOException) {
+                        ScreenUiState.Network
+                    } else {
+                        ScreenUiState.Error(Res.string.feature_generic_error_server)
+                    },
                 )
             }
 
             is DataState.Success -> updateState {
-                val items = result.data.pageItems
-                if (items.isEmpty()) {
-                    it.copy(isEmpty = true, dialogState = null)
+                if (result.data.pageItems.isEmpty()) {
+                    it.copy(uiState = ScreenUiState.Empty)
                 } else {
-                    it.copy(charges = items, dialogState = null)
+                    it.copy(uiState = ScreenUiState.Success)
                 }
             }
         }
@@ -235,16 +278,20 @@ internal class ClientChargeViewModel(
  * @property topBarTitleResId Title shown in the app bar.
  * @property dialogState Dialog state used for showing loading or error.
  * @property charges List of fetched charges.
+ * @property uiState holds the state of screen
  */
 data class ClientChargeState(
+    val networkStatus: Boolean = false,
     val clientId: Long,
     val chargeType: ChargeType,
     val chargeTypeId: Long?,
     val isOnline: Boolean,
     val isEmpty: Boolean = false,
     val topBarTitleResId: StringResource = Res.string.charges,
-    val dialogState: DialogState? = null,
     val charges: List<Charge> = emptyList(),
+
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * Represents the possible dialog states in the UI.
@@ -252,9 +299,6 @@ data class ClientChargeState(
     sealed interface DialogState {
         /** Error dialog with a message */
         data class Error(val message: String) : DialogState
-
-        /** Loading dialog shown while fetching data */
-        data object Loading : DialogState
     }
 }
 
@@ -297,6 +341,12 @@ sealed interface ClientChargeAction {
      * @param charge The clicked charge.
      */
     data class OnChargeClick(val charge: Charge) : ClientChargeAction
+
+    /** Receive the network status */
+    data class ReceiveNetworkResult(val isOnline: Boolean) : ClientChargeAction
+
+    /** Action to trigger to refetch the charges */
+    data object Retry : ClientChargeAction
 
     /**
      * Internal actions used by the ViewModel.

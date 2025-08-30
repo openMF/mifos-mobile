@@ -10,9 +10,12 @@
 package org.mifos.mobile.feature.savingsaccount.savingsAccount
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
+import mifos_mobile.feature.savings_account.generated.resources.Res
+import mifos_mobile.feature.savings_account.generated.resources.feature_generic_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -23,6 +26,8 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
 import kotlin.collections.orEmpty
 
@@ -48,7 +53,59 @@ class SavingsAccountViewmodel(
 
     init {
         observeNetwork()
-        handleAction(SavingsAccountAction.LoadAccounts(emptyList()))
+    }
+
+    /**
+     * Observes the network connectivity status and updates state accordingly.
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(SavingsAccountAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                sendAction(SavingsAccountAction.LoadAccounts(emptyList()))
+            }
+        }
+    }
+
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
+    private fun updateState(update: (SavingsAccountState) -> SavingsAccountState) {
+        mutableStateFlow.update(update)
     }
 
     override fun handleAction(action: SavingsAccountAction) {
@@ -63,6 +120,14 @@ class SavingsAccountViewmodel(
                 loadAccounts(action.filters)
             }
 
+            is SavingsAccountAction.OnFirstLaunched -> {
+                updateState {
+                    it.copy(firstLaunch = false)
+                }
+            }
+
+            is SavingsAccountAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is SavingsAccountAction.OnAccountClicked ->
                 sendEvent(SavingsAccountsEvent.AccountClicked(action.accountId, action.accountType))
 
@@ -70,7 +135,20 @@ class SavingsAccountViewmodel(
                 handleReceivedAccounts(action.dataState, action.filters)
             }
 
-            SavingsAccountAction.OnRetry -> {
+            SavingsAccountAction.OnRetry -> retry()
+        }
+    }
+
+    /**
+     * Retries the data fetching process. If the network is unavailable, it shows
+     * a network error dialog. Otherwise, it triggers the `loadAccounts` `fetchClient`,
+     * `fetchLonPurpose` function.
+     */
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
                 handleAction(SavingsAccountAction.LoadAccounts(emptyList()))
             }
         }
@@ -95,19 +173,6 @@ class SavingsAccountViewmodel(
     }
 
     /**
-     * Observes the network connectivity status and updates state accordingly.
-     */
-    private fun observeNetwork() {
-        viewModelScope.launch {
-            networkMonitor.isOnline.collect { isConnected ->
-                mutableStateFlow.update {
-                    it.copy(networkConnection = isConnected)
-                }
-            }
-        }
-    }
-
-    /**
      * Fetches accounts from the repository and applies filters.
      * If cached data is available, it uses it directly.
      *
@@ -116,37 +181,12 @@ class SavingsAccountViewmodel(
     private fun loadAccounts(
         selectedFilters: List<StringResource?>,
     ) {
-        val cached = state.originalAccounts
-
-        if (cached != null) {
-            val filtered = filterAccounts(selectedFilters, cached)
-            getTotalSavingAmount(filtered)
-
-            mutableStateFlow.update {
-                it.copy(
-                    savingsAccount = filtered,
-                    selectedFilters = selectedFilters,
-                    dialogState = null,
-                    isEmpty = filtered.isEmpty(),
-                )
-            }
-            sendEvent(SavingsAccountsEvent.LoadingCompleted)
-            return
-        }
-
         viewModelScope.launch {
-            mutableStateFlow.update { it.copy(dialogState = SavingsAccountState.DialogState.Loading) }
-
+            updateState { it.copy(uiState = ScreenUiState.Loading) }
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId ?: return@launch,
                 accountType = Constants.SAVINGS_ACCOUNTS,
-            ).catch {
-                mutableStateFlow.update {
-                    it.copy(
-                        dialogState = SavingsAccountState.DialogState.Error("Something went wrong"),
-                    )
-                }
-            }.collect { clientAccounts ->
+            ).collect { clientAccounts ->
                 sendAction(
                     SavingsAccountAction.Internal.ReceiveSavingsAccounts(
                         filters = selectedFilters,
@@ -167,39 +207,55 @@ class SavingsAccountViewmodel(
         dataState: DataState<ClientAccounts>,
         selectedFilters: List<StringResource?>,
     ) {
+        sendEvent(SavingsAccountsEvent.LoadingCompleted)
         when (dataState) {
             is DataState.Error -> {
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
-                        dialogState = SavingsAccountState.DialogState.Error("Something went wrong"),
+                        uiState = if (dataState.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
                     )
                 }
             }
 
             DataState.Loading -> {
                 mutableStateFlow.update {
-                    it.copy(dialogState = SavingsAccountState.DialogState.Loading)
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
             is DataState.Success -> {
                 val allSavings = dataState.data.savingsAccounts.orEmpty()
                 val filtered = filterAccounts(selectedFilters, allSavings)
-                mutableStateFlow.update {
+                updateState {
                     it.copy(
                         decimals = filtered.firstOrNull()?.currency?.decimalPlaces ?: 2,
                     )
                 }
-                getTotalSavingAmount(dataState.data.savingsAccounts)
-                mutableStateFlow.update {
+
+                if (allSavings.isNotEmpty()) {
+                    getTotalSavingAmount(dataState.data.savingsAccounts)
+                }
+
+                updateState {
+                    val isEmptyAccounts = allSavings.isEmpty()
+                    val isFilteredEmpty = filtered.isEmpty()
+
                     it.copy(
                         items = filtered.size,
+                        isFilteredEmpty = isFilteredEmpty,
                         savingsAccount = filtered,
-                        isEmpty = filtered.isEmpty(),
                         originalAccounts = allSavings,
-                        currency = allSavings.firstOrNull()?.currency?.displaySymbol,
-                        dialogState = null,
                         selectedFilters = selectedFilters,
+                        currency = allSavings.firstOrNull()?.currency?.displaySymbol,
+                        uiState = if (isEmptyAccounts) {
+                            ScreenUiState.Empty
+                        } else {
+                            ScreenUiState.Success
+                        },
                     )
                 }
             }
@@ -262,6 +318,8 @@ data class SavingsAccountState(
     val savingsAccount: List<SavingAccount>?,
     val originalAccounts: List<SavingAccount>? = null,
 
+    val firstLaunch: Boolean = true,
+
     /** Number of filtered accounts */
     val items: Int? = 0,
 
@@ -289,7 +347,11 @@ data class SavingsAccountState(
     /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
 
-    val isEmpty: Boolean = false,
+    val isFilteredEmpty: Boolean = false,
+
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
+
+    val networkStatus: Boolean = false,
 ) {
 
     /**
@@ -297,7 +359,6 @@ data class SavingsAccountState(
      */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-        data object Loading : DialogState
     }
 }
 
@@ -305,6 +366,7 @@ data class SavingsAccountState(
  * Represents user or system actions for the Savings Account screen.
  */
 sealed interface SavingsAccountAction {
+    data object OnFirstLaunched : SavingsAccountAction
 
     data object OnRetry : SavingsAccountAction
 
@@ -316,6 +378,9 @@ sealed interface SavingsAccountAction {
 
     /** Toggle visibility of savings amount */
     data object ToggleAmountVisible : SavingsAccountAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : SavingsAccountAction
 
     /** Load savings accounts with applied filters */
     data class LoadAccounts(
