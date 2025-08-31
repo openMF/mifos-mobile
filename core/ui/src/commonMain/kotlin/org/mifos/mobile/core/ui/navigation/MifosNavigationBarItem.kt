@@ -47,7 +47,7 @@ fun RowScope.MifosNavigationBarItem(
                 modifier = Modifier.padding(DesignToken.padding.extraSmall),
                 text = stringResource(label),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
         selected = isSelected,
