@@ -64,7 +64,7 @@ internal class MakeTransferViewModel(
         MakeTransferState(
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
             accountId = route.accountId,
-            outstandingBalance = route.outstandingBalance,
+            outstandingBalance = route.outstandingBalance?.toDouble(),
             transferTarget = if (route.transferTarget != null) {
                 enumValueOf<TransferType>(route.transferTarget)
             } else {

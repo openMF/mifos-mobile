@@ -80,7 +80,7 @@ internal class TransferProcessViewModel(
                 toClientId = route.toClientId,
                 toAccountType = route.toAccountType,
                 transferDate = DateHelper.getDateMonthYearString(transferDate),
-                transferAmount = route.transferAmount,
+                transferAmount = route.transferAmount?.toDouble(),
                 transferDescription = route.transferDescription,
                 dateFormat = "dd MMMM yyyy",
                 locale = "en",

@@ -18,7 +18,6 @@ import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -40,7 +39,6 @@ fun ColumnScope.MifosNavigationRailItem(
             Icon(
                 imageVector = if (isSelected) selectedIconRes else unselectedIconRes,
                 contentDescription = stringResource(contentDescriptionRes),
-                tint = Color.Unspecified,
             )
         },
         label = {
@@ -48,7 +46,7 @@ fun ColumnScope.MifosNavigationRailItem(
                 modifier = Modifier.padding(DesignToken.padding.extraSmall),
                 text = stringResource(label),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
         selected = isSelected,
@@ -57,7 +55,9 @@ fun ColumnScope.MifosNavigationRailItem(
         colors = NavigationRailItemDefaults.colors(
             selectedIconColor = MaterialTheme.colorScheme.primary,
             unselectedIconColor = MaterialTheme.colorScheme.primary,
+            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
         ),
+
         modifier = modifier,
     )
 }
