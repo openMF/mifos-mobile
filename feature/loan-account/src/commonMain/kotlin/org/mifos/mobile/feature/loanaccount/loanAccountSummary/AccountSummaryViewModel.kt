@@ -13,9 +13,12 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_number_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_status_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_auto_debit_label
@@ -43,8 +46,11 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.LabelValueItem
 
 /**
@@ -55,20 +61,32 @@ import org.mifos.mobile.feature.loanaccount.loanAccountDetails.LabelValueItem
  */
 internal class LoanAccountSummaryViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
+    private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoanAccountSummaryState, LoanAccountSummaryEvent, LoanAccountSummaryAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<AccountSummaryRoute>()
         LoanAccountSummaryState(
-            dialogState = LoanAccountSummaryState.DialogState.Loading,
             accountId = route.accountId,
         )
     },
 ) {
 
     init {
-        // Automatically fetch savings account info on ViewModel creation
-        fetchLoanSummary()
+        observeNetwork()
+    }
+
+    /**
+     * Observes the network connectivity status and updates state accordingly.
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(LoanAccountSummaryAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
     }
 
     private fun fetchLoanSummary() {
@@ -89,12 +107,59 @@ internal class LoanAccountSummaryViewModel(
         when (action) {
             LoanAccountSummaryAction.OnNavigateBack -> sendEvent(LoanAccountSummaryEvent.NavigateBack)
 
-            LoanAccountSummaryAction.Retry -> fetchLoanSummary()
+            is LoanAccountSummaryAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
+            LoanAccountSummaryAction.Retry -> retry()
 
             is LoanAccountSummaryAction.Internal.LoanSummaryReceived ->
                 handleLoanAccountSummaryResult(action.dataState)
 
             LoanAccountSummaryAction.DismissDialog -> handleDismissDialog()
+        }
+    }
+
+    private fun updateState(update: (LoanAccountSummaryState) -> LoanAccountSummaryState) {
+        mutableStateFlow.update(update)
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchLoanSummary()
+            }
+        }
+    }
+
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                fetchLoanSummary()
+            }
         }
     }
 
@@ -111,14 +176,20 @@ internal class LoanAccountSummaryViewModel(
     private fun handleLoanAccountSummaryResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = LoanAccountSummaryState.DialogState.Error(dataState.message))
+                updateState {
+                    it.copy(
+                        uiState = if (dataState.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
                 }
             }
 
             DataState.Loading -> {
                 mutableStateFlow.update {
-                    it.copy(dialogState = LoanAccountSummaryState.DialogState.Loading)
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -316,7 +387,7 @@ internal class LoanAccountSummaryViewModel(
                 paidOffDetails = paidOffDetails,
                 outStandingDetails = outStandingDetails,
                 installmentDetails = installmentDetails,
-                dialogState = null,
+                uiState = ScreenUiState.Success,
             )
         }
     }
@@ -339,7 +410,9 @@ internal data class LoanAccountSummaryState(
     val outStandingDetails: List<LabelValueItem>? = emptyList(),
     val installmentDetails: List<LabelValueItem>? = emptyList(),
 
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * Represents UI dialog states.
@@ -347,9 +420,6 @@ internal data class LoanAccountSummaryState(
     sealed interface DialogState {
         /** Shown when an error occurs. */
         data class Error(val message: String) : DialogState
-
-        /** Shown during loading state. */
-        data object Loading : DialogState
     }
 }
 
@@ -373,6 +443,9 @@ sealed interface LoanAccountSummaryAction {
 
     /** User dismissed a dialog. */
     data object DismissDialog : LoanAccountSummaryAction
+
+    /** Receive Network Result */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountSummaryAction
 
     /**
      * Internal-only actions such as results from repository calls.

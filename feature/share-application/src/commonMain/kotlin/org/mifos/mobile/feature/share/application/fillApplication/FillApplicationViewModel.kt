@@ -211,7 +211,8 @@ internal class ShareFillApplicationViewModel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ShareApplicationUiState.Error ||
+                    if (current.uiState is ShareApplicationUiState.Loading ||
+                        current.uiState is ShareApplicationUiState.Error ||
                         current.uiState is ShareApplicationUiState.Network
                     ) {
                         current.copy(uiState = ShareApplicationUiState.Network)
@@ -381,9 +382,6 @@ internal class ShareFillApplicationViewModel(
     /**
      * Sets the UI state to `OverlayLoading`.
      */
-    private fun showOverlayLoading() {
-        updateState { it.copy(uiState = ShareApplicationUiState.OverlayLoading) }
-    }
 
     /**
      * Sets the dialog state to an `Error` dialog.
@@ -609,8 +607,7 @@ internal class ShareFillApplicationViewModel(
      * Prepares the state for form submission and triggers the authentication event.
      */
     private fun handleSubmit() {
-        showOverlayLoading()
-        updateState { it.copy(hasChanges = false, dialogState = null) }
+        updateState { it.copy(hasChanges = false) }
         submitAttempts = 0
         sendEvent(ShareApplicationEvent.NavigateToAuthentication)
     }
@@ -634,7 +631,7 @@ internal class ShareFillApplicationViewModel(
      * Constructs the payload from the current state and calls the repository's submission function.
      */
     private fun submitShareAccountApplication() {
-        updateState { it.copy(uiState = ShareApplicationUiState.Loading) }
+        updateState { it.copy(showOverlay = true) }
         viewModelScope.launch {
             val response = shareAccountRepositoryImpl.submitShareApplication(
                 payload = state.toShareApplicationPayload(),
@@ -653,21 +650,25 @@ internal class ShareFillApplicationViewModel(
      */
     @OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
     private suspend fun handleShareApplicationResult(response: DataState<String>) {
-        updateState { it.copy(uiState = ShareApplicationUiState.Success) }
         when (response) {
-            is DataState.Error -> sendEvent(
-                ShareApplicationEvent.NavigateToStatus(
-                    eventType = EventType.FAILURE.name,
-                    eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
-                    title = getString(Res.string.feature_apply_share_status_failure),
-                    subtitle = getString(
-                        Res.string.feature_apply_share_status_failure_tip,
-                        state.shareProductName,
+            is DataState.Error -> {
+                updateState { it.copy(showOverlay = false) }
+                sendEvent(
+                    ShareApplicationEvent.NavigateToStatus(
+                        eventType = EventType.FAILURE.name,
+                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
+                        title = getString(Res.string.feature_apply_share_status_failure),
+                        subtitle = getString(
+                            Res.string.feature_apply_share_status_failure_tip,
+                            state.shareProductName,
+                        ),
+                        buttonText = getString(Res.string.feature_apply_share_status_failure_action),
                     ),
-                    buttonText = getString(Res.string.feature_apply_share_status_failure_action),
-                ),
-            )
-            DataState.Loading -> updateState { it.copy(uiState = ShareApplicationUiState.OverlayLoading) }
+                )
+            }
+
+            DataState.Loading -> updateState { it.copy(showOverlay = true) }
+
             is DataState.Success -> sendEvent(
                 ShareApplicationEvent.NavigateToStatus(
                     eventType = EventType.SUCCESS.name,
@@ -812,6 +813,7 @@ internal data class ShareApplicationState(
     val networkStatus: Boolean = false,
     val dialogState: ShareApplicationDialogState? = null,
     val uiState: ShareApplicationUiState?,
+    val showOverlay: Boolean = false,
 ) {
     /**
      * The current date formatted as a string.

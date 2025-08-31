@@ -17,6 +17,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
@@ -33,7 +34,7 @@ import org.mifos.mobile.feature.accounts.utils.StatusUtils
 internal class AccountsViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AccountsState, AccountsEvent, AccountsAction>(
-    initialState = AccountsState(dialogState = null),
+    initialState = AccountsState(),
 ) {
 
     init {
@@ -166,7 +167,6 @@ internal class AccountsViewModel(
      */
     private fun observeAccountTypeAndInitCheckboxes() {
         val route = savedStateHandle.toRoute<AccountNavRoute>()
-// TODO use enum class AccountType instead of Constants
         val type = when (route.accountType) {
             Constants.SAVINGS_ACCOUNT -> AccountType.SAVINGS
             Constants.LOAN_ACCOUNT -> AccountType.LOAN
@@ -181,6 +181,7 @@ internal class AccountsViewModel(
                 checkboxOptions = checkboxes,
                 selectedFilters = emptyList(),
                 isRefreshing = false,
+                uiState = ScreenUiState.Success,
             )
         }
     }
@@ -202,8 +203,7 @@ internal class AccountsViewModel(
  * UI state for the Accounts screen, containing filter options, dialog visibility,
  * current account type, and refresh signals.
  */
-internal data class AccountsState
-constructor(
+internal data class AccountsState(
     val isRefreshing: Boolean = false,
 
     /** Current filter checkboxes shown in the dialog */
@@ -228,7 +228,10 @@ constructor(
     val refreshSignal: Long = Clock.System.now().epochSeconds,
 
     /** Current dialog being shown (loading, filters, error) */
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
+
+    /** Hold the state of the screen */
+    val uiState: ScreenUiState = ScreenUiState.Loading,
 ) {
 
     /**
@@ -236,7 +239,6 @@ constructor(
      */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-        data object Loading : DialogState
         data object Filters : DialogState
     }
 

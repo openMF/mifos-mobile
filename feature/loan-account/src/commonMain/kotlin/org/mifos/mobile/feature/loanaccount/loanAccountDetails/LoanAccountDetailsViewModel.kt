@@ -14,9 +14,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_number_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_currency_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_due_date_label
@@ -28,14 +31,17 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
+
 /**
  * ViewModel for managing the state and logic of the Loan Account Details screen.
  *
@@ -45,21 +51,33 @@ import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 internal class LoanAccountDetailsViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val networkMonitor: NetworkMonitor,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoanAccountDetailsState, LoanAccountDetailsEvent, LoanAccountDetailsAction>(
     initialState = run {
         val accountId = savedStateHandle.toRoute<LoanAccountDetailsRoute>().accountId
         LoanAccountDetailsState(
             accountId = accountId,
-            dialogState = LoanAccountDetailsState.DialogState.Loading,
             items = loanAccountActions,
         )
     },
 ) {
 
     init {
-        // Automatically fetch savings account info on ViewModel creation
-        fetchLoanAccount()
+        observeNetwork()
+    }
+
+    /**
+     * Observes the network connectivity status and updates state accordingly.
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(LoanAccountDetailsAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
     }
 
     private fun fetchLoanAccount() {
@@ -80,7 +98,9 @@ internal class LoanAccountDetailsViewModel(
         when (action) {
             LoanAccountDetailsAction.OnNavigateBack -> sendEvent(LoanAccountDetailsEvent.NavigateBack)
 
-            LoanAccountDetailsAction.OnRetry -> fetchLoanAccount()
+            LoanAccountDetailsAction.OnRetry -> retry()
+
+            is LoanAccountDetailsAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
 
             is LoanAccountDetailsAction.OnNavigateToAction ->
                 sendEvent(LoanAccountDetailsEvent.NavigateToAction(action.route))
@@ -89,6 +109,56 @@ internal class LoanAccountDetailsViewModel(
                 handleLoanAccountResult(action.dataState)
 
             LoanAccountDetailsAction.DismissDialog -> handleDismissDialog()
+        }
+    }
+
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
+    private fun updateState(update: (LoanAccountDetailsState) -> LoanAccountDetailsState) {
+        mutableStateFlow.update(update)
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchLoanAccount()
+            }
+        }
+    }
+
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                fetchLoanAccount()
+            }
         }
     }
 
@@ -123,14 +193,20 @@ internal class LoanAccountDetailsViewModel(
     private fun handleLoanAccountResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = LoanAccountDetailsState.DialogState.Error(dataState.message))
+                updateState {
+                    it.copy(
+                        uiState = if (dataState.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
                 }
             }
 
             DataState.Loading -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = LoanAccountDetailsState.DialogState.Loading)
+                updateState {
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -185,8 +261,8 @@ internal class LoanAccountDetailsViewModel(
                 submissionDate = DateHelper.getDateAsString(loan?.timeline?.submittedOnDate ?: emptyList()),
                 displayItems = displayItems,
                 transactionList = transactions,
-                dialogState = null,
                 totalOutStandingBalance = loan?.summary?.totalOutstanding,
+                uiState = ScreenUiState.Success,
             )
         }
     }
@@ -217,7 +293,10 @@ internal data class LoanAccountDetailsState(
     val accountStatus: LoanStatus? = LoanStatus.ACTIVE,
     val items: ImmutableList<LoanActionItems>,
     val isUpdatable: Boolean = false,
-    val dialogState: DialogState?,
+
+    val dialogState: DialogState? = null,
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * Represents UI dialog states.
@@ -225,9 +304,6 @@ internal data class LoanAccountDetailsState(
     sealed interface DialogState {
         /** Shown when an error occurs. */
         data class Error(val message: String) : DialogState
-
-        /** Shown during loading state. */
-        data object Loading : DialogState
     }
 }
 
@@ -308,6 +384,9 @@ sealed interface LoanAccountDetailsAction {
 
     /** When user retry */
     data object OnRetry : LoanAccountDetailsAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountDetailsAction
 
     /**
      * Internal-only actions such as results from repository calls.

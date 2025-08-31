@@ -10,9 +10,12 @@
 package org.mifos.mobile.feature.shareaccount.shareAccount
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
+import mifos_mobile.feature.share_account.generated.resources.Res
+import mifos_mobile.feature.share_account.generated.resources.feature_generic_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -23,6 +26,8 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
 import kotlin.collections.firstOrNull
 
@@ -42,26 +47,38 @@ class ShareAccountsViewmodel(
 ) : BaseViewModel<ShareAccountsState, ShareAccountsEvent, ShareAccountsAction>(
     initialState = ShareAccountsState(
         clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
-        dialogState = null,
         shareAccounts = emptyList(),
     ),
 ) {
 
     init {
         observeNetwork()
-        handleAction(ShareAccountsAction.LoadAccounts(emptyList()))
     }
 
     override fun handleAction(action: ShareAccountsAction) {
         when (action) {
             is ShareAccountsAction.OnDismissDialog -> handleDismissDialog()
+
             is ShareAccountsAction.OnNavigateBack -> sendEvent(ShareAccountsEvent.NavigateBack)
+
             is ShareAccountsAction.ToggleAmountVisible -> handleAmountVisible()
+
             is ShareAccountsAction.LoadAccounts -> loadAccounts(action.filters)
-            is ShareAccountsAction.OnRetry -> loadAccounts(action.filters)
+
+            is ShareAccountsAction.OnFirstLaunched -> {
+                updateState {
+                    it.copy(firstLaunch = false)
+                }
+            }
+
+            is ShareAccountsAction.OnRetry -> retry()
+
+            is ShareAccountsAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is ShareAccountsAction.OnAccountClicked -> sendEvent(
                 ShareAccountsEvent.AccountClicked(action.accountId, action.accountType),
             )
+
             is ShareAccountsAction.Internal.ReceiveShareAccounts -> {
                 handleReceivedAccounts(action.dataState, action.filters)
             }
@@ -91,10 +108,65 @@ class ShareAccountsViewmodel(
      */
     private fun observeNetwork() {
         viewModelScope.launch {
-            networkMonitor.isOnline.collect { isConnected ->
-                mutableStateFlow.update {
-                    it.copy(networkConnection = isConnected)
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(ShareAccountsAction.ReceiveNetworkStatus(isOnline))
                 }
+        }
+    }
+
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
+    private fun updateState(update: (ShareAccountsState) -> ShareAccountsState) {
+        mutableStateFlow.update(update)
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                sendAction(ShareAccountsAction.LoadAccounts(emptyList()))
+            }
+        }
+    }
+
+    /**
+     * Retries the data fetching process. If the network is unavailable, it shows
+     * a network error dialog. Otherwise, it triggers the `loadAccounts` `fetchClient`,
+     * `fetchLonPurpose` function.
+     */
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                handleAction(ShareAccountsAction.LoadAccounts(emptyList()))
             }
         }
     }
@@ -108,34 +180,13 @@ class ShareAccountsViewmodel(
     private fun loadAccounts(
         selectedFilters: List<StringResource?>,
     ) {
-        val cached = state.originalAccounts
-
-        if (cached != null) {
-            val filtered = filterAccounts(selectedFilters, cached)
-            getTotalShareAmount(filtered)
-
-            mutableStateFlow.update {
-                it.copy(
-                    shareAccounts = filtered,
-                    selectedFilters = selectedFilters,
-                    dialogState = null,
-                )
-            }
-            sendEvent(ShareAccountsEvent.LoadingCompleted)
-            return
-        }
-
         viewModelScope.launch {
-            mutableStateFlow.update { it.copy(dialogState = ShareAccountsState.DialogState.Loading) }
+            mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
 
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId ?: return@launch,
                 accountType = Constants.SHARE_ACCOUNTS,
-            ).catch {
-                mutableStateFlow.update {
-                    it.copy(dialogState = ShareAccountsState.DialogState.Error("Something went wrong"))
-                }
-            }.collect { clientAccounts ->
+            ).collect { clientAccounts ->
                 sendAction(
                     ShareAccountsAction.Internal.ReceiveShareAccounts(
                         filters = selectedFilters,
@@ -158,14 +209,20 @@ class ShareAccountsViewmodel(
     ) {
         when (dataState) {
             is DataState.Error -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = ShareAccountsState.DialogState.Error("Something went wrong"))
+                updateState {
+                    it.copy(
+                        uiState = if (dataState.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
                 }
             }
 
             DataState.Loading -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = ShareAccountsState.DialogState.Loading)
+                updateState {
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -177,15 +234,27 @@ class ShareAccountsViewmodel(
                         decimals = filtered.firstOrNull()?.currency?.decimalPlaces ?: 2,
                     )
                 }
-                getTotalShareAmount(shareAccounts)
-                mutableStateFlow.update {
+
+                if (shareAccounts.isNotEmpty()) {
+                    getTotalShareAmount(shareAccounts)
+                }
+
+                updateState {
+                    val isEmptyAccounts = shareAccounts.isEmpty()
+                    val isFilteredEmpty = filtered.isEmpty()
+
                     it.copy(
                         items = filtered.size,
-                        isEmpty = filtered.isEmpty(),
+                        isFilteredEmpty = isFilteredEmpty,
+                        currency = shareAccounts.firstOrNull()?.currency?.displaySymbol,
                         shareAccounts = filtered,
                         originalAccounts = shareAccounts,
-                        dialogState = null,
                         selectedFilters = selectedFilters,
+                        uiState = if (isEmptyAccounts) {
+                            ScreenUiState.Empty
+                        } else {
+                            ScreenUiState.Success
+                        },
                     )
                 }
             }
@@ -244,7 +313,8 @@ class ShareAccountsViewmodel(
 data class ShareAccountsState(
     val shareAccounts: List<ShareAccount>?,
     val originalAccounts: List<ShareAccount>? = null,
-    val isEmpty: Boolean = false,
+    val isFilteredEmpty: Boolean = false,
+    val firstLaunch: Boolean = true,
 
     /** Number of filtered accounts */
     val items: Int? = 0,
@@ -264,21 +334,24 @@ data class ShareAccountsState(
     /** Current client ID from user preferences */
     val clientId: Long?,
 
-    /** Currently active dialog (Loading/Error) */
-    val dialogState: DialogState?,
+    /** Currently active dialog (Error) */
+    val dialogState: DialogState? = null,
 
     /** Filters currently applied */
     val selectedFilters: List<StringResource?> = emptyList(),
 
     /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
+
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
+
+    val networkStatus: Boolean = false,
 ) {
     /**
      * Represents UI dialog states.
      */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-        data object Loading : DialogState
     }
 }
 
@@ -286,6 +359,7 @@ data class ShareAccountsState(
  * Represents user or system actions for the Share Accounts screen.
  */
 sealed interface ShareAccountsAction {
+    data object OnFirstLaunched : ShareAccountsAction
 
     /** Dismiss any open dialog */
     data object OnDismissDialog : ShareAccountsAction
@@ -300,10 +374,13 @@ sealed interface ShareAccountsAction {
     data class LoadAccounts(val filters: List<StringResource?>) : ShareAccountsAction
 
     /** Retry loading with same filters */
-    data class OnRetry(val filters: List<StringResource?>) : ShareAccountsAction
+    data object OnRetry : ShareAccountsAction
 
     /** Navigate to a selected account's detail page */
     data class OnAccountClicked(val accountId: Long, val accountType: String) : ShareAccountsAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : ShareAccountsAction
 
     /**
      * Internal-only actions triggered by repository/data flow.

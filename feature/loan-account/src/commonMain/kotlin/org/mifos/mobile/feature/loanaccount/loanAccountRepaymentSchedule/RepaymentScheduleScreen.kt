@@ -44,6 +44,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.RepaymentScheduleItem
 
 @Composable
@@ -109,39 +110,61 @@ internal fun RepaymentScreenContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(
-                        vertical = DesignToken.padding.extraLarge,
-                        horizontal = DesignToken.padding.large,
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                MifosDetailsCard(keyValuePairs = state.basicDetails)
-
-                Spacer(Modifier.height(DesignToken.padding.large))
-
-                RepaymentScheduleList(
-                    periods = state.getPeriods,
-                    currencyCode = state.loanWithAssociations?.currency?.code ?: "",
-                    maxDigits = state.loanWithAssociations?.currency?.decimalPlaces?.toInt(),
-                    onPayClick = { period ->
-
-                        onAction(
-                            RepaymentScheduleAction.OnPayInstallment(
-                                accountId = state.accountId ?: 0L,
-                                outStandingBalance = period.totalDueForPeriod ?: 0.0,
-                                transferTyp = Constants.TRANSFER_PAY_TO,
-                                transferTarget = TransferType.SELF,
-                                transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
-                            ),
-                        )
-                    },
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(RepaymentScheduleAction.Retry) },
                 )
             }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(RepaymentScheduleAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(
+                            vertical = DesignToken.padding.extraLarge,
+                            horizontal = DesignToken.padding.large,
+                        ),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    MifosDetailsCard(keyValuePairs = state.basicDetails)
+
+                    Spacer(Modifier.height(DesignToken.padding.large))
+
+                    RepaymentScheduleList(
+                        periods = state.getPeriods,
+                        currencyCode = state.loanWithAssociations?.currency?.code ?: "",
+                        maxDigits = state.loanWithAssociations?.currency?.decimalPlaces?.toInt(),
+                        onPayClick = { period ->
+
+                            onAction(
+                                RepaymentScheduleAction.OnPayInstallment(
+                                    accountId = state.accountId ?: 0L,
+                                    outStandingBalance = period.totalDueForPeriod ?: 0.0,
+                                    transferTyp = Constants.TRANSFER_PAY_TO,
+                                    transferTarget = TransferType.SELF,
+                                    transferSuccessDestination = TransferSuccessDestination.LOAN_ACCOUNT,
+                                ),
+                            )
+                        },
+                    )
+                }
+            }
+
+            else -> { }
         }
     }
 }
@@ -178,13 +201,9 @@ internal fun RepaymentDialogs(
         is RepaymentScheduleState.DialogState.Error -> {
             MifosErrorComponent(
                 message = dialogState.message,
-                onRetry = { onAction(RepaymentScheduleAction.RetryClicked) },
+                onRetry = { onAction(RepaymentScheduleAction.Retry) },
                 isRetryEnabled = true,
             )
-        }
-
-        is RepaymentScheduleState.DialogState.Loading -> {
-            MifosProgressIndicator()
         }
 
         null -> Unit

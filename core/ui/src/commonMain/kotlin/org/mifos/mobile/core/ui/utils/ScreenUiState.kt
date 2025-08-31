@@ -43,6 +43,16 @@ sealed interface ScreenUiState {
      */
     data class Error(val message: StringResource) : ScreenUiState
 
+    /**
+     * Represents a full-screen error state with a simple string message.
+     *
+     * This is useful for handling error messages received directly as a string from an API
+     * or a library, without needing to map them to a resource ID.
+     *
+     * @property message The plain string error message to be displayed.
+     */
+    data class ErrorString(val message: String) : ScreenUiState
+
     /** * Represents a successful state where content can be displayed.
      * * This is the final state after a successful data fetch or operation.
      * The UI can now display the main content of the screen.

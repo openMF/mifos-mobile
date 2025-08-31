@@ -154,10 +154,6 @@ internal fun ShareFillApplicationContent(
                 MifosProgressIndicator()
             }
 
-            is ShareApplicationUiState.OverlayLoading -> {
-                MifosProgressIndicatorOverlay()
-            }
-
             is ShareApplicationUiState.Error -> {
                 MifosErrorComponent(
                     message = stringResource(Res.string.feature_apply_share_error_server),
@@ -175,10 +171,13 @@ internal fun ShareFillApplicationContent(
             }
 
             is ShareApplicationUiState.Success -> {
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
                 ShareFillApplicationForm(state, onAction, modifier)
             }
 
-            null -> {}
+            else -> { }
         }
     }
 }

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.io.IOException
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
@@ -51,6 +52,7 @@ import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
@@ -84,9 +86,7 @@ internal class SavingsFillApplicationViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<SavingsFillApplicationRoute>()
         SavingsApplicationState(
-            dialogState = SavingsApplicationDialogState.Loading,
             clientId = requireNotNull(userPreferencesRepository.clientId.value),
-            applicantName = "",
             currency = Currency(),
             savingsProductId = route.savingsProductId,
             fieldOfficerName = route.fieldOfficerName,
@@ -133,6 +133,8 @@ internal class SavingsFillApplicationViewModel(
                 viewModelScope.launch { handleSavingsApplicationResult(action.result) }
             }
 
+            is SavingsApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is SavingsApplicationAction.Internal.ReceiveAuthenticationResult -> handleSavingsApplyRequest(action.result)
 
             is SavingsApplicationAction.NavigateToAuthentication -> validateAndSubmit()
@@ -144,6 +146,37 @@ internal class SavingsFillApplicationViewModel(
             is SavingsApplicationAction.RetrySubmit -> resetSubmitAttempts()
 
             is SavingsApplicationAction.DismissDialog -> dismissDialog()
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchSavingsTemplateByProduct()
+            }
         }
     }
 
@@ -170,19 +203,7 @@ internal class SavingsFillApplicationViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            dialogState = if (!isOnline) {
-                                SavingsApplicationDialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-                    if (isOnline) {
-                        fetchSavingsTemplateByProduct()
-                    }
+                    sendAction(SavingsApplicationAction.ReceiveNetworkStatus(isOnline))
                 }
         }
     }
@@ -207,7 +228,7 @@ internal class SavingsFillApplicationViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(dialogState = SavingsApplicationDialogState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
                 fetchSavingsTemplateByProduct()
             }
@@ -235,14 +256,7 @@ internal class SavingsFillApplicationViewModel(
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(dialogState = SavingsApplicationDialogState.Loading) }
-    }
-
-    /**
-     * Sets the dialog state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(dialogState = SavingsApplicationDialogState.OverlayLoading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
@@ -466,7 +480,9 @@ internal class SavingsFillApplicationViewModel(
      * and sends an event to navigate to the authentication screen.
      */
     private fun handleSubmit() {
-        showOverlayLoading()
+        updateState {
+            it.copy(showOverlay = true)
+        }
         viewModelScope.launch {
             try {
                 updateState {
@@ -503,7 +519,7 @@ internal class SavingsFillApplicationViewModel(
      */
     private fun submitSavingsAccountApplication() {
         updateState {
-            it.copy(dialogState = SavingsApplicationDialogState.Loading)
+            it.copy(showOverlay = true)
         }
         viewModelScope.launch {
             val response = savingsAccountRepositorImpl.submitSavingAccountApplication(
@@ -522,14 +538,21 @@ internal class SavingsFillApplicationViewModel(
         when (template) {
             is DataState.Loading -> showLoading()
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_savings_error_server)
-                updateState { it.copy(dialogState = null) }
+                updateState {
+                    it.copy(
+                        uiState = if (template.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
+                        },
+                    )
+                }
             }
             is DataState.Success -> {
                 val savingsTemplate = template.data ?: return
                 updateState {
                     it.copy(
-                        dialogState = null,
+                        uiState = ScreenUiState.Success,
                         isOverDraftAllowed = savingsTemplate.allowOverdraft ?: false,
                         applicantName = savingsTemplate.clientName ?: "",
                         currency = savingsTemplate.currency ?: Currency(),
@@ -546,9 +569,11 @@ internal class SavingsFillApplicationViewModel(
      * @param response The [DataState] containing the result of the submission.
      */
     private suspend fun handleSavingsApplicationResult(response: DataState<String>) {
-        dismissDialog()
         when (response) {
             is DataState.Error -> {
+                updateState {
+                    it.copy(showOverlay = false)
+                }
                 sendEvent(
                     SavingsApplicationEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
@@ -562,7 +587,11 @@ internal class SavingsFillApplicationViewModel(
                     ),
                 )
             }
-            DataState.Loading -> showOverlayLoading()
+
+            DataState.Loading -> updateState {
+                it.copy(showOverlay = true)
+            }
+
             is DataState.Success -> {
                 sendEvent(
                     SavingsApplicationEvent.NavigateToStatus(
@@ -671,7 +700,7 @@ internal class SavingsFillApplicationViewModel(
 @OptIn(ExperimentalMaterial3Api::class)
 internal data class SavingsApplicationState(
     val clientId: Long,
-    val applicantName: String,
+    val applicantName: String = "",
     val savingsProductId: Long,
     val fieldOfficerName: String,
     val currency: Currency,
@@ -688,6 +717,8 @@ internal data class SavingsApplicationState(
     val hasChanges: Boolean = false,
     val networkStatus: Boolean = false,
     val dialogState: SavingsApplicationDialogState? = null,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
+    val showOverlay: Boolean = false,
 ) {
     /**
      * The current date as a formatted string.
@@ -719,14 +750,6 @@ internal data class SavingsApplicationState(
  * shown on the savings account application screen.
  */
 internal sealed interface SavingsApplicationDialogState {
-    /** Represents an overlay loading state. */
-    data object OverlayLoading : SavingsApplicationDialogState
-
-    /** Represents a full-screen loading state. */
-    data object Loading : SavingsApplicationDialogState
-
-    /** Represents a network error state. */
-    data object Network : SavingsApplicationDialogState
 
     /**
      * Represents a generic error dialog with a message.
@@ -805,6 +828,9 @@ internal sealed interface SavingsApplicationAction {
      * @property frequency The new value of the frequency field.
      */
     data class FrequencyChange(val frequency: String) : SavingsApplicationAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : SavingsApplicationAction
 
     /**
      * User action when the frequency type changes.

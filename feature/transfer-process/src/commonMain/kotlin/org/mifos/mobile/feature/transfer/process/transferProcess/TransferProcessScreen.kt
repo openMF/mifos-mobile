@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,7 +47,9 @@ import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun TransferProcessScreen(
@@ -108,34 +109,27 @@ private fun TransferProcessScreen(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            TransferProcessContent(
-                state = state,
-                onAction = onAction,
-            )
-        }
-        MakeTransferDialog(
-            state = state,
-        )
-    }
-}
+        when (state.uiState) {
+            ScreenUiState.Loading -> MifosProgressIndicator()
 
-@Composable
-internal fun MakeTransferDialog(
-    state: TransferProcessState,
-    modifier: Modifier = Modifier,
-) {
-    when (state.dialogState) {
-        TransferProcessState.DialogState.Loading -> {
-            MifosProgressIndicator()
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                )
+            }
+
+            ScreenUiState.Success -> {
+                TransferProcessContent(
+                    state = state,
+                    onAction = onAction,
+                )
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+            else -> { }
         }
-        TransferProcessState.DialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = !state.networkUnavailable,
-                modifier = modifier,
-            )
-        }
-        null -> {}
     }
 }
 
@@ -166,10 +160,6 @@ private fun TransferProcessContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-                contentColor = MaterialTheme.colorScheme.primary,
-            ),
             onClick = {
                 onAction(TransferProcessAction.OnNavigate)
             },

@@ -54,6 +54,7 @@ import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 
@@ -126,7 +127,6 @@ internal fun LoanAccountDetailsScreen(
 internal fun LoanAccountDetailsContent(
     state: LoanAccountDetailsState,
     onAction: (LoanAccountDetailsAction) -> Unit,
-//    onActionClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MifosElevatedScaffold(
@@ -142,34 +142,54 @@ internal fun LoanAccountDetailsContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(DesignToken.padding.large),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-            ) {
-                AccountDetailsGrid(
-                    details = state.displayItems,
-                )
-
-                if (state.transactionList != null) {
-                    AccountDetailsGrid(
-                        label = stringResource(Res.string.feature_loan_next_installment_label),
-                        details = state.transactionList,
-                    )
-                }
-
-                val visibleActions = state.accountStatus?.allowedActions ?: emptySet()
-
-                SavingsAccountActions(
-                    visibleActions = visibleActions,
-                    onActionClick = {
-                        onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
-                    },
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(LoanAccountDetailsAction.OnRetry) },
                 )
             }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(LoanAccountDetailsAction.OnRetry) },
+                )
+            }
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(DesignToken.padding.large),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                ) {
+                    AccountDetailsGrid(
+                        details = state.displayItems,
+                    )
+
+                    if (state.transactionList != null) {
+                        AccountDetailsGrid(
+                            label = stringResource(Res.string.feature_loan_next_installment_label),
+                            details = state.transactionList,
+                        )
+                    }
+
+                    val visibleActions = state.accountStatus?.allowedActions ?: emptySet()
+
+                    SavingsAccountActions(
+                        visibleActions = visibleActions,
+                        onActionClick = {
+                            onAction(LoanAccountDetailsAction.OnNavigateToAction(it))
+                        },
+                    )
+                }
+            }
+            else -> { }
         }
     }
 }
@@ -259,10 +279,6 @@ internal fun LoanAccountDialogs(
                 onRetry = { onAction(LoanAccountDetailsAction.OnRetry) },
                 isRetryEnabled = true,
             )
-        }
-
-        is LoanAccountDetailsState.DialogState.Loading -> {
-            MifosProgressIndicator()
         }
 
         null -> Unit

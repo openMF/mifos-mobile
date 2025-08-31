@@ -48,6 +48,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
@@ -106,7 +107,6 @@ internal fun AccountsDialog(
             onAction = onAction,
             modifier = modifier,
         )
-        AccountsState.DialogState.Loading -> MifosProgressIndicator()
         null -> {}
     }
 }
@@ -215,54 +215,62 @@ internal fun AccountScreenContent(
             }
         },
     ) {
-        val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
-        val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
-        when (state.accountType) {
-            AccountType.SAVINGS -> {
-                SavingsAccountScreen(
-                    navigateBack = { onAction(AccountsAction.OnNavigateBack) },
-                    refreshSignal = state.refreshSignal,
-                    onLoadingCompleted = {
-                        onAction(AccountsAction.RefreshCompleted)
-                    },
-                    onAccountClicked = { accountType, accountId ->
-                        onAction(AccountsAction.OnAccountClicked(accountId, accountType))
-                    },
-                    accountTypeFilters = typeFilters.map { it.statusLabel },
-                    accountStatusFilters = statusFilters.map { it.statusLabel },
-                    filtersClicked = { onAction(AccountsAction.ToggleFilter) },
-                )
+        when (state.uiState) {
+            ScreenUiState.Success -> {
+                val typeFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_TYPE }
+                val statusFilters = state.selectedFilters.filter { it.type == FilterType.ACCOUNT_STATUS }
+                when (state.accountType) {
+                    AccountType.SAVINGS -> {
+                        SavingsAccountScreen(
+                            navigateBack = { onAction(AccountsAction.OnNavigateBack) },
+                            refreshSignal = state.refreshSignal,
+                            onLoadingCompleted = {
+                                onAction(AccountsAction.RefreshCompleted)
+                            },
+                            onAccountClicked = { accountType, accountId ->
+                                onAction(AccountsAction.OnAccountClicked(accountId, accountType))
+                            },
+                            accountTypeFilters = typeFilters.map { it.statusLabel },
+                            accountStatusFilters = statusFilters.map { it.statusLabel },
+                            filtersClicked = { onAction(AccountsAction.ToggleFilter) },
+                        )
+                    }
+                    AccountType.LOAN -> {
+                        LoanAccountScreen(
+                            navigateBack = { onAction(AccountsAction.OnNavigateBack) },
+                            refreshSignal = state.refreshSignal,
+                            onLoadingCompleted = {
+                                onAction(AccountsAction.RefreshCompleted)
+                            },
+                            onAccountClicked = { accountType, accountId ->
+                                onAction(AccountsAction.OnAccountClicked(accountId, accountType))
+                            },
+                            accountTypeFilters = typeFilters.map { it.statusLabel },
+                            accountStatusFilters = statusFilters.map { it.statusLabel },
+                            filtersClicked = { onAction(AccountsAction.ToggleFilter) },
+                        )
+                    }
+                    AccountType.SHARE -> {
+                        ShareAccountScreen(
+                            navigateBack = { onAction(AccountsAction.OnNavigateBack) },
+                            refreshSignal = state.refreshSignal,
+                            onLoadingCompleted = {
+                                onAction(AccountsAction.RefreshCompleted)
+                            },
+                            onAccountClicked = { accountType, accountId ->
+                                onAction(AccountsAction.OnAccountClicked(accountId, accountType))
+                            },
+                            accountTypeFilters = typeFilters.map { it.statusLabel },
+                            accountStatusFilters = statusFilters.map { it.statusLabel },
+                            filtersClicked = { onAction(AccountsAction.ToggleFilter) },
+                        )
+                    }
+                }
             }
-            AccountType.LOAN -> {
-                LoanAccountScreen(
-                    navigateBack = { onAction(AccountsAction.OnNavigateBack) },
-                    refreshSignal = state.refreshSignal,
-                    onLoadingCompleted = {
-                        onAction(AccountsAction.RefreshCompleted)
-                    },
-                    onAccountClicked = { accountType, accountId ->
-                        onAction(AccountsAction.OnAccountClicked(accountId, accountType))
-                    },
-                    accountTypeFilters = typeFilters.map { it.statusLabel },
-                    accountStatusFilters = statusFilters.map { it.statusLabel },
-                    filtersClicked = { onAction(AccountsAction.ToggleFilter) },
-                )
-            }
-            AccountType.SHARE -> {
-                ShareAccountScreen(
-                    navigateBack = { onAction(AccountsAction.OnNavigateBack) },
-                    refreshSignal = state.refreshSignal,
-                    onLoadingCompleted = {
-                        onAction(AccountsAction.RefreshCompleted)
-                    },
-                    onAccountClicked = { accountType, accountId ->
-                        onAction(AccountsAction.OnAccountClicked(accountId, accountType))
-                    },
-                    accountTypeFilters = typeFilters.map { it.statusLabel },
-                    accountStatusFilters = statusFilters.map { it.statusLabel },
-                    filtersClicked = { onAction(AccountsAction.ToggleFilter) },
-                )
-            }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            else -> { }
         }
     }
 }

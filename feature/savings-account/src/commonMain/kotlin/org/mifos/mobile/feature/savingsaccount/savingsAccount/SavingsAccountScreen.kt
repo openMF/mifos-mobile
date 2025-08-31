@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.savingsaccount.savingsAccount
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
+import mifos_mobile.feature.savings_account.generated.resources.feature_account_empty_savings_accounts
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
@@ -57,6 +59,8 @@ import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import kotlin.collections.orEmpty
 
 @Composable
 fun SavingsAccountScreen(
@@ -72,6 +76,11 @@ fun SavingsAccountScreen(
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(refreshSignal) {
+        if (state.firstLaunch) {
+            viewModel.trySendAction(SavingsAccountAction.OnFirstLaunched)
+            return@LaunchedEffect
+        }
+
         viewModel.trySendAction(
             SavingsAccountAction.LoadAccounts(
                 filters = accountTypeFilters + accountStatusFilters,
@@ -122,9 +131,7 @@ internal fun SavingsAccountDialog(
                 isRetryEnabled = true,
             )
         }
-        is SavingsAccountState.DialogState.Loading -> {
-            MifosProgressIndicator()
-        }
+
         null -> Unit
     }
 }
@@ -140,122 +147,162 @@ internal fun SavingsAccountContent(
             .fillMaxSize()
             .padding(DesignToken.padding.large),
     ) {
-        if (state.dialogState == null) {
-            Spacer(modifier = Modifier.height(DesignToken.spacing.large))
-
-            MifosDashboardCard(
-                isSingleLine = true,
-                savingsAccount = Res.string.feature_savings_account_dashboard,
-                savingsAmount = state.totalSavingAmount,
-                isVisible = state.isAmountVisible,
-                currency = state.currency,
-                onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
-            )
-
-            Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column {
-                    Text(
-                        text = stringResource(Res.string.feature_savings_account),
-                        style = MifosTypography.titleMediumEmphasized,
-                        color = MaterialTheme.colorScheme.onBackground,
-                    )
-                    Text(
-                        text = stringResource(
-                            Res.string.feature_savings_account_items,
-                            state.items ?: 0,
-                        ),
-                        style = MifosTypography.labelMedium,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-                ) {
-                    // TODO : un-implemented feature,
-                    //  commenting because user won't feels its good ,uncomment and implement it
-//                    Icon(
-//                        modifier = Modifier
-//                            .clickable {}
-//                            .size(20.dp),
-//                        imageVector = MifosIcons.SearchNew,
-//                        contentDescription = stringResource(Res.string.content_description_search),
-//                    )
-                    Icon(
-                        modifier = Modifier
-                            .clickable { filtersClicked() }
-                            .size(20.dp),
-                        imageVector = MifosIcons.Filter,
-                        contentDescription = stringResource(Res.string.content_description_filter),
-                    )
-                }
+        when (state.uiState) {
+            ScreenUiState.Loading -> {
+                MifosProgressIndicator()
             }
 
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(0.99997.dp),
-            )
-        }
-
-        if (state.isEmpty) {
-            EmptyDataView(
-                icon = MifosIcons.Info,
-                error = Res.string.feature_savings_no_accounts_found,
-            )
-        }
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-            }
-            items(state.savingsAccount.orEmpty()) { account ->
-                val color = when (account.status?.value) {
-                    LoanStatus.ACTIVE.status -> AppColors.customEnable
-                    LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                    LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status -> MaterialTheme.colorScheme.error
-                    else -> MaterialTheme.colorScheme.onSurface
-                }
-
-                MifosAccountCard(
-                    accountId = account.id,
-                    accountNumber = account.accountNo,
-                    accountType = account.productName,
-                    accountStatus = (
-                        if (account.status?.active == true) {
-                            CurrencyFormatter.format(
-                                account.accountBalance,
-                                account.currency?.code,
-                                account.currency?.decimalPlaces,
-                            )
-                        } else {
-                            account.status?.value ?: ""
-                        }
-                        ),
-                    accountStatusColor = color,
-                    onAccountClick = {
-                        onAction(
-                            SavingsAccountAction.OnAccountClicked(
-                                it,
-                                Constants.SAVINGS_ACCOUNT,
-                            ),
-                        )
-                    },
-                    icon = MifosIcons.PersonAccounts,
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(SavingsAccountAction.OnRetry) },
                 )
             }
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsAccountAction.OnRetry) },
+                )
+            }
+
+            ScreenUiState.Empty -> {
+                EmptyDataView(
+                    icon = MifosIcons.Info,
+                    error = Res.string.feature_account_empty_savings_accounts,
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+
+                MifosDashboardCard(
+                    isSingleLine = true,
+                    savingsAccount = Res.string.feature_savings_account_dashboard,
+                    savingsAmount = state.totalSavingAmount,
+                    isVisible = state.isAmountVisible,
+                    currency = state.currency,
+                    onVisibilityToggle = { onAction(SavingsAccountAction.ToggleAmountVisible) },
+                )
+
+                Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column {
+                        Text(
+                            text = stringResource(Res.string.feature_savings_account),
+                            style = MifosTypography.titleMediumEmphasized,
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                        Text(
+                            text = stringResource(
+                                Res.string.feature_savings_account_items,
+                                state.items ?: 0,
+                            ),
+                            style = MifosTypography.labelMedium,
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                    ) {
+                        // TODO : un-implemented feature,
+                        //  commenting because user won't feels its good ,uncomment and implement it
+                        //                    Icon(
+                        //                        modifier = Modifier
+                        //                            .clickable {}
+                        //                            .size(20.dp),
+                        //                        imageVector = MifosIcons.SearchNew,
+                        //                        contentDescription =
+                        //                        stringResource(Res.string.content_description_search),
+                        //                    )
+                        Icon(
+                            modifier = Modifier
+                                .clickable { filtersClicked() }
+                                .size(20.dp),
+                            imageVector = MifosIcons.Filter,
+                            contentDescription = stringResource(Res.string.content_description_filter),
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(0.99997.dp),
+                )
+
+                if (state.isFilteredEmpty) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        EmptyDataView(
+                            icon = MifosIcons.Info,
+                            error = Res.string.feature_savings_no_accounts_found,
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                    ) {
+                        item {
+                            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                        }
+                        items(state.savingsAccount.orEmpty()) { account ->
+                            val color = when (account.status?.value) {
+                                LoanStatus.ACTIVE.status -> AppColors.customEnable
+                                LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
+                                    MaterialTheme.colorScheme.error
+                                else -> MaterialTheme.colorScheme.onSurface
+                            }
+
+                            MifosAccountCard(
+                                accountId = account.id,
+                                accountNumber = account.accountNo,
+                                accountType = account.productName,
+                                accountStatus = (
+                                    if (account.status?.active == true) {
+                                        CurrencyFormatter.format(
+                                            account.accountBalance,
+                                            account.currency?.code,
+                                            account.currency?.decimalPlaces,
+                                        )
+                                    } else {
+                                        account.status?.value ?: ""
+                                    }
+                                    ),
+                                accountStatusColor = color,
+                                onAccountClick = {
+                                    onAction(
+                                        SavingsAccountAction.OnAccountClicked(
+                                            it,
+                                            Constants.SAVINGS_ACCOUNT,
+                                        ),
+                                    )
+                                },
+                                icon = MifosIcons.PersonAccounts,
+                            )
+                        }
+                    }
+                }
+            }
+
+            else -> {}
         }
     }
 }

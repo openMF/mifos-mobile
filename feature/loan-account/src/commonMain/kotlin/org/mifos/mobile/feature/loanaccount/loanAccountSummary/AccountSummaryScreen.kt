@@ -44,6 +44,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.AccountSummaryCard
 import kotlin.collections.orEmpty
 
@@ -88,7 +89,6 @@ internal fun LoanAccountSummaryDialog(
                 isRetryEnabled = true,
             )
         }
-        is LoanAccountSummaryState.DialogState.Loading -> MifosProgressIndicator()
 
         null -> Unit
     }
@@ -113,55 +113,77 @@ internal fun LoanAccountSummaryContent(
             }
         },
     ) {
-        if (state.dialogState == null) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(DesignToken.padding.large)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-            ) {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_account_details_title),
-                    keyValuePairs = state.accountDetails.orEmpty()
-                        .associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_payoff_details_title),
-                    keyValuePairs = state.payOffDetails.orEmpty().associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_charges_title),
-                    keyValuePairs = state.chargeDetails.orEmpty().associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_waivers_title),
-                    keyValuePairs = state.waiversDetails.orEmpty()
-                        .associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_paid_off_details_title),
-                    keyValuePairs = state.paidOffDetails.orEmpty()
-                        .associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_outstanding_details_title),
-                    keyValuePairs = state.outStandingDetails.orEmpty()
-                        .associate { it.label to it.value },
-                )
-
-                AccountSummaryCard(
-                    title = stringResource(Res.string.feature_loan_installment_details_title),
-                    keyValuePairs = state.installmentDetails.orEmpty()
-                        .associate { it.label to it.value },
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(LoanAccountSummaryAction.Retry) },
                 )
             }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(LoanAccountSummaryAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.large)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                ) {
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_account_details_title),
+                        keyValuePairs = state.accountDetails.orEmpty()
+                            .associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_payoff_details_title),
+                        keyValuePairs = state.payOffDetails.orEmpty().associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_charges_title),
+                        keyValuePairs = state.chargeDetails.orEmpty().associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_waivers_title),
+                        keyValuePairs = state.waiversDetails.orEmpty()
+                            .associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_paid_off_details_title),
+                        keyValuePairs = state.paidOffDetails.orEmpty()
+                            .associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_outstanding_details_title),
+                        keyValuePairs = state.outStandingDetails.orEmpty()
+                            .associate { it.label to it.value },
+                    )
+
+                    AccountSummaryCard(
+                        title = stringResource(Res.string.feature_loan_installment_details_title),
+                        keyValuePairs = state.installmentDetails.orEmpty()
+                            .associate { it.label to it.value },
+                    )
+                }
+            }
+
+            else -> { }
         }
     }
 }

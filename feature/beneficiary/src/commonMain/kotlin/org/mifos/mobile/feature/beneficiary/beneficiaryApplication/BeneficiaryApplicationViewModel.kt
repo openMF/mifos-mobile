@@ -15,16 +15,16 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.enter_account_number
 import mifos_mobile.feature.beneficiary.generated.resources.enter_beneficiary_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_office_name
 import mifos_mobile.feature.beneficiary.generated.resources.enter_transfer_limit
+import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.beneficiary.generated.resources.invalid_amount
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
@@ -36,6 +36,7 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.Int
 
 /**
@@ -50,7 +51,6 @@ internal class BeneficiaryApplicationViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationNavRoute>()
         BeneficiaryApplicationState(
-            dialogState = null,
             beneficiaryId = route.beneficiaryId,
             beneficiaryName = route.name,
             accountType = route.accountType,
@@ -67,7 +67,7 @@ internal class BeneficiaryApplicationViewModel(
      */
     init {
         viewModelScope.launch {
-            observeNetworkStatus()
+            observeNetwork()
             getTopBarTitle()
         }
     }
@@ -100,8 +100,8 @@ internal class BeneficiaryApplicationViewModel(
     /**
      * Updates only the dialog state in the ViewModel.
      */
-    private fun setDialogState(dialogState: BeneficiaryApplicationState.DialogState?) {
-        updateState { it.copy(dialogState = dialogState) }
+    private fun setLoadingState(loading: ScreenUiState.Loading) {
+        updateState { it.copy(uiState = loading) }
     }
 
     /**
@@ -109,6 +109,9 @@ internal class BeneficiaryApplicationViewModel(
      */
     override fun handleAction(action: BeneficiaryApplicationAction) {
         when (action) {
+            is BeneficiaryApplicationAction.ReceiveNetworkStatus ->
+                handleNetworkStatus(action.isOnline)
+
             BeneficiaryApplicationAction.LoadBeneficiaryTemplate -> {
                 viewModelScope.launch {
                     loadBeneficiaryAndTemplate()
@@ -184,24 +187,32 @@ internal class BeneficiaryApplicationViewModel(
      * Loads both the beneficiary list and template from the repository.
      */
     private fun loadBeneficiaryAndTemplate() {
-        setDialogState(BeneficiaryApplicationState.DialogState.Loading)
-        combine(
-            beneficiaryRepositoryImp.beneficiaryList(),
-            beneficiaryRepositoryImp.beneficiaryTemplate(),
-        ) { beneficiaryList, beneficiaryTemplate ->
-            sendAction(
-                BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(
-                    beneficiaryList,
-                    beneficiaryTemplate,
-                ),
-            )
-        }.catch { error ->
-            setDialogState(
-                BeneficiaryApplicationState.DialogState.Error(
-                    error.message ?: "An error occurred",
-                ),
-            )
-        }.launchIn(viewModelScope)
+        setLoadingState(ScreenUiState.Loading)
+        viewModelScope.launch {
+            combine(
+                beneficiaryRepositoryImp.beneficiaryList(),
+                beneficiaryRepositoryImp.beneficiaryTemplate(),
+            ) { beneficiaryList, beneficiaryTemplate ->
+                beneficiaryList to beneficiaryTemplate
+            }.catch { error ->
+                updateState {
+                    it.copy(
+                        uiState = if (error.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
+                }
+            }.collect { (beneficiaryList, beneficiaryTemplate) ->
+                sendAction(
+                    BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(
+                        beneficiaryList,
+                        beneficiaryTemplate,
+                    ),
+                )
+            }
+        }
     }
 
     /**
@@ -212,20 +223,25 @@ internal class BeneficiaryApplicationViewModel(
         beneficiaryTemplate: DataState<BeneficiaryTemplate>,
     ) {
         when {
-            beneficiaryList is DataState.Loading || beneficiaryTemplate is DataState.Loading -> {
-                setDialogState(BeneficiaryApplicationState.DialogState.Loading)
+            beneficiaryList is DataState.Loading && beneficiaryTemplate is DataState.Loading -> {
+                setLoadingState(ScreenUiState.Loading)
             }
-            beneficiaryList is DataState.Error || beneficiaryTemplate is DataState.Error -> {
-                val error = (beneficiaryList as? DataState.Error)?.exception?.message
-                    ?: (beneficiaryTemplate as? DataState.Error)?.exception?.message
-                    ?: "An error occurred"
-                setDialogState(BeneficiaryApplicationState.DialogState.Error(error))
+
+            beneficiaryList is DataState.Error && beneficiaryTemplate is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Error(
+                            Res.string.feature_generic_error_server,
+                        ),
+                    )
+                }
             }
+
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {
                 val beneficiary = beneficiaryList.data.find { it.id == state.beneficiaryId }
                 updateState { currentState ->
                     currentState.copy(
-                        dialogState = null,
+                        uiState = ScreenUiState.Success,
                         template = beneficiaryTemplate.data,
                     )
                 }
@@ -324,28 +340,41 @@ internal class BeneficiaryApplicationViewModel(
     }
 
     /**
-     * Observes the network status and updates the ViewModel state accordingly.
+     * Observe network and dispatch status changes into actions
      */
-    private fun observeNetworkStatus() {
+    private fun observeNetwork() {
         viewModelScope.launch {
             networkMonitor.isOnline
-                .map(Boolean::not)
                 .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
-                        it.copy(
-                            networkUnavailable = isOffline,
-                            dialogState = if (isOffline) {
-                                BeneficiaryApplicationState.DialogState.Network
-                            } else {
-                                null
-                            },
+                .collect { isOnline ->
+                    sendAction(BeneficiaryApplicationAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handle network state changes like LoanAccountDetailsViewModel
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(
+                            uiState = ScreenUiState.Network,
                         )
-                    }
-                    if (!isOffline) {
-                        loadBeneficiaryAndTemplate()
+                    } else {
+                        current
                     }
                 }
+            } else {
+                loadBeneficiaryAndTemplate()
+            }
         }
     }
 }
@@ -357,7 +386,7 @@ data class BeneficiaryApplicationState(
     val template: BeneficiaryTemplate? = null,
     val beneficiary: Beneficiary? = null,
     val beneficiaryState: BeneficiaryState = BeneficiaryState.CREATE_MANUAL,
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
 
     val accountTypeError: StringResource? = null,
     val accountNumberError: StringResource? = null,
@@ -370,13 +399,13 @@ data class BeneficiaryApplicationState(
     val officeName: String = "",
     val transferLimit: String = "",
     val beneficiaryName: String = "",
+
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState = ScreenUiState.Loading,
+    val shoeOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-
-        data object Loading : DialogState
-
-        data object Network : DialogState
     }
     val isEnabled = accountType != -1 &&
         accountNumber.isNotEmpty() &&
@@ -411,6 +440,8 @@ sealed interface BeneficiaryApplicationAction {
     data class OnOfficeNameChanged(val officeName: String) : BeneficiaryApplicationAction
     data class OnTransferLimitChanged(val transferLimit: String) : BeneficiaryApplicationAction
     data class OnBeneficiaryNameChanged(val beneficiaryName: String) : BeneficiaryApplicationAction
+
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationAction
 
     sealed interface Internal : BeneficiaryApplicationAction {
 

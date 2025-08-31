@@ -10,33 +10,77 @@
 package org.mifos.mobile.feature.beneficiary.beneficiaryList
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
+import mifos_mobile.feature.beneficiary.generated.resources.Res
+import mifos_mobile.feature.beneficiary.generated.resources.beneficiary
+import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 internal class BeneficiaryListViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
 ) : BaseViewModel<BeneficiaryListState, BeneficiaryListEvent, BeneficiaryListAction>(
-    initialState = BeneficiaryListState(dialogState = null),
+    initialState = BeneficiaryListState(),
 ) {
 
     init {
-        observeNetworkStatus()
-        fetchBeneficiaries()
-        getBeneficiaryList()
+        observeNetwork()
+    }
+
+    /**
+     * Observe network and dispatch status changes into actions
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(BeneficiaryListAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handle network state changes like LoanAccountDetailsViewModel
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(
+                            uiState = ScreenUiState.Network,
+                        )
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchBeneficiaries()
+                getBeneficiaryList()
+            }
+        }
     }
 
     override fun handleAction(action: BeneficiaryListAction) {
         when (action) {
+            is BeneficiaryListAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is BeneficiaryListAction.RefreshBeneficiaries -> fetchBeneficiaries()
 
             is BeneficiaryListAction.OnAddBeneficiaryClicked -> handleAddBeneficiaryClick()
@@ -67,75 +111,60 @@ internal class BeneficiaryListViewModel(
         mutableStateFlow.update(update)
     }
 
-    private fun observeNetworkStatus() {
-        viewModelScope.launch {
-            networkMonitor.isOnline
-                .map(Boolean::not)
-                .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
-                        it.copy(
-                            networkUnavailable = isOffline,
-                            dialogState = if (isOffline) {
-                                BeneficiaryListState.DialogState.Error("")
-                            } else {
-                                null
-                            },
-                        )
-                    }
-                }
-        }
-    }
-
     private fun fetchBeneficiaries() {
         updateState {
             it.copy(
-                dialogState = BeneficiaryListState.DialogState.Loading,
+                uiState = ScreenUiState.Loading,
             )
         }
         viewModelScope.launch {
-            beneficiaryRepositoryImp.beneficiaryList().catch { e ->
-                updateState {
-                    it.copy(
-                        dialogState = BeneficiaryListState.DialogState.Error(
-                            e.message.toString(),
-                        ),
-                    )
-                }
-            }.collect { beneficiaryList ->
+            beneficiaryRepositoryImp.beneficiaryList().collect { beneficiaryList ->
                 sendAction(BeneficiaryListAction.Internal.ReceiveBeneficiaryResult(beneficiaryList))
             }
         }
     }
+
     private fun processBeneficiaryList(beneficiaryList: DataState<List<Beneficiary>>) {
         when (beneficiaryList) {
             DataState.Loading -> updateState {
                 it.copy(
-                    dialogState = BeneficiaryListState.DialogState.Loading,
+                    uiState = ScreenUiState.Loading,
                 )
             }
 
             is DataState.Success -> {
+                val list = beneficiaryList.data
+
                 updateState {
-                    it.copy(
-                        dialogState = null,
-                        beneficiaries = beneficiaryList.data,
-                        filteredBeneficiaries = beneficiaryList.data,
-                        isEmpty = beneficiaryList.data.isEmpty(),
-                        selectedOffices = emptySet(),
-                        selectedAccounts = emptySet(),
-                        isFilteredEmpty = false,
-                    )
+                    if (list.isEmpty()) {
+                        it.copy(
+                            uiState = ScreenUiState.Empty,
+                        )
+                    } else {
+                        it.copy(
+                            beneficiaries = list,
+                            filteredBeneficiaries = list,
+                            selectedOffices = emptySet(),
+                            selectedAccounts = emptySet(),
+                            isFilteredEmpty = false,
+                            uiState = ScreenUiState.Success,
+                        )
+                    }
                 }
-                getOffices(beneficiaryList.data)
+
+                if (list.isNotEmpty()) {
+                    getOffices(list)
+                }
             }
 
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = BeneficiaryListState.DialogState.Error(
-                            beneficiaryList.message,
-                        ),
+                        uiState = if (beneficiaryList.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
                     )
                 }
             }
@@ -263,7 +292,7 @@ internal class BeneficiaryListViewModel(
 }
 
 data class BeneficiaryListState(
-    val networkUnavailable: Boolean = false,
+    val networkStatus: Boolean = false,
     val isRefreshing: Boolean = false,
     val beneficiaries: List<Beneficiary> = emptyList(),
     val template: BeneficiaryTemplate? = null,
@@ -273,13 +302,10 @@ data class BeneficiaryListState(
     val isEmpty: Boolean = false,
     val isFilteredEmpty: Boolean = false,
     val filteredBeneficiaries: List<Beneficiary> = emptyList(),
-    val dialogState: DialogState?,
+    val dialogState: DialogState? = null,
+    val uiState: ScreenUiState = ScreenUiState.Loading,
 ) {
     sealed interface DialogState {
-
-        data class Error(val message: String) : DialogState
-
-        data object Loading : DialogState
 
         data object Filters : DialogState
     }
@@ -299,6 +325,7 @@ sealed interface BeneficiaryListAction {
     data class OnAccountChange(val account: String) : BeneficiaryListAction
     data class OnOfficeChange(val office: String) : BeneficiaryListAction
     data object LoadBeneficiaries : BeneficiaryListAction
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryListAction
 
     sealed interface Internal : BeneficiaryListAction {
 

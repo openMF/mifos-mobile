@@ -29,6 +29,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun BeneficiaryApplicationScreen(
@@ -91,21 +92,11 @@ private fun BeneficiaryApplicationDialogs(
     onAction: (BeneficiaryApplicationAction) -> Unit,
 ) {
     when (state.dialogState) {
-        BeneficiaryApplicationState.DialogState.Loading -> {
-            MifosProgressIndicator()
-        }
-
         is BeneficiaryApplicationState.DialogState.Error -> {
             MifosErrorComponent(
                 isRetryEnabled = true,
                 onRetry = { onAction(BeneficiaryApplicationAction.OnRetry) },
                 message = stringResource(Res.string.error_fetching_beneficiary_template),
-            )
-        }
-
-        BeneficiaryApplicationState.DialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = !state.networkUnavailable,
             )
         }
 
@@ -132,11 +123,23 @@ private fun BeneficiaryApplicationScreen(
             }
         },
     ) {
-        if (state.dialogState == null && state.template != null) {
-            BeneficiaryApplicationContent(
-                state = state,
-                onAction = onAction,
-            )
+        when (state.uiState) {
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                )
+            }
+
+            ScreenUiState.Success -> {
+                BeneficiaryApplicationContent(
+                    state = state,
+                    onAction = onAction,
+                )
+            }
+
+            else -> { }
         }
     }
 }

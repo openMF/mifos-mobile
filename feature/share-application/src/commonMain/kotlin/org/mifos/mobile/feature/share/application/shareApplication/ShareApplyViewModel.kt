@@ -12,10 +12,12 @@ package org.mifos.mobile.feature.share.application.shareApplication
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.io.IOException
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_submit_failed
@@ -28,6 +30,7 @@ import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -105,7 +108,8 @@ internal class ShareApplyViewModel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ShareApplicationUiState.Error ||
+                    if (current.uiState is ShareApplicationUiState.Loading ||
+                        current.uiState is ShareApplicationUiState.Error ||
                         current.uiState is ShareApplicationUiState.Network
                     ) {
                         current.copy(uiState = ShareApplicationUiState.Network)
@@ -114,61 +118,69 @@ internal class ShareApplyViewModel(
                     }
                 }
             } else {
-                fetchClient()
-                fetchShareTemplate()
+                getClientDataAndTemplate()
             }
         }
     }
 
     /**
-     * Fetches the current client's details, specifically the activation date,
-     * from the repository.
+     * Fetches client data, a generic share template, and a product-specific loan purpose template
+     * from the repositories.
+     * The results are combined and handled in a single flow to manage loading and error states.
      */
-    private fun fetchClient() {
+    private fun getClientDataAndTemplate() {
+        showLoading()
         viewModelScope.launch {
-            homeRepositoryImpl.currentClient(state.clientId)
-                .catch {
-                    showErrorState(Res.string.feature_apply_share_error_server)
-                }
-                .collect { response ->
+            combine(
+                homeRepositoryImpl.currentClient(state.clientId),
+                shareAccountRepositoryImpl.getShareProducts(state.clientId),
+            ) { client, template ->
+                client to template
+            }
+                .catch { throwable ->
+
                     updateState {
                         it.copy(
-                            applicantName = response.data?.displayName ?: "",
+                            uiState = if (throwable.cause is IOException) {
+                                ShareApplicationUiState.Network
+                            } else {
+                                ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server)
+                            },
                         )
                     }
                 }
-        }
-    }
-
-    /**
-     * Fetches the savings template data from the repository. The template contains
-     * savings product options and currency information.
-     */
-    private fun fetchShareTemplate() {
-        showLoading()
-        viewModelScope.launch {
-            shareAccountRepositoryImpl.getShareProducts(state.clientId)
-                .collect { result ->
-                    sendAction(ShareApplicationAction.Internal.ReceiveShareTemplate(result))
+                .collect { (client, template) ->
+                    sendAction(
+                        ShareApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                            client,
+                            template,
+                        ),
+                    )
                 }
         }
     }
 
     /**
-     * Handles the result of the `fetchShareTemplate` network call.
+     * Handles the result of the `fetchSavingsTemplate` network call.
      * Updates the state with product options and currency on success,
      * or displays an error and navigates back on failure.
      *
      * @param template The [DataState] containing the savings template data.
      */
-    private fun handleShareTemplate(template: DataState<Page<ShareProduct>>) {
-        when (template) {
-            is DataState.Loading -> showLoading()
-            is DataState.Success -> {
-                val products = template.data.pageItems
+    private fun handleClientAndSavingsTemplate(
+        client: DataState<Client>,
+        template: DataState<Page<ShareProduct>>,
+    ) {
+        when {
+            listOf(client, template).any { it is DataState.Loading } -> {
+                showLoading()
+            }
 
+            client is DataState.Success && template is DataState.Success -> {
+                val products = template.data.pageItems
                 updateState {
                     it.copy(
+                        applicantName = client.data.displayName ?: "",
                         productOptions = products,
                         uiState = if (products.isEmpty()) {
                             ShareApplicationUiState.Empty
@@ -179,8 +191,10 @@ internal class ShareApplyViewModel(
                 }
             }
 
-            is DataState.Error -> {
-                showErrorState(Res.string.feature_apply_share_error_server)
+            else -> updateState {
+                it.copy(
+                    uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
+                )
             }
         }
     }
@@ -194,8 +208,7 @@ internal class ShareApplyViewModel(
             if (!state.networkStatus) {
                 updateState { it.copy(uiState = ShareApplicationUiState.Network) }
             } else {
-                fetchClient()
-                fetchShareTemplate()
+                getClientDataAndTemplate()
             }
         }
     }
@@ -211,13 +224,6 @@ internal class ShareApplyViewModel(
      */
     private fun updateState(update: (ShareApplicationState) -> ShareApplicationState) {
         mutableStateFlow.update(update)
-    }
-
-    /**
-     * Sets the dialog state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(uiState = ShareApplicationUiState.OverlayLoading) }
     }
 
     /**
@@ -269,7 +275,8 @@ internal class ShareApplyViewModel(
 
             is ShareApplicationAction.DismissDialog -> dismissDialog()
 
-            is ShareApplicationAction.Internal.ReceiveShareTemplate -> handleShareTemplate(action.template)
+            is ShareApplicationAction.Internal.ReceiveClientAndTemplateResult ->
+                handleClientAndSavingsTemplate(action.client, action.template)
 
             is ShareApplicationAction.Internal.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
 
@@ -308,13 +315,11 @@ internal class ShareApplyViewModel(
      * It shows a loading overlay and sends an event to navigate to the confirmation screen.
      */
     private fun handleSubmit() {
-        showOverlayLoading()
         viewModelScope.launch {
             try {
                 updateState {
                     it.copy(
                         hasChanges = false,
-                        dialogState = null,
                         uiState = ShareApplicationUiState.Success,
                     )
                 }
@@ -492,7 +497,8 @@ internal sealed interface ShareApplicationAction {
          * An internal action to handle the result of fetching a savings template.
          * @property template The [DataState] containing the savings template data.
          */
-        data class ReceiveShareTemplate(
+        data class ReceiveClientAndTemplateResult(
+            val client: DataState<Client>,
             val template: DataState<Page<ShareProduct>>,
         ) : Internal
     }

@@ -13,9 +13,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import mifos_mobile.feature.loan_account.generated.resources.Res
+import mifos_mobile.feature.loan_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_number_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_disbursement_date_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_installments_left_label
@@ -34,6 +37,7 @@ import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 internal class RepaymentScheduleViewModel(
     private val loanRepositoryImp: LoanRepository,
@@ -43,27 +47,34 @@ internal class RepaymentScheduleViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<RepaymentScheduleRoute>()
         RepaymentScheduleState(
-            dialogState = RepaymentScheduleState.DialogState.Loading,
             accountId = route.accountId,
         )
     },
 ) {
     init {
+        observeNetwork()
+    }
+
+    /**
+     * Observes the network connectivity status and updates state accordingly.
+     */
+    private fun observeNetwork() {
         viewModelScope.launch {
-            networkMonitor.isOnline.collect { isConnected ->
-                updateState { it.copy(isOnline = isConnected) }
-            }
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(RepaymentScheduleAction.ReceiveNetworkStatus(isOnline))
+                }
         }
-        fetchLoanWithAssociations()
     }
 
     override fun handleAction(action: RepaymentScheduleAction) {
         when (action) {
-            RepaymentScheduleAction.RetryClicked -> {
-                fetchLoanWithAssociations()
-            }
-
             RepaymentScheduleAction.OnNavigateBack -> sendEvent(RepaymentScheduleEvent.NavigateBack)
+
+            is RepaymentScheduleAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
+            is RepaymentScheduleAction.Retry -> retry()
 
             is RepaymentScheduleAction.Internal.ReceivedRepaymentSchedule ->
                 handleRepaymentScheduleResult(action.dataState)
@@ -82,18 +93,63 @@ internal class RepaymentScheduleViewModel(
         }
     }
 
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                fetchLoanWithAssociations()
+            }
+        }
+    }
+
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                fetchLoanWithAssociations()
+            }
+        }
+    }
+
     private fun updateState(update: (RepaymentScheduleState) -> RepaymentScheduleState) {
         mutableStateFlow.update(update)
     }
 
     private fun fetchLoanWithAssociations() {
-        updateState { it.copy(dialogState = RepaymentScheduleState.DialogState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
         viewModelScope.launch {
             loanRepositoryImp.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, state.accountId)
-                .catch {
+                .catch { error ->
                     updateState {
                         it.copy(
-                            dialogState = RepaymentScheduleState.DialogState.Error("Something went wrong"),
+                            uiState = if (error.cause is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            },
                         )
                     }
                 }
@@ -108,14 +164,18 @@ internal class RepaymentScheduleViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = RepaymentScheduleState.DialogState.Error("Something went wrong"),
+                        uiState = if (dataState.exception is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
                     )
                 }
             }
 
             DataState.Loading -> updateState {
                 it.copy(
-                    dialogState = RepaymentScheduleState.DialogState.Loading,
+                    uiState = ScreenUiState.Loading,
                 )
             }
 
@@ -152,7 +212,7 @@ internal class RepaymentScheduleViewModel(
                     it.copy(
                         basicDetails = basicDetails,
                         loanWithAssociations = result,
-                        dialogState = null,
+                        uiState = ScreenUiState.Success,
                     )
                 }
             }
@@ -165,11 +225,12 @@ internal data class RepaymentScheduleState(
     val loanWithAssociations: LoanWithAssociations? = null,
     val periods: List<Periods> = emptyList(),
     val basicDetails: Map<StringResource, String?> = emptyMap(),
-    val dialogState: DialogState?,
-    val isOnline: Boolean = false,
+
+    val dialogState: DialogState? = null,
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     sealed interface DialogState {
-        data object Loading : DialogState
 
         data class Error(val message: String) : DialogState
     }
@@ -195,8 +256,9 @@ sealed interface RepaymentScheduleEvent {
 }
 
 sealed interface RepaymentScheduleAction {
-    data object RetryClicked : RepaymentScheduleAction
+    data object Retry : RepaymentScheduleAction
     data object OnNavigateBack : RepaymentScheduleAction
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : RepaymentScheduleAction
 
     data class OnPayInstallment(
         val accountId: Long,

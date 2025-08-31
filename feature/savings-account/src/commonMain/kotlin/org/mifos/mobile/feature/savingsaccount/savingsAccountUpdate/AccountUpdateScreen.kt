@@ -33,18 +33,20 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.LoadingDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun AccountUpdateScreen(
@@ -100,10 +102,6 @@ internal fun AccountUpdateDialog(
             onDismissRequest = { onAction(AccountUpdateAction.DismissDialog) },
         )
 
-        is AccountUpdateState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
         null -> Unit
     }
 }
@@ -127,48 +125,76 @@ internal fun AccountUpdateScreenContent(
             }
         },
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.medium),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-        ) {
-            MifosDetailsCard(
-                keyValuePairs = state.details,
-            )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-            ) {
-                MifosOutlineDropdown(
-                    selectedText = state.selectedProduct,
-                    items = state.productOptions,
-                    onItemSelected = { id, product ->
-                        onAction(AccountUpdateAction.OnProductSelected(id, product))
-                    },
-                    label = stringResource(Res.string.feature_savings_update_product_label),
-                )
-
-                MifosButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(DesignToken.sizes.buttonHeight),
-                    onClick = { onAction(AccountUpdateAction.RequestUpdate) },
-                    text = {
-                        Text(
-                            text = stringResource(Res.string.feature_savings_new_product_label),
-                            style = MifosTypography.titleMedium,
-                        )
-                    },
-
-                    enabled = state.selectedProductId != null,
-                    shape = DesignToken.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                    ),
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
+                    onRetry = { onAction(AccountUpdateAction.Retry) },
                 )
             }
+
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(AccountUpdateAction.Retry) },
+                )
+            }
+
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(DesignToken.padding.large)
+                        .padding(top = DesignToken.padding.medium),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                ) {
+                    MifosDetailsCard(
+                        keyValuePairs = state.details,
+                    )
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
+                    ) {
+                        MifosOutlineDropdown(
+                            selectedText = state.selectedProduct,
+                            items = state.productOptions,
+                            onItemSelected = { id, product ->
+                                onAction(AccountUpdateAction.OnProductSelected(id, product))
+                            },
+                            label = stringResource(Res.string.feature_savings_update_product_label),
+                        )
+
+                        MifosButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(DesignToken.sizes.buttonHeight),
+                            onClick = { onAction(AccountUpdateAction.RequestUpdate) },
+                            text = {
+                                Text(
+                                    text = stringResource(Res.string.feature_savings_new_product_label),
+                                    style = MifosTypography.titleMedium,
+                                )
+                            },
+
+                            enabled = state.selectedProductId != null,
+                            shape = DesignToken.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                            ),
+                        )
+                    }
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
+            }
+
+            else -> { }
         }
     }
 }

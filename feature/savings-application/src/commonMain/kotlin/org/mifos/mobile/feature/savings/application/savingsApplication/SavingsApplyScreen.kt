@@ -47,7 +47,9 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun SavingsApplyScreen(
@@ -78,7 +80,6 @@ internal fun SavingsApplyScreen(
     )
 
     SavingsAccountDialog(
-        state = state,
         dialogState = state.savingsApplicationDialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
@@ -88,7 +89,6 @@ internal fun SavingsApplyScreen(
 
 @Composable
 internal fun SavingsAccountDialog(
-    state: SavingsApplicationState,
     dialogState: SavingsApplicationDialogState?,
     onAction: (SavingsApplicationAction) -> Unit,
 ) {
@@ -100,10 +100,6 @@ internal fun SavingsAccountDialog(
             )
         }
 
-        SavingsApplicationDialogState.Loading -> MifosProgressIndicator()
-
-        SavingsApplicationDialogState.OverlayLoading -> MifosProgressIndicator()
-
         is SavingsApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -111,14 +107,6 @@ internal fun SavingsAccountDialog(
                 ),
                 onDismissRequest = { onAction(SavingsApplicationAction.DismissDialog) },
                 onConfirm = { onAction(SavingsApplicationAction.ConfirmNavigation) },
-            )
-        }
-
-        is SavingsApplicationDialogState.Network -> {
-            MifosErrorComponent(
-                isNetworkConnected = state.networkStatus,
-                isRetryEnabled = true,
-                onRetry = { onAction(SavingsApplicationAction.Retry) },
             )
         }
 
@@ -145,76 +133,102 @@ internal fun SavingsAccountContent(
             }
         },
     ) {
-        if (state.savingsApplicationDialogState == null) {
-            Column(
-                modifier = Modifier
-                    .padding(DesignToken.padding.large)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
-            ) {
-                MifosOutlinedTextField(
-                    value = state.applicantName,
-                    onValueChange = { },
-                    label = stringResource(Res.string.feature_apply_savings_label_applicant_name),
-                    shape = DesignToken.shapes.medium,
-                    textStyle = MifosTypography.bodyLarge,
-                    config = MifosTextFieldConfig(
-                        enabled = false,
-                    ),
+        when (state.uiState) {
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    message = stringResource(state.uiState.message),
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlinedTextField(
-                    value = state.submittedOnDate,
-                    onValueChange = { },
-                    label = stringResource(Res.string.feature_apply_savings_label_submission_date),
-                    config = MifosTextFieldConfig(
-                        showClearIcon = false,
-                        enabled = false,
-                        readOnly = true,
-                        trailingIcon = {
-                            Icon(
-                                imageVector = MifosIcons.Calendar,
-                                contentDescription = "Open Date Picker",
-                            )
-                        },
-                    ),
-                    shape = DesignToken.shapes.medium,
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                    isRetryEnabled = true,
+                    onRetry = { onAction(SavingsApplicationAction.Retry) },
                 )
+            }
 
-                MifosOutlineDropdown(
-                    selectedText = state.selectedSavingsProduct,
-                    items = state.productOptionsMap,
-                    enabled = true,
-                    onItemSelected = { id, product ->
-                        onAction(SavingsApplicationAction.SavingsProductChange(id, product))
-                    },
-                    label = stringResource(Res.string.feature_apply_savings_label_savings_product),
-                )
-
-                MifosOutlineDropdown(
-                    selectedText = state.selectedFieldOfficer,
-                    items = state.savingsFieldOfficer,
-                    enabled = state.selectedSavingsProduct.isNotBlank(),
-                    onItemSelected = { id, officer ->
-                        onAction(SavingsApplicationAction.FieldOfficerChange(id, officer))
-                    },
-                    label = stringResource(Res.string.feature_apply_savings_label_field_officer),
-                )
-
-                MifosButton(
-                    modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                    enabled = state.isFormValid,
-                    onClick = {
-                        onAction(SavingsApplicationAction.NavigateToConfirmDetails)
-                    },
-                    shape = DesignToken.shapes.medium,
+            ScreenUiState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(DesignToken.padding.large)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
                 ) {
-                    Text(
-                        text = stringResource(Res.string.feature_apply_savings_button_continue),
-                        style = MifosTypography.titleMedium,
+                    MifosOutlinedTextField(
+                        value = state.applicantName,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_savings_label_applicant_name),
+                        shape = DesignToken.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                        config = MifosTextFieldConfig(
+                            enabled = false,
+                        ),
                     )
+
+                    MifosOutlinedTextField(
+                        value = state.submittedOnDate,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_savings_label_submission_date),
+                        config = MifosTextFieldConfig(
+                            showClearIcon = false,
+                            enabled = false,
+                            readOnly = true,
+                            trailingIcon = {
+                                Icon(
+                                    imageVector = MifosIcons.Calendar,
+                                    contentDescription = "Open Date Picker",
+                                )
+                            },
+                        ),
+                        shape = DesignToken.shapes.medium,
+                    )
+
+                    MifosOutlineDropdown(
+                        selectedText = state.selectedSavingsProduct,
+                        items = state.productOptionsMap,
+                        enabled = true,
+                        onItemSelected = { id, product ->
+                            onAction(SavingsApplicationAction.SavingsProductChange(id, product))
+                        },
+                        label = stringResource(Res.string.feature_apply_savings_label_savings_product),
+                    )
+
+                    MifosOutlineDropdown(
+                        selectedText = state.selectedFieldOfficer,
+                        items = state.savingsFieldOfficer,
+                        enabled = state.selectedSavingsProduct.isNotBlank(),
+                        onItemSelected = { id, officer ->
+                            onAction(SavingsApplicationAction.FieldOfficerChange(id, officer))
+                        },
+                        label = stringResource(Res.string.feature_apply_savings_label_field_officer),
+                    )
+
+                    MifosButton(
+                        modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+                        enabled = state.isFormValid,
+                        onClick = {
+                            onAction(SavingsApplicationAction.NavigateToConfirmDetails)
+                        },
+                        shape = DesignToken.shapes.medium,
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_apply_savings_button_continue),
+                            style = MifosTypography.titleMedium,
+                        )
+                    }
+                }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
                 }
             }
+
+            else -> { }
         }
     }
 }

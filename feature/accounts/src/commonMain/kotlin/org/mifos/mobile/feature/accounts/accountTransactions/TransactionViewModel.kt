@@ -23,7 +23,10 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.io.IOException
 import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
+import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_credit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_debit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_1_year
@@ -47,6 +50,7 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
@@ -63,6 +67,7 @@ import kotlin.collections.map
  * @property loanAccountRepositoryImpl The repository for loan account data.
  * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
+@Suppress("TooManyFunctions")
 internal class AccountsTransactionViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val recentTransactionRepositoryImpl: RecentTransactionRepository,
@@ -75,39 +80,27 @@ internal class AccountsTransactionViewModel(
         val route = savedStateHandle.toRoute<AccountTransactionsNavRoute>()
         AccountTransactionState(
             clientId = requireNotNull(userPreferencesRepository.clientId.value),
-            dialogState = AccountTransactionState.DialogState.Loading,
             accountId = route.accountId,
             accountType = route.accountType,
         )
     },
 ) {
     init {
-        loadTransactions()
-        observeAccountTypeAndInitCheckboxes()
         observeNetworkStatus()
     }
 
     /**
      * Observes the network connectivity status and updates the UI state accordingly.
-     * If the network is unavailable, it sets the `networkUnavailable` flag in the state
+     * If the network is unavailable, it sets the `networkStatus` flag in the state
      * and shows a network-related dialog.
      */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
-                .map(Boolean::not)
                 .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
-                        it.copy(
-                            networkUnavailable = isOffline,
-                            dialogState = if (isOffline) {
-                                AccountTransactionState.DialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
+                .collect { isOnline ->
+
+                    sendAction(AccountTransactionAction.ReceiveNetworkResult(isOnline = isOnline))
                 }
         }
     }
@@ -127,22 +120,23 @@ internal class AccountsTransactionViewModel(
     override fun handleAction(action: AccountTransactionAction) {
         when (action) {
             AccountTransactionAction.DismissDialog -> handleDismissDialog()
+
             AccountTransactionAction.OnNavigateBackClick -> {
                 sendEvent(AccountTransactionEvent.OnNavigateBack)
             }
+
             AccountTransactionAction.GetFilterResults -> handleConfirmFilterDialog()
-            AccountTransactionAction.Refresh -> {
-                loadTransactions()
-                updateState {
-                    it.copy(
-                        isRefreshing = true,
-                    )
-                }
-                handleConfirmFilterDialog()
-            }
+
+            AccountTransactionAction.Refresh -> handleRefresh()
+
             AccountTransactionAction.ResetFilters -> handleResetFilters()
+
+            is AccountTransactionAction.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
+
             is AccountTransactionAction.ToggleCheckbox -> toggleCheckbox(action.label, action.type)
+
             AccountTransactionAction.ToggleFilter -> handleToggleFilterDialog()
+
             is AccountTransactionAction.ToggleRadioButton -> {
                 updateState {
                     it.copy(
@@ -161,6 +155,39 @@ internal class AccountsTransactionViewModel(
             is AccountTransactionAction.Internal.ReceiveLoanTransactions -> {
                 handleLoanTransactionsResult(action.dataState)
             }
+        }
+    }
+
+    private fun handleRefresh() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                observeAccountTypeAndInitCheckboxes()
+                loadTransactions()
+            }
+        }
+    }
+
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState {
+            it.copy(networkStatus = isOnline)
+        }
+        if (!isOnline) {
+            updateState { current ->
+                if (current.uiState is ScreenUiState.Loading ||
+                    current.uiState is ScreenUiState.Error ||
+                    current.uiState is ScreenUiState.Empty ||
+                    current.uiState is ScreenUiState.Network
+                ) {
+                    current.copy(uiState = ScreenUiState.Network)
+                } else {
+                    current
+                }
+            }
+        } else {
+            observeAccountTypeAndInitCheckboxes()
+            loadTransactions()
         }
     }
 
@@ -280,7 +307,8 @@ internal class AccountsTransactionViewModel(
                 .catch { error ->
                     updateState {
                         it.copy(
-                            dialogState = AccountTransactionState.DialogState.Error("Something Went Wrong"),
+                            isRefreshing = false,
+                            uiState = ScreenUiState.Error(Res.string.feature_no__filtered_transactions_found),
                         )
                     }
                 }
@@ -299,14 +327,19 @@ internal class AccountsTransactionViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = AccountTransactionState.DialogState.Error(dataState.message),
+                        isRefreshing = false,
+                        uiState = if (dataState.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
                     )
                 }
             }
 
             DataState.Loading -> {
                 updateState {
-                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -320,13 +353,23 @@ internal class AccountsTransactionViewModel(
                 }
 
                 updateState {
-                    it.copy(
-                        data = transactions,
-                        filteredData = groupedTransactions,
-                        isEmpty = transactions.isEmpty(),
-                        isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
-                        dialogState = null,
-                    )
+                    if (transactions.isEmpty()) {
+                        it.copy(
+                            isRefreshing = false,
+                            data = emptyList(),
+                            filteredData = emptyMap(),
+                            isFilteredRecordsEmpty = true,
+                            uiState = ScreenUiState.Empty,
+                        )
+                    } else {
+                        it.copy(
+                            isRefreshing = false,
+                            data = transactions,
+                            filteredData = groupedTransactions,
+                            isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                            uiState = ScreenUiState.Success,
+                        )
+                    }
                 }
             }
         }
@@ -337,14 +380,19 @@ internal class AccountsTransactionViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        dialogState = AccountTransactionState.DialogState.Error(dataState.message),
+                        isRefreshing = false,
+                        uiState = if (dataState.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
                     )
                 }
             }
 
             DataState.Loading -> {
                 updateState {
-                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -357,13 +405,23 @@ internal class AccountsTransactionViewModel(
                 }
 
                 updateState {
-                    it.copy(
-                        data = transactions,
-                        filteredData = groupedTransactions,
-                        isEmpty = transactions.isEmpty(),
-                        isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
-                        dialogState = null,
-                    )
+                    if (transactions.isEmpty()) {
+                        it.copy(
+                            isRefreshing = false,
+                            data = emptyList(),
+                            filteredData = emptyMap(),
+                            isFilteredRecordsEmpty = true,
+                            uiState = ScreenUiState.Empty,
+                        )
+                    } else {
+                        it.copy(
+                            isRefreshing = false,
+                            data = transactions,
+                            filteredData = groupedTransactions,
+                            isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                            uiState = ScreenUiState.Success,
+                        )
+                    }
                 }
             }
         }
@@ -373,13 +431,20 @@ internal class AccountsTransactionViewModel(
         when (dataState) {
             is DataState.Error -> {
                 updateState {
-                    it.copy(dialogState = AccountTransactionState.DialogState.Error(dataState.message))
+                    it.copy(
+                        isRefreshing = false,
+                        uiState = if (dataState.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
                 }
             }
 
             DataState.Loading -> {
                 updateState {
-                    it.copy(dialogState = AccountTransactionState.DialogState.Loading)
+                    it.copy(uiState = ScreenUiState.Loading)
                 }
             }
 
@@ -392,13 +457,23 @@ internal class AccountsTransactionViewModel(
                 }
 
                 updateState {
-                    it.copy(
-                        dialogState = null,
-                        data = transactions,
-                        filteredData = grouped,
-                        isFilteredRecordsEmpty = grouped.isEmpty(),
-                        isEmpty = transactions.isEmpty(),
-                    )
+                    if (transactions.isEmpty()) {
+                        it.copy(
+                            isRefreshing = false,
+                            data = emptyList(),
+                            filteredData = emptyMap(),
+                            isFilteredRecordsEmpty = true,
+                            uiState = ScreenUiState.Empty,
+                        )
+                    } else {
+                        it.copy(
+                            isRefreshing = false,
+                            data = transactions,
+                            filteredData = grouped,
+                            isFilteredRecordsEmpty = grouped.isEmpty(),
+                            uiState = ScreenUiState.Success,
+                        )
+                    }
                 }
             }
         }
@@ -574,7 +649,7 @@ data class UiTransaction(
  * @property accountDurationFiltersCount The number of active duration filters.
  * @property selectedRadioButton The string resource ID of the selected radio button filter.
  * @property isEmpty A boolean indicating if the filtered data is empty.
- * @property networkUnavailable A boolean indicating if the network is unavailable.
+ * @property networkStatus A boolean indicating if the network is unavailable.
  */
 internal data class AccountTransactionState(
     val clientId: Long,
@@ -583,25 +658,24 @@ internal data class AccountTransactionState(
     val isRefreshing: Boolean = false,
     val data: List<UiTransaction> = emptyList(),
     val filteredData: Map<String, List<UiTransaction>> = emptyMap(),
-    val dialogState: DialogState? = AccountTransactionState.DialogState.Loading,
+    val dialogState: DialogState? = null,
     val checkboxOptions: List<TransactionCheckboxStatus> = emptyList(),
     val selectedFilters: List<TransactionCheckboxStatus> = emptyList(),
     val toggleFilterDialog: Boolean = false,
     val accountTypeFiltersCount: Int? = 0,
     val accountDurationFiltersCount: Int? = 0,
     val selectedRadioButton: StringResource? = null,
-    val isEmpty: Boolean = false,
     val isFilteredRecordsEmpty: Boolean = false,
-    val networkUnavailable: Boolean = false,
+    val networkStatus: Boolean = false,
+
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * Sealed interface representing the different states of the dialog.
      */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
-        data object Loading : DialogState
         data object Filters : DialogState
-        data object Network : DialogState
     }
 
     /**
@@ -620,6 +694,7 @@ internal sealed interface AccountTransactionAction {
     data object ToggleFilter : AccountTransactionAction
     data object ResetFilters : AccountTransactionAction
     data object GetFilterResults : AccountTransactionAction
+    data class ReceiveNetworkResult(val isOnline: Boolean) : AccountTransactionAction
 
     /**
      * Action to toggle a specific checkbox filter.

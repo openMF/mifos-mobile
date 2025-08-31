@@ -14,10 +14,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.io.IOException
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_product_empty
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
@@ -31,9 +33,11 @@ import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsProduct
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
  * A `ViewModel` for the savings application screen, responsible for handling user input,
@@ -56,9 +60,7 @@ internal class SavingsApplyViewModel(
     private val networkMonitor: NetworkMonitor,
 ) : BaseViewModel<SavingsApplicationState, SavingsApplicationEvent, SavingsApplicationAction>(
     initialState = SavingsApplicationState(
-        savingsApplicationDialogState = SavingsApplicationDialogState.Loading,
         clientId = requireNotNull(userPreferencesRepository.clientId.value),
-        applicantName = "",
     ),
 ) {
 
@@ -76,22 +78,40 @@ internal class SavingsApplyViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    mutableStateFlow.update {
-                        it.copy(
-                            networkStatus = isOnline,
-                            savingsApplicationDialogState = if (!isOnline) {
-                                SavingsApplicationDialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
+                    sendAction(SavingsApplicationAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
 
-                    if (isOnline) {
-                        fetchClient()
-                        fetchSavingsTemplate()
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (
+                        current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
                     }
                 }
+            } else {
+                getClientDataAndTemplate()
+            }
         }
     }
 
@@ -127,7 +147,10 @@ internal class SavingsApplyViewModel(
 
             is SavingsApplicationAction.GetFieldOfficer -> fetchFieldOfficer()
 
-            is SavingsApplicationAction.Internal.ReceiveSavingsTemplate -> handleSavingsTemplate(action.template)
+            is SavingsApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
+            is SavingsApplicationAction.Internal.ReceiveClientAndTemplateResult ->
+                handleClientAndSavingsTemplate(action.client, action.template)
 
             is SavingsApplicationAction.Internal.ReceiveSavingsFieldOfficers ->
                 handleFieldOfficers(action.template)
@@ -152,43 +175,46 @@ internal class SavingsApplyViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(savingsApplicationDialogState = SavingsApplicationDialogState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
-                fetchClient()
-                fetchSavingsTemplate()
+                getClientDataAndTemplate()
             }
         }
     }
 
     /**
-     * Fetches the current client's details, specifically the activation date,
-     * from the repository.
+     * Fetches client data, a generic saving template, and a product-specific loan purpose template
+     * from the repositories.
+     * The results are combined and handled in a single flow to manage loading and error states.
      */
-    private fun fetchClient() {
+    private fun getClientDataAndTemplate() {
+        showLoading()
         viewModelScope.launch {
-            homeRepositoryImpl.currentClient(state.clientId)
-                .catch {
-                    showErrorDialog(Res.string.feature_apply_savings_error_server)
-                }
-                .collect { response ->
+            combine(
+                homeRepositoryImpl.currentClient(state.clientId),
+                savingsAccountRepositoryImpl.getSavingAccountApplicationTemplate(state.clientId),
+            ) { client, template ->
+                client to template
+            }
+                .catch { throwable ->
+
                     updateState {
                         it.copy(
-                            applicantName = response.data?.displayName ?: "",
+                            uiState = if (throwable.cause is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
+                            },
                         )
                     }
                 }
-        }
-    }
-
-    /**
-     * Fetches the savings template data from the repository. The template contains
-     * savings product options and currency information.
-     */
-    private fun fetchSavingsTemplate() {
-        viewModelScope.launch {
-            savingsAccountRepositoryImpl.getSavingAccountApplicationTemplate(state.clientId)
-                .collect { result ->
-                    sendAction(SavingsApplicationAction.Internal.ReceiveSavingsTemplate(result))
+                .collect { (client, template) ->
+                    sendAction(
+                        SavingsApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                            client,
+                            template,
+                        ),
+                    )
                 }
         }
     }
@@ -214,14 +240,14 @@ internal class SavingsApplyViewModel(
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(savingsApplicationDialogState = SavingsApplicationDialogState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
      * Sets the dialog state to an overlay loading spinner.
      */
     private fun showOverlayLoading() {
-        updateState { it.copy(savingsApplicationDialogState = SavingsApplicationDialogState.OverlayLoading) }
+        updateState { it.copy(showOverlay = !state.showOverlay) }
     }
 
     /**
@@ -240,21 +266,29 @@ internal class SavingsApplyViewModel(
      *
      * @param template The [DataState] containing the savings template data.
      */
-    private fun handleSavingsTemplate(template: DataState<SavingsAccountTemplate?>) {
-        when (template) {
-            is DataState.Loading -> showLoading()
-            is DataState.Success -> {
-                val savingsTemplate = template.data
+    private fun handleClientAndSavingsTemplate(
+        client: DataState<Client>,
+        template: DataState<SavingsAccountTemplate?>,
+    ) {
+        when {
+            listOf(client, template).any { it is DataState.Loading } -> {
+                showLoading()
+            }
+
+            client is DataState.Success && template is DataState.Success -> {
                 updateState {
                     it.copy(
-                        productOptions = savingsTemplate?.productOptions ?: emptyList(),
-                        savingsApplicationDialogState = null,
+                        applicantName = client.data.displayName ?: "",
+                        productOptions = template.data?.productOptions ?: emptyList(),
+                        uiState = ScreenUiState.Success,
                     )
                 }
             }
 
-            is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_savings_error_server)
+            else -> updateState {
+                it.copy(
+                    uiState = ScreenUiState.Error(Res.string.feature_apply_savings_error_server),
+                )
             }
         }
     }
@@ -269,8 +303,19 @@ internal class SavingsApplyViewModel(
      */
     private fun handleFieldOfficers(template: DataState<SavingsAccountTemplate?>) {
         when (template) {
-            is DataState.Loading -> showOverlayLoading()
+            is DataState.Loading -> {
+                updateState {
+                    it.copy(
+                        showOverlay = true,
+                    )
+                }
+            }
             is DataState.Success -> {
+                updateState {
+                    it.copy(
+                        showOverlay = false,
+                    )
+                }
                 val mappedSavingsFieldOfficer: Map<Long, String> = template.data?.fieldOfficerOptions
                     ?.mapNotNull { option ->
                         val id = option.id?.toLong()
@@ -284,13 +329,25 @@ internal class SavingsApplyViewModel(
                     it.copy(
                         savingsProductTemplate = template.data,
                         savingsFieldOfficer = mappedSavingsFieldOfficer,
-                        savingsApplicationDialogState = null,
                     )
                 }
             }
 
             is DataState.Error -> {
-                showErrorDialog(Res.string.feature_apply_savings_error_server)
+                updateState {
+                    it.copy(
+                        showOverlay = false,
+                    )
+                }
+                updateState {
+                    it.copy(
+                        uiState = if (template.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
+                        },
+                    )
+                }
             }
         }
     }
@@ -399,13 +456,13 @@ internal class SavingsApplyViewModel(
      * and sends an event to navigate to the confirmation screen.
      */
     private fun handleSubmit() {
-        showOverlayLoading()
         viewModelScope.launch {
             try {
                 updateState {
                     it.copy(
                         hasChanges = false,
                         savingsApplicationDialogState = null,
+                        showOverlay = false,
                     )
                 }
                 submitAttempts = 0
@@ -495,7 +552,7 @@ internal class SavingsApplyViewModel(
 @OptIn(ExperimentalMaterial3Api::class)
 internal data class SavingsApplicationState(
     val clientId: Long,
-    val applicantName: String,
+    val applicantName: String = "",
     val productOptions: List<SavingsProduct> = emptyList(),
     val selectedSavingsProduct: String = "",
     val selectedSavingsProductId: Long = 0,
@@ -506,7 +563,10 @@ internal data class SavingsApplicationState(
     val savingsProductTemplate: SavingsAccountTemplate? = null,
     val savingsProductError: StringResource? = null,
     val hasChanges: Boolean = false,
+
     val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
+    val showOverlay: Boolean = false,
 ) {
     /**
      * A boolean indicating if the entire form is valid for submission.
@@ -541,15 +601,6 @@ internal data class SavingsApplicationState(
  * shown on the savings application screen.
  */
 internal sealed interface SavingsApplicationDialogState {
-    /** Represents an overlay loading state. */
-    data object OverlayLoading : SavingsApplicationDialogState
-
-    /** Represents a full-screen loading state. */
-    data object Loading : SavingsApplicationDialogState
-
-    /** Represents a network error state. */
-    data object Network : SavingsApplicationDialogState
-
     /**
      * Represents a generic error dialog with a message.
      * @property message The [StringResource] for the error message.
@@ -591,6 +642,9 @@ internal sealed interface SavingsApplicationAction {
     /** User action to confirm navigation (e.g., dismissing an unsaved changes dialog). */
     data object ConfirmNavigation : SavingsApplicationAction
 
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : SavingsApplicationAction
+
     /**
      * User action when a savings product is selected.
      * @property id The ID of the selected savings product.
@@ -626,7 +680,8 @@ internal sealed interface SavingsApplicationAction {
          * An internal action to handle the result of fetching a savings template.
          * @property template The [DataState] containing the savings template data.
          */
-        data class ReceiveSavingsTemplate(
+        data class ReceiveClientAndTemplateResult(
+            val client: DataState<Client>,
             val template: DataState<SavingsAccountTemplate?>,
         ) : Internal
 

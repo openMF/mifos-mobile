@@ -34,7 +34,9 @@ import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
 internal fun BeneficiaryApplicationConfirmationScreen(
@@ -83,7 +85,6 @@ private fun BeneficiaryApplicationConfirmationScreenDialogs(
     state: BeneficiaryApplicationConfirmationState,
 ) {
     when (state.dialogState) {
-        BeneficiaryApplicationConfirmationState.DialogState.Loading -> MifosProgressIndicator()
         BeneficiaryApplicationConfirmationState.DialogState.Network -> {
             MifosErrorComponent(
                 isNetworkConnected = !state.networkUnavailable,
@@ -111,8 +112,17 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                 )
             }
         },
-        content = {
-            if (state.dialogState == null) {
+    ) {
+        when (state.uiState) {
+            ScreenUiState.Loading -> MifosProgressIndicator()
+
+            ScreenUiState.Network -> {
+                MifosErrorComponent(
+                    isNetworkConnected = state.networkStatus,
+                )
+            }
+
+            ScreenUiState.Success -> {
                 Column(
                     Modifier.padding(DesignToken.padding.large),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
@@ -133,7 +143,13 @@ fun BeneficiaryApplicationConfirmationScreenContent(
                         },
                     )
                 }
+
+                if (state.showOverlay) {
+                    MifosProgressIndicatorOverlay()
+                }
             }
-        },
-    )
+
+            else -> { }
+        }
+    }
 }

@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -31,6 +32,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.model.StatusNavigationDestination
@@ -39,6 +41,7 @@ import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTempla
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
 
 /**
@@ -59,6 +62,7 @@ import org.mifos.mobile.core.ui.utils.observe
 internal class AccountUpdateViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val savingsAccountRepositoryImp: SavingsAccountRepository,
+    private val networkMonitor: NetworkMonitor,
     private val navigator: ResultNavigator,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AccountUpdateState, AccountUpdateEvent, AccountUpdateAction>(
@@ -87,6 +91,7 @@ internal class AccountUpdateViewModel(
 ) {
 
     init {
+        observeNetwork()
         observeAuthResult()
     }
 
@@ -103,6 +108,60 @@ internal class AccountUpdateViewModel(
 //                }
 //        }
 //    }
+
+    /**
+     * Observes the network connectivity status and updates state accordingly.
+     */
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(AccountUpdateAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
+                    }
+                }
+            } else {
+                // TODO get the products from server
+            }
+        }
+    }
+
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(uiState = ScreenUiState.Network) }
+            } else {
+                // TODO get the products from server
+            }
+        }
+    }
 
     /**
      * Observes authentication result (passcode confirmation) and triggers update flow if successful.
@@ -137,6 +196,10 @@ internal class AccountUpdateViewModel(
             AccountUpdateAction.RequestUpdate -> sendEvent(AccountUpdateEvent.NavigateToAuthenticate())
 
             is AccountUpdateAction.OnProductSelected -> handleProductChange(action.id, action.product)
+
+            is AccountUpdateAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
+            is AccountUpdateAction.Retry -> retry()
 
 //            TODO handle received products
             is AccountUpdateAction.Internal.ReceiveProducts -> { }
@@ -186,7 +249,7 @@ internal class AccountUpdateViewModel(
      */
     private fun performUpdate() {
         viewModelScope.launch {
-            updateState { it.copy(dialogState = AccountUpdateState.DialogState.Loading) }
+            updateState { it.copy(showOverlay = true) }
 
             val response = savingsAccountRepositoryImp.updateSavingsAccount(
                 accountId = state.accountId,
@@ -210,11 +273,14 @@ internal class AccountUpdateViewModel(
         when (dataState) {
             is DataState.Loading -> updateState {
                 it.copy(
-                    dialogState = AccountUpdateState.DialogState.Loading,
+                    showOverlay = true,
                 )
             }
 
             is DataState.Error -> {
+                updateState {
+                    it.copy(showOverlay = false)
+                }
                 sendEvent(
                     AccountUpdateEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
@@ -266,7 +332,11 @@ internal data class AccountUpdateState(
     val productOptions: Map<Long, String> = emptyMap(),
     val selectedProductId: Long? = null,
     val selectedProduct: String = "",
-    val dialogState: DialogState?,
+
+    val dialogState: DialogState? = null,
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
 ) {
     /**
      * Represents different dialog types that can appear in the UI.
@@ -276,11 +346,6 @@ internal data class AccountUpdateState(
          * Error dialog with message to show.
          */
         data class Error(val message: String) : DialogState
-
-        /**
-         * Loading dialog shown during network operations.
-         */
-        data object Loading : DialogState
     }
 }
 
@@ -340,6 +405,12 @@ internal sealed interface AccountUpdateAction {
      * User dismissed dialog.
      */
     data object DismissDialog : AccountUpdateAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : AccountUpdateAction
+
+    /** Action to refetch products */
+    data object Retry : AccountUpdateAction
 
     /**
      * User selected a different savings product.

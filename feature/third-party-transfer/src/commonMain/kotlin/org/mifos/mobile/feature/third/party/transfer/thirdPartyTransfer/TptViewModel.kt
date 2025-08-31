@@ -20,6 +20,7 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_required
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_empty
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_invalid
+import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
@@ -29,7 +30,9 @@ import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
+
 /**
  * ViewModel for the Make Transfer screen.
  *
@@ -48,7 +51,6 @@ internal class TptViewModel(
     initialState = run {
         TptState(
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
-            uiState = TptState.TptScreenState.Loading,
         )
     },
 ) {
@@ -80,17 +82,10 @@ internal class TptViewModel(
     }
 
     /**
-     * Sets the UI state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(uiState = TptState.TptScreenState.OverlayLoading) }
-    }
-
-    /**
      * Sets the UI state to a full-screen loading spinner.
      */
     private fun showLoading() {
-        updateState { it.copy(uiState = TptState.TptScreenState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
     }
 
     /**
@@ -110,6 +105,8 @@ internal class TptViewModel(
      */
     override fun handleAction(action: TptAction) {
         when (action) {
+            is TptAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is TptAction.OnToAccountSelected -> handleToAccountChange(action.accountNo)
 
             is TptAction.OnFromAccountSelected -> handleFromAccountChange(action.accountNo)
@@ -147,7 +144,7 @@ internal class TptViewModel(
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
-                updateState { it.copy(uiState = TptState.TptScreenState.Network) }
+                updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
                 fetchAccountOptions()
             }
@@ -164,7 +161,6 @@ internal class TptViewModel(
      * @param fromAccount The account number of the selected 'from' account.
      */
     private fun handleFromAccountChange(fromAccount: String) {
-        println("From Account Selected: $fromAccount")
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
             .find { it.accountNo == fromAccount }
 
@@ -350,20 +346,39 @@ internal class TptViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-                    updateState {
-                        it.copy(
-                            networkStatus = isOnline,
-                            uiState = if (!isOnline) {
-                                TptState.TptScreenState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-                    if (isOnline) {
-                        fetchAccountOptions()
+                    sendAction(TptAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Empty ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
                     }
                 }
+            } else {
+                fetchAccountOptions()
+            }
         }
     }
 
@@ -397,16 +412,14 @@ internal class TptViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = TptState.TptScreenState.Error(
-                            dataState.message,
+                        uiState = ScreenUiState.Error(
+                            Res.string.feature_tpt_error_server,
                         ),
                     )
                 }
             }
 
-            DataState.Loading -> {
-                showOverlayLoading()
-            }
+            DataState.Loading -> showLoading()
 
             is DataState.Success -> {
                 updateState {
@@ -414,7 +427,7 @@ internal class TptViewModel(
                         accountOptionsTemplate = dataState.data,
                         fromAccountOptions = dataState.data.fromAccountOptions,
                         toAccountOptions = dataState.data.toAccountOptions,
-                        uiState = TptState.TptScreenState.Success,
+                        uiState = ScreenUiState.Success,
                     )
                 }
             }
@@ -465,9 +478,10 @@ internal data class TptState(
     var toAccountOptions: List<AccountOption> = emptyList(),
     val fromAccount: AccountOption? = null,
     val toAccount: AccountOption? = null,
+
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
-    val uiState: TptScreenState?,
+    val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**
      * Represents the possible states of a dialog shown on the Make Transfer screen.
@@ -478,29 +492,6 @@ internal data class TptState(
          * @property message The error message to display.
          */
         data class Error(val message: StringResource) : DialogState
-    }
-
-    /**
-     * Represents the possible overall states of the screen.
-     */
-    sealed interface TptScreenState {
-        /** Represents a full-screen loading state. */
-        data object Loading : TptScreenState
-
-        /**
-         * Represents an error state with a message.
-         * @property message The string message for the error.
-         */
-        data class Error(val message: String) : TptScreenState
-
-        /** Represents a successful state where content can be displayed. */
-        data object Success : TptScreenState
-
-        /** Represents a state where there is a network connectivity issue. */
-        data object Network : TptScreenState
-
-        /** Represents a state where an overlay loading spinner should be shown. */
-        data object OverlayLoading : TptScreenState
     }
 
     /**
@@ -547,6 +538,9 @@ internal sealed interface TptAction {
 
     /** Action triggered to retry a failed operation, typically fetching account options. */
     data object OnRetry : TptAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : TptAction
 
     /**
      * Represents internal actions used within the ViewModel, not directly triggered by the UI.

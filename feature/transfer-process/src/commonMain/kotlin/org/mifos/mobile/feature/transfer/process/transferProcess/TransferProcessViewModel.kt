@@ -13,7 +13,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.transfer_process.generated.resources.Res
@@ -33,6 +32,8 @@ import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.core.ui.utils.observe
 
 /**
@@ -99,6 +100,8 @@ internal class TransferProcessViewModel(
      */
     override fun handleAction(action: TransferProcessAction) {
         when (action) {
+            is TransferProcessAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
+
             is TransferProcessAction.RequestTransfer -> sendEvent(TransferProcessEvent.NavigateToAuthenticate())
 
             is TransferProcessAction.OnNavigate -> sendEvent(TransferProcessEvent.Navigate)
@@ -140,23 +143,40 @@ internal class TransferProcessViewModel(
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
-                .map(Boolean::not)
                 .distinctUntilChanged()
-                .collect { isOffline ->
-                    updateState {
-                        it.copy(
-                            networkUnavailable = isOffline,
-                            dialogState = if (isOffline) {
-                                TransferProcessState.DialogState.Network
-                            } else {
-                                null
-                            },
-                        )
-                    }
-                    if (!isOffline) {
-                        observeAuthResult()
+                .collect { isOnline ->
+                    sendAction(TransferProcessAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Loading ||
+                        current.uiState is ScreenUiState.Error ||
+                        current.uiState is ScreenUiState.Network
+                    ) {
+                        current.copy(uiState = ScreenUiState.Network)
+                    } else {
+                        current
                     }
                 }
+            } else {
+                observeAuthResult()
+            }
         }
     }
 
@@ -169,7 +189,7 @@ internal class TransferProcessViewModel(
         state.transferPayload?.let { payload ->
             updateState {
                 it.copy(
-                    dialogState = TransferProcessState.DialogState.Loading,
+                    showOverlay = true,
                 )
             }
             viewModelScope.launch {
@@ -189,11 +209,16 @@ internal class TransferProcessViewModel(
     private suspend fun processTransferResult(response: DataState<String>) {
         updateState {
             it.copy(
-                dialogState = null,
+                showOverlay = true,
             )
         }
         when (response) {
             is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        showOverlay = false,
+                    )
+                }
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
@@ -204,9 +229,11 @@ internal class TransferProcessViewModel(
                     ),
                 )
             }
+
             DataState.Loading -> {
-                updateState { it.copy(dialogState = TransferProcessState.DialogState.Loading) }
+                updateState { it.copy(showOverlay = true) }
             }
+
             is DataState.Success -> {
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
@@ -233,18 +260,10 @@ data class TransferProcessState(
     val transferDestination: String? = null,
     val transferType: TransferType? = null,
     val transferPayload: TransferPayload? = null,
-    val dialogState: DialogState? = null,
-    val networkUnavailable: Boolean = false,
-) {
-    sealed interface DialogState {
-
-        /** Represents a loading state, typically shown when data is being fetched. */
-        data object Loading : DialogState
-
-        /** Represents a network error state */
-        data object Network : DialogState
-    }
-}
+    val networkStatus: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val showOverlay: Boolean = false,
+)
 
 /**
  * Defines the events that the [TransferProcessViewModel] can send to the UI.
@@ -290,6 +309,9 @@ sealed interface TransferProcessAction {
 
     /** Action dispatched for generic navigation, its specific use case should be clear from context. */
     data object OnNavigate : TransferProcessAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : TransferProcessAction
 
     /**
      * Sealed interface for internal actions used within the [TransferProcessViewModel].

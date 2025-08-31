@@ -13,20 +13,22 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
-import mifos_mobile.feature.settings.generated.resources.feature_settings_error_fetching_client
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.UserDataRepository
+import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ImageUtil
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 import org.mifos.mobile.feature.settings.componenets.settingsItems
 import kotlin.io.encoding.Base64
@@ -48,6 +50,7 @@ internal class SettingsViewModel(
     private val homeRepositoryImpl: HomeRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val userDataRepositoryImpl: UserDataRepository,
+    private val networkMonitor: NetworkMonitor,
 ) : BaseViewModel<SettingsState, SettingsEvents, SettingsAction>(
     initialState = run {
         SettingsState(
@@ -57,7 +60,22 @@ internal class SettingsViewModel(
     },
 ) {
     init {
-        loadUserData()
+        observeNetworkStatus()
+    }
+
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * If the network is unavailable, it sets the `networkUnavailable` flag in the state
+     * and shows a network-related dialog.
+     */
+    private fun observeNetworkStatus() {
+        viewModelScope.launch {
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(SettingsAction.ReceiveNetworkStatus(isOnline))
+                }
+        }
     }
 
     /**
@@ -90,9 +108,48 @@ internal class SettingsViewModel(
             SettingsAction.DismissDialog -> setDialogState(null)
             SettingsAction.LogoutDialog -> handleLogout()
             SettingsAction.Logout -> handleInternalLogOut()
+            SettingsAction.Retry -> retry()
+            is SettingsAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
             is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
+        }
+    }
+
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
+    private fun handleNetworkStatus(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
+
+        viewModelScope.launch {
+            if (!isOnline) {
+                updateState { current ->
+                    current.copy(isUserLoading = false, isUserLoaded = false)
+                }
+            } else {
+                loadUserData()
+            }
+        }
+    }
+
+    /**
+     * Retries the data fetching process. If the network is unavailable, it shows
+     * a network error dialog. Otherwise, it triggers the `fetchSavingsTemplate` `fetchClient`,
+     */
+    private fun retry() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(isUserLoading = false, isUserLoaded = false) }
+            } else {
+                loadUserData()
+            }
         }
     }
 
@@ -144,13 +201,6 @@ internal class SettingsViewModel(
     private fun loadUserData() {
         viewModelScope.launch {
             homeRepositoryImpl.currentClient(state.clientId ?: -1L)
-                .catch {
-                    setDialogState(
-                        SettingsState.DialogState.Error(
-                            Res.string.feature_settings_error_fetching_client,
-                        ),
-                    )
-                }
                 .collect { sendAction(SettingsAction.Internal.ReceiveClientInfo(it)) }
         }
 
@@ -175,16 +225,22 @@ internal class SettingsViewModel(
     private fun handleClientResponse(state: DataState<Client>) {
         when (state) {
             is DataState.Error -> {
-                setDialogState(
-                    SettingsState.DialogState.Error(
-                        Res.string.feature_settings_error_fetching_client,
-                    ),
-                )
+                updateState {
+                    it.copy(
+                        isUserLoaded = false,
+                        isUserLoading = false,
+                    )
+                }
             }
-            DataState.Loading -> setDialogState(SettingsState.DialogState.Loading)
+
+            DataState.Loading -> updateState {
+                it.copy(isUserLoading = true)
+            }
+
             is DataState.Success -> {
-                setDialogState(null)
-                updateState { it.copy(client = state.data) }
+                updateState {
+                    it.copy(isUserLoading = false, isUserLoaded = true, client = state.data)
+                }
             }
         }
     }
@@ -199,13 +255,11 @@ internal class SettingsViewModel(
      */
     private fun handleClientImageResponse(state: DataState<String>) {
         when (state) {
-            is DataState.Error -> {
-                // No need to show user that client image getting failed
-                setDialogState(null)
-            }
-            DataState.Loading -> setDialogState(SettingsState.DialogState.Loading)
+            is DataState.Error -> Unit
+
+            DataState.Loading -> Unit
+
             is DataState.Success -> {
-                setDialogState(null)
                 setUserProfile(state.data)
             }
         }
@@ -253,21 +307,18 @@ internal data class SettingsState(
     val clientId: Long? = null,
     val client: Client? = null,
     val profileImage: ByteArray? = null,
+
     val dialogState: DialogState? = null,
+    val isUserLoading: Boolean = true,
+    val isUserLoaded: Boolean = false,
+    val uiState: ScreenUiState? = ScreenUiState.Success,
+    val networkStatus: Boolean = false,
 ) {
     /**
      * A sealed interface representing the different types of dialogs that can be
      * shown on the Settings screen.
      */
     sealed interface DialogState {
-        /**
-         * Represents a generic error dialog with a message.
-         * @property message The [StringResource] for the error message.
-         */
-        data class Error(val message: StringResource) : DialogState
-
-        /** Represents a loading dialog. */
-        data object Loading : DialogState
 
         /** Represents a logout dialog. */
         data class Logout(
@@ -288,6 +339,9 @@ internal sealed interface SettingsAction {
     /** User action to dismiss a dialog. */
     data object DismissDialog : SettingsAction
 
+    /** User Action to refetch user data */
+    data object Retry : SettingsAction
+
     /**
      * Action to navigate to a specific settings screen.
      * @property item The [SettingsItems] to navigate to.
@@ -303,6 +357,9 @@ internal sealed interface SettingsAction {
      * Action to perform user logout.
      */
     data object Logout : SettingsAction
+
+    /** Action to observe network status */
+    data class ReceiveNetworkStatus(val isOnline: Boolean) : SettingsAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
