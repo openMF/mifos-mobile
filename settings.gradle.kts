@@ -56,6 +56,15 @@ include(":core:datastore")
 include(":core:qrcode")
 //include(":core:testing")
 
+include(":core-base:datastore")
+include(":core-base:common")
+include(":core-base:database")
+include(":core-base:network")
+include(":core-base:designsystem")
+include(":core-base:platform")
+include(":core-base:ui")
+include(":core-base:analytics")
+
 // Feature Modules
 include(":feature:beneficiary")
 include(":feature:savings")
