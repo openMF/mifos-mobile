@@ -451,12 +451,16 @@ naming:
     active: true
     mustBeFirst: true
     excludes:
-      - "**/*.jvm.kt"
-      - "**/*.desktop.kt"
-      - "**/*.wasmJs.kt"
-      - "**/*.native.kt"
-      - "**/*.js.kt"
-      - "**/*.android.kt"
+      [
+        "**/*.android.*",
+        "**/*.desktop.*",
+        "**/*.js.*",
+        "**/*.native.*",
+        "**/*.jvm.*",
+        "**/*.linux.*",
+        "**/*.macos.*",
+        "**/*.wasmJs.*",
+      ]
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
@@ -472,6 +476,10 @@ naming:
   PackageNaming:
     active: true
     packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9]*)*'
+    excludes:
+      [
+        "**/generated/**",
+      ]
   TopLevelPropertyNaming:
     active: true
     constantPattern: "[A-Z][_A-Z0-9]*"
