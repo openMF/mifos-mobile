@@ -104,7 +104,7 @@ review = "2.0.2"
 integrity = "1.4.0"
 
 # Desktop Version
-packageName = "MifosWallet"
+packageName = "Mifos Mobile"
 packageNamespace = "org.mifos.mobile"
 packageVersion = "1.0.0"
 roomCommonVersion = "2.6.1"
