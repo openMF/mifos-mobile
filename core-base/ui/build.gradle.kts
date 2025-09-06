@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 plugins {
-    alias(libs.plugins.mifos.kmp.library)
+    alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
 }

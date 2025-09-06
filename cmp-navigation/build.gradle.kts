@@ -9,9 +9,9 @@
  */
 
 plugins {
-    alias(libs.plugins.mifos.kmp.library)
-    alias(libs.plugins.mifos.cmp.feature)
-    alias(libs.plugins.mifos.kmp.koin)
+    alias(libs.plugins.kmp.library.convention)
+    alias(libs.plugins.cmp.feature.convention)
+    alias(libs.plugins.kmp.koin.convention)
     alias(libs.plugins.kotlin.serialization)
 }
 

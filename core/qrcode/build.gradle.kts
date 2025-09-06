@@ -9,7 +9,7 @@
  */
 
 plugins {
-    alias(libs.plugins.mifos.kmp.library)
+    alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
