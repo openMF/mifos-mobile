@@ -9,6 +9,8 @@
  */
 plugins {
     alias(libs.plugins.kmp.library.convention)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrainsCompose)
 }
 
 android {
@@ -39,6 +41,7 @@ kotlin {
             api(libs.squareup.okio)
             api(libs.jb.kotlin.stdlib)
             api(libs.kotlinx.datetime)
+            implementation(libs.jb.composeRuntime)
         }
 
         androidMain.dependencies {

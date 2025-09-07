@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -55,6 +54,8 @@ import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * ViewModel for managing the state and logic of the account transactions screen.
@@ -527,6 +528,7 @@ internal class AccountsTransactionViewModel(
      * @param selectedFilters A list of [TransactionCheckboxStatus] representing the active checkbox filters.
      * @return A map of filtered transactions grouped by date.
      */
+    @OptIn(ExperimentalTime::class)
     internal fun applyTransactionFilters(
         selectedFilters: List<TransactionCheckboxStatus>,
     ): Map<String, List<UiTransaction>> {

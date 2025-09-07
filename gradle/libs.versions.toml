@@ -1,29 +1,29 @@
 [versions]
-accompanistVersion = "0.37.3"
+accompanistVersion = "0.36.0"
 activityVersion = "1.9.3"
-androidDesugarJdkLibs = "2.1.4"
-androidGradlePlugin = "8.7.3"
-androidTools = "31.7.3"
+androidDesugarJdkLibs = "2.1.5"
+androidGradlePlugin = "8.10.0"
+androidTools = "31.10.0"
 androidx-test-ext-junit = "1.2.1"
-androidxActivity = "1.9.3"
-androidxComposeBom = "2024.12.01"
+androidxActivity = "1.10.1"
+androidxComposeBom = "2025.06.01"
 androidxComposeCompiler = "1.5.15"
 androidxCoreSplashscreen = "1.0.1"
 androidxEspresso = "3.6.1"
-androidxLifecycle = "2.8.7"
+androidxLifecycle = "2.9.2"
 androidxMetrics = "1.0.0-beta01"
-androidxNavigation = "2.8.5"
+androidxNavigation = "2.9.2"
 androidxProfileinstaller = "1.4.1"
 androidxTestRules = "1.6.1"
-androidxTracing = "1.2.0"
-appcompatVersion = "1.7.0"
+androidxTracing = "1.3.0"
+appcompatVersion = "1.7.1"
 androidxBrowser = "1.8.0"
 mlkit="17.3.0"
 guavaVersion = "33.3.1-android"
 cameraxVersion = "1.4.1"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 dependencyGuard = "0.5.0"
-detekt = "1.23.7"
+detekt = "1.23.8"
 easycropVersion = "0.1.1"
 firebaseBom = "33.7.0"
 firebaseCrashlyticsPlugin = "3.0.2"
@@ -37,7 +37,7 @@ ktlint = "12.1.1"
 libphonenumberAndroidVersion = "8.13.35"
 lifecycleExtensionsVersion = "2.2.0"
 lifecycleLivedataKtxVersion = "2.8.7"
-lifecycleVersion = "2.8.7"
+lifecycleVersion = "2.9.2"
 material3 = "1.3.1"
 mockitoCoreVersion = "5.6.0"
 multidexVersion = "2.0.1"
@@ -57,12 +57,12 @@ lottie = "6.6.7"
 compottie = "2.0.0-rc05"
 
 # Kotlin KMP Dependencies
-kotlin = "2.1.0"
+kotlin = "2.1.20"
 kotlinInject = "0.7.2"
 kotlinxCoroutines = "1.10.1"
-kotlinxDatetime = "0.7.1-0.6.x-compat"
+kotlinxDatetime = "0.6.2"
 kotlinxImmutable = "0.3.8"
-kotlinxSerializationJson = "1.7.3"
+kotlinxSerializationJson = "1.8.1"
 ksp = "2.1.20-2.0.1"
 
 # Ktor & Ktorfit
@@ -81,20 +81,22 @@ backHandlerVersion = "2.5.0"
 multiplatformSettings = "1.3.0"
 mokoPermission = "0.19.1"
 qroseVersion = "1.0.1"
-okioVersion = "3.15.0"
+
+okioVersion = "3.9.1"
 kermit = "2.0.6"
 fileKit = "0.10.0-beta04"
-fileKitDialog = "0.10.0"
+fileKitCompose = "0.8.8"
 wire = "5.0.0"
 zoomImage = "1.3.0"
 uiBackhandler = "1.8.2"
 
 # Jetbrains CMP
 windowsSizeClass = "0.5.0"
+composeJB = "1.8.2"
 composeLifecycle = "2.9.1"
 composeNavigation = "2.9.0-beta03"
 jbCoreBundle = "1.0.1"
-jbSavedState = "1.3.3"
+jbSavedState = "1.3.1"
 gitLive = "2.1.0"
 material3adaptive = "1.1.2"
 
@@ -203,7 +205,7 @@ zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVe
 jb-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 jb-kotlin-stdlib-js = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-js", version.ref = "kotlin" }
 jb-kotlin-dom = { group = "org.jetbrains.kotlin", name = "kotlin-dom-api-compat", version.ref = "kotlin" }
-jb-composeRuntime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-plugin" }
+jb-composeRuntime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeJB" }
 jb-lifecycle-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "composeLifecycle" }
 jb-composeViewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeLifecycle" }
 jb-lifecycleViewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "composeLifecycle" }
@@ -276,9 +278,10 @@ compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compile
 squareup-okio = { group = "com.squareup.okio", name = "okio", version.ref = "okioVersion" }
 back-handler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "backHandlerVersion" }
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "fileKit" }
-filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "fileKit" }
 filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "fileKit" }
-filekit-dialog-compose = { group = "io.github.vinceglb", name = "filekit-dialogs-compose", version.ref = "fileKitDialog" }
+filekit-dialog-compose = { group = "io.github.vinceglb", name = "filekit-dialogs-compose", version.ref = "fileKit" }
+filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "fileKit" }
+filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "fileKitCompose" }
 qrose = { group = "io.github.alexzhirkevich", name="qrose", version.ref = "qroseVersion" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }

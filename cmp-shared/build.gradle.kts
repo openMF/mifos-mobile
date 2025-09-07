@@ -9,26 +9,15 @@
  */
 
 plugins {
-    alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.cmp.feature.convention)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-            optimized = true
-        }
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
@@ -40,15 +29,25 @@ kotlin {
             //put your multiplatform dependencies here
             implementation(compose.material)
             implementation(compose.material3)
-            api(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
         }
 
         desktopMain.dependencies {
             // Desktop specific dependencies
             implementation(compose.desktop.currentOs)
             implementation(compose.desktop.common)
+        }
+    }
+
+    cocoapods {
+        summary = "KMP Shared Module"
+        homepage = "https://github.com/openMF/mifos-mobile"
+        version = "1.0"
+        ios.deploymentTarget = "16.0"
+        podfile = project.file("../cmp-ios/Podfile")
+
+        framework {
+            baseName = "ComposeApp"
+            isStatic = true
         }
     }
 }

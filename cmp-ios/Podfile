@@ -1,0 +1,21 @@
+deployment_target = '16.0'
+
+target 'iosApp' do
+  use_frameworks!
+  platform :ios, deployment_target
+  # Pods for iosApp
+  pod 'cmp_shared', :path => '../cmp-shared'
+end
+
+post_install do |installer|
+    installer.generated_projects.each do |project|
+        project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+            end
+        end
+        project.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
+        end
+    end
+end
