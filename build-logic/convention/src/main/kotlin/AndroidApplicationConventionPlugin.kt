@@ -20,6 +20,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("mifos.detekt.plugin")
                 apply("mifos.spotless.plugin")
                 apply("mifos.git.hooks")
+                apply("org.convention.android.application.lint")
+                apply("org.convention.android.application.firebase")
+
             }
 
             extensions.configure<ApplicationExtension> {

@@ -15,7 +15,7 @@ class KMPLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.multiplatform")
-                apply("mifos.kmp.koin")
+                apply("org.convention.kmp.koin")
                 apply("mifos.detekt.plugin")
                 apply("mifos.spotless.plugin")
             }

@@ -8,8 +8,8 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("mifos.kmp.library")
-                apply("mifos.kmp.koin")
+                apply("org.convention.kmp.library")
+                apply("org.convention.kmp.koin")
                 apply("org.jetbrains.kotlin.plugin.compose")
                 apply("org.jetbrains.compose")
             }

@@ -9,7 +9,7 @@
  */
 
 plugins {
-    alias(libs.plugins.mifos.kmp.library)
+    alias(libs.plugins.kmp.library.convention)
     id("kotlinx-serialization")
 }
 
