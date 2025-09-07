@@ -25,7 +25,6 @@ import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.days
-import kotlin.time.ExperimentalTime
 
 @Suppress("TooManyFunctions")
 @OptIn(FormatStringsInDatetimeFormats::class)
@@ -163,7 +162,6 @@ object DateHelper {
 
     private val monthNumberToAbbreviation = monthMap.entries.associate { (k, v) -> v to k }
 
-    @OptIn(ExperimentalTime::class)
     fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
         if (integersOfDate == null) return null
         val dateStr = getDateAsString(integersOfDate)

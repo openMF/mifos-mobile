@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.accounts.accounts
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.enums.AccountType
@@ -21,6 +20,8 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.accounts.utils.StatusUtils
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * ViewModel responsible for managing the account screen state,
@@ -41,6 +42,7 @@ internal class AccountsViewModel(
         observeAccountTypeAndInitCheckboxes()
     }
 
+    @OptIn(ExperimentalTime::class)
     override fun handleAction(action: AccountsAction) {
         when (action) {
             is AccountsAction.SetCheckboxFilterList -> {
@@ -113,6 +115,7 @@ internal class AccountsViewModel(
      * Applies the selected checkboxes as filters, sets refresh signal,
      * and dismisses the filter dialog.
      */
+    @OptIn(ExperimentalTime::class)
     private fun handleConfirmFilterDialog() {
         val selectedFilters = state.checkboxOptions.filter { it.isChecked }
 
@@ -203,7 +206,9 @@ internal class AccountsViewModel(
  * UI state for the Accounts screen, containing filter options, dialog visibility,
  * current account type, and refresh signals.
  */
-internal data class AccountsState(
+internal data class AccountsState
+@OptIn(ExperimentalTime::class)
+constructor(
     val isRefreshing: Boolean = false,
 
     /** Current filter checkboxes shown in the dialog */

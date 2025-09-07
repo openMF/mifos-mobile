@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock.System
 import kotlinx.serialization.Serializable
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -45,6 +44,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 /**
@@ -631,6 +632,7 @@ class DataStoreComprehensiveFeatureTest : KoinTest {
      * Test 9: Complete Integration Scenario
      * Tests realistic app usage patterns
      */
+    @OptIn(ExperimentalTime::class)
     @Test
     fun test09_CompleteIntegrationScenario() = runTest(testDispatcher) {
         println("=== Testing Complete Integration Scenario ===")
@@ -668,7 +670,7 @@ class DataStoreComprehensiveFeatureTest : KoinTest {
 
         // 3. Session preferences
         repository.savePreference("session_id", "sess_abc123")
-        repository.savePreference("login_timestamp", System.now().toEpochMilliseconds())
+        repository.savePreference("login_timestamp", Clock.System.now().toEpochMilliseconds())
         repository.savePreference("device_id", "device_xyz789")
 
         // 4. Feature flags and settings

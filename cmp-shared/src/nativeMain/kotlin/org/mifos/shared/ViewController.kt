@@ -18,5 +18,9 @@ fun viewController() = ComposeUIViewController(
         initKoin()
     },
 ) {
-    SharedApp()
+    SharedApp(
+        handleThemeMode = {},
+        handleAppLocale = {},
+        onSplashScreenRemoved = {},
+    )
 }
