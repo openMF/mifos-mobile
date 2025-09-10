@@ -9,10 +9,8 @@
  */
 package org.mifos.mobile.core.common
 
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
@@ -23,8 +21,12 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Suppress("TooManyFunctions")
 @OptIn(FormatStringsInDatetimeFormats::class)
@@ -67,11 +69,12 @@ object DateHelper {
         return stringBuilder.toString()
     }
 
+    @OptIn(ExperimentalTime::class)
     fun getFormattedDateWithPrefix(dateList: List<Int>): String {
         val inputDate = LocalDate(dateList[0], dateList[1], dateList[2])
         val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 
-        val formatted = "${inputDate.dayOfMonth} ${getMonthName(inputDate.monthNumber)} ${inputDate.year}"
+        val formatted = "${inputDate.month.number} ${getMonthName(inputDate.month.number)} ${inputDate.year}"
 
         val today = now
         val yesterday = today.minus(1, DateTimeUnit.DAY)
@@ -83,9 +86,9 @@ object DateHelper {
         val endOfLastWeek = startOfThisWeek.minus(1, DateTimeUnit.DAY)
 
         // Last Month
-        val firstOfThisMonth = LocalDate(today.year, today.monthNumber, 1)
+        val firstOfThisMonth = LocalDate(today.year, today.month.number, 1)
         val lastMonthDate = firstOfThisMonth.minus(1, DateTimeUnit.MONTH)
-        val startOfLastMonth = LocalDate(lastMonthDate.year, lastMonthDate.monthNumber, 1)
+        val startOfLastMonth = LocalDate(lastMonthDate.year, lastMonthDate.month.number, 1)
         val endOfLastMonth = firstOfThisMonth.minus(1, DateTimeUnit.DAY)
 
         // Last Year
@@ -132,6 +135,7 @@ object DateHelper {
         return listOf(year, month, day)
     }
 
+    @OptIn(ExperimentalTime::class)
     fun subtractTime(number: Int, unit: String): Long {
         val now: Instant = Clock.System.now()
         val daysToSubtract = when (unit.lowercase()) {
@@ -153,8 +157,8 @@ object DateHelper {
         val input = LocalDate.Format { byUnicodePattern(format) }
         val localDate = input.parse(dateString)
 
-        val day = localDate.dayOfMonth.toString().padStart(2, '0')
-        val month = monthNumberToAbbreviation[localDate.monthNumber]
+        val day = localDate.day.toString().padStart(2, '0')
+        val month = monthNumberToAbbreviation[localDate.month.number]
         val year = localDate.year
 
         return "$day $month $year"
@@ -162,6 +166,7 @@ object DateHelper {
 
     private val monthNumberToAbbreviation = monthMap.entries.associate { (k, v) -> v to k }
 
+    @OptIn(ExperimentalTime::class)
     fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
         if (integersOfDate == null) return null
         val dateStr = getDateAsString(integersOfDate)
@@ -202,8 +207,8 @@ object DateHelper {
     // Extension function to format LocalDate
     fun LocalDate.format(pattern: String): String {
         val year = this.year.toString().padStart(4, '0')
-        val month = this.monthNumber.toString().padStart(2, '0')
-        val day = this.dayOfMonth.toString().padStart(2, '0')
+        val month = this.month.toString().padStart(2, '0')
+        val day = this.day.toString().padStart(2, '0')
 
         return pattern
             .replace("yyyy", year)
@@ -238,6 +243,7 @@ object DateHelper {
      * Example timestamp "1698278400000"
      * Output examples: "dd-MM-yyyy" - "14-04-2016"
      */
+    @OptIn(ExperimentalTime::class)
     fun getDateAsStringFromLong(timeInMillis: Long): String {
         val instant = Instant.fromEpochMilliseconds(timeInMillis)
             .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -250,20 +256,22 @@ object DateHelper {
      * Example timestamp "1698278400000"
      * Output examples: "14 April"
      */
+    @OptIn(ExperimentalTime::class)
     fun getMonthAsStringFromLong(timeInMillis: Long): String {
         val instant = Instant.fromEpochMilliseconds(timeInMillis)
             .toLocalDateTime(TimeZone.currentSystemDefault())
 
         val monthName = instant.month.name.lowercase().capitalize()
 
-        return "${instant.dayOfMonth} $monthName"
+        return "${instant.day} $monthName"
     }
 
+    @OptIn(ExperimentalTime::class)
     fun getDateMonthYearString(timeInMillis: Long): String {
         val instant = Instant.fromEpochMilliseconds(timeInMillis)
             .toLocalDateTime(TimeZone.currentSystemDefault())
 
-        val day = instant.dayOfMonth
+        val day = instant.day
         val month = instant.month.name.lowercase().replaceFirstChar { it.uppercase() }.take(3)
         val year = instant.year
 
@@ -337,6 +345,7 @@ object DateHelper {
      * "Today at 05:41"
      * "Tomorrow at 05:41"
      */
+    @OptIn(ExperimentalTime::class)
     fun String.toFormattedDateTime(): String {
         // Parse the datetime string
         val dateTime = try {
@@ -361,25 +370,25 @@ object DateHelper {
             nowDateTime.year == dateTime.year -> {
                 when {
                     // Same month
-                    nowDateTime.monthNumber == dateTime.monthNumber -> {
+                    nowDateTime.month.number == dateTime.month.number -> {
                         when {
                             // Tomorrow
-                            dateTime.dayOfMonth - nowDateTime.dayOfMonth == 1 -> {
+                            dateTime.month.number - nowDateTime.month.number == 1 -> {
                                 "Tomorrow at ${dateTime.format()}"
                             }
                             // Today
-                            dateTime.dayOfMonth == nowDateTime.dayOfMonth -> {
+                            dateTime.month.number == nowDateTime.month.number -> {
                                 "Today at ${dateTime.format()}"
                             }
                             // Yesterday
-                            nowDateTime.dayOfMonth - dateTime.dayOfMonth == 1 -> {
+                            nowDateTime.month.number - dateTime.month.number == 1 -> {
                                 "Yesterday at ${dateTime.format()}"
                             }
                             // Same month but different day
                             else -> {
                                 "${
                                     dateTime.month.name.lowercase().capitalize()
-                                } ${dateTime.dayOfMonth}, ${dateTime.format()}"
+                                } ${dateTime.month.number}, ${dateTime.format()}"
                             }
                         }
                     }
@@ -387,7 +396,7 @@ object DateHelper {
                     else -> {
                         "${
                             dateTime.month.name.lowercase().capitalize()
-                        } ${dateTime.dayOfMonth}, ${dateTime.format()}"
+                        } ${dateTime.month.number}, ${dateTime.format()}"
                     }
                 }
             }
@@ -395,7 +404,7 @@ object DateHelper {
             else -> {
                 "${
                     dateTime.month.name.lowercase().capitalize()
-                } ${dateTime.dayOfMonth} ${dateTime.year}, ${dateTime.format()}"
+                } ${dateTime.month.number} ${dateTime.year}, ${dateTime.format()}"
             }
         }
     }
@@ -407,6 +416,7 @@ object DateHelper {
      * "Today at 12:00"
      * "Tomorrow at 15:30"
      */
+    @OptIn(ExperimentalTime::class)
     fun String.toPrettyDate(): String {
         val timestamp = this.toLong()
         val instant = Instant.fromEpochMilliseconds(timestamp)
@@ -419,20 +429,20 @@ object DateHelper {
             nowDateTime.year == neededDateTime.year -> {
                 when {
                     // Same month
-                    nowDateTime.monthNumber == neededDateTime.monthNumber -> {
+                    nowDateTime.month.number == neededDateTime.month.number -> {
                         when {
                             // Tomorrow
-                            neededDateTime.dayOfMonth - nowDateTime.dayOfMonth == 1 -> {
+                            neededDateTime.month.number - nowDateTime.month.number == 1 -> {
                                 val time = neededDateTime.format()
                                 "Tomorrow at $time"
                             }
                             // Today
-                            neededDateTime.dayOfMonth == nowDateTime.dayOfMonth -> {
+                            neededDateTime.month.number == nowDateTime.month.number -> {
                                 val time = neededDateTime.format()
                                 "Today at $time"
                             }
                             // Yesterday
-                            nowDateTime.dayOfMonth - neededDateTime.dayOfMonth == 1 -> {
+                            nowDateTime.month.number - neededDateTime.month.number == 1 -> {
                                 val time = neededDateTime.format()
                                 "Yesterday at $time"
                             }
@@ -440,7 +450,7 @@ object DateHelper {
                             else -> {
                                 "${
                                     neededDateTime.month.name.lowercase().capitalize()
-                                } ${neededDateTime.dayOfMonth}, ${neededDateTime.format()}"
+                                } ${neededDateTime.month.number}, ${neededDateTime.format()}"
                             }
                         }
                     }
@@ -448,7 +458,7 @@ object DateHelper {
                     else -> {
                         "${
                             neededDateTime.month.name.lowercase().capitalize()
-                        } ${neededDateTime.dayOfMonth}, ${neededDateTime.format()}"
+                        } ${neededDateTime.month.number}, ${neededDateTime.format()}"
                     }
                 }
             }
@@ -456,7 +466,7 @@ object DateHelper {
             else -> {
                 "${
                     neededDateTime.month.name.lowercase().capitalize()
-                } ${neededDateTime.dayOfMonth} ${neededDateTime.year}, ${neededDateTime.format()}"
+                } ${neededDateTime.month.number} ${neededDateTime.year}, ${neededDateTime.format()}"
             }
         }
     }
@@ -471,6 +481,7 @@ object DateHelper {
         if (it.isLowerCase()) it.titlecase() else it.toString()
     }
 
+    @OptIn(ExperimentalTime::class)
     val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
     /**

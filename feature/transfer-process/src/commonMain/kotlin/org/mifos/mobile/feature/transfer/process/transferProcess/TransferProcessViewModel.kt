@@ -15,6 +15,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.number
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.back_to_accounts
 import mifos_mobile.feature.transfer_process.generated.resources.transfer_failed
@@ -62,8 +63,8 @@ internal class TransferProcessViewModel(
     initialState = run {
         val route = savedStateHandle.toRoute<TransferProcessRoute>()
         val transferDate = listOf(
-            currentDate.dayOfMonth,
-            currentDate.monthNumber,
+            currentDate.day,
+            currentDate.month.number,
             currentDate.year,
         )
         println("TransferProcessViewModel: route = ${route.transferSuccessDestination}")
