@@ -54,7 +54,10 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import fluent.ui.system.icons.FluentIcons
+import fluent.ui.system.icons.colored.AddCircle
 import fluent.ui.system.icons.colored.Alert
+import fluent.ui.system.icons.colored.CoinMultiple
+import fluent.ui.system.icons.colored.Savings
 import fluent.ui.system.icons.colored.Warning
 import fluent.ui.system.icons.filled.AppRecent
 import fluent.ui.system.icons.filled.ArchiveSettings
@@ -192,7 +195,9 @@ object MifosIcons {
     val SearchNew = FluentIcons.Regular.Search
 
     val SavingsAccount = FluentIcons.Filled.Wallet
+    val SavingsAccountColor = FluentIcons.Colored.Savings
     val LoanAccount = FluentIcons.Filled.CoinMultiple
+    val LoanAccountColor = FluentIcons.Colored.CoinMultiple
     val ShareAccount = FluentIcons.Filled.DataWhisker
     val ApplyForLoan = FluentIcons.Filled.Receipt
     val ApplyForSavings = FluentIcons.Filled.Savings
@@ -255,4 +260,6 @@ object MifosIcons {
     val Signature = FluentIcons.Regular.DrawShape
     val Camera = FluentIcons.Regular.Camera
     val Attach = FluentIcons.Regular.Attach
+
+    val AddColor = FluentIcons.Colored.AddCircle
 }

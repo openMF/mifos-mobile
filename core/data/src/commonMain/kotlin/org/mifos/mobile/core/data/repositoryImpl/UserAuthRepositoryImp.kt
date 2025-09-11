@@ -31,25 +31,8 @@ class UserAuthRepositoryImp(
 ) : UserAuthRepository {
 
     override suspend fun registerUser(
-        accountNumber: String?,
-        authenticationMode: String?,
-        email: String?,
-        firstName: String?,
-        lastName: String?,
-        mobileNumber: String?,
-        password: String?,
-        username: String?,
+        registerPayload: RegisterPayload,
     ): DataState<String> {
-        val registerPayload = RegisterPayload(
-            accountNumber = accountNumber,
-            authenticationMode = authenticationMode,
-            email = email,
-            firstName = firstName,
-            lastName = lastName,
-            mobileNumber = mobileNumber,
-            password = password,
-            username = username,
-        )
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.registrationApi.registerUser(registerPayload)

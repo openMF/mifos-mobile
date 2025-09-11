@@ -18,6 +18,8 @@ data class RegisterPayload(
 
     val firstName: String? = null,
 
+    val middleName: String? = null,
+
     val lastName: String? = null,
 
     val email: String? = null,

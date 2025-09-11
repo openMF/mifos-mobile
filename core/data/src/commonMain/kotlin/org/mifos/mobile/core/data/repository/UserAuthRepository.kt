@@ -11,18 +11,12 @@ package org.mifos.mobile.core.data.repository
 
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.User
+import org.mifos.mobile.core.model.entity.register.RegisterPayload
 
 interface UserAuthRepository {
 
     suspend fun registerUser(
-        accountNumber: String?,
-        authenticationMode: String?,
-        email: String?,
-        firstName: String?,
-        lastName: String?,
-        mobileNumber: String?,
-        password: String?,
-        username: String?,
+        registerPayload: RegisterPayload,
     ): DataState<String>
 
     suspend fun login(username: String, password: String): DataState<User>
