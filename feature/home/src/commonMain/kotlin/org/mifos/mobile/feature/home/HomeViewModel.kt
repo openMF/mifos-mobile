@@ -401,7 +401,7 @@ internal data class HomeState(
     val firstName: String? = "",
     val currency: String? = "",
     val decimals: Int = 2,
-    val isAccountsPresent: Boolean = false,
+    val isAccountsPresent: Boolean = true,
     val username: String = "",
     val clientAccounts: ClientAccounts? = null,
     val notificationCount: Int = 0,
