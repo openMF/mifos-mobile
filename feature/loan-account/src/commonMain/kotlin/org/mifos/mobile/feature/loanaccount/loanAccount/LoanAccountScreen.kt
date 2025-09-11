@@ -178,10 +178,10 @@ internal fun LoanAccountContent(
                 Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
                 MifosDashboardCard(
+                    isVisible = state.isAmountVisible,
                     isSingleLine = true,
                     savingsAccount = Res.string.feature_loan_account_dashboard,
                     savingsAmount = state.totalLoanAmount,
-                    isVisible = state.isAmountVisible,
                     currency = state.currency,
                     onVisibilityToggle = {
                         onAction(LoanAccountsAction.ToggleAmountVisible)

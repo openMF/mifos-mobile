@@ -120,6 +120,11 @@
     <string name="pay_from">Pay from</string>
     <string name="available_balance_formatted">Available Balance - %1$s</string>
 
+    <string name="feature_dashboard_welcome_back">Welcome back to Mifos</string>
+    <string name="feature_dashboard_no_accounts_title">No Accounts Yet</string>
+    <string name="feature_dashboard_no_accounts_description">Start your financial journey by opening your first account with us.</string>
+    <string name="feature_dashboard_open_account">Open Account</string>
+
     <string name="feature_savings_filter">Filters</string>
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Apply</string>

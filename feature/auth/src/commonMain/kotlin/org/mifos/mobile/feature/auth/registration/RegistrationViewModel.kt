@@ -22,12 +22,14 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
+import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
+import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
@@ -186,15 +188,16 @@ class RegistrationViewModel(
      */
     @Suppress("ReturnCount")
     private fun validateName(name: String, nameType: String): ValidationResult? {
-        if (name.isEmpty() && nameType != "middle") {
+        if (name.isEmpty()) {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
+                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
         }
 
-        if (name.isNotEmpty() && !ValidationHelper.isValidName(name)) {
+        if (!ValidationHelper.isValidName(name)) {
             return ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
         }
 
@@ -525,14 +528,17 @@ class RegistrationViewModel(
         updateState { it.copy(showOverlay = true) }
         viewModelScope.launch {
             val response = userAuthRepositoryImpl.registerUser(
-                accountNumber = state.customerAccount,
-                authenticationMode = "email",
-                email = state.email,
-                firstName = state.firstName,
-                lastName = state.lastName,
-                mobileNumber = state.mobileNumber,
-                password = state.password,
-                username = state.email,
+                registerPayload = RegisterPayload(
+                    accountNumber = state.customerAccount,
+                    authenticationMode = "email",
+                    email = state.email,
+                    firstName = state.firstName,
+                    middleName = state.middleName,
+                    lastName = state.lastName,
+                    mobileNumber = state.mobileNumber,
+                    password = state.password,
+                    username = state.email,
+                ),
             )
             sendAction(
                 SignUpAction.Internal.ReceiveRegisterResult(
@@ -626,6 +632,7 @@ data class SignUpState(
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
+            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&

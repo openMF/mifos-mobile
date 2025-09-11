@@ -15,17 +15,24 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -53,10 +60,12 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.MifosAccountApplyDashboard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.feature.home.components.BottomSheetContent
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
 
@@ -161,10 +170,10 @@ internal fun HomeContent(
             HomeScreenState.Success -> {
                 Column(
                     modifier = Modifier
+                        .verticalScroll(rememberScrollState())
                         .padding(DesignToken.padding.large),
                 ) {
                     Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-
                     Text(
                         text = stringResource(
                             Res.string.feature_home_greet,
@@ -176,16 +185,21 @@ internal fun HomeContent(
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-                    MifosDashboardCard(
-                        isLoanApplied = state.isLoanApplied,
-                        savingsAccount = Res.string.feature_home_total_available_savings,
-                        loanAccount = Res.string.feature_home_total_available_loan,
-                        loanAmount = state.loanAmount,
-                        savingsAmount = state.savingsAmount,
-                        isVisible = state.isAmountVisible,
-                        onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
-                        currency = state.currency,
-                    )
+                    if (state.isAccountsPresent) {
+                        MifosDashboardCard(
+                            savingsAccount = Res.string.feature_home_total_available_savings,
+                            loanAccount = Res.string.feature_home_total_available_loan,
+                            loanAmount = state.loanAmount,
+                            savingsAmount = state.savingsAmount,
+                            isVisible = state.isAmountVisible,
+                            onVisibilityToggle = { onAction(HomeAction.ToggleAmountVisible) },
+                            currency = state.currency,
+                        )
+                    } else {
+                        MifosAccountApplyDashboard(
+                            onOpenAccountClick = { onAction(HomeAction.BottomBarPicker) },
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
 
@@ -203,6 +217,7 @@ internal fun HomeContent(
                     )
                 }
             }
+
             null -> {}
         }
     }
@@ -214,21 +229,27 @@ internal fun ServiceBox(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+    FlowRow(
+        modifier = modifier
+            .fillMaxWidth(),
+        maxItemsInEachRow = 4,
         horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        modifier = modifier,
-        content = {
-            items(items) { item ->
+        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+    ) {
+        items.forEach { item ->
+            Box(
+                modifier = Modifier
+                    .weight(1f),
+                contentAlignment = Alignment.Center,
+            ) {
                 ServiceItemCard(
                     title = item.title,
                     icon = item.icon,
                     onClick = { onAction(HomeAction.OnNavigate(item.route)) },
                 )
             }
-        },
-    )
+        }
+    }
 }
 
 @Composable
@@ -273,6 +294,7 @@ internal fun ServiceItemCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreenDialog(
     dialogState: HomeState.DialogState?,
@@ -287,6 +309,35 @@ private fun HomeScreenDialog(
             )
         }
 
+        is HomeState.DialogState.ShowAccountApplyBottomBar -> {
+            val sheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = dialogState.isVisible,
+            )
+
+            LaunchedEffect(dialogState.isVisible) {
+                if (dialogState.isVisible) {
+                    sheetState.expand()
+                }
+            }
+
+            ModalBottomSheet(
+                onDismissRequest = {
+                    onAction(HomeAction.OnDismissDialog)
+                },
+                sheetState = sheetState,
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentWindowInsets = {
+                    BottomSheetDefaults.windowInsets
+                },
+                modifier = Modifier.wrapContentHeight(),
+                dragHandle = { BottomSheetDefaults.DragHandle() },
+            ) {
+                BottomSheetContent(
+                    onAction = onAction,
+                    isVisible = dialogState.isVisible,
+                )
+            }
+        }
         null -> Unit
     }
 }

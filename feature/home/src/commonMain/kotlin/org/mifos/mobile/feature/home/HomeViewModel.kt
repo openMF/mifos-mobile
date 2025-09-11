@@ -98,6 +98,16 @@ internal class HomeViewModel(
                 action.dataState,
             )
 
+            is HomeAction.BottomBarPicker -> {
+                updateState {
+                    it.copy(
+                        dialogState = HomeState.DialogState.ShowAccountApplyBottomBar(
+                            isVisible = true,
+                        ),
+                    )
+                }
+            }
+
             is HomeAction.Internal.ReceiveClientDetails -> handleClientDetails(action.dataState)
         }
     }
@@ -294,8 +304,7 @@ internal class HomeViewModel(
                 } else {
                     updateState {
                         it.copy(
-                            dialogState = null,
-                            isLoanApplied = false,
+                            isAccountsPresent = false,
                             uiState = HomeScreenState.Success,
                         )
                     }
@@ -374,7 +383,7 @@ internal class HomeViewModel(
  * @property clientId The ID of the current client.
  * @property firstName The first name of the client, or an empty string.
  * @property currency The currency symbol for the client's accounts, or `null`.
- * @property isLoanApplied A boolean indicating if the client has any active loans.
+ * @property isAccountsPresent A boolean indicating if the client has any active loans.
  * @property username The username of the currently logged-in user.
  * @property clientAccounts The full account details of the client, or `null`.
  * @property notificationCount The number of unread notifications.
@@ -392,7 +401,7 @@ internal data class HomeState(
     val firstName: String? = "",
     val currency: String? = "",
     val decimals: Int = 2,
-    val isLoanApplied: Boolean = true,
+    val isAccountsPresent: Boolean = false,
     val username: String = "",
     val clientAccounts: ClientAccounts? = null,
     val notificationCount: Int = 0,
@@ -415,6 +424,12 @@ internal data class HomeState(
          * @property message The [StringResource] for the error message.
          */
         data class Error(val message: StringResource) : DialogState
+
+        /**
+         * Represents a modal bottom sheet for Account options.
+         * @property isVisible A boolean to control the content shown inside the sheet.
+         */
+        data class ShowAccountApplyBottomBar(val isVisible: Boolean) : DialogState
     }
 }
 
@@ -481,6 +496,9 @@ sealed interface HomeAction {
 
     /** Action to retry fetching data after an error or network issue. */
     data object Retry : HomeAction
+
+    /** Action to trigger that display Bottom bar for applying to an account */
+    data object BottomBarPicker : HomeAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.

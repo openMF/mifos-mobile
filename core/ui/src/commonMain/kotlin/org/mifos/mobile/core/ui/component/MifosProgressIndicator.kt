@@ -39,7 +39,11 @@ fun MifosProgressIndicator(
             Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
         )
     }
-    val progress by animateLottieCompositionAsState(composition)
+
+    val progress by animateLottieCompositionAsState(
+        composition,
+        iterations = Int.MAX_VALUE,
+    )
 
     Box(
         modifier = modifier,
@@ -64,7 +68,11 @@ fun MifosProgressIndicatorOverlay(
             Res.readBytes("files/loading_animation.json").decodeToString(),
         )
     }
-    val progress by animateLottieCompositionAsState(composition)
+
+    val progress by animateLottieCompositionAsState(
+        composition,
+        iterations = Int.MAX_VALUE,
+    )
 
     Box(
         modifier = modifier

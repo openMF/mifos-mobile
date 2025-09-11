@@ -54,6 +54,11 @@
     <string name="feature_home_beneficiary">Beneficiary</string>
     <string name="feature_home_faq">FAQ</string>
 
+    <string name="feature_home_saving_account">Savings Account</string>
+    <string name="feature_home_loan_account">Loan Account</string>
+    <string name="feature_home_savings_tip">Earn interest on your deposits with flexible access to your money anytime.</string>
+    <string name="feature_home_loan_tip">Get the funds you need for personal, business, or educational purposes.</string>
+
     <string name="feature_home_total_available_savings">Total Available Savings</string>
     <string name="feature_home_total_available_loan">Total Available Loan</string>
 
