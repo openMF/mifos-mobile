@@ -152,6 +152,6 @@ internal fun BottomSheetIconContainer(
 }
 
 enum class BottomSheetItemType {
-    LOAN,
     SAVINGS,
+    LOAN,
 }

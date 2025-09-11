@@ -173,17 +173,15 @@ internal fun HomeContent(
                         .verticalScroll(rememberScrollState())
                         .padding(DesignToken.padding.large),
                 ) {
-                    if (state.isAccountsPresent) {
-                        Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-                        Text(
-                            text = stringResource(
-                                Res.string.feature_home_greet,
-                                state.firstName.toString(),
-                            ),
-                            style = MifosTypography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                    Text(
+                        text = stringResource(
+                            Res.string.feature_home_greet,
+                            state.firstName.toString(),
+                        ),
+                        style = MifosTypography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
@@ -199,10 +197,6 @@ internal fun HomeContent(
                         )
                     } else {
                         MifosAccountApplyDashboard(
-                            userName = stringResource(
-                                Res.string.feature_home_greet,
-                                state.firstName.toString(),
-                            ),
                             onOpenAccountClick = { onAction(HomeAction.BottomBarPicker) },
                         )
                     }

@@ -42,7 +42,7 @@ fun MifosProgressIndicator(
 
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = Int.MAX_VALUE
+        iterations = Int.MAX_VALUE,
     )
 
     Box(
@@ -71,7 +71,7 @@ fun MifosProgressIndicatorOverlay(
 
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = Int.MAX_VALUE
+        iterations = Int.MAX_VALUE,
     )
 
     Box(

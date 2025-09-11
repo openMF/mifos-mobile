@@ -38,7 +38,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -47,7 +46,6 @@ import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_title
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_open_account
-import mifos_mobile.core.ui.generated.resources.feature_dashboard_welcome_back
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.powered_by
 import org.jetbrains.compose.resources.StringResource
@@ -171,124 +169,68 @@ fun MifosDashboardCard(
 
 @Composable
 fun MifosAccountApplyDashboard(
-    userName: String,
     onOpenAccountClick: () -> Unit,
 ) {
     MifosCustomCard(
         modifier = Modifier
+            .padding(horizontal = DesignToken.padding.largeIncreased)
             .border(
-                0.dp,
-                Color.Transparent,
-            )
-            .shadow(
-                elevation = 7.dp,
-                shape = DesignToken.shapes.bottomSheet,
-                spotColor = MaterialTheme.colorScheme.onSurface,
-                ambientColor = MaterialTheme.colorScheme.onSurface,
+                0.5.dp,
+                MaterialTheme.colorScheme.primary,
+                DesignToken.shapes.medium,
             ),
-        variant = CardVariant.ELEVATED,
+        variant = CardVariant.OUTLINED,
         enabled = false,
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = DesignToken.elevation.elevation,
+        onClick = onOpenAccountClick,
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ),
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
                 .background(
-                    color = Color.Transparent,
-                    shape = DesignToken.shapes.bottomSheet,
-                ),
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.01f),
+                )
+                .fillMaxWidth()
+                .padding(DesignToken.padding.extraLarge),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
-            Column(
+            Icon(
+                imageVector = MifosIcons.AddColor,
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(DesignToken.sizes.iconExtraLarge),
+            )
+
+            Text(
+                text = stringResource(Res.string.feature_dashboard_no_accounts_title),
+                style = MifosTypography.titleMediumEmphasized,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+            )
+
+            Text(
+                text = stringResource(Res.string.feature_dashboard_no_accounts_description),
+                style = MifosTypography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = TextAlign.Center,
+            )
+
+            MifosButton(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = DesignToken.shapes.bottomSheet,
+                    .wrapContentWidth()
+                    .height(DesignToken.sizes.avatarMedium),
+                onClick = onOpenAccountClick,
+                shape = DesignToken.shapes.circle,
+                text = {
+                    Text(
+                        text = stringResource(Res.string.feature_dashboard_open_account),
+                        style = MifosTypography.titleSmallEmphasized,
                     )
-                    .padding(DesignToken.padding.large),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
-            ) {
-                Text(
-                    text = userName,
-                    style = MifosTypography.titleLarge,
-                    color = MaterialTheme.colorScheme.surface,
-                )
-                Text(
-                    text = stringResource(Res.string.feature_dashboard_welcome_back),
-                    color = MaterialTheme.colorScheme.surface,
-                    style = MifosTypography.titleSmallEmphasized,
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                MifosCustomCard(
-                    modifier = Modifier
-                        .padding(DesignToken.padding.largeIncreased)
-                        .border(
-                            0.5.dp,
-                            MaterialTheme.colorScheme.primary,
-                            DesignToken.shapes.medium,
-                        ),
-                    variant = CardVariant.ELEVATED,
-                    enabled = false,
-                    onClick = onOpenAccountClick,
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color.Transparent,
-                        contentColor = MaterialTheme.colorScheme.onSurface,
-                    ),
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .background(
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.01f),
-                            )
-                            .fillMaxWidth()
-                            .padding(DesignToken.padding.extraLarge),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                    ) {
-                        Icon(
-                            imageVector = MifosIcons.AddColor,
-                            contentDescription = null,
-                            tint = Color.Unspecified,
-                            modifier = Modifier.size(DesignToken.sizes.iconExtraLarge),
-                        )
-
-                        Text(
-                            text = stringResource(Res.string.feature_dashboard_no_accounts_title),
-                            style = MifosTypography.titleMediumEmphasized,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            textAlign = TextAlign.Center,
-                        )
-
-                        Text(
-                            text = stringResource(Res.string.feature_dashboard_no_accounts_description),
-                            style = MifosTypography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary,
-                            textAlign = TextAlign.Center,
-                        )
-
-                        MifosButton(
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .height(DesignToken.sizes.buttonHeight),
-                            onClick = onOpenAccountClick,
-                            shape = DesignToken.shapes.medium,
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.feature_dashboard_open_account),
-                                    style = MifosTypography.titleSmallEmphasized,
-                                )
-                            },
-                        )
-                    }
-                }
-            }
+                },
+            )
         }
     }
 }
@@ -340,7 +282,6 @@ private fun MifosDashboardCard() {
             )
 
             MifosAccountApplyDashboard(
-                userName = "Maria",
                 onOpenAccountClick = {},
             )
         }
