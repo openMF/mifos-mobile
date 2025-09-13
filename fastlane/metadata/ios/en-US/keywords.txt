@@ -1,0 +1,2 @@
+mobilebanking,onlinebanking,savingsaccount,loanrepayment,statements,transfers,beneficiaries
+
