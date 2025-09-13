@@ -1,0 +1,3 @@
+© 2025 The Mifos Initiative
+
+This app is licensed under the Mozilla Public License, v. 2.0.

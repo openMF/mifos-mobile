@@ -1,0 +1,12 @@
+Mifos Mobile is a modern, white-label mobile banking app for financial institutions running Mifos X / Apache Fineract. It gives customers a clear view of their savings and loan accounts and lets them move money, repay loans, and stay on top of activity—all from a clean, intuitive interface.
+
+WHAT YOU CAN DO
+• View a summary of all your accounts at a glance, with detailed balances and transaction history
+• Download or review account statements
+• Apply for new accounts (when enabled by your institution)
+• Transfer funds between your own savings accounts
+• Repay loans directly from linked savings accounts
+• Send money to other customers of your financial institution
+• Add beneficiaries quickly—scan or share a QR code to set them up
+• See recent activity instantly and receive in-app notifications about important events and campaigns
+• Manage profile details and change your password from Settings
