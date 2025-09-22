@@ -9,31 +9,42 @@
  */
 package org.mifos.mobile.core.ui.utils
 
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asSkiaBitmap
-import io.github.vinceglb.filekit.core.FileKit
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.download
 import kotlinx.browser.window
 
+/**
+ * Provides utility functions for sharing content on JS and WASM platforms.
+ *
+ * This implementation uses [FileKit.download] to trigger file downloads
+ * in web environments (WASM), as native share dialogs are not supported
+ * on these platforms.
+ */
 actual object ShareUtils {
-    actual fun shareText(text: String) {
+    /**
+     * Shares plain text content by triggering a file download.
+     *
+     * The text is saved to a file named `text.txt` and offered to the user
+     * as a downloadable file in the browser.
+     *
+     * @param text The plain text content to be shared.
+     */
+    actual suspend fun shareText(text: String) {
+        FileKit.download(bytes = text.encodeToByteArray(), fileName = "text.txt")
     }
 
-    actual suspend fun shareImage(title: String, image: ImageBitmap) {
-        FileKit.saveFile(
-            bytes = image.asSkiaBitmap().readPixels(),
-            baseName = "MifosQrCode",
-            extension = "png",
-        )
+    /**
+     * Shares a file by triggering a download of the file's byte content.
+     *
+     * This method creates a download link in the browser for the given
+     * [ShareFileModel.bytes], using the provided [ShareFileModel.fileName]
+     * as the download file name.
+     *
+     * @param file The [ShareFileModel] containing file name and content to be downloaded.
+     */
+    actual suspend fun shareFile(file: ShareFileModel) {
+        FileKit.download(bytes = file.bytes, fileName = file.fileName)
     }
-
-    actual suspend fun shareImage(title: String, byte: ByteArray) {
-        FileKit.saveFile(
-            bytes = byte,
-            baseName = "MifosQrCode",
-            extension = "png",
-        )
-    }
-
     actual fun callHelpline() {
         window.alert("Calling is not supported on Web. Please contact support at 8000000000.")
     }
