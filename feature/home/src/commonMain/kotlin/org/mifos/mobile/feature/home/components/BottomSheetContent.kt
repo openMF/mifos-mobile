@@ -89,7 +89,7 @@ internal fun BottomSheetContent(
 internal fun BottomSheetIconContainer(
     onClick: (BottomSheetItemType) -> Unit,
 ) {
-    BottomSheetItemType.entries.forEach { it ->
+    BottomSheetItemType.entries.forEach {
         MifosCustomCard(
             modifier = Modifier
                 .fillMaxWidth()

@@ -63,7 +63,6 @@ actual object ShareUtils {
             FileKit.shareFile(fileToShare)
         } catch (e: Exception) {
             println("Failed to share file: ${e.message}")
-            e.printStackTrace()
         }
     }
 

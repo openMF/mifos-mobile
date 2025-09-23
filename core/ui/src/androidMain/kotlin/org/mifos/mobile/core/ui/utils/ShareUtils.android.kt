@@ -111,8 +111,6 @@ actual object ShareUtils {
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
-
             println("Failed to share file: ${e.message}")
         }
     }
