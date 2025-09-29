@@ -52,7 +52,7 @@ enum class FilterUtil(
 
     /**
      * Filter for share accounts that are pending approval.
-     * Matches if the share account's status indicates it is submitted and pending approval.
+     * Matches if the share account's status indicates it is Pending Approval.
      */
     APPROVAL_PENDING(
         Res.string.feature_account_approval_pending,

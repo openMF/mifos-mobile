@@ -56,7 +56,7 @@ enum class FilterUtil(
 
     /**
      * Filter for savings accounts that are pending approval.
-     * Matches if the savings account's status indicates it is submitted and pending approval.
+     * Matches if the savings account's status indicates it is Pending Approval.
      */
     APPROVAL_PENDING(
         label = Res.string.feature_savings_filter_pending_account,

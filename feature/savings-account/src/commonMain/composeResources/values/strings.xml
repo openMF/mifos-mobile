@@ -22,6 +22,12 @@
     <string name="feature_savings_account_dashboard">Total Available Savings</string>
     <string name="feature_savings_account">Savings Account</string>
     <string name="feature_savings_account_items">%1$d Items</string>
+    <string name="feature_savings_account_active_only">Active Only</string>
+    <string name="feature_savings_account_filtered_items">%1$d of %2$d accounts (Active Only)</string>
+    <string name="feature_savings_account_no_accounts_found">No accounts found</string>
+    <string name="feature_savings_account_no_active_accounts">0 of %1$d accounts (Active Only)</string>
+    <string name="feature_savings_account_all_active">%1$d accounts (All Active)</string>
+    <string name="feature_savings_account_active_filtered">%1$d of %2$d accounts (Active Only)</string>
 
     <string name="feature_common_error">Something went wrong</string>
 

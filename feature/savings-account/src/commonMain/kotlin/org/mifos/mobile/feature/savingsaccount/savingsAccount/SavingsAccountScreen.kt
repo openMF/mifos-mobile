@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.feature.savingsaccount.savingsAccount
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +22,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
@@ -200,19 +206,81 @@ internal fun SavingsAccountContent(
                             style = MifosTypography.titleMediumEmphasized,
                             color = MaterialTheme.colorScheme.onBackground,
                         )
-                        Text(
-                            text = stringResource(
-                                Res.string.feature_savings_account_items,
-                                state.items ?: 0,
-                            ),
-                            style = MifosTypography.labelMedium,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            // Enhanced display with better edge case handling
+                            if (state.isActiveFilterApplied) {
+                                val activeCount = state.items ?: 0
+                                val totalCount = state.totalAccounts ?: 0
+                                Text(
+                                    text = when {
+                                        totalCount == 0 -> stringResource(Res.string.feature_savings_account_no_accounts_found)
+                                        activeCount == 0 -> stringResource(Res.string.feature_savings_account_no_active_accounts, totalCount)
+                                        activeCount == totalCount -> stringResource(Res.string.feature_savings_account_all_active, activeCount)
+                                        else -> stringResource(Res.string.feature_savings_account_active_filtered, activeCount, totalCount)
+                                    },
+                                    style = MifosTypography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            } else {
+                                Text(
+                                    text = stringResource(
+                                        Res.string.feature_savings_account_items,
+                                        state.items ?: 0,
+                                    ),
+                                    style = MifosTypography.labelMedium,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                )
+                            }
+                        }
                     }
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                     ) {
+                        // Quick Active Filter Toggle
+                        OutlinedButton(
+                            onClick = { 
+                                // Use dedicated action for proper integration
+                                onAction(SavingsAccountAction.ToggleActiveFilter)
+                            },
+                            modifier = Modifier.height(32.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                containerColor = if (state.isActiveFilterApplied) {
+                                    MaterialTheme.colorScheme.primaryContainer
+                                } else {
+                                    Color.Transparent
+                                },
+                                contentColor = if (state.isActiveFilterApplied) {
+                                    MaterialTheme.colorScheme.onPrimaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.primary
+                                }
+                            ),
+                            border = BorderStroke(
+                                1.dp, 
+                                if (state.isActiveFilterApplied) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.outline
+                                }
+                            ),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        ) {
+                            Icon(
+                                imageVector = MifosIcons.CheckCircle,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = stringResource(Res.string.feature_savings_account_active_only),
+                                style = MifosTypography.labelMedium
+                            )
+                        }
+                        
                         // TODO : un-implemented feature,
                         //  commenting because user won't feels its good ,uncomment and implement it
                         //                    Icon(

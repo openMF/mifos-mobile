@@ -20,7 +20,7 @@ enum class LoanStatus(val status: String) {
 
     APPROVED("Approved"),
 
-    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
+    SUBMIT_AND_PENDING_APPROVAL("Pending Approval"),
 
     DISBURSED("Disbursed"),
 

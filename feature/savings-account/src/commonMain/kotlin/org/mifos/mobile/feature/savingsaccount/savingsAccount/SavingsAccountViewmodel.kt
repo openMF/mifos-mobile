@@ -120,6 +120,10 @@ class SavingsAccountViewmodel(
                 loadAccounts(action.filters)
             }
 
+            is SavingsAccountAction.ToggleActiveFilter -> {
+                handleToggleActiveFilter()
+            }
+
             is SavingsAccountAction.OnFirstLaunched -> {
                 updateState {
                     it.copy(firstLaunch = false)
@@ -161,6 +165,25 @@ class SavingsAccountViewmodel(
         mutableStateFlow.update {
             it.copy(isAmountVisible = !state.isAmountVisible)
         }
+    }
+
+    /**
+     * Toggles the active filter while preserving other existing filters.
+     * This ensures proper integration with the filter dialog system.
+     */
+    private fun handleToggleActiveFilter() {
+        val activeFilterLabel = mifos_mobile.feature.savings_account.generated.resources.Res.string.feature_savings_filter_active_account
+        val currentFilters = state.selectedFilters
+        
+        val newFilters = if (currentFilters.contains(activeFilterLabel)) {
+            // Remove active filter but keep others
+            currentFilters.filter { it != activeFilterLabel }
+        } else {
+            // Add active filter to existing filters (avoid duplicates)
+            (currentFilters + activeFilterLabel).distinct()
+        }
+        
+        loadAccounts(newFilters)
     }
 
     /**
@@ -246,6 +269,7 @@ class SavingsAccountViewmodel(
 
                     it.copy(
                         items = filtered.size,
+                        totalAccounts = allSavings.size,
                         isFilteredEmpty = isFilteredEmpty,
                         savingsAccount = filtered,
                         originalAccounts = allSavings,
@@ -322,6 +346,9 @@ data class SavingsAccountState(
 
     /** Number of filtered accounts */
     val items: Int? = 0,
+    
+    /** Total number of accounts before filtering */
+    val totalAccounts: Int? = 0,
 
     /** Total savings amount computed from accounts */
     val totalSavingAmount: String? = "",
@@ -353,6 +380,15 @@ data class SavingsAccountState(
 
     val networkStatus: Boolean = false,
 ) {
+    
+    /**
+     * Computed property to check if active filter is currently applied.
+     * Reusable across UI components for consistent state checking.
+     */
+    val isActiveFilterApplied: Boolean
+        get() = selectedFilters.contains(
+            mifos_mobile.feature.savings_account.generated.resources.Res.string.feature_savings_filter_active_account
+        )
 
     /**
      * Sealed class representing possible dialog states.
@@ -386,6 +422,9 @@ sealed interface SavingsAccountAction {
     data class LoadAccounts(
         val filters: List<StringResource?>,
     ) : SavingsAccountAction
+
+    /** Toggle active filter on/off while preserving other filters */
+    data object ToggleActiveFilter : SavingsAccountAction
 
     /** Navigate to a selected account's detail page */
     data class OnAccountClicked(

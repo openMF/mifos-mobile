@@ -296,7 +296,7 @@ internal class SavingsAccountDetailsViewModel(
  * @property transactionList List of most recent transaction details.
  * @property isActive True if the account is active.
  * @property items List of quick action items (Deposit, Transfer, etc.)
- * @property isUpdatable user can update only when status is submit and pending approval
+ * @property isUpdatable user can update only when status is Pending Approval
  * @property dialogState State representing dialogs like error, loading, etc.
  */
 @Immutable
