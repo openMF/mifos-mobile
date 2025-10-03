@@ -225,6 +225,10 @@ internal class SavingsAccountDetailsViewModel(
             ""
         }
     }
+    fun handleMenuOption(option: SavingsDetailsOption) {
+        // Send an action to trigger navigation based on the route defined in the option object
+        trySendAction(SavingsAccountDetailsAction.OnNavigateToAction(option.route))
+    }
 
     private fun extractDetails(savings: SavingsWithAssociations) {
         val isActive = savings.status?.value == LoanStatus.ACTIVE.status

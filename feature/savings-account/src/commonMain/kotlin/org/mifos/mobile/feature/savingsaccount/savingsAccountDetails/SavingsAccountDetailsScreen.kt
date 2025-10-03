@@ -22,13 +22,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -59,7 +65,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
-
 @Composable
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
@@ -90,6 +95,12 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
+                    // ADDED: Handle the new Transaction Info navigation case
+                    event.route == Constants.TRANSACTION_INFO -> {
+                        // Place your navigation function here once implemented
+                        // navigateToTransactionInfoScreen(uiState.accountId)
+                    }
+                    // END ADDED
                 }
             }
 
@@ -110,6 +121,11 @@ internal fun SavingsAccountDetailsScreen(
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
+        // MODIFIED: Pass the new menu handler to the content Composable
+        onMenuOptionSelected = remember(viewModel) {
+            { viewModel.handleMenuOption(it) }
+        },
+        // END MODIFIED
     )
 
     SavingsAccountDialogs(
@@ -120,15 +136,34 @@ internal fun SavingsAccountDetailsScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class) // REQUIRED for using ModalBottomSheet in the logic below
 @Composable
 internal fun SavingsAccountDetailsContent(
     state: SavingsAccountDetailsState,
     onAction: (SavingsAccountDetailsAction) -> Unit,
+    // ADDED: New Composable parameter for menu actions
+    onMenuOptionSelected: (SavingsDetailsOption) -> Unit,
+    // END ADDED
     modifier: Modifier = Modifier,
 ) {
+    // ADDED: State to control the visibility of the options menu (Bottom Sheet)
+    var showOptionsSheet by remember { mutableStateOf(false) }
+    // END ADDED
+
     MifosElevatedScaffold(
         onNavigateBack = { onAction(SavingsAccountDetailsAction.OnNavigateBack) },
         topBarTitle = stringResource(Res.string.feature_account_details_top_bar_title),
+        // ADDED: The actions block to insert the three-dot menu icon
+        actions = {
+            IconButton(onClick = { showOptionsSheet = true }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "More Options",
+                    // TODO: Replace with stringResource
+                )
+            }
+        },
+        // END ADDED
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -183,19 +218,31 @@ internal fun SavingsAccountDetailsContent(
                         )
                     }
 
-                    if (state.isActive) {
+                    // REMOVED: The old SavingsAccountActions is deprecated by the new menu
+                    /* if (state.isActive) {
                         SavingsAccountActions(
                             items = state.items,
                             onActionClick = {
                                 onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
                             },
                         )
-                    }
+                    } */
                 }
             }
             else -> { }
         }
     }
+
+    // ADDED: Display the menu Bottom Sheet when the state is true
+    if (showOptionsSheet) {
+        SavingsDetailsOptionsBottomSheet(
+            onDismissRequest = { showOptionsSheet = false },
+            onOptionSelected = onMenuOptionSelected,
+            isActive = state.isActive,
+
+        )
+    }
+    // END ADDED
 }
 
 @Composable
@@ -352,6 +399,8 @@ private fun Account_Details_Overview() {
                     dialogState = null,
                 ),
                 onAction = {},
+                // Preview requires a dummy handler for the new parameter
+                onMenuOptionSelected = {},
             )
         }
     }
