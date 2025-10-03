@@ -62,5 +62,5 @@ concurrency:
 jobs:
   monthly_release:
     name: Tag Monthly Release
-    uses: openMF/mifos-x-actionhub/.github/workflows/monthly-version-tag.yaml@v1.0.0
+    uses: openMF/mifos-x-actionhub/.github/workflows/monthly-version-tag.yaml@v1.0.7
     secrets: inherit

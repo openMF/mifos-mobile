@@ -1,1 +1,1 @@
-https://github.com/openMF/mifos-mobile
+https://mifos.org/resources/support/

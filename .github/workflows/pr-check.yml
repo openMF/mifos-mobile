@@ -13,7 +13,7 @@
 ### Workflow Jobs
 # 1. **Setup**: Prepares the build environment
 #   - Checks out repository code
-#   - Sets up Java 17
+#   - Sets up Java (configurable; defaults to 17)
 #   - Configures Gradle
 #   - Manages dependency caching
 #
@@ -36,7 +36,7 @@
 #   - Generates platform-specific executables and packages
 #
 ### Prerequisites
-#   - Java 17
+#   - Java (configurable; default 17)
 #   - Gradle
 #   - Configured build scripts for:
 #       - Android module
@@ -49,13 +49,19 @@
 ### Configuration Parameters
 # The workflow requires two input parameters:
 #
-#   |         Parameter      |              Description           |  Type  | Required |
-#   |------------------------|------------------------------------|--------|----------|
-#   | `android_package_name` | Name of the Android project module | String |    Yes   |
-#   | `desktop_package_name` | Name of the Desktop project module | String |    Yes   |
+#   |         Parameter      |              Description           |  Type  | Required  |
+#   |------------------------|------------------------------------|--------|-----------|
+#   | `android_package_name` | Name of the Android project module | String |    Yes    |
+#   | `desktop_package_name` | Name of the Desktop project module | String |    Yes    |
+#   |`web_package_name`      | Name of the Web (Kotlin/JS) project/module | String | No|
+#   |`ios_package_name`      | Name of the iOS project/module	| String |	No	       |
+#   |`build_ios`	         | Build iOS targets as part of PR checks |	Boolean	| No   |
+#   |`use_cocoapods`         | Use CocoaPods for iOS integration	| Boolean	| No   |
+#   |`shared_module	         | Path of the shared KMP module  |	String	| (required when build_ios=true) |
+#   |`java-version	         | Java version to use (configurable; defaults to 17)| No  |
 #
 
-# https://github.com/openMF/mifos-mobile-github-actions/blob/main/.github/workflows/pr-check.yaml
+# https://github.com/openMF/mifos-x-actionhub/blob/main/.github/workflows/pr-check.yaml
 
 # ##############################################################################
 #                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
@@ -82,7 +88,7 @@ permissions:
 jobs:
   pr_checks:
     name: PR Checks KMP
-    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.0
+    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.7
     secrets: inherit
     with:
       android_package_name: 'cmp-android' # <-- Change Your Android Package Name
@@ -90,3 +96,6 @@ jobs:
       web_package_name: 'cmp-web' # <-- Change Your Web Package Name
       ios_package_name: 'cmp-ios' # <-- Change Your iOS Package Name
       build_ios: true # <-- Change to 'false' if you don't want to build iOS
+      use_cocoapods: true
+      shared_module: ':cmp-shared'
+      java-version: '21'
