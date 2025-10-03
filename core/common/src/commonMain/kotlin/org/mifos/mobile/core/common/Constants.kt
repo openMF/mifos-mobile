@@ -115,4 +115,5 @@ object Constants {
     const val APPLY_SAVINGS = "apply_savings"
     const val APPLY_SHARE = "apply_share"
     const val TRANSFER_TAB = "transfer_tab"
+    const val TRANSACTION_INFO = "transactionInfo"
 }

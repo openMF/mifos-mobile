@@ -54,3 +54,6 @@ playStorePublishServiceCredentialsFile.json
 # Ruby stuff we don't care about
 .bundle/
 vendor/
+
+# Ignore Java Heap Dumps and related large files
+*.hprof/
