@@ -17,6 +17,7 @@ internal fun Project.configureDetekt(extension: DetektExtension) = extension.app
         exclude("**/generated/**")
         exclude("**/build-logic/**")
         exclude("**/spotless/**")
+        exclude("core-base/designsystem/**")
         reports {
             xml.required.set(true)
             html.required.set(true)

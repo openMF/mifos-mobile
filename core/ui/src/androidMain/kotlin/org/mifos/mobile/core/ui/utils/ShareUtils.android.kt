@@ -13,25 +13,32 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.ImageFormat
+import io.github.vinceglb.filekit.compressImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.decodeToImageBitmap
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
+/**
+ * Actual implementation of [ShareUtils] for Android platform.
+ *
+ * This utility enables sharing of text and files (PDF, image, text) through Android's
+ * native `Intent`-based sharing system.
+ */
 actual object ShareUtils {
 
+    /**
+     * Provider function to retrieve the current [Activity].
+     * This must be set before using [shareText] or [shareFile].
+     */
     private var activityProvider: () -> Activity = {
         throw IllegalArgumentException(
             "You need to implement the 'activityProvider' to provide the required Activity. " +
@@ -40,11 +47,23 @@ actual object ShareUtils {
         )
     }
 
+    /**
+     * Sets the activity provider function to be used internally for context retrieval.
+     *
+     * This is required to initialize before calling any sharing methods.
+     *
+     * @param provider A lambda that returns the current [Activity].
+     */
     fun setActivityProvider(provider: () -> Activity) {
         activityProvider = provider
     }
 
-    actual fun shareText(text: String) {
+    /**
+     * Shares plain text content using an Android share sheet (`Intent.ACTION_SEND`).
+     *
+     * @param text The text content to share.
+     */
+    actual suspend fun shareText(text: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, text)
@@ -53,65 +72,99 @@ actual object ShareUtils {
         activityProvider.invoke().startActivity(intentChooser)
     }
 
-    actual suspend fun shareImage(title: String, image: ImageBitmap) {
-        val context = activityProvider.invoke().application.baseContext
-
-        val uri = saveImage(image.asAndroidBitmap(), context)
-
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, uri)
-            setDataAndType(uri, "image/png")
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, title)
-        activityProvider.invoke().startActivity(shareIntent)
-    }
-
+    /**
+     * Shares a file (e.g. PDF, text, image) using Android's file sharing mechanism.
+     *
+     * If the file is an image, it is compressed before sharing.
+     * The file is temporarily saved to internal cache and shared using a `FileProvider`.
+     *
+     * @param file A [ShareFileModel] containing file metadata and binary content.
+     */
     @OptIn(ExperimentalResourceApi::class)
-    actual suspend fun shareImage(title: String, byte: ByteArray) {
-        Log.d("Sharing QR Code", " $title, size: ${byte.size} bytes")
+    actual suspend fun shareFile(file: ShareFileModel) {
         val context = activityProvider.invoke().application.baseContext
-        val imageBitmap = byte.decodeToImageBitmap()
 
-        val uri = saveImage(imageBitmap.asAndroidBitmap(), context)
+        try {
+            withContext(Dispatchers.IO) {
+                val compressedBytes = if (file.mime == MimeType.IMAGE) {
+                    compressImage(file.bytes)
+                } else {
+                    file.bytes
+                }
 
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, uri)
-            setDataAndType(uri, "image/png")
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val savedFile = saveFile(file.fileName, compressedBytes, context = context)
+                val uri = FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.provider",
+                    savedFile,
+                )
+
+                withContext(Dispatchers.Main) {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        flags += Intent.FLAG_ACTIVITY_NEW_TASK
+                        flags += Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        setDataAndType(uri, file.mime.toAndroidMimeType())
+                    }
+                    val chooser = Intent.createChooser(intent, null)
+                    activityProvider.invoke().startActivity(chooser)
+                }
+            }
+        } catch (e: Exception) {
+            println("Failed to share file: ${e.message}")
         }
-
-        val shareIntent = Intent.createChooser(sendIntent, title)
-        activityProvider.invoke().startActivity(shareIntent)
     }
 
-    private suspend fun saveImage(image: Bitmap, context: Context): Uri? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val imagesFolder = File(context.cacheDir, "images")
-                imagesFolder.mkdirs()
-                val file = File(imagesFolder, "shared_image.png")
+    /**
+     * Saves the provided byte array as a temporary file in the internal cache directory.
+     *
+     * @param name The name of the file to be saved.
+     * @param data Byte array representing the file content.
+     * @param context Android [Context] used to access the cache directory.
+     * @return The saved [File] object.
+     */
+    private fun saveFile(name: String, data: ByteArray, context: Context): File {
+        val cache = context.cacheDir
+        val savedFile = File(cache, name)
+        savedFile.writeBytes(data)
+        return savedFile
+    }
 
-                val stream = FileOutputStream(file)
-                image.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                stream.flush()
-                stream.close()
+    /**
+     * Maps [MimeType] to a corresponding Android MIME type string.
+     *
+     * @return Android-compatible MIME type string.
+     */
+    private fun MimeType.toAndroidMimeType(): String = when (this) {
+        MimeType.PDF -> "application/pdf"
+        MimeType.TEXT -> "text/plain"
+        MimeType.IMAGE -> "image/*"
+    }
 
-                FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-            } catch (e: IOException) {
-                Log.d("saving bitmap", "saving bitmap error ${e.message}")
-                null
-            }
-        }
+    /**
+     * Compresses an image file using [FileKit] logic.
+     *
+     * @param imageBytes The original image byte array.
+     * @return A compressed image as a byte array.
+     */
+    private suspend fun compressImage(imageBytes: ByteArray): ByteArray {
+        return FileKit.compressImage(
+            bytes = imageBytes,
+            // Compression quality (0–100)
+            quality = 100,
+            // Max width in pixels
+            maxWidth = 1024,
+            // Max height in pixels
+            maxHeight = 1024,
+            // Image format (e.g., PNG or JPEG)
+            imageFormat = ImageFormat.PNG,
+        )
     }
 
     actual fun callHelpline() {
         val context = activityProvider.invoke().application.baseContext
         val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:8000000000")
+            data = "tel:8000000000".toUri()
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
@@ -122,7 +175,7 @@ actual object ShareUtils {
         val context = activityProvider.invoke().application.baseContext
 
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
+            data = "mailto:".toUri()
             putExtra(Intent.EXTRA_EMAIL, arrayOf("support@mifos.org"))
             putExtra(Intent.EXTRA_SUBJECT, "User Query")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -162,7 +215,7 @@ actual object ShareUtils {
 
     actual fun openUrl(url: String) {
         val context = activityProvider.invoke().application.baseContext
-        val uri = url.let { Uri.parse(url) } ?: return
+        val uri = url.let { url.toUri() }
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = uri
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

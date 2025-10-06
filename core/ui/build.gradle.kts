@@ -43,8 +43,8 @@ kotlin{
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.jb.composeNavigation)
-            implementation(libs.filekit.compose)
             implementation(libs.filekit.core)
+            implementation(libs.filekit.dialog.compose)
             implementation(libs.compottie.resources)
             implementation(libs.compottie.lite)
         }

@@ -170,9 +170,10 @@ fun MifosDashboardCard(
 @Composable
 fun MifosAccountApplyDashboard(
     onOpenAccountClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     MifosCustomCard(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = DesignToken.padding.largeIncreased)
             .border(
                 0.5.dp,
