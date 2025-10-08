@@ -43,6 +43,13 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosBeneficiaryTopCard
 
+/**
+ * Composable function to display beneficiary details.
+ *
+ * @param state The state of the beneficiary screen.
+ * @param onAction The callback to handle actions on the beneficiary screen.
+ * @param modifier The modifier for the composable.
+ */
 @Composable
 internal fun BeneficiaryDetailContent(
     state: BeneficiaryDetailState?,
@@ -116,6 +123,12 @@ internal fun BeneficiaryDetailContent(
     }
 }
 
+/**
+ * A composable function to display a row of actions for the beneficiary detail screen.
+ *
+ * @param onAction A callback to handle actions from the beneficiary detail screen.
+ * @param modifier The modifier to apply to the composable.
+ */
 @Composable
 internal fun ActionBar(
     onAction: (BeneficiaryDetailAction) -> Unit,

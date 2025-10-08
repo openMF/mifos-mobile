@@ -75,7 +75,15 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-
+/**
+ * Composable function to display the beneficiary list screen.
+ *
+ * @param navigateBack The callback to navigate back to the previous screen.
+ * @param addBeneficiaryClicked The callback to navigate to the add beneficiary screen.
+ * @param onBeneficiaryItemClick The callback to navigate to a beneficiary detail screen when a beneficiary item is clicked.
+ * @param modifier The modifier to apply to the composable.
+ * @param viewModel The view model to use for the beneficiary list screen.
+ */
 @Composable
 internal fun BeneficiaryListScreen(
     navigateBack: () -> Unit,
@@ -113,6 +121,13 @@ internal fun BeneficiaryListScreen(
     )
 }
 
+/**
+ * Composable function to display the dialogs for the beneficiary list screen.
+ *
+ * @param state the state of the beneficiary list screen.
+ * @param onAction the callback to handle user actions.
+ * @return a Unit or null if no dialog should be shown.
+ */
 @Composable
 private fun BeneficiaryListDialog(
     state: BeneficiaryListState,
@@ -130,6 +145,13 @@ private fun BeneficiaryListDialog(
     }
 }
 
+/**
+ * Composable function to display the beneficiary list screen.
+ *
+ * @param state The state of the beneficiary list screen.
+ * @param onAction The callback to handle user actions.
+ * @param modifier The modifier to apply to the composable function.
+ */
 @Composable
 private fun BeneficiaryListScreen(
     state: BeneficiaryListState,
@@ -158,6 +180,13 @@ private fun BeneficiaryListScreen(
     }
 }
 
+/**
+ * Composable function to display the beneficiary list content.
+ *
+ * @param state The state of the beneficiary list content.
+ * @param onAction The callback to handle user actions.
+ * @param modifier The modifier to apply to the composable function.
+ */
 @Composable
 fun BeneficiaryListContent(
     state: BeneficiaryListState,
@@ -253,6 +282,12 @@ fun BeneficiaryListContent(
     }
 }
 
+/**
+ * A composable function to display the action bar with add and filter buttons.
+ *
+ * @param onAction The callback to handle user actions.
+ * @param modifier The modifier to apply to the composable function.
+ */
 @Composable
 internal fun ActionBar(
     onAction: (BeneficiaryListAction) -> Unit,
@@ -313,6 +348,13 @@ internal fun ActionBar(
     }
 }
 
+/**
+ * A composable function to display the beneficiary filters.
+ *
+ * @param state The view state to use for the beneficiary filters.
+ * @param onAction A callback to handle user actions.
+ * @param modifier The modifier to apply to the composable function.
+ */
 @Composable
 internal fun BeneficiaryFilters(
     state: BeneficiaryListState,
@@ -383,6 +425,17 @@ internal fun BeneficiaryFilters(
     }
 }
 
+/**
+ * A composable function to display a filter section.
+ *
+ * @param title The title of the filter section.
+ * @param selectedFilters The list of selected filters.
+ * @param isExpanded Whether the filter section is expanded or not.
+ * @param onToggle The callback to toggle the filter section.
+ * @param filters The list of filters to display.
+ * @param onCheckChanged The callback to handle the check changed event of the filters.
+ * @param modifier The modifier to apply to the composable.
+ */
 @Composable
 internal fun FilterSection(
     title: String,

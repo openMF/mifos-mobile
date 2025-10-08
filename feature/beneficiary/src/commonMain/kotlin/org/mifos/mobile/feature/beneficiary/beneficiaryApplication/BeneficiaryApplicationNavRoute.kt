@@ -15,7 +15,16 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
-
+/**
+ * Data class representing the navigation route for the beneficiary application screen.
+ *
+ * @property beneficiaryId the ID of the beneficiary.
+ * @property beneficiaryState the state of the beneficiary.
+ * @property name the name of the beneficiary.
+ * @property accountType the account type of the beneficiary.
+ * @property accountNumber the account number of the beneficiary.
+ * @property officeName the office name of the beneficiary.
+ */
 @Serializable
 data class BeneficiaryApplicationNavRoute(
     val beneficiaryId: Long = -1L,
@@ -26,6 +35,17 @@ data class BeneficiaryApplicationNavRoute(
     val officeName: String = "",
 )
 
+/**
+ * Navigate to the manual beneficiary add screen.
+ *
+ * @param beneficiaryId the ID of the beneficiary.
+ * @param name the name of the beneficiary.
+ * @param accountType the account type of the beneficiary.
+ * @param accountNumber the account number of the beneficiary.
+ * @param officeName the office name of the beneficiary.
+ * @param beneficiaryState the state of the beneficiary.
+ * @param navOptions the navigation options.
+ */
 fun NavController.navigateToManualBeneficiaryAddScreen(
     beneficiaryId: Long = -1L,
     name: String = "",
@@ -48,6 +68,13 @@ fun NavController.navigateToManualBeneficiaryAddScreen(
     )
 }
 
+/**
+ * Composable function to define the manual beneficiary add destination in the navigation graph.
+ *
+ * @param navigateBack a function to navigate back to the previous screen.
+ * @param navigateToQR a function to navigate to the QR code screen.
+ * @param navigateToConfirmationScreen a function to navigate to the confirmation screen.
+ */
 fun NavGraphBuilder.manualBeneficiaryAddDestination(
     navigateBack: () -> Unit,
     navigateToQR: () -> Unit,

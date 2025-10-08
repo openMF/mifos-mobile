@@ -24,12 +24,36 @@ import org.mifos.mobile.feature.beneficiary.beneficiaryDetail.navigateToBenefici
 import org.mifos.mobile.feature.beneficiary.beneficiaryList.BeneficiaryListNavRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryList.beneficiaryListScreen
 
+/**
+ * Data class representing the navigation route for the beneficiary feature.
+ *
+ * @property BeneficiaryNavRoute the navigation route for the beneficiary feature.
+ */
 @Serializable
 data object BeneficiaryNavRoute
 
+/**
+ * Navigate to the beneficiary navigation graph.
+ *
+ * @param navOptions the navigation options to use when navigating to the beneficiary navigation graph.
+ */
 fun NavController.navigateToBeneficiaryNavGraph(navOptions: NavOptions? = null) =
     navigate(BeneficiaryNavRoute, navOptions)
 
+/**
+ * Adds a navigation graph for the beneficiary feature to the NavGraphBuilder.
+ *
+ * @param navController the NavController that will be used to navigate through the graph.
+ * @param navigateToQR a function that will be called when the user clicks on the QR code button.
+ * @param navigateToStatusScreen a function that will be called when the user needs to view the status of a beneficiary.
+ * The function takes in the following parameters:
+ *  - beneficiaryId: the ID of the beneficiary.
+ *  - name: the name of the beneficiary.
+ *  - accountType: the account type of the beneficiary.
+ *  - accountNumber: the account number of the beneficiary.
+ *  - officeName: the office name of the beneficiary.
+ * @param navigateToAuthenticateScreen a function that will be called when the user needs to authenticate to complete an action.
+ */
 fun NavGraphBuilder.beneficiaryNavGraph(
     navController: NavController,
     navigateToQR: () -> Unit,

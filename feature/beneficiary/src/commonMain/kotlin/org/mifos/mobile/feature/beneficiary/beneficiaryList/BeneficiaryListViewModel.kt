@@ -26,6 +26,12 @@ import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTempl
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * ViewModel for BeneficiaryListScreen
+ *
+ * @param beneficiaryRepositoryImp The repository for beneficiary data.
+ * @param networkMonitor The monitor for network connectivity.
+ */
 internal class BeneficiaryListViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
@@ -33,6 +39,15 @@ internal class BeneficiaryListViewModel(
     initialState = BeneficiaryListState(),
 ) {
 
+    /**
+     * Initialize the view model.
+     */
+    init {
+        observeNetwork()
+    }
+    /**
+     * Initialize the view model.
+     */
     init {
         observeNetwork()
     }
@@ -77,6 +92,7 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+
     override fun handleAction(action: BeneficiaryListAction) {
         when (action) {
             is BeneficiaryListAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
@@ -107,10 +123,18 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Update the state of the view model.
+     *
+     * @param update The function to update the state.
+     */
     private fun updateState(update: (BeneficiaryListState) -> BeneficiaryListState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Fetch the list of beneficiaries from the repository.
+     */
     private fun fetchBeneficiaries() {
         updateState {
             it.copy(
@@ -124,6 +148,11 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Process the list of beneficiaries.
+     *
+     * @param beneficiaryList The list of beneficiaries.
+     */
     private fun processBeneficiaryList(beneficiaryList: DataState<List<Beneficiary>>) {
         when (beneficiaryList) {
             DataState.Loading -> updateState {
@@ -170,19 +199,32 @@ internal class BeneficiaryListViewModel(
             }
         }
     }
-
+    /**
+     * Handle the click on the add beneficiary button.
+     */
     private fun handleAddBeneficiaryClick() {
         sendEvent(BeneficiaryListEvent.AddBeneficiaryClicked)
     }
 
+    /**
+     * Handle the click on a beneficiary item.
+     *
+     * @param action The action to handle.
+     */
     private fun handleBeneficiaryItemClick(action: BeneficiaryListAction.OnBeneficiaryItemClick) {
         sendEvent(BeneficiaryListEvent.BeneficiaryItemClick(action.position))
     }
 
+     /**
+      * Handle the click on the navigate button.
+      */
     private fun handleNavigate() {
         sendEvent(BeneficiaryListEvent.Navigate)
     }
 
+    /**
+     * Handle the click on the get filter results button.
+     */
     private fun handleGetFilterResults() {
         val filteredAccounts = if (state.selectedAccounts.isNotEmpty()) {
             state.beneficiaries.filter {
@@ -208,7 +250,11 @@ internal class BeneficiaryListViewModel(
             )
         }
     }
-
+     /**
+      * Handle the change of the selected accounts.
+      *
+      * @param action The action to handle.
+      */
     private fun handleAccountChange(action: BeneficiaryListAction.OnAccountChange) {
         val currentAccounts = state.selectedAccounts
         val updatedAccounts = if (currentAccounts.contains(action.account)) {
@@ -222,6 +268,11 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Handle the change of the selected offices.
+     *
+     * @param action The action to handle.
+     */
     private fun handleOfficeChange(action: BeneficiaryListAction.OnOfficeChange) {
         val currentOffices = state.selectedOffices
         val updatedOffices = if (currentOffices.contains(action.office)) {
@@ -253,6 +304,9 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Handle the click on the toggle filter dialog button.
+     */
     private fun handleToggleFilterDialog() {
         updateState {
             it.copy(
@@ -272,6 +326,9 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Reset the filters.
+     */
     private fun resetFilters() {
         updateState {
             it.copy(
@@ -282,6 +339,9 @@ internal class BeneficiaryListViewModel(
         }
     }
 
+    /**
+     * Dismiss the dialog.
+     */
     private fun dismissDialog() {
         updateState {
             it.copy(
@@ -290,6 +350,23 @@ internal class BeneficiaryListViewModel(
         }
     }
 }
+
+/**
+ * State class for the beneficiary list screen.
+ *
+ * @param networkStatus The network status.
+ * @param isRefreshing Whether the screen is refreshing.
+ * @param beneficiaries The list of beneficiaries.
+ * @param template The beneficiary template.
+ * @param selectedAccounts The selected accounts.
+ * @param selectedOffices The selected offices.
+ * @param offices The list of offices.
+ * @param isEmpty Whether the list of beneficiaries is empty.
+ * @param isFilteredEmpty Whether the filtered list of beneficiaries is empty.
+ * @param filteredBeneficiaries The filtered list of beneficiaries.
+ * @param dialogState The dialog state.
+ * @param uiState The screen UI state.
+ */
 
 data class BeneficiaryListState(
     val networkStatus: Boolean = false,
@@ -313,30 +390,99 @@ data class BeneficiaryListState(
     val isAnyFilterSelected = selectedAccounts.isNotEmpty() || selectedOffices.isNotEmpty()
 }
 
+/**
+ * Action class for the beneficiary list screen.
+ *
+ * @param RefreshBeneficiaries Refresh the list of beneficiaries.
+ * @param OnAddBeneficiaryClicked Add a new beneficiary.
+ * @param OnBeneficiaryItemClick Click on a beneficiary item.
+ * @param OnNavigate Navigate to another screen.
+ * @param ToggleFilter Toggle the filter dialog.
+ * @param ResetFilters Reset the filters.
+ * @param GetFilterResults Get the filter results.
+ * @param DismissDialog Dismiss the dialog.
+ * @param OnAccountChange Change the selected account.
+ */
 sealed interface BeneficiaryListAction {
+    /**
+     * Refresh the list of beneficiaries.
+     */
     data object RefreshBeneficiaries : BeneficiaryListAction
+    /**
+     * Add a new beneficiary.
+     */
     data object OnAddBeneficiaryClicked : BeneficiaryListAction
+    /**
+     * Click on a beneficiary item.
+     */
     data class OnBeneficiaryItemClick(val position: Long) : BeneficiaryListAction
+    /**
+     * Navigate to another screen.
+     */
     data object OnNavigate : BeneficiaryListAction
+    /**
+     * Toggle the filter dialog.
+     */
     data object ToggleFilter : BeneficiaryListAction
+    /**
+     * Reset the filters.
+     */
     data object ResetFilters : BeneficiaryListAction
+    /**
+     * Get the filter results.
+     */
     data object GetFilterResults : BeneficiaryListAction
+    /**
+     * Dismiss the dialog.
+     */
     data object DismissDialog : BeneficiaryListAction
+    /**
+     * Change the selected account.
+     */
     data class OnAccountChange(val account: String) : BeneficiaryListAction
+    /**
+     * Change the selected office.
+     */
     data class OnOfficeChange(val office: String) : BeneficiaryListAction
+    /**
+     * Load the beneficiaries.
+     */
     data object LoadBeneficiaries : BeneficiaryListAction
+    /**
+     * Receive the network status.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryListAction
 
     sealed interface Internal : BeneficiaryListAction {
 
+        /**
+         * Receive the beneficiary result.
+         * @param beneficiaryList The list of beneficiaries.
+         */
         data class ReceiveBeneficiaryResult(
             val beneficiaryList: DataState<List<Beneficiary>>,
         ) : Internal
     }
 }
 
+/**
+ * Event class for the beneficiary list screen.
+ *
+ * @param AddBeneficiaryClicked Add a new beneficiary.
+ * @param BeneficiaryItemClick Click on a beneficiary item.
+ * @param Navigate Navigate to another screen.
+ */
 sealed interface BeneficiaryListEvent {
+    /**
+     * Add a new beneficiary.
+     */
     data object AddBeneficiaryClicked : BeneficiaryListEvent
+    /**
+     * Click on a beneficiary item.
+     */
     data class BeneficiaryItemClick(val position: Long) : BeneficiaryListEvent
+    /**
+     * Navigate to another screen.
+     */
     data object Navigate : BeneficiaryListEvent
 }

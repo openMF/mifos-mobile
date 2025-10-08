@@ -164,6 +164,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+/**
+ * Handles the result of the beneficiary creation API call.
+ * If the API call is successful, navigates the user to the beneficiary status screen.
+ * If the API call fails, navigates the user to the previous screen with an error message.
+ */
     private fun processSubmitBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
@@ -226,6 +231,12 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Processes the result of an update beneficiary API call.
+     * Handles success, failure and loading states.
+     * Shows an overlay during the loading state.
+     * Shows a success or failure message on the status screen depending on the result.
+     */
     private fun processUpdateBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
@@ -325,6 +336,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
         }
     }
 
+    /**
+     * Initializes the map details state variable with the route details.
+     *
+     * @param savedStateHandle the SavedStateHandle containing the route details.
+     */
     private suspend fun initializeMapDetails() {
         val route = savedStateHandle.toRoute<BeneficiaryApplicationConfirmationNavRoute>()
         val details = mapOf(
@@ -363,6 +379,26 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     }
 }
 
+/**
+ * Represents the state of the Beneficiary Application Confirmation screen.
+ *
+ * @param details the map of beneficiary details to display on the screen.
+ * @param topBarTitle the title to display on the top bar of the screen.
+ * @param beneficiaryId the ID of the beneficiary being updated or added.
+ * @param name the name of the beneficiary.
+ * @param officeName the name of the office where the beneficiary is registered.
+ * @param accountType the type of account the beneficiary has (e.g. savings, loan).
+ * @param accountNumber the account number of the beneficiary.
+ * @param transferLimit the transfer limit of the beneficiary.
+ * @param networkUnavailable indicates whether the network is unavailable.
+ * @param beneficiaryState the state of the beneficiary (e.g. updating, adding).
+ * @param dialogState the state of any dialogs to display on the screen.
+ * @param uiState the current UI state of the screen (e.g. loading, error, success).
+ * @param showOverlay indicates whether to show an overlay on the screen.
+ * @param networkStatus indicates whether the network is available.
+ */
+
+
 data class BeneficiaryApplicationConfirmationState(
     val details: Map<StringResource, String> = emptyMap(),
     val topBarTitle: StringResource = Res.string.add_beneficiary,
@@ -386,31 +422,108 @@ data class BeneficiaryApplicationConfirmationState(
     }
 }
 
+/*
+* Represents the events that can occur on the Beneficiary Application Confirmation screen.
+* */
+
 sealed interface BeneficiaryApplicationConfirmationEvent {
+    /**
+     * Represents the event of navigating back to the previous screen.
+     */
     data object Navigate : BeneficiaryApplicationConfirmationEvent
+    /**
+     * Represents the event of navigating to the Beneficiary Status screen.
+     *
+     * @param eventType the type of event (e.g. success, error).
+     * @param eventDestination the destination to navigate to.
+     * @param title the title to display on the screen.
+     * @param subtitle the subtitle to display on the screen.
+     * @param buttonText the text to display on the button.
+     */
     data class NavigateToStatus(
+        /**
+         * The type of event (e.g. success, error).
+         */
         val eventType: String,
+        /**
+         * The destination to navigate to.
+         */
         val eventDestination: String,
+        /**
+         * The title to display on the screen.
+         */
         val title: String,
+        /**
+         * The subtitle to display on the screen.
+         */
         val subtitle: String,
+        /**
+         * The text to display on the button.
+         */
+        /**
+         * The text to display on the button.
+         */
         val buttonText: String,
     ) : BeneficiaryApplicationConfirmationEvent
     data class NavigateToAuthenticate(
+        /**
+         * The status of the event (e.g. success, error).
+         */
         val status: String = EventType.SUCCESS.name,
     ) : BeneficiaryApplicationConfirmationEvent
 }
 
+/**
+ * Represents the actions that can be performed on the Beneficiary Application Confirmation screen.
+ *
+ * @param SubmitBeneficiary the action of submitting the beneficiary application.
+ * @param ReceiveNetworkStatus the action of receiving the network status.
+ * @param OnNavigate the action of navigating back to the previous screen.
+ */
+
+
 sealed interface BeneficiaryApplicationConfirmationAction {
 
+    /**
+     * Represents the action of submitting the beneficiary application.
+     */
     data object SubmitBeneficiary : BeneficiaryApplicationConfirmationAction
-
+    /**
+     * Represents the action of receiving the network status.
+     *
+     * @param isOnline indicates whether the network is available.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationConfirmationAction
 
+    /**
+     * Represents the action of navigating back to the previous screen.
+     */
     data object OnNavigate : BeneficiaryApplicationConfirmationAction
-
+    /**
+     * Represents the internal actions that can be performed on the Beneficiary Application Confirmation screen.
+     *
+     * @param ReceiveAuthenticationResult the action of receiving the authentication result.
+     * @param ReceiveSubmitBeneficiary the action of receiving the result of submitting the beneficiary application.
+     * @param ReceiveUpdateBeneficiary the action of receiving the result of updating the beneficiary application.
+     */
     sealed interface Internal : BeneficiaryApplicationConfirmationAction {
+        /**
+         * Represents the action of receiving the authentication result.
+         *
+         * @param result indicates whether the authentication was successful.
+         */
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
+        /**
+         * Represents the action of receiving the result of submitting the beneficiary application.
+         *
+         * @param result the data state of the submission result.
+         */
         data class ReceiveSubmitBeneficiary(val result: DataState<String>) : Internal
+        /**
+         * Represents the action of receiving the result of updating the beneficiary application.
+         *
+         * @param result the data state of the update result.
+         */
         data class ReceiveUpdateBeneficiary(val result: DataState<String>) : Internal
     }
 }

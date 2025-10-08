@@ -35,6 +35,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A composable function to display the beneficiary detail screen.
+ *
+ * @param navigateBack A callback to navigate back from the beneficiary detail screen.
+ * @param updateBeneficiary A callback to update a beneficiary.
+ * @param modifier The modifier to apply to the composable.
+ * @param viewModel The view model to use for the beneficiary detail screen.
+ */
 @Composable
 internal fun BeneficiaryDetailScreen(
     navigateBack: () -> Unit,
@@ -69,6 +77,12 @@ internal fun BeneficiaryDetailScreen(
     )
 }
 
+/**
+ * A composable function to display the beneficiary detail dialogs.
+ *
+ * @param state The view state to use for the beneficiary detail dialogs.
+ * @param onAction A callback to handle the dialog actions.
+ */
 @Composable
 private fun BeneficiaryDialogs(
     state: BeneficiaryDetailState,
@@ -100,6 +114,13 @@ private fun BeneficiaryDialogs(
     }
 }
 
+/**
+ * A composable function to display the beneficiary detail screen.
+ *
+ * @param state The view state to use for the beneficiary detail screen.
+ * @param onAction A callback to handle the actions from the view state.
+ * @param modifier The modifier to apply to the composable.
+ */
 @Composable
 private fun BeneficiaryDetailScreen(
     state: BeneficiaryDetailState,

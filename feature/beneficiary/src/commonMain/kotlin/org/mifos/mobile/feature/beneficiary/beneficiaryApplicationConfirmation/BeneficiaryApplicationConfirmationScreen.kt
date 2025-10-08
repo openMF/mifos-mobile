@@ -38,6 +38,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Composable function to render the beneficiary application confirmation screen.
+ *
+ * @param navigateBack a function to navigate back to the previous screen.
+ * @param navigateToStatusScreen a function to navigate to the status screen.
+ * @param navigateToAuthenticateScreen a function to navigate to the authenticate screen.
+ * @param viewModel the view model for the beneficiary application confirmation screen.
+ */
 @Composable
 internal fun BeneficiaryApplicationConfirmationScreen(
     navigateBack: () -> Unit,
@@ -80,6 +88,11 @@ internal fun BeneficiaryApplicationConfirmationScreen(
     )
 }
 
+/**
+ * Composable function to display error dialogs for the Beneficiary Application Confirmation screen.
+ * @param state the state of the Beneficiary Application Confirmation screen.
+ * @return a Unit or null if no dialog should be shown.
+ */
 @Composable
 private fun BeneficiaryApplicationConfirmationScreenDialogs(
     state: BeneficiaryApplicationConfirmationState,
@@ -94,6 +107,14 @@ private fun BeneficiaryApplicationConfirmationScreenDialogs(
     }
 }
 
+/**
+ * Composable function to render the content of the Beneficiary Application confirmation screen.
+ *
+ * @param state the state of the Beneficiary Application confirmation screen.
+ * @param modifier the modifier to apply to the content.
+ * @param onAction the action to perform when the confirm button is clicked.
+ * @return a Unit or null if no content should be rendered.
+ */
 @Composable
 fun BeneficiaryApplicationConfirmationScreenContent(
     state: BeneficiaryApplicationConfirmationState,

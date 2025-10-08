@@ -31,6 +31,15 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Composable function to display the beneficiary application screen.
+ *
+ * @param navigateBack a function to navigate back to the previous screen.
+ * @param navigateToQR a function to navigate to the QR code screen.
+ * @param navigateToConfirmationScreen a function to navigate to the confirmation screen.
+ * @param modifier the modifier to apply to the composable.
+ * @param viewModel the [BeneficiaryApplicationViewModel] to use for the composable.
+ */
 @Composable
 internal fun BeneficiaryApplicationScreen(
     navigateBack: () -> Unit,
@@ -86,6 +95,12 @@ internal fun BeneficiaryApplicationScreen(
     )
 }
 
+/**
+ * Composable function to display dialogs for the beneficiary application screen.
+ *
+ * @param state the current state of the screen.
+ * @param onAction a function to handle user actions.
+ */
 @Composable
 private fun BeneficiaryApplicationDialogs(
     state: BeneficiaryApplicationState,
@@ -104,6 +119,15 @@ private fun BeneficiaryApplicationDialogs(
     }
 }
 
+/**
+ * Composable function to display the beneficiary application screen.
+ *
+ * It displays a progress indicator when the UI state is loading, a network error component when the network status is false, and the beneficiary application content when the UI state is success.
+ *
+ * @param state the current state of the screen.
+ * @param onAction a function to handle user actions.
+ * @param modifier the modifier to apply to the composable.
+ */
 @Composable
 private fun BeneficiaryApplicationScreen(
     state: BeneficiaryApplicationState,

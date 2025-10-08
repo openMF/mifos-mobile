@@ -28,6 +28,13 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A view model for the beneficiary detail screen.
+ *
+ * @param beneficiaryRepositoryImp The repository for beneficiary data.
+ * @param networkMonitor The network monitor to use for network status.
+ * @param savedStateHandle The saved state handle to use for navigation.
+ */
 internal class BeneficiaryDetailViewModel(
     private val beneficiaryRepositoryImp: BeneficiaryRepository,
     private val networkMonitor: NetworkMonitor,
@@ -41,6 +48,9 @@ internal class BeneficiaryDetailViewModel(
     },
 ) {
 
+    /**
+     * Initialize the view model.
+     */
     init {
         observeNetwork()
     }
@@ -84,14 +94,30 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+    /**
+     * Updates the view model state using the provided lambda transformation.
+     * @param update The lambda transformation to apply to the current state.
+     */
     private fun updateState(update: (BeneficiaryDetailState) -> BeneficiaryDetailState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Updates the beneficiary dialog state in the view model state.
+     *
+     * @param dialogState The new dialog state to set. If null, the dialog state will be cleared.
+     */
     private fun setDialogState(dialogState: BeneficiaryDetailState.DialogState?) {
         updateState { it.copy(beneficiaryDialog = dialogState) }
     }
 
+    /**
+     * Load the beneficiary list and update the view model state accordingly.
+     *
+     * This function updates the view model state to show a loading state and then
+     * an internal action to handle the list is sent.
+     */
+/* <<<<<<<<<<  bc32bbbe-6f8b-4804-ad34-e26cae92c97e  >>>>>>>>>>> */
     private fun loadBeneficiary() {
         updateState {
             it.copy(
@@ -105,6 +131,15 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+    /**
+     * Handles the response from the beneficiary list API and updates the view model state accordingly.
+     *
+     * If the response is loading, the view model state is updated to show a loading state.
+     * If the response is an error, the view model state is updated to show an error state.
+     * If the response is successful, the view model state is updated to show a success state and the beneficiary is updated to the one with the matching ID.
+     *
+     * @param beneficiary The response from the beneficiary list API.
+     */
     private fun handleResponse(beneficiary: DataState<List<Beneficiary>>) {
         when (beneficiary) {
             DataState.Loading -> {
@@ -138,6 +173,14 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+    /**
+     * Deletes a beneficiary with the given ID.
+     *
+     * This function updates the view model state to show an overlay and then
+     * sends an internal action to handle the response from the delete beneficiary API.
+     *
+     * @param beneficiaryId The ID of the beneficiary to delete.
+     */
     private fun deleteBeneficiary(beneficiaryId: Long?) {
         viewModelScope.launch {
             updateState {
@@ -154,6 +197,15 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+    /**
+     * Processes the result of the delete beneficiary API.
+     *
+     * If the response is loading, the view model state is updated to show an overlay.
+     * If the response is an error, the view model state is updated to show an error state and a dialog is shown with a generic error message.
+     * If the response is successful, the view model state is updated to navigate back to the previous screen.
+     *
+     * @param response The response from the delete beneficiary API.
+     */
     private fun processDeleteBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
@@ -183,6 +235,11 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+        /**
+         * Handles actions from the UI.
+         *
+         * @param action The action to handle.
+         */
     override fun handleAction(action: BeneficiaryDetailAction) {
         when (action) {
             is BeneficiaryDetailAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
@@ -211,6 +268,9 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
+    /**
+     * Shows a confirmation dialog before deleting a beneficiary.
+     */
     private fun showDeleteConfirmation() {
         viewModelScope.launch {
             val message = getString(Res.string.delete_beneficiary_confirmation)
@@ -223,6 +283,16 @@ internal class BeneficiaryDetailViewModel(
     }
 }
 
+/**
+ * Represents the state of the Beneficiary Detail screen.
+ *
+ * @property beneficiaryId The ID of the beneficiary to display.
+ * @property beneficiary The beneficiary to display.
+ * @property beneficiaryDialog The dialog state of the beneficiary detail screen.
+ * @property networkStatus The current network status of the device.
+ * @property uiState The current UI state of the beneficiary detail screen.
+ * @property showOverlay Whether to show the overlay or not.
+ */
 data class BeneficiaryDetailState(
     val beneficiaryId: Long = -1L,
     val beneficiary: Beneficiary? = null,
@@ -239,22 +309,85 @@ data class BeneficiaryDetailState(
     }
 }
 
+/*
+* Represents the events that can be triggered from the Beneficiary Detail screen.
+*
+* @property NavigateBack Navigates back to the previous screen.
+* @property UpdateBeneficiary Updates the beneficiary with the given ID.
+* */
+
+
 sealed interface BeneficiaryDetailEvent {
+    /**
+     * Navigates back to the previous screen.
+     */
     data object NavigateBack : BeneficiaryDetailEvent
+    /**
+     * Updates the beneficiary with the given ID.
+     *
+     * @property beneficiaryId The ID of the beneficiary to update.
+     */
     data class UpdateBeneficiary(val beneficiaryId: Long) : BeneficiaryDetailEvent
 }
 
+/*
+* Represents the actions that can be triggered from the Beneficiary Detail screen.
+*
+* @property OnRefresh Refreshes the beneficiary list.
+* @property OnUpdateBeneficiary Updates the beneficiary with the given ID.
+* @property DeleteBeneficiary Deletes the beneficiary with the given ID.
+* @property OnNavigate Navigates to the beneficiary list screen.
+* @property ErrorDialogDismiss Dismisses the error dialog.
+* @property ShowDeleteConfirmation Shows the delete confirmation dialog.
+* @property ReceiveNetworkStatus Receives the network status.
+* @property Internal Internal actions.
+* */
 sealed interface BeneficiaryDetailAction {
+    /**
+     * Refreshes the beneficiary list.
+     */
     data object OnRefresh : BeneficiaryDetailAction
+    /**
+     * Updates the beneficiary with the given ID.
+     */
     data object OnUpdateBeneficiary : BeneficiaryDetailAction
+    /**
+     * Deletes the beneficiary with the given ID.
+     */
     data object DeleteBeneficiary : BeneficiaryDetailAction
+    /**
+     * Navigates to the beneficiary list screen.
+     */
     data object OnNavigate : BeneficiaryDetailAction
+    /**
+     * Dismisses the error dialog.
+     */
     data object ErrorDialogDismiss : BeneficiaryDetailAction
+    /**
+     * Shows the delete confirmation dialog.
+     */
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
+    /**
+     * Receives the network status.
+     *
+     * @property isOnline Whether the device is online or not.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryDetailAction
-
+    /**
+     * Internal actions.
+     */
     sealed interface Internal : BeneficiaryDetailAction {
+        /**
+         * Receives the result of loading a beneficiary.
+         *
+         * @property result The result of loading a beneficiary.
+         */
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
+        /**
+         * Receives the result of deleting a beneficiary.
+         *
+         * @property result The result of deleting a beneficiary.
+         */
         data class ReceiveDeleteBeneficiary(val result: DataState<String>) : Internal
     }
 }

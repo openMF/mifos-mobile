@@ -50,6 +50,13 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 
+/**
+ * Composable function to display a beneficiary application form.
+ *
+ * @param state The current state of the beneficiary application form.
+ * @param onAction A callback to handle actions from the form.
+ * @param modifier The modifier to apply to the composable.
+ */
 @Composable
 @Suppress("CyclomaticComplexMethod", "ComplexCondition")
 internal fun BeneficiaryApplicationContent(
