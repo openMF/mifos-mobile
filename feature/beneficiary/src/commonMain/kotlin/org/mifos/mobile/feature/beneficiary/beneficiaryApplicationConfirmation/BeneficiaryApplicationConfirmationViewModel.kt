@@ -165,10 +165,10 @@ internal class BeneficiaryApplicationConfirmationViewModel(
     }
 
 /**
- * Handles the result of the beneficiary creation API call.
- * If the API call is successful, navigates the user to the beneficiary status screen.
- * If the API call fails, navigates the user to the previous screen with an error message.
- */
+     * Handles the result of the beneficiary creation API call.
+     * If the API call is successful, navigates the user to the beneficiary status screen.
+     * If the API call fails, navigates the user to the previous screen with an error message.
+     */
     private fun processSubmitBeneficiaryResult(response: DataState<String>) {
         viewModelScope.launch {
             when (response) {
@@ -398,7 +398,6 @@ internal class BeneficiaryApplicationConfirmationViewModel(
  * @param networkStatus indicates whether the network is available.
  */
 
-
 data class BeneficiaryApplicationConfirmationState(
     val details: Map<StringResource, String> = emptyMap(),
     val topBarTitle: StringResource = Res.string.add_beneficiary,
@@ -431,6 +430,7 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
      * Represents the event of navigating back to the previous screen.
      */
     data object Navigate : BeneficiaryApplicationConfirmationEvent
+
     /**
      * Represents the event of navigating to the Beneficiary Status screen.
      *
@@ -448,6 +448,7 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
 
         val buttonText: String,
     ) : BeneficiaryApplicationConfirmationEvent
+
     /**
      * Represents the event of navigating to the Beneficiary Authentication screen.
      *
@@ -466,13 +467,13 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
  * @param OnNavigate the action of navigating back to the previous screen.
  */
 
-
 sealed interface BeneficiaryApplicationConfirmationAction {
 
     /**
      * Represents the action of submitting the beneficiary application.
      */
     data object SubmitBeneficiary : BeneficiaryApplicationConfirmationAction
+
     /**
      * Represents the action of receiving the network status.
      *
@@ -484,6 +485,7 @@ sealed interface BeneficiaryApplicationConfirmationAction {
      * Represents the action of navigating back to the previous screen.
      */
     data object OnNavigate : BeneficiaryApplicationConfirmationAction
+
     /**
      * Represents the internal actions that can be performed on the Beneficiary Application Confirmation screen.
      *
@@ -498,12 +500,14 @@ sealed interface BeneficiaryApplicationConfirmationAction {
          * @param result indicates whether the authentication was successful.
          */
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
+
         /**
          * Represents the action of receiving the result of submitting the beneficiary application.
          *
          * @param result the data state of the submission result.
          */
         data class ReceiveSubmitBeneficiary(val result: DataState<String>) : Internal
+
         /**
          * Represents the action of receiving the result of updating the beneficiary application.
          *

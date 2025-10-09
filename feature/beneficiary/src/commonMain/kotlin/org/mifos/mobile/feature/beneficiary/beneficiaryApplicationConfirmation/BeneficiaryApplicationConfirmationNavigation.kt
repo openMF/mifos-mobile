@@ -17,7 +17,6 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
-
 /**
  * Data class representing the navigation route for the beneficiary application confirmation screen.
  *

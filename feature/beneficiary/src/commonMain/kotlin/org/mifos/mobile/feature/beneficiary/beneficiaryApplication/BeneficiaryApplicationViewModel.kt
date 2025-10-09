@@ -439,7 +439,6 @@ data class BeneficiaryApplicationState(
         beneficiaryName.isNotEmpty()
 }
 
-
 /**
  * Data class to represent the events of the beneficiary application screen.
  *
@@ -452,6 +451,7 @@ sealed interface BeneficiaryApplicationEvent {
      * Navigate to the next screen.
      */
     data object Navigate : BeneficiaryApplicationEvent
+
     /***
      * Submit the beneficiary application.
      *
@@ -472,6 +472,7 @@ sealed interface BeneficiaryApplicationEvent {
         val accountNumber: String,
         val transferLimit: Int,
     ) : BeneficiaryApplicationEvent
+
     /***
      * Navigate to the QR screen.
      */
@@ -493,46 +494,57 @@ sealed interface BeneficiaryApplicationAction {
      * Load the beneficiary template.
      */
     data object LoadBeneficiaryTemplate : BeneficiaryApplicationAction
+
     /***
      * Submit the beneficiary application.
      */
     data object SubmitBeneficiary : BeneficiaryApplicationAction
+
     /***
      * Navigate to the next screen.
      */
     data object OnNavigate : BeneficiaryApplicationAction
+
     /***
      * Retry the operation.
      */
     data object OnRetry : BeneficiaryApplicationAction
+
     /***
      * Navigate to the QR screen.
      */
     data object NavigateToQR : BeneficiaryApplicationAction
+
     /***
      * Account type changed.
      */
     data class OnAccountTypeChanged(val accountType: Int) : BeneficiaryApplicationAction
+
     /***
      * Account number changed.
      */
     data class OnAccountNumberChanged(val accountNumber: String) : BeneficiaryApplicationAction
+
     /***
      * Office name changed.
      */
     data class OnOfficeNameChanged(val officeName: String) : BeneficiaryApplicationAction
+
     /***
      * Transfer limit changed.
      */
     data class OnTransferLimitChanged(val transferLimit: String) : BeneficiaryApplicationAction
+
     /***
      * Beneficiary name changed.
      */
     data class OnBeneficiaryNameChanged(val beneficiaryName: String) : BeneficiaryApplicationAction
+
     /***
      * Receive network status.
      */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationAction
+
     /***
      * Internal action.
      */

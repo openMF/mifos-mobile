@@ -112,9 +112,9 @@ internal class BeneficiaryDetailViewModel(
     }
 
     /*
-    * Update the view model state to show a loading state and then
-    * an internal action to handle the list is sent.
-    * */
+     * Update the view model state to show a loading state and then
+     * an internal action to handle the list is sent.
+     * */
     private fun loadBeneficiary() {
         updateState {
             it.copy(
@@ -232,11 +232,11 @@ internal class BeneficiaryDetailViewModel(
         }
     }
 
-        /**
-         * Handles actions from the UI.
-         *
-         * @param action The action to handle.
-         */
+    /**
+     * Handles actions from the UI.
+     *
+     * @param action The action to handle.
+     */
     override fun handleAction(action: BeneficiaryDetailAction) {
         when (action) {
             is BeneficiaryDetailAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
@@ -313,12 +313,12 @@ data class BeneficiaryDetailState(
 * @property UpdateBeneficiary Updates the beneficiary with the given ID.
 * */
 
-
 sealed interface BeneficiaryDetailEvent {
     /**
      * Navigates back to the previous screen.
      */
     data object NavigateBack : BeneficiaryDetailEvent
+
     /**
      * Updates the beneficiary with the given ID.
      *
@@ -344,32 +344,39 @@ sealed interface BeneficiaryDetailAction {
      * Refreshes the beneficiary list.
      */
     data object OnRefresh : BeneficiaryDetailAction
+
     /**
      * Updates the beneficiary with the given ID.
      */
     data object OnUpdateBeneficiary : BeneficiaryDetailAction
+
     /**
      * Deletes the beneficiary with the given ID.
      */
     data object DeleteBeneficiary : BeneficiaryDetailAction
+
     /**
      * Navigates to the beneficiary list screen.
      */
     data object OnNavigate : BeneficiaryDetailAction
+
     /**
      * Dismisses the error dialog.
      */
     data object ErrorDialogDismiss : BeneficiaryDetailAction
+
     /**
      * Shows the delete confirmation dialog.
      */
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
+
     /**
      * Receives the network status.
      *
      * @property isOnline Whether the device is online or not.
      */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryDetailAction
+
     /**
      * Internal actions.
      */
@@ -380,6 +387,7 @@ sealed interface BeneficiaryDetailAction {
          * @property result The result of loading a beneficiary.
          */
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
+
         /**
          * Receives the result of deleting a beneficiary.
          *
