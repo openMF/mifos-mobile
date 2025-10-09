@@ -111,13 +111,10 @@ internal class BeneficiaryDetailViewModel(
         updateState { it.copy(beneficiaryDialog = dialogState) }
     }
 
-    /**
-     * Load the beneficiary list and update the view model state accordingly.
-     *
-     * This function updates the view model state to show a loading state and then
-     * an internal action to handle the list is sent.
-     */
-/* <<<<<<<<<<  bc32bbbe-6f8b-4804-ad34-e26cae92c97e  >>>>>>>>>>> */
+    /*
+    * Update the view model state to show a loading state and then
+    * an internal action to handle the list is sent.
+    * */
     private fun loadBeneficiary() {
         updateState {
             it.copy(
