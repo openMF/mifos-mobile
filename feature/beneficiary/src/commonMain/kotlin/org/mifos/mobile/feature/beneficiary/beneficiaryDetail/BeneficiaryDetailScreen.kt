@@ -43,6 +43,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
  * @param modifier The modifier to apply to the composable.
  * @param viewModel The view model to use for the beneficiary detail screen.
  */
+
 @Composable
 internal fun BeneficiaryDetailScreen(
     navigateBack: () -> Unit,
