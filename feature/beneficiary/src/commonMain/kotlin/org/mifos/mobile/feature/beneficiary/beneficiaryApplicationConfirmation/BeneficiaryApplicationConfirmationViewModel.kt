@@ -441,34 +441,19 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
      * @param buttonText the text to display on the button.
      */
     data class NavigateToStatus(
-        /**
-         * The type of event (e.g. success, error).
-         */
         val eventType: String,
-        /**
-         * The destination to navigate to.
-         */
         val eventDestination: String,
-        /**
-         * The title to display on the screen.
-         */
         val title: String,
-        /**
-         * The subtitle to display on the screen.
-         */
         val subtitle: String,
-        /**
-         * The text to display on the button.
-         */
-        /**
-         * The text to display on the button.
-         */
+
         val buttonText: String,
     ) : BeneficiaryApplicationConfirmationEvent
+    /**
+     * Represents the event of navigating to the Beneficiary Authentication screen.
+     *
+     * @param status the status of the event (e.g. success, error).
+     */
     data class NavigateToAuthenticate(
-        /**
-         * The status of the event (e.g. success, error).
-         */
         val status: String = EventType.SUCCESS.name,
     ) : BeneficiaryApplicationConfirmationEvent
 }
