@@ -41,18 +41,24 @@ fun NavController.navigateToBeneficiaryNavGraph(navOptions: NavOptions? = null) 
     navigate(BeneficiaryNavRoute, navOptions)
 
 /**
- * Adds a navigation graph for the beneficiary feature to the NavGraphBuilder.
+ * Adds a navigation graph for the beneficiary feature.
  *
- * @param navController the NavController that will be used to navigate through the graph.
- * @param navigateToQR a function that will be called when the user clicks on the QR code button.
- * @param navigateToStatusScreen a function that will be called when the user needs to view the status of a beneficiary.
- * The function takes in the following parameters:
- *  - beneficiaryId: the ID of the beneficiary.
- *  - name: the name of the beneficiary.
- *  - accountType: the account type of the beneficiary.
- *  - accountNumber: the account number of the beneficiary.
- *  - officeName: the office name of the beneficiary.
- * @param navigateToAuthenticateScreen a function that will be called when the user needs to authenticate to complete an action.
+ * The navigation graph has the following destinations:
+ * - Beneficiary List Screen: The screen that displays the list of all beneficiaries.
+ * - Manual Beneficiary Add Screen: The screen that allows the user to manually add a beneficiary.
+ * - Beneficiary Application Confirmation Screen: The screen that confirms the addition of a beneficiary.
+ * - Beneficiary Detail Screen: The screen that displays the details of a beneficiary.
+ *
+ * The navigation graph is structured as follows:
+ * - The Beneficiary List Screen is the starting point of the graph.
+ * - The Manual Beneficiary Add Screen is reachable from the Beneficiary List Screen.
+ * - The Beneficiary Application Confirmation Screen is reachable from the Manual Beneficiary Add Screen.
+ * - The Beneficiary Detail Screen is reachable from the Beneficiary List Screen and the Manual Beneficiary Add Screen.
+ *
+ * @param navController The navigation controller to use for navigation.
+ * @param navigateToQR A function to navigate to the QR code screen.
+ * @param navigateToStatusScreen A function to navigate to the status screen.
+ * @param navigateToAuthenticateScreen A function to navigate to the authentication screen.
  */
 fun NavGraphBuilder.beneficiaryNavGraph(
     navController: NavController,

@@ -406,72 +406,31 @@ data class BeneficiaryListState(
  * @param OnAccountChange Change the selected account.
  */
 sealed interface BeneficiaryListAction {
-    /**
-     * Refresh the list of beneficiaries.
-     */
+
     data object RefreshBeneficiaries : BeneficiaryListAction
 
-    /**
-     * Add a new beneficiary.
-     */
     data object OnAddBeneficiaryClicked : BeneficiaryListAction
 
-    /**
-     * Click on a beneficiary item.
-     */
     data class OnBeneficiaryItemClick(val position: Long) : BeneficiaryListAction
 
-    /**
-     * Navigate to another screen.
-     */
     data object OnNavigate : BeneficiaryListAction
 
-    /**
-     * Toggle the filter dialog.
-     */
     data object ToggleFilter : BeneficiaryListAction
 
-    /**
-     * Reset the filters.
-     */
     data object ResetFilters : BeneficiaryListAction
 
-    /**
-     * Get the filter results.
-     */
     data object GetFilterResults : BeneficiaryListAction
 
-    /**
-     * Dismiss the dialog.
-     */
     data object DismissDialog : BeneficiaryListAction
 
-    /**
-     * Change the selected account.
-     */
     data class OnAccountChange(val account: String) : BeneficiaryListAction
 
-    /**
-     * Change the selected office.
-     */
     data class OnOfficeChange(val office: String) : BeneficiaryListAction
 
-    /**
-     * Load the beneficiaries.
-     */
     data object LoadBeneficiaries : BeneficiaryListAction
-
-    /**
-     * Receive the network status.
-     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryListAction
 
     sealed interface Internal : BeneficiaryListAction {
-
-        /**
-         * Receive the beneficiary result.
-         * @param beneficiaryList The list of beneficiaries.
-         */
         data class ReceiveBeneficiaryResult(
             val beneficiaryList: DataState<List<Beneficiary>>,
         ) : Internal
@@ -486,18 +445,7 @@ sealed interface BeneficiaryListAction {
  * @param Navigate Navigate to another screen.
  */
 sealed interface BeneficiaryListEvent {
-    /**
-     * Add a new beneficiary.
-     */
     data object AddBeneficiaryClicked : BeneficiaryListEvent
-
-    /**
-     * Click on a beneficiary item.
-     */
     data class BeneficiaryItemClick(val position: Long) : BeneficiaryListEvent
-
-    /**
-     * Navigate to another screen.
-     */
     data object Navigate : BeneficiaryListEvent
 }

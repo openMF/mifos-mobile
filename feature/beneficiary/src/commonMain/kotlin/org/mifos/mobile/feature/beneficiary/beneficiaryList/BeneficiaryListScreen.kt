@@ -80,7 +80,8 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
  *
  * @param navigateBack The callback to navigate back to the previous screen.
  * @param addBeneficiaryClicked The callback to navigate to the add beneficiary screen.
- * @param onBeneficiaryItemClick The callback to navigate to a beneficiary detail screen when a beneficiary item is clicked.
+ * @param onBeneficiaryItemClick The callback to navigate to a beneficiary detail screen when a
+ * beneficiary item is clicked.
  * @param modifier The modifier to apply to the composable.
  * @param viewModel The view model to use for the beneficiary list screen.
  */

@@ -122,7 +122,8 @@ private fun BeneficiaryApplicationDialogs(
 /**
  * Composable function to display the beneficiary application screen.
  *
- * It displays a progress indicator when the UI state is loading, a network error component when the network status is false, and the beneficiary application content when the UI state is success.
+ * It displays a progress indicator when the UI state is loading, a network error component
+ * when the network status is false, and the beneficiary application content when the UI state is success.
  *
  * @param state the current state of the screen.
  * @param onAction a function to handle user actions.

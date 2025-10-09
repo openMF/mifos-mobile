@@ -31,7 +31,8 @@ fun NavController.navigateToBeneficiaryListScreen() {
  *
  * @param navigateBack a function to navigate back to the previous screen.
  * @param addBeneficiaryClicked a function to navigate to the add beneficiary screen.
- * @param onBeneficiaryItemClick a function to navigate to a beneficiary detail screen when a beneficiary item is clicked.
+ * @param onBeneficiaryItemClick a function to navigate to a beneficiary detail screen when a
+ * beneficiary item is clicked.
  */
 fun NavGraphBuilder.beneficiaryListScreen(
     navigateBack: () -> Unit,

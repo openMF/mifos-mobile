@@ -130,10 +130,8 @@ internal class BeneficiaryDetailViewModel(
 
     /**
      * Handles the response from the beneficiary list API and updates the view model state accordingly.
-     *
-     * If the response is loading, the view model state is updated to show a loading state.
-     * If the response is an error, the view model state is updated to show an error state.
-     * If the response is successful, the view model state is updated to show a success state and the beneficiary is updated to the one with the matching ID.
+     * If the response is successful, the view model state is updated to show a success state and
+     * the beneficiary is updated to the one with the matching ID.
      *
      * @param beneficiary The response from the beneficiary list API.
      */
@@ -198,7 +196,8 @@ internal class BeneficiaryDetailViewModel(
      * Processes the result of the delete beneficiary API.
      *
      * If the response is loading, the view model state is updated to show an overlay.
-     * If the response is an error, the view model state is updated to show an error state and a dialog is shown with a generic error message.
+     * If the response is an error, the view model state is updated to show an error state and a dialog
+     * is shown with a generic error message.
      * If the response is successful, the view model state is updated to navigate back to the previous screen.
      *
      * @param response The response from the delete beneficiary API.
