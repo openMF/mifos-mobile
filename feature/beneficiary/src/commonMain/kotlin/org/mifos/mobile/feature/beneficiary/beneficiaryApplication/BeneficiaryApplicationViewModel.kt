@@ -477,9 +477,7 @@ sealed interface BeneficiaryApplicationAction {
     data object LoadBeneficiaryTemplate : BeneficiaryApplicationAction
     data object SubmitBeneficiary : BeneficiaryApplicationAction
 
-
     data object OnNavigate : BeneficiaryApplicationAction
-
 
     data object OnRetry : BeneficiaryApplicationAction
 
@@ -487,20 +485,15 @@ sealed interface BeneficiaryApplicationAction {
 
     data class OnAccountTypeChanged(val accountType: Int) : BeneficiaryApplicationAction
 
-
     data class OnAccountNumberChanged(val accountNumber: String) : BeneficiaryApplicationAction
 
-
     data class OnOfficeNameChanged(val officeName: String) : BeneficiaryApplicationAction
-
 
     data class OnTransferLimitChanged(val transferLimit: String) : BeneficiaryApplicationAction
 
     data class OnBeneficiaryNameChanged(val beneficiaryName: String) : BeneficiaryApplicationAction
 
-
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationAction
-
 
     sealed interface Internal : BeneficiaryApplicationAction {
 

@@ -335,28 +335,21 @@ sealed interface BeneficiaryDetailAction {
 
     data object OnRefresh : BeneficiaryDetailAction
 
-
     data object OnUpdateBeneficiary : BeneficiaryDetailAction
-
 
     data object DeleteBeneficiary : BeneficiaryDetailAction
 
     data object OnNavigate : BeneficiaryDetailAction
 
-
     data object ErrorDialogDismiss : BeneficiaryDetailAction
-
 
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
 
-
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryDetailAction
-
 
     sealed interface Internal : BeneficiaryDetailAction {
 
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
-
 
         data class ReceiveDeleteBeneficiary(val result: DataState<String>) : Internal
     }
