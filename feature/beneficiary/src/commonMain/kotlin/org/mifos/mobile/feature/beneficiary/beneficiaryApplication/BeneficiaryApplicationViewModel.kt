@@ -447,22 +447,8 @@ data class BeneficiaryApplicationState(
  * @param NavigateToQR navigate to the QR screen.
  */
 sealed interface BeneficiaryApplicationEvent {
-    /***
-     * Navigate to the next screen.
-     */
     data object Navigate : BeneficiaryApplicationEvent
 
-    /***
-     * Submit the beneficiary application.
-     *
-     * @param beneficiaryId the ID of the beneficiary.
-     * @param beneficiaryState the state of the beneficiary.
-     * @param name the name of the beneficiary.
-     * @param officeName the office name of the beneficiary.
-     * @param accountType the account type of the beneficiary.
-     * @param accountNumber the account number of the beneficiary.
-     * @param transferLimit the transfer limit of the beneficiary.
-     */
     data class SubmitBeneficiary(
         val beneficiaryId: Long,
         val beneficiaryState: String,
@@ -473,9 +459,6 @@ sealed interface BeneficiaryApplicationEvent {
         val transferLimit: Int,
     ) : BeneficiaryApplicationEvent
 
-    /***
-     * Navigate to the QR screen.
-     */
     data object NavigateToQR : BeneficiaryApplicationEvent
 }
 
@@ -490,68 +473,37 @@ sealed interface BeneficiaryApplicationEvent {
  */
 
 sealed interface BeneficiaryApplicationAction {
-    /***
-     * Load the beneficiary template.
-     */
-    data object LoadBeneficiaryTemplate : BeneficiaryApplicationAction
 
-    /***
-     * Submit the beneficiary application.
-     */
+    data object LoadBeneficiaryTemplate : BeneficiaryApplicationAction
     data object SubmitBeneficiary : BeneficiaryApplicationAction
 
-    /***
-     * Navigate to the next screen.
-     */
+
     data object OnNavigate : BeneficiaryApplicationAction
 
-    /***
-     * Retry the operation.
-     */
+
     data object OnRetry : BeneficiaryApplicationAction
 
-    /***
-     * Navigate to the QR screen.
-     */
     data object NavigateToQR : BeneficiaryApplicationAction
 
-    /***
-     * Account type changed.
-     */
     data class OnAccountTypeChanged(val accountType: Int) : BeneficiaryApplicationAction
 
-    /***
-     * Account number changed.
-     */
+
     data class OnAccountNumberChanged(val accountNumber: String) : BeneficiaryApplicationAction
 
-    /***
-     * Office name changed.
-     */
+
     data class OnOfficeNameChanged(val officeName: String) : BeneficiaryApplicationAction
 
-    /***
-     * Transfer limit changed.
-     */
+
     data class OnTransferLimitChanged(val transferLimit: String) : BeneficiaryApplicationAction
 
-    /***
-     * Beneficiary name changed.
-     */
     data class OnBeneficiaryNameChanged(val beneficiaryName: String) : BeneficiaryApplicationAction
 
-    /***
-     * Receive network status.
-     */
+
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationAction
 
-    /***
-     * Internal action.
-     */
+
     sealed interface Internal : BeneficiaryApplicationAction {
-        /***
-         * Receive beneficiary result.
-         */
+
         data class ReceiveBeneficiaryResult(
             val beneficiaryList: DataState<List<Beneficiary>>,
             val beneficiaryTemplate: DataState<BeneficiaryTemplate>,

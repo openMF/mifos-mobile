@@ -423,7 +423,7 @@ data class BeneficiaryApplicationConfirmationState(
 
 /*
 * Represents the events that can occur on the Beneficiary Application Confirmation screen.
-* */
+*/
 
 sealed interface BeneficiaryApplicationConfirmationEvent {
     /**
@@ -449,11 +449,6 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
         val buttonText: String,
     ) : BeneficiaryApplicationConfirmationEvent
 
-    /**
-     * Represents the event of navigating to the Beneficiary Authentication screen.
-     *
-     * @param status the status of the event (e.g. success, error).
-     */
     data class NavigateToAuthenticate(
         val status: String = EventType.SUCCESS.name,
     ) : BeneficiaryApplicationConfirmationEvent
@@ -469,21 +464,10 @@ sealed interface BeneficiaryApplicationConfirmationEvent {
 
 sealed interface BeneficiaryApplicationConfirmationAction {
 
-    /**
-     * Represents the action of submitting the beneficiary application.
-     */
     data object SubmitBeneficiary : BeneficiaryApplicationConfirmationAction
 
-    /**
-     * Represents the action of receiving the network status.
-     *
-     * @param isOnline indicates whether the network is available.
-     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryApplicationConfirmationAction
 
-    /**
-     * Represents the action of navigating back to the previous screen.
-     */
     data object OnNavigate : BeneficiaryApplicationConfirmationAction
 
     /**
@@ -494,25 +478,10 @@ sealed interface BeneficiaryApplicationConfirmationAction {
      * @param ReceiveUpdateBeneficiary the action of receiving the result of updating the beneficiary application.
      */
     sealed interface Internal : BeneficiaryApplicationConfirmationAction {
-        /**
-         * Represents the action of receiving the authentication result.
-         *
-         * @param result indicates whether the authentication was successful.
-         */
         data class ReceiveAuthenticationResult(val result: Boolean) : Internal
 
-        /**
-         * Represents the action of receiving the result of submitting the beneficiary application.
-         *
-         * @param result the data state of the submission result.
-         */
         data class ReceiveSubmitBeneficiary(val result: DataState<String>) : Internal
 
-        /**
-         * Represents the action of receiving the result of updating the beneficiary application.
-         *
-         * @param result the data state of the update result.
-         */
         data class ReceiveUpdateBeneficiary(val result: DataState<String>) : Internal
     }
 }

@@ -313,16 +313,9 @@ data class BeneficiaryDetailState(
 * */
 
 sealed interface BeneficiaryDetailEvent {
-    /**
-     * Navigates back to the previous screen.
-     */
+
     data object NavigateBack : BeneficiaryDetailEvent
 
-    /**
-     * Updates the beneficiary with the given ID.
-     *
-     * @property beneficiaryId The ID of the beneficiary to update.
-     */
     data class UpdateBeneficiary(val beneficiaryId: Long) : BeneficiaryDetailEvent
 }
 
@@ -339,59 +332,32 @@ sealed interface BeneficiaryDetailEvent {
 * @property Internal Internal actions.
 * */
 sealed interface BeneficiaryDetailAction {
-    /**
-     * Refreshes the beneficiary list.
-     */
+
     data object OnRefresh : BeneficiaryDetailAction
 
-    /**
-     * Updates the beneficiary with the given ID.
-     */
+
     data object OnUpdateBeneficiary : BeneficiaryDetailAction
 
-    /**
-     * Deletes the beneficiary with the given ID.
-     */
+
     data object DeleteBeneficiary : BeneficiaryDetailAction
 
-    /**
-     * Navigates to the beneficiary list screen.
-     */
     data object OnNavigate : BeneficiaryDetailAction
 
-    /**
-     * Dismisses the error dialog.
-     */
+
     data object ErrorDialogDismiss : BeneficiaryDetailAction
 
-    /**
-     * Shows the delete confirmation dialog.
-     */
+
     data object ShowDeleteConfirmation : BeneficiaryDetailAction
 
-    /**
-     * Receives the network status.
-     *
-     * @property isOnline Whether the device is online or not.
-     */
+
     data class ReceiveNetworkStatus(val isOnline: Boolean) : BeneficiaryDetailAction
 
-    /**
-     * Internal actions.
-     */
+
     sealed interface Internal : BeneficiaryDetailAction {
-        /**
-         * Receives the result of loading a beneficiary.
-         *
-         * @property result The result of loading a beneficiary.
-         */
+
         data class ReceiveBeneficiaryResult(val result: DataState<List<Beneficiary>>) : Internal
 
-        /**
-         * Receives the result of deleting a beneficiary.
-         *
-         * @property result The result of deleting a beneficiary.
-         */
+
         data class ReceiveDeleteBeneficiary(val result: DataState<String>) : Internal
     }
 }
