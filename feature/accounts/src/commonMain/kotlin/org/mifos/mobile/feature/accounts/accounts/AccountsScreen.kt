@@ -54,7 +54,13 @@ import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
 import org.mifos.mobile.feature.shareaccount.shareAccount.ShareAccountScreen
-
+/**
+ * Composable function that displays the Accounts Screen.
+ *
+ * @param navigateBack The function to be called when the back button is pressed.
+ * @param onAccountClicked The function to be called when an account is clicked.
+ * @param viewModel The ViewModel to be used for the screen.
+ */
 @Composable
 internal fun AccountsScreen(
     navigateBack: () -> Unit,
@@ -86,7 +92,13 @@ internal fun AccountsScreen(
         },
     )
 }
-
+/**
+ * Composable function that displays the Accounts Dialog.
+ *
+ * @param state The state of the screen.
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @Composable
 internal fun AccountsDialog(
     state: AccountsState,
@@ -110,7 +122,13 @@ internal fun AccountsDialog(
         null -> {}
     }
 }
-
+/**
+ * Composable function that displays the Savings Account Filters Dialog.
+ *
+ * @param state The state of the screen.
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @Composable
 internal fun SavingsAccountFilters(
     state: AccountsState,
@@ -181,7 +199,13 @@ internal fun SavingsAccountFilters(
         }
     }
 }
-
+/**
+ * Composable function that displays the Account Screen Content.
+ *
+ * @param state The state of the screen.
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @Composable
 internal fun AccountScreenContent(
     state: AccountsState,
