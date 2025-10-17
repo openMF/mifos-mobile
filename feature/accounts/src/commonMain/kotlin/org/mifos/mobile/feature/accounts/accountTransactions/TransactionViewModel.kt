@@ -383,6 +383,7 @@ internal class AccountsTransactionViewModel(
             }
         }
     }
+
     /**
      * Handles the result of the savings transactions API call by updating the UI state
      * based on [DataState] — success, loading, or error.
@@ -438,6 +439,7 @@ internal class AccountsTransactionViewModel(
             }
         }
     }
+
     /**
      * Handles the result of the loan transactions API call by updating the UI state
      * based on [DataState] — success, loading, or error.

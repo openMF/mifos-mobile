@@ -92,6 +92,7 @@ internal fun AccountsScreen(
         },
     )
 }
+
 /**
  * Composable function that displays the Accounts Dialog.
  *
@@ -122,6 +123,7 @@ internal fun AccountsDialog(
         null -> {}
     }
 }
+
 /**
  * Composable function that displays the Savings Account Filters Dialog.
  *
@@ -199,6 +201,7 @@ internal fun SavingsAccountFilters(
         }
     }
 }
+
 /**
  * Composable function that displays the Account Screen Content.
  *

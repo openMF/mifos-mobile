@@ -101,6 +101,7 @@ internal fun TransactionScreen(
         },
     )
 }
+
 /**
  * Composable function for the Account Transactions Screen Content.
  *
@@ -216,6 +217,7 @@ internal fun TransactionScreenContent(
         }
     }
 }
+
 /**
  * Composable function for the Account Transactions Dialog.
  *
@@ -247,6 +249,7 @@ internal fun AccountTransactionsDialog(
         null -> {}
     }
 }
+
 /**
  * Composable function for the Account Transactions Action Bar.
  *
@@ -309,6 +312,7 @@ internal fun ActionBar(
         }
     }
 }
+
 /**
  * Composable function for the Account Transactions Filters.
  *

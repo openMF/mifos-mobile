@@ -29,6 +29,7 @@ data class AccountTransactionsNavRoute(
     val accountType: String,
     val accountId: Long,
 )
+
 /**
  * Navigates to the Account Transactions Screen with the specified account type and ID.
  *

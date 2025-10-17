@@ -26,6 +26,7 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 data class AccountNavRoute(
     val accountType: String,
 )
+
 /**
  * Navigates to the Accounts Screen.
  *

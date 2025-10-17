@@ -157,6 +157,7 @@ internal fun FilterSection(
         )
     }
 }
+
 /**
  * Composable function for the Filter Checkbox UI.
  *

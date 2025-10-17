@@ -125,6 +125,7 @@ object StatusUtils {
 
         return accountTypes + accountStatuses
     }
+
     /**
      * Retrieves the list of available checkbox statuses for transactions.
      *

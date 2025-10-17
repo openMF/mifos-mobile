@@ -34,6 +34,7 @@ enum class FilterType {
     ACCOUNT_TYPE,
     ACCOUNT_STATUS,
 }
+
 /**
  * Data class representing a transaction checkbox status.
  *
@@ -46,6 +47,7 @@ internal data class TransactionCheckboxStatus(
     val isChecked: Boolean = false,
     val type: TransactionFilterType = TransactionFilterType.TRANSACTION_TYPE,
 )
+
 /**
  * Enum class representing the type of transaction filter.
  *
