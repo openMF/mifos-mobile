@@ -44,7 +44,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
-
+/**
+ * Composable function that displays the Client Charges Screen.
+ *
+ * @param navigateBack A lambda function that is called when the user navigates back.
+ * @param onChargeClick A lambda function that is called when the user clicks on a charge.
+ * @param modifier Modifier to be applied to the layout.
+ * @param viewModel ViewModel that provides the state and actions for the screen.
+ */
 @Composable
 internal fun ClientChargeScreen(
     navigateBack: () -> Unit,
@@ -87,6 +94,13 @@ internal fun ClientChargeScreen(
     )
 }
 
+/**
+ * Composable function that displays the Client Charges Screen.
+ *
+ * @param state State of the screen.
+ * @param modifier Modifier to be applied to the layout.
+ * @param onAction A lambda function that is called when the user performs an action.
+ */
 @Composable
 private fun ClientChargeScreen(
     state: ClientChargeState,
@@ -149,6 +163,13 @@ private fun ClientChargeScreen(
     }
 }
 
+/**
+ * Composable function that displays the content of the Client Charges Screen.
+ *
+ * @param chargesList List of charges to be displayed.
+ * @param onChargeClick A lambda function that is called when the user clicks on a charge.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @Composable
 private fun ClientChargeContent(
     chargesList: List<Charge>,
@@ -164,6 +185,12 @@ private fun ClientChargeContent(
     }
 }
 
+/**
+ * Composable function that displays the dialogs of the Client Charges Screen.
+ *
+ * @param dialogState Dialog state used for showing loading or error.
+ * @param onDismissRequest A lambda function that is called when the user dismisses the dialog.
+ */
 @Composable
 private fun ClientChargeDialogs(
     dialogState: ClientChargeState.DialogState?,

@@ -41,6 +41,13 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.Charge
 
+/**
+ * Composable function that displays a charge item.
+ *
+ * @param charge The charge to be displayed.
+ * @param onChargeClick A lambda function that is called when the user clicks on a charge.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @Composable
 fun ClientChargeItem(
     charge: Charge,
