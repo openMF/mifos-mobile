@@ -59,6 +59,10 @@ kotlin {
     }
 }
 
+tasks.register("jsBrowserRun") {
+    dependsOn("jsBrowserDevelopmentRun")
+}
+
 compose.resources {
     publicResClass = true
     generateResClass = always

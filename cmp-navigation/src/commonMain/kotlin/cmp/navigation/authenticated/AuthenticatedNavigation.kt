@@ -33,7 +33,6 @@ import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
-import org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation.BeneficiaryApplicationConfirmationNavRoute
 import org.mifos.mobile.feature.beneficiary.navigation.BeneficiaryNavRoute
 import org.mifos.mobile.feature.beneficiary.navigation.beneficiaryNavGraph
 import org.mifos.mobile.feature.beneficiary.navigation.navigateToBeneficiaryNavGraph
@@ -41,7 +40,6 @@ import org.mifos.mobile.feature.charge.charges.navigateToClientChargeScreen
 import org.mifos.mobile.feature.charge.navigation.clientChargeNavGraph
 import org.mifos.mobile.feature.charge.navigation.navigateToChargeGraph
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
-import org.mifos.mobile.feature.loan.application.confirmDetails.ConfirmDetailsRoute
 import org.mifos.mobile.feature.loan.application.navigation.loanApplicationNavGraph
 import org.mifos.mobile.feature.loan.application.navigation.navigateToLoanApplicationGraph
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.navigateToLoanAccountDetailsScreen
@@ -69,12 +67,13 @@ import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
-import org.mifos.mobile.feature.transfer.process.transferProcess.TransferProcessRoute
 import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
 @Serializable
 internal data object AuthenticatedGraphRoute
+
+expect fun getPopRules(): Map<String, Int>
 
 internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? = null) {
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
@@ -471,11 +470,7 @@ fun NavController.navigateToBeneficiaryFromStatus() {
 }
 
 fun NavController.popScreens(
-    popRules: Map<String, Int> = mapOf(
-        ConfirmDetailsRoute::class.qualifiedName.orEmpty() to 2,
-        TransferProcessRoute::class.qualifiedName.orEmpty() to 2,
-        BeneficiaryApplicationConfirmationNavRoute::class.qualifiedName.orEmpty() to 2,
-    ),
+    popRules: Map<String, Int> = getPopRules(),
 ) {
     val lastEntry = previousBackStackEntry?.destination?.route
 
