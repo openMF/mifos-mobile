@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_new_product_label
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_savings_product_empty
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_product_label
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_topbar_title
 import org.jetbrains.compose.resources.stringResource
@@ -126,6 +127,14 @@ internal fun AccountUpdateScreenContent(
         },
     ) {
         when (state.uiState) {
+            ScreenUiState.Empty -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(Res.string.feature_savings_savings_product_empty),
+                    onRetry = { onAction(AccountUpdateAction.Retry) },
+                )
+            }
+
             is ScreenUiState.Error -> {
                 MifosErrorComponent(
                     isRetryEnabled = true,

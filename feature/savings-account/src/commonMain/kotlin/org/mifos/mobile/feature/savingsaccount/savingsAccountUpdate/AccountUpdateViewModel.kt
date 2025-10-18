@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import mifos_mobile.feature.savings_account.generated.resources.Res
+import mifos_mobile.feature.savings_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_account_number_label
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_client_name_label
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_product_label
@@ -74,17 +75,10 @@ internal class AccountUpdateViewModel(
             Res.string.feature_savings_update_account_number_label to clientDetails.accountNumber,
             Res.string.feature_savings_update_product_label to clientDetails.product,
         )
-        val productOptions = mapOf(
-            1L to "Wallet",
-            2L to "FDP",
-            4L to "1 year Fixed Deposit",
-
-        )
         AccountUpdateState(
             clientId = requireNotNull(userPreferencesRepository.clientId.value),
             accountId = requireNotNull(clientDetails.accountId),
             details = detailsMap,
-            productOptions = productOptions,
             dialogState = null,
         )
     },
@@ -95,19 +89,14 @@ internal class AccountUpdateViewModel(
         observeAuthResult()
     }
 
-//    TODO get savings product from server
-//    init {
-//        observeSavingsProducts()
-//    }
-
-//    private fun observeSavingsProducts() {
-//        viewModelScope.launch {
-//            savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(state.clientId)
-//                .collect {
-//                    sendAction(AccountUpdateAction.Internal.ReceiveProducts(it))
-//                }
-//        }
-//    }
+    private fun fetchSavingsProducts() {
+        viewModelScope.launch {
+            savingsAccountRepositoryImp.getSavingAccountApplicationTemplate(state.clientId)
+                .collect {
+                    sendAction(AccountUpdateAction.Internal.ReceiveProducts(it))
+                }
+        }
+    }
 
     /**
      * Observes the network connectivity status and updates state accordingly.
@@ -131,6 +120,7 @@ internal class AccountUpdateViewModel(
      *
      * @param isOnline A boolean indicating the current network status.
      */
+    @Suppress("ComplexCondition")
     private fun handleNetworkStatus(isOnline: Boolean) {
         updateState { it.copy(networkStatus = isOnline) }
 
@@ -138,6 +128,7 @@ internal class AccountUpdateViewModel(
             if (!isOnline) {
                 updateState { current ->
                     if (current.uiState is ScreenUiState.Loading ||
+                        state.showOverlay ||
                         current.uiState is ScreenUiState.Error ||
                         current.uiState is ScreenUiState.Empty ||
                         current.uiState is ScreenUiState.Network
@@ -148,7 +139,7 @@ internal class AccountUpdateViewModel(
                     }
                 }
             } else {
-                // TODO get the products from server
+                fetchSavingsProducts()
             }
         }
     }
@@ -158,7 +149,7 @@ internal class AccountUpdateViewModel(
             if (!state.networkStatus) {
                 updateState { it.copy(uiState = ScreenUiState.Network) }
             } else {
-                // TODO get the products from server
+                fetchSavingsProducts()
             }
         }
     }
@@ -201,8 +192,7 @@ internal class AccountUpdateViewModel(
 
             is AccountUpdateAction.Retry -> retry()
 
-//            TODO handle received products
-            is AccountUpdateAction.Internal.ReceiveProducts -> { }
+            is AccountUpdateAction.Internal.ReceiveProducts -> handleSavingsProduct(action.dataState)
 
             is AccountUpdateAction.Internal.ReceiveUpdateRequestResult -> {
                 viewModelScope.launch {
@@ -217,6 +207,49 @@ internal class AccountUpdateViewModel(
             is AccountUpdateAction.Internal.PerformUpdate -> performUpdate()
 
             is AccountUpdateAction.DismissDialog -> handleDismissDialog()
+        }
+    }
+
+    /**
+     * Handles the result of the `fetchSavingsProducts` network call.
+     * Updates the state with product options on success. If the list of
+     * options is empty, it sets the `isEmpty` flag to true. On failure,
+     * it displays an error dialog.
+     *
+     * @param template The [DataState] containing the loan template data.
+     */
+    private fun handleSavingsProduct(template: DataState<SavingsAccountTemplate>) {
+        when (template) {
+            is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
+            is DataState.Success -> {
+                val loanTemplate = template.data
+                if (loanTemplate.productOptions.isEmpty()) {
+                    updateState {
+                        it.copy(
+                            uiState = ScreenUiState.Empty,
+                        )
+                    }
+                    return
+                }
+
+                val productOptions = loanTemplate.productOptions.associate {
+                    it.id.toLong() to it.name
+                }
+
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Success,
+                        productOptions = productOptions,
+                    )
+                }
+            }
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        uiState = ScreenUiState.Error(Res.string.feature_generic_error_server),
+                    )
+                }
+            }
         }
     }
 

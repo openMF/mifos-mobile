@@ -75,6 +75,8 @@
     <string name="feature_savings_update_request_update">Request Update</string>
     <string name="feature_savings_new_product_label">New Product</string>
 
+    <string name="feature_savings_savings_product_empty">Currently Loan Products are not available</string>
+
     <string name="feature_savings_update_request_successful">Request Submitted Successfully</string>
     <string name="feature_savings_update_request_successful_message">Request to update the account details is submitted successfully</string>
     <string name="feature_savings_update_request_back_to_home">Back To Home</string>
