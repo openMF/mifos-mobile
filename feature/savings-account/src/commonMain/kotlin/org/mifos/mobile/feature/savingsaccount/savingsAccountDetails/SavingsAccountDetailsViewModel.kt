@@ -118,6 +118,21 @@ internal class SavingsAccountDetailsViewModel(
             SavingsAccountDetailsAction.OnUpdateAccount -> sendEvent(
                 SavingsAccountDetailsEvent.UpdateAccount,
             )
+
+            SavingsAccountDetailsAction.OnTransactionsClick -> handleTransactionsClick()
+
+            SavingsAccountDetailsAction.OnChargesClick -> handleChargesClick()
+
+            SavingsAccountDetailsAction.OnQrCodeClick -> handleQrCodeClick()
+
+            SavingsAccountDetailsAction.OnTransactionInfoClick -> handleTransactionInfoClick()
+
+            SavingsAccountDetailsAction.ToggleMenu -> {
+                updateState { it.copy(isMenuExpanded = !it.isMenuExpanded) }
+            }
+            SavingsAccountDetailsAction.DismissMenu -> {
+                updateState { it.copy(isMenuExpanded = false) }
+            }
         }
     }
 
@@ -128,6 +143,28 @@ internal class SavingsAccountDetailsViewModel(
      */
     private fun updateState(update: (SavingsAccountDetailsState) -> SavingsAccountDetailsState) {
         mutableStateFlow.update(update)
+    }
+
+    private fun handleTransactionsClick() {
+        if (state.isActive) {
+            sendEvent(SavingsAccountDetailsEvent.ShowTransactions)
+        }
+    }
+
+    private fun handleChargesClick() {
+        sendEvent(SavingsAccountDetailsEvent.ShowCharges)
+    }
+
+    private fun handleQrCodeClick() {
+        if (state.accountNumber != null) {
+            sendEvent(SavingsAccountDetailsEvent.ShowQrCode)
+        }
+    }
+
+    private fun handleTransactionInfoClick() {
+        if (state.transactionList.isNotEmpty()) {
+            updateState { it.copy(dialogState = SavingsAccountDetailsState.DialogState.TransactionInfo) }
+        }
     }
 
     /**
@@ -297,6 +334,7 @@ internal class SavingsAccountDetailsViewModel(
  * @property isActive True if the account is active.
  * @property items List of quick action items (Deposit, Transfer, etc.)
  * @property isUpdatable user can update only when status is submit and pending approval
+ * @property isMenuExpanded True if the menu is expanded.
  * @property dialogState State representing dialogs like error, loading, etc.
  */
 @Immutable
@@ -313,6 +351,8 @@ internal data class SavingsAccountDetailsState(
 
     val isUpdatable: Boolean = false,
 
+    val isMenuExpanded: Boolean = false,
+
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
@@ -323,6 +363,9 @@ internal data class SavingsAccountDetailsState(
     sealed interface DialogState {
         /** Shown when an error occurs. */
         data class Error(val message: String) : DialogState
+
+        /** Shown when displaying transaction info. */
+        data object TransactionInfo : DialogState
     }
 }
 
@@ -338,6 +381,12 @@ sealed interface SavingsAccountDetailsEvent {
 
     /** Trigger Update Amount */
     data object UpdateAccount : SavingsAccountDetailsEvent
+
+    data object ShowTransactions : SavingsAccountDetailsEvent
+
+    data object ShowCharges : SavingsAccountDetailsEvent
+
+    data object ShowQrCode : SavingsAccountDetailsEvent
 }
 
 /**
@@ -361,6 +410,18 @@ sealed interface SavingsAccountDetailsAction {
 
     /** Action to observe network status */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : SavingsAccountDetailsAction
+
+    data object OnTransactionsClick : SavingsAccountDetailsAction
+
+    data object OnChargesClick : SavingsAccountDetailsAction
+
+    data object OnQrCodeClick : SavingsAccountDetailsAction
+
+    data object OnTransactionInfoClick : SavingsAccountDetailsAction
+
+    data object ToggleMenu : SavingsAccountDetailsAction
+
+    data object DismissMenu : SavingsAccountDetailsAction
 
     /**
      * Internal-only actions such as results from repository calls.
