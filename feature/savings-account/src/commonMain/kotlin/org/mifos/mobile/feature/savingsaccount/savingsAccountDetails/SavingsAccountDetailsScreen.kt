@@ -439,9 +439,9 @@ internal fun SavingsAccountDialogs(
         is SavingsAccountDetailsState.DialogState.TransactionInfo -> {
             MifosAlertDialog(
                 onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
-                dialogTitle =stringResource(Res.string.feature_transaction_info_title),
+                dialogTitle = stringResource(Res.string.feature_transaction_info_title),
                 dialogText = transectionInfo.joinToString("\n ") { "${it.label}: ${it.value}" },
-                confirmationText ="Close",
+                confirmationText = "Close",
                 dismissText = "",
                 onConfirmation = { onAction(SavingsAccountDetailsAction.DismissDialog) },
             )
