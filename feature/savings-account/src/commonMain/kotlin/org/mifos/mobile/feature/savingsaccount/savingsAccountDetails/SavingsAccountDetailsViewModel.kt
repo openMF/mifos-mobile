@@ -308,7 +308,7 @@ internal class SavingsAccountDetailsViewModel(
             )
         } ?: emptyList()
 
-        mutableStateFlow.update {
+        updateState {
             it.copy(
                 isActive = isActive,
                 isUpdatable = isUpdate,

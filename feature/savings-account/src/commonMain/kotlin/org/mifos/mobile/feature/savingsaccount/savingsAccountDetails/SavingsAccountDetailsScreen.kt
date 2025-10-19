@@ -30,7 +30,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
@@ -63,6 +61,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
+import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -138,7 +137,7 @@ internal fun SavingsAccountDetailsScreen(
 
     SavingsAccountDialogs(
         dialogState = uiState.dialogState,
-        transactionList = uiState.transactionList,
+        transectionInfo = uiState.transactionList,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -423,55 +422,9 @@ internal fun SavingsAccountActions(
 }
 
 @Composable
-private fun TransactionInfoDialog(
-    transactionItems: List<LabelValueItem>,
-    onDismiss: () -> Unit,
-) {
-    androidx.compose.material3.AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = stringResource(Res.string.feature_transaction_info_title),
-                style = MaterialTheme.typography.titleLarge,
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-            ) {
-                transactionItems.forEach { item ->
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            text = stringResource(item.label),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Text(
-                            text = item.value,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Close")
-            }
-        },
-    )
-}
-
-@Composable
 internal fun SavingsAccountDialogs(
     dialogState: SavingsAccountDetailsState.DialogState?,
-    transactionList: List<LabelValueItem>,
+    transectionInfo: List<LabelValueItem>,
     onAction: (SavingsAccountDetailsAction) -> Unit,
 ) {
     when (dialogState) {
@@ -484,9 +437,13 @@ internal fun SavingsAccountDialogs(
         }
 
         is SavingsAccountDetailsState.DialogState.TransactionInfo -> {
-            TransactionInfoDialog(
-                transactionItems = transactionList,
-                onDismiss = { onAction(SavingsAccountDetailsAction.DismissDialog) },
+            MifosAlertDialog(
+                onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
+                dialogTitle =stringResource(Res.string.feature_transaction_info_title),
+                dialogText = transectionInfo.joinToString("\n ") { "${it.label}: ${it.value}" },
+                confirmationText ="Close",
+                dismissText = "",
+                onConfirmation = { onAction(SavingsAccountDetailsAction.DismissDialog) },
             )
         }
 
