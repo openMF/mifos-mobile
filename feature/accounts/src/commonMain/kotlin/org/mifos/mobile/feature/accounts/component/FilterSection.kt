@@ -45,6 +45,19 @@ import org.mifos.mobile.core.designsystem.utils.onClick
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
 
+/**
+ * Composable function for the Filter Section.
+ *
+ * @param title The title of the filter section.
+ * @param filtersSelected The number of filters selected.
+ * @param isExpanded Boolean indicating whether the filter section is expanded.
+ * @param onToggle The function to be called when the filter section is toggled.
+ * @param filters The list of filters to be displayed.
+ * @param onCheckChanged The function to be called when a filter is checked.
+ * @param modifier Optional modifier for the filter section.
+ * @param isRadio Boolean indicating whether the filter section is a radio button.
+ * @param selectedRadioButton The currently selected radio button.
+ */
 @Composable
 internal fun FilterSection(
     title: String,
@@ -145,6 +158,15 @@ internal fun FilterSection(
     }
 }
 
+/**
+ * Composable function for the Filter Checkbox UI.
+ *
+ * @param statusLabel The label of the filter checkbox.
+ * @param isChecked Boolean indicating whether the filter checkbox is checked.
+ * @param onCheckedChange The function to be called when the filter checkbox is checked.
+ * @param modifier Optional modifier for the filter checkbox.
+ * @param isRadio Boolean indicating whether the filter checkbox is a radio button.
+ */
 @Composable
 fun FilterCheckboxUI(
     statusLabel: StringResource,

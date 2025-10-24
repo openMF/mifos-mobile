@@ -159,6 +159,9 @@ internal class AccountsTransactionViewModel(
         }
     }
 
+    /**
+     * Handles the refresh action by checking the network status and loading transactions.
+     */
     private fun handleRefresh() {
         viewModelScope.launch {
             if (!state.networkStatus) {
@@ -170,6 +173,11 @@ internal class AccountsTransactionViewModel(
         }
     }
 
+    /**
+     * Handles the network result by updating the network status and UI state.
+     *
+     * @param isOnline Boolean indicating whether the network is online.
+     */
     private fun handleNetworkResult(isOnline: Boolean) {
         updateState {
             it.copy(networkStatus = isOnline)
@@ -376,6 +384,10 @@ internal class AccountsTransactionViewModel(
         }
     }
 
+    /**
+     * Handles the result of the savings transactions API call by updating the UI state
+     * based on [DataState] — success, loading, or error.
+     */
     private fun handleSavingsTransactionsResult(dataState: DataState<SavingsWithAssociations>) {
         when (dataState) {
             is DataState.Error -> {
@@ -428,6 +440,10 @@ internal class AccountsTransactionViewModel(
         }
     }
 
+    /**
+     * Handles the result of the loan transactions API call by updating the UI state
+     * based on [DataState] — success, loading, or error.
+     */
     private fun handleLoanTransactionsResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
@@ -688,6 +704,14 @@ internal data class AccountTransactionState(
 
 /**
  * Sealed interface representing actions that can be performed on the account transactions screen.
+ * @property Refresh Action to refresh the transaction data.
+ * @property DismissDialog Action to dismiss any currently shown dialog.
+ * @property OnNavigateBackClick Action to navigate back to the previous screen.
+ * @property ToggleFilter Action to toggle the visibility of the filter dialog.
+ * @property ResetFilters Action to reset all filters to their default state.
+ * @property GetFilterResults Action to get the results of the filter dialog.
+ * @property ReceiveNetworkResult Action to receive the result of the network status check.
+ * @property ToggleCheckbox Action to toggle a specific checkbox filter.
  */
 internal sealed interface AccountTransactionAction {
     data object Refresh : AccountTransactionAction
@@ -746,6 +770,7 @@ internal sealed interface AccountTransactionAction {
 
 /**
  * Sealed interface representing one-time events to be sent to the UI.
+ * @property OnNavigateBack Event to navigate back to the previous screen.
  */
 sealed interface AccountTransactionEvent {
     data object OnNavigateBack : AccountTransactionEvent

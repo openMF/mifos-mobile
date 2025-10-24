@@ -66,7 +66,12 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
-
+/**
+ * Composable function for the Account Transactions Screen.
+ *
+ * @param navigateBack The function to be called when the back button is pressed.
+ * @param viewModel The ViewModel for the Account Transactions Screen.
+ */
 @Composable
 internal fun TransactionScreen(
     navigateBack: () -> Unit,
@@ -97,6 +102,13 @@ internal fun TransactionScreen(
     )
 }
 
+/**
+ * Composable function for the Account Transactions Screen Content.
+ *
+ * @param state The current state of the Account Transactions Screen.
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Optional modifier for the content.
+ */
 @Composable
 internal fun TransactionScreenContent(
     state: AccountTransactionState,
@@ -206,6 +218,12 @@ internal fun TransactionScreenContent(
     }
 }
 
+/**
+ * Composable function for the Account Transactions Dialog.
+ *
+ * @param state The current state of the Account Transactions Screen.
+ * @param onAction The function to be called when an action is performed.
+ */
 @Composable
 internal fun AccountTransactionsDialog(
     state: AccountTransactionState,
@@ -232,6 +250,12 @@ internal fun AccountTransactionsDialog(
     }
 }
 
+/**
+ * Composable function for the Account Transactions Action Bar.
+ *
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Optional modifier for the action bar.
+ */
 @Composable
 internal fun ActionBar(
     onAction: (AccountTransactionAction) -> Unit,
@@ -289,6 +313,13 @@ internal fun ActionBar(
     }
 }
 
+/**
+ * Composable function for the Account Transactions Filters.
+ *
+ * @param state The current state of the Account Transactions Screen.
+ * @param onAction The function to be called when an action is performed.
+ * @param modifier Optional modifier for the filters.
+ */
 @Composable
 internal fun TransactionFilters(
     state: AccountTransactionState,

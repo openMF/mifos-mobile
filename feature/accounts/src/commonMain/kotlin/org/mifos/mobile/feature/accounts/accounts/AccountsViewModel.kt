@@ -205,91 +205,82 @@ internal class AccountsViewModel(
 /**
  * UI state for the Accounts screen, containing filter options, dialog visibility,
  * current account type, and refresh signals.
+ *
+ * @property isRefreshing Indicates if the screen is currently refreshing data.
+ * @property checkboxOptions List of checkboxes for filter options.
+ * @property selectedFilters List of currently selected filters.
+ * @property accountType Current account type filter.
+ * @property toggleFilterDialog Whether the filter dialog is open.
+ * @property accountTypeFiltersCount Count of selected account type filters.
+ * @property accountStatusFiltersCount Count of selected account status filters.
+ * @property refreshSignal Signal to trigger data refresh.
+ * @property dialogState Current dialog state (Error or Filters).
+ * @property uiState Overall UI state of the screen (Loading, Success, Error).
+ *
  */
 internal data class AccountsState
 @OptIn(ExperimentalTime::class)
 constructor(
     val isRefreshing: Boolean = false,
-
-    /** Current filter checkboxes shown in the dialog */
     val checkboxOptions: List<CheckboxStatus> = emptyList(),
-
-    /** Confirmed filters applied to the data */
     val selectedFilters: List<CheckboxStatus> = emptyList(),
-
-    /** Selected account type (Savings, Loan, Share) */
     val accountType: AccountType = AccountType.SAVINGS,
-
-    /** Whether filter dialog is visible */
     val toggleFilterDialog: Boolean = false,
-
-    /** Count of selected account-type filters */
     val accountTypeFiltersCount: Int? = 0,
-
-    /** Count of selected status filters */
     val accountStatusFiltersCount: Int? = 0,
-
-    /** Used to trigger data refresh downstream */
     val refreshSignal: Long = Clock.System.now().epochSeconds,
-
-    /** Current dialog being shown (loading, filters, error) */
     val dialogState: DialogState? = null,
-
-    /** Hold the state of the screen */
     val uiState: ScreenUiState = ScreenUiState.Loading,
 ) {
 
-    /**
-     * Defines various dialog states in the Accounts screen.
-     */
     sealed interface DialogState {
         data class Error(val message: String) : DialogState
         data object Filters : DialogState
     }
 
-    /** True if any checkbox is selected */
     val isAnyFilterSelected = checkboxOptions.any { it.isChecked }
 }
 
 /**
  * Defines all user or internal actions that can be triggered in the Accounts screen.
+ *
+ * @property ToggleFilter Opens or closes the filter dialog
+ * @property ResetFilters Clears all filters and selections
+ * @property DismissDialog Dismisses any open dialog
+ * @property GetFilterResults Applies filter and triggers refresh
+ * @property OnNavigateBack Handles back navigation
+ * @property Refresh Initiates refresh of data
+ * @property RefreshCompleted Signals that refresh is done
+ * @property OnAccountClicked When an account card is clicked
+ * @property SetCheckboxFilterList Sets the checkbox list based on account type
+ * @property ToggleCheckbox Toggles a specific checkbox in the dialog
  */
 internal sealed interface AccountsAction {
 
-    /** Opens or closes the filter dialog */
     data object ToggleFilter : AccountsAction
 
-    /** Clears all filters and selections */
     data object ResetFilters : AccountsAction
 
-    /** Dismisses any open dialog */
     data object DismissDialog : AccountsAction
 
-    /** Applies filter and triggers refresh */
     data object GetFilterResults : AccountsAction
 
-    /** Handles back navigation */
     data object OnNavigateBack : AccountsAction
 
-    /** Initiates refresh of data */
     data object Refresh : AccountsAction
 
-    /** Signals that refresh is done */
     data object RefreshCompleted : AccountsAction
 
-    /** When an account card is clicked */
     data class OnAccountClicked(
         val accountId: Long,
         val accountType: String,
     ) : AccountsAction
 
-    /** Sets the checkbox list based on account type */
     data class SetCheckboxFilterList(
         val checkBoxList: List<CheckboxStatus>,
         val accountType: String,
     ) : AccountsAction
 
-    /** Toggles a specific checkbox */
     data class ToggleCheckbox(
         val label: StringResource,
         val type: FilterType,
@@ -298,13 +289,13 @@ internal sealed interface AccountsAction {
 
 /**
  * Defines one-time events sent from AccountsViewModel to UI.
+ * @property NavigateBack Navigate back to previous screen
+ * @property AccountClicked Navigate to account detail screen
  */
 sealed interface AccountsEvent {
 
-    /** Navigate back to previous screen */
     data object NavigateBack : AccountsEvent
 
-    /** Navigate to account detail screen */
     data class AccountClicked(
         val accountId: Long,
         val accountType: String,

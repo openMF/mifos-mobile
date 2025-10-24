@@ -17,12 +17,26 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * Navigation route for the Account Transactions Screen.
+ *
+ * @param accountType The type of account to be displayed.
+ * @param accountId The ID of the account to be displayed.
+ */
+
 @Serializable
 data class AccountTransactionsNavRoute(
     val accountType: String,
     val accountId: Long,
 )
 
+/**
+ * Navigates to the Account Transactions Screen with the specified account type and ID.
+ *
+ * @param accountType The type of account to be displayed.
+ * @param accountId The ID of the account to be displayed.
+ * @param navOptions Optional navigation options for the transaction screen.
+ */
 fun NavController.navigateToAccountTransactionsScreen(
     accountType: String,
     accountId: Long,
@@ -31,6 +45,11 @@ fun NavController.navigateToAccountTransactionsScreen(
     this.navigate(AccountTransactionsNavRoute(accountType, accountId), navOptions)
 }
 
+/**
+ * Adds the Account Transactions Screen to the navigation graph.
+ *
+ * @param navigateBack The function to be called when the back button is pressed.
+ */
 fun NavGraphBuilder.accountTransactionsDestination(
     navigateBack: () -> Unit,
 ) {

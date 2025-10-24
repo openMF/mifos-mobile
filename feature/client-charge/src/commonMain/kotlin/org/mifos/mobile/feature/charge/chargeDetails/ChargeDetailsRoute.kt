@@ -17,7 +17,19 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.ui.composableWithStayTransitions
-
+/**
+ * Route for the Charges Details Screen.
+ *
+ * @param title Title of the charge.
+ * @param date Date of the charge.
+ * @param due Due amount of the charge.
+ * @param paid Paid amount of the charge.
+ * @param waived Waived amount of the charge.
+ * @param outstanding Outstanding amount of the charge.
+ * @param refNo Reference number of the charge.
+ * @param paidOn Date when the charge was paid.
+ * @param isPaid Whether the charge is paid or not.
+ */
 @Serializable
 data class ChargesDetailsRoute(
     val title: String = "",
@@ -41,6 +53,11 @@ fun NavGraphBuilder.chargesDetailsDestination(onNavigateBack: () -> Unit) {
 
 // TODO: last charge paid On , needed that.
 // TODO: Add reference No instead of chargeId
+/**
+ * Navigates to the Charges Details Screen.
+ *
+ * @param charge Charge object containing the details of the charge.
+ */
 fun NavController.navigateToChargesDetailsScreen(charge: Charge) {
     this.navigate(
         ChargesDetailsRoute(

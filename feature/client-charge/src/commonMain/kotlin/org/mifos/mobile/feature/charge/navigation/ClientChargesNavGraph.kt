@@ -25,6 +25,11 @@ import org.mifos.mobile.feature.charge.charges.clientChargesScreen
 @Serializable
 data object ClientChargesNavGraphRoute
 
+/**
+ * Navigation graph for the Client Charges Screen.
+ *
+ * @param navController The NavController to be used for navigation.
+ */
 fun NavGraphBuilder.clientChargeNavGraph(
     navController: NavController,
 //    navigateBack: () -> Unit,

@@ -126,6 +126,11 @@ object StatusUtils {
         return accountTypes + accountStatuses
     }
 
+    /**
+     * Retrieves the list of available checkbox statuses for transactions.
+     *
+     * @return A list of [TransactionCheckboxStatus] representing different transaction statuses.
+     */
     internal fun getTransactionCheckboxes(): List<TransactionCheckboxStatus> {
         val type = listOf(
             TransactionCheckboxStatus(

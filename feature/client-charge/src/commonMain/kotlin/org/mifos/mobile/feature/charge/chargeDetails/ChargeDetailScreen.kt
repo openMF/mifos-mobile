@@ -50,6 +50,13 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
+/**
+ * ChargeDetailScreen is a composable function that displays the details of a charge.
+ *
+ * @param onNavigateBack A lambda function that is called when the user navigates back.
+ * @param modifier Modifier for the composable.
+ * @param viewModel The ChargeDetailsViewModel for the screen.
+ */
 @Composable
 internal fun ChargeDetailScreen(
     onNavigateBack: () -> Unit,
@@ -110,6 +117,13 @@ internal fun ChargeDetailScreen(
     )
 }
 
+/**
+ * ChargeDetailsPaidComponent is a composable function that displays the details of a paid charge.
+ *
+ * @param refNo Reference number of the charge.
+ * @param paidOn Date when the charge was paid.
+ * @param modifier Modifier for the composable.
+ */
 @Composable
 fun ChargeDetailsPaidComponent(
     refNo: String,
@@ -153,6 +167,13 @@ fun ChargeDetailsPaidComponent(
     }
 }
 
+/**
+ * ChargeDetailsUnPaidComponent is a composable function that displays the details of an unpaid charge.
+ *
+ * @param amountPaidOn Date when the charge was paid.
+ * @param onPayOutStanding A lambda function that is called when the user pays the outstanding amount.
+ * @param modifier Modifier for the composable.
+ */
 @Composable
 fun ChargeDetailsUnPaidComponent(
     amountPaidOn: String,

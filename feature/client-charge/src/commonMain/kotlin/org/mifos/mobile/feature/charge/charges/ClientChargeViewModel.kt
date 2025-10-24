@@ -125,6 +125,11 @@ internal class ClientChargeViewModel(
         }
     }
 
+    /**
+     * Handles the result of the network status.
+     *
+     * @param isOnline Boolean indicating if the network is online.
+     */
     private fun handleNetworkResult(isOnline: Boolean) {
         updateState {
             it.copy(networkStatus = isOnline)
@@ -146,6 +151,10 @@ internal class ClientChargeViewModel(
         }
     }
 
+    /**
+     * Retries loading charges if the network is available.
+     * If the network is not available, it sets the UI state to Network.
+     */
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
@@ -304,67 +313,47 @@ data class ClientChargeState(
 
 /**
  * UI events emitted from the ViewModel to be handled by the UI layer.
+ *
+ * @property ShowToast Shows a toast message.
+ * @property Navigate Navigates to the charge creation screen.
+ * @property OnChargeClick Triggered when a user clicks on a charge item.
  */
 sealed interface ClientChargeEvent {
-    /**
-     * Shows a toast message.
-     * @param message Message to display.
-     */
     data class ShowToast(val message: String) : ClientChargeEvent
 
-    /** Navigates to the charge creation screen. */
     data object Navigate : ClientChargeEvent
 
-    /**
-     * Triggered when a charge item is clicked.
-     * @param charge The clicked charge.
-     */
     data class OnChargeClick(val charge: Charge) : ClientChargeEvent
 }
 
 /**
  * Actions dispatched from the UI or internal processes.
+ *
+ * @property RefreshCharges Refreshes the list of charges.
+ * @property OnNavigate Navigates to the charge creation screen.
+ * @property OnDismissDialog Dismisses any open dialog (error/loading).
+ * @property OnChargeClick Triggered when a user clicks on a charge item.
  */
 sealed interface ClientChargeAction {
 
-    /** Refreshes the list of charges. */
     data object RefreshCharges : ClientChargeAction
 
-    /** Navigates to the charge creation screen. */
     data object OnNavigate : ClientChargeAction
 
-    /** Dismisses any open dialog (error/loading). */
     data object OnDismissDialog : ClientChargeAction
 
-    /**
-     * Triggered when a user clicks on a charge item.
-     * @param charge The clicked charge.
-     */
     data class OnChargeClick(val charge: Charge) : ClientChargeAction
 
-    /** Receive the network status */
     data class ReceiveNetworkResult(val isOnline: Boolean) : ClientChargeAction
 
-    /** Action to trigger to refetch the charges */
     data object Retry : ClientChargeAction
 
-    /**
-     * Internal actions used by the ViewModel.
-     */
     sealed class Internal : ClientChargeAction {
 
-        /**
-         * Result from fetching loan or savings charges.
-         * @param result DataState containing a list of charges.
-         */
         data class ReceiveLoanOrSavingsChargesResult(
             val result: DataState<List<Charge>>,
         ) : Internal()
 
-        /**
-         * Result from fetching client charges.
-         * @param result DataState containing a paginated response.
-         */
         data class ReceiveClientChargesResult(
             val result: DataState<Page<Charge>>,
         ) : Internal()
