@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.savingsaccount.savingsAccountDetails
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -23,10 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,17 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_details_top_bar_title
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_options_title
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_menu_charges
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_menu_qr_code
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_menu_transaction_info
-import mifos_mobile.feature.savings_account.generated.resources.feature_savings_menu_transactions
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_status_label
-import mifos_mobile.feature.savings_account.generated.resources.feature_transaction_info_title
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -61,7 +50,6 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
-import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -134,14 +122,6 @@ internal fun SavingsAccountDetailsScreen(
             { viewModel.trySendAction(it) }
         },
     )
-
-    SavingsAccountDialogs(
-        dialogState = uiState.dialogState,
-        transectionInfo = uiState.transactionList,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
 }
 
 @Composable
@@ -160,85 +140,6 @@ internal fun SavingsAccountDetailsContent(
                         .fillMaxWidth()
                         .navigationBarsPadding(),
                 )
-            }
-        },
-        actions = {
-            Box {
-                IconButton(onClick = { onAction(SavingsAccountDetailsAction.ToggleMenu) }) {
-                    Icon(
-                        imageVector = MifosIcons.MoreVert,
-                        contentDescription = stringResource(Res.string.feature_savings_account_options_title),
-                    )
-                }
-
-                // Dropdown menu
-                DropdownMenu(
-                    expanded = state.isMenuExpanded,
-                    onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissMenu) },
-                ) {
-                    // Transactions option
-                    DropdownMenuItem(
-                        text = { Text(stringResource(Res.string.feature_savings_menu_transactions)) },
-                        onClick = {
-                            onAction(SavingsAccountDetailsAction.OnTransactionsClick)
-                            onAction(SavingsAccountDetailsAction.DismissMenu)
-                        },
-                        enabled = state.isActive,
-                        leadingIcon = {
-                            Icon(
-                                imageVector = MifosIcons.TransactionHistory,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-
-                    // Charges option
-                    DropdownMenuItem(
-                        text = { Text(stringResource(Res.string.feature_savings_menu_charges)) },
-                        onClick = {
-                            onAction(SavingsAccountDetailsAction.OnChargesClick)
-                            onAction(SavingsAccountDetailsAction.DismissMenu)
-                        },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = MifosIcons.Receipt,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-
-                    // QR Code option
-                    DropdownMenuItem(
-                        text = { Text(stringResource(Res.string.feature_savings_menu_qr_code)) },
-                        onClick = {
-                            onAction(SavingsAccountDetailsAction.OnQrCodeClick)
-                            onAction(SavingsAccountDetailsAction.DismissMenu)
-                        },
-                        enabled = state.accountNumber != null,
-                        leadingIcon = {
-                            Icon(
-                                imageVector = MifosIcons.QrCode,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-
-                    // Transaction Info option
-                    DropdownMenuItem(
-                        text = { Text(stringResource(Res.string.feature_savings_menu_transaction_info)) },
-                        onClick = {
-                            onAction(SavingsAccountDetailsAction.OnTransactionInfoClick)
-                            onAction(SavingsAccountDetailsAction.DismissMenu)
-                        },
-                        enabled = state.transactionList.isNotEmpty(),
-                        leadingIcon = {
-                            Icon(
-                                imageVector = MifosIcons.Info,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-                }
             }
         },
     ) {
@@ -278,7 +179,7 @@ internal fun SavingsAccountDetailsContent(
                         isActive = state.isActive,
                     )
 
-                    if (state.isActive) {
+                    if (state.transactionList.isNotEmpty()) {
                         AccountDetailsGrid(
                             label = "Last Transactions",
                             details = state.transactionList,
@@ -286,14 +187,14 @@ internal fun SavingsAccountDetailsContent(
                         )
                     }
 
-                    if (state.isActive) {
-                        SavingsAccountActions(
-                            items = state.items,
-                            onActionClick = {
-                                onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
-                            },
-                        )
-                    }
+                    val visibleActions = state.savingStatus?.allowedActions ?: emptySet()
+
+                    SavingsAccountActions(
+                        visibleActions = visibleActions,
+                        onActionClick = {
+                            onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
+                        },
+                    )
                 }
             }
             else -> { }
@@ -393,7 +294,7 @@ internal fun AccountDetailsGrid(
 
 @Composable
 internal fun SavingsAccountActions(
-    items: ImmutableList<SavingsActionItems>,
+    visibleActions: Set<SavingsActionItems>,
     onActionClick: (String) -> Unit,
 ) {
     Column(
@@ -407,7 +308,8 @@ internal fun SavingsAccountActions(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items.forEach { item ->
+            println("Visible Actions: $visibleActions")
+            visibleActions.forEach { item ->
                 MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
@@ -418,36 +320,6 @@ internal fun SavingsAccountActions(
                 )
             }
         }
-    }
-}
-
-@Composable
-internal fun SavingsAccountDialogs(
-    dialogState: SavingsAccountDetailsState.DialogState?,
-    transectionInfo: List<LabelValueItem>,
-    onAction: (SavingsAccountDetailsAction) -> Unit,
-) {
-    when (dialogState) {
-        is SavingsAccountDetailsState.DialogState.Error -> {
-            MifosErrorComponent(
-                message = dialogState.message,
-                onRetry = { onAction(SavingsAccountDetailsAction.OnRetry) },
-                isRetryEnabled = true,
-            )
-        }
-
-        is SavingsAccountDetailsState.DialogState.TransactionInfo -> {
-            MifosAlertDialog(
-                onDismissRequest = { onAction(SavingsAccountDetailsAction.DismissDialog) },
-                dialogTitle = stringResource(Res.string.feature_transaction_info_title),
-                dialogText = transectionInfo.joinToString("\n ") { "${it.label}: ${it.value}" },
-                confirmationText = "Close",
-                dismissText = "",
-                onConfirmation = { onAction(SavingsAccountDetailsAction.DismissDialog) },
-            )
-        }
-
-        null -> Unit
     }
 }
 
