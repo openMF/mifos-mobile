@@ -95,13 +95,8 @@
     <string name="feature_savings_withdraw_request_failed_message">Request to withdraw the account is failed. Please try again </string>
 
     <string name="feature_savings_no_accounts_found">No Savings Accounts Found</string>
-    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
-
-    <string name="feature_savings_menu_transactions">Transactions</string>
-    <string name="feature_savings_menu_charges">Charges</string>
-    <string name="feature_savings_menu_qr_code">QR Code</string>
-    <string name="feature_savings_menu_transaction_info">Transaction Info</string>
-    <string name="feature_savings_account_options_title">Account Options</string>
-    <string name="feature_transaction_info_title">Transaction Information</string>
+        <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
     
-</resources>
+    
+        
+    </resources>
