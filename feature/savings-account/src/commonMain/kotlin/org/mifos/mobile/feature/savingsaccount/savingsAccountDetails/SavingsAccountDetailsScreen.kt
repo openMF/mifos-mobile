@@ -299,7 +299,7 @@ internal fun SavingsAccountActions(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-           visibleActions.forEach { item ->
+            visibleActions.forEach { item ->
                 MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
