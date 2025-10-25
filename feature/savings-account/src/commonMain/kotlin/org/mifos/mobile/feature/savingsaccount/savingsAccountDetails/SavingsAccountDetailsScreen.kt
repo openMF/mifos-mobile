@@ -105,7 +105,6 @@ internal fun SavingsAccountDetailsScreen(
                 )
             }
             else -> {
-
             }
         }
     }
