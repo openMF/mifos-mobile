@@ -362,12 +362,6 @@ sealed interface SavingsAccountDetailsEvent {
 
     /** Trigger Update Amount */
     data object UpdateAccount : SavingsAccountDetailsEvent
-
-    data object ShowTransactions : SavingsAccountDetailsEvent
-
-    data object ShowCharges : SavingsAccountDetailsEvent
-
-    data object ShowQrCode : SavingsAccountDetailsEvent
 }
 
 /**

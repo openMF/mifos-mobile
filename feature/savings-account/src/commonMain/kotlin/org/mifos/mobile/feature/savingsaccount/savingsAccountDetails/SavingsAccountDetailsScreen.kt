@@ -104,8 +104,6 @@ internal fun SavingsAccountDetailsScreen(
                     uiState.product,
                 )
             }
-            else -> {
-            }
         }
     }
 
