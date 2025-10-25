@@ -80,12 +80,15 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.CHARGES -> {
                         navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
                     }
+
                     event.route == Constants.TRANSFER -> {
                         navigateToTransferScreen(uiState.accountId)
                     }
+
                     event.route == Constants.TRANSACTIONS -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
+
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
@@ -101,17 +104,8 @@ internal fun SavingsAccountDetailsScreen(
                     uiState.product,
                 )
             }
+            else -> {
 
-            SavingsAccountDetailsEvent.ShowTransactions -> {
-                navigateToSavingsAccountTransactionScreen(uiState.accountId)
-            }
-
-            SavingsAccountDetailsEvent.ShowCharges -> {
-                navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
-            }
-
-            SavingsAccountDetailsEvent.ShowQrCode -> {
-                navigateToQrCodeScreen(viewModel.getQrString())
             }
         }
     }
