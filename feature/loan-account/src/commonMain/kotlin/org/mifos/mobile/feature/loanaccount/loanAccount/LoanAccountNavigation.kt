@@ -17,12 +17,25 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * A route for the loan account screen.
+ */
 @Serializable
 data object LoanAccountRoute
 
+/**
+ * Navigates to the loan account screen.
+ *
+ * @param navOptions The navigation options.
+ */
 fun NavController.navigateToLoanAccountScreen(navOptions: NavOptions? = null) =
     navigate(LoanAccountRoute, navOptions)
 
+/**
+ * Defines the loan account screen destination in the navigation graph.
+ *
+ * @param navigateBack A callback to navigate back to the previous screen.
+ */
 fun NavGraphBuilder.loanAccountDestination(
     navigateBack: () -> Unit,
 ) {

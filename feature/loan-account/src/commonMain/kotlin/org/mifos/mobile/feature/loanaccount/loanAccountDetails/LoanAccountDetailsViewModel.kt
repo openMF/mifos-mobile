@@ -43,10 +43,13 @@ import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 
 /**
- * ViewModel for managing the state and logic of the Loan Account Details screen.
+ * ViewModel for the loan account details screen.
+ * It is responsible for fetching and displaying the details of a loan account.
  *
- * @param loanAccountRepositoryImp Repository for fetching loan account data.
- * @param savedStateHandle Used to retrieve route arguments such as accountId.
+ * @param loanAccountRepositoryImp The repository for fetching loan account data.
+ * @param userPreferencesRepository The repository for user preferences.
+ * @param networkMonitor The network monitor to observe network connectivity.
+ * @param savedStateHandle The saved state handle for the view model.
  */
 internal class LoanAccountDetailsViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
@@ -169,6 +172,11 @@ internal class LoanAccountDetailsViewModel(
         mutableStateFlow.update { it.copy(dialogState = null) }
     }
 
+    /**
+     * Generates a string representation of the account details for use in a QR code.
+     *
+     * @return A string containing the account details, or an empty string if the office name is not available.
+     */
     fun getQrString(): String {
         val officeName = userPreferencesRepository.userInfo.value.officeName
         return if (officeName.isNotEmpty()) {
@@ -269,15 +277,23 @@ internal class LoanAccountDetailsViewModel(
 }
 
 /**
- * UI State for the Loan Account Details screen.
+ * Represents the state of the loan account details screen.
  *
- * @property accountId Unique ID for the loan account.
- * @property displayItems List of account metadata to be displayed.
- * @property transactionList List of most recent transaction details.
- * @property accountStatus True if the loan is active.
- * @property items List of quick action items (e.g., Repay, Foreclose).
- * @property isUpdatable Whether the loan is editable (e.g., in a pending state).
- * @property dialogState State representing UI dialogs like loading or error.
+ * @property accountId The ID of the loan account.
+ * @property totalOutStandingBalance The total outstanding balance of the loan.
+ * @property isEmpty Whether the account details are empty.
+ * @property clientName The name of the client.
+ * @property submissionDate The submission date of the loan application.
+ * @property accountNumber The account number of the loan.
+ * @property product The name of the loan product.
+ * @property displayItems A list of label-value pairs to display in the UI.
+ * @property transactionList A list of recent transactions.
+ * @property accountStatus The status of the loan account.
+ * @property items A list of actions that can be performed on the account.
+ * @property isUpdatable Whether the loan account is updatable.
+ * @property dialogState The state of the dialog to display.
+ * @property networkStatus The network connectivity status.
+ * @property uiState The overall state of the screen.
  */
 @Immutable
 internal data class LoanAccountDetailsState(
@@ -302,7 +318,11 @@ internal data class LoanAccountDetailsState(
      * Represents UI dialog states.
      */
     sealed interface DialogState {
-        /** Shown when an error occurs. */
+        /**
+         * An error dialog with a message.
+         *
+         * @param message The error message to display.
+         */
         data class Error(val message: String) : DialogState
     }
 }
@@ -359,40 +379,64 @@ val LoanStatus.allowedActions: Set<LoanActionItems>
     }
 
 /**
- * One-time navigation or effect events for the Loan Account Details screen.
+ * Represents the one-time events that can be sent from the ViewModel to the UI.
  */
 sealed interface LoanAccountDetailsEvent {
-    /** Trigger navigation back. */
+    /**
+     * Event to trigger navigation back to the previous screen.
+     */
     data object NavigateBack : LoanAccountDetailsEvent
 
-    /** Trigger navigation to a specific loan action screen. */
+    /**
+     * Event to trigger navigation to a specific loan action screen.
+     *
+     * @param route The route of the screen to navigate to.
+     */
     data class NavigateToAction(val route: String) : LoanAccountDetailsEvent
 }
 
 /**
- * Actions triggered from the UI layer to the ViewModel.
+ * Represents the actions that can be taken on the loan account details screen.
  */
 sealed interface LoanAccountDetailsAction {
-    /** User tapped back. */
+    /**
+     * Action to navigate back from the screen.
+     */
     data object OnNavigateBack : LoanAccountDetailsAction
 
-    /** User tapped on a quick action (e.g., Repay). */
+    /**
+     * Action to handle a click on a loan action.
+     *
+     * @param route The route of the screen to navigate to.
+     */
     data class OnNavigateToAction(val route: String) : LoanAccountDetailsAction
 
-    /** User dismissed a dialog. */
+    /**
+     * Action to dismiss any open dialog.
+     */
     data object DismissDialog : LoanAccountDetailsAction
 
-    /** When user retry */
+    /**
+     * Action to retry a failed operation.
+     */
     data object OnRetry : LoanAccountDetailsAction
 
-    /** Action to observe network status */
+    /**
+     * Action to receive the network status.
+     *
+     * @param isOnline Whether the device is online.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountDetailsAction
 
     /**
-     * Internal-only actions such as results from repository calls.
+     * Internal-only actions triggered by repository/data flow.
      */
     sealed interface Internal : LoanAccountDetailsAction {
-        /** Result of the loan account data fetch. */
+        /**
+         * Action to receive the loan account details from the repository.
+         *
+         * @param dataState The result of the data fetch.
+         */
         data class LoanResultReceived(val dataState: DataState<LoanWithAssociations?>) : Internal
     }
 }

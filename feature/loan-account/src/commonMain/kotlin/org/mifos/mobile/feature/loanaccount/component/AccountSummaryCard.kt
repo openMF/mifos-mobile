@@ -52,6 +52,15 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import kotlin.collections.component1
 import kotlin.collections.component2
 
+/**
+ * A composable that displays a summary of account details in a card format.
+ * The card is expandable to show more details.
+ *
+ * @param keyValuePairs A map of key-value pairs to display as account details. The key is a
+ *   [StringResource] for the label, and the value is the string to display.
+ * @param modifier The modifier to be applied to the component.
+ * @param title The title of the card.
+ */
 @Composable
 fun AccountSummaryCard(
     keyValuePairs: Map<StringResource, String?>,

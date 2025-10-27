@@ -39,6 +39,14 @@ import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * ViewModel for the repayment schedule screen.
+ * It is responsible for fetching and displaying the repayment schedule for a loan account.
+ *
+ * @param loanRepositoryImp The repository for fetching loan data.
+ * @param networkMonitor The network monitor to observe network connectivity.
+ * @param savedStateHandle The saved state handle for the view model.
+ */
 internal class RepaymentScheduleViewModel(
     private val loanRepositoryImp: LoanRepository,
     private val networkMonitor: NetworkMonitor,
@@ -220,6 +228,17 @@ internal class RepaymentScheduleViewModel(
     }
 }
 
+/**
+ * Represents the state of the repayment schedule screen.
+ *
+ * @property accountId The ID of the loan account.
+ * @property loanWithAssociations The loan account with its associations.
+ * @property periods The list of repayment periods.
+ * @property basicDetails A map of basic details about the loan.
+ * @property dialogState The state of the dialog to display.
+ * @property networkStatus The network connectivity status.
+ * @property uiState The overall state of the screen.
+ */
 internal data class RepaymentScheduleState(
     val accountId: Long? = null,
     val loanWithAssociations: LoanWithAssociations? = null,
@@ -230,8 +249,16 @@ internal data class RepaymentScheduleState(
     val networkStatus: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
+    /**
+     * Represents the possible dialog states.
+     */
     sealed interface DialogState {
 
+        /**
+         * An error dialog with a message.
+         *
+         * @param message The error message to display.
+         */
         data class Error(val message: String) : DialogState
     }
 
@@ -243,9 +270,24 @@ internal data class RepaymentScheduleState(
             .filter { it.period != null }
 }
 
+/**
+ * Represents the one-time events that can be sent from the ViewModel to the UI.
+ */
 sealed interface RepaymentScheduleEvent {
+    /**
+     * Event to navigate back to the previous screen.
+     */
     data object NavigateBack : RepaymentScheduleEvent
 
+    /**
+     * Event to pay an installment.
+     *
+     * @property accountId The ID of the loan account.
+     * @property outStandingBalance The outstanding balance of the installment.
+     * @property transferTyp The type of transfer.
+     * @property transferTarget The target of the transfer.
+     * @property transferSuccessDestination The destination to navigate to after a successful transfer.
+     */
     data class PayInstallment(
         val accountId: Long,
         val outStandingBalance: Double?,
@@ -255,11 +297,36 @@ sealed interface RepaymentScheduleEvent {
     ) : RepaymentScheduleEvent
 }
 
+/**
+ * Represents the actions that can be taken on the repayment schedule screen.
+ */
 sealed interface RepaymentScheduleAction {
+    /**
+     * Action to retry a failed operation.
+     */
     data object Retry : RepaymentScheduleAction
+
+    /**
+     * Action to navigate back from the screen.
+     */
     data object OnNavigateBack : RepaymentScheduleAction
+
+    /**
+     * Action to receive the network status.
+     *
+     * @param isOnline Whether the device is online.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : RepaymentScheduleAction
 
+    /**
+     * Action to pay an installment.
+     *
+     * @property accountId The ID of the loan account.
+     * @property outStandingBalance The outstanding balance of the installment.
+     * @property transferTyp The type of transfer.
+     * @property transferTarget The target of the transfer.
+     * @property transferSuccessDestination The destination to navigate to after a successful transfer.
+     */
     data class OnPayInstallment(
         val accountId: Long,
         val outStandingBalance: Double?,
@@ -268,7 +335,15 @@ sealed interface RepaymentScheduleAction {
         val transferSuccessDestination: TransferSuccessDestination,
     ) : RepaymentScheduleAction
 
+    /**
+     * Internal-only actions triggered by repository/data flow.
+     */
     sealed interface Internal : RepaymentScheduleAction {
+        /**
+         * Action to receive the repayment schedule from the repository.
+         *
+         * @param dataState The result of the data fetch.
+         */
         data class ReceivedRepaymentSchedule(val dataState: DataState<LoanWithAssociations?>) :
             Internal
     }

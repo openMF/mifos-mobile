@@ -54,10 +54,12 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.loanaccount.loanAccountDetails.LabelValueItem
 
 /**
- * ViewModel for managing the state and logic of the Loan Account Details screen.
+ * ViewModel for the loan account summary screen.
+ * It is responsible for fetching and displaying the summary of a loan account.
  *
- * @param loanAccountRepositoryImp Repository for fetching loan account data.
- * @param savedStateHandle Used to retrieve route arguments such as accountId.
+ * @param loanAccountRepositoryImp The repository for fetching loan account data.
+ * @param networkMonitor The network monitor to observe network connectivity.
+ * @param savedStateHandle The saved state handle for the view model.
  */
 internal class LoanAccountSummaryViewModel(
     private val loanAccountRepositoryImp: LoanRepository,
@@ -394,10 +396,19 @@ internal class LoanAccountSummaryViewModel(
 }
 
 /**
- * UI State for the Loan Account Details screen.
+ * Represents the state of the loan account summary screen.
  *
- * @property accountId Unique ID for the loan account.
- * @property dialogState State representing UI dialogs like loading or error.
+ * @property accountId The ID of the loan account.
+ * @property accountDetails A list of label-value pairs for the account details.
+ * @property payOffDetails A list of label-value pairs for the pay-off details.
+ * @property chargeDetails A list of label-value pairs for the charge details.
+ * @property waiversDetails A list of label-value pairs for the waivers details.
+ * @property paidOffDetails A list of label-value pairs for the paid-off details.
+ * @property outStandingDetails A list of label-value pairs for the outstanding details.
+ * @property installmentDetails A list of label-value pairs for the installment details.
+ * @property dialogState The state of the dialog to display.
+ * @property networkStatus The network connectivity status.
+ * @property uiState The overall state of the screen.
  */
 @Immutable
 internal data class LoanAccountSummaryState(
@@ -418,40 +429,60 @@ internal data class LoanAccountSummaryState(
      * Represents UI dialog states.
      */
     sealed interface DialogState {
-        /** Shown when an error occurs. */
+        /**
+         * An error dialog with a message.
+         *
+         * @param message The error message to display.
+         */
         data class Error(val message: String) : DialogState
     }
 }
 
 /**
- * One-time navigation or effect events for the Loan Account Details screen.
+ * Represents the one-time events that can be sent from the ViewModel to the UI.
  */
 sealed interface LoanAccountSummaryEvent {
-    /** Trigger navigation back. */
+    /**
+     * Event to trigger navigation back to the previous screen.
+     */
     data object NavigateBack : LoanAccountSummaryEvent
 }
 
 /**
- * Actions triggered from the UI layer to the ViewModel.
+ * Represents the actions that can be taken on the loan account summary screen.
  */
 sealed interface LoanAccountSummaryAction {
-    /** User tapped back. */
+    /**
+     * Action to navigate back from the screen.
+     */
     data object OnNavigateBack : LoanAccountSummaryAction
 
-    /** When user retry */
+    /**
+     * Action to retry a failed operation.
+     */
     data object Retry : LoanAccountSummaryAction
 
-    /** User dismissed a dialog. */
+    /**
+     * Action to dismiss any open dialog.
+     */
     data object DismissDialog : LoanAccountSummaryAction
 
-    /** Receive Network Result */
+    /**
+     * Action to receive the network status.
+     *
+     * @param isOnline Whether the device is online.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountSummaryAction
 
     /**
-     * Internal-only actions such as results from repository calls.
+     * Internal-only actions triggered by repository/data flow.
      */
     sealed interface Internal : LoanAccountSummaryAction {
-        /** Result of the loan account data fetch. */
+        /**
+         * Action to receive the loan summary from the repository.
+         *
+         * @param dataState The result of the data fetch.
+         */
         data class LoanSummaryReceived(val dataState: DataState<LoanWithAssociations?>) : Internal
     }
 }

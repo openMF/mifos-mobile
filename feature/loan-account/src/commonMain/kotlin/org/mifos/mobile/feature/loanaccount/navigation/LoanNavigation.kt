@@ -28,9 +28,23 @@ import org.mifos.mobile.feature.loanaccount.loanAccountSummary.navigateToLoanAcc
 @Serializable
 data object LoanGraphRoute
 
+/**
+ * Navigates to the loan account navigation graph.
+ *
+ * @param navOptions The navigation options.
+ */
 fun NavController.navigateToLoanGraph(navOptions: NavOptions? = null) =
     navigate(LoanGraphRoute, navOptions)
 
+/**
+ * Defines the loan account navigation graph.
+ *
+ * @param navController The [NavController] for the graph.
+ * @param navigateToMakePaymentScreen A callback to navigate to the make payment screen.
+ * @param navigateToQrCodeScreen A callback to navigate to the QR code screen.
+ * @param navigateToClientChargeScreen A callback to navigate to the client charge screen.
+ * @param navigateToLoanAccountTransactionScreen A callback to navigate to the loan account transaction screen.
+ */
 fun NavGraphBuilder.loanNavGraph(
     navController: NavController,
     navigateToMakePaymentScreen: (AccountDetails) -> Unit,

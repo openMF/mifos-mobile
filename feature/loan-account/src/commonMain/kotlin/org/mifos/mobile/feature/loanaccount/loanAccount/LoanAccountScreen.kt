@@ -61,6 +61,19 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.collections.orEmpty
 
+/**
+ * The main composable for the loan account screen.
+ * It displays a list of loan accounts and allows the user to filter them.
+ *
+ * @param navigateBack A callback to navigate back to the previous screen.
+ * @param onAccountClicked A callback that is invoked when a loan account is clicked.
+ * @param refreshSignal A signal to trigger a refresh of the account list.
+ * @param onLoadingCompleted A callback that is invoked when the initial loading is completed.
+ * @param accountTypeFilters A list of account type filters to apply.
+ * @param accountStatusFilters A list of account status filters to apply.
+ * @param filtersClicked A callback that is invoked when the filter button is clicked.
+ * @param viewModel The [LoanAccountsViewmodel] for this screen.
+ */
 @Composable
 fun LoanAccountScreen(
     navigateBack: () -> Unit,
@@ -117,6 +130,13 @@ fun LoanAccountScreen(
     )
 }
 
+/**
+ * A composable that displays a dialog for the loan account screen.
+ * It can show an error dialog.
+ *
+ * @param dialogState The state of the dialog to display.
+ * @param onAction A callback to handle actions from the dialog.
+ */
 @Composable
 internal fun LoanAccountDialog(
     dialogState: LoanAccountsState.DialogState?,
@@ -135,6 +155,15 @@ internal fun LoanAccountDialog(
     }
 }
 
+/**
+ * The content of the loan account screen.
+ * It displays a dashboard card with the total loan amount and a list of loan accounts.
+ * It also handles different UI states such as loading, error, network, and empty.
+ *
+ * @param state The [LoanAccountsState] for this screen.
+ * @param onAction A callback to handle actions from the screen.
+ * @param filtersClicked A callback that is invoked when the filter button is clicked.
+ */
 @Composable
 internal fun LoanAccountContent(
     state: LoanAccountsState,

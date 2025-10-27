@@ -49,6 +49,17 @@ import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/**
+ * A composable that displays a single item in a repayment schedule.
+ * It shows details such as the installment number, due date, and amount.
+ * It also provides a button to pay the installment if it's due.
+ *
+ * @param period The [Periods] object containing the details of the repayment period.
+ * @param currencyCode The currency code to use for formatting the amount.
+ * @param maxDigits The maximum number of digits to display for the fractional part of the amount.
+ * @param modifier The modifier to be applied to the component.
+ * @param onPayClick A callback that is invoked when the pay button is clicked.
+ */
 @OptIn(ExperimentalTime::class)
 @Composable
 fun RepaymentScheduleItem(

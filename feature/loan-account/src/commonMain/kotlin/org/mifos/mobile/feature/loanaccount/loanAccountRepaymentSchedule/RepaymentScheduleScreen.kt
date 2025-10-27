@@ -47,8 +47,16 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.RepaymentScheduleItem
 
+/**
+ * The main composable for the repayment schedule screen.
+ * It displays the repayment schedule for a loan account and allows the user to pay installments.
+ *
+ * @param navigateBack A callback to navigate back to the previous screen.
+ * @param navigateToMakePaymentScreen A callback to navigate to the make payment screen.
+ * @param viewModel The [RepaymentScheduleViewModel] for this screen.
+ */
 @Composable
-internal fun ChargeDetailScreen(
+internal fun RepaymentScheduleScreen(
     navigateBack: () -> Unit,
     navigateToMakePaymentScreen: (AccountDetails) -> Unit,
     viewModel: RepaymentScheduleViewModel = koinViewModel(),
@@ -88,6 +96,14 @@ internal fun ChargeDetailScreen(
     )
 }
 
+/**
+ * The content of the repayment schedule screen.
+ * It displays the basic details of the loan and a list of repayment periods.
+ *
+ * @param state The [RepaymentScheduleState] for this screen.
+ * @param onAction A callback to handle actions from the screen.
+ * @param modifier The modifier to be applied to the component.
+ */
 @Composable
 internal fun RepaymentScreenContent(
     state: RepaymentScheduleState,
@@ -169,6 +185,15 @@ internal fun RepaymentScreenContent(
     }
 }
 
+/**
+ * A composable that displays a list of repayment schedule items.
+ *
+ * @param periods The list of [Periods] to display.
+ * @param currencyCode The currency code to use for formatting the amount.
+ * @param maxDigits The maximum number of digits to display for the fractional part of the amount.
+ * @param modifier The modifier to be applied to the component.
+ * @param onPayClick A callback that is invoked when the pay button is clicked for a period.
+ */
 @Composable
 fun RepaymentScheduleList(
     periods: List<Periods>,
@@ -192,6 +217,13 @@ fun RepaymentScheduleList(
     }
 }
 
+/**
+ * A composable that displays a dialog for the repayment schedule screen.
+ * It can show an error dialog.
+ *
+ * @param dialogState The state of the dialog to display.
+ * @param onAction A callback to handle actions from the dialog.
+ */
 @Composable
 internal fun RepaymentDialogs(
     dialogState: RepaymentScheduleState.DialogState?,

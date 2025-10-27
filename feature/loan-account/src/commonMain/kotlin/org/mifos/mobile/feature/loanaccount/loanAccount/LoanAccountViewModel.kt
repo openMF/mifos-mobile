@@ -31,12 +31,12 @@ import org.mifos.mobile.feature.loanaccount.utils.FilterUtil
 import kotlin.collections.firstOrNull
 
 /**
- * ViewModel responsible for managing loan account UI state, fetching, filtering,
- * and reacting to user actions and network changes.
+ * ViewModel for the loan accounts screen.
+ * It is responsible for fetching and filtering loan accounts, and for handling user actions.
  *
- * @param accountsRepositoryImpl Provides access to account data.
- * @param networkMonitor Observes network connectivity.
- * @param userPreferencesRepositoryImpl Provides user-specific data such as client ID.
+ * @param accountsRepositoryImpl The repository for fetching account data.
+ * @param networkMonitor The network monitor to observe network connectivity.
+ * @param userPreferencesRepositoryImpl The repository for user preferences.
  */
 class LoanAccountsViewmodel(
     private val accountsRepositoryImpl: AccountsRepository,
@@ -307,8 +307,22 @@ class LoanAccountsViewmodel(
 }
 
 /**
- * State holder for the Loan Account screen.
- * Contains all values needed to render the UI and manage logic.
+ * Represents the state of the loan accounts screen.
+ *
+ * @property loanAccounts The list of loan accounts to display.
+ * @property originalAccounts The original, unfiltered list of loan accounts.
+ * @property isFilteredEmpty Whether the filtered list of accounts is empty.
+ * @property firstLaunch Whether this is the first time the screen is launched.
+ * @property items The number of filtered accounts.
+ * @property totalLoanAmount The total loan amount computed from the accounts.
+ * @property currency The currency symbol (e.g., ₹, $, etc.).
+ * @property decimals The number of decimals to display for the amount.
+ * @property clientId The current client ID from user preferences.
+ * @property dialogState The currently active dialog (Error).
+ * @property selectedFilters The filters currently applied.
+ * @property isAmountVisible Whether the account balances are visible.
+ * @property networkStatus The network connectivity status.
+ * @property uiState The overall state of the screen.
  */
 data class LoanAccountsState(
     val loanAccounts: List<LoanAccount>?,
@@ -353,40 +367,70 @@ data class LoanAccountsState(
      * Sealed class representing possible dialog states.
      */
     sealed interface DialogState {
+        /**
+         * An error dialog with a message.
+         *
+         * @param message The error message to display.
+         */
         data class Error(val message: String) : DialogState
     }
 }
 
 /**
- * Represents user or system actions for the Loan Account screen.
+ * Represents the actions that can be taken on the loan accounts screen.
  */
 sealed interface LoanAccountsAction {
 
+    /**
+     * Action to indicate that the screen is being launched for the first time.
+     */
     data object OnFirstLaunched : LoanAccountsAction
 
-    /** Dismiss any open dialog */
+    /**
+     * Action to dismiss any open dialog.
+     */
     data object OnDismissDialog : LoanAccountsAction
 
-    /** Navigate back from the screen */
+    /**
+     * Action to navigate back from the screen.
+     */
     data object OnNavigateBack : LoanAccountsAction
 
-    /** Toggle visibility of loan amount */
+    /**
+     * Action to toggle the visibility of the loan amount.
+     */
     data object ToggleAmountVisible : LoanAccountsAction
 
+    /**
+     * Action to retry a failed operation.
+     */
     data object OnRetry : LoanAccountsAction
 
-    /** Load loan accounts with applied filters */
+    /**
+     * Action to load the loan accounts with the given filters.
+     *
+     * @param filters The filters to apply.
+     */
     data class LoadAccounts(
         val filters: List<StringResource?>,
     ) : LoanAccountsAction
 
-    /** Navigate to a selected account's detail page */
+    /**
+     * Action to handle a click on a loan account.
+     *
+     * @param accountId The ID of the clicked account.
+     * @param accountType The type of the clicked account.
+     */
     data class OnAccountClicked(
         val accountId: Long,
         val accountType: String,
     ) : LoanAccountsAction
 
-    /** Action to observe network status */
+    /**
+     * Action to receive the network status.
+     *
+     * @param isOnline Whether the device is online.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountsAction
 
     /**
@@ -394,7 +438,12 @@ sealed interface LoanAccountsAction {
      */
     sealed interface Internal : LoanAccountsAction {
 
-        /** Called when account data is received from repository */
+        /**
+         * Action to receive the loan accounts from the repository.
+         *
+         * @param filters The filters that were applied.
+         * @param dataState The result of the data fetch.
+         */
         data class ReceiveLoanAccounts(
             val filters: List<StringResource?>,
             val dataState: DataState<ClientAccounts>,
@@ -403,19 +452,28 @@ sealed interface LoanAccountsAction {
 }
 
 /**
- * One-time UI events for the Loan Account screen.
+ * Represents the one-time events that can be sent from the ViewModel to the UI.
  */
 sealed interface LoanAccountsEvent {
 
-    /** Trigger navigation to selected account's detail screen */
+    /**
+     * Event to trigger navigation to the selected account's detail screen.
+     *
+     * @param accountId The ID of the clicked account.
+     * @param accountType The type of the clicked account.
+     */
     data class AccountClicked(
         val accountId: Long,
         val accountType: String,
     ) : LoanAccountsEvent
 
-    /** Signals the UI that loading is complete */
+    /**
+     * Event to signal that the loading is complete.
+     */
     data object LoadingCompleted : LoanAccountsEvent
 
-    /** Navigates back to the previous screen */
+    /**
+     * Event to navigate back to the previous screen.
+     */
     data object NavigateBack : LoanAccountsEvent
 }

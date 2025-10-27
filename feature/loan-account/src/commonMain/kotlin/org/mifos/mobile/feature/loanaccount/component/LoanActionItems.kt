@@ -29,12 +29,24 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
+/**
+ * Represents the different actions that can be performed on a loan account.
+ * Each action has a title, subtitle, icon, and a route for navigation.
+ *
+ * @property title The title of the action item.
+ * @property subTitle A brief description of the action.
+ * @property icon The icon representing the action.
+ * @property route The navigation route associated with the action.
+ */
 sealed class LoanActionItems(
     val title: StringResource,
     val subTitle: StringResource,
     val icon: ImageVector,
     val route: String,
 ) {
+    /**
+     * Action to make a payment on the loan account.
+     */
     data object MakePayment : LoanActionItems(
         title = Res.string.feature_account_action_make_payment,
         subTitle = Res.string.feature_account_action_make_payment_tip,
@@ -42,6 +54,9 @@ sealed class LoanActionItems(
         route = Constants.MAKE_PAYMENT,
     )
 
+    /**
+     * Action to view the loan summary.
+     */
     data object LoanSummary : LoanActionItems(
         title = Res.string.feature_account_action_loan_summary,
         subTitle = Res.string.feature_account_action_loan_summary_tip,
@@ -49,6 +64,9 @@ sealed class LoanActionItems(
         route = Constants.LOAN_SUMMARY,
     )
 
+    /**
+     * Action to view the repayment schedule of the loan.
+     */
     data object RepaymentSchedule : LoanActionItems(
         title = Res.string.feature_account_action_repayment_schedule,
         subTitle = Res.string.feature_account_action_repayment_schedule_tip,
@@ -56,6 +74,9 @@ sealed class LoanActionItems(
         route = Constants.REPAYMENT_SCHEDULE,
     )
 
+    /**
+     * Action to view the transaction history of the loan account.
+     */
     data object Transactions : LoanActionItems(
         title = Res.string.feature_account_action_transactions,
         subTitle = Res.string.feature_account_action_transactions_tip,
@@ -63,6 +84,9 @@ sealed class LoanActionItems(
         route = Constants.TRANSACTIONS,
     )
 
+    /**
+     * Action to view the charges associated with the loan account.
+     */
     data object Charges : LoanActionItems(
         title = Res.string.feature_account_action_charges,
         subTitle = Res.string.feature_account_action_charges_tip,
@@ -70,6 +94,9 @@ sealed class LoanActionItems(
         route = Constants.CHARGES,
     )
 
+    /**
+     * Action to generate a QR code for the loan account.
+     */
     data object QrCode : LoanActionItems(
         title = Res.string.feature_account_action_qr,
         subTitle = Res.string.feature_account_action_qr_tip,
@@ -78,6 +105,9 @@ sealed class LoanActionItems(
     )
 }
 
+/**
+ * A list of all available loan account actions.
+ */
 internal val loanAccountActions: ImmutableList<LoanActionItems> = persistentListOf(
     LoanActionItems.MakePayment,
     LoanActionItems.LoanSummary,

@@ -58,6 +58,19 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
 
+/**
+ * The main composable for the loan account details screen.
+ * It displays the details of a loan account and provides actions that can be performed on it.
+ *
+ * @param navigateBack A callback to navigate back to the previous screen.
+ * @param navigateToMakePaymentScreen A callback to navigate to the make payment screen.
+ * @param navigateToRepaymentScheduleScreen A callback to navigate to the repayment schedule screen.
+ * @param navigateToLoanSummaryScreen A callback to navigate to the loan summary screen.
+ * @param navigateToQrCodeScreen A callback to navigate to the QR code screen.
+ * @param navigateToClientChargeScreen A callback to navigate to the client charge screen.
+ * @param navigateToLoanAccountTransactionScreen A callback to navigate to the loan account transaction screen.
+ * @param viewModel The [LoanAccountDetailsViewModel] for this screen.
+ */
 @Composable
 internal fun LoanAccountDetailsScreen(
     navigateBack: () -> Unit,
@@ -123,6 +136,14 @@ internal fun LoanAccountDetailsScreen(
     )
 }
 
+/**
+ * The content of the loan account details screen.
+ * It displays the account details and actions in a scaffold.
+ *
+ * @param state The [LoanAccountDetailsState] for this screen.
+ * @param onAction A callback to handle actions from the screen.
+ * @param modifier The modifier to be applied to the component.
+ */
 @Composable
 internal fun LoanAccountDetailsContent(
     state: LoanAccountDetailsState,
@@ -194,6 +215,12 @@ internal fun LoanAccountDetailsContent(
     }
 }
 
+/**
+ * A composable that displays a grid of account details.
+ *
+ * @param label The label for the grid.
+ * @param details A list of [LabelValueItem]s to display.
+ */
 @Composable
 internal fun AccountDetailsGrid(
     label: String? = null,
@@ -238,6 +265,12 @@ internal fun AccountDetailsGrid(
     }
 }
 
+/**
+ * A composable that displays the actions that can be performed on a savings account.
+ *
+ * @param visibleActions A set of [LoanActionItems] that should be visible.
+ * @param onActionClick A callback that is invoked when an action is clicked.
+ */
 @Composable
 internal fun SavingsAccountActions(
     visibleActions: Set<LoanActionItems>,
@@ -267,6 +300,13 @@ internal fun SavingsAccountActions(
     }
 }
 
+/**
+ * A composable that displays a dialog for the loan account details screen.
+ * It can show an error dialog.
+ *
+ * @param dialogState The state of the dialog to display.
+ * @param onAction A callback to handle actions from the dialog.
+ */
 @Composable
 internal fun LoanAccountDialogs(
     dialogState: LoanAccountDetailsState.DialogState?,
@@ -285,6 +325,12 @@ internal fun LoanAccountDialogs(
     }
 }
 
+/**
+ * A data class that represents a label-value pair.
+ *
+ * @property label The label.
+ * @property value The value.
+ */
 data class LabelValueItem(
     val label: StringResource,
     val value: String,

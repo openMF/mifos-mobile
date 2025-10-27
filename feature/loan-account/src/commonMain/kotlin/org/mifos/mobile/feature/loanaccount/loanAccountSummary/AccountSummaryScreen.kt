@@ -48,6 +48,13 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.AccountSummaryCard
 import kotlin.collections.orEmpty
 
+/**
+ * The main composable for the loan account summary screen.
+ * It displays a summary of the loan account details.
+ *
+ * @param navigateBack A callback to navigate back to the previous screen.
+ * @param viewModel The [LoanAccountSummaryViewModel] for this screen.
+ */
 @Composable
 internal fun LoanAccountSummaryScreen(
     navigateBack: () -> Unit,
@@ -76,6 +83,13 @@ internal fun LoanAccountSummaryScreen(
     )
 }
 
+/**
+ * A composable that displays a dialog for the loan account summary screen.
+ * It can show an error dialog.
+ *
+ * @param dialogState The state of the dialog to display.
+ * @param onAction A callback to handle actions from the dialog.
+ */
 @Composable
 internal fun LoanAccountSummaryDialog(
     dialogState: LoanAccountSummaryState.DialogState?,
@@ -94,6 +108,14 @@ internal fun LoanAccountSummaryDialog(
     }
 }
 
+/**
+ * The content of the loan account summary screen.
+ * It displays the account summary details in a scaffold.
+ *
+ * @param state The [LoanAccountSummaryState] for this screen.
+ * @param onAction A callback to handle actions from the screen.
+ * @param modifier The modifier to be applied to the component.
+ */
 @Composable
 internal fun LoanAccountSummaryContent(
     state: LoanAccountSummaryState,
