@@ -13,6 +13,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.utils.EmptyContent.status
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -35,7 +36,7 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.LoanStatus
+import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.qr.getAccountDetailsInString
@@ -227,8 +228,8 @@ internal class SavingsAccountDetailsViewModel(
     }
 
     private fun extractDetails(savings: SavingsWithAssociations) {
-        val isActive = savings.status?.value == LoanStatus.ACTIVE.status
-        val isUpdate = savings.status?.value == LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status
+        val isActive = savings.status?.value == SavingStatus.ACTIVE.status
+        val isUpdate = savings.status?.value == SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status
 
         val currencyCode = savings.currency?.code
         val decimalPlaces = savings.currency?.decimalPlaces
@@ -271,8 +272,9 @@ internal class SavingsAccountDetailsViewModel(
             )
         } ?: emptyList()
 
-        mutableStateFlow.update {
+        updateState {
             it.copy(
+                savingStatus = SavingStatus.fromStatus(savings.status?.value ?: ""),
                 isActive = isActive,
                 isUpdatable = isUpdate,
                 accountId = savings.id ?: -1L,
@@ -308,6 +310,7 @@ internal data class SavingsAccountDetailsState(
     val product: String? = "",
     val displayItems: List<LabelValueItem> = emptyList(),
     val transactionList: List<LabelValueItem> = emptyList(),
+    val savingStatus: SavingStatus? = null,
     val isActive: Boolean = false,
     val items: ImmutableList<SavingsActionItems>,
 
@@ -325,6 +328,27 @@ internal data class SavingsAccountDetailsState(
         data class Error(val message: String) : DialogState
     }
 }
+val SavingStatus.allowedActions: Set<SavingsActionItems>
+    get() = when (this) {
+        SavingStatus.ACTIVE -> setOf(
+            SavingsActionItems.Transactions,
+            SavingsActionItems.Charges,
+            SavingsActionItems.QrCode,
+            SavingsActionItems.Transfer,
+        )
+        SavingStatus.INACTIVE -> setOf(
+            SavingsActionItems.Transfer,
+            SavingsActionItems.QrCode,
+        )
+        SavingStatus.CLOSED -> setOf(
+            SavingsActionItems.QrCode,
+            SavingsActionItems.Transfer,
+            SavingsActionItems.Transactions,
+        )
+        SavingStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
+            SavingsActionItems.QrCode,
+        )
+    }
 
 /**
  * One-time navigation or effect events for the SavingsAccountDetails screen.
