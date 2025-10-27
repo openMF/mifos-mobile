@@ -14,6 +14,7 @@ package org.mifos.mobile.feature.location.navigation
  * Base route for the locations feature navigation graph.
  */
 const val LOCATIONS_NAVIGATION_ROUTE_BASE = "locations_base_route"
+
 /**
  * Route for the locations screen.
  */
@@ -29,6 +30,7 @@ sealed class LocationsNavigation(val route: String) {
      * Represents the base navigation route for the locations feature.
      */
     data object LocationsBase : LocationsNavigation(route = LOCATIONS_NAVIGATION_ROUTE_BASE)
+
     /**
      * Represents the screen for displaying locations.
      */
