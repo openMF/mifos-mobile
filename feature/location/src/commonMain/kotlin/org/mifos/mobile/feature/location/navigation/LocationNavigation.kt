@@ -10,11 +10,27 @@
 package org.mifos.mobile.feature.location.navigation
 
 // Constants for Routes
+/**
+ * Base route for the locations feature navigation graph.
+ */
 const val LOCATIONS_NAVIGATION_ROUTE_BASE = "locations_base_route"
+/**
+ * Route for the locations screen.
+ */
 const val LOCATIONS_SCREEN_ROUTE = "locations_screen_route"
 
-// Sealed class for Navigation Routes
+/**
+ * Sealed class representing the navigation routes for the locations feature.
+ *
+ * @property route The route string for the navigation destination.
+ */
 sealed class LocationsNavigation(val route: String) {
+    /**
+     * Represents the base navigation route for the locations feature.
+     */
     data object LocationsBase : LocationsNavigation(route = LOCATIONS_NAVIGATION_ROUTE_BASE)
+    /**
+     * Represents the screen for displaying locations.
+     */
     data object LocationsScreen : LocationsNavigation(route = LOCATIONS_SCREEN_ROUTE)
 }

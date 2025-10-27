@@ -12,6 +12,12 @@ package org.mifos.mobile.feature.location
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * WasmJs-specific implementation of the [RenderMap] composable function.
+ * This is currently a no-op.
+ *
+ * @param modifier A [Modifier] for this composable.
+ */
 @Composable
 actual fun RenderMap(modifier: Modifier) {
 }

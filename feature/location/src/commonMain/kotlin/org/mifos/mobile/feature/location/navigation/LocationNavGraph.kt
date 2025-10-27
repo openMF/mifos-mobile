@@ -15,10 +15,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.mifos.mobile.feature.location.LocationsScreen
 
+/**
+ * Navigates to the locations screen.
+ */
 fun NavController.navigateToLocationsScreen() {
     navigate(LocationsNavigation.LocationsScreen.route)
 }
 
+/**
+ * Defines the navigation graph for the locations feature.
+ *
+ * @receiver [NavGraphBuilder]
+ */
 fun NavGraphBuilder.locationsNavGraph() {
     navigation(
         startDestination = LocationsNavigation.LocationsScreen.route,
@@ -28,6 +36,11 @@ fun NavGraphBuilder.locationsNavGraph() {
     }
 }
 
+/**
+ * Defines the route for the locations screen.
+ *
+ * @receiver [NavGraphBuilder]
+ */
 fun NavGraphBuilder.locationsScreenRoute() {
     composable(
         route = LocationsNavigation.LocationsScreen.route,

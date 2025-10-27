@@ -18,6 +18,12 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
+/**
+ * Android-specific implementation of the [RenderMap] composable function.
+ * This function displays a Google Map centered on the Mifos Initiative headquarters.
+ *
+ * @param modifier A [Modifier] for this composable.
+ */
 @Composable
 actual fun RenderMap(modifier: Modifier) {
     val headquarterLatLng = LatLng(47.61115, -122.34481)

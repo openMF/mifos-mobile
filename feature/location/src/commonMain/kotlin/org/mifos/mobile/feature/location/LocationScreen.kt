@@ -23,6 +23,12 @@ import mifos_mobile.feature.location.generated.resources.mifos_initiative
 import mifos_mobile.feature.location.generated.resources.mifos_location
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * A composable function that displays the location of the Mifos Initiative.
+ * It includes the name, address, and a map view showing the location.
+ *
+ * @param modifier A [Modifier] for this composable.
+ */
 @Composable
 internal fun LocationsScreen(
     modifier: Modifier = Modifier,
@@ -45,5 +51,11 @@ internal fun LocationsScreen(
     }
 }
 
+/**
+ * An expect composable function for rendering a map. Each platform is expected
+ * to provide its own implementation.
+ *
+ * @param modifier A [Modifier] for this composable.
+ */
 @Composable
 expect fun RenderMap(modifier: Modifier = Modifier)
