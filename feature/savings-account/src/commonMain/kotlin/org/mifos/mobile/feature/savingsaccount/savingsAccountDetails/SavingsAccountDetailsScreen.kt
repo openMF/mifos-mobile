@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_details_top_bar_title
@@ -81,12 +80,15 @@ internal fun SavingsAccountDetailsScreen(
                     event.route == Constants.CHARGES -> {
                         navigateToClientChargeScreen(ChargeType.SAVINGS.name, uiState.accountId)
                     }
+
                     event.route == Constants.TRANSFER -> {
                         navigateToTransferScreen(uiState.accountId)
                     }
+
                     event.route == Constants.TRANSACTIONS -> {
                         navigateToSavingsAccountTransactionScreen(uiState.accountId)
                     }
+
                     event.route == Constants.QR_CODE -> {
                         navigateToQrCodeScreen(viewModel.getQrString())
                     }
@@ -107,13 +109,6 @@ internal fun SavingsAccountDetailsScreen(
 
     SavingsAccountDetailsContent(
         state = uiState,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
-
-    SavingsAccountDialogs(
-        dialogState = uiState.dialogState,
         onAction = remember(viewModel) {
             { viewModel.trySendAction(it) }
         },
@@ -175,7 +170,7 @@ internal fun SavingsAccountDetailsContent(
                         isActive = state.isActive,
                     )
 
-                    if (state.isActive) {
+                    if (state.transactionList.isNotEmpty()) {
                         AccountDetailsGrid(
                             label = "Last Transactions",
                             details = state.transactionList,
@@ -183,14 +178,14 @@ internal fun SavingsAccountDetailsContent(
                         )
                     }
 
-                    if (state.isActive) {
-                        SavingsAccountActions(
-                            items = state.items,
-                            onActionClick = {
-                                onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
-                            },
-                        )
-                    }
+                    val visibleActions = state.savingStatus?.allowedActions ?: emptySet()
+
+                    SavingsAccountActions(
+                        visibleActions = visibleActions,
+                        onActionClick = {
+                            onAction(SavingsAccountDetailsAction.OnNavigateToAction(it))
+                        },
+                    )
                 }
             }
             else -> { }
@@ -290,7 +285,7 @@ internal fun AccountDetailsGrid(
 
 @Composable
 internal fun SavingsAccountActions(
-    items: ImmutableList<SavingsActionItems>,
+    visibleActions: Set<SavingsActionItems>,
     onActionClick: (String) -> Unit,
 ) {
     Column(
@@ -304,7 +299,7 @@ internal fun SavingsAccountActions(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items.forEach { item ->
+            visibleActions.forEach { item ->
                 MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
@@ -315,24 +310,6 @@ internal fun SavingsAccountActions(
                 )
             }
         }
-    }
-}
-
-@Composable
-internal fun SavingsAccountDialogs(
-    dialogState: SavingsAccountDetailsState.DialogState?,
-    onAction: (SavingsAccountDetailsAction) -> Unit,
-) {
-    when (dialogState) {
-        is SavingsAccountDetailsState.DialogState.Error -> {
-            MifosErrorComponent(
-                message = dialogState.message,
-                onRetry = { onAction(SavingsAccountDetailsAction.OnRetry) },
-                isRetryEnabled = true,
-            )
-        }
-
-        null -> Unit
     }
 }
 
