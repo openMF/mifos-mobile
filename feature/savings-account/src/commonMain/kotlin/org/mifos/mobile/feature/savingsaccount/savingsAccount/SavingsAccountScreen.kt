@@ -52,7 +52,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.core.model.LoanStatus
+import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
@@ -254,6 +254,19 @@ internal fun SavingsAccountContent(
                         )
                     }
                 } else {
+                    val statusOrder = remember {
+                        listOf(
+                            SavingStatus.ACTIVE.status,
+                            SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status,
+                            SavingStatus.CLOSED.status,
+                            SavingStatus.INACTIVE.status,
+                        )
+                    }
+                    val sortedAccounts = remember(state.savingsAccount) {
+                        state.savingsAccount.orEmpty().sortedWith(
+                            compareBy { statusOrder.indexOf(it.status?.value) },
+                        )
+                    }
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -262,30 +275,34 @@ internal fun SavingsAccountContent(
                         item {
                             Spacer(modifier = Modifier.height(DesignToken.spacing.small))
                         }
-                        items(state.savingsAccount.orEmpty()) { account ->
+                        items(sortedAccounts) { account ->
                             val color = when (account.status?.value) {
-                                LoanStatus.ACTIVE.status -> AppColors.customEnable
-                                LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                                LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
-                                    MaterialTheme.colorScheme.error
+                                SavingStatus.ACTIVE.status -> AppColors.customEnable
+                                SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+
+                                SavingStatus.INACTIVE.status -> MaterialTheme.colorScheme.error
+
                                 else -> MaterialTheme.colorScheme.onSurface
+                            }
+                            val accountStatus = if (account.status?.active == true) {
+                                CurrencyFormatter.format(
+                                    account.accountBalance,
+                                    account.currency?.code,
+                                    account.currency?.decimalPlaces,
+                                )
+                            } else {
+                                if (account.status?.value == SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status) {
+                                    "PENDING APPROVAL"
+                                } else {
+                                    account.status?.value ?: ""
+                                }
                             }
 
                             MifosAccountCard(
                                 accountId = account.id,
                                 accountNumber = account.accountNo,
                                 accountType = account.productName,
-                                accountStatus = (
-                                    if (account.status?.active == true) {
-                                        CurrencyFormatter.format(
-                                            account.accountBalance,
-                                            account.currency?.code,
-                                            account.currency?.decimalPlaces,
-                                        )
-                                    } else {
-                                        account.status?.value ?: ""
-                                    }
-                                    ),
+                                accountStatus = accountStatus,
                                 accountStatusColor = color,
                                 onAccountClick = {
                                     onAction(
