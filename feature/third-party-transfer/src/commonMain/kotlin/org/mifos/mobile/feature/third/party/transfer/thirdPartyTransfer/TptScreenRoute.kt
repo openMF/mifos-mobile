@@ -16,13 +16,26 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 
+/**
+ * Serializable data object representing the route for the Third Party Transfer screen.
+ */
 @Serializable
 data object TptScreenRoute
 
+/**
+ * Navigates to the Third Party Transfer screen.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToTptScreen(navOptions: NavOptions? = null) {
     this.navigate(TptScreenRoute, navOptions)
 }
 
+/**
+ * Defines the destination for the Third Party Transfer screen within the navigation graph.
+ *
+ * @param onNavigate A [TptNavigator] function to handle navigation events from this screen.
+ */
 fun NavGraphBuilder.tptScreenDestination(
     onNavigate: TptNavigator,
 ) {

@@ -13,6 +13,9 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.third.party.transfer.thirdPartyTransfer.TptViewModel
 
+/**
+ * Koin module for the Third Party Transfer feature.
+ */
 val ThirdPartyTransferModule = module {
     viewModelOf(::TptViewModel)
 }

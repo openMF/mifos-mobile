@@ -61,6 +61,12 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 
+/**
+ * Composable function for the Third Party Transfer screen.
+ *
+ * @param onNavigate A [TptNavigator] function to handle navigation events from this screen.
+ * @param viewModel The view model for the Third Party Transfer screen, defaulting to a Koin view model.
+ * */
 @Composable
 internal fun TptScreen(
     onNavigate: TptNavigator,
@@ -99,6 +105,12 @@ internal fun TptScreen(
     )
 }
 
+/*
+* Composable function for the Third Party Transfer dialog.
+*
+* @param dialogState The dialog state for the Third Party Transfer screen.
+* @param onAction A [TptAction] function to handle actions from this dialog.
+* */
 @Composable
 internal fun TptDialog(
     dialogState: TptState.DialogState?,
@@ -177,6 +189,13 @@ internal fun TprContent(
     }
 }
 
+/*
+* Composable function for the Third Party Transfer form.
+*
+* @param state The state for the Third Party Transfer screen.
+* @param onAction A [TptAction] function to handle actions from this form.
+* @param modifier The modifier to apply to this composable.
+* */
 @Composable
 internal fun TptForm(
     state: TptState,
