@@ -61,6 +61,12 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
 
+/**
+ * Composable function for the Third Party Transfer screen.
+ *
+ * @param onNavigate The navigator function to handle navigation to other screens.
+ * @param viewModel The ViewModel for the TPT screen.
+ */
 @Composable
 internal fun TptScreen(
     onNavigate: TptNavigator,
@@ -99,6 +105,12 @@ internal fun TptScreen(
     )
 }
 
+/**
+ * Composable function for displaying dialogs on the TPT screen.
+ *
+ * @param dialogState The current state of the dialog.
+ * @param onAction The action to be performed when the dialog is dismissed.
+ */
 @Composable
 internal fun TptDialog(
     dialogState: TptState.DialogState?,
@@ -118,6 +130,13 @@ internal fun TptDialog(
     }
 }
 
+/**
+ * Composable function for the content of the TPT screen.
+ *
+ * @param state The current state of the TPT screen.
+ * @param onAction The action to be performed when a user interacts with the screen.
+ * @param modifier The modifier to be applied to the layout.
+ */
 @Composable
 internal fun TprContent(
     state: TptState,
@@ -177,6 +196,13 @@ internal fun TprContent(
     }
 }
 
+/**
+ * Composable function for the TPT form.
+ *
+ * @param state The current state of the TPT screen.
+ * @param onAction The action to be performed when a user interacts with the form.
+ * @param modifier The modifier to be applied to the layout.
+ */
 @Composable
 internal fun TptForm(
     state: TptState,

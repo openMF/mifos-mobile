@@ -18,18 +18,44 @@ import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.feature.third.party.transfer.thirdPartyTransfer.TptScreenRoute
 import org.mifos.mobile.feature.third.party.transfer.thirdPartyTransfer.tptScreenDestination
 
+/**
+ * Sealed class representing the possible navigation destinations from the TPT screen.
+ */
 sealed class TptNavigationDestination {
-    // Add more as needed
-    object Notification : TptNavigationDestination()
+    /**
+     * Navigation destination for the Notification screen.
+     */
+    data object Notification : TptNavigationDestination()
+
+    /**
+     * Navigation destination for the Transfer Process screen.
+     *
+     * @param payload The payload containing the details of the transfer to be reviewed.
+     */
     class TransferProcess(val payload: ReviewTransferPayload) : TptNavigationDestination()
-    object AddBeneficiaryScreen : TptNavigationDestination()
+
+    /**
+     * Navigation destination for the Add Beneficiary screen.
+     */
+    data object AddBeneficiaryScreen : TptNavigationDestination()
 }
 
+/**
+ * A type alias for the navigator function that handles navigation to a [TptNavigationDestination].
+ */
 typealias TptNavigator = (TptNavigationDestination) -> Unit
 
+/**
+ * The route for the Third Party Transfer navigation graph.
+ */
 @Serializable
 data object ThirdPartyTransferNavGraphRoute
 
+/**
+ * Navigates to the TPT navigation graph.
+ *
+ * @param navOptions The navigation options to apply to this navigation.
+ */
 fun NavController.navigateToTptGraph(navOptions: NavOptions? = null) {
     this.navigate(
         ThirdPartyTransferNavGraphRoute,
@@ -37,6 +63,11 @@ fun NavController.navigateToTptGraph(navOptions: NavOptions? = null) {
     )
 }
 
+/**
+ * Defines the TPT navigation graph.
+ *
+ * @param onNavigate The navigator function to handle navigation to other screens.
+ */
 fun NavGraphBuilder.tptGraphDestination(
     onNavigate: TptNavigator,
 ) {

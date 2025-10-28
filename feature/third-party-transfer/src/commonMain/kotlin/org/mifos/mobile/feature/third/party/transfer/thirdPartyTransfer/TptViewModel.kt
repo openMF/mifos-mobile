@@ -450,6 +450,7 @@ internal class TptViewModel(
 /**
  * Represents the state of the Make Transfer screen.
  *
+ * @property accountId The ID of the account.
  * @property clientId The ID of the current user.
  * @property outstandingBalance The outstanding balance of the primary account, if applicable.
  * @property amount The amount entered by the user for the transfer.
