@@ -130,6 +130,14 @@ internal fun TptDialog(
     }
 }
 
+/**
+ * Composable function for the main content of the Third Party Transfer screen.
+ * It handles displaying the loading indicator, error messages, and the main form.
+ *
+ * @param state The current state of the Third Party Transfer screen.
+ * @param onAction A function to handle actions from this composable.
+ * @param modifier The modifier to apply to this composable.
+ */
 @Composable
 internal fun TprContent(
     state: TptState,
