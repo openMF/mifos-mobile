@@ -24,8 +24,10 @@ import org.mifos.mobile.feature.third.party.transfer.thirdPartyTransfer.tptScree
 sealed class TptNavigationDestination {
     /** Represents the notification screen. */
     object Notification : TptNavigationDestination()
+
     /** Represents the transfer process screen, carrying a [ReviewTransferPayload]. */
     class TransferProcess(val payload: ReviewTransferPayload) : TptNavigationDestination()
+
     /** Represents the add beneficiary screen. */
     object AddBeneficiaryScreen : TptNavigationDestination()
 }
