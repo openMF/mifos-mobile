@@ -51,6 +51,14 @@ import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 
+/**
+ * Composable function for the Notification Screen.
+ * This is the entry point for the notification feature.
+ *
+ * @param navigateBack The function to call to navigate back to the previous screen.
+ * @param modifier [Modifier] for the composable.
+ * @param viewModel The [NotificationViewModel] for this screen.
+ */
 @Composable
 internal fun NotificationScreen(
     navigateBack: () -> Unit,
@@ -73,6 +81,20 @@ internal fun NotificationScreen(
     )
 }
 
+/**
+ * Composable function that displays the main content of the Notification Screen.
+ * It handles the different UI states (Loading, Error, Success, Empty) and displays
+ * the appropriate content.
+ *
+ * @param uiState The current state of the UI.
+ * @param isNetworkAvailable A boolean indicating if the network is available.
+ * @param navigateBack The function to call to navigate back to the previous screen.
+ * @param onRetry The function to call to retry loading notifications.
+ * @param dismissNotification The function to call to dismiss a notification.
+ * @param isRefreshing A boolean indicating if the screen is being refreshed.
+ * @param onRefresh The function to call to refresh the notifications.
+ * @param modifier [Modifier] for the composable.
+ */
 @Composable
 private fun NotificationScreen(
     uiState: NotificationUiState,
@@ -124,6 +146,16 @@ private fun NotificationScreen(
     )
 }
 
+/**
+ * Composable function that displays the list of notifications.
+ * It uses a [PullToRefreshBox] to allow the user to refresh the list.
+ *
+ * @param isRefreshing A boolean indicating if the screen is being refreshed.
+ * @param notifications The list of notifications to display.
+ * @param dismissNotification The function to call to dismiss a notification.
+ * @param onRefresh The function to call to refresh the notifications.
+ * @param modifier [Modifier] for the composable.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NotificationContent(
@@ -155,6 +187,13 @@ private fun NotificationContent(
     }
 }
 
+/**
+ * Composable function that displays a single notification item.
+ *
+ * @param notification The notification to display.
+ * @param dismissNotification The function to call to dismiss the notification.
+ * @param modifier [Modifier] for the composable.
+ */
 @Composable
 private fun NotificationItem(
     notification: MifosNotification,

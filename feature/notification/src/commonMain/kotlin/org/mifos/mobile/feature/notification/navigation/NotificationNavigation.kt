@@ -18,13 +18,26 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.notification.NotificationScreen
 
+/**
+ * Navigation route for the Notification Screen.
+ */
 @Serializable
 data object NotificationRoute
 
+/**
+ * Navigates to the Notification Screen.
+ *
+ * @param navOptions The navigation options to be applied.
+ */
 fun NavController.navigateToNotificationScreen(navOptions: NavOptions? = null) {
     navigate(NotificationRoute, navOptions)
 }
 
+/**
+ * Adds the Notification Screen to the navigation graph.
+ *
+ * @param navigateBack The function to be called when the back button is pressed.
+ */
 fun NavGraphBuilder.notificationDestination(
     navigateBack: () -> Unit,
 ) {
