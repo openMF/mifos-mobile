@@ -134,16 +134,19 @@ internal sealed interface NotificationUiState {
      * Represents the loading state where notifications are being fetched.
      */
     data object Loading : NotificationUiState
+
     /**
      * Represents the success state with a list of notifications.
      * @param notifications The list of notifications to display.
      */
     data class Success(val notifications: List<MifosNotification>) : NotificationUiState
+
     /**
      * Represents the error state with an error message.
      * @param errorMessage The error message to display.
      */
     data class Error(val errorMessage: String?) : NotificationUiState
+
     /**
      * Represents the empty state when no notifications are available.
      */
