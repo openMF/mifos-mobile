@@ -40,6 +40,7 @@ import mifos_mobile.feature.savings_account.generated.resources.feature_account_
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_dashboard
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_account_items
+import mifos_mobile.feature.savings_account.generated.resources.feature_savings_filter_pending_account
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_no_accounts_found
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -292,7 +293,7 @@ internal fun SavingsAccountContent(
                                 )
                             } else {
                                 if (account.status?.value == SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status) {
-                                    "PENDING APPROVAL"
+                                    stringResource(Res.string.feature_savings_filter_pending_account)
                                 } else {
                                     account.status?.value ?: ""
                                 }
