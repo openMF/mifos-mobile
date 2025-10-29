@@ -23,11 +23,11 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.savingsaccount.utils.FilterUtil
 import kotlin.collections.orEmpty
 
@@ -55,9 +55,7 @@ class SavingsAccountViewmodel(
         observeNetwork()
     }
 
-    /**
-     * Observes the network connectivity status and updates state accordingly.
-     */
+    /** Observes the network connectivity status and updates state accordingly. */
     private fun observeNetwork() {
         viewModelScope.launch {
             networkMonitor.isOnline
@@ -68,15 +66,7 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * Handles changes in network connectivity.
-     *
-     * It updates the `networkStatus` state. If the network is offline, it sets the
-     * `uiState` to [ScreenUiState.Network]. If the network is online, it
-     * automatically triggers a data fetch to refresh the content.
-     *
-     * @param isOnline A boolean indicating the current network status.
-     */
+    /** Handles changes in network connectivity. */
     private fun handleNetworkStatus(isOnline: Boolean) {
         updateState { it.copy(networkStatus = isOnline) }
 
@@ -99,11 +89,7 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * A helper function to update the mutable state flow.
-     *
-     * @param update A lambda function that takes the current state and returns a new state.
-     */
+    /** A helper function to update the mutable state flow. */
     private fun updateState(update: (SavingsAccountState) -> SavingsAccountState) {
         mutableStateFlow.update(update)
     }
@@ -139,11 +125,7 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * Retries the data fetching process. If the network is unavailable, it shows
-     * a network error dialog. Otherwise, it triggers the `loadAccounts` `fetchClient`,
-     * `fetchLonPurpose` function.
-     */
+    /** Retries data fetching depending on network availability. */
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
@@ -154,33 +136,22 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * Toggles visibility of the total savings amount in UI.
-     */
+    /** Toggles visibility of total savings amount in UI. */
     private fun handleAmountVisible() {
         mutableStateFlow.update {
             it.copy(isAmountVisible = !state.isAmountVisible)
         }
     }
 
-    /**
-     * Dismisses any active dialog in the UI.
-     */
+    /** Dismisses any active dialog. */
     private fun handleDismissDialog() {
         mutableStateFlow.update {
             it.copy(dialogState = null)
         }
     }
 
-    /**
-     * Fetches accounts from the repository and applies filters.
-     * If cached data is available, it uses it directly.
-     *
-     * @param selectedFilters List of selected filters to apply.
-     */
-    private fun loadAccounts(
-        selectedFilters: List<StringResource?>,
-    ) {
+    /** Loads savings accounts for the current client. */
+    private fun loadAccounts(selectedFilters: List<StringResource?>) {
         viewModelScope.launch {
             updateState { it.copy(uiState = ScreenUiState.Loading) }
             accountsRepositoryImpl.loadAccounts(
@@ -197,12 +168,7 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * Handles the result of the repository call and updates the state.
-     *
-     * @param dataState Result of fetching savings accounts (Success, Error, Loading).
-     * @param selectedFilters Filters applied to the list.
-     */
+    /** Handles repository response and updates UI state accordingly. */
     private fun handleReceivedAccounts(
         dataState: DataState<ClientAccounts>,
         selectedFilters: List<StringResource?>,
@@ -230,9 +196,10 @@ class SavingsAccountViewmodel(
             is DataState.Success -> {
                 val allSavings = dataState.data.savingsAccounts.orEmpty()
                 val filtered = filterAccounts(selectedFilters, allSavings)
+                val sortedAccounts = sortAccountsByStatus(filtered)
                 updateState {
                     it.copy(
-                        decimals = filtered.firstOrNull()?.currency?.decimalPlaces ?: 2,
+                        decimals = sortedAccounts.firstOrNull()?.currency?.decimalPlaces ?: 2,
                     )
                 }
 
@@ -242,12 +209,12 @@ class SavingsAccountViewmodel(
 
                 updateState {
                     val isEmptyAccounts = allSavings.isEmpty()
-                    val isFilteredEmpty = filtered.isEmpty()
+                    val isFilteredEmpty = sortedAccounts.isEmpty()
 
                     it.copy(
-                        items = filtered.size,
+                        items = sortedAccounts.size,
                         isFilteredEmpty = isFilteredEmpty,
-                        savingsAccount = filtered,
+                        savingsAccount = sortedAccounts,
                         originalAccounts = allSavings,
                         selectedFilters = selectedFilters,
                         currency = allSavings.firstOrNull()?.currency?.displaySymbol,
@@ -262,13 +229,7 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /**
-     * Filters the accounts based on the selected filters (status).
-     *
-     * @param selectedFilters List of selected labels for filtering.
-     * @param accounts Original unfiltered list of accounts.
-     * @return List of accounts that match the applied filters.
-     */
+    /** Filters the accounts based on the selected filters (status). */
     private fun filterAccounts(
         selectedFilters: List<StringResource?>,
         accounts: List<SavingAccount>,
@@ -280,15 +241,15 @@ class SavingsAccountViewmodel(
         } else {
             accounts
         }
-
         return filteredByStatus.distinct()
     }
 
-    /**
-     * Calculates the total savings balance and updates state.
-     *
-     * @param accounts List of [SavingAccount] to compute totals from.
-     */
+    /** Sorts accounts based on the defined status order. */
+    private fun sortAccountsByStatus(accounts: List<SavingAccount>): List<SavingAccount> {
+        return accounts.sortedWith(compareBy { state.statusOrder.indexOf(it.status?.value) })
+    }
+
+    /** Calculates total savings balance and updates state. */
     private fun getTotalSavingAmount(accounts: List<SavingAccount>?) {
         var amount = 0.0
         var items = 0
@@ -352,6 +313,14 @@ data class SavingsAccountState(
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 
     val networkStatus: Boolean = false,
+
+    /** Order of statuses for consistent sorting */
+    val statusOrder: List<String> = listOf(
+        SavingStatus.ACTIVE.status,
+        SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status,
+        SavingStatus.CLOSED.status,
+        SavingStatus.INACTIVE.status,
+    ),
 ) {
 
     /**

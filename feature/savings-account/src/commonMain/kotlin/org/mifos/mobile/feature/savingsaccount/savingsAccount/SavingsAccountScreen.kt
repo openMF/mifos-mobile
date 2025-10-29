@@ -61,7 +61,6 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import kotlin.collections.orEmpty
 
 @Composable
 fun SavingsAccountScreen(
@@ -92,29 +91,21 @@ fun SavingsAccountScreen(
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is SavingsAccountsEvent.NavigateBack -> navigateBack.invoke()
-
             is SavingsAccountsEvent.AccountClicked -> {
                 onAccountClicked(Constants.SAVINGS_ACCOUNT, event.accountId)
             }
-
-            is SavingsAccountsEvent.LoadingCompleted -> {
-                onLoadingCompleted.invoke()
-            }
+            is SavingsAccountsEvent.LoadingCompleted -> onLoadingCompleted.invoke()
         }
     }
 
     SavingsAccountDialog(
         dialogState = state.dialogState,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
+        onAction = remember(viewModel) { { viewModel.trySendAction(it) } },
     )
 
     SavingsAccountContent(
         state = state,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
+        onAction = remember(viewModel) { { viewModel.trySendAction(it) } },
         filtersClicked = filtersClicked,
     )
 }
@@ -132,7 +123,6 @@ internal fun SavingsAccountDialog(
                 isRetryEnabled = true,
             )
         }
-
         null -> Unit
     }
 }
@@ -211,19 +201,7 @@ internal fun SavingsAccountContent(
                         )
                     }
 
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
-                    ) {
-                        // TODO : un-implemented feature,
-                        //  commenting because user won't feels its good ,uncomment and implement it
-                        //                    Icon(
-                        //                        modifier = Modifier
-                        //                            .clickable {}
-                        //                            .size(20.dp),
-                        //                        imageVector = MifosIcons.SearchNew,
-                        //                        contentDescription =
-                        //                        stringResource(Res.string.content_description_search),
-                        //                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased)) {
                         Icon(
                             modifier = Modifier
                                 .clickable { filtersClicked() }
@@ -255,36 +233,22 @@ internal fun SavingsAccountContent(
                         )
                     }
                 } else {
-                    val statusOrder = remember {
-                        listOf(
-                            SavingStatus.ACTIVE.status,
-                            SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status,
-                            SavingStatus.CLOSED.status,
-                            SavingStatus.INACTIVE.status,
-                        )
-                    }
-                    val sortedAccounts = remember(state.savingsAccount) {
-                        state.savingsAccount.orEmpty().sortedWith(
-                            compareBy { statusOrder.indexOf(it.status?.value) },
-                        )
-                    }
+                    val accounts = state.savingsAccount.orEmpty()
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
                             .weight(1f),
                     ) {
-                        item {
-                            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
-                        }
-                        items(sortedAccounts) { account ->
+                        item { Spacer(modifier = Modifier.height(DesignToken.spacing.small)) }
+
+                        items(accounts) { account ->
                             val color = when (account.status?.value) {
                                 SavingStatus.ACTIVE.status -> AppColors.customEnable
                                 SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-
                                 SavingStatus.INACTIVE.status -> MaterialTheme.colorScheme.error
-
                                 else -> MaterialTheme.colorScheme.onSurface
                             }
+
                             val accountStatus = if (account.status?.active == true) {
                                 CurrencyFormatter.format(
                                     account.accountBalance,
