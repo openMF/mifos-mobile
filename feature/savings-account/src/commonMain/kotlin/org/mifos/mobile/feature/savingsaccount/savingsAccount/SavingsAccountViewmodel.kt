@@ -259,7 +259,6 @@ class SavingsAccountViewmodel(
         }
     }
 
-
     /**
      * Filters the accounts based on the selected filters (status).
      *
@@ -280,7 +279,6 @@ class SavingsAccountViewmodel(
         }
         return filteredByStatus.distinct()
     }
-
 
     /**
      * Calculates the total savings balance and updates state.
