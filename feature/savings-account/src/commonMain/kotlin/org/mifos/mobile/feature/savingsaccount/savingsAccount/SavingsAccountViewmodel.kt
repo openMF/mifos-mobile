@@ -66,7 +66,15 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Handles changes in network connectivity. */
+    /**
+     * Handles changes in network connectivity.
+     *
+     * It updates the `networkStatus` state. If the network is offline, it sets the
+     * `uiState` to [ScreenUiState.Network]. If the network is online, it
+     * automatically triggers a data fetch to refresh the content.
+     *
+     * @param isOnline A boolean indicating the current network status.
+     */
     private fun handleNetworkStatus(isOnline: Boolean) {
         updateState { it.copy(networkStatus = isOnline) }
 
@@ -89,7 +97,11 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** A helper function to update the mutable state flow. */
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
     private fun updateState(update: (SavingsAccountState) -> SavingsAccountState) {
         mutableStateFlow.update(update)
     }
@@ -125,7 +137,11 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Retries data fetching depending on network availability. */
+    /**
+     * A helper function to update the mutable state flow.
+     *
+     * @param update A lambda function that takes the current state and returns a new state.
+     */
     private fun retry() {
         viewModelScope.launch {
             if (!state.networkStatus) {
@@ -136,7 +152,9 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Toggles visibility of total savings amount in UI. */
+    /**
+     * Toggles visibility of total savings amount in UI.
+     * */
     private fun handleAmountVisible() {
         mutableStateFlow.update {
             it.copy(isAmountVisible = !state.isAmountVisible)
@@ -150,8 +168,15 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Loads savings accounts for the current client. */
-    private fun loadAccounts(selectedFilters: List<StringResource?>) {
+    /**
+     * Fetches accounts from the repository and applies filters.
+     * If cached data is available, it uses it directly.
+     *
+     * @param selectedFilters List of selected filters to apply.
+     */
+    private fun loadAccounts(
+        selectedFilters: List<StringResource?>,
+    ) {
         viewModelScope.launch {
             updateState { it.copy(uiState = ScreenUiState.Loading) }
             accountsRepositoryImpl.loadAccounts(
@@ -168,7 +193,12 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Handles repository response and updates UI state accordingly. */
+    /**
+     * Handles the result of the repository call and updates the state.
+     *
+     * @param dataState Result of fetching savings accounts (Success, Error, Loading).
+     * @param selectedFilters Filters applied to the list.
+     */
     private fun handleReceivedAccounts(
         dataState: DataState<ClientAccounts>,
         selectedFilters: List<StringResource?>,
@@ -229,7 +259,14 @@ class SavingsAccountViewmodel(
         }
     }
 
-    /** Filters the accounts based on the selected filters (status). */
+
+    /**
+     * Filters the accounts based on the selected filters (status).
+     *
+     * @param selectedFilters List of selected labels for filtering.
+     * @param accounts Original unfiltered list of accounts.
+     * @return List of accounts that match the applied filters.
+     */
     private fun filterAccounts(
         selectedFilters: List<StringResource?>,
         accounts: List<SavingAccount>,
@@ -244,7 +281,12 @@ class SavingsAccountViewmodel(
         return filteredByStatus.distinct()
     }
 
-    /** Sorts accounts based on the defined status order. */
+
+    /**
+     * Calculates the total savings balance and updates state.
+     *
+     * @param accounts List of [SavingAccount] to compute totals from.
+     */
     private fun sortAccountsByStatus(accounts: List<SavingAccount>): List<SavingAccount> {
         return accounts.sortedWith(compareBy { state.statusOrder.indexOf(it.status?.value) })
     }
