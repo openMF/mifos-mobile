@@ -52,12 +52,15 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 
 /**
- * Composable function for the Notification Screen.
- * This is the entry point for the notification feature.
+ * This is the main entry point for the Notification Screen feature. It's a composable function
+ * that sets up the screen, observes state from the [NotificationViewModel], and delegates the UI
+ * rendering to other composable functions.
  *
- * @param navigateBack The function to call to navigate back to the previous screen.
- * @param modifier [Modifier] for the composable.
- * @param viewModel The [NotificationViewModel] for this screen.
+ * @param navigateBack A lambda function to be invoked when the user wants to navigate back from
+ *   this screen.
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param viewModel An instance of [NotificationViewModel] which holds the business logic for this
+ *   screen. It's provided by Koin's `koinViewModel()`.
  */
 @Composable
 internal fun NotificationScreen(
@@ -82,18 +85,20 @@ internal fun NotificationScreen(
 }
 
 /**
- * Composable function that displays the main content of the Notification Screen.
- * It handles the different UI states (Loading, Error, Success, Empty) and displays
- * the appropriate content.
+ * This composable function is responsible for displaying the main content of the Notification
+ * Screen. It acts as a presentation layer that reacts to different UI states like Loading, Error,
+ * Success, or Empty. Based on the `uiState`, it renders the appropriate composable.
  *
- * @param uiState The current state of the UI.
- * @param isNetworkAvailable A boolean indicating if the network is available.
- * @param navigateBack The function to call to navigate back to the previous screen.
- * @param onRetry The function to call to retry loading notifications.
- * @param dismissNotification The function to call to dismiss a notification.
- * @param isRefreshing A boolean indicating if the screen is being refreshed.
- * @param onRefresh The function to call to refresh the notifications.
- * @param modifier [Modifier] for the composable.
+ * @param uiState The current state of the UI, which determines what to display.
+ * @param isNetworkAvailable A boolean that indicates whether the device has an active network
+ *   connection.
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param onRetry A lambda function to be called when the user wants to retry loading notifications
+ *   after an error.
+ * @param dismissNotification A lambda function to handle the dismissal of a notification.
+ * @param isRefreshing A boolean that indicates if the screen is currently in a refresh state.
+ * @param onRefresh A lambda function to be called to refresh the list of notifications.
+ * @param modifier The [Modifier] to be applied to this composable.
  */
 @Composable
 private fun NotificationScreen(
@@ -147,14 +152,17 @@ private fun NotificationScreen(
 }
 
 /**
- * Composable function that displays the list of notifications.
- * It uses a [PullToRefreshBox] to allow the user to refresh the list.
+ * This composable function is responsible for displaying the list of notifications. It uses a
+ * [PullToRefreshBox], allowing the user to swipe down to refresh the list. The actual list is
+ * rendered using a `LazyColumn` for efficient display of potentially long lists.
  *
- * @param isRefreshing A boolean indicating if the screen is being refreshed.
- * @param notifications The list of notifications to display.
- * @param dismissNotification The function to call to dismiss a notification.
- * @param onRefresh The function to call to refresh the notifications.
- * @param modifier [Modifier] for the composable.
+ * @param isRefreshing A boolean indicating if the pull-to-refresh action is currently active.
+ * @param notifications The list of [MifosNotification] objects to be displayed.
+ * @param dismissNotification A lambda function that handles the action of dismissing a
+ *   notification.
+ * @param onRefresh A lambda function that's triggered when the user performs a pull-to-refresh
+ *   gesture.
+ * @param modifier The [Modifier] to be applied to this composable.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -188,11 +196,14 @@ private fun NotificationContent(
 }
 
 /**
- * Composable function that displays a single notification item.
+ * This composable function is designed to display a single notification item in the list. It shows
+ * the notification's message, the timestamp, and provides an "OK" button to dismiss it if it's
+ * unread. The visual style of the item changes based on whether the notification has been read.
  *
- * @param notification The notification to display.
- * @param dismissNotification The function to call to dismiss the notification.
- * @param modifier [Modifier] for the composable.
+ * @param notification The [MifosNotification] object to be displayed.
+ * @param dismissNotification A lambda function that's called when the user dismisses the
+ *   notification.
+ * @param modifier The [Modifier] to be applied to this composable.
  */
 @Composable
 private fun NotificationItem(

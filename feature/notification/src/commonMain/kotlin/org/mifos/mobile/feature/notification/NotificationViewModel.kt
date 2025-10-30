@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright 2024 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -24,15 +24,15 @@ import org.mifos.mobile.core.model.entity.MifosNotification
 import org.mifos.mobile.feature.notification.NotificationUiState.Loading
 
 /**
- * ViewModel for the Notification screen.
+ * The ViewModel for the Notification screen.
  *
- * This ViewModel is responsible for loading notifications, handling refreshing,
- * and managing the UI state of the notification screen. It interacts with the
- * [NotificationRepository] to fetch and update notification data. It also
- * monitors network availability via [NetworkMonitor].
+ * This class is responsible for the business logic of the Notification screen. It fetches
+ * notifications from the [NotificationRepository], manages the UI state, and handles user
+ * interactions like refreshing the list and dismissing notifications. It's also aware of the
+ * network status, thanks to [NetworkMonitor].
  *
- * @param notificationRepositoryImp The repository for accessing notification data.
- * @param networkMonitor The utility to monitor network connectivity.
+ * @param notificationRepositoryImp The repository that provides access to notification data.
+ * @param networkMonitor A utility to monitor the device's network connectivity.
  */
 internal class NotificationViewModel(
     private val notificationRepositoryImp: NotificationRepository,
@@ -60,8 +60,8 @@ internal class NotificationViewModel(
     }
 
     /**
-     * Loads the notifications from the repository and updates the UI state.
-     * It handles loading, success, and error states.
+     * Kicks off the process of loading notifications from the repository. This function updates the
+     * UI state to reflect the current status of the operation, such as Loading, Success, or Error.
      */
     fun loadNotifications() {
         _notificationUiState.value = Loading
@@ -94,7 +94,9 @@ internal class NotificationViewModel(
     }
 
     /**
-     * Refreshes the notifications by setting the refreshing state and calling [loadNotifications].
+     * Initiates a refresh of the notifications. This is typically triggered by a user action, like
+     * a pull-to-refresh gesture. It sets the refreshing state and then calls [loadNotifications]
+     * to fetch the latest data.
      */
     fun refreshNotifications() {
         _isRefreshing.value = true
@@ -102,8 +104,10 @@ internal class NotificationViewModel(
     }
 
     /**
-     * Marks a notification as read and saves the updated status in the repository.
-     * @param notification The notification to be dismissed.
+     * Marks a specific notification as read. This involves updating the notification's state in
+     * the local repository to ensure the change is persisted.
+     *
+     * @param notification The [MifosNotification] to be marked as read.
      */
     fun dismissNotification(notification: MifosNotification) {
         viewModelScope.launch {
@@ -113,10 +117,11 @@ internal class NotificationViewModel(
     }
 
     /**
-     * Sorts the notifications based on their read status and timestamp.
-     * Unread notifications are shown first, followed by the most recent ones.
-     * @param notifications The list of notifications to be sorted.
-     * @return The sorted list of notifications.
+     * Sorts a list of notifications. The sorting logic prioritizes unread notifications and then
+     * sorts them by timestamp, so the most recent ones appear first.
+     *
+     * @param notifications The list of [MifosNotification]s to be sorted.
+     * @return A new list containing the sorted notifications.
      */
     private fun sortNotifications(notifications: List<MifosNotification>): List<MifosNotification> {
         return notifications.sortedWith(
@@ -127,28 +132,33 @@ internal class NotificationViewModel(
 }
 
 /**
- * Represents the different UI states for the Notification screen.
+ * A sealed interface that represents the various states the Notification screen can be in. This
+ * allows for exhaustive state handling in the UI, ensuring a predictable user experience.
  */
 internal sealed interface NotificationUiState {
     /**
-     * Represents the loading state where notifications are being fetched.
+     * Indicates that the notifications are currently being loaded. This is the ideal time to show
+     * a progress indicator.
      */
     data object Loading : NotificationUiState
 
     /**
-     * Represents the success state with a list of notifications.
-     * @param notifications The list of notifications to display.
+     * Represents a successful fetch of notifications.
+     *
+     * @param notifications The list of notifications to be displayed on the screen.
      */
     data class Success(val notifications: List<MifosNotification>) : NotificationUiState
 
     /**
-     * Represents the error state with an error message.
-     * @param errorMessage The error message to display.
+     * Signals that an error occurred while trying to fetch notifications.
+     *
+     * @param errorMessage A descriptive message about the error that can be shown to the user.
      */
     data class Error(val errorMessage: String?) : NotificationUiState
 
     /**
-     * Represents the empty state when no notifications are available.
+     * Used when the notification list is empty. This state allows for showing a user-friendly
+     * message indicating that there are no notifications.
      */
     data object Empty : NotificationUiState
 }

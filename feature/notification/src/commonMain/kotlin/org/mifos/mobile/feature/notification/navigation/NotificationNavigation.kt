@@ -19,24 +19,30 @@ import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.notification.NotificationScreen
 
 /**
- * Navigation route for the Notification Screen.
+ * A type-safe navigation destination for the Notification Screen. Using a serializable object
+ * like this ensures that navigation is robust and less prone to runtime errors.
  */
 @Serializable
 data object NotificationRoute
 
 /**
- * Navigates to the Notification Screen.
+ * An extension function on [NavController] that provides a convenient and type-safe way to
+ * navigate to the Notification Screen.
  *
- * @param navOptions The navigation options to be applied.
+ * @param navOptions Optional [NavOptions] to apply to this navigation action. This can be used
+ *   to control aspects like the back stack and animations.
  */
 fun NavController.navigateToNotificationScreen(navOptions: NavOptions? = null) {
     navigate(NotificationRoute, navOptions)
 }
 
 /**
- * Adds the Notification Screen to the navigation graph.
+ * An extension function on [NavGraphBuilder] that defines the Notification Screen destination
+ * within the navigation graph. This is where the screen's composable is associated with its
+ * route, and where transitions and arguments can be configured.
  *
- * @param navigateBack The function to be called when the back button is pressed.
+ * @param navigateBack A lambda function that will be invoked when the user navigates back from
+ *   the Notification Screen. This is typically used to pop the back stack.
  */
 fun NavGraphBuilder.notificationDestination(
     navigateBack: () -> Unit,
