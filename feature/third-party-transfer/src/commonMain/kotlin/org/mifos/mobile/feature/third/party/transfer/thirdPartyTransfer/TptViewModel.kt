@@ -61,7 +61,7 @@ internal class TptViewModel(
 
     private var validationJob: Job? = null
 
-    /*
+    /**
      * Functions related to UI State and Dialogs
      */
 

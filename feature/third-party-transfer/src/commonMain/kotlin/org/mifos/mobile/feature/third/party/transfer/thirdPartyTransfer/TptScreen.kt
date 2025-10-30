@@ -105,7 +105,7 @@ internal fun TptScreen(
     )
 }
 
-/*
+/**
 * Composable function for the Third Party Transfer dialog.
 *
 * @param dialogState The dialog state for the Third Party Transfer screen.
@@ -197,7 +197,7 @@ internal fun TprContent(
     }
 }
 
-/*
+/**
 * Composable function for the Third Party Transfer form.
 *
 * @param state The state for the Third Party Transfer screen.
