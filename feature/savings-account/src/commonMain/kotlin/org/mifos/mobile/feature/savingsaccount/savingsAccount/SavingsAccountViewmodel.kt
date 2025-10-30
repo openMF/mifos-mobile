@@ -229,7 +229,8 @@ class SavingsAccountViewmodel(
                 val sortedAccounts = sortAccountsByStatus(filtered)
                 updateState {
                     it.copy(
-                        decimals = sortedAccounts.firstOrNull()?.currency?.decimalPlaces ?: 2,
+                        decimals = sortedAccounts.firstOrNull()?.currency?.decimalPlaces
+                            ?: allSavings.firstOrNull()?.currency?.decimalPlaces ?: 2,
                     )
                 }
 
