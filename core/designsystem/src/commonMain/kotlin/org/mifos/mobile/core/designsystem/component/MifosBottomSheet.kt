@@ -54,7 +54,7 @@ fun MifosBottomSheet(
 
     AnimatedVisibility(visible = showBottomSheet) {
         ModalBottomSheet(
-            containerColor = Color.White,
+            containerColor = Color.Black,
             onDismissRequest = {
                 showBottomSheet = false
                 dismissSheet()
