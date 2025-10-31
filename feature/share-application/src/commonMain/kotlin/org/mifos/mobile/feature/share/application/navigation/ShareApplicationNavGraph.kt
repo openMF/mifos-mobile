@@ -19,13 +19,28 @@ import org.mifos.mobile.feature.share.application.fillApplication.shareFillAppli
 import org.mifos.mobile.feature.share.application.shareApplication.ShareApplyRoute
 import org.mifos.mobile.feature.share.application.shareApplication.shareApplyDestination
 
+/**
+ * A serializable object representing the navigation graph for the Share Application feature.
+ */
 @Serializable
 data object ShareApplicationNavGraph
 
+/**
+ * Navigates to the Share Application navigation graph.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToShareApplicationGraph(navOptions: NavOptions? = null) {
     this.navigate(ShareApplicationNavGraph, navOptions)
 }
 
+/**
+ * Defines the navigation graph for the Share Application feature.
+ *
+ * @param navController The [NavController] for the graph.
+ * @param navigateToAuthenticateScreen A function to navigate to the authentication screen.
+ * @param navigateToStatusScreen A function to navigate to the status screen.
+ */
 fun NavGraphBuilder.shareApplicationNavGraph(
     navController: NavController,
     navigateToAuthenticateScreen: () -> Unit,

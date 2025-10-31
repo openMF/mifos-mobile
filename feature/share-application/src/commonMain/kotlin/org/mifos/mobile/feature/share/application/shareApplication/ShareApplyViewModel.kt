@@ -67,10 +67,6 @@ internal class ShareApplyViewModel(
         observeNetworkStatus()
     }
 
-    /*
-     * Functions related to Data Observation and Fetching
-     */
-
     /**
      * Observes the network connectivity status and updates the UI state accordingly.
      * If the network is unavailable, it sets the `networkUnavailable` flag in the state
@@ -98,7 +94,7 @@ internal class ShareApplyViewModel(
      * When the app is **online**:
      * - It immediately updates the `networkStatus` in the state to `true`.
      * - It then triggers essential functions to **refresh data** and ensure the UI is up-to-date,
-     * specifically by calling `unreadNotificationsCount()` and `loadClientAccountDetails()`.
+     * specifically by calling `getClientDataAndTemplate()`.
      *
      * @param isOnline A `Boolean` indicating the current network connectivity status.
      *
@@ -125,8 +121,7 @@ internal class ShareApplyViewModel(
     }
 
     /**
-     * Fetches client data, a generic share template, and a product-specific loan purpose template
-     * from the repositories.
+     * Fetches client data and a generic share template from the repositories.
      * The results are combined and handled in a single flow to manage loading and error states.
      */
     private fun getClientDataAndTemplate() {
@@ -166,6 +161,7 @@ internal class ShareApplyViewModel(
      * Updates the state with product options and currency on success,
      * or displays an error and navigates back on failure.
      *
+     * @param client The [DataState] containing the client data.
      * @param template The [DataState] containing the savings template data.
      */
     private fun handleClientAndSavingsTemplate(
@@ -202,7 +198,7 @@ internal class ShareApplyViewModel(
 
     /**
      * Retries the data fetching process. If the network is unavailable, it shows
-     * a network error dialog. Otherwise, it triggers the `fetchShareTemplate` `fetchClient`,
+     * a network error dialog. Otherwise, it triggers the `getClientDataAndTemplate` function.
      */
     private fun retry() {
         viewModelScope.launch {
@@ -213,10 +209,6 @@ internal class ShareApplyViewModel(
             }
         }
     }
-
-    /*
-     * Functions related to UI State and Dialogs
-     */
 
     /**
      * A helper function to update the mutable state flow.
@@ -252,10 +244,6 @@ internal class ShareApplyViewModel(
         }
     }
 
-    /*
-     * Functions related to User Input and Validation
-     */
-
     /**
      * Handles incoming actions from the UI and dispatches them to the appropriate
      * business logic functions.
@@ -287,8 +275,7 @@ internal class ShareApplyViewModel(
 
     /**
      * Handles changes to the selected savings product.
-     * It updates the state, fetches the corresponding field officer options,
-     * and debounces validation.
+     * It updates the state with the new product ID and name.
      *
      * @param id The ID of the selected savings product.
      * @param name The name of the selected savings product.
@@ -331,10 +318,6 @@ internal class ShareApplyViewModel(
         }
     }
 
-    /*
-     * Functions related to Navigation and Lifecycle
-     */
-
     /**
      * Handles the back navigation. If there are unsaved changes, it shows a
      * confirmation dialog. Otherwise, it sends an event to navigate back.
@@ -360,11 +343,13 @@ internal class ShareApplyViewModel(
  * @property clientId The ID of the current client.
  * @property applicantName The name of the applicant.
  * @property productOptions A list of available savings product options.
+ * @property selectedShareProduct The name of the selected share product.
+ * @property selectedShareProductId The ID of the selected share product.
+ * @property dialogState The state of any dialogs that overlay the main content.
  * @property savingsProductTemplate The full savings template object for the selected product.
  * @property hasChanges A boolean indicating if there are unsaved changes.
  * @property networkStatus A boolean indicating if the network is unavailable.
  * @property uiState The primary UI state of the screen (e.g., Loading, Empty, Success).
- * @property dialogState The state of any dialogs that overlay the main content.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 internal data class ShareApplicationState(
@@ -399,6 +384,9 @@ internal data class ShareApplicationState(
         }
         .toMap()
 
+    /**
+     * The current date formatted as a string.
+     */
     @OptIn(ExperimentalTime::class)
     val submittedOnDate: String
         get() {
@@ -496,8 +484,9 @@ internal sealed interface ShareApplicationAction {
         data class ReceiveNetworkResult(val isOnline: Boolean) : ShareApplicationAction
 
         /**
-         * An internal action to handle the result of fetching a savings template.
-         * @property template The [DataState] containing the savings template data.
+         * An internal action to handle the result of fetching client and template data.
+         * @property client The [DataState] containing the client data.
+         * @property template The [DataState] containing the share product data.
          */
         data class ReceiveClientAndTemplateResult(
             val client: DataState<Client>,

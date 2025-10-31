@@ -62,6 +62,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A Composable function that represents the Share Fill Application screen.
+ *
+ * @param navigateBack A function to navigate back to the previous screen.
+ * @param navigateToStatusScreen A function to navigate to the status screen.
+ * @param navigateToAuthenticateScreen A function to navigate to the authentication screen.
+ * @param viewModel An instance of [ShareFillApplicationViewModel].
+ */
 @Composable
 internal fun ShareFillApplicationScreen(
     navigateBack: () -> Unit,
@@ -104,6 +112,12 @@ internal fun ShareFillApplicationScreen(
     )
 }
 
+/**
+ * A Composable function that displays a dialog based on the [ShareApplicationDialogState].
+ *
+ * @param dialogState The state of the dialog to be displayed.
+ * @param onAction A function to handle actions from the dialog.
+ */
 @Composable
 internal fun ShareFillApplicationDialog(
     dialogState: ShareApplicationDialogState?,
@@ -130,6 +144,13 @@ internal fun ShareFillApplicationDialog(
     }
 }
 
+/**
+ * A Composable function that displays the content of the Share Fill Application screen.
+ *
+ * @param state The current state of the screen.
+ * @param onAction A function to handle actions from the screen.
+ * @param modifier A [Modifier] for the Composable.
+ */
 @Composable
 internal fun ShareFillApplicationContent(
     state: ShareApplicationState,
@@ -182,6 +203,13 @@ internal fun ShareFillApplicationContent(
     }
 }
 
+/**
+ * A Composable function that displays the form for the Share Fill Application screen.
+ *
+ * @param state The current state of the screen.
+ * @param onAction A function to handle actions from the screen.
+ * @param modifier A [Modifier] for the Composable.
+ */
 @Composable
 internal fun ShareFillApplicationForm(
     state: ShareApplicationState,

@@ -14,6 +14,11 @@ import org.koin.dsl.module
 import org.mifos.mobile.feature.share.application.fillApplication.ShareFillApplicationViewModel
 import org.mifos.mobile.feature.share.application.shareApplication.ShareApplyViewModel
 
+/**
+ * Koin module for the Share Application feature.
+ *
+ * This module provides the ViewModels required for the share application screens.
+ */
 val shareApplicationModule = module {
     viewModelOf(::ShareApplyViewModel)
     viewModelOf(::ShareFillApplicationViewModel)

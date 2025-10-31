@@ -277,7 +277,7 @@ internal class ShareFillApplicationViewModel(
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
-            ).catch {
+            ).catch { e ->
                 mutableStateFlow.update {
                     it.copy(
                         uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
@@ -315,7 +315,6 @@ internal class ShareFillApplicationViewModel(
             }
             is DataState.Success -> {
                 val shareTemplate = response.data
-                println(shareTemplate)
                 updateState {
                     it.copy(
                         defaultAccounts = shareTemplate.savingsAccounts ?: emptyList(),
@@ -348,8 +347,6 @@ internal class ShareFillApplicationViewModel(
             }
             is DataState.Success -> {
                 val shareTemplate = template.data ?: return
-                println(shareTemplate)
-                println(shareTemplate.accountingMappings?.toAccountList())
                 updateState {
                     it.copy(
                         currency = shareTemplate.currency ?: Currency(),
@@ -379,10 +376,6 @@ internal class ShareFillApplicationViewModel(
     private fun showLoading() {
         updateState { it.copy(uiState = ShareApplicationUiState.Loading) }
     }
-
-    /**
-     * Sets the UI state to `OverlayLoading`.
-     */
 
     /**
      * Sets the dialog state to an `Error` dialog.
@@ -452,7 +445,7 @@ internal class ShareFillApplicationViewModel(
      */
     private fun validateTotalShares(newValue: String): ValidationResult = when {
         newValue.isBlank() -> ValidationResult.Error(Res.string.feature_apply_share_error_shares_required)
-        newValue.toIntOrNull() == null -> ValidationResult.Error(Res.string.feature_apply_share_shares_invalid)
+        newValue.toLongOrNull() == null -> ValidationResult.Error(Res.string.feature_apply_share_shares_invalid)
         else -> ValidationResult.Success
     }
 
@@ -783,6 +776,7 @@ internal class ShareFillApplicationViewModel(
  * @property networkStatus The current network connectivity status.
  * @property dialogState The state of the dialog to be displayed.
  * @property uiState The overall UI state (e.g., loading, success, error).
+ * @property showOverlay A flag to show an overlay progress indicator.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 internal data class ShareApplicationState(

@@ -50,6 +50,13 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A Composable function that represents the Share Apply screen.
+ *
+ * @param navigateBack A function to navigate back to the previous screen.
+ * @param navigateToFillDetailsScreen A function to navigate to the fill details screen.
+ * @param viewModel An instance of [ShareApplyViewModel].
+ */
 @Composable
 internal fun ShareApplyScreen(
     navigateBack: () -> Unit,
@@ -85,6 +92,12 @@ internal fun ShareApplyScreen(
     )
 }
 
+/**
+ * A Composable function that displays a dialog based on the [ShareApplicationDialogState].
+ *
+ * @param dialogState The state of the dialog to be displayed.
+ * @param onAction A function to handle actions from the dialog.
+ */
 @Composable
 internal fun ShareApplicationDialog(
     dialogState: ShareApplicationDialogState?,
@@ -105,6 +118,13 @@ internal fun ShareApplicationDialog(
     }
 }
 
+/**
+ * A Composable function that displays the content of the Share Application screen.
+ *
+ * @param state The current state of the screen.
+ * @param onAction A function to handle actions from the screen.
+ * @param modifier A [Modifier] for the Composable.
+ */
 @Composable
 internal fun ShareApplicationContent(
     state: ShareApplicationState,
@@ -163,6 +183,13 @@ internal fun ShareApplicationContent(
     }
 }
 
+/**
+ * A Composable function that displays the form for the Share Application screen.
+ *
+ * @param state The current state of the screen.
+ * @param onAction A function to handle actions from the screen.
+ * @param modifier A [Modifier] for the Composable.
+ */
 @Composable
 internal fun ShareApplicationForm(
     state: ShareApplicationState,
