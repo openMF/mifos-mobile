@@ -17,12 +17,25 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * A serializable object representing the route to the Share Account screen.
+ */
 @Serializable
 data object ShareAccountRoute
 
+/**
+ * Navigates to the Share Account screen.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToShareAccountScreen(navOptions: NavOptions? = null) =
     navigate(ShareAccountRoute, navOptions)
 
+/**
+ * Defines the destination for the Share Account screen in the navigation graph.
+ *
+ * @param navigateBack A function to navigate back to the previous screen.
+ */
 fun NavGraphBuilder.shareAccountDestination(
     navigateBack: () -> Unit,
 ) {

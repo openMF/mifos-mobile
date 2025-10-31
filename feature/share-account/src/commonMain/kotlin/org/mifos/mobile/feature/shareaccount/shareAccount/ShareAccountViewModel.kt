@@ -27,9 +27,7 @@ import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.feature.shareaccount.utils.FilterUtil
-import kotlin.collections.firstOrNull
 
 // TODO: Refactor according to figma design
 /**
@@ -158,8 +156,7 @@ class ShareAccountsViewmodel(
 
     /**
      * Retries the data fetching process. If the network is unavailable, it shows
-     * a network error dialog. Otherwise, it triggers the `loadAccounts` `fetchClient`,
-     * `fetchLonPurpose` function.
+     * a network error dialog. Otherwise, it triggers the `loadAccounts` function.
      */
     private fun retry() {
         viewModelScope.launch {
@@ -309,48 +306,49 @@ class ShareAccountsViewmodel(
 /**
  * State holder for the Share Accounts screen.
  * Contains all values needed to render the UI and manage logic.
+ *
+ * @property shareAccounts The list of share accounts.
+ * @property originalAccounts The original list of share accounts.
+ * @property isFilteredEmpty A flag indicating if the filtered list is empty.
+ * @property firstLaunch A flag indicating if this is the first launch of the screen.
+ * @property items The number of filtered accounts.
+ * @property totalLoanAmount The total share amount computed from accounts.
+ * @property currency The currency symbol (e.g., ₹, $, etc.).
+ * @property decimals The number of decimals to display for the amount.
+ * @property networkConnection The network connectivity status.
+ * @property clientId The current client ID from user preferences.
+ * @property dialogState The currently active dialog (Error).
+ * @property selectedFilters The filters currently applied.
+ * @property isAmountVisible A flag to control whether account balances are visible.
+ * @property uiState The current UI state of the screen.
+ * @property networkStatus The network connectivity status.
  */
 data class ShareAccountsState(
     val shareAccounts: List<ShareAccount>?,
     val originalAccounts: List<ShareAccount>? = null,
     val isFilteredEmpty: Boolean = false,
     val firstLaunch: Boolean = true,
-
-    /** Number of filtered accounts */
     val items: Int? = 0,
-
-    /** Total share amount computed from accounts */
     val totalLoanAmount: String? = "",
-
-    /** Currency symbol (e.g., ₹, $, etc.) */
     val currency: String? = "",
-
-    /** Decimals to display amount*/
     val decimals: Int? = 2,
-
-    /** Network connectivity status */
     val networkConnection: Boolean? = true,
-
-    /** Current client ID from user preferences */
     val clientId: Long?,
-
-    /** Currently active dialog (Error) */
     val dialogState: DialogState? = null,
-
-    /** Filters currently applied */
     val selectedFilters: List<StringResource?> = emptyList(),
-
-    /** Controls whether account balances are visible */
     val isAmountVisible: Boolean = false,
-
     val uiState: ScreenUiState? = ScreenUiState.Loading,
-
     val networkStatus: Boolean = false,
 ) {
     /**
      * Represents UI dialog states.
      */
     sealed interface DialogState {
+        /**
+         * An error dialog state.
+         *
+         * @property message The error message to display.
+         */
         data class Error(val message: String) : DialogState
     }
 }
@@ -359,27 +357,51 @@ data class ShareAccountsState(
  * Represents user or system actions for the Share Accounts screen.
  */
 sealed interface ShareAccountsAction {
+    /**
+     * Action triggered on the first launch of the screen.
+     */
     data object OnFirstLaunched : ShareAccountsAction
 
-    /** Dismiss any open dialog */
+    /**
+     * Action to dismiss any open dialog.
+     */
     data object OnDismissDialog : ShareAccountsAction
 
-    /** Navigate back from the screen */
+    /**
+     * Action to navigate back from the screen.
+     */
     data object OnNavigateBack : ShareAccountsAction
 
-    /** Toggle visibility of share amount */
+    /**
+     * Action to toggle the visibility of the share amount.
+     */
     data object ToggleAmountVisible : ShareAccountsAction
 
-    /** Load share accounts with applied filters */
+    /**
+     * Action to load share accounts with applied filters.
+     *
+     * @property filters The list of filters to apply.
+     */
     data class LoadAccounts(val filters: List<StringResource?>) : ShareAccountsAction
 
-    /** Retry loading with same filters */
+    /**
+     * Action to retry loading with the same filters.
+     */
     data object OnRetry : ShareAccountsAction
 
-    /** Navigate to a selected account's detail page */
+    /**
+     * Action triggered when an account is clicked.
+     *
+     * @property accountId The ID of the clicked account.
+     * @property accountType The type of the clicked account.
+     */
     data class OnAccountClicked(val accountId: Long, val accountType: String) : ShareAccountsAction
 
-    /** Action to observe network status */
+    /**
+     * Action to observe the network status.
+     *
+     * @property isOnline A boolean indicating if the device is online.
+     */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : ShareAccountsAction
 
     /**
@@ -387,7 +409,12 @@ sealed interface ShareAccountsAction {
      */
     sealed interface Internal : ShareAccountsAction {
 
-        /** Called when share account data is received from repository */
+        /**
+         * Called when share account data is received from the repository.
+         *
+         * @property filters The list of filters applied.
+         * @property dataState The result of fetching the share accounts.
+         */
         data class ReceiveShareAccounts(
             val filters: List<StringResource?>,
             val dataState: DataState<ClientAccounts>,
@@ -400,12 +427,21 @@ sealed interface ShareAccountsAction {
  */
 sealed interface ShareAccountsEvent {
 
-    /** Trigger navigation to selected share account's detail screen */
+    /**
+     * Trigger navigation to the selected share account's detail screen.
+     *
+     * @property accountId The ID of the clicked account.
+     * @property accountType The type of the clicked account.
+     */
     data class AccountClicked(val accountId: Long, val accountType: String) : ShareAccountsEvent
 
-    /** Signals the UI that loading is complete */
+    /**
+     * Signals the UI that loading is complete.
+     */
     data object LoadingCompleted : ShareAccountsEvent
 
-    /** Navigates back to the previous screen */
+    /**
+     * Navigates back to the previous screen.
+     */
     data object NavigateBack : ShareAccountsEvent
 }

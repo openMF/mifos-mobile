@@ -59,6 +59,18 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.collections.orEmpty
 
+/**
+ * A Composable function that represents the Share Account screen.
+ *
+ * @param navigateBack A function to navigate back to the previous screen.
+ * @param onAccountClicked A function to handle account click events.
+ * @param refreshSignal A signal to trigger a refresh of the account data.
+ * @param onLoadingCompleted A function to be called when loading is completed.
+ * @param accountTypeFilters A list of account type filters.
+ * @param accountStatusFilters A list of account status filters.
+ * @param filtersClicked A function to handle filter click events.
+ * @param viewModel An instance of [ShareAccountsViewmodel].
+ */
 @Composable
 fun ShareAccountScreen(
     navigateBack: () -> Unit,
@@ -115,6 +127,12 @@ fun ShareAccountScreen(
     )
 }
 
+/**
+ * A Composable function that displays a dialog based on the [ShareAccountsState.DialogState].
+ *
+ * @param dialogState The state of the dialog to be displayed.
+ * @param onAction A function to handle actions from the dialog.
+ */
 @Composable
 internal fun ShareAccountDialog(
     dialogState: ShareAccountsState.DialogState?,
@@ -133,6 +151,13 @@ internal fun ShareAccountDialog(
     }
 }
 
+/**
+ * A Composable function that displays the content of the Share Account screen.
+ *
+ * @param state The current state of the screen.
+ * @param onAction A function to handle actions from the screen.
+ * @param filtersClicked A function to handle filter click events.
+ */
 @Composable
 internal fun ShareAccountContent(
     state: ShareAccountsState,
