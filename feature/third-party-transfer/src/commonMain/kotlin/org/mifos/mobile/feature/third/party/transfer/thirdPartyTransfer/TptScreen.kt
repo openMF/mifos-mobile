@@ -243,7 +243,7 @@ internal fun TptForm(
             },
         )
 
-        if(state.toAccount?.accountNo.isNullOrBlank()){
+        if (state.toAccount?.accountNo.isNullOrBlank()) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
                 modifier = Modifier
@@ -265,7 +265,7 @@ internal fun TptForm(
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
-        }else{
+        } else {
             Box(modifier = Modifier.height(DesignToken.spacing.extraSmall))
         }
 
