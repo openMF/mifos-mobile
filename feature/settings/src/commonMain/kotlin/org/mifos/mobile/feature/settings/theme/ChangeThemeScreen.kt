@@ -39,6 +39,14 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main composable for the Change Theme screen. It connects the UI to the ViewModel
+ * and handles navigation events.
+ *
+ * @param onNavigateBack Lambda to handle back navigation.
+ * @param modifier The modifier to be applied to the screen.
+ * @param viewmodel The [ChangeThemeViewModel] for this screen.
+ */
 @Composable
 internal fun ChangeThemeScreen(
     onNavigateBack: () -> Unit,
@@ -60,6 +68,13 @@ internal fun ChangeThemeScreen(
     )
 }
 
+/**
+ * The content of the Theme screen, including the scaffold and theme selection options.
+ *
+ * @param uiState The current state of the theme screen.
+ * @param modifier The modifier to be applied to the content.
+ * @param onAction Lambda to send actions to the ViewModel.
+ */
 @Composable
 internal fun ThemeScreenContent(
     uiState: ThemeState,
@@ -111,6 +126,9 @@ internal fun ThemeScreenContent(
     }
 }
 
+/**
+ * A preview for the [ThemeScreenContent] composable.
+ */
 @DevicePreview
 @Composable
 fun ThemeScreenPreview() {

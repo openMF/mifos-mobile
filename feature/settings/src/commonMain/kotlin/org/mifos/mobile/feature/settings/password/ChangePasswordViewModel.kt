@@ -37,6 +37,13 @@ import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 
+/**
+ * ViewModel for the Change Password screen. It manages the state, validation logic,
+ * and interactions for updating a user's password.
+ *
+ * @param repository The repository for handling user authentication operations.
+ * @param userDataRepository The repository for accessing user-specific data.
+ */
 @Suppress("CyclomaticComplexMethod", "TooManyFunctions")
 internal class ChangePasswordViewModel(
     private val repository: UserAuthRepository,
@@ -50,6 +57,7 @@ internal class ChangePasswordViewModel(
     private val maxFailedAttempts = 5
 
     init {
+        // Observe user data to get the current password.
         userDataRepository.userData.map {
             it.data?.password ?: ""
         }.onEach {
@@ -57,6 +65,12 @@ internal class ChangePasswordViewModel(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Handles incoming actions from the UI, such as input changes, button clicks,
+     * and internal events.
+     *
+     * @param action The [PasswordAction] to be processed.
+     */
     override fun handleAction(action: PasswordAction) {
         when (action) {
             is PasswordAction.OnOldPasswordChange -> {
@@ -84,6 +98,11 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Validates the provided current password.
+     * @param password The current password string to validate.
+     * @return [ValidationResult.Success] if valid, otherwise [ValidationResult.Error].
+     */
     private fun validateCurrentPassword(password: String): ValidationResult = when {
         password.isEmpty() -> ValidationResult.Error(Res.string.password_empty_error)
         password.length < 8 -> ValidationResult.Error(Res.string.password_length_error)
@@ -91,6 +110,11 @@ internal class ChangePasswordViewModel(
         else -> ValidationResult.Success
     }
 
+    /**
+     * Validates the new password based on strength and other rules.
+     * @param password The new password string to validate.
+     * @return [ValidationResult.Success] if valid, otherwise [ValidationResult.Error].
+     */
     @Suppress("ReturnCount")
     private fun validateNewPassword(password: String): ValidationResult {
         if (password.isEmpty()) {
@@ -116,6 +140,12 @@ internal class ChangePasswordViewModel(
         return ValidationResult.Success
     }
 
+    /**
+     * Validates that the confirmed password matches the new password.
+     * @param confirmPassword The confirmed password string.
+     * @param newPassword The new password string.
+     * @return [ValidationResult.Success] if they match, otherwise [ValidationResult.Error].
+     */
     private fun validateConfirmPassword(
         confirmPassword: String,
         newPassword: String,
@@ -126,6 +156,10 @@ internal class ChangePasswordViewModel(
         else -> ValidationResult.Success
     }
 
+    /**
+     * Handles changes to the current password input field with debounced validation.
+     * @param newValue The updated password string.
+     */
     private fun onCurrentPasswordChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(
@@ -143,6 +177,10 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Handles changes to the new password field, updates strength, and runs debounced validation.
+     * @param newValue The updated password string.
+     */
     private fun onNewPasswordChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(
@@ -188,6 +226,10 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Handles changes to the confirm password input field with debounced validation.
+     * @param newValue The updated password string.
+     */
     private fun onConfirmPasswordChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(
@@ -205,6 +247,10 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Updates the password strength state based on the validation result.
+     * @param action The internal action containing the password strength result.
+     */
     private fun handlePasswordStrengthResult(action: PasswordAction.Internal.ReceivePasswordStrengthResult) {
         when (val result = action.result) {
             is PasswordStrengthResult.Success -> {
@@ -232,6 +278,10 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Validates all password fields and submits the change if they are all valid.
+     * Tracks failed attempts to prevent brute-forcing.
+     */
     private fun validateAndSubmit() {
         if (failedAttempts >= maxFailedAttempts) {
             mutableStateFlow.update {
@@ -266,6 +316,9 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Initiates the password update process by calling the repository.
+     */
     private fun handleSubmitClick() {
         mutableStateFlow.update {
             it.copy(dialogState = PasswordState.DialogState.Loading)
@@ -292,6 +345,11 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Handles the result of the password update operation, showing a success or error dialog.
+     * Logs the user out on success.
+     * @param action The internal action containing the result of the update operation.
+     */
     private fun handleUpdatePasswordResult(action: PasswordAction.Internal.UpdatePasswordResult) {
         when (action.result) {
             is DataState.Error -> {
@@ -335,12 +393,20 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Updates the state with the user's current password received from the repository.
+     * @param action The internal action containing the user's password.
+     */
     private fun handleOldPasswordReceived(action: PasswordAction.Internal.OldPasswordReceived) {
         action.password?.let {
             mutableStateFlow.update { it.copy(currentPassword = action.password) }
         }
     }
 
+    /**
+     * A helper function to debounce validation logic.
+     * @param validation The validation logic to execute after a delay.
+     */
     private fun debounceValidation(validation: suspend () -> Unit) {
         validationJob?.cancel()
         validationJob = viewModelScope.launch {
@@ -349,6 +415,11 @@ internal class ChangePasswordViewModel(
         }
     }
 
+    /**
+     * Checks if a string has consecutive repeating characters.
+     * @param input The string to check.
+     * @return `true` if consecutive repeating characters are found, `false` otherwise.
+     */
     private fun hasConsecutiveRepeatingChars(input: String): Boolean {
         for (i in 0 until input.length - 1) {
             if (input[i] == input[i + 1]) {
@@ -358,39 +429,48 @@ internal class ChangePasswordViewModel(
         return false
     }
 
+    /** Toggles the visibility of the current password field. */
     private fun toggleCurrentPasswordVisibility() {
         mutableStateFlow.update {
             it.copy(oldPasswordVisible = !it.oldPasswordVisible)
         }
     }
 
+    /** Toggles the visibility of the new password field. */
     private fun toggleNewPasswordVisibility() {
         mutableStateFlow.update {
             it.copy(newPasswordVisible = !it.newPasswordVisible)
         }
     }
 
+    /** Toggles the visibility of the confirm password field. */
     private fun toggleConfirmPasswordVisibility() {
         mutableStateFlow.update {
             it.copy(confirmPasswordVisible = !it.confirmPasswordVisible)
         }
     }
 
+    /** Dismisses any currently shown dialog. */
     private fun dismissDialog() {
         mutableStateFlow.update {
             it.copy(dialogState = null)
         }
     }
 
+    /** Clears sensitive data and navigates back. */
     private fun navigateBack() {
         clearSensitiveData()
         sendEvent(PasswordEvent.OnNavigateBack)
     }
 
+    /** Resets the counter for failed submission attempts. */
     private fun resetFailedAttempts() {
         failedAttempts = 0
     }
 
+    /**
+     * Clears all sensitive password data and validation errors from the state.
+     */
     private fun clearSensitiveData() {
         mutableStateFlow.update {
             it.copy(
@@ -414,6 +494,24 @@ internal class ChangePasswordViewModel(
     }
 }
 
+/**
+ * Represents the state of the Change Password screen.
+ *
+ * @property currentPassword The user's actual current password (internal use).
+ * @property oldPassword The value entered in the "current password" field.
+ * @property newPassword The value entered in the "new password" field.
+ * @property confirmPassword The value entered in the "confirm password" field.
+ * @property oldPasswordError A string resource for the current password validation error, if any.
+ * @property newPasswordError A string resource for the new password validation error, if any.
+ * @property confirmPasswordError A string resource for the confirm password validation error, if any.
+ * @property oldPasswordVisible Whether the current password text is visible.
+ * @property newPasswordVisible Whether the new password text is visible.
+ * @property confirmPasswordVisible Whether the confirm password text is visible.
+ * @property passwordStrengthState The calculated strength of the new password.
+ * @property passwordFeedback A list of suggestions for improving password strength.
+ * @property dialogState The state of any dialog to be shown (e.g., loading, success, error).
+ * @property isEnabled Whether the submit button should be enabled.
+ */
 internal data class PasswordState(
     internal val currentPassword: String = "",
     val oldPassword: String = "",
@@ -432,11 +530,14 @@ internal data class PasswordState(
     val passwordFeedback: List<StringResource> = emptyList(),
     val dialogState: DialogState? = null,
 ) {
+    /** Represents the state of the dialog shown on the screen. */
     internal sealed interface DialogState {
         data object Loading : DialogState
         data class Success(val message: StringResource) : DialogState
         data class Error(val message: StringResource) : DialogState
     }
+
+    /** Determines if the submit button should be enabled based on input validity. */
     internal val isEnabled = oldPasswordError == null &&
         newPasswordError == null &&
         confirmPasswordError == null &&
@@ -445,32 +546,68 @@ internal data class PasswordState(
         confirmPassword.isNotEmpty()
 }
 
+/**
+ * Represents events that can be sent from the ViewModel to the UI, typically for navigation.
+ */
 internal sealed interface PasswordEvent {
+    /** Event to navigate back to the previous screen. */
     data object OnNavigateBack : PasswordEvent
 }
 
+/**
+ * Represents actions that can be dispatched from the UI to the ViewModel.
+ */
 internal sealed interface PasswordAction {
+    /** Action for when the current password input changes. */
     data class OnOldPasswordChange(val currentPassword: String) : PasswordAction
+
+    /** Action for when the new password input changes. */
     data class OnNewPasswordChange(val newPassword: String) : PasswordAction
+
+    /** Action for when the confirm password input changes. */
     data class OnConfirmPasswordChange(val confirmPassword: String) : PasswordAction
 
+    /** Action to toggle visibility of the current password. */
     data object OldPasswordVisibleClick : PasswordAction
+
+    /** Action to toggle visibility of the new password. */
     data object NewPasswordVisibleClick : PasswordAction
+
+    /** Action to toggle visibility of the confirm password. */
     data object ConfirmPasswordVisibleClick : PasswordAction
 
+    /** Action to submit the password change request. */
     data object SubmitClick : PasswordAction
+
+    /** Action to retry submission after too many failed attempts. */
     data object RetrySubmit : PasswordAction
+
+    /** Action to navigate back. */
     data object NavigateBack : PasswordAction
+
+    /** Action to dismiss the current dialog. */
     data object DismissDialog : PasswordAction
 
+    /** Represents internal actions used within the ViewModel. */
     sealed interface Internal : PasswordAction {
+        /** Action containing the result of the password update operation. */
         data class UpdatePasswordResult(val result: DataState<String>) : Internal
+
+        /** Action containing the calculated password strength result. */
         data class ReceivePasswordStrengthResult(val result: PasswordStrengthResult) : Internal
+
+        /** Action containing the user's current password from the repository. */
         data class OldPasswordReceived(val password: String?) : Internal
     }
 }
 
+/**
+ * A sealed class to represent the result of a validation check.
+ */
 sealed class ValidationResult {
+    /** Represents a successful validation. */
     data object Success : ValidationResult()
+
+    /** Represents a failed validation with an error message. */
     data class Error(val message: StringResource) : ValidationResult()
 }

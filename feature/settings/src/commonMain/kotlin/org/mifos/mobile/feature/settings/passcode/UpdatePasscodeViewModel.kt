@@ -25,6 +25,13 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
+/**
+ * ViewModel for the Update Passcode screen. It handles the business logic for validating
+ * and updating the user's passcode.
+ *
+ * @param userPreferencesRepository Repository for accessing and modifying user preferences,
+ * including the stored passcode.
+ */
 internal class UpdatePasscodeViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) :
@@ -39,6 +46,12 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Handles incoming actions from the UI, such as input changes, button clicks, and
+     * internal events.
+     *
+     * @param action The [PasscodeAction] to be processed.
+     */
     override fun handleAction(action: PasscodeAction) {
         when (action) {
             is PasscodeAction.OnConfirmPasscodeChange -> onConfirmPasscodeChange(action.confirmPasscode)
@@ -95,6 +108,10 @@ internal class UpdatePasscodeViewModel(
     }
 
     // Validation functions
+    /**
+     * Validates the old passcode.
+     * @return A [StringResource] for the error message, or null if valid.
+     */
     private fun validateOldPasscode(passcode: String): StringResource? = when {
         passcode.isEmpty() -> Res.string.feature_settings_passcode_empty_error
         passcode.length != 4 -> Res.string.feature_settings_passcode_length_error
@@ -103,6 +120,10 @@ internal class UpdatePasscodeViewModel(
         else -> null
     }
 
+    /**
+     * Validates the new passcode.
+     * @return A [StringResource] for the error message, or null if valid.
+     */
     private fun validateNewPasscode(passcode: String): StringResource? = when {
         passcode.isEmpty() -> Res.string.feature_settings_passcode_empty_error
         passcode.length != 4 -> Res.string.feature_settings_passcode_length_error
@@ -110,6 +131,10 @@ internal class UpdatePasscodeViewModel(
         else -> null
     }
 
+    /**
+     * Validates the confirmed passcode against the new passcode.
+     * @return A [StringResource] for the error message, or null if valid.
+     */
     private fun validateConfirmPasscode(
         confirmPasscode: String,
         newPasscode: String,
@@ -123,6 +148,9 @@ internal class UpdatePasscodeViewModel(
 
     private var validationJob: Job? = null
 
+    /**
+     * Handles changes to the old passcode input field with debounced validation.
+     */
     private fun onOldPasscodeChange(newValue: String) {
         // Immediately update the value without validation
         mutableStateFlow.update {
@@ -140,6 +168,9 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Handles changes to the new passcode input field with debounced validation.
+     */
     private fun onNewPasscodeChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(newPasscode = newValue)
@@ -164,6 +195,9 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Handles changes to the confirm passcode input field with debounced validation.
+     */
     private fun onConfirmPasscodeChange(newValue: String) {
         mutableStateFlow.update {
             it.copy(confirmPasscode = newValue)
@@ -179,6 +213,9 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Validates all fields upon submission and proceeds if they are valid.
+     */
     private fun validateSubmitClick() {
         val oldPasscodeError = validateOldPasscode(state.oldPasscode)
         val newPasscodeError = validateNewPasscode(state.newPasscode)
@@ -197,6 +234,9 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Submits the new passcode to the repository and updates the UI state.
+     */
     private fun handleSubmitClick() {
         mutableStateFlow.update {
             it.copy(dialogState = PasscodeState.DialogState.Loading)
@@ -213,6 +253,9 @@ internal class UpdatePasscodeViewModel(
         }
     }
 
+    /**
+     * Handles the result of the passcode update operation, showing a success dialog.
+     */
     private fun handleUpdatePasscodeResult(action: PasscodeAction.Internal.UpdatePasscodeResult) {
         mutableStateFlow.update {
             it.copy(dialogState = PasscodeState.DialogState.Shown(action.result))
@@ -220,6 +263,9 @@ internal class UpdatePasscodeViewModel(
         clearSensitiveData()
     }
 
+    /**
+     * Clears sensitive passcode data from the state.
+     */
     private fun clearSensitiveData() {
         mutableStateFlow.update {
             it.copy(
@@ -239,6 +285,10 @@ internal class UpdatePasscodeViewModel(
     }
 }
 
+/**
+ * Represents the state of the Update Passcode screen, including input values, validation errors,
+ * and dialog visibility.
+ */
 internal data class PasscodeState(
     internal val currentPasscode: String = "",
 
@@ -255,17 +305,26 @@ internal data class PasscodeState(
     val isConfirmPasscodeVisible: Boolean = false,
     val dialogState: DialogState? = null,
 ) {
+    /**
+     * Represents the state of the dialog shown on the screen (e.g., loading, success).
+     */
     sealed interface DialogState {
         data object Loading : DialogState
         data class Shown(val message: StringResource) : DialogState
     }
 }
 
+/**
+ * Represents events that can be sent from the ViewModel to the UI, typically for navigation.
+ */
 internal sealed interface PasscodeEvent {
     data object OnNavigateBack : PasscodeEvent
     data object OnNavigateToPasscodeScreen : PasscodeEvent
 }
 
+/**
+ * Represents actions that can be dispatched from the UI to the ViewModel.
+ */
 internal sealed interface PasscodeAction {
     data class OnOldPasscodeChange(val oldPasscode: String) : PasscodeAction
     data class OnNewPasscodeChange(val newPasscode: String) : PasscodeAction
@@ -281,6 +340,9 @@ internal sealed interface PasscodeAction {
     data object DismissDialog : PasscodeAction
     data object NavigateToPasscodeScreen : PasscodeAction
 
+    /**
+     * Represents internal actions used within the ViewModel.
+     */
     sealed interface Internal : PasscodeAction {
         data class UpdatePasscodeResult(val result: StringResource) : Internal
         data class CurrentPasscodeReceived(val passcode: String) : Internal

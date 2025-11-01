@@ -48,6 +48,15 @@ import org.mifos.mobile.core.ui.component.FaqItemHolder
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main entry point composable for the FAQ screen.
+ * It observes the state from the [FaqViewModel] and handles navigation events.
+ *
+ * @param onNavigateBack Lambda to be invoked to navigate back to the previous screen.
+ * @param onClickHelp Lambda to be invoked when the "Contact Us" or "Help" action is triggered.
+ * @param modifier The modifier to be applied to the screen.
+ * @param viewModel The [FaqViewModel] instance for this screen.
+ */
 @Composable
 internal fun FaqScreen(
     onNavigateBack: () -> Unit,
@@ -70,6 +79,14 @@ internal fun FaqScreen(
         },
     )
 }
+
+/**
+ * The content of the FAQ screen. It displays the list of FAQs within a scaffold.
+ *
+ * @param uiState The current state of the FAQ screen, containing the list of FAQs.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ * @param modifier The modifier to be applied to the content.
+ */
 
 @Composable
 private fun FaqScreenContent(
@@ -95,6 +112,14 @@ private fun FaqScreenContent(
     )
 }
 
+/**
+ * Displays the list of FAQs or an empty state view if no questions are available.
+ * It also includes a "Contact Us" prompt at the bottom.
+ *
+ * @param faqArrayList The list of [FAQ] items to display.
+ * @param selectedFaqPosition The index of the currently expanded FAQ item.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ */
 @Composable
 private fun FaqContent(
     faqArrayList: List<FAQ>,
@@ -150,6 +175,10 @@ private fun FaqContent(
     }
 }
 
+/**
+ * A preview composable for the [FaqScreenContent].
+ * This allows for easy visualization of the screen's layout in Android Studio.
+ */
 @DevicePreview
 @Composable
 fun FaqScreenPreview() {

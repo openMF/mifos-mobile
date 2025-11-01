@@ -43,6 +43,14 @@ import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main entry point composable for the Change Password screen.
+ * It connects the UI to the [ChangePasswordViewModel] and handles navigation events.
+ *
+ * @param navigateBack Lambda function to be invoked to navigate back to the previous screen.
+ * @param modifier The modifier to be applied to the screen.
+ * @param viewmodel The [ChangePasswordViewModel] instance for this screen.
+ */
 @Composable
 internal fun ChangePasswordScreen(
     navigateBack: () -> Unit,
@@ -73,6 +81,13 @@ internal fun ChangePasswordScreen(
     )
 }
 
+/**
+ * The main UI structure for the Change Password screen, including the scaffold and content.
+ *
+ * @param state The current state of the password screen.
+ * @param modifier The modifier to be applied to the screen.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ */
 @Composable
 internal fun ChangePasswordScreen(
     state: PasswordState,
@@ -98,6 +113,14 @@ internal fun ChangePasswordScreen(
     }
 }
 
+/**
+ * The content of the password screen, containing input fields for old, new, and confirm passwords,
+ * along with validation feedback.
+ *
+ * @param state The current state of the password screen.
+ * @param modifier The modifier to be applied to the content.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ */
 @Composable
 internal fun PasswordScreenContent(
     state: PasswordState,
@@ -183,6 +206,12 @@ internal fun PasswordScreenContent(
     }
 }
 
+/**
+ * Displays different dialogs (Success, Error, Loading) based on the current dialog state.
+ *
+ * @param dialogState The current state of the dialog.
+ * @param onDismiss A lambda function to handle dialog dismissal.
+ */
 @Composable
 private fun PasswordDialog(
     dialogState: PasswordState.DialogState?,

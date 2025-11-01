@@ -15,6 +15,11 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Defines the composable destination for the "Theme" screen within the navigation graph.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ */
 internal fun NavGraphBuilder.themeDestination(
     navigateBack: () -> Unit,
 ) {
@@ -24,5 +29,11 @@ internal fun NavGraphBuilder.themeDestination(
         )
     }
 }
+
+/**
+ * Navigates to the Theme selection screen.
+ *
+ * @param navOptions Optional [NavOptions] to configure the navigation action.
+ */
 internal fun NavController.navigateToTheme(navOptions: NavOptions? = null) =
     navigate(SettingsItems.Theme, navOptions)

@@ -20,6 +20,12 @@ import org.mifos.mobile.core.common.DataState.Loading.data
 import org.mifos.mobile.core.model.entity.FAQ
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
+/**
+ * ViewModel for the FAQ screen. It handles the business logic, state management,
+ * and events for the FAQ feature.
+ *
+ * @constructor Creates an instance of [FaqViewModel] and initiates the loading of the FAQ list.
+ */
 internal class FaqViewModel : BaseViewModel<FaqState, FaqEvent, FaqAction>(
     initialState = FaqState(emptyList()),
 ) {
@@ -28,6 +34,11 @@ internal class FaqViewModel : BaseViewModel<FaqState, FaqEvent, FaqAction>(
             sendAction(FaqAction.Internal.LoadFaqList)
         }
     }
+
+    /**
+     * Handles actions dispatched from the UI.
+     * @param action The [FaqAction] to be processed.
+     */
     override fun handleAction(action: FaqAction) {
         when (action) {
             FaqAction.NavigateBack -> {
@@ -45,6 +56,12 @@ internal class FaqViewModel : BaseViewModel<FaqState, FaqEvent, FaqAction>(
             }
         }
     }
+
+    /**
+     * Loads the list of FAQs from the string resources and updates the state.
+     * Questions and answers are retrieved from XML arrays, cleaned of extra whitespace,
+     * and then mapped into a list of [FAQ] objects.
+     */
     private fun loadFaqList() {
         viewModelScope.launch {
             val questions = getStringArray(Res.array.faq_qs).map {
@@ -66,21 +83,40 @@ internal class FaqViewModel : BaseViewModel<FaqState, FaqEvent, FaqAction>(
     }
 }
 
+/**
+ * Represents the state of the FAQ screen.
+ * @property faqList The list of frequently asked questions.
+ * @property selectedFaqPosition The index of the currently selected/expanded FAQ item.
+ */
 internal data class FaqState(
     val faqList: List<FAQ> = emptyList(),
     val selectedFaqPosition: Int = 0,
 )
+
+/**
+ * Represents the events that can be sent from the ViewModel to the UI.
+ */
 internal sealed interface FaqEvent {
     data object OnNavigateBack : FaqEvent
     data object OnNavigateToHelp : FaqEvent
 }
+
+/**
+ * Represents the actions that can be dispatched from the UI to the ViewModel.
+ */
 internal sealed interface FaqAction {
+    /** Action to navigate back. */
     data object NavigateBack : FaqAction
+
+    /** Action to navigate to the help screen. */
     data object NavigateToHelp : FaqAction
 
+    /** Action to update the selected FAQ item. */
     data class UpdateFaqPosition(val position: Int) : FaqAction
 
+    /** Internal ViewModel actions not directly triggered by the user. */
     sealed interface Internal : FaqAction {
+        /** Action to load the FAQ list. */
         data object LoadFaqList : Internal
     }
 }

@@ -48,6 +48,16 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.feature.settings.util.appVersion
 
+/**
+ * The main composable function for the "App Info" screen. It acts as a wrapper
+ * for the [AppInfoContent] composable, setting up the screen's structure.
+ *
+ * @param onBackClick A lambda function to handle the back button click event.
+ * @param navigateToPrivacyPolicy A lambda function to navigate to the Privacy Policy screen.
+ * @param modifier The modifier to be applied to the screen.
+ * @param navigateToTermsAndConditions A lambda function to navigate to the Terms and Conditions screen.
+ */
+
 @Composable
 internal fun AppInfoScreen(
     onBackClick: () -> Unit,
@@ -62,6 +72,16 @@ internal fun AppInfoScreen(
         navigateToTermsAndConditions = navigateToTermsAndConditions,
     )
 }
+
+/**
+ * The content of the "App Info" screen. It displays application details like
+ * version, name, and other related information within a scaffold.
+ *
+ * @param onBackClick A lambda function to handle the back navigation from the scaffold's top bar.
+ * @param navigateToPrivacyPolicy A lambda function to navigate to the Privacy Policy screen.
+ * @param modifier The modifier to be applied to the content.
+ * @param navigateToTermsAndConditions A lambda function to navigate to the Terms and Conditions screen.
+ */
 
 @Suppress("UnusedParameter")
 @Composable

@@ -57,6 +57,13 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.ShareUtils
 
+/**
+ * The main composable for the Help screen. It sets up the scaffold and integrates the content.
+ *
+ * @param onBackClick Lambda to handle back navigation.
+ * @param modifier The modifier to be applied to the screen.
+ * @param navigateToFAQ Lambda to navigate to the FAQ screen.
+ */
 @Composable
 internal fun HelpScreen(
     onBackClick: () -> Unit,
@@ -79,6 +86,15 @@ internal fun HelpScreen(
         )
     }
 }
+
+/**
+ * The content of the Help screen, displaying various support options like FAQ, phone, and email.
+ *
+ * @param onCallClick Lambda to initiate a phone call to the helpline.
+ * @param onMailClick Lambda to open the mail client to contact support.
+ * @param modifier The modifier to be applied to the content.
+ * @param navigateToFAQ Lambda to navigate to the FAQ screen.
+ */
 
 @Composable
 internal fun HelpScreenContent(
@@ -104,6 +120,12 @@ internal fun HelpScreenContent(
     }
 }
 
+/**
+ * A card component that provides a link to the FAQ screen.
+ *
+ * @param modifier The modifier to be applied to the card.
+ * @param onClick Lambda to be executed when the card is clicked.
+ */
 @Composable
 private fun FAQCard(
     modifier: Modifier = Modifier,
@@ -132,6 +154,12 @@ private fun FAQCard(
     }
 }
 
+/**
+ * A card component for displaying phone support information and an action button.
+ *
+ * @param modifier The modifier to be applied to the card.
+ * @param onCallClick Lambda to be executed when the call action is triggered.
+ */
 @Composable
 private fun PhoneSupportCard(
     modifier: Modifier = Modifier,
@@ -149,6 +177,12 @@ private fun PhoneSupportCard(
     )
 }
 
+/**
+ * A card component for displaying email support information and an action button.
+ *
+ * @param modifier The modifier to be applied to the card.
+ * @param onMailClick Lambda to be executed when the mail action is triggered.
+ */
 @Composable
 private fun EmailSupportCard(
     modifier: Modifier = Modifier,
@@ -166,6 +200,14 @@ private fun EmailSupportCard(
     )
 }
 
+/**
+ * A generic card used as a base for different help-related cards.
+ *
+ * @param backgroundColor The background color of the card.
+ * @param modifier The modifier to be applied to the card.
+ * @param onClick Optional lambda to handle click events on the card.
+ * @param content The composable content to be displayed inside the card.
+ */
 @Composable
 private fun HelpCard(
     backgroundColor: Color,
@@ -181,6 +223,19 @@ private fun HelpCard(
         content()
     }
 }
+
+/**
+ * A specialized card for displaying support options (like phone or email) with an icon and action.
+ *
+ * @param backgroundColor The background color of the card.
+ * @param titleRes The string resource for the title.
+ * @param messageRes The string resource for the message.
+ * @param actionRes The string resource for the action button text.
+ * @param iconRes The drawable resource for the icon.
+ * @param iconContentDescription The content description for the icon.
+ * @param modifier The modifier to be applied to the card.
+ * @param onActionClick Lambda to be executed when the action button is clicked.
+ */
 
 @Composable
 private fun SupportCard(
@@ -218,6 +273,15 @@ private fun SupportCard(
     }
 }
 
+/**
+ * The textual content within a [SupportCard], including title, message, and action button.
+ *
+ * @param titleRes The string resource for the title.
+ * @param messageRes The string resource for the message.
+ * @param actionRes The string resource for the action button text.
+ * @param modifier The modifier to be applied to the content.
+ * @param onActionClick Lambda for the action button's click event.
+ */
 @Composable
 private fun SupportCardContent(
     titleRes: StringResource,
@@ -247,6 +311,13 @@ private fun SupportCardContent(
     }
 }
 
+/**
+ * The icon displayed at the bottom-end of a [SupportCard].
+ *
+ * @param iconRes The drawable resource for the icon.
+ * @param contentDescription The content description for the icon.
+ * @param modifier The modifier to be applied to the icon.
+ */
 @Composable
 private fun SupportCardIcon(
     iconRes: DrawableResource,
@@ -260,6 +331,13 @@ private fun SupportCardIcon(
     )
 }
 
+/**
+ * A styled action button used within the help cards.
+ *
+ * @param textRes The string resource for the button's text.
+ * @param modifier The modifier to be applied to the button.
+ * @param onClick Lambda to be executed on button click.
+ */
 @Composable
 private fun HelpActionButton(
     textRes: StringResource,

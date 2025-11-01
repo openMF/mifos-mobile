@@ -15,9 +15,19 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Navigates to the Update Passcode screen.
+ *
+ * @param navOptions Optional [NavOptions] to configure the navigation action.
+ */
 fun NavController.navigateToUpdatePasscode(navOptions: NavOptions? = null) =
     navigate(SettingsItems.AuthPasscode, navOptions)
 
+/**
+ * Defines the composable destination for the "Update Passcode" screen within the navigation graph.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ */
 internal fun NavGraphBuilder.updatePasscodeDestination(
     navigateBack: () -> Unit,
 ) {

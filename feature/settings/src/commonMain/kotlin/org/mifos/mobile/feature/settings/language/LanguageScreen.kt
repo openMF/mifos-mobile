@@ -40,6 +40,13 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main composable for the Language screen. It connects the UI to the ViewModel.
+ *
+ * @param navigateBack Lambda to handle back navigation.
+ * @param modifier The modifier to be applied to the screen.
+ * @param viewModel The [LanguageViewModel] for this screen.
+ */
 @Composable
 internal fun LanguageScreen(
     navigateBack: () -> Unit,
@@ -63,6 +70,13 @@ internal fun LanguageScreen(
     )
 }
 
+/**
+ * The content of the Language screen, including the scaffold and language options.
+ *
+ * @param uiState The current state of the screen.
+ * @param modifier The modifier to be applied to the content.
+ * @param onAction Lambda to send actions to the ViewModel.
+ */
 @Composable
 internal fun LanguageScreenContent(
     uiState: LanguageState,
@@ -95,6 +109,13 @@ internal fun LanguageScreenContent(
     }
 }
 
+/**
+ * Displays a list of available languages for selection.
+ *
+ * @param selectedLanguage The currently selected language.
+ * @param modifier The modifier to be applied to the list.
+ * @param onSetLanguage Lambda to handle language selection.
+ */
 @Composable
 internal fun LanguageSelectionContent(
     selectedLanguage: LanguageConfig,
@@ -124,6 +145,9 @@ internal fun LanguageSelectionContent(
     }
 }
 
+/**
+ * A preview for the [LanguageScreenContent].
+ */
 @Preview
 @Composable
 private fun Language_Screen_Preview() {

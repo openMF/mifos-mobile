@@ -43,6 +43,13 @@ import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main composable for the Update Passcode screen, connecting the UI to the ViewModel.
+ *
+ * @param navigateBack Lambda to handle back navigation.
+ * @param modifier The modifier to be applied to the screen.
+ * @param viewmodel The [UpdatePasscodeViewModel] for this screen.
+ */
 @Composable
 internal fun UpdatePasscodeScreen(
     navigateBack: () -> Unit,
@@ -74,6 +81,13 @@ internal fun UpdatePasscodeScreen(
     )
 }
 
+/**
+ * The main UI structure for the Update Passcode screen, including the scaffold.
+ *
+ * @param state The current state of the screen.
+ * @param modifier The modifier to be applied to the content.
+ * @param onAction Lambda to send actions to the ViewModel.
+ */
 @Composable
 internal fun UpdatePasscodeScreen(
     state: PasscodeState,
@@ -98,6 +112,13 @@ internal fun UpdatePasscodeScreen(
     }
 }
 
+/**
+ * The content of the passcode screen, containing input fields for old, new, and confirm passcodes.
+ *
+ * @param passcodeData The current state containing passcode values and errors.
+ * @param modifier The modifier to be applied to the content.
+ * @param onAction Lambda to send actions to the ViewModel.
+ */
 @Composable
 internal fun PasscodeScreenContent(
     passcodeData: PasscodeState,
@@ -174,6 +195,12 @@ internal fun PasscodeScreenContent(
     }
 }
 
+/**
+ * Displays different dialogs based on the dialog state (Loading, Success).
+ *
+ * @param dialogState The current state of the dialog.
+ * @param onDismiss Lambda to handle dialog dismissal.
+ */
 @Composable
 private fun PasscodeDialog(
     dialogState: PasscodeState.DialogState?,

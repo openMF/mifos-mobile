@@ -57,6 +57,15 @@ import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * The main entry point composable for the Settings screen.
+ * It connects the UI to the [SettingsViewModel], handles navigation events,
+ * and displays dialogs.
+ *
+ * @param navigateBack Lambda function to navigate to the previous screen.
+ * @param navigateToScreen Lambda function to navigate to a specific settings sub-screen.
+ * @param viewModel The [SettingsViewModel] instance for this screen.
+ */
 @Composable
 internal fun SettingsScreen(
     navigateBack: () -> Unit,
@@ -89,6 +98,12 @@ internal fun SettingsScreen(
     )
 }
 
+/**
+ * Manages the display of dialogs on the settings screen, such as the logout confirmation.
+ *
+ * @param state The current state of the settings screen.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ */
 @Composable
 private fun SettingsDialog(
     state: SettingsState,
@@ -113,6 +128,14 @@ private fun SettingsDialog(
     }
 }
 
+/**
+ * The main content of the Settings screen, including the scaffold, user profile,
+ * and list of setting actions. It handles different UI states like loading, success, and error.
+ *
+ * @param state The current state of the settings screen.
+ * @param onAction A lambda function to send actions to the ViewModel.
+ * @param modifier The modifier to be applied to the content.
+ */
 @Composable
 internal fun SettingsScreenContent(
     state: SettingsState,
@@ -172,6 +195,13 @@ internal fun SettingsScreenContent(
     }
 }
 
+/**
+ * Displays the user's profile information, including their profile picture,
+ * display name, and account number.
+ *
+ * @param state The current state of the settings screen, containing user data.
+ * @param modifier The modifier to be applied to the card.
+ */
 @Composable
 internal fun SettingsProfileCard(
     state: SettingsState,
@@ -217,6 +247,12 @@ internal fun SettingsProfileCard(
     }
 }
 
+/**
+ * Renders a list of actionable setting items, such as "Change Password", "About", etc.
+ *
+ * @param items An immutable list of [SettingsItems] to display.
+ * @param onActionClick A lambda function to handle clicks on a setting item.
+ */
 @Composable
 internal fun SettingsActions(
     items: ImmutableList<SettingsItems>,
