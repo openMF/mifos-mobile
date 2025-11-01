@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.third.party.transfer.thirdPartyTransfer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -242,26 +243,30 @@ internal fun TptForm(
             },
         )
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-        ) {
-            Text(
-                text = stringResource(Res.string.feature_tpt_tip),
-                style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-
-            Text(
+        if(state.toAccount?.accountNo.isNullOrBlank()){
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
                 modifier = Modifier
-                    .clickable {
-                        onAction(TptAction.OnAddBeneficiaryClicked)
-                    },
-                text = stringResource(Res.string.feature_tpt_tip_action),
-                style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
-            )
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = stringResource(Res.string.feature_tpt_tip),
+                    style = MifosTypography.labelMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                Text(
+                    modifier = Modifier
+                        .clickable {
+                            onAction(TptAction.OnAddBeneficiaryClicked)
+                        },
+                    text = stringResource(Res.string.feature_tpt_tip_action),
+                    style = MifosTypography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }else{
+            Box(modifier = Modifier.height(DesignToken.spacing.extraSmall))
         }
 
         MifosOutlinedTextField(
