@@ -13,6 +13,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -53,6 +54,7 @@ fun MifosBottomSheet(
 
     AnimatedVisibility(visible = showBottomSheet) {
         ModalBottomSheet(
+            containerColor = MaterialTheme.colorScheme.surface,
             onDismissRequest = {
                 showBottomSheet = false
                 dismissSheet()
