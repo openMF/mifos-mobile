@@ -54,3 +54,10 @@ playStorePublishServiceCredentialsFile.json
 # Ruby stuff we don't care about
 .bundle/
 vendor/
+# iOS / Xcode specific ignores
+*.xcuserstate
+*.xcworkspace/
+*.xcodeproj/
+*.xcuserdata/
+DerivedData/
+Pods/
