@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
+import mifos_mobile.feature.accounts.generated.resources.feature_accounts_filter_status
+import mifos_mobile.feature.accounts.generated.resources.feature_accounts_filter_type
 import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_title
 import mifos_mobile.feature.accounts.generated.resources.feature_saving_account_title
 import mifos_mobile.feature.accounts.generated.resources.feature_share_account_title
@@ -164,7 +166,7 @@ internal fun SavingsAccountFilters(
         HorizontalDivider(modifier = Modifier.height(1.dp))
 
         FilterSection(
-            title = "Type",
+            title = stringResource(Res.string.feature_accounts_filter_type),
             filtersSelected = state.accountTypeFiltersCount ?: 0,
             isExpanded = state.isTypeExpanded,
             onToggle = { onAction(AccountsAction.ToggleTypeExpanded) },
@@ -175,7 +177,7 @@ internal fun SavingsAccountFilters(
         )
 
         FilterSection(
-            title = "Status",
+            title = stringResource(Res.string.feature_accounts_filter_status),
             filtersSelected = state.accountStatusFiltersCount ?: 0,
             isExpanded = state.isStatusExpanded,
             onToggle = { onAction(AccountsAction.ToggleStatusExpanded) },
