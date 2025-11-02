@@ -44,4 +44,3 @@ internal fun NavGraphBuilder.themeDestination(
  */
 internal fun NavController.navigateToTheme(navOptions: NavOptions? = null) =
     navigate(SettingsItems.Theme, navOptions)
-

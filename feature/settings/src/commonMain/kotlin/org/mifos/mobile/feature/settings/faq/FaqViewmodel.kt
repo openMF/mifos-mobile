@@ -98,6 +98,7 @@ internal data class FaqState(
 internal sealed interface FaqEvent {
     /** Signals that the UI should navigate back. */
     data object OnNavigateBack : FaqEvent
+
     /** Signals that the UI should navigate to the help screen. */
     data object OnNavigateToHelp : FaqEvent
 }
@@ -108,6 +109,7 @@ internal sealed interface FaqEvent {
 internal sealed interface FaqAction {
     /** An action to navigate back. */
     data object NavigateBack : FaqAction
+
     /** An action to navigate to the help screen. */
     data object NavigateToHelp : FaqAction
 

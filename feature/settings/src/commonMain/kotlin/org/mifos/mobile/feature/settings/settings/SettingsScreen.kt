@@ -159,7 +159,7 @@ internal fun SettingsScreenContent(
                         .padding(vertical = DesignToken.padding.large)
                         .verticalScroll(rememberScrollState()),
 
-                    ) {
+                ) {
                     when {
                         state.isUserLoading -> {
                             MifosProgressIndicator()
@@ -287,4 +287,3 @@ internal fun SettingsActions(
         }
     }
 }
-

@@ -130,7 +130,7 @@ internal fun AppInfoContent(
                             Image(
                                 painter = painterResource(Res.drawable.mifos_icon),
                                 contentDescription =
-                                    stringResource(Res.string.feature_settings_about_logo_content_description),
+                                stringResource(Res.string.feature_settings_about_logo_content_description),
                                 modifier = Modifier
                                     .size(DesignToken.sizes.iconExtraLarge),
                             )
@@ -182,7 +182,7 @@ internal fun AppInfoContent(
                         Image(
                             painter = painterResource(Res.drawable.mifo_app_info_icon),
                             contentDescription =
-                                stringResource(Res.string.feature_settings_appinfo_logo_content_description),
+                            stringResource(Res.string.feature_settings_appinfo_logo_content_description),
                             modifier = Modifier
                                 .size(150.dp)
                                 .align(Alignment.BottomEnd).zIndex(0f),

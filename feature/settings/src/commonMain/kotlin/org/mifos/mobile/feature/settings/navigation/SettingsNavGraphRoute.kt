@@ -100,4 +100,3 @@ internal fun NavController.navigateToScreen(
     route: SettingsItems,
     navOptions: NavOptions? = null,
 ) = navigate(route, navOptions)
-

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -344,6 +344,7 @@ internal data class PasscodeState(
     sealed interface DialogState {
         /** The dialog is showing a loading indicator. */
         data object Loading : DialogState
+
         /** The dialog is showing a message.
          * @param message The string resource to display.
          */
@@ -358,6 +359,7 @@ internal data class PasscodeState(
 internal sealed interface PasscodeEvent {
     /** Event to navigate back from the current screen. */
     data object OnNavigateBack : PasscodeEvent
+
     /** Event to navigate to the main passcode screen after a successful update. */
     data object OnNavigateToPasscodeScreen : PasscodeEvent
 }
@@ -369,15 +371,19 @@ internal sealed interface PasscodeEvent {
 internal sealed interface PasscodeAction {
     /** Action triggered when the old passcode input changes. */
     data class OnOldPasscodeChange(val oldPasscode: String) : PasscodeAction
+
     /** Action triggered when the new passcode input changes. */
     data class OnNewPasscodeChange(val newPasscode: String) : PasscodeAction
+
     /** Action triggered when the confirm passcode input changes. */
     data class OnConfirmPasscodeChange(val confirmPasscode: String) : PasscodeAction
 
     /** Action to toggle the visibility of the new passcode. */
     data object NewPasscodeVisibleClick : PasscodeAction
+
     /** Action to toggle the visibility of the old passcode. */
     data object OldPasscodeVisibleClick : PasscodeAction
+
     /** Action to toggle the visibility of the confirm passcode. */
     data object ConfirmPasscodeVisibleClick : PasscodeAction
 
@@ -386,8 +392,10 @@ internal sealed interface PasscodeAction {
 
     /** Action triggered when the user clicks the back navigation button. */
     data object NavigateBackClick : PasscodeAction
+
     /** Action to dismiss the current dialog. */
     data object DismissDialog : PasscodeAction
+
     /** Action to navigate to the passcode screen. */
     data object NavigateToPasscodeScreen : PasscodeAction
 
@@ -397,6 +405,7 @@ internal sealed interface PasscodeAction {
     sealed interface Internal : PasscodeAction {
         /** Internal action representing the result of the update operation. */
         data class UpdatePasscodeResult(val result: StringResource) : Internal
+
         /** Internal action triggered when the current passcode is fetched from the repository. */
         data class CurrentPasscodeReceived(val passcode: String) : Internal
     }

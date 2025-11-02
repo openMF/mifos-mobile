@@ -114,7 +114,7 @@ internal fun AboutScreenContent(
                         Image(
                             painter = painterResource(Res.drawable.mifos_icon),
                             contentDescription =
-                                stringResource(Res.string.feature_settings_about_logo_content_description),
+                            stringResource(Res.string.feature_settings_about_logo_content_description),
                             modifier = Modifier
                                 .size(DesignToken.sizes.iconExtraLarge),
                         )
@@ -160,7 +160,7 @@ internal fun AboutScreenContent(
                 }
                 Image(
                     painter =
-                        painterResource(Res.drawable.ic_icon_money_transfer),
+                    painterResource(Res.drawable.ic_icon_money_transfer),
                     contentDescription = null,
                     modifier = Modifier.fillMaxWidth(),
                 )

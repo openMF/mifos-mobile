@@ -550,18 +550,21 @@ internal data class PasswordState(
     internal sealed interface DialogState {
         /** The dialog is showing a loading indicator. */
         data object Loading : DialogState
+
         /** The dialog is showing a success message. */
         data class Success(val message: StringResource) : DialogState
+
         /** The dialog is showing an error message. */
         data class Error(val message: StringResource) : DialogState
     }
+
     /** Determines if the submit button should be enabled based on input validity and presence. */
     internal val isEnabled = oldPasswordError == null &&
-            newPasswordError == null &&
-            confirmPasswordError == null &&
-            oldPassword.isNotEmpty() &&
-            newPassword.isNotEmpty() &&
-            confirmPassword.isNotEmpty()
+        newPasswordError == null &&
+        confirmPasswordError == null &&
+        oldPassword.isNotEmpty() &&
+        newPassword.isNotEmpty() &&
+        confirmPassword.isNotEmpty()
 }
 
 /**
@@ -578,24 +581,31 @@ internal sealed interface PasswordEvent {
 internal sealed interface PasswordAction {
     /** Action triggered when the old password input changes. */
     data class OnOldPasswordChange(val currentPassword: String) : PasswordAction
+
     /** Action triggered when the new password input changes. */
     data class OnNewPasswordChange(val newPassword: String) : PasswordAction
+
     /** Action triggered when the confirm password input changes. */
     data class OnConfirmPasswordChange(val confirmPassword: String) : PasswordAction
 
     /** Action to toggle the visibility of the old password. */
     data object OldPasswordVisibleClick : PasswordAction
+
     /** Action to toggle the visibility of the new password. */
     data object NewPasswordVisibleClick : PasswordAction
+
     /** Action to toggle the visibility of the confirm password. */
     data object ConfirmPasswordVisibleClick : PasswordAction
 
     /** Action triggered when the user clicks the submit button. */
     data object SubmitClick : PasswordAction
+
     /** Action to retry submission after being blocked. */
     data object RetrySubmit : PasswordAction
+
     /** Action to navigate back from the screen. */
     data object NavigateBack : PasswordAction
+
     /** Action to dismiss the current dialog. */
     data object DismissDialog : PasswordAction
 
@@ -603,8 +613,10 @@ internal sealed interface PasswordAction {
     sealed interface Internal : PasswordAction {
         /** Internal action representing the result of the password update operation. */
         data class UpdatePasswordResult(val result: DataState<String>) : Internal
+
         /** Internal action carrying the result of a password strength check. */
         data class ReceivePasswordStrengthResult(val result: PasswordStrengthResult) : Internal
+
         /** Internal action for when the current password is fetched from the repository. */
         data class OldPasswordReceived(val password: String?) : Internal
     }
@@ -616,6 +628,7 @@ internal sealed interface PasswordAction {
 sealed class ValidationResult {
     /** Represents a successful validation. */
     data object Success : ValidationResult()
+
     /** Represents a failed validation with an associated error message. */
     data class Error(val message: StringResource) : ValidationResult()
 }
