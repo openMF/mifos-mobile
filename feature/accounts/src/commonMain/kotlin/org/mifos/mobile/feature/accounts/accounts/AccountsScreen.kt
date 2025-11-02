@@ -22,15 +22,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
-import mifos_mobile.feature.accounts.generated.resources.feature_account_title
+import mifos_mobile.feature.accounts.generated.resources.feature_accounts_filter_status
+import mifos_mobile.feature.accounts.generated.resources.feature_accounts_filter_type
 import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_title
 import mifos_mobile.feature.accounts.generated.resources.feature_saving_account_title
 import mifos_mobile.feature.accounts.generated.resources.feature_share_account_title
@@ -38,6 +36,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosBottomSheet
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -115,17 +114,22 @@ internal fun AccountsDialog(
                 onDismissRequest = { onAction(AccountsAction.DismissDialog) },
             )
         }
-        AccountsState.DialogState.Filters -> SavingsAccountFilters(
-            state = state,
-            onAction = onAction,
+        AccountsState.DialogState.Filters -> MifosBottomSheet(
+            content = {
+                SavingsAccountFilters(
+                    state = state,
+                    onAction = onAction,
+                )
+            },
             modifier = modifier,
+            onDismiss = { onAction(AccountsAction.DismissDialog) },
         )
         null -> {}
     }
 }
 
 /**
- * Composable function that displays the Savings Account Filters Dialog.
+ * Composable function that displays the Savings Account Filters Bottom Bar.
  *
  * @param state The state of the screen.
  * @param onAction The function to be called when an action is performed.
@@ -137,68 +141,51 @@ internal fun SavingsAccountFilters(
     onAction: (AccountsAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isTypeExpanded by rememberSaveable { mutableStateOf(true) }
-    var isStatusExpanded by rememberSaveable { mutableStateOf(true) }
-
-    MifosElevatedScaffold(
-        onNavigateBack = { onAction(AccountsAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_account_title),
-        bottomBar = {
-            Surface {
-                MifosPoweredCard(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding(),
-                )
-            }
-        },
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(DesignToken.padding.large)
+            .padding(top = DesignToken.padding.large),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.large),
-        ) {
-            FilterTopSection(
-                isAnyFilterSelected = state.isAnyFilterSelected,
-                resetFilters = {
-                    onAction(AccountsAction.ResetFilters)
-                },
-                onApplyFilter = {
-                    onAction(AccountsAction.GetFilterResults)
-                },
-                dismissDialog = {
-                    onAction(AccountsAction.DismissDialog)
-                },
-            )
+        FilterTopSection(
+            isAnyFilterSelected = state.isAnyFilterSelected,
+            resetFilters = {
+                onAction(AccountsAction.ResetFilters)
+            },
+            onApplyFilter = {
+                onAction(AccountsAction.GetFilterResults)
+            },
+            dismissDialog = {
+                onAction(AccountsAction.DismissDialog)
+            },
+        )
 
-            Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
+        Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
 
-            HorizontalDivider(modifier = Modifier.height(1.dp))
+        HorizontalDivider(modifier = Modifier.height(1.dp))
 
-            FilterSection(
-                title = "Type",
-                filtersSelected = state.accountTypeFiltersCount ?: 0,
-                isExpanded = isTypeExpanded,
-                onToggle = { isTypeExpanded = !isTypeExpanded },
-                filters = state.checkboxOptions.filter { it.type == FilterType.ACCOUNT_TYPE },
-                onCheckChanged = { label ->
-                    onAction(AccountsAction.ToggleCheckbox(label, FilterType.ACCOUNT_TYPE))
-                },
-            )
+        FilterSection(
+            title = stringResource(Res.string.feature_accounts_filter_type),
+            filtersSelected = state.accountTypeFiltersCount ?: 0,
+            isExpanded = state.isTypeExpanded,
+            onToggle = { onAction(AccountsAction.ToggleTypeExpanded) },
+            filters = state.checkboxOptions.filter { it.type == FilterType.ACCOUNT_TYPE },
+            onCheckChanged = { label ->
+                onAction(AccountsAction.ToggleCheckbox(label, FilterType.ACCOUNT_TYPE))
+            },
+        )
 
-            FilterSection(
-                title = "Status",
-                filtersSelected = state.accountStatusFiltersCount ?: 0,
-                isExpanded = isStatusExpanded,
-                onToggle = { isStatusExpanded = !isStatusExpanded },
-                filters = state.checkboxOptions.filter { it.type == FilterType.ACCOUNT_STATUS },
-                onCheckChanged = { label ->
-                    onAction(AccountsAction.ToggleCheckbox(label, FilterType.ACCOUNT_STATUS))
-                },
-            )
-        }
+        FilterSection(
+            title = stringResource(Res.string.feature_accounts_filter_status),
+            filtersSelected = state.accountStatusFiltersCount ?: 0,
+            isExpanded = state.isStatusExpanded,
+            onToggle = { onAction(AccountsAction.ToggleStatusExpanded) },
+            filters = state.checkboxOptions.filter { it.type == FilterType.ACCOUNT_STATUS },
+            onCheckChanged = { label ->
+                onAction(AccountsAction.ToggleCheckbox(label, FilterType.ACCOUNT_STATUS))
+            },
+        )
     }
 }
 
@@ -207,13 +194,11 @@ internal fun SavingsAccountFilters(
  *
  * @param state The state of the screen.
  * @param onAction The function to be called when an action is performed.
- * @param modifier Modifier to be applied to the layout.
  */
 @Composable
 internal fun AccountScreenContent(
     state: AccountsState,
     onAction: (AccountsAction) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val isRefreshing = state.isRefreshing
     val pullToRefreshState = rememberMifosPullToRefreshState(
@@ -235,7 +220,7 @@ internal fun AccountScreenContent(
         bottomBar = {
             Surface {
                 MifosPoweredCard(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding(),
                 )
