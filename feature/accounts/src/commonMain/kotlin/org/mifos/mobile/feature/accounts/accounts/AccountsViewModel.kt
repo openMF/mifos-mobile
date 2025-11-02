@@ -83,6 +83,8 @@ internal class AccountsViewModel(
             is AccountsAction.OnNavigateBack -> sendEvent(AccountsEvent.NavigateBack)
 
             is AccountsAction.ToggleCheckbox -> toggleCheckbox(action.label, action.type)
+            AccountsAction.ToggleTypeExpanded -> handleToggleTypeExpanded()
+            AccountsAction.ToggleStatusExpanded -> handleToggleStatusExpanded()
         }
     }
 
@@ -95,6 +97,20 @@ internal class AccountsViewModel(
                 dialogState = AccountsState.DialogState.Filters,
             )
         }
+    }
+
+    /**
+     * Toggles the expanded state of the type filter section.
+     */
+    private fun handleToggleTypeExpanded() {
+        mutableStateFlow.update { it.copy(isTypeExpanded = !it.isTypeExpanded) }
+    }
+
+    /**
+     * Toggles the expanded state of the status filter section.
+     */
+    private fun handleToggleStatusExpanded() {
+        mutableStateFlow.update { it.copy(isStatusExpanded = !it.isStatusExpanded) }
     }
 
     /**
@@ -231,6 +247,8 @@ constructor(
     val refreshSignal: Long = Clock.System.now().epochSeconds,
     val dialogState: DialogState? = null,
     val uiState: ScreenUiState = ScreenUiState.Loading,
+    val isTypeExpanded: Boolean = true,
+    val isStatusExpanded: Boolean = true,
 ) {
 
     sealed interface DialogState {
@@ -258,6 +276,8 @@ constructor(
 internal sealed interface AccountsAction {
 
     data object ToggleFilter : AccountsAction
+    data object ToggleTypeExpanded : AccountsAction
+    data object ToggleStatusExpanded : AccountsAction
 
     data object ResetFilters : AccountsAction
 

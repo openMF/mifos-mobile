@@ -14,6 +14,10 @@
     <string name="feature_loan_account_title">Loan Accounts</string>
     <string name="feature_saving_account_title">Saving Accounts</string>
     <string name="feature_share_account_title">Share Accounts</string>
+
+    <string name="feature_accounts_filter_status">Status</string>
+    <string name="feature_accounts_filter_type">Type</string>
+
 <!--    Loan Account Filters-->
 
     <string name="feature_loan_account_filter_active">Active</string>
