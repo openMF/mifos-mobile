@@ -48,6 +48,15 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.feature.settings.util.appVersion
 
+/**
+ * The main composable for the App Info screen, which acts as a stateful wrapper
+ * around the core UI content.
+ *
+ * @param onBackClick Lambda to handle back navigation events.
+ * @param navigateToPrivacyPolicy Lambda to navigate to the Privacy Policy screen.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param navigateToTermsAndConditions Lambda to navigate to the Terms and Conditions screen.
+ */
 @Composable
 internal fun AppInfoScreen(
     onBackClick: () -> Unit,
@@ -63,6 +72,15 @@ internal fun AppInfoScreen(
     )
 }
 
+/**
+ * Renders the stateless UI content for the App Info screen. This includes details
+ * about the app, version, and links to legal documents.
+ *
+ * @param onBackClick Lambda to handle back navigation from the top bar.
+ * @param navigateToPrivacyPolicy Lambda to navigate to the Privacy Policy screen.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param navigateToTermsAndConditions Lambda to navigate to the Terms and Conditions screen.
+ */
 @Suppress("UnusedParameter")
 @Composable
 internal fun AppInfoContent(
@@ -112,7 +130,7 @@ internal fun AppInfoContent(
                             Image(
                                 painter = painterResource(Res.drawable.mifos_icon),
                                 contentDescription =
-                                stringResource(Res.string.feature_settings_about_logo_content_description),
+                                    stringResource(Res.string.feature_settings_about_logo_content_description),
                                 modifier = Modifier
                                     .size(DesignToken.sizes.iconExtraLarge),
                             )
@@ -164,7 +182,7 @@ internal fun AppInfoContent(
                         Image(
                             painter = painterResource(Res.drawable.mifo_app_info_icon),
                             contentDescription =
-                            stringResource(Res.string.feature_settings_appinfo_logo_content_description),
+                                stringResource(Res.string.feature_settings_appinfo_logo_content_description),
                             modifier = Modifier
                                 .size(150.dp)
                                 .align(Alignment.BottomEnd).zIndex(0f),

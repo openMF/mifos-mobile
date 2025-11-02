@@ -37,6 +37,13 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
+/**
+ * A composable function that displays a confirmation dialog for logging out.
+ * The dialog's visibility and content are controlled by the [LogoutDialogState].
+ *
+ * @param visibilityState The state that determines whether the dialog is shown or hidden,
+ * and provides the necessary content and actions.
+ */
 @Composable
 fun MifosLogoutDialog(
     visibilityState: LogoutDialogState,
@@ -117,10 +124,27 @@ fun MifosLogoutDialog(
     }
 }
 
+/**
+ * Represents the state of the [MifosLogoutDialog].
+ */
 sealed interface LogoutDialogState {
 
+    /**
+     * The dialog is hidden.
+     */
     data object Hidden : LogoutDialogState
 
+    /**
+     * The dialog is visible.
+     *
+     * @param description The main descriptive text of the dialog.
+     * @param title The title of the dialog.
+     * @param message A message typically shown below the main action button.
+     * @param messageActionText Clickable text accompanying the message.
+     * @param onLogout Lambda to be executed when the logout button is clicked.
+     * @param onNavigateToHome Lambda to be executed when the message action text is clicked.
+     * @param onDismiss Lambda to be executed when the dialog is dismissed.
+     */
     data class Shown(
         val description: StringResource,
         val title: StringResource,
@@ -132,6 +156,9 @@ sealed interface LogoutDialogState {
     ) : LogoutDialogState
 }
 
+/**
+ * A Jetpack Compose preview for the [MifosLogoutDialog].
+ */
 @Preview
 @Composable
 fun MifosLogoutDialogPreview() {

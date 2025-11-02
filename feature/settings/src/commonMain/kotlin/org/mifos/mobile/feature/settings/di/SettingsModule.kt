@@ -18,6 +18,11 @@ import org.mifos.mobile.feature.settings.password.ChangePasswordViewModel
 import org.mifos.mobile.feature.settings.settings.SettingsViewModel
 import org.mifos.mobile.feature.settings.theme.ChangeThemeViewModel
 
+/**
+ * Koin module for providing dependencies related to the settings feature.
+ * This module declares all the ViewModels used across the settings screens,
+ * making them available for dependency injection.
+ */
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel)
     viewModelOf(::UpdatePasscodeViewModel)

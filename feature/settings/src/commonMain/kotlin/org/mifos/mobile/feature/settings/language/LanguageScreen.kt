@@ -40,6 +40,14 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that constructs the "Language" screen. It observes state from the
+ * [LanguageViewModel] and handles navigation events.
+ *
+ * @param navigateBack Lambda to handle back navigation events.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param viewModel The ViewModel responsible for the screen's logic and state management.
+ */
 @Composable
 internal fun LanguageScreen(
     navigateBack: () -> Unit,
@@ -63,6 +71,14 @@ internal fun LanguageScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the UI for the language selection screen.
+ * It includes the scaffold, top bar, content, and a confirmation button.
+ *
+ * @param uiState The current state of the language screen.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onAction Callback to send actions to the ViewModel.
+ */
 @Composable
 internal fun LanguageScreenContent(
     uiState: LanguageState,
@@ -95,6 +111,13 @@ internal fun LanguageScreenContent(
     }
 }
 
+/**
+ * Renders the list of available languages as radio buttons, allowing the user to make a selection.
+ *
+ * @param selectedLanguage The currently selected [LanguageConfig].
+ * @param modifier The [Modifier] to be applied to the list.
+ * @param onSetLanguage Callback that is invoked when a new language is selected.
+ */
 @Composable
 internal fun LanguageSelectionContent(
     selectedLanguage: LanguageConfig,
@@ -124,6 +147,10 @@ internal fun LanguageSelectionContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview for the [LanguageScreenContent]. This allows for
+ * visualizing the UI component in Android Studio's preview pane.
+ */
 @Preview
 @Composable
 private fun Language_Screen_Preview() {
