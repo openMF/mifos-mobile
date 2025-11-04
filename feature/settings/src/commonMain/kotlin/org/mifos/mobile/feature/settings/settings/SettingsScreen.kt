@@ -57,6 +57,17 @@ import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * A stateful composable that serves as the entry point for the main "Settings" screen.
+ *
+ * It connects to the [SettingsViewModel] to observe state and events, and orchestrates
+ * the display of the UI content and dialogs. It handles navigation events for backing
+ * out of the screen or navigating to other specific settings pages.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToScreen A lambda function to handle navigation to a specific [SettingsItems] destination.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun SettingsScreen(
     navigateBack: () -> Unit,
@@ -89,6 +100,13 @@ internal fun SettingsScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the current [SettingsState].
+ * It currently handles the display of the logout confirmation dialog.
+ *
+ * @param state The current state of the settings screen, used to determine which dialog to show.
+ * @param onAction A callback to send actions to the ViewModel, such as logout confirmation or dismissal.
+ */
 @Composable
 private fun SettingsDialog(
     state: SettingsState,
@@ -113,6 +131,16 @@ private fun SettingsDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Settings" screen.
+ *
+ * It includes the scaffold, top bar, and conditionally displays content based on the
+ * [ScreenUiState] (e.g., success, loading, error).
+ *
+ * @param state The current state of the settings screen.
+ * @param onAction A callback to send actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SettingsScreenContent(
     state: SettingsState,
@@ -172,6 +200,13 @@ internal fun SettingsScreenContent(
     }
 }
 
+/**
+ * A composable that displays the user's profile information card at the top of the settings screen.
+ * It includes the user's profile picture, name, and account number.
+ *
+ * @param state The current state containing the client's profile data.
+ * @param modifier The [Modifier] to be applied to the card layout.
+ */
 @Composable
 internal fun SettingsProfileCard(
     state: SettingsState,
@@ -217,6 +252,13 @@ internal fun SettingsProfileCard(
     }
 }
 
+/**
+ * A composable that renders a list of actionable settings items.
+ * Each item is displayed as a [MifosActionCard] and triggers a callback when clicked.
+ *
+ * @param items An immutable list of [SettingsItems] to be displayed.
+ * @param onActionClick A lambda function invoked with the [SettingsItems] that was clicked.
+ */
 @Composable
 internal fun SettingsActions(
     items: ImmutableList<SettingsItems>,

@@ -15,9 +15,22 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Navigates to the "Help" screen. This is an extension function on [NavController]
+ * that simplifies the process of navigating to the help destination.
+ *
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 internal fun NavController.navigateToHelp(navOptions: NavOptions? = null) =
     navigate(SettingsItems.Help, navOptions)
 
+/**
+ * Defines the composable destination for the "Help" screen within the navigation graph.
+ * This sets up the route and the content to be displayed, along with screen transitions.
+ *
+ * @param onBackClick A lambda function to be invoked when the user initiates a back action.
+ * @param navigateToFAQ A lambda function to navigate to the "FAQ" screen.
+ */
 internal fun NavGraphBuilder.helpDestination(
     onBackClick: () -> Unit,
     navigateToFAQ: () -> Unit,

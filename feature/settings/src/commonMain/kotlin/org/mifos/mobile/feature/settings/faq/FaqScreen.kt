@@ -48,6 +48,15 @@ import org.mifos.mobile.core.ui.component.FaqItemHolder
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that displays the FAQ screen. It collects state and events from
+ * the [FaqViewModel] and delegates the UI rendering to [FaqScreenContent].
+ *
+ * @param onNavigateBack Callback to handle back navigation.
+ * @param onClickHelp Callback to navigate to the help/contact screen.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun FaqScreen(
     onNavigateBack: () -> Unit,
@@ -71,6 +80,13 @@ internal fun FaqScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the UI for the FAQ screen based on the provided [uiState].
+ *
+ * @param uiState The current state of the FAQ screen.
+ * @param onAction Callback to send actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 private fun FaqScreenContent(
     uiState: FaqState,
@@ -95,6 +111,14 @@ private fun FaqScreenContent(
     )
 }
 
+/**
+ * Renders the main content of the FAQ screen, including the list of questions and answers
+ * or an empty state view if no FAQs are available.
+ *
+ * @param faqArrayList The list of [FAQ] items to display.
+ * @param selectedFaqPosition The index of the currently expanded FAQ item.
+ * @param onAction Callback to send actions to the ViewModel.
+ */
 @Composable
 private fun FaqContent(
     faqArrayList: List<FAQ>,
@@ -150,6 +174,10 @@ private fun FaqContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview for the [FaqScreenContent]. This allows for
+ * visualizing the UI component in Android Studio's preview pane.
+ */
 @DevicePreview
 @Composable
 fun FaqScreenPreview() {

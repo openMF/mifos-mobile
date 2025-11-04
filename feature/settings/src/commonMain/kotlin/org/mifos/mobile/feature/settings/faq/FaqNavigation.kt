@@ -15,6 +15,13 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Defines the composable destination for the "FAQ" (Frequently Asked Questions) screen
+ * within the navigation graph.
+ *
+ * @param onBackClick A lambda function to be invoked when the user initiates a back action.
+ * @param contact A lambda function to handle navigation to a contact or help screen.
+ */
 fun NavGraphBuilder.faqDestination(
     onBackClick: () -> Unit,
     contact: () -> Unit,
@@ -26,5 +33,12 @@ fun NavGraphBuilder.faqDestination(
         )
     }
 }
+
+/**
+ * Navigates to the "FAQ" screen. This is an extension function on [NavController]
+ * that simplifies the process of navigating to the FAQ destination.
+ *
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 fun NavController.navigateToFaq(navOptions: NavOptions? = null) =
     navigate(SettingsItems.FAQ, navOptions)

@@ -15,9 +15,24 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Navigates to the App Info screen. This is an extension function on [NavController]
+ * that simplifies the process of navigating to the app info destination.
+ *
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation,
+ *   allowing for customization of aspects like launch modes and animations.
+ */
 internal fun NavController.navigateToAppInfo(navOptions: NavOptions? = null) =
     navigate(SettingsItems.AppInfo, navOptions)
 
+/**
+ * Defines the composable destination for the "App Info" screen within the navigation graph.
+ * This sets up the route and the content to be displayed, along with screen transitions.
+ *
+ * @param onBackClick A lambda function to be invoked when the user initiates a back action.
+ * @param navigateToPrivacyPolicy A lambda function to navigate to the Privacy Policy screen.
+ * @param navigateToTermsAndConditions A lambda function to navigate to the Terms and Conditions screen.
+ */
 internal fun NavGraphBuilder.appInfoDestination(
     onBackClick: () -> Unit,
     navigateToPrivacyPolicy: () -> Unit,

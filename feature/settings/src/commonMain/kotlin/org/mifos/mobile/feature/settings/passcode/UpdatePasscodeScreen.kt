@@ -43,6 +43,14 @@ import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that manages the "Update Passcode" screen.
+ * It observes state and events from the [UpdatePasscodeViewModel] and handles navigation.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param viewmodel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun UpdatePasscodeScreen(
     navigateBack: () -> Unit,
@@ -74,6 +82,14 @@ internal fun UpdatePasscodeScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the UI for the "Update Passcode" screen.
+ * It includes the scaffold, top bar, and the main content area.
+ *
+ * @param state The current state of the passcode screen.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onAction A callback to send actions to the ViewModel.
+ */
 @Composable
 internal fun UpdatePasscodeScreen(
     state: PasscodeState,
@@ -98,6 +114,13 @@ internal fun UpdatePasscodeScreen(
     }
 }
 
+/**
+ * Renders the form content for updating the passcode, including input fields and a submit button.
+ *
+ * @param passcodeData The current state containing the passcode fields' data and errors.
+ * @param modifier The [Modifier] to be applied to the content layout.
+ * @param onAction A callback to send user actions to the ViewModel.
+ */
 @Composable
 internal fun PasscodeScreenContent(
     passcodeData: PasscodeState,
@@ -174,6 +197,13 @@ internal fun PasscodeScreenContent(
     }
 }
 
+/**
+ * A composable that displays a dialog based on the [PasscodeState.DialogState].
+ * It can show a loading indicator or a success message.
+ *
+ * @param dialogState The current state of the dialog.
+ * @param onDismiss A lambda to be executed when the success dialog is dismissed.
+ */
 @Composable
 private fun PasscodeDialog(
     dialogState: PasscodeState.DialogState?,
