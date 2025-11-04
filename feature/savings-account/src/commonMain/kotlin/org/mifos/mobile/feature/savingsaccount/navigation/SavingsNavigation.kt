@@ -77,10 +77,10 @@ fun NavGraphBuilder.savingsNavGraph(
         savingsAccountDetailsDestination(
             navigateBack = navController::popBackStack,
             navigateToClientChargeScreen = navigateToClientChargeScreen,
-            navigateToUpdateScreen
-            = navController::navigateToSavingsAccountUpdateScreen,
+            navigateToUpdateScreen =
+            navController::navigateToSavingsAccountUpdateScreen,
             navigateToSavingsAccountTransactionScreen =
-                navigateToSavingsAccountTransactionScreen,
+            navigateToSavingsAccountTransactionScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToTransferScreen = navigateToTransferScreen,
         )
