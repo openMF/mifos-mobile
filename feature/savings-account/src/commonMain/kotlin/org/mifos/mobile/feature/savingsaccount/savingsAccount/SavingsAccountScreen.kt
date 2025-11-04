@@ -62,6 +62,22 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A stateful composable that serves as the main entry point for the Savings Account list screen.
+ *
+ * This screen is responsible for observing state from the [SavingsAccountViewmodel], handling
+ * user events, and orchestrating the display of the savings account data. It also manages
+ * data loading triggers, including initial launch and external refresh signals.
+ *
+ * @param navigateBack A lambda to handle the back navigation event.
+ * @param onAccountClicked A callback invoked when a savings account item is clicked, providing the account type and ID.
+ * @param refreshSignal A signal to trigger a data refresh when its value changes.
+ * @param onLoadingCompleted A callback invoked when the data loading process finishes.
+ * @param accountTypeFilters A list of string resources representing the applied account type filters.
+ * @param accountStatusFilters A list of string resources representing the applied account status filters.
+ * @param filtersClicked A lambda to handle the click event on the filter icon.
+ * @param viewModel The [SavingsAccountViewmodel] instance for this screen, typically provided by Koin.
+ */
 @Composable
 fun SavingsAccountScreen(
     navigateBack: () -> Unit,
@@ -110,6 +126,13 @@ fun SavingsAccountScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [SavingsAccountState].
+ * Currently, it handles the display of an error dialog with a retry option.
+ *
+ * @param dialogState The current state of the dialog from [SavingsAccountState].
+ * @param onAction A callback to send actions, like retry, to the ViewModel.
+ */
 @Composable
 internal fun SavingsAccountDialog(
     dialogState: SavingsAccountState.DialogState?,
@@ -127,6 +150,16 @@ internal fun SavingsAccountDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the Savings Account screen.
+ *
+ * It conditionally displays UI elements based on the [ScreenUiState], such as a loading
+ * indicator, error messages, an empty data view, or the success view with the list of accounts.
+ *
+ * @param state The current [SavingsAccountState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param filtersClicked A lambda to handle the click event on the filter icon.
+ */
 @Composable
 internal fun SavingsAccountContent(
     state: SavingsAccountState,
@@ -288,6 +321,13 @@ internal fun SavingsAccountContent(
         }
     }
 }
+
+/**
+ * A Jetpack Compose preview for the [SavingsAccountContent].
+ *
+ * This provides a design-time visualization of the savings account screen UI in
+ * Android Studio, configured with a default empty state.
+ */
 
 @Preview
 @Composable

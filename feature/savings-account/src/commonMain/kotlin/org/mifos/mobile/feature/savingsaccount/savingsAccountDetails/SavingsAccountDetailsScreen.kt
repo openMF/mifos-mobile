@@ -59,6 +59,21 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
 
+/**
+ * A stateful composable that serves as the entry point for the "Savings Account Details" screen.
+ *
+ * This function connects to the [SavingsAccountDetailsViewModel] to observe UI state and handle
+ * one-time events. It is responsible for orchestrating navigation to other screens based on
+ * user actions and ViewModel events.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToTransferScreen A lambda to navigate to the fund transfer screen.
+ * @param navigateToUpdateScreen A lambda to navigate to the account update screen (e.g., for deposits).
+ * @param navigateToClientChargeScreen A lambda to navigate to the screen showing charges for the account.
+ * @param navigateToSavingsAccountTransactionScreen A lambda to navigate to the transaction history screen.
+ * @param navigateToQrCodeScreen A lambda to navigate to the QR code display screen.
+ * @param viewModel The ViewModel responsible for the screen's logic and state, typically provided by Koin.
+ */
 @Composable
 internal fun SavingsAccountDetailsScreen(
     navigateBack: () -> Unit,
@@ -115,6 +130,16 @@ internal fun SavingsAccountDetailsScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Savings Account Details" screen.
+ *
+ * It conditionally displays content based on the [ScreenUiState] (e.g., loading, error, success)
+ * and arranges the various UI components like the action bar, details grid, and action cards.
+ *
+ * @param state The current [SavingsAccountDetailsState] to render.
+ * @param onAction A callback to send actions (like retry or navigate back) to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SavingsAccountDetailsContent(
     state: SavingsAccountDetailsState,
@@ -193,6 +218,15 @@ internal fun SavingsAccountDetailsContent(
     }
 }
 
+/**
+ * Renders an action bar, currently containing an "Update" action.
+ *
+ * The action's appearance and clickability are determined by the [isUpdatable] flag.
+ *
+ * @param onAction A callback to send the [SavingsAccountDetailsAction.OnUpdateAccount] action.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param isUpdatable A boolean indicating if the update action should be enabled.
+ */
 @Composable
 internal fun ActionBar(
     onAction: (SavingsAccountDetailsAction) -> Unit,
@@ -237,6 +271,16 @@ internal fun ActionBar(
     }
 }
 
+/**
+ * Renders a grid of account details using [MifosLabelValueCard]s.
+ *
+ * The layout uses [FlowRow] to wrap items into a new row if they exceed the screen width,
+ * with a maximum of two items per row. It can also display an optional section label.
+ *
+ * @param label An optional string for the section's title.
+ * @param details A list of [LabelValueItem]s to display in the grid.
+ * @param isActive A boolean to conditionally color the status field.
+ */
 @Composable
 internal fun AccountDetailsGrid(
     label: String? = null,
@@ -283,6 +327,15 @@ internal fun AccountDetailsGrid(
     }
 }
 
+/**
+ * Renders a section with a list of actionable cards for the savings account.
+ *
+ * It filters the available actions based on the [visibleActions] set and displays them
+ * using [MifosActionCard].
+ *
+ * @param visibleActions A set of [SavingsActionItems] that should be displayed.
+ * @param onActionClick A callback invoked with the route string of the clicked action.
+ */
 @Composable
 internal fun SavingsAccountActions(
     visibleActions: Set<SavingsActionItems>,
@@ -313,11 +366,23 @@ internal fun SavingsAccountActions(
     }
 }
 
+/**
+ * A data class to represent a simple key-value pair for display in the UI.
+ *
+ * @property label The string resource for the label (key).
+ * @property value The string value to be displayed.
+ */
 data class LabelValueItem(
     val label: StringResource,
     val value: String,
 )
 
+/**
+ * A Jetpack Compose preview for the [SavingsAccountDetailsContent].
+ *
+ * This provides a design-time visualization of the account details screen in Android Studio,
+ * configured with a default success state.
+ */
 @Preview
 @Composable
 private fun Account_Details_Overview() {

@@ -47,6 +47,20 @@ import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that serves as the entry point for the "Account Withdraw" screen.
+ *
+ * This screen allows a user to request a withdrawal from their savings account. It connects
+ * to the [AccountWithdrawViewModel] to manage state, handle user input for remarks, and
+ * orchestrate navigation events.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToStatusScreen A lambda to navigate to a generic status/result screen after
+ *   the withdrawal operation is complete, passing along relevant details.
+ * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen,
+ *   which is typically required before processing the withdrawal.
+ * @param viewModel The ViewModel responsible for this screen's logic and state.
+ */
 @Composable
 internal fun AccountWithdrawScreen(
     navigateBack: () -> Unit,
@@ -88,6 +102,15 @@ internal fun AccountWithdrawScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [AccountWithdrawState.DialogState].
+ *
+ * It can show a loading indicator dialog while an operation is in progress or an error
+ * dialog with a message if something goes wrong.
+ *
+ * @param dialogState The current dialog state from the [AccountWithdrawState].
+ * @param onAction A callback to send actions, such as dismissing the dialog, to the ViewModel.
+ */
 @Composable
 internal fun AccountWithdrawDialog(
     dialogState: AccountWithdrawState.DialogState?,
@@ -109,6 +132,16 @@ internal fun AccountWithdrawDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Account Withdraw" screen.
+ *
+ * It displays the account details in a card, provides a text field for withdrawal remarks,
+ * and includes a button to initiate the withdrawal request.
+ *
+ * @param state The current [AccountWithdrawState] to render.
+ * @param onAction A callback to send user actions (like input changes or button clicks) to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun AccountWithdrawScreenContent(
     state: AccountWithdrawState,
@@ -179,6 +212,12 @@ internal fun AccountWithdrawScreenContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview for the [AccountWithdrawScreenContent].
+ *
+ * This provides a design-time visualization of the account withdrawal UI in Android Studio,
+ * configured with a default initial state.
+ */
 @Preview
 @Composable
 private fun Account_Update_Preview() {

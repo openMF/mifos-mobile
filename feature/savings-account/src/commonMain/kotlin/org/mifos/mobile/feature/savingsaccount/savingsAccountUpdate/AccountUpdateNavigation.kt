@@ -17,6 +17,20 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * A type-safe, serializable route for the Savings Account Update screen.
+ *
+ * This class encapsulates all the necessary parameters for the update screen,
+ * such as account and client details, making navigation more robust and less
+ * prone to errors. The parameters are optional where applicable to support
+ * various entry points.
+ *
+ * @property accountId The unique identifier of the savings account to be updated.
+ * @property clientName The name of the client who owns the account (optional).
+ * @property submissionData The submission date of the account (optional).
+ * @property accountNumber The account number (optional).
+ * @property product The name of the savings product (optional).
+ */
 @Serializable
 data class SavingsAccountUpdateRoute(
     val accountId: Long,
@@ -26,6 +40,20 @@ data class SavingsAccountUpdateRoute(
     val product: String? = null,
 )
 
+/**
+ * Navigates to the Savings Account Update screen.
+ *
+ * This is an extension function on [NavController] that simplifies the process of
+ * navigating to the update screen by constructing and passing the
+ * [SavingsAccountUpdateRoute] with all required and optional parameters.
+ *
+ * @param accountId The ID of the account to update.
+ * @param clientName The name of the client.
+ * @param submissionData The account's submission date.
+ * @param accountNumber The account number.
+ * @param product The savings product name.
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 fun NavController.navigateToSavingsAccountUpdateScreen(
     accountId: Long,
     clientName: String?,
@@ -45,6 +73,20 @@ fun NavController.navigateToSavingsAccountUpdateScreen(
         navOptions,
     )
 
+/**
+ * Defines the composable destination for the "Savings Account Update" screen
+ * within the navigation graph.
+ *
+ * This function sets up the route, the screen content (`AccountUpdateScreen`),
+ * and specifies the screen transitions. It also wires up the necessary navigation
+ * callbacks for actions initiated from the update screen.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen,
+ *   typically required before performing a sensitive action like a deposit.
+ * @param navigateToStatusScreen A lambda to navigate to a generic status/result screen
+ *   after the update operation is complete, passing along relevant details.
+ */
 fun NavGraphBuilder.savingsAccountUpdateDestination(
     navigateBack: () -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
