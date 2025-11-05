@@ -26,12 +26,28 @@ import org.mifos.mobile.feature.settings.settings.SettingsRoute
 import org.mifos.mobile.feature.settings.settings.settingsDestination
 import org.mifos.mobile.feature.settings.theme.themeDestination
 
+/**
+ * A serializable object representing the route for the nested settings navigation graph.
+ * This serves as the entry point for all settings-related screens.
+ */
 @Serializable
 data object SettingsNavGraphRoute
 
+/**
+ * Navigates to the settings navigation graph. This is a convenience extension function
+ * on [NavController] to encapsulate the navigation logic to the settings feature.
+ *
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 fun NavController.navigateToSettingsGraph(navOptions: NavOptions? = null) =
     navigate(SettingsNavGraphRoute, navOptions)
 
+/**
+ * Builds the nested navigation graph for the settings feature. This function defines
+ * all the destinations within the settings module and their corresponding navigation actions.
+ *
+ * @param navController The [NavController] used for handling navigation events within the graph.
+ */
 fun NavGraphBuilder.settingsGraph(
     navController: NavController,
 ) {
@@ -73,6 +89,13 @@ fun NavGraphBuilder.settingsGraph(
     }
 }
 
+/**
+ * A generic internal helper function to navigate to any screen within the settings graph
+ * using its [SettingsItems] route.
+ *
+ * @param route The [SettingsItems] destination to navigate to.
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 internal fun NavController.navigateToScreen(
     route: SettingsItems,
     navOptions: NavOptions? = null,

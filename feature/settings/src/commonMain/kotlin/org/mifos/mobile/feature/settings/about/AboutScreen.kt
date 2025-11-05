@@ -49,6 +49,14 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
+/**
+ * The main entry point for the "About Us" screen. This composable function serves as a wrapper
+ * around the actual content, allowing for separation of concerns and easier testing.
+ *
+ * @param modifier The [Modifier] to be applied to the screen.
+ * @param onBackClick A lambda function to be invoked when the back button is pressed,
+ *   triggering navigation to the previous screen.
+ */
 @Composable
 fun AboutScreen(
     modifier: Modifier = Modifier,
@@ -60,6 +68,13 @@ fun AboutScreen(
     )
 }
 
+/**
+ * Renders the UI content for the "About Us" screen. This includes the screen's scaffold,
+ * top bar, and the informational content about the Mifos Initiative.
+ *
+ * @param modifier The [Modifier] to be applied to the content layout.
+ * @param onBackClick A lambda function to handle the back navigation event from the scaffold.
+ */
 @Composable
 internal fun AboutScreenContent(
     modifier: Modifier = Modifier,
@@ -154,6 +169,11 @@ internal fun AboutScreenContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview function for the [AboutScreenContent]. This allows for
+ * visualizing the UI component in Android Studio's preview pane without needing to
+ * run the entire application.
+ */
 @Preview
 @Composable
 internal fun AboutScreenContentPreview() {

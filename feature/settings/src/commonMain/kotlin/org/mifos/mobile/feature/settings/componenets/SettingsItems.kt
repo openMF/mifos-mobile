@@ -37,6 +37,18 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 
+/**
+ * A sealed class representing all navigable items available on the settings screen.
+ * Each object holds metadata for a specific setting, such as its title, subtitle, icon,
+ * and navigation route, making it easy to generate UI components dynamically.
+ *
+ * This class is serializable to support navigation graph persistence.
+ *
+ * @property title The string resource for the setting's title.
+ * @property subTitle The string resource for the setting's descriptive subtitle.
+ * @property icon The vector graphic icon representing the setting.
+ * @property route The unique navigation route string for the destination screen.
+ */
 @Serializable
 sealed class SettingsItems(
     @Contextual val title: StringResource,
@@ -53,6 +65,7 @@ sealed class SettingsItems(
 //        route = Constants.PROFILE,
 //    )
 
+    /** Represents the 'Change Password' setting. */
     @Serializable
     data object Password : SettingsItems(
         title = Res.string.feature_settings_action_password,
@@ -61,6 +74,7 @@ sealed class SettingsItems(
         route = Constants.PASSWORD,
     )
 
+    /** Represents the 'Set Passcode' setting for app authentication. */
     @Serializable
     data object AuthPasscode : SettingsItems(
         title = Res.string.feature_settings_action_auth_passcode,
@@ -69,6 +83,7 @@ sealed class SettingsItems(
         route = Constants.AUTH_PASSCODE,
     )
 
+    /** Represents the 'Language' selection setting. */
     @Serializable
     data object Language : SettingsItems(
         title = Res.string.feature_settings_action_language,
@@ -78,6 +93,7 @@ sealed class SettingsItems(
     )
 
 //    TODO : uncomment once ui/ux team provide a valid colours for dark theme
+    /** Represents the 'Display Theme' setting (e.g., light/dark mode). */
     @Serializable
     data object Theme : SettingsItems(
         title = Res.string.feature_settings_action_theme,
@@ -94,6 +110,7 @@ sealed class SettingsItems(
 //        route = Constants.ENDPOINT,
 //    )
 
+    /** Represents the 'About Us' information screen. */
     @Serializable
     data object AboutUs : SettingsItems(
         title = Res.string.feature_settings_action_about_us,
@@ -102,6 +119,7 @@ sealed class SettingsItems(
         route = Constants.ABOUT_US,
     )
 
+    /** Represents the 'FAQ' (Frequently Asked Questions) screen. */
     @Serializable
     data object FAQ : SettingsItems(
         title = Res.string.feature_settings_action_faq,
@@ -110,6 +128,7 @@ sealed class SettingsItems(
         route = Constants.FAQ,
     )
 
+    /** Represents the 'Help' or support screen. */
     @Serializable
     data object Help : SettingsItems(
         title = Res.string.feature_settings_action_help,
@@ -118,6 +137,7 @@ sealed class SettingsItems(
         route = Constants.HELP,
     )
 
+    /** Represents the 'App Info' screen with version and legal details. */
     @Serializable
     data object AppInfo : SettingsItems(
         title = Res.string.feature_settings_action_app_info,
@@ -126,6 +146,7 @@ sealed class SettingsItems(
         route = Constants.APP_INFO,
     )
 
+    /** Represents the 'Logout' action. */
     @Serializable
     data object Logout : SettingsItems(
         title = Res.string.feature_settings_action_logout,
@@ -135,6 +156,10 @@ sealed class SettingsItems(
     )
 }
 
+/**
+ * An immutable list defining the order and content of items displayed on the settings screen.
+ * This list is used to dynamically render the settings menu.
+ */
 internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
 //    SettingsItems.Profile,
     SettingsItems.Password,

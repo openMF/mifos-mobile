@@ -43,6 +43,15 @@ import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that serves as the entry point for the "Change Password" screen.
+ * It observes state and events from the [ChangePasswordViewModel], handles navigation,
+ * and orchestrates the display of the UI content and dialogs.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param viewmodel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun ChangePasswordScreen(
     navigateBack: () -> Unit,
@@ -73,6 +82,14 @@ internal fun ChangePasswordScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the main scaffold and top bar for the "Change Password" screen.
+ * It delegates the rendering of the main form content.
+ *
+ * @param state The current state of the password screen.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onAction A callback to send actions to the ViewModel.
+ */
 @Composable
 internal fun ChangePasswordScreen(
     state: PasswordState,
@@ -98,6 +115,14 @@ internal fun ChangePasswordScreen(
     }
 }
 
+/**
+ * Renders the core form content for changing the password, including input fields,
+ * password strength indicators, and a submit button.
+ *
+ * @param state The current state containing password fields' data, errors, and visibility.
+ * @param modifier The [Modifier] to be applied to the content layout.
+ * @param onAction A callback to send user actions (like input changes) to the ViewModel.
+ */
 @Composable
 internal fun PasswordScreenContent(
     state: PasswordState,
@@ -183,6 +208,13 @@ internal fun PasswordScreenContent(
     }
 }
 
+/**
+ * A composable that displays a dialog based on the [PasswordState.DialogState].
+ * It can show a loading indicator, a success message, or an error dialog.
+ *
+ * @param dialogState The current state of the dialog.
+ * @param onDismiss A lambda to be executed when the error dialog is dismissed.
+ */
 @Composable
 private fun PasswordDialog(
     dialogState: PasswordState.DialogState?,

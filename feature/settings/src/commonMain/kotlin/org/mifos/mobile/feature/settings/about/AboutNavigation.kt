@@ -15,6 +15,11 @@ import androidx.navigation.NavOptions
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 
+/**
+ * Defines the "About Us" screen destination in the navigation graph.
+ *
+ * @param onBackClick Lambda to handle back navigation.
+ */
 internal fun NavGraphBuilder.aboutDestination(
     onBackClick: () -> Unit,
 ) {
@@ -25,5 +30,10 @@ internal fun NavGraphBuilder.aboutDestination(
     }
 }
 
+/**
+ * Navigates to the "About Us" screen.
+ *
+ * @param navOptions Optional navigation options.
+ */
 internal fun NavController.navigateToAbout(navOptions: NavOptions? = null) =
     navigate(SettingsItems.AboutUs, navOptions)

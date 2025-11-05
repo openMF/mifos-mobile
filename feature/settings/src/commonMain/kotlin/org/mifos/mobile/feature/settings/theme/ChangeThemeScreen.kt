@@ -39,6 +39,17 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * A stateful composable that constructs the "Change Theme" screen.
+ *
+ * It connects to the [ChangeThemeViewModel] to observe the current UI state and
+ * listen for one-time events, such as navigation. It delegates the rendering
+ * of the UI to the stateless [ThemeScreenContent] composable.
+ *
+ * @param onNavigateBack A lambda function to be invoked when a back navigation event is triggered.
+ * @param modifier The [Modifier] to be applied to this screen.
+ * @param viewmodel The ViewModel responsible for the screen's logic and state management.
+ */
 @Composable
 internal fun ChangeThemeScreen(
     onNavigateBack: () -> Unit,
@@ -60,6 +71,16 @@ internal fun ChangeThemeScreen(
     )
 }
 
+/**
+ * A stateless composable that renders the UI for the theme selection screen.
+ *
+ * It includes the scaffold with a top bar, a list of theme options presented as
+ * radio buttons, and an "Apply" button to save the selection.
+ *
+ * @param uiState The current state of the theme screen, containing the available themes and the selection.
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onAction A callback to send actions (like theme selection or navigation) to the ViewModel.
+ */
 @Composable
 internal fun ThemeScreenContent(
     uiState: ThemeState,
@@ -111,6 +132,12 @@ internal fun ThemeScreenContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview for the [ThemeScreenContent].
+ *
+ * This provides a design-time visualization of the theme selection UI in Android Studio,
+ * configured with a default state.
+ */
 @DevicePreview
 @Composable
 fun ThemeScreenPreview() {
