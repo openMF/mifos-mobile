@@ -135,7 +135,6 @@ internal fun SavingsAccountDialog(
     }
 }
 
-
 /**
  * A stateless composable that renders the main UI for the "Apply for Savings" screen.
  *

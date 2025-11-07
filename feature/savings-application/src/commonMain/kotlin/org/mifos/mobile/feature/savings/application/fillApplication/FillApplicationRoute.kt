@@ -55,7 +55,6 @@ fun NavController.navigateToSavingsFillApplicationScreen(
     this.navigate(SavingsFillApplicationRoute(savingsProductId, fieldOfficerId, fieldOfficerName), navOptions)
 }
 
-
 /**
  * Defines the composable destination for the "Fill Savings Application" screen
  * within the navigation graph.
