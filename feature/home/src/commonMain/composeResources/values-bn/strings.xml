@@ -41,7 +41,7 @@
     <string name="cancel">বাতিল</string>
     <string name="dialog_logout">আপনি কি সত্যিই লগআউট করতে চান?</string>
 
-    <string name="feature_home_greet">হ্যালো %1$s,</string>
+    <string name="feature_home_greet">হ্যালো, %1$s</string>
     <string name="feature_home_services">সেবা</string>
     <string name="feature_home_saving_accounts">সঞ্চয় অ্যাকাউন্ট</string>
     <string name="feature_home_loan_accounts">ঋণ অ্যাকাউন্ট</string>

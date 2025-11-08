@@ -41,7 +41,7 @@
     <string name="cancel">Batal</string>
     <string name="dialog_logout">Apakah Anda yakin ingin keluar?</string>
 
-    <string name="feature_home_greet">Halo %1$s,</string>
+    <string name="feature_home_greet">Halo, %1$s</string>
     <string name="feature_home_services">Layanan</string>
     <string name="feature_home_saving_accounts">Rekening Tabungan</string>
     <string name="feature_home_loan_accounts">Rekening Pinjaman</string>

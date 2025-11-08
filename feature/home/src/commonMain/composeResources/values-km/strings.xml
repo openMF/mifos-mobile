@@ -41,7 +41,7 @@
     <string name="cancel">បោះបង់</string>
     <string name="dialog_logout">តើអ្នកប្រាកដថាចង់ចេញពីប្រព័ន្ធមែនទេ?</string>
 
-    <string name="feature_home_greet">សួស្តី %1$s,</string>
+    <string name="feature_home_greet">សួស្តី, %1$s</string>
     <string name="feature_home_services">សេវាកម្ម</string>
     <string name="feature_home_saving_accounts">គណនីសន្សំ</string>
     <string name="feature_home_loan_accounts">គណនីប្រាក់កម្ចី</string>

@@ -43,7 +43,7 @@
     <string name="cancel">Cancel</string>
     <string name="dialog_logout">Are you sure you want to logout?</string>
 
-    <string name="feature_home_greet">Hello %1$s,</string>
+    <string name="feature_home_greet">Hello, %1$s</string>
     <string name="feature_home_services">Services</string>
     <string name="feature_home_saving_accounts">Savings Accounts</string>
     <string name="feature_home_loan_accounts">Loan Accounts</string>

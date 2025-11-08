@@ -41,7 +41,7 @@
     <string name="cancel">రద్దు</string>
     <string name="dialog_logout">మీరు నిజంగా లాగౌట్ అవ్వాలనుకుంటున్నారా?</string>
 
-    <string name="feature_home_greet">హలో %1$s,</string>
+    <string name="feature_home_greet">హలో, %1$s</string>
     <string name="feature_home_services">సేవలు</string>
     <string name="feature_home_saving_accounts">పొదుపు ఖాతాలు</string>
     <string name="feature_home_loan_accounts">రుణ ఖాతాలు</string>

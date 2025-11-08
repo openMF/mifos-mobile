@@ -41,7 +41,7 @@
     <string name="cancel">Ghairi</string>
     <string name="dialog_logout">Una uhakika unataka kutoka?</string>
 
-    <string name="feature_home_greet">Habari %1$s,</string>
+    <string name="feature_home_greet">Habari, %1$s</string>
     <string name="feature_home_services">Huduma</string>
     <string name="feature_home_saving_accounts">Akaunti za Akiba</string>
     <string name="feature_home_loan_accounts">Akaunti za Mikopo</string>

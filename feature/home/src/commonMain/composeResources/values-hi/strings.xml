@@ -41,7 +41,7 @@
     <string name="cancel">रद्द करें</string>
     <string name="dialog_logout">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
 
-    <string name="feature_home_greet">नमस्ते %1$s,</string>
+    <string name="feature_home_greet">नमस्ते, %1$s</string>
     <string name="feature_home_services">सेवाएँ</string>
     <string name="feature_home_saving_accounts">बचत खाते</string>
     <string name="feature_home_loan_accounts">ऋण खाते</string>

@@ -41,7 +41,7 @@
     <string name="cancel">منسوخ کریں</string>
     <string name="dialog_logout">کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟</string>
 
-    <string name="feature_home_greet">السلام علیکم ‎%1$s،</string>
+    <string name="feature_home_greet">السلام علیکم، %1$s</string>
     <string name="feature_home_services">سروسز</string>
     <string name="feature_home_saving_accounts">بچت اکاؤنٹس</string>
     <string name="feature_home_loan_accounts">قرض اکاؤنٹس</string>

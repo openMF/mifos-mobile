@@ -41,7 +41,7 @@
     <string name="cancel">မလုပ်တော့ပါ</string>
     <string name="dialog_logout">ထွက်လိုသည်မှာ သေချာပါသလား?</string>
 
-    <string name="feature_home_greet">ဟယ်လို %1$s,</string>
+    <string name="feature_home_greet">ဟယ်လို, %1$s</string>
     <string name="feature_home_services">ဝန်ဆောင်မှုများ</string>
     <string name="feature_home_saving_accounts">စုဆောင်းငွေ အကောင့်များ</string>
     <string name="feature_home_loan_accounts">ချေးငွေ အကောင့်များ</string>

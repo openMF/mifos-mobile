@@ -41,7 +41,7 @@
     <string name="cancel">ರದ್ದುಮಾಡು</string>
     <string name="dialog_logout">ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
 
-    <string name="feature_home_greet">ನಮಸ್ಕಾರ %1$s,</string>
+    <string name="feature_home_greet">ನಮಸ್ಕಾರ, %1$s</string>
     <string name="feature_home_services">ಸೇವೆಗಳು</string>
     <string name="feature_home_saving_accounts">ಉಳಿತಾಯ ಖಾತೆಗಳು</string>
     <string name="feature_home_loan_accounts">ಸಾಲ ಖಾತೆಗಳು</string>

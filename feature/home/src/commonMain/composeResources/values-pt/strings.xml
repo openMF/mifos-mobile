@@ -41,7 +41,7 @@
     <string name="cancel">Cancelar</string>
     <string name="dialog_logout">Tem certeza de que deseja sair?</string>
 
-    <string name="feature_home_greet">Olá %1$s,</string>
+    <string name="feature_home_greet">Olá, %1$s</string>
     <string name="feature_home_services">Serviços</string>
     <string name="feature_home_saving_accounts">Contas de Poupança</string>
     <string name="feature_home_loan_accounts">Contas de Empréstimo</string>

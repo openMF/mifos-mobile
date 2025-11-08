@@ -41,7 +41,7 @@
     <string name="cancel">Cancelar</string>
     <string name="dialog_logout">¿Estás seguro de que quieres cerrar sesión?</string>
 
-    <string name="feature_home_greet">Hola %1$s,</string>
+    <string name="feature_home_greet">Hola, %1$s</string>
     <string name="feature_home_services">Servicios</string>
     <string name="feature_home_saving_accounts">Cuentas de ahorro</string>
     <string name="feature_home_loan_accounts">Cuentas de préstamo</string>

@@ -41,7 +41,7 @@
     <string name="cancel">إلغاء</string>
     <string name="dialog_logout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
 
-    <string name="feature_home_greet">مرحباً ‎%1$s،</string>
+    <string name="feature_home_greet">مرحباً، %1$s</string>
     <string name="feature_home_services">الخدمات</string>
     <string name="feature_home_saving_accounts">حسابات التوفير</string>
     <string name="feature_home_loan_accounts">حسابات القروض</string>

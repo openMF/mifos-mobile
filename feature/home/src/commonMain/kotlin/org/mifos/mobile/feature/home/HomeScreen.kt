@@ -18,9 +18,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
@@ -222,7 +224,6 @@ internal fun HomeContent(
         }
     }
 }
-
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
@@ -248,6 +249,24 @@ internal fun ServiceBox(
                     onClick = { onAction(HomeAction.OnNavigate(item.route)) },
                 )
             }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            ServiceItemCard(
+                title = ServiceItem.Beneficiary.title,
+                icon = ServiceItem.Beneficiary.icon,
+                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Beneficiary.route)) }
+            )
+            Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
+            ServiceItemCard(
+                title = ServiceItem.Faq.title,
+                icon = ServiceItem.Faq.icon,
+                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Faq.route)) }
+            )
         }
     }
 }

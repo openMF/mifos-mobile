@@ -101,7 +101,5 @@ internal val serviceCards: ImmutableList<ServiceItem> = persistentListOf(
     ServiceItem.ApplyForSavings,
     ServiceItem.ApplyForShare,
     ServiceItem.TransactionHistory,
-    ServiceItem.Charges,
-    ServiceItem.Beneficiary,
-    ServiceItem.Faq,
+    ServiceItem.Charges
 )

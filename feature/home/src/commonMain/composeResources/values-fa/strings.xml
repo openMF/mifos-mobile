@@ -41,7 +41,7 @@
     <string name="cancel">لغو</string>
     <string name="dialog_logout">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
 
-    <string name="feature_home_greet">سلام %1$s،</string>
+    <string name="feature_home_greet">سلام، %1$s</string>
     <string name="feature_home_services">خدمات</string>
     <string name="feature_home_saving_accounts">حساب‌های پس‌انداز</string>
     <string name="feature_home_loan_accounts">حساب‌های وام</string>
