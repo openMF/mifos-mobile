@@ -17,13 +17,27 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 
+/**
+ * Represents the type-safe navigation route for the QR Code Import screen.
+ */
 @Serializable
 data object QrCodeImportRoute
 
+/**
+ * Navigates to the QR Code Import screen.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToQrImportScreen(navOptions: NavOptions? = null) {
     this.navigate(QrCodeImportRoute, navOptions)
 }
 
+/**
+ * Defines the composable destination for the QR Code Import screen in the navigation graph.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ * @param openBeneficiaryApplication Callback to open the beneficiary application with the parsed beneficiary data.
+ */
 fun NavGraphBuilder.qrImportDestination(
     navigateBack: () -> Unit,
     openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,

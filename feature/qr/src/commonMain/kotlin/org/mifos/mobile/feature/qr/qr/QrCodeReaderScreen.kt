@@ -64,6 +64,16 @@ import org.mifos.mobile.core.qr.QrScannerWithPermissions
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main composable for the QR Code Reader screen. It handles state, events,
+ * and composes the UI content and dialogs.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ * @param openBeneficiaryApplication Callback to open the beneficiary application with parsed data.
+ * @param navigateToQrImportScreen Callback to navigate to the screen for importing QR from an image.
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param viewModel The [QrCodeReaderViewModel] for this screen.
+ */
 @Composable
 internal fun QrCodeReaderScreen(
     navigateBack: () -> Unit,
@@ -104,6 +114,12 @@ internal fun QrCodeReaderScreen(
     )
 }
 
+/**
+ * Displays dialogs based on the current [QrCodeReaderState].
+ *
+ * @param state The current state of the QR reader screen.
+ * @param onAction Callback for user actions within the dialog.
+ */
 @Composable
 private fun QrCodeReaderDialog(
     state: QrCodeReaderState,
@@ -123,6 +139,13 @@ private fun QrCodeReaderDialog(
     }
 }
 
+
+/**
+ * The main content of the QR Code Reader screen, including the camera preview and UI controls.
+ *
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param onAction Callback for user actions on the screen.
+ */
 @Composable
 private fun QrCodeReaderContent(
     modifier: Modifier = Modifier,
@@ -237,6 +260,10 @@ private fun QrCodeReaderContent(
     }
 }
 
+/**
+ * A custom [Modifier] that draws four corners around a composable,
+ * creating a visual guide for the QR scanner.
+ */
 private fun Modifier.drawQrCorners(): Modifier = drawWithContent {
     drawContent()
 
@@ -306,6 +333,9 @@ private fun Modifier.drawQrCorners(): Modifier = drawWithContent {
     )
 }
 
+/**
+ * A Jetpack Compose Preview for the [QrCodeReaderContent] composable.
+ */
 @Preview
 @Composable
 private fun QrCodeReaderScreenPreview() {

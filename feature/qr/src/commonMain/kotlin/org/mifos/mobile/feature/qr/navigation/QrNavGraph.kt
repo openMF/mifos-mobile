@@ -24,13 +24,28 @@ import org.mifos.mobile.feature.qr.qrCodeDisplay.qrDisplayDestination
 import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.qrCodeImport.qrImportDestination
 
+
+/**
+ * Type-safe navigation route for the entire QR feature's nested navigation graph.
+ */
 @Serializable
 data object QrGraphRoute
 
+/**
+ * Navigates to the nested QR navigation graph.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToQrGraph(navOptions: NavOptions? = null) {
     this.navigate(QrGraphRoute, navOptions)
 }
 
+/**
+ * Builds the nested navigation graph for the QR feature.
+ *
+ * @param navController The NavController for the graph.
+ * @param openBeneficiaryApplication Callback to navigate to the beneficiary application screen.
+ */
 fun NavGraphBuilder.qrNavGraph(
     navController: NavController,
     openBeneficiaryApplication: (Beneficiary, BeneficiaryState) -> Unit,

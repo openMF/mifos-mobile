@@ -15,13 +15,31 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 
+/**
+ * Represents the type-safe navigation route for the QR Code Display screen.
+ * It can optionally take a `qrString` to display, otherwise it will generate one.
+ *
+ * @param qrString The string to be encoded and displayed as a QR code.
+ */
 @Serializable
 data class QrCodeDisplayRoute(val qrString: String = "")
 
+/**
+ * Navigates to the QR Code Display screen.
+ *
+ * @param qrString The string to be encoded into the QR code.
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToQrDisplayScreen(qrString: String, navOptions: NavOptions? = null) {
     this.navigate(QrCodeDisplayRoute(qrString), navOptions)
 }
 
+
+/**
+ * Defines the composable destination for the QR Code Display screen in the navigation graph.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ */
 fun NavGraphBuilder.qrDisplayDestination(
     navigateBack: () -> Unit,
 ) {

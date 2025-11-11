@@ -15,6 +15,12 @@ import org.mifos.mobile.feature.qr.qr.QrCodeReaderViewModel
 import org.mifos.mobile.feature.qr.qrCodeDisplay.QrCodeDisplayViewModel
 import org.mifos.mobile.feature.qr.qrCodeImport.QrCodeImportViewModel
 
+/**
+ * Koin module for the QR feature.
+ *
+ * This module is responsible for providing all the ViewModels used within the QR code
+ * feature of the application.
+ */
 val QrModule = module {
     viewModelOf(::QrCodeImportViewModel)
     viewModelOf(::QrCodeReaderViewModel)

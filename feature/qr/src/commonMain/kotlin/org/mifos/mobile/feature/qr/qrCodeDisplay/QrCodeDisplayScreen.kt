@@ -49,6 +49,15 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+
+/**
+ * The main entry point for the QR Code Display screen. This composable handles state
+ * from the ViewModel and events.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param viewModel The [QrCodeDisplayViewModel] for this screen.
+ */
 @Composable
 internal fun QrCodeDisplayScreen(
     navigateBack: () -> Unit,
@@ -72,6 +81,14 @@ internal fun QrCodeDisplayScreen(
     )
 }
 
+/**
+ * The private, stateless version of the QR Code Display screen.
+ * This composable is responsible for the UI layout and generating the QR code painter.
+ *
+ * @param state The current [QrCodeDisplayState] to render.
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param onAction Callback for user actions on the screen.
+ */
 @Suppress("UnusedPrivateProperty")
 @Composable
 private fun QrCodeDisplayScreen(
@@ -103,6 +120,13 @@ private fun QrCodeDisplayScreen(
     )
 }
 
+/**
+ * The main content of the QR code display screen.
+ * It lays out the title, instructions, QR code image, and generation date.
+ *
+ * @param painter The [Painter] used to draw the QR code.
+ * @param modifier The [Modifier] to be applied to this composable.
+ */
 @Composable
 private fun QrCodeDisplayContent(
     painter: Painter,
@@ -163,6 +187,10 @@ private fun QrCodeDisplayContent(
     }
 }
 
+
+/**
+ * A Jetpack Compose Preview for the [QrCodeDisplayScreen] composable.
+ */
 @Preview
 @Composable
 private fun QrCodeDisplayScreenPreview() {

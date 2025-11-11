@@ -36,6 +36,15 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * The main composable for the QR Code Import screen. It connects the UI to the ViewModel,
+ * handles state and events, and orchestrates navigation.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ * @param openBeneficiaryApplication Callback to open the beneficiary application with parsed data.
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param viewModel The [QrCodeImportViewModel] for this screen.
+ */
 @Composable
 internal fun QrCodeImportScreen(
     navigateBack: () -> Unit,
@@ -73,6 +82,13 @@ internal fun QrCodeImportScreen(
     )
 }
 
+/**
+ * Displays dialogs based on the current [QrCodeImportState], such as loading indicators
+ * or error messages.
+ *
+ * @param state The current state of the QR import screen.
+ * @param onAction Callback for user actions within the dialog.
+ */
 @Composable
 private fun QrCodeDialog(
     state: QrCodeImportState,
@@ -92,6 +108,13 @@ private fun QrCodeDialog(
     }
 }
 
+/**
+ * The main content layout for the QR Code Import screen, including the scaffold and
+ * bottom bar.
+ *
+ * @param modifier The [Modifier] to be applied to this composable.
+ * @param onAction Callback for user actions on the screen.
+ */
 @Composable
 private fun QrCodeImportScreenContent(
     modifier: Modifier = Modifier,
@@ -126,12 +149,26 @@ private fun QrCodeImportScreenContent(
     }
 }
 
+/**
+ * Expect composable for a platform-specific image picker UI.
+ * This allows each platform (Android, iOS) to implement its own native
+ * image selection logic.
+ *
+ * @param onProceed Callback that provides the selected [ImageBitmap] to the caller.
+ * @param modifier The [Modifier] to be applied to the picker composable.
+ */
 @Composable
 expect fun QrCodeImagePicker(
     onProceed: (bitmap: ImageBitmap) -> Unit,
     modifier: Modifier = Modifier,
 )
 
+/**
+ * A wrapper composable that hosts the platform-specific [QrCodeImagePicker].
+ *
+ * @param proceedClicked Callback invoked when an image is selected and ready to be processed.
+ * @param modifier The [Modifier] to be applied to this composable.
+ */
 @Composable
 private fun QrCodeImportContent(
     proceedClicked: (bitmap: ImageBitmap) -> Unit,
@@ -145,6 +182,9 @@ private fun QrCodeImportContent(
     )
 }
 
+/**
+ * A Jetpack Compose Preview for the [QrCodeImportScreenContent] composable.
+ */
 @Preview
 @Composable
 private fun QrCodeImportPreview() {
