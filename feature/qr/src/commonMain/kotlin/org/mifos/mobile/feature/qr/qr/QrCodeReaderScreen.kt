@@ -139,7 +139,6 @@ private fun QrCodeReaderDialog(
     }
 }
 
-
 /**
  * The main content of the QR Code Reader screen, including the camera preview and UI controls.
  *

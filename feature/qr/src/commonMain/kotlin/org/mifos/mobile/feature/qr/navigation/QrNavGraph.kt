@@ -24,7 +24,6 @@ import org.mifos.mobile.feature.qr.qrCodeDisplay.qrDisplayDestination
 import org.mifos.mobile.feature.qr.qrCodeImport.navigateToQrImportScreen
 import org.mifos.mobile.feature.qr.qrCodeImport.qrImportDestination
 
-
 /**
  * Type-safe navigation route for the entire QR feature's nested navigation graph.
  */

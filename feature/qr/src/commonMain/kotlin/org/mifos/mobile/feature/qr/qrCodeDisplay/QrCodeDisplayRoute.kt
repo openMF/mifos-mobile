@@ -34,7 +34,6 @@ fun NavController.navigateToQrDisplayScreen(qrString: String, navOptions: NavOpt
     this.navigate(QrCodeDisplayRoute(qrString), navOptions)
 }
 
-
 /**
  * Defines the composable destination for the QR Code Display screen in the navigation graph.
  *

@@ -49,7 +49,6 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
-
 /**
  * The main entry point for the QR Code Display screen. This composable handles state
  * from the ViewModel and events.
@@ -186,7 +185,6 @@ private fun QrCodeDisplayContent(
         )
     }
 }
-
 
 /**
  * A Jetpack Compose Preview for the [QrCodeDisplayScreen] composable.
