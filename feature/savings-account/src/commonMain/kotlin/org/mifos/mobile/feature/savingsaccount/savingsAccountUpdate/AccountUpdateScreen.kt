@@ -49,6 +49,20 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A stateful composable that serves as the entry point for the "Account Update" screen.
+ *
+ * This screen allows a user to modify certain details of a savings account, such as changing
+ * the associated product. It connects to the [AccountUpdateViewModel] to manage state and
+ * handle one-time events for navigation.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToStatusScreen A lambda to navigate to a generic status/result screen after
+ *   the update operation is complete, passing along relevant details.
+ * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen,
+ *   typically required before performing a sensitive action.
+ * @param viewModel The ViewModel responsible for this screen's logic and state.
+ */
 @Composable
 internal fun AccountUpdateScreen(
     navigateBack: () -> Unit,
@@ -90,6 +104,14 @@ internal fun AccountUpdateScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [AccountUpdateState.DialogState].
+ *
+ * It currently handles the display of a basic error dialog.
+ *
+ * @param dialogState The current dialog state from the [AccountUpdateState].
+ * @param onAction A callback to send actions, such as dismissing the dialog, to the ViewModel.
+ */
 @Composable
 internal fun AccountUpdateDialog(
     dialogState: AccountUpdateState.DialogState?,
@@ -107,6 +129,16 @@ internal fun AccountUpdateDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Account Update" screen.
+ *
+ * It conditionally displays content based on the [ScreenUiState] (e.g., loading, error, success).
+ * In the success state, it shows account details, a dropdown for product selection, and a submit button.
+ *
+ * @param state The current [AccountUpdateState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun AccountUpdateScreenContent(
     state: AccountUpdateState,
@@ -208,6 +240,12 @@ internal fun AccountUpdateScreenContent(
     }
 }
 
+/**
+ * A Jetpack Compose preview for the [AccountUpdateScreenContent].
+ *
+ * This provides a design-time visualization of the account update UI in Android Studio,
+ * configured with a default initial state.
+ */
 @Preview
 @Composable
 private fun Account_Update_Preview() {

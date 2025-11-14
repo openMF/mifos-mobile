@@ -21,14 +21,40 @@ import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * Type-safe, serializable route for the Savings Account Details screen.
+ *
+ * @property accountId The unique ID of the savings account to display.
+ */
 @Serializable
 data class SavingsAccountDetailsRoute(
     val accountId: Long,
 )
 
-fun NavController.navigateToSavingsAccountDetailsScreen(accountId: Long, navOptions: NavOptions? = null) =
+/**
+ * Navigates to the Savings Account Details screen.
+ *
+ * @param accountId The ID of the savings account.
+ * @param navOptions Optional navigation options.
+ */
+
+fun NavController.navigateToSavingsAccountDetailsScreen(
+    accountId: Long,
+    navOptions: NavOptions? = null,
+) =
     navigate(SavingsAccountDetailsRoute(accountId), navOptions)
 
+/**
+ * Defines the composable destination for the "Savings Account Details" screen.
+ * This sets up the route, content, and navigation callbacks.
+ *
+ * @param navigateBack Handles back navigation.
+ * @param navigateToTransferScreen Navigates to the fund transfer screen.
+ * @param navigateToClientChargeScreen Navigates to the account charges screen.
+ * @param navigateToUpdateScreen Navigates to the account update screen.
+ * @param navigateToSavingsAccountTransactionScreen Navigates to the transaction history.
+ * @param navigateToQrCodeScreen Navigates to the QR code display screen.
+ */
 fun NavGraphBuilder.savingsAccountDetailsDestination(
     navigateBack: () -> Unit,
     navigateToTransferScreen: (AccountDetails) -> Unit,

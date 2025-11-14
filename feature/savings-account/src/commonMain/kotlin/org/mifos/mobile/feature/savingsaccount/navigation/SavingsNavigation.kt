@@ -24,12 +24,39 @@ import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.navigateToSa
 import org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate.savingsAccountUpdateDestination
 import org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw.savingsAccountWithdrawDestination
 
+/**
+ * A serializable, type-safe route representing the entry point for the nested
+ * savings account navigation graph.
+ */
 @Serializable
 data object SavingsGraphRoute
 
+/**
+ * Navigates to the savings account navigation graph.
+ *
+ * This is a convenience extension function on [NavController] that encapsulates the
+ * logic for navigating to the start of the savings account feature.
+ *
+ * @param navOptions Optional [NavOptions] to apply to this navigation operation.
+ */
 fun NavController.navigateToSavingsGraph(navOptions: NavOptions? = null) =
     navigate(SavingsAccountRoute, navOptions)
 
+/**
+ * Builds the nested navigation graph for the savings account feature.
+ *
+ * This function defines all the destinations within the savings account module and
+ * wires them together. It takes lambdas for navigating to screens both inside and
+ * outside of this feature's scope, promoting a decoupled architecture.
+ *
+ * @param navController The [NavController] used for handling navigation events within the graph.
+ * @param navigateToClientChargeScreen Lambda to navigate to the client charges screen.
+ * @param navigateToTransferScreen Lambda to navigate to the fund transfer screen.
+ * @param navigateToAuthenticateScreen Lambda to navigate to an authentication screen.
+ * @param navigateToStatusScreen Lambda to navigate to a generic status/result screen after an operation.
+ * @param navigateToSavingsAccountTransactionScreen Lambda to navigate to the transaction history screen.
+ * @param navigateToQrCodeScreen Lambda to navigate to the QR code display screen.
+ */
 fun NavGraphBuilder.savingsNavGraph(
     navController: NavController,
     navigateToClientChargeScreen: (String, Long) -> Unit,
@@ -42,25 +69,28 @@ fun NavGraphBuilder.savingsNavGraph(
     navigation<SavingsGraphRoute>(
         startDestination = SavingsAccountRoute,
     ) {
+        // Destination for the list of savings accounts
         savingsAccountDestination(
             navigateBack = navController::popBackStack,
         )
-
+        // Destination for the details of a single savings account
         savingsAccountDetailsDestination(
             navigateBack = navController::popBackStack,
             navigateToClientChargeScreen = navigateToClientChargeScreen,
-            navigateToUpdateScreen = navController::navigateToSavingsAccountUpdateScreen,
-            navigateToSavingsAccountTransactionScreen = navigateToSavingsAccountTransactionScreen,
+            navigateToUpdateScreen =
+            navController::navigateToSavingsAccountUpdateScreen,
+            navigateToSavingsAccountTransactionScreen =
+            navigateToSavingsAccountTransactionScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,
             navigateToTransferScreen = navigateToTransferScreen,
         )
-
+        // Destination for updating a savings account (e.g., deposit)
         savingsAccountUpdateDestination(
             navigateBack = navController::popBackStack,
             navigateToStatusScreen = navigateToStatusScreen,
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
         )
-
+        // Destination for withdrawing from a savings account
         savingsAccountWithdrawDestination(
             navigateBack = navController::popBackStack,
             navigateToStatusScreen = navigateToStatusScreen,
