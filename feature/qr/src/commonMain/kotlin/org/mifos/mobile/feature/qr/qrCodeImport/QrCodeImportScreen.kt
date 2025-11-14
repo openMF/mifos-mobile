@@ -42,7 +42,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
  *
  * @param navigateBack Callback to navigate to the previous screen.
  * @param openBeneficiaryApplication Callback to open the beneficiary application with parsed data.
- * @param modifier The [Modifier] to be applied to this composable.
  * @param viewModel The [QrCodeImportViewModel] for this screen.
  */
 @Composable
@@ -111,8 +110,6 @@ private fun QrCodeDialog(
 /**
  * The main content layout for the QR Code Import screen, including the scaffold and
  * bottom bar.
- *
- * @param modifier The [Modifier] to be applied to this composable.
  * @param onAction Callback for user actions on the screen.
  */
 @Composable
@@ -167,7 +164,6 @@ expect fun QrCodeImagePicker(
  * A wrapper composable that hosts the platform-specific [QrCodeImagePicker].
  *
  * @param proceedClicked Callback invoked when an image is selected and ready to be processed.
- * @param modifier The [Modifier] to be applied to this composable.
  */
 @Composable
 private fun QrCodeImportContent(
