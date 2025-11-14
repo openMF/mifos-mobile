@@ -54,7 +54,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
  * from the ViewModel and events.
  *
  * @param navigateBack Callback to navigate to the previous screen.
- * @param modifier The [Modifier] to be applied to this composable.
  * @param viewModel The [QrCodeDisplayViewModel] for this screen.
  */
 @Composable
@@ -85,7 +84,6 @@ internal fun QrCodeDisplayScreen(
  * This composable is responsible for the UI layout and generating the QR code painter.
  *
  * @param state The current [QrCodeDisplayState] to render.
- * @param modifier The [Modifier] to be applied to this composable.
  * @param onAction Callback for user actions on the screen.
  */
 @Suppress("UnusedPrivateProperty")
@@ -124,7 +122,6 @@ private fun QrCodeDisplayScreen(
  * It lays out the title, instructions, QR code image, and generation date.
  *
  * @param painter The [Painter] used to draw the QR code.
- * @param modifier The [Modifier] to be applied to this composable.
  */
 @Composable
 private fun QrCodeDisplayContent(
