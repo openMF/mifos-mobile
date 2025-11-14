@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -252,7 +251,9 @@ internal fun ServiceBox(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .padding(DesignToken.padding.medium)
+                .fillMaxWidth(2f),
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
             verticalAlignment = Alignment.CenterVertically
         ){
