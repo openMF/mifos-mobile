@@ -223,50 +223,60 @@ internal fun HomeContent(
         }
     }
 }
+
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(
-        modifier = modifier
-            .fillMaxWidth(),
-        maxItemsInEachRow = 4,
-        horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+    Column(
+        modifier = modifier.fillMaxWidth(),
     ) {
-        items.forEach { item ->
-            Box(
-                modifier = Modifier
-                    .weight(1f),
-                contentAlignment = Alignment.Center,
-            ) {
-                ServiceItemCard(
-                    title = item.title,
-                    icon = item.icon,
-                    onClick = { onAction(HomeAction.OnNavigate(item.route)) },
-                )
-            }
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            maxItemsInEachRow = 4,
+        ) {
+            items
+                .filter { it != ServiceItem.Beneficiary && it != ServiceItem.Faq }
+                .forEach { item ->
+                    ServiceItemCard(
+                        title = item.title,
+                        icon = item.icon,
+                        onClick = { onAction(HomeAction.OnNavigate(item.route)) },
+                        modifier = Modifier
+                            .width(72.dp)
+                            .wrapContentHeight(),
+                    )
+                }
         }
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
         Row(
             modifier = Modifier
-                .padding(DesignToken.padding.medium)
-                .fillMaxWidth(2f),
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-            verticalAlignment = Alignment.CenterVertically
-        ){
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(
+                DesignToken.spacing.medium,
+                Alignment.Start,
+            ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             ServiceItemCard(
                 title = ServiceItem.Beneficiary.title,
                 icon = ServiceItem.Beneficiary.icon,
-                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Beneficiary.route)) }
+                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Beneficiary.route)) },
+                modifier = Modifier
+                    .width(72.dp),
             )
-            Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
+
             ServiceItemCard(
                 title = ServiceItem.Faq.title,
                 icon = ServiceItem.Faq.icon,
-                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Faq.route)) }
+                onClick = { onAction(HomeAction.OnNavigate(ServiceItem.Faq.route)) },
+                modifier = Modifier.width(72.dp),
             )
         }
     }
