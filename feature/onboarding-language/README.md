@@ -20,10 +20,6 @@ sequenceDiagram
     ViewModel->>Screen: Update UI with new language
     
     Note over Screen,Repository: Language preference is now persisted
-    
-    User->>Screen: Clicks continue
-    Screen->>ViewModel: handleAction(ContinueToNextScreen)
-    ViewModel-->>Screen: Navigate to next screen
 ```
 
 ## Architecture
