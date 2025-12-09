@@ -117,9 +117,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     is HomeNavigationDestination.TransactionHistory ->
                         navController.navigateToRecentTransactionScreen()
 
-                    is HomeNavigationDestination.TransactionHistory ->
-                        navController.navigateToRecentTransactionScreen()
-
                     is HomeNavigationDestination.ApplyLoan ->
                         navController.navigateToLoanApplicationGraph()
 
