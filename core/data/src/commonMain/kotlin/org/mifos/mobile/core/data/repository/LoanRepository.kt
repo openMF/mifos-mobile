@@ -11,6 +11,7 @@ package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
@@ -21,6 +22,11 @@ interface LoanRepository {
         associationType: String?,
         loanId: Long?,
     ): Flow<DataState<LoanWithAssociations?>>
+
+    fun getLoanTransactionDetails(
+        loanId: Long,
+        transactionId: Long,
+    ): Flow<DataState<TransactionDetails>>
 
     suspend fun withdrawLoanAccount(
         loanId: Long?,

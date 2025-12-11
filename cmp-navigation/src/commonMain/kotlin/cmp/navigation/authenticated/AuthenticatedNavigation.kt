@@ -14,8 +14,8 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.navOptions
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -25,11 +25,14 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.feature.accounts.accountTransactions.AccountTransactionsNavRoute
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.AccountNavRoute
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
+import org.mifos.mobile.feature.accounts.transactionDetail.navigateToTransactionDetails
+import org.mifos.mobile.feature.accounts.transactionDetail.transactionDetailDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
@@ -162,6 +165,23 @@ internal fun NavGraphBuilder.authenticatedGraph(
         )
 
         accountTransactionsDestination(
+            navigateBack = navController::popBackStack,
+            navigateToDetails = { transactionId ->
+
+                val currentEntry = navController.currentBackStackEntry
+                val route = currentEntry?.toRoute<AccountTransactionsNavRoute>()
+
+                if (route != null) {
+                    navController.navigateToTransactionDetails(
+                        transactionId = transactionId,
+                        accountType = route.accountType,
+                        accountId = route.accountId,
+                    )
+                }
+            },
+        )
+
+        transactionDetailDestination(
             navigateBack = navController::popBackStack,
         )
 

@@ -44,11 +44,12 @@ fun TransactionScreenItem(
     transactionAmount: String,
     isCredited: Boolean,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable(onClick = onClick)
             .padding(vertical = DesignToken.padding.medium),
     ) {
         Row(

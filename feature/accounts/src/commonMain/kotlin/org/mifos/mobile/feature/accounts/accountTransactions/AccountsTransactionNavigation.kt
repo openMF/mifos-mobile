@@ -49,11 +49,16 @@ fun NavController.navigateToAccountTransactionsScreen(
  * Adds the Account Transactions Screen to the navigation graph.
  *
  * @param navigateBack The function to be called when the back button is pressed.
+ * @param navigateToDetails The callback function to navigate to the transaction details screen.
  */
 fun NavGraphBuilder.accountTransactionsDestination(
     navigateBack: () -> Unit,
+    navigateToDetails: (String) -> Unit,
 ) {
     composableWithSlideTransitions<AccountTransactionsNavRoute> {
-        TransactionScreen(navigateBack)
+        TransactionScreen(
+            navigateBack = navigateBack,
+            navigateToDetails = navigateToDetails,
+        )
     }
 }

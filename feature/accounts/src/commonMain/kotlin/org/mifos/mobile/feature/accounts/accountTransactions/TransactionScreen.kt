@@ -70,11 +70,13 @@ import org.mifos.mobile.feature.accounts.model.TransactionFilterType
  * Composable function for the Account Transactions Screen.
  *
  * @param navigateBack The function to be called when the back button is pressed.
+ * @param navigateToDetails The callback function to navigate to the transaction details screen.
  * @param viewModel The ViewModel for the Account Transactions Screen.
  */
 @Composable
 internal fun TransactionScreen(
     navigateBack: () -> Unit,
+    navigateToDetails: (String) -> Unit,
     viewModel: AccountsTransactionViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -83,6 +85,9 @@ internal fun TransactionScreen(
         when (event) {
             AccountTransactionEvent.OnNavigateBack -> {
                 navigateBack.invoke()
+            }
+            is AccountTransactionEvent.NavigateToDetails -> {
+                navigateToDetails(event.id)
             }
         }
     }
@@ -205,6 +210,11 @@ internal fun TransactionScreenContent(
                                             maximumFractionDigits = 3,
                                         ),
                                         isCredited = transaction.isCredit == true,
+                                        onClick = {
+                                            transaction.id?.let { id ->
+                                                onAction(AccountTransactionAction.OnTransactionClick(id))
+                                            }
+                                        },
                                     )
                                 }
                             }

@@ -14,7 +14,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
@@ -155,6 +154,10 @@ internal class AccountsTransactionViewModel(
 
             is AccountTransactionAction.Internal.ReceiveLoanTransactions -> {
                 handleLoanTransactionsResult(action.dataState)
+            }
+
+            is AccountTransactionAction.OnTransactionClick -> {
+                sendEvent(AccountTransactionEvent.NavigateToDetails(action.id.toString()))
             }
         }
     }
@@ -712,6 +715,7 @@ internal data class AccountTransactionState(
  * @property GetFilterResults Action to get the results of the filter dialog.
  * @property ReceiveNetworkResult Action to receive the result of the network status check.
  * @property ToggleCheckbox Action to toggle a specific checkbox filter.
+ * @property id The unique identifier of the clicked transaction.
  */
 internal sealed interface AccountTransactionAction {
     data object Refresh : AccountTransactionAction
@@ -721,6 +725,8 @@ internal sealed interface AccountTransactionAction {
     data object ResetFilters : AccountTransactionAction
     data object GetFilterResults : AccountTransactionAction
     data class ReceiveNetworkResult(val isOnline: Boolean) : AccountTransactionAction
+
+    data class OnTransactionClick(val id: Long?) : AccountTransactionAction
 
     /**
      * Action to toggle a specific checkbox filter.
@@ -771,9 +777,11 @@ internal sealed interface AccountTransactionAction {
 /**
  * Sealed interface representing one-time events to be sent to the UI.
  * @property OnNavigateBack Event to navigate back to the previous screen.
+ * @property NavigateToDetails Event to navigate to the transaction details screen with a specific ID.
  */
 sealed interface AccountTransactionEvent {
     data object OnNavigateBack : AccountTransactionEvent
+    data class NavigateToDetails(val id: String) : AccountTransactionEvent
 }
 
 /**
