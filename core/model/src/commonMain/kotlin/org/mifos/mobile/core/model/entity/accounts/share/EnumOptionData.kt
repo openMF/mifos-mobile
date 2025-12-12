@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,26 +15,8 @@ import org.mifos.mobile.core.model.Parcelize
 
 @Serializable
 @Parcelize
-data class ShareAccount(
-
-    val id: Long = 0,
-
-    val accountNo: String? = null,
-
-    val totalApprovedShares: Int? = null,
-
-    val totalPendingForApprovalShares: Int? = null,
-
-    val productId: Int? = null,
-
-    val productName: String? = null,
-
-    val shortProductName: String? = null,
-
-    val status: Status? = null,
-
-    val currency: Currency? = null,
-
-    val timeline: Timeline? = null,
-
+data class EnumOptionData(
+    val id: Long? = null,
+    val code: String? = null,
+    val value: String? = null,
 ) : Parcelable

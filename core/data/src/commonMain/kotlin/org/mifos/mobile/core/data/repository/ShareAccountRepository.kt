@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.repository
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
@@ -25,4 +26,6 @@ interface ShareAccountRepository {
     suspend fun submitShareApplication(
         payload: ShareApplicationPayload?,
     ): DataState<String>
+
+    fun getShareAccountDetails(accountId: Long): Flow<DataState<ShareAccountWithAssociations>>
 }

@@ -17,4 +17,5 @@ enum class ChargeType(val type: String) {
     CLIENT("clients"),
     SAVINGS("savingsaccounts"),
     LOAN("loans"),
+    SHARE("shareaccounts"),
 }
