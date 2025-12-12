@@ -67,6 +67,8 @@ import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.billDestination
+import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToBillScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
@@ -313,6 +315,11 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateBack = navController::popBackStack,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
             navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
+            navigateToBillScreen = navController::navigateToBillScreen,
+        )
+
+        billDestination(
+            navigateToHome = navController::navigateToHomeAfterStatus,
         )
 
         faqDestination(onBackClick = navController::popBackStack, contact = {})

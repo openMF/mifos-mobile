@@ -19,7 +19,6 @@ import kotlinx.datetime.number
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.back_to_accounts
 import mifos_mobile.feature.transfer_process.generated.resources.transfer_failed
-import mifos_mobile.feature.transfer_process.generated.resources.transfer_successful
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -54,7 +53,7 @@ import org.mifos.mobile.core.ui.utils.observe
  * @param navigator Utility to observe results from other parts of the application,
  *                  specifically used here to get the authentication result.
  */
-internal class TransferProcessViewModel(
+class TransferProcessViewModel(
     private val transferRepository: TransferRepository,
     savedStateHandle: SavedStateHandle,
     private val networkMonitor: NetworkMonitor,
@@ -237,12 +236,13 @@ internal class TransferProcessViewModel(
 
             is DataState.Success -> {
                 sendEvent(
-                    TransferProcessEvent.NavigateToStatus(
-                        eventType = EventType.SUCCESS.name,
-                        eventDestination = state.transferDestination ?: "",
-                        title = getString(Res.string.transfer_successful),
-                        subtitle = "Transfer Id: ${response.data}",
-                        buttonText = getString(Res.string.back_to_accounts),
+                    TransferProcessEvent.NavigateToBill(
+                        transferId = response.data,
+                        amount = state.transferPayload?.transferAmount?.toString() ?: "0.0",
+                        fromAccount = state.transferPayload?.fromAccountId ?: "N/A",
+                        toAccount = state.transferPayload?.toAccountId ?: "N/A",
+                        date = state.transferPayload?.transferDate ?: "",
+                        remark = state.transferPayload?.transferDescription ?: "",
                     ),
                 )
             }
@@ -297,6 +297,24 @@ sealed interface TransferProcessEvent {
         val title: String,
         val subtitle: String,
         val buttonText: String,
+    ) : TransferProcessEvent
+
+    /**
+     * Event to navigate to the bill screen after successful transfer.
+     * @param transferId The ID of the successful transfer.
+     * @param amount The amount transferred.
+     * @param fromAccount The source account.
+     * @param toAccount The destination account.
+     * @param date The transfer date.
+     * @param remark The transfer remark/description.
+     */
+    data class NavigateToBill(
+        val transferId: String,
+        val amount: String,
+        val fromAccount: String,
+        val toAccount: String,
+        val date: String,
+        val remark: String,
     ) : TransferProcessEvent
 }
 

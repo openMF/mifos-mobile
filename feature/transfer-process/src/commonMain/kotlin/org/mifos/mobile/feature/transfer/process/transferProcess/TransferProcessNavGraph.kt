@@ -34,16 +34,38 @@ data class TransferProcessRoute(
     val transferSuccessDestination: String = "",
 )
 
+@Serializable
+data class BillRoute(
+    val transferId: String,
+    val amount: String,
+    val fromAccount: String,
+    val toAccount: String,
+    val date: String,
+    val remark: String = "",
+)
+
 fun NavGraphBuilder.transferProcessDestination(
     navigateBack: () -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
+    navigateToBillScreen: (String, String, String, String, String, String) -> Unit,
 ) {
     composableWithSlideTransitions<TransferProcessRoute> {
         TransferProcessScreen(
             navigateBack = navigateBack,
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
             navigateToStatusScreen = navigateToStatusScreen,
+            navigateToBillScreen = navigateToBillScreen,
+        )
+    }
+}
+
+fun NavGraphBuilder.billDestination(
+    navigateToHome: () -> Unit,
+) {
+    composableWithSlideTransitions<BillRoute> {
+        BillScreen(
+            navigateToHome = navigateToHome,
         )
     }
 }
@@ -67,6 +89,26 @@ fun NavController.navigateToTransferProcessScreen(
             transferDescription = transferPayload.review,
             transferType = transferType.name,
             transferSuccessDestination = transferSuccessDestination,
+        ),
+    )
+}
+
+fun NavController.navigateToBillScreen(
+    transferId: String,
+    amount: String,
+    fromAccount: String,
+    toAccount: String,
+    date: String,
+    remark: String,
+) {
+    this.navigate(
+        BillRoute(
+            transferId = transferId,
+            amount = amount,
+            fromAccount = fromAccount,
+            toAccount = toAccount,
+            date = date,
+            remark = remark,
         ),
     )
 }

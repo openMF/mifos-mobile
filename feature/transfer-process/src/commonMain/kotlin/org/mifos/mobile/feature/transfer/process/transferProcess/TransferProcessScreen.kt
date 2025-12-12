@@ -52,10 +52,11 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 @Composable
-internal fun TransferProcessScreen(
+fun TransferProcessScreen(
     navigateBack: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,
     navigateToAuthenticateScreen: () -> Unit,
+    navigateToBillScreen: (String, String, String, String, String, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TransferProcessViewModel = koinViewModel(),
 ) {
@@ -76,6 +77,17 @@ internal fun TransferProcessScreen(
                     event.title,
                     event.subtitle,
                     event.buttonText,
+                )
+            }
+
+            is TransferProcessEvent.NavigateToBill -> {
+                navigateToBillScreen.invoke(
+                    event.transferId,
+                    event.amount,
+                    event.fromAccount,
+                    event.toAccount,
+                    event.date,
+                    event.remark,
                 )
             }
         }
