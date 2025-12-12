@@ -126,8 +126,17 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-        val isCreditValue = when (this.type?.value?.lowercase()) {
-            "disbursement", "repayment", "withdrawal" -> false
+
+        val typeLower = this.type?.value?.lowercase().orEmpty()
+
+        val isCreditValue = when {
+            typeLower.contains("withdrawal") -> false
+            typeLower.contains("disbursement") -> false
+            typeLower.contains("repayment") -> false
+            typeLower.contains("fee") -> false
+            typeLower.contains("charge") -> false
+            typeLower.contains("penalty") -> false
+            typeLower.contains("transfer") && !typeLower.contains("incoming") -> false
             else -> true
         }
 
