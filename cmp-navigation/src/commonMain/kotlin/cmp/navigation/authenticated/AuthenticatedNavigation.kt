@@ -168,10 +168,14 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateBack = navController::popBackStack,
             navigateToDetails = { transactionId ->
 
-                val currentEntry = navController.currentBackStackEntry
-                val route = currentEntry?.toRoute<AccountTransactionsNavRoute>()
+                val route = runCatching {
+                    navController.currentBackStackEntry?.toRoute<AccountTransactionsNavRoute>()
+                }.getOrNull()
 
-                if (route != null) {
+                if (route != null &&
+                    route.accountId > 0L &&
+                    route.accountType in listOf(Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT)
+                ) {
                     navController.navigateToTransactionDetails(
                         transactionId = transactionId,
                         accountType = route.accountType,

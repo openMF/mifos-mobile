@@ -29,7 +29,7 @@ data class TransactionDetails(
 
     @OptIn(ExperimentalSerializationApi::class)
     @JsonNames("transactionType")
-    val type: Type,
+    val type: Type? = null,
 
     val date: List<Int> = emptyList(),
 

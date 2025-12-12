@@ -43,6 +43,7 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_det
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_balance
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_breakdown
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_date
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_default_type
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_external_id
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_fees
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_id
@@ -126,39 +127,7 @@ fun TransactionDetailContent(
             .padding(DesignToken.padding.large),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer),
-            contentAlignment = Alignment.Center,
-        ) {
-            val isCredit = transaction.isCredit == true
-            Icon(
-                imageVector = if (isCredit) MifosIcons.ArrowDropDown else MifosIcons.ArrowDropUp,
-                contentDescription = null,
-                tint = if (isCredit) Color(0xFF2E7D32) else Color(0xFFC62828),
-                modifier = Modifier.size(46.dp),
-            )
-        }
-
-        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
-
-        Text(
-            text = CurrencyFormatter.format(
-                transaction.amount,
-                transaction.currency,
-                maximumFractionDigits = 2,
-            ),
-            style = MifosTypography.headlineMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-
-        Text(
-            text = transaction.typeValue ?: "Transaction",
-            style = MifosTypography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        TransactionHeader(transaction)
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
@@ -231,61 +200,115 @@ fun TransactionDetailContent(
                 )
             }
 
-            if (transaction.principal != null || transaction.interest != null) {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+            TransactionBreakdown(transaction)
 
-                Text(
-                    text = stringResource(Res.string.feature_transaction_detail_breakdown),
-                    style = MifosTypography.labelLargeEmphasized,
-                    modifier = Modifier.padding(bottom = 8.dp),
-                )
-
-                if (transaction.principal != null && transaction.principal > 0) {
-                    DetailItem(
-                        label = stringResource(Res.string.feature_transaction_detail_principal),
-                        value = CurrencyFormatter.format(
-                            transaction.principal,
-                            transaction.currency,
-                            maximumFractionDigits = 2,
-                        ),
-                    )
-                }
-                if (transaction.interest != null && transaction.interest > 0) {
-                    DetailItem(
-                        label = stringResource(Res.string.feature_transaction_detail_interest),
-                        value = CurrencyFormatter.format(
-                            transaction.interest,
-                            transaction.currency,
-                            maximumFractionDigits = 2,
-                        ),
-                    )
-                }
-                if (transaction.fees != null && transaction.fees > 0) {
-                    DetailItem(
-                        label = stringResource(Res.string.feature_transaction_detail_fees),
-                        value = CurrencyFormatter.format(
-                            transaction.fees,
-                            transaction.currency,
-                            maximumFractionDigits = 2,
-                        ),
-                    )
-                }
-                if (transaction.penalties != null && transaction.penalties > 0) {
-                    DetailItem(
-                        label = stringResource(Res.string.feature_transaction_detail_penalties),
-                        value = CurrencyFormatter.format(
-                            transaction.penalties,
-                            transaction.currency,
-                            maximumFractionDigits = 2,
-                        ),
-                    )
-                }
-            }
             if (transaction.outstandingBalance != null) {
                 DetailItem(
                     label = stringResource(Res.string.feature_transaction_detail_balance),
                     value = CurrencyFormatter.format(
                         transaction.outstandingBalance,
+                        transaction.currency,
+                        maximumFractionDigits = 2,
+                    ),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TransactionHeader(transaction: UiTransactionDetails) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .size(72.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.secondaryContainer),
+            contentAlignment = Alignment.Center,
+        ) {
+            val isCredit = transaction.isCredit == true
+            Icon(
+                imageVector = if (isCredit) MifosIcons.ArrowDropDown else MifosIcons.ArrowDropUp,
+                contentDescription = null,
+                tint = if (isCredit) Color(0xFF2E7D32) else Color(0xFFC62828),
+                modifier = Modifier.size(46.dp),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+        Text(
+            text = CurrencyFormatter.format(
+                transaction.amount,
+                transaction.currency,
+                maximumFractionDigits = 2,
+            ),
+            style = MifosTypography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
+        Text(
+            text = transaction.typeValue ?: stringResource(Res.string.feature_transaction_detail_default_type),
+            style = MifosTypography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun TransactionBreakdown(transaction: UiTransactionDetails) {
+    if (transaction.principal != null ||
+        transaction.interest != null ||
+        transaction.fees != null ||
+        transaction.penalties != null
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+            Text(
+                text = stringResource(Res.string.feature_transaction_detail_breakdown),
+                style = MifosTypography.labelLargeEmphasized,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+
+            if (transaction.principal != null && transaction.principal > 0) {
+                DetailItem(
+                    label = stringResource(Res.string.feature_transaction_detail_principal),
+                    value = CurrencyFormatter.format(
+                        transaction.principal,
+                        transaction.currency,
+                        maximumFractionDigits = 2,
+                    ),
+                )
+            }
+            if (transaction.interest != null && transaction.interest > 0) {
+                DetailItem(
+                    label = stringResource(Res.string.feature_transaction_detail_interest),
+                    value = CurrencyFormatter.format(
+                        transaction.interest,
+                        transaction.currency,
+                        maximumFractionDigits = 2,
+                    ),
+                )
+            }
+            if (transaction.fees != null && transaction.fees > 0) {
+                DetailItem(
+                    label = stringResource(Res.string.feature_transaction_detail_fees),
+                    value = CurrencyFormatter.format(
+                        transaction.fees,
+                        transaction.currency,
+                        maximumFractionDigits = 2,
+                    ),
+                )
+            }
+            if (transaction.penalties != null && transaction.penalties > 0) {
+                DetailItem(
+                    label = stringResource(Res.string.feature_transaction_detail_penalties),
+                    value = CurrencyFormatter.format(
+                        transaction.penalties,
                         transaction.currency,
                         maximumFractionDigits = 2,
                     ),

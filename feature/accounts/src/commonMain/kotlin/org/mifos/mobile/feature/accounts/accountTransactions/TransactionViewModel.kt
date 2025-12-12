@@ -157,7 +157,8 @@ internal class AccountsTransactionViewModel(
             }
 
             is AccountTransactionAction.OnTransactionClick -> {
-                sendEvent(AccountTransactionEvent.NavigateToDetails(action.id.toString()))
+                val id = action.id ?: return
+                sendEvent(AccountTransactionEvent.NavigateToDetails(id.toString()))
             }
         }
     }
@@ -715,7 +716,7 @@ internal data class AccountTransactionState(
  * @property GetFilterResults Action to get the results of the filter dialog.
  * @property ReceiveNetworkResult Action to receive the result of the network status check.
  * @property ToggleCheckbox Action to toggle a specific checkbox filter.
- * @property id The unique identifier of the clicked transaction.
+ * @property OnTransactionClick Action to navigate to transactionDetails screen.
  */
 internal sealed interface AccountTransactionAction {
     data object Refresh : AccountTransactionAction

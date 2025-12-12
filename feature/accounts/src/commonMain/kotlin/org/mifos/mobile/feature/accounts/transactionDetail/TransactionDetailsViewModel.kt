@@ -59,6 +59,7 @@ class TransactionDetailsViewModel(
     },
 ) {
 
+    private var loadJob: kotlinx.coroutines.Job? = null
     init {
         fetchTransactionDetails()
     }
@@ -72,7 +73,10 @@ class TransactionDetailsViewModel(
 
     private fun fetchTransactionDetails() {
         updateState { it.copy(uiState = ScreenUiState.Loading) }
-        viewModelScope.launch {
+
+        loadJob?.cancel()
+
+        loadJob = viewModelScope.launch {
             if (state.transactionId == -1L) {
                 updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_generic_error_server)) }
                 return@launch
@@ -88,24 +92,18 @@ class TransactionDetailsViewModel(
         }
     }
 
-    private fun loadSavingsTransaction() {
-        // Collect the Flow from the repository
-        viewModelScope.launch {
-            savingsRepository.getSavingsAccountTransactionDetails(state.accountId, state.transactionId)
-                .collect { dataState ->
-                    handleDataState(dataState)
-                }
-        }
+    private suspend fun loadSavingsTransaction() {
+        savingsRepository.getSavingsAccountTransactionDetails(state.accountId, state.transactionId)
+            .collect { dataState ->
+                handleDataState(dataState)
+            }
     }
 
-    private fun loadLoanTransaction() {
-        // Collect the Flow from the repository
-        viewModelScope.launch {
-            loanRepository.getLoanTransactionDetails(state.accountId, state.transactionId)
-                .collect { dataState ->
-                    handleDataState(dataState)
-                }
-        }
+    private suspend fun loadLoanTransaction() {
+        loanRepository.getLoanTransactionDetails(state.accountId, state.transactionId)
+            .collect { dataState ->
+                handleDataState(dataState)
+            }
     }
 
     private fun handleDataState(dataState: DataState<TransactionDetails>) {
@@ -119,8 +117,6 @@ class TransactionDetailsViewModel(
                 }
             }
             is DataState.Error -> {
-                println("TRANSACTION DEBUG: Error loading transaction: ${dataState.exception.message}")
-                dataState.exception.printStackTrace()
                 updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_generic_error_server)) }
             }
             DataState.Loading -> {
@@ -130,7 +126,7 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-        val isCreditValue = when (this.type.value?.lowercase()) {
+        val isCreditValue = when (this.type?.value?.lowercase()) {
             "disbursement", "repayment", "withdrawal" -> false
             else -> true
         }
@@ -145,7 +141,7 @@ class TransactionDetailsViewModel(
             id = this.id,
             date = this.date,
             amount = this.amount,
-            typeValue = this.type.value,
+            typeValue = this.type?.value,
             isCredit = isCreditValue,
             currency = this.currency?.code ?: "USD",
             accountNo = accountNumber,
