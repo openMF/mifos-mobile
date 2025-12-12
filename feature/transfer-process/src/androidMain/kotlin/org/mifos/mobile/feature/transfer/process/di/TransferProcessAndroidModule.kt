@@ -11,9 +11,10 @@ package org.mifos.mobile.feature.transfer.process.di
 
 import android.content.Context
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-actual val platformModule = module {
+actual val platformModule: Module = module {
     single { androidContext() } bind Context::class
 }

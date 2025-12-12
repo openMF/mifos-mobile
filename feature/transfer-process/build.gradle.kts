@@ -32,6 +32,7 @@ kotlin {
             implementation(libs.kotlin.reflect)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
         }
         androidMain.dependencies {
             implementation(libs.koin.android)

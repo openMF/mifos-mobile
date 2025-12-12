@@ -16,7 +16,6 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
     val receipt = buildString {
         appendLine("TRANSFER RECEIPT")
         appendLine("Transaction Confirmation")
-        appendLine(billData.date)
         appendLine()
         appendLine("TRANSACTION ID")
         appendLine(billData.transferId)
@@ -42,10 +41,15 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 }
 
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
-    // Save to user's Downloads directory
-    val homeDir = System.getProperty("user.home")
-    val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
-    val file = File(homeDir, "Downloads/$sanitizedName")
-    file.parentFile?.mkdirs()
-    file.writeBytes(pdfData)
+    try {
+        // Save to user's Downloads directory
+        val homeDir = System.getProperty("user.home")
+        val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+        val file = File(homeDir, "Downloads/$sanitizedName")
+        file.parentFile?.mkdirs()
+        file.writeBytes(pdfData)
+    } catch (e: Exception) {
+        println("Error saving file: ${e.message}")
+        throw e
+    }
 }

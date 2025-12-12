@@ -42,20 +42,31 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 }
 
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
-    // For iOS, save to documents
-    val nsData = pdfData.toNSData()
-    val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
-    val fileManager = platform.Foundation.NSFileManager.defaultManager
-    val urls = fileManager.URLsForDirectory(
-        platform.Foundation.NSDocumentDirectory,
-        platform.Foundation.NSUserDomainMask,
-    )
-    val documentsURL = urls.firstOrNull() as? platform.Foundation.NSURL ?: return
-    val fileURL = documentsURL.URLByAppendingPathComponent(sanitizedName)
-    nsData.writeToURL(fileURL, atomically = true)
+    require(fileName.isNotBlank()) { "Filename cannot be empty" }
+    try {
+        // For iOS, save to documents
+        val nsData = pdfData.toNSData()
+        val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+        val finalName = if (sanitizedName.endsWith(".pdf")) sanitizedName else "$sanitizedName.pdf"
+        val fileManager = platform.Foundation.NSFileManager.defaultManager
+        val urls = fileManager.URLsForDirectory(
+            platform.Foundation.NSDocumentDirectory,
+            platform.Foundation.NSUserDomainMask,
+        )
+        val documentsURL = urls.firstOrNull() as? platform.Foundation.NSURL
+            ?: error("Could not access documents directory")
+        val fileURL = documentsURL.URLByAppendingPathComponent(finalName)
+        val success = nsData.writeToURL(fileURL, atomically = true)
+        check(success) { "Failed to write file to $fileURL" }
+    } catch (e: Exception) {
+        println("Error saving file: ${e.message}")
+        throw e
+    }
 }
 
-private fun ByteArray.toNSData(): NSData = NSData.create(
-    bytes = this.refTo(0),
-    length = this.size.toULong(),
-)
+private fun ByteArray.toNSData(): NSData = this.usePinned { pinned ->
+    NSData.create(
+        bytes = pinned.addressOf(0),
+        length = this.size.toULong(),
+    )
+}

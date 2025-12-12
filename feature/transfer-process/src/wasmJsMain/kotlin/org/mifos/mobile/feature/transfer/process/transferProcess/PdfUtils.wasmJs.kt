@@ -23,6 +23,18 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 }
 
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
-    // For WASM JS, do nothing
-    println("PDF generated for WASM JS, but not saved")
+    try {
+        val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+        val url = js("URL.createObjectURL(new Blob([pdfData], {type: 'text/plain'}))") as String
+        val link = js("document.createElement('a')") as org.w3c.dom.HTMLAnchorElement
+        link.href = url
+        link.download = sanitizedName
+        js("document.body.appendChild(link)")
+        link.click()
+        js("document.body.removeChild(link)")
+        js("URL.revokeObjectURL(url)")
+    } catch (e: Exception) {
+        println("Error downloading file: ${e.message}")
+        throw e
+    }
 }
