@@ -9,38 +9,58 @@
  */
 package org.mifos.mobile.feature.transfer.process.transferProcess
 
-import kotlinx.cinterop.refTo
+import kotlinx.cinterop.usePinned
 import platform.Foundation.NSData
-import platform.Foundation.NSMutableData
-import platform.Foundation.create
+import platform.Foundation.dataWithBytes
 import platform.Foundation.writeToURL
-import platform.UIKit.UIGraphicsBeginPDFContextToData
-import platform.UIKit.UIGraphicsBeginPDFPage
-import platform.UIKit.UIGraphicsEndPDFContext
 
 actual fun generateBillPdf(billData: TransferBillData): ByteArray {
-    val data = NSMutableData()
-    UIGraphicsBeginPDFContextToData(data, null, null)
-    UIGraphicsBeginPDFPage()
-    // For simplicity, just return the data, as drawing is complex
-    UIGraphicsEndPDFContext()
-    return data.toByteArray()
+    // Generate text-based receipt similar to desktop
+    val receipt = buildString {
+        appendLine("TRANSFER RECEIPT")
+        appendLine("Transaction Confirmation")
+        appendLine(billData.date)
+        appendLine()
+        appendLine("TRANSACTION ID")
+        appendLine(billData.transferId)
+        appendLine()
+        appendLine("AMOUNT TRANSFERRED")
+        appendLine(billData.amount)
+        appendLine()
+        appendLine("FROM ACCOUNT")
+        appendLine(billData.fromAccount)
+        appendLine()
+        appendLine("TO ACCOUNT")
+        appendLine(billData.toAccount)
+        appendLine()
+        appendLine("DATE")
+        appendLine(billData.date)
+        appendLine()
+        appendLine("REMARK")
+        appendLine(billData.remark)
+        appendLine()
+        appendLine("This is a computer-generated receipt and does not require a signature.")
+    }
+    return receipt.encodeToByteArray()
 }
 
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
     // For iOS, save to documents
     val nsData = pdfData.toNSData()
+    val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
     val fileManager = platform.Foundation.NSFileManager.defaultManager
     val urls = fileManager.URLsForDirectory(
         platform.Foundation.NSDocumentDirectory,
         platform.Foundation.NSUserDomainMask,
     )
     val documentsURL = urls.firstOrNull() as? platform.Foundation.NSURL ?: return
-    val fileURL = documentsURL.URLByAppendingPathComponent(fileName)
+    val fileURL = documentsURL.URLByAppendingPathComponent(sanitizedName)
     nsData.writeToURL(fileURL, atomically = true)
 }
 
-private fun ByteArray.toNSData(): NSData = NSData.create(
-    bytes = this.refTo(0),
-    length = this.size.toULong(),
-)
+private fun ByteArray.toNSData(): NSData {
+    if (isEmpty()) return NSData.data()
+    return usePinned {
+        NSData.dataWithBytes(it.addressOf(0), length = size.toULong())
+    }
+}

@@ -33,6 +33,9 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
         appendLine("DATE")
         appendLine(billData.date)
         appendLine()
+        appendLine("REMARK")
+        appendLine(billData.remark)
+        appendLine()
         appendLine("This is a computer-generated receipt and does not require a signature.")
     }
     return receipt.toByteArray()
@@ -41,7 +44,8 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
     // Save to user's Downloads directory
     val homeDir = System.getProperty("user.home")
-    val file = File(homeDir, "Downloads/$fileName")
+    val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+    val file = File(homeDir, "Downloads/$sanitizedName")
     file.parentFile?.mkdirs()
     file.writeBytes(pdfData)
 }

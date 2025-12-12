@@ -15,6 +15,7 @@ import android.graphics.pdf.PdfDocument
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import org.koin.core.context.GlobalContext
 import java.io.File
 import java.io.FileOutputStream
 
@@ -104,13 +105,14 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
     try {
-        // Get application context
-        val context = getApplicationContext()
+        // Get context from Koin dependency injection
+        val context: Context = GlobalContext.get().get()
+        val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Use MediaStore for Android 10+
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            val contentValues = android.content.ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, sanitizedName)
                 put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
             }
@@ -133,21 +135,11 @@ actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
             if (!downloadsDir.exists()) {
                 downloadsDir.mkdirs()
             }
-            val file = File(downloadsDir, fileName)
+            val file = File(downloadsDir, sanitizedName)
             FileOutputStream(file).use { it.write(pdfData) }
             println("PDF saved successfully to: ${file.absolutePath}")
         }
     } catch (e: Exception) {
         println("Failed to save PDF: ${e.message}")
-    }
-}
-
-private fun getApplicationContext(): Context {
-    return try {
-        Class.forName("android.app.ActivityThread")
-            .getMethod("currentApplication")
-            .invoke(null) as Context
-    } catch (e: Exception) {
-        throw IllegalStateException("Could not get application context", e)
     }
 }

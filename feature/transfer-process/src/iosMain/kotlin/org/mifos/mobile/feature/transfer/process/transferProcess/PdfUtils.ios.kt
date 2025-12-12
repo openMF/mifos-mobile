@@ -9,27 +9,17 @@
  */
 package org.mifos.mobile.feature.transfer.process.transferProcess
 
-import platform.CoreGraphics.CGRectMake
 import platform.Foundation.NSData
-import platform.Foundation.NSMutableData
-import platform.UIKit.UIGraphicsBeginPDFContextToData
-import platform.UIKit.UIGraphicsBeginPDFPage
-import platform.UIKit.UIGraphicsEndPDFContext
 
 actual fun generateBillPdf(billData: TransferBillData): ByteArray {
-    val data = NSMutableData()
-    UIGraphicsBeginPDFContextToData(data, CGRectMake(0.0, 0.0, 595.0, 842.0), null)
-    UIGraphicsBeginPDFPage()
-    // Basic PDF generation - text-based for simplicity
-    UIGraphicsEndPDFContext()
-
-    // For now, return text-based receipt
+    // Generate text-based receipt for iOS
     val receipt = """TRANSFER RECEIPT
         |Transaction ID: ${billData.transferId}
         |Amount: ${billData.amount}
         |From: ${billData.fromAccount}
         |To: ${billData.toAccount}
         |Date: ${billData.date}
+        |Remark: ${billData.remark}
     """.trimMargin()
     return receipt.toByteArray()
 }
@@ -37,13 +27,14 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
 actual fun savePdfToFile(pdfData: ByteArray, fileName: String) {
     // For iOS, save to documents
     val nsData = pdfData.toNSData()
+    val sanitizedName = fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
     val fileManager = platform.Foundation.NSFileManager.defaultManager
     val urls = fileManager.URLsForDirectory(
         platform.Foundation.NSDocumentDirectory,
         platform.Foundation.NSUserDomainMask,
     )
     val documentsURL = urls.firstOrNull() as? platform.Foundation.NSURL ?: return
-    val fileURL = documentsURL.URLByAppendingPathComponent(fileName)
+    val fileURL = documentsURL.URLByAppendingPathComponent(sanitizedName)
     nsData.writeToURL(fileURL, atomically = true)
 }
 

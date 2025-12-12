@@ -17,6 +17,7 @@ actual fun generateBillPdf(billData: TransferBillData): ByteArray {
         |From: ${billData.fromAccount}
         |To: ${billData.toAccount}
         |Date: ${billData.date}
+        |Remark: ${billData.remark}
     """.trimMargin()
     return receipt.toByteArray()
 }

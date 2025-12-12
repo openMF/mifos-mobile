@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.transfer.process.di
 
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -21,3 +22,5 @@ val TransferProcessModule = module {
     viewModel<TransferProcessViewModel> { TransferProcessViewModel(get(), get(), get(), get()) }
     viewModel<BillViewModel> { BillViewModel(get()) }
 }
+
+expect val platformModule: Module
