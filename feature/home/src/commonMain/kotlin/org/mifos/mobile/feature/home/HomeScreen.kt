@@ -90,7 +90,7 @@ internal fun HomeScreen(
                     Constants.APPLY_LOAN -> onNavigate(HomeNavigationDestination.ApplyLoan)
                     Constants.APPLY_SAVINGS -> onNavigate(HomeNavigationDestination.ApplySavings)
                     Constants.APPLY_SHARE -> onNavigate(HomeNavigationDestination.ApplyShare)
-                    Constants.TRANSACTIONS -> onNavigate(HomeNavigationDestination.Transaction)
+                    Constants.TRANSACTIONS -> onNavigate(HomeNavigationDestination.TransactionHistory)
                     Constants.CHARGES -> onNavigate(HomeNavigationDestination.Charge)
                     Constants.BENEFICIARY -> onNavigate(HomeNavigationDestination.Beneficiary)
                     Constants.HELP -> onNavigate(HomeNavigationDestination.Faq)

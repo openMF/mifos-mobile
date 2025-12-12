@@ -14,7 +14,21 @@ import org.koin.dsl.module
 import org.mifos.mobile.feature.savings.application.fillApplication.SavingsFillApplicationViewModel
 import org.mifos.mobile.feature.savings.application.savingsApplication.SavingsApplyViewModel
 
+/**
+ * Koin module for providing dependencies related to the Savings Application feature.
+ *
+ * This module declares the ViewModels used in the savings account application process,
+ * allowing Koin's dependency injection framework to construct and provide them where needed.
+ */
 val savingsApplicationModule = module {
+    /**
+     * Provides an instance of [SavingsApplyViewModel].
+     * This ViewModel manages the logic for the initial savings application screen.
+     */
     viewModelOf(::SavingsApplyViewModel)
+    /**
+     * Provides an instance of [SavingsFillApplicationViewModel].
+     * This ViewModel handles the logic for filling out the details of a new savings application.
+     */
     viewModelOf(::SavingsFillApplicationViewModel)
 }
