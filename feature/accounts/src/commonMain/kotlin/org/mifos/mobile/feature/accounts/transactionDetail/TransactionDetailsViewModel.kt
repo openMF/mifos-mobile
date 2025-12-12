@@ -126,7 +126,6 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-
         val typeLower = this.type?.value?.lowercase().orEmpty()
 
         val isCreditValue = when {

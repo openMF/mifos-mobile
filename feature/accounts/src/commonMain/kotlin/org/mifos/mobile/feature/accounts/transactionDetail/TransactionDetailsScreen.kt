@@ -220,7 +220,7 @@ fun TransactionDetailContent(
 private fun TransactionHeader(transaction: UiTransactionDetails) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
