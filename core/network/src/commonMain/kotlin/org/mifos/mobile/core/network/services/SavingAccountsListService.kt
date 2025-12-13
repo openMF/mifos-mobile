@@ -71,9 +71,9 @@ interface SavingAccountsListService {
         @Body payload: SavingsAccountWithdrawPayload?,
     ): HttpResponse
 
-    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{savingsId}/transactions/{transactionId}")
+    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/transactions/{transactionId}")
     fun getSavingsAccountTransactionDetails(
-        @Path("savingsId") savingsId: Long,
+        @Path("accountId") savingsId: Long,
         @Path("transactionId") transactionId: Long,
     ): Flow<TransactionDetails>
 }

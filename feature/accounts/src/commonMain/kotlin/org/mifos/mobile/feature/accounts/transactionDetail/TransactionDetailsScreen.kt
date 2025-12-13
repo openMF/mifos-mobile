@@ -48,10 +48,8 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_det
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_fees
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_id
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_interest
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_payment_method
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_penalties
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_principal
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_receipt
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status_reversed
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status_success
@@ -63,11 +61,14 @@ import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
@@ -156,7 +157,7 @@ fun TransactionDetailContent(
             val statusColor = if (transaction.status == "reversed") {
                 MaterialTheme.colorScheme.error
             } else {
-                Color(0xFF2E7D32)
+                AppColors.customEnable
             }
 
             DetailItem(
@@ -172,24 +173,10 @@ fun TransactionDetailContent(
                 )
             }
 
-            if (!transaction.paymentMethod.isNullOrEmpty() && transaction.paymentMethod != "N/A") {
-                DetailItem(
-                    stringResource(Res.string.feature_transaction_detail_payment_method),
-                    transaction.paymentMethod,
-                )
-            }
-
             if (transaction.typeValue != null) {
                 DetailItem(
                     stringResource(Res.string.feature_transaction_detail_type),
                     transaction.typeValue,
-                )
-            }
-
-            if (!transaction.receiptNumber.isNullOrEmpty()) {
-                DetailItem(
-                    label = stringResource(Res.string.feature_transaction_detail_receipt),
-                    value = transaction.receiptNumber,
                 )
             }
 
@@ -233,7 +220,7 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
             Icon(
                 imageVector = if (isCredit) MifosIcons.ArrowDropDown else MifosIcons.ArrowDropUp,
                 contentDescription = null,
-                tint = if (isCredit) Color(0xFF2E7D32) else Color(0xFFC62828),
+                tint = if (isCredit) AppColors.customEnable else MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(46.dp),
             )
         }
@@ -343,4 +330,32 @@ fun DetailItem(
         )
     }
     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+}
+
+@DevicePreview
+@Composable
+@Suppress("UnusedPrivateMember")
+private fun TransactionDetailContentPreview() {
+    val sampleTransaction = UiTransactionDetails(
+        id = 12345L,
+        date = listOf(2025, 12, 13),
+        amount = 559.88,
+        status = "success",
+        typeValue = "Repayment",
+        isCredit = false,
+        currency = "USD",
+        accountNo = "000000123",
+        principal = 500.0,
+        interest = 59.88,
+        fees = 0.0,
+        penalties = 0.0,
+        externalId = "EXT-888",
+        outstandingBalance = 1200.0,
+    )
+
+    MifosMobileTheme {
+        Surface {
+            TransactionDetailContent(transaction = sampleTransaction)
+        }
+    }
 }

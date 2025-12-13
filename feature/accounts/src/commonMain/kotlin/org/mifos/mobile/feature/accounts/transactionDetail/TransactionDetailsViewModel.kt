@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.accounts.transactionDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.accounts.generated.resources.Res
@@ -59,7 +60,6 @@ class TransactionDetailsViewModel(
     },
 ) {
 
-    private var loadJob: kotlinx.coroutines.Job? = null
     init {
         fetchTransactionDetails()
     }
@@ -74,9 +74,7 @@ class TransactionDetailsViewModel(
     private fun fetchTransactionDetails() {
         updateState { it.copy(uiState = ScreenUiState.Loading) }
 
-        loadJob?.cancel()
-
-        loadJob = viewModelScope.launch {
+        viewModelScope.launch {
             if (state.transactionId == -1L) {
                 updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_generic_error_server)) }
                 return@launch
@@ -94,6 +92,9 @@ class TransactionDetailsViewModel(
 
     private suspend fun loadSavingsTransaction() {
         savingsRepository.getSavingsAccountTransactionDetails(state.accountId, state.transactionId)
+            .catch { exception ->
+                emit(DataState.Error(exception))
+            }
             .collect { dataState ->
                 handleDataState(dataState)
             }
@@ -101,6 +102,9 @@ class TransactionDetailsViewModel(
 
     private suspend fun loadLoanTransaction() {
         loanRepository.getLoanTransactionDetails(state.accountId, state.transactionId)
+            .catch { exception ->
+                emit(DataState.Error(exception))
+            }
             .collect { dataState ->
                 handleDataState(dataState)
             }
@@ -126,21 +130,7 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-        val typeLower = this.type?.value?.lowercase().orEmpty()
-
-        val isCreditValue = when {
-            typeLower.contains("withdrawal") -> false
-            typeLower.contains("disbursement") -> false
-            typeLower.contains("repayment") -> false
-            typeLower.contains("fee") -> false
-            typeLower.contains("charge") -> false
-            typeLower.contains("penalty") -> false
-            typeLower.contains("transfer") && !typeLower.contains("incoming") -> false
-            else -> true
-        }
-
-        val paymentMethodName = this.paymentDetailData?.paymentType?.name ?: "N/A"
-        val accountNumber = this.accountNo ?: this.paymentDetailData?.accountNumber ?: "N/A"
+        val accountNumber = this.accountNo ?: "N/A"
         val isReversed = (this.reversed == true) || (this.manuallyReversed == true)
         val statusKey = if (isReversed) "reversed" else "success"
         val balance = this.outstandingLoanBalance ?: this.runningBalance
@@ -150,13 +140,11 @@ class TransactionDetailsViewModel(
             date = this.date,
             amount = this.amount,
             typeValue = this.type?.value,
-            isCredit = isCreditValue,
+            isCredit = this.isCredit,
             currency = this.currency?.code ?: "USD",
             accountNo = accountNumber,
-            paymentMethod = paymentMethodName,
             status = statusKey,
             externalId = this.externalId,
-            receiptNumber = this.paymentDetailData?.receiptNumber,
             outstandingBalance = balance,
             principal = this.principalPortion,
             interest = this.interestPortion,
@@ -179,12 +167,10 @@ data class UiTransactionDetails(
     val isCredit: Boolean?,
     val currency: String,
     val accountNo: String? = null,
-    val paymentMethod: String? = null,
     val principal: Double? = null,
     val interest: Double? = null,
     val fees: Double? = null,
     val penalties: Double? = null,
     val externalId: String? = null,
-    val receiptNumber: String? = null,
     val outstandingBalance: Double? = null,
 )

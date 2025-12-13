@@ -12,13 +12,9 @@ package org.mifos.mobile.core.model.entity
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
-import org.mifos.mobile.core.model.entity.accounts.savings.PaymentDetailData
 import org.mifos.mobile.core.model.entity.client.Type
 
 @Serializable
-@Parcelize
 data class TransactionDetails(
 
     val id: Long? = null,
@@ -43,8 +39,6 @@ data class TransactionDetails(
 
     val accountNo: String? = null,
 
-    val paymentDetailData: PaymentDetailData? = null,
-
     val manuallyReversed: Boolean? = null,
 
     val externalId: String? = null,
@@ -60,4 +54,19 @@ data class TransactionDetails(
     val feeChargesPortion: Double? = null,
 
     val penaltyChargesPortion: Double? = null,
-) : Parcelable
+) {
+    val isCredit: Boolean
+        get() {
+            val typeLower = this.type?.value?.lowercase().orEmpty()
+            return when {
+                typeLower.contains("withdrawal") -> false
+                typeLower.contains("disbursement") -> false
+                typeLower.contains("repayment") -> false
+                typeLower.contains("fee") -> false
+                typeLower.contains("charge") -> false
+                typeLower.contains("penalty") -> false
+                typeLower.contains("transfer") && !typeLower.contains("incoming") -> false
+                else -> true
+            }
+        }
+}

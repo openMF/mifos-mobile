@@ -59,7 +59,7 @@ interface LoanAccountsListService {
         @Body loanWithdraw: LoanWithdraw?,
     ): HttpResponse
 
-    @GET("loans/{loanId}/transactions/{transactionId}")
+    @GET(ApiEndPoints.LOANS + "/{loanId}/transactions/{transactionId}")
     fun getLoanTransactionDetails(
         @Path("loanId") loanId: Long,
         @Path("transactionId") transactionId: Long,

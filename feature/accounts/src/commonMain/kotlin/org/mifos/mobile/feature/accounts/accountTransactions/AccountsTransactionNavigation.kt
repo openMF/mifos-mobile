@@ -14,7 +14,9 @@ package org.mifos.mobile.feature.accounts.accountTransactions
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 /**
@@ -53,12 +55,21 @@ fun NavController.navigateToAccountTransactionsScreen(
  */
 fun NavGraphBuilder.accountTransactionsDestination(
     navigateBack: () -> Unit,
-    navigateToDetails: (String) -> Unit,
+    // Update signature to pass back all necessary data (id, type, accountId)
+    navigateToDetails: (String, String, Long) -> Unit,
 ) {
-    composableWithSlideTransitions<AccountTransactionsNavRoute> {
+    composableWithSlideTransitions<AccountTransactionsNavRoute> { backStackEntry ->
+        val route = backStackEntry.toRoute<AccountTransactionsNavRoute>()
+
         TransactionScreen(
             navigateBack = navigateBack,
-            navigateToDetails = navigateToDetails,
+            navigateToDetails = { transactionId ->
+                if (route.accountId > 0L &&
+                    route.accountType in listOf(Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT)
+                ) {
+                    navigateToDetails(transactionId, route.accountType, route.accountId)
+                }
+            },
         )
     }
 }
