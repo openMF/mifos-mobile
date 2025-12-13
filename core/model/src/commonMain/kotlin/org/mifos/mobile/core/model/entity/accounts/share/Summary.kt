@@ -17,7 +17,7 @@ import org.mifos.mobile.core.model.Parcelize
 @Parcelize
 data class Summary(
     val id: Long? = null,
-    val accountNo: Long? = null,
+    val accountNo: String? = null,
     val productId: Long? = null,
     val productName: String? = null,
     val status: Status? = null,

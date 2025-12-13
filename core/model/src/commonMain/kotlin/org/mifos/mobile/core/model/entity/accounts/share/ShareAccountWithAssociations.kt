@@ -33,7 +33,7 @@ data class ShareAccountWithAssociations(
     // Financials
     val currentMarketPrice: Double? = null,
     val savingsAccountId: Long? = null,
-    val savingsAccountNumber: Long? = null,
+    val savingsAccountNumber: String? = null,
     val allowDividendCalculationForInactiveClients: Boolean? = null,
 
     // Configuration / Periods

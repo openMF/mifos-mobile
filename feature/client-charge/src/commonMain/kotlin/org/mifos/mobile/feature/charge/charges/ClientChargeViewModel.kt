@@ -229,7 +229,7 @@ internal class ClientChargeViewModel(
 
             is DataState.Success -> updateState {
                 if (result.data.isEmpty()) {
-                    it.copy(uiState = ScreenUiState.Empty)
+                    it.copy(uiState = ScreenUiState.Empty, charges = emptyList())
                 } else {
                     it.copy(uiState = ScreenUiState.Success, charges = result.data)
                 }

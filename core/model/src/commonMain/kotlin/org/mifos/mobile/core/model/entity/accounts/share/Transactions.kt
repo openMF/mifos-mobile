@@ -22,7 +22,7 @@ data class Transactions(
     val chargeAmount: Double? = null,
     val id: Long? = null,
     val numberOfShares: Int? = null,
-    val purchasedDate: List<Int>,
+    val purchasedDate: List<Int> = emptyList(),
     val purchasedPrice: Double? = null,
     val status: EnumOptionData? = null,
     val type: EnumOptionData? = null,

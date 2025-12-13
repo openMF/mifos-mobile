@@ -198,7 +198,10 @@ internal fun ShareAccountActions(
             color = MaterialTheme.colorScheme.onSurface,
         )
         FlowRow(modifier = Modifier.fillMaxWidth()) {
-            visibleActions.forEach { item ->
+            visibleActions
+                .toList()
+                .sortedBy {it.route}
+                .forEach { item ->
                 MifosActionCard(
                     title = item.title,
                     subTitle = item.subTitle,
