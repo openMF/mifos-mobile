@@ -200,15 +200,15 @@ internal fun ShareAccountActions(
         FlowRow(modifier = Modifier.fillMaxWidth()) {
             visibleActions
                 .toList()
-                .sortedBy {it.route}
+                .sortedBy { it.route }
                 .forEach { item ->
-                MifosActionCard(
-                    title = item.title,
-                    subTitle = item.subTitle,
-                    icon = item.icon,
-                    onClick = { onActionClick(item.route) },
-                )
-            }
+                    MifosActionCard(
+                        title = item.title,
+                        subTitle = item.subTitle,
+                        icon = item.icon,
+                        onClick = { onActionClick(item.route) },
+                    )
+                }
         }
     }
 }

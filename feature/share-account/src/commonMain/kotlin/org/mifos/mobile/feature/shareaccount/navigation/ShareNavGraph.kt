@@ -31,7 +31,6 @@ fun NavGraphBuilder.shareNavGraph(
     navigation<ShareGraphRoute>(
         startDestination = ShareAccountRoute,
     ) {
-        // 1. The List Screen
         shareAccountDestination(
             navigateBack = navController::popBackStack,
             onAccountClicked = { accountId ->
@@ -39,11 +38,9 @@ fun NavGraphBuilder.shareNavGraph(
             },
         )
 
-        // 2. The Details Screen
         shareAccountDetailsDestination(
             navigateBack = navController::popBackStack,
 
-            // Pass the parameters down to the destination
             navigateToClientChargeScreen = navigateToClientChargeScreen,
             navigateToShareAccountTransactionScreen = navigateToShareAccountTransactionScreen,
             navigateToQrCodeScreen = navigateToQrCodeScreen,

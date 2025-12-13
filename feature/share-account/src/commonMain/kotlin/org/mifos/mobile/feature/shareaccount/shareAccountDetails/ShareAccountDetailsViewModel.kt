@@ -125,8 +125,9 @@ internal class ShareAccountDetailsViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (dataState.exception is IOException
-                            || dataState.exception.cause is IOException) {
+                        uiState = if (dataState.exception is IOException ||
+                            dataState.exception.cause is IOException
+                        ) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -140,34 +141,36 @@ internal class ShareAccountDetailsViewModel(
     }
 
     private fun extractDetails(account: ShareAccountWithAssociations) {
-        val isActive = account.status.active == true
-        val currencyCode = account.currency.code
-        val decimals = account.currency.decimalPlaces
+        val isActive = account.status?.active == true
+        val currencyCode = account.currency?.code
+        val decimals = account.currency?.decimalPlaces
 
-        val appDate = account.timeline.submittedOnDate?.let { DateHelper.getDateAsString(it) } ?: "-"
-        val actDate = account.timeline.activatedDate?.let { DateHelper.getDateAsString(it) } ?: "-"
+        val appDate = account.timeline?.submittedOnDate?.let { DateHelper.getDateAsString(it) } ?: "-"
+        val actDate = account.timeline?.activatedDate?.let { DateHelper.getDateAsString(it) } ?: "-"
 
-        // Main Grid Items
         val displayItems = listOf(
-            LabelValueItem(Res.string.feature_share_account_number, account.accountNo),
-            LabelValueItem(Res.string.feature_share_product_name, account.productName),
+            LabelValueItem(Res.string.feature_share_account_number, account.accountNo ?: "-"),
+            LabelValueItem(Res.string.feature_share_product_name, account.productName ?: "-"),
 
-            LabelValueItem(Res.string.feature_share_status, account.status.value ?: "-"),
-            LabelValueItem(Res.string.feature_share_currency, account.currency.displayLabel ?: currencyCode ?: ""),
+            LabelValueItem(Res.string.feature_share_status, account.status?.value ?: "-"),
+            LabelValueItem(
+                Res.string.feature_share_currency,
+                account.currency?.displayLabel ?: currencyCode ?: "",
+            ),
 
             LabelValueItem(
                 Res.string.feature_share_approved_shares,
-                account.summary.totalApprovedShares?.toString() ?: "0",
+                account.summary?.totalApprovedShares?.toString() ?: "0",
             ),
             LabelValueItem(
                 Res.string.feature_share_pending_shares,
-                account.summary.totalPendingForApprovalShares.toString(),
+                account.summary?.totalPendingForApprovalShares.toString(),
             ),
 
             LabelValueItem(
                 Res.string.feature_share_market_price,
                 CurrencyFormatter.format(
-                    account.currentMarketPrice,
+                    account.currentMarketPrice ?: 0.0,
                     currencyCode,
                     decimals,
                 ),
@@ -186,7 +189,7 @@ internal class ShareAccountDetailsViewModel(
 
         updateState {
             it.copy(
-                accountId = account.id,
+                accountId = account.id ?: 0L,
                 accountNumber = account.accountNo,
                 clientName = account.clientName,
                 isActive = isActive,

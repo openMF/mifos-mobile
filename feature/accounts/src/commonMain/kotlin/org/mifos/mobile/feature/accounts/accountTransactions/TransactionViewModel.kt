@@ -59,7 +59,7 @@ import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
-
+import org.mifos.mobile.core.model.entity.accounts.share.Transactions as ShareTransactions
 /**
  * ViewModel for managing the state and logic of the account transactions screen.
  *
@@ -386,8 +386,8 @@ internal class AccountsTransactionViewModel(
      * @param currency The currency object from the Share Account details.
      * @return A [UiTransaction] object ready for display.
      */
-    private fun org.mifos.mobile.core.model.entity.accounts.share.Transactions.toUiTransaction(
-        currency: Currency,
+    private fun ShareTransactions.toUiTransaction(
+        currency: Currency?,
     ) = UiTransaction(
         id = id,
         date = purchasedDate,
@@ -399,7 +399,7 @@ internal class AccountsTransactionViewModel(
             type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false // Red (Debit)
             else -> true // Green (Credit)
         },
-        currency = currency.code ?: "USD",
+        currency = currency?.code ?: "USD",
     )
 
     /**
