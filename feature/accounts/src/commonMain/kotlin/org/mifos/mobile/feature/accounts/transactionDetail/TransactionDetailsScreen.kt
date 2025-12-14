@@ -220,7 +220,7 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
             Icon(
                 imageVector = if (isCredit) MifosIcons.ArrowDropDown else MifosIcons.ArrowDropUp,
                 contentDescription = null,
-                tint = if (isCredit) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                tint = if (isCredit) AppColors.customEnable else AppColors.lightRed,
                 modifier = Modifier.size(46.dp),
             )
         }

@@ -285,6 +285,13 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         recentTransactionNavGraph(
             navController = navController,
+            navigateToDetails = { transactionId, accountType, accountId ->
+                navController.navigateToTransactionDetails(
+                    transactionId = transactionId,
+                    accountType = accountType,
+                    accountId = accountId,
+                )
+            },
         )
 
         beneficiaryNavGraph(

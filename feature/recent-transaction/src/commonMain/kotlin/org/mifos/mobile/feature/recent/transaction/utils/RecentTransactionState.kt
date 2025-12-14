@@ -72,10 +72,23 @@ sealed interface RecentTransactionAction {
     data class ApplyFilter(val account: SavingAccount, val type: TransactionFilterType) : RecentTransactionAction
     data object ClearFilter : RecentTransactionAction
 
+    data class OnTransactionClick(val transaction: Transactions) : RecentTransactionAction
+
     // Internal events for handling async operations
     sealed interface Internal : RecentTransactionAction {
         data class AccountsLoaded(val accounts: List<SavingAccount>) : Internal
         data class TransactionsLoaded(val items: List<Transactions>) : Internal
         data class LoadFailed(val error: Throwable?) : Internal
     }
+}
+
+/**
+ * Events sent from ViewModel to UI
+ */
+sealed interface RecentTransactionEvent {
+    data class NavigateToDetails(
+        val transactionId: String,
+        val accountType: String,
+        val accountId: Long,
+    ) : RecentTransactionEvent
 }

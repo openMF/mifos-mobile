@@ -11,12 +11,14 @@ package org.mifos.mobile.feature.recent.transaction.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
@@ -25,9 +27,12 @@ import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction.Internal
+import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionEvent
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState.ViewState
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
@@ -39,24 +44,27 @@ class RecentTransactionViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(
+    private val mutableUiState = MutableStateFlow(
         RecentTransactionUiState(viewState = ViewState.Loading),
     )
-    val uiState = _uiState.asStateFlow()
+    val uiState = mutableUiState.asStateFlow()
+
+    private val eventChannel = Channel<RecentTransactionEvent>()
+    val eventFlow = eventChannel.receiveAsFlow()
 
     private var originalTransactionList: List<Transactions> = emptyList()
 
     init {
         networkMonitor.isOnline
             .onEach { isOnline ->
-                _uiState.update { it.copy(isNetworkAvailable = isOnline) }
+                mutableUiState.update { it.copy(isNetworkAvailable = isOnline) }
             }
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
             userPreferencesRepository.clientId.collect { clientId ->
                 if (clientId != null) {
-                    _uiState.update { it.copy(clientId = clientId) }
+                    mutableUiState.update { it.copy(clientId = clientId) }
                     handleAction(RecentTransactionAction.LoadInitial)
                 }
             }
@@ -68,19 +76,19 @@ class RecentTransactionViewModel(
             is RecentTransactionAction.LoadInitial -> fetchAccounts()
             is RecentTransactionAction.Refresh -> loadTransactions(isRefreshing = true)
             is RecentTransactionAction.LoadMore -> {
-                if (_uiState.value.canPaginate && !_uiState.value.isPaginating) {
+                if (mutableUiState.value.canPaginate && !mutableUiState.value.isPaginating) {
                     loadTransactions(isPaginating = true)
                 }
             }
             is RecentTransactionAction.ToggleFilter -> {
-                _uiState.update { it.copy(showFilter = !it.showFilter) }
+                mutableUiState.update { it.copy(showFilter = !it.showFilter) }
             }
             is RecentTransactionAction.ApplyFilter -> {
-                val previousAccount = _uiState.value.selectedAccount
+                val previousAccount = mutableUiState.value.selectedAccount
                 val newAccount = action.account
                 val newType = action.type
 
-                _uiState.update {
+                mutableUiState.update {
                     it.copy(
                         selectedAccount = newAccount,
                         filterType = newType,
@@ -95,8 +103,8 @@ class RecentTransactionViewModel(
                 }
             }
             is RecentTransactionAction.ClearFilter -> {
-                val firstAccount = _uiState.value.accounts.firstOrNull()
-                _uiState.update {
+                val firstAccount = mutableUiState.value.accounts.firstOrNull()
+                mutableUiState.update {
                     it.copy(
                         selectedAccount = firstAccount,
                         filterType = TransactionFilterType.ALL,
@@ -107,7 +115,7 @@ class RecentTransactionViewModel(
             }
             is Internal.AccountsLoaded -> {
                 val defaultAccount = action.accounts.firstOrNull()
-                _uiState.update {
+                mutableUiState.update {
                     it.copy(
                         accounts = action.accounts,
                         selectedAccount = defaultAccount,
@@ -120,13 +128,38 @@ class RecentTransactionViewModel(
                 applyLocalFilters()
             }
             is Internal.LoadFailed -> handleLoadFailed(action)
+
+            is RecentTransactionAction.OnTransactionClick -> {
+                val transaction = action.transaction
+                val selectedAccount = mutableUiState.value.selectedAccount
+
+                if (transaction.id != null && selectedAccount?.id != null) {
+                    viewModelScope.launch {
+                        eventChannel.send(
+                            RecentTransactionEvent.NavigateToDetails(
+                                transactionId = transaction.id.toString(),
+                                accountType = determineAccountType(selectedAccount),
+                                accountId = selectedAccount.id,
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun determineAccountType(account: Any): String {
+        return when (account) {
+            is SavingAccount -> Constants.SAVINGS_ACCOUNT
+            is LoanAccount -> Constants.LOAN_ACCOUNT
+            else -> Constants.SAVINGS_ACCOUNT // Default fallback
         }
     }
 
     private fun fetchAccounts() {
         viewModelScope.launch {
             accountsRepositoryImpl.loadAccounts(
-                clientId = _uiState.value.clientId,
+                clientId = mutableUiState.value.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
             ).collect { dataState ->
                 if (dataState is DataState.Success) {
@@ -143,15 +176,15 @@ class RecentTransactionViewModel(
         isRefreshing: Boolean = false,
         isPaginating: Boolean = false,
     ) {
-        val currentState = _uiState.value
+        val currentState = mutableUiState.value
         val selectedAccount = currentState.selectedAccount
 
         if (selectedAccount == null) {
-            _uiState.update { it.copy(viewState = ViewState.Empty) }
+            mutableUiState.update { it.copy(viewState = ViewState.Empty) }
             return
         }
 
-        _uiState.update {
+        mutableUiState.update {
             it.copy(
                 isRefreshing = isRefreshing,
                 isPaginating = isPaginating,
@@ -166,7 +199,7 @@ class RecentTransactionViewModel(
             )
                 .catch { e -> handleAction(Internal.LoadFailed(e)) }
                 .onCompletion {
-                    _uiState.update { it.copy(isRefreshing = false, isPaginating = false) }
+                    mutableUiState.update { it.copy(isRefreshing = false, isPaginating = false) }
                 }
                 .collect { dataState ->
                     when (dataState) {
@@ -184,7 +217,7 @@ class RecentTransactionViewModel(
     }
 
     private fun applyLocalFilters() {
-        val currentType = _uiState.value.filterType
+        val currentType = mutableUiState.value.filterType
 
         val filteredList = if (currentType == TransactionFilterType.ALL) {
             originalTransactionList
@@ -195,7 +228,7 @@ class RecentTransactionViewModel(
             }
         }
 
-        _uiState.update {
+        mutableUiState.update {
             it.copy(
                 transactions = filteredList,
                 viewState = if (filteredList.isEmpty()) ViewState.Empty else ViewState.Content(filteredList),
@@ -205,7 +238,7 @@ class RecentTransactionViewModel(
     }
 
     private fun handleLoadFailed(action: Internal.LoadFailed) {
-        _uiState.update {
+        mutableUiState.update {
             it.copy(
                 isRefreshing = false,
                 viewState = ViewState.Error(action.error?.message),
