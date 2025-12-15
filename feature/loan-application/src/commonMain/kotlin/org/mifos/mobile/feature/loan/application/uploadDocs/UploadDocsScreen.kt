@@ -174,7 +174,7 @@ internal fun UploadDocsDialogs(
  * Displays the document upload sections and the Next button.
  *
  * @param state Current [UploadDocsState] of the screen.
-  * @param onAction Callback to handle user actions such as upload, navigate, or submit.
+ * @param onAction Callback to handle user actions such as upload, navigate, or submit.
  */
 @Composable
 internal fun UploadDocsScreenContent(
