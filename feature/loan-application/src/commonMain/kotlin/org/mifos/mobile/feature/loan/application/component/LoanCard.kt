@@ -120,7 +120,6 @@ fun LoanCard(
     }
 }
 
-
 @Preview
 @Composable
 fun LoanCardPreview() {

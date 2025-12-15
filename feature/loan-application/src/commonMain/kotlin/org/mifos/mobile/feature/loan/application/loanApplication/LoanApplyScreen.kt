@@ -67,7 +67,6 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-
 /**
  * Entry point for the Loan Application form.
  * Manages the form state, handles navigation events, and coordinates dialog interactions.

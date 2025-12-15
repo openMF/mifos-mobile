@@ -23,7 +23,6 @@ import org.mifos.mobile.core.ui.composableWithPushTransitions
 @Serializable
 data object UploadDocsRoute
 
-
 /**
  * Navigates to the document upload flow.
  */

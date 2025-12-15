@@ -40,7 +40,6 @@ fun NavController.navigateToLoanApplyScreen(
 ) =
     navigate(LoanApplyRoute(productId, productName), navOptions)
 
-
 /**
  * Registers the loan application screen in the navigation graph.
  *
