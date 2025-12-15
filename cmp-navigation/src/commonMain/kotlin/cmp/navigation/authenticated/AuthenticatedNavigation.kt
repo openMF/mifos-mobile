@@ -53,6 +53,7 @@ import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
+import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
 import org.mifos.mobile.feature.savings.application.navigation.navigateToSavingsApplicationGraph
 import org.mifos.mobile.feature.savings.application.navigation.savingsApplicationNavGraph
@@ -113,11 +114,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     is HomeNavigationDestination.Beneficiary ->
                         navController.navigateToBeneficiaryNavGraph()
 
-                    is HomeNavigationDestination.Transaction ->
-                        navController.navigateToAccountTransactionsScreen(
-                            Constants.RECENT_TRANSACTIONS,
-                            -1L,
-                        )
+                    is HomeNavigationDestination.TransactionHistory ->
+                        navController.navigateToRecentTransactionScreen()
 
                     is HomeNavigationDestination.ApplyLoan ->
                         navController.navigateToLoanApplicationGraph()

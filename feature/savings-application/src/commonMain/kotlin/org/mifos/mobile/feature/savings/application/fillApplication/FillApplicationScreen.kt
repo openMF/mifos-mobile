@@ -63,6 +63,17 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A stateful composable serving as the entry point for the "Fill Savings Application" screen.
+ *
+ * This function connects to the [SavingsFillApplicationViewModel] to observe state, handle UI
+ * events, and orchestrate navigation based on user actions and ViewModel commands.
+ *
+ * @param navigateBack A lambda to handle the back navigation event.
+ * @param navigateToStatusScreen A lambda to navigate to a generic status screen after an operation.
+ * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen for sensitive actions.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun SavingsFillApplicationScreen(
     navigateBack: () -> Unit,
@@ -106,6 +117,16 @@ internal fun SavingsFillApplicationScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [SavingsApplicationDialogState].
+ *
+ * This function handles the presentation of error dialogs and confirmation dialogs
+ * for unsaved changes.
+ *
+ * @param state The current [SavingsApplicationState] used for context like network status.
+ * @param dialogState The current state of the dialog to be displayed.
+ * @param onAction A callback to send actions (like dismiss or confirm) to the ViewModel.
+ */
 @Composable
 internal fun SavingsFillApplicationDialog(
     state: SavingsApplicationState,
@@ -135,6 +156,16 @@ internal fun SavingsFillApplicationDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Fill Savings Application" screen.
+ *
+ * It conditionally displays UI based on the [ScreenUiState] (e.g., loading, error, success).
+ * The success state includes a form with various input fields for the application details.
+ *
+ * @param state The current [SavingsApplicationState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SavingsFillApplicationContent(
     state: SavingsApplicationState,
