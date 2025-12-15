@@ -69,6 +69,14 @@ import org.mifos.mobile.feature.loan.application.component.LoanCard
 import org.mifos.mobile.feature.loan.application.component.TermsAndConditionItem
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
+/**
+ * Displays loan product details and terms before applying.
+ *
+ * @param navigateBack Navigates back to the previous screen.
+ * @param navigateToApplyLoanScreen Navigates to the loan application screen.
+ * @param modifier Modifier applied to the screen container.
+ * @param viewModel ViewModel managing loan product details state.
+ */
 @Composable
 internal fun LoanProductDetailsScreen(
     navigateBack: () -> Unit,
@@ -103,6 +111,12 @@ internal fun LoanProductDetailsScreen(
     )
 }
 
+/**
+ * Displays dialogs related to loan product details.
+ *
+ * @param state Current loan product details state.
+ * @param onAction Callback to handle dialog actions.
+ */
 @Composable
 internal fun LoanProductDetailsDialog(
     state: LoanProductDetailsState,
@@ -122,6 +136,13 @@ internal fun LoanProductDetailsDialog(
     }
 }
 
+/**
+ * UI content for the loan product details screen.
+ *
+ * @param state Current loan product details UI state.
+ * @param modifier Modifier applied to the content container.
+ * @param onAction Callback to handle user actions.
+ */
 @Composable
 internal fun LoanProductDetailsScreenContent(
     state: LoanProductDetailsState,

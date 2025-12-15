@@ -16,9 +16,18 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 import org.mifos.mobile.feature.loan.application.loanProductDescription.navigateToLoanProductDetailsScreen
 
+/**
+ * Navigation route for selecting a loan type.
+ */
 @Serializable
 data object SelectLoanTypeRoute
 
+/**
+ * Adds the select loan type destination to the navigation graph.
+ *
+ * @param navigateBack Handles back navigation.
+ * @param navigateToLoanProductDetailsScreen Navigates to loan product details screen.
+ */
 fun NavGraphBuilder.selectLoanTypeDestination(
     navigateBack: () -> Unit,
     navigateToLoanProductDetailsScreen: (Int, String) -> Unit,
@@ -31,5 +40,10 @@ fun NavGraphBuilder.selectLoanTypeDestination(
     }
 }
 
+/**
+ * Navigates to the select loan type screen.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToSelectLoanType(navOptions: NavOptions? = null) =
     navigate(SelectLoanTypeRoute, navOptions)

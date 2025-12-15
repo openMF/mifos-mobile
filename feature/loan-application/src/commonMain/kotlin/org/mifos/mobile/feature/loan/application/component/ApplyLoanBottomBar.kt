@@ -32,6 +32,18 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.onClick
 
+/**
+* A Composable that displays the bottom bar for the loan application screen.
+*
+* It contains a checkbox for agreeing to the terms and conditions and an "Apply" button
+* for submitting the application.
+*
+* @param checked The current state of the terms and conditions checkbox.
+* @param androidx.compose.ui.test.isEnabled Controls the enabled state of the "Apply" button.
+* @param onCheckedChange A callback lambda that is invoked when the user interacts with the
+*   checkbox or its associated text.
+* @param onApplyClick A callback lambda to be executed when the "Apply" button is clicked.
+*/
 @Composable
 fun ApplyLoanBottomBar(
     checked: Boolean,

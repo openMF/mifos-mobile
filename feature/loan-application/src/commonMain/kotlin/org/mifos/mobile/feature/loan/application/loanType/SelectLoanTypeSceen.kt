@@ -44,6 +44,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Screen for selecting a loan type.
+ *
+ * @param navigateBack Navigates back to the previous screen.
+ * @param navigateToLoanProductDetailsScreen Navigates to loan product details screen.
+ * @param modifier Modifier applied to the screen container.
+ * @param viewModel ViewModel managing loan type state.
+ */
 @Composable
 internal fun SelectLoanTypeScreen(
     navigateBack: () -> Unit,
@@ -77,6 +85,12 @@ internal fun SelectLoanTypeScreen(
     )
 }
 
+/**
+ * Displays dialogs related to loan type selection.
+ *
+ * @param state Current select loan type state.
+ * @param onAction Callback to handle dialog actions.
+ */
 @Composable
 internal fun SelectLoanTypeDialog(
     state: SelectLoanTypeState,
@@ -96,6 +110,13 @@ internal fun SelectLoanTypeDialog(
     }
 }
 
+/**
+ * UI content for the select loan type screen.
+ *
+ * @param state Current select loan type UI state.
+ * @param modifier Modifier applied to the content container.
+ * @param onAction Callback to handle user actions.
+ */
 @Composable
 internal fun SelectLoanTypeScreenContent(
     state: SelectLoanTypeState,

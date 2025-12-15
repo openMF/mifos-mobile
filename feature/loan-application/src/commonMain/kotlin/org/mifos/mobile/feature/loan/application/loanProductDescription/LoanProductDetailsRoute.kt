@@ -14,12 +14,24 @@ import androidx.navigation.NavGraphBuilder
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * Navigation route for the loan product details screen.
+ *
+ * @param productId Selected loan product ID.
+ * @param productName Selected loan product name.
+ */
 @Serializable
 data class LoanProductDetailsRoute(
     val productId: Int,
     val productName: String,
 )
 
+/**
+ * Navigates to the loan product details screen.
+ *
+ * @param productId Selected loan product ID.
+ * @param productName Selected loan product name.
+ */
 fun NavController.navigateToLoanProductDetailsScreen(
     productId: Int,
     productName: String,
@@ -27,6 +39,12 @@ fun NavController.navigateToLoanProductDetailsScreen(
     this.navigate(LoanProductDetailsRoute(productId, productName))
 }
 
+/**
+ * Adds the loan product details destination to the navigation graph.
+ *
+ * @param navigateBack Handles back navigation.
+ * @param navigateToApplyLoanScreen Navigates to loan application screen.
+ */
 fun NavGraphBuilder.loanProductDetailsDestination(
     navigateBack: () -> Unit,
     navigateToApplyLoanScreen: (productId: Int?, productName: String) -> Unit,

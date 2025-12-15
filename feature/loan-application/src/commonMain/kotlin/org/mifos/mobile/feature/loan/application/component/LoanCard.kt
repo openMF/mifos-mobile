@@ -39,6 +39,15 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
+/**
+ * A card that displays loan information with a background image.
+ *
+ * @param cardImage The background image for the card.
+ * @param title The title of the loan.
+ * @param amount The loan amount.
+ * @param interestRate The interest rate for the loan.
+ * @param onClick A lambda function to be executed when the card is clicked.
+ */
 @Composable
 fun LoanCard(
     cardImage: DrawableResource,
@@ -124,6 +133,17 @@ fun LoanCardPreview() {
     )
 }
 
+/**
+ * A customizable card for displaying loan details.
+ *
+ * @param cardImage The image to display at the top of the card.
+ * @param title The title of the loan.
+ * @param amount The loan amount.
+ * @param interestRate The interest rate for the loan.
+ * @param backgroundColor The background color of the card's content section.
+ * @param contentColor The color of the text content.
+ * @param onClick A lambda function to be executed when the card is clicked.
+ */
 @Composable
 fun LoanCardCustom(
     cardImage: DrawableResource,

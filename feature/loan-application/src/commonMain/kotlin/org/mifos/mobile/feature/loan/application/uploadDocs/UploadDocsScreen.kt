@@ -52,6 +52,14 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.loan.application.component.UploadDocumentsSection
 import org.mifos.mobile.feature.loan.application.uploadDocs.component.BottomSheetContent
 
+/**
+ * Screen for uploading required documents in the loan application flow.
+ *
+ * @param navigateBack Callback triggered when user navigates back.
+ * @param navigateToNext Callback triggered when user proceeds to the next step.
+ * @param navigateToPreviewDoc Callback triggered to preview uploaded documents.
+ * @param viewModel The [UploadDocsViewModel] providing state and events for this screen.
+ */
 @Composable
 internal fun UploadDocsScreen(
     navigateBack: () -> Unit,
@@ -86,6 +94,13 @@ internal fun UploadDocsScreen(
     )
 }
 
+/**
+ * Handles and displays dialogs for the Upload Documents screen, including errors
+ * and signature picker.
+ *
+ * @param dialogState Current dialog state to display.
+ * @param onAction Callback to handle actions triggered from dialogs.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UploadDocsDialogs(
@@ -153,6 +168,14 @@ internal fun UploadDocsDialogs(
     }
 }
 
+/**
+ * Content of the Upload Documents screen.
+ *
+ * Displays the document upload sections and the Next button.
+ *
+ * @param state Current [UploadDocsState] of the screen.
+  * @param onAction Callback to handle user actions such as upload, navigate, or submit.
+ */
 @Composable
 internal fun UploadDocsScreenContent(
     state: UploadDocsState,

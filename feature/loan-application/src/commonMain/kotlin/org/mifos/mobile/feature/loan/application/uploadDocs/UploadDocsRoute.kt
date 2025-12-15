@@ -17,13 +17,28 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithPushTransitions
 
+/**
+ * Navigation route for the Upload Documents screen.
+ */
 @Serializable
 data object UploadDocsRoute
 
+/**
+ * Navigates to the Upload Documents screen.
+ *
+ * @param navOptions Optional [NavOptions] to configure navigation behavior.
+ */
 fun NavController.navigateToUploadDocsScreen(navOptions: NavOptions? = null) {
     this.navigate(route = UploadDocsRoute, navOptions = navOptions)
 }
 
+/**
+ * Adds the Upload Documents destination to the navigation graph.
+ *
+ * @param navigateBack Callback invoked when user requests to navigate back.
+ * @param navigateToNext Callback invoked to proceed to the next screen in the flow.
+ * @param navigateToPreviewDoc Callback invoked to preview uploaded documents.
+ */
 fun NavGraphBuilder.uploadDocsDestination(
     navigateBack: () -> Unit,
     navigateToNext: () -> Unit,

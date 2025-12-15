@@ -44,6 +44,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Confirm details screen for reviewing loan information before submission.
+ *
+ * @param navigateBack Navigates back to the previous screen.
+ * @param navigateToStatusScreen Navigates to the loan status screen.
+ * @param navigateToAuthenticateScreen Navigates to authentication flow.
+ * @param viewModel ViewModel managing confirm details state and actions.
+ */
 @Composable
 internal fun ConfirmDetailsScreen(
     navigateBack: () -> Unit,
@@ -85,6 +93,12 @@ internal fun ConfirmDetailsScreen(
     )
 }
 
+/**
+ * Displays dialogs related to confirm details actions.
+ *
+ * @param dialogState Current dialog state.
+ * @param onAction Callback to handle dialog actions.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ConfirmDetailsDialog(
@@ -105,6 +119,13 @@ internal fun ConfirmDetailsDialog(
     }
 }
 
+/**
+ * UI content for the confirm details screen.
+ *
+ * @param state Current confirm details UI state.
+ * @param onAction Callback to handle user actions.
+ * @param modifier Modifier applied to the content container.
+ */
 @Composable
 internal fun ConfirmDetailsScreenContent(
     state: ConfirmDetailsState,

@@ -21,6 +21,12 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsState
 
+/**
+ * Displays the document upload section for a loan application.
+ *
+ * @param state Current upload documents state.
+ * @param onAction Callback to handle user actions.
+ */
 @Composable
 internal fun UploadDocumentsSection(
     state: UploadDocsState,

@@ -15,6 +15,16 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * Navigation route for the confirm loan details screen.
+ *
+ * @param loanProductId Selected loan product ID.
+ * @param applicantName Name of the applicant.
+ * @param loanProductName Name of the loan product.
+ * @param loanPurpose Purpose of the loan.
+ * @param disbursementDate Selected disbursement date.
+ * @param principalAmount Loan principal amount.
+ */
 @Serializable
 data class ConfirmDetailsRoute(
     val loanProductId: Long,
@@ -25,6 +35,17 @@ data class ConfirmDetailsRoute(
     val principalAmount: String,
 )
 
+/**
+ * Navigates to the confirm details screen.
+ *
+ * @param loanProductId Selected loan product ID.
+ * @param applicantName Name of the applicant.
+ * @param loanProductName Name of the loan product.
+ * @param loanPurpose Purpose of the loan.
+ * @param disbursementDate Selected disbursement date.
+ * @param principalAmount Loan principal amount.
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToConfirmDetailsScreen(
     loanProductId: Long,
     applicantName: String,
@@ -46,6 +67,13 @@ fun NavController.navigateToConfirmDetailsScreen(
         navOptions,
     )
 
+/**
+ * Adds the confirm details destination to the navigation graph.
+ *
+ * @param navigateToAuthenticateScreen Navigates to authentication screen.
+ * @param navigateToStatusScreen Navigates to loan status screen.
+ * @param navigateBack Handles back navigation.
+ */
 fun NavGraphBuilder.confirmDetailsDestination(
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,

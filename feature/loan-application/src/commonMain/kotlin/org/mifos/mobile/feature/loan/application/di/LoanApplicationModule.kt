@@ -17,6 +17,9 @@ import org.mifos.mobile.feature.loan.application.loanProductDescription.LoanProd
 import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeViewModel
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsViewModel
 
+/**
+ * Koin module providing dependencies for the loan application feature.
+ */
 val loanApplicationModule = module {
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)

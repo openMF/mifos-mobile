@@ -30,6 +30,12 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import kotlin.collections.component1
 import kotlin.collections.component2
 
+/**
+ * A card that displays a map of key-value pairs.
+ *
+ * @param keyValuePairs A map where keys are [StringResource] labels and
+ *   values are the strings to display.
+ */
 @Composable
 fun ConfirmDetailsCard(
     keyValuePairs: Map<StringResource, String>,

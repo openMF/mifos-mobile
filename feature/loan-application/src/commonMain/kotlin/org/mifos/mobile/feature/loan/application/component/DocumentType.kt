@@ -9,8 +9,22 @@
  */
 package org.mifos.mobile.feature.loan.application.component
 
+/**
+ * Represents the types of documents that can be uploaded as part of a loan application.
+ */
 enum class DocumentType {
+    /**
+     * A financial document showing account activity.
+     */
     BANK_STATEMENT,
+
+    /**
+     * A legal document proving ownership of a property.
+     */
     PROPERTY_DOCUMENT,
+
+    /**
+     * A handwritten depiction of a person's name for verification.
+     */
     SIGNATURE,
 }

@@ -24,13 +24,28 @@ import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeRoute
 import org.mifos.mobile.feature.loan.application.loanType.selectLoanTypeDestination
 import org.mifos.mobile.feature.loan.application.uploadDocs.uploadDocsDestination
 
+/**
+ * Root navigation graph for the loan application flow.
+ */
 @Serializable
 data object LoanApplicationNavGraph
 
+/**
+ * Navigates to the loan application navigation graph.
+ *
+ * @param navOptions Optional navigation options.
+ */
 fun NavController.navigateToLoanApplicationGraph(navOptions: NavOptions? = null) {
     this.navigate(LoanApplicationNavGraph, navOptions)
 }
 
+/**
+ * Defines the loan application navigation graph and destinations.
+ *
+ * @param navController NavController used for navigation actions.
+ * @param navigateToAuthenticateScreen Navigates to authentication flow.
+ * @param navigateToStatusScreen Navigates to loan status screen.
+ */
 fun NavGraphBuilder.loanApplicationNavGraph(
     navController: NavController,
     navigateToAuthenticateScreen: () -> Unit,

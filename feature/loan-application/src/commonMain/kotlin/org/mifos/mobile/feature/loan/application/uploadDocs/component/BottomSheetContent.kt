@@ -73,6 +73,13 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.feature.loan.application.component.SignatureUploadType
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
 
+/**
+ * Composable displaying the bottom sheet content for uploading documents or signatures.
+ *
+ * @param onAction Callback to handle user actions such as uploading a signature, capturing
+ * or attaching a file, or dismissing the dialog.
+ * @param isSignatureMode Whether to show the signature capture interface. Defaults to false.
+ */
 @Composable
 internal fun BottomSheetContent(
     onAction: (UploadDocsAction) -> Unit,
@@ -134,6 +141,13 @@ internal fun BottomSheetContent(
     }
 }
 
+/**
+ * Composable showing a clickable icon with label for the bottom sheet.
+ *
+ * @param text The label text displayed below the icon.
+ * @param icon The icon to show inside the container.
+ * @param onClick Callback invoked when the icon is clicked.
+ */
 @Composable
 internal fun BottomSheetIconContainer(
     text: StringResource,
@@ -172,6 +186,11 @@ internal fun BottomSheetIconContainer(
     }
 }
 
+/**
+ * Composable displaying the signature capture interface.
+ *
+ * @param onAction Callback to handle actions like saving, submitting, or dismissing the signature.
+ */
 @Composable
 private fun SignatureContent(
     modifier: Modifier = Modifier,

@@ -67,6 +67,13 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/**
+ * Loan application screen for entering and submitting loan details.
+ *
+ * @param navigateBack Navigates back to the previous screen.
+ * @param navigateToConfirmDetailsScreen Navigates to the confirm details screen.
+ * @param viewModel ViewModel managing loan application state and actions.
+ */
 @Composable
 internal fun LoanApplyScreen(
     navigateBack: () -> Unit,
@@ -107,6 +114,12 @@ internal fun LoanApplyScreen(
     )
 }
 
+/**
+ * Displays dialogs related to loan application actions.
+ *
+ * @param dialogState Current dialog state.
+ * @param onAction Callback to handle dialog actions.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDialog(
@@ -137,6 +150,13 @@ internal fun LoanAccountDialog(
     }
 }
 
+/**
+ * UI content for the loan application form.
+ *
+ * @param state Current loan application UI state.
+ * @param onAction Callback to handle user actions.
+ * @param modifier Modifier applied to the content container.
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 internal fun LoanAccountContent(
