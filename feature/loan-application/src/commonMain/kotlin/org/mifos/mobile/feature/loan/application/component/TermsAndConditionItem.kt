@@ -21,6 +21,12 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
+/**
+ * Displays a single terms and conditions entry with a highlighted title and body text.
+ *
+ * @param title The resource ID for the term's heading.
+ * @param description The resource ID for the detailed explanation of the term.
+ */
 @Composable
 fun TermsAndConditionItem(
     title: StringResource,

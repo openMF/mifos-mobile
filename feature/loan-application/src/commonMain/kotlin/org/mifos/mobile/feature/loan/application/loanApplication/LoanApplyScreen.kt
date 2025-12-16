@@ -67,6 +67,15 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/**
+ * Entry point for the Loan Application form.
+ * Manages the form state, handles navigation events, and coordinates dialog interactions.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToConfirmDetailsScreen Callback to proceed to the confirmation
+ * page with valid form data.
+ * @param viewModel The state holder managing form validation and business logic.
+ */
 @Composable
 internal fun LoanApplyScreen(
     navigateBack: () -> Unit,
@@ -107,6 +116,12 @@ internal fun LoanApplyScreen(
     )
 }
 
+/**
+ * Renders modal dialogs for critical interruptions, such as error alerts or unsaved changes warnings.
+ *
+ * @param dialogState The current dialog type to display (Error or UnsavedChanges).
+ * @param onAction Callback to handle dialog responses (e.g., dismiss, confirm navigation).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDialog(
@@ -137,6 +152,13 @@ internal fun LoanAccountDialog(
     }
 }
 
+/**
+ * Displays the input fields for the loan application, including name, purpose, and disbursement date.
+ * Handles the date picker visibility and input validation feedback.
+ *
+ * @param state The current UI state containing field values, errors, and list options.
+ * @param onAction Callback for user interactions (text input, date selection, submission).
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 internal fun LoanAccountContent(
