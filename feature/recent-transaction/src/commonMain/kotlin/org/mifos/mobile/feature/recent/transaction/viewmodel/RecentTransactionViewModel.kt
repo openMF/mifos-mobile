@@ -27,8 +27,6 @@ import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction.Internal
@@ -44,10 +42,10 @@ class RecentTransactionViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
-    private val mutableUiState = MutableStateFlow(
+    private val _uiState = MutableStateFlow(
         RecentTransactionUiState(viewState = ViewState.Loading),
     )
-    val uiState = mutableUiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     private val eventChannel = Channel<RecentTransactionEvent>()
     val eventFlow = eventChannel.receiveAsFlow()
@@ -57,14 +55,14 @@ class RecentTransactionViewModel(
     init {
         networkMonitor.isOnline
             .onEach { isOnline ->
-                mutableUiState.update { it.copy(isNetworkAvailable = isOnline) }
+                _uiState.update { it.copy(isNetworkAvailable = isOnline) }
             }
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
             userPreferencesRepository.clientId.collect { clientId ->
                 if (clientId != null) {
-                    mutableUiState.update { it.copy(clientId = clientId) }
+                    _uiState.update { it.copy(clientId = clientId) }
                     handleAction(RecentTransactionAction.LoadInitial)
                 }
             }
@@ -76,19 +74,19 @@ class RecentTransactionViewModel(
             is RecentTransactionAction.LoadInitial -> fetchAccounts()
             is RecentTransactionAction.Refresh -> loadTransactions(isRefreshing = true)
             is RecentTransactionAction.LoadMore -> {
-                if (mutableUiState.value.canPaginate && !mutableUiState.value.isPaginating) {
+                if (_uiState.value.canPaginate && !_uiState.value.isPaginating) {
                     loadTransactions(isPaginating = true)
                 }
             }
             is RecentTransactionAction.ToggleFilter -> {
-                mutableUiState.update { it.copy(showFilter = !it.showFilter) }
+                _uiState.update { it.copy(showFilter = !it.showFilter) }
             }
             is RecentTransactionAction.ApplyFilter -> {
-                val previousAccount = mutableUiState.value.selectedAccount
+                val previousAccount = _uiState.value.selectedAccount
                 val newAccount = action.account
                 val newType = action.type
 
-                mutableUiState.update {
+                _uiState.update {
                     it.copy(
                         selectedAccount = newAccount,
                         filterType = newType,
@@ -103,8 +101,8 @@ class RecentTransactionViewModel(
                 }
             }
             is RecentTransactionAction.ClearFilter -> {
-                val firstAccount = mutableUiState.value.accounts.firstOrNull()
-                mutableUiState.update {
+                val firstAccount = _uiState.value.accounts.firstOrNull()
+                _uiState.update {
                     it.copy(
                         selectedAccount = firstAccount,
                         filterType = TransactionFilterType.ALL,
@@ -115,7 +113,7 @@ class RecentTransactionViewModel(
             }
             is Internal.AccountsLoaded -> {
                 val defaultAccount = action.accounts.firstOrNull()
-                mutableUiState.update {
+                _uiState.update {
                     it.copy(
                         accounts = action.accounts,
                         selectedAccount = defaultAccount,
@@ -131,14 +129,14 @@ class RecentTransactionViewModel(
 
             is RecentTransactionAction.OnTransactionClick -> {
                 val transaction = action.transaction
-                val selectedAccount = mutableUiState.value.selectedAccount
+                val selectedAccount = _uiState.value.selectedAccount
 
                 if (transaction.id != null && selectedAccount?.id != null) {
                     viewModelScope.launch {
                         eventChannel.send(
                             RecentTransactionEvent.NavigateToDetails(
                                 transactionId = transaction.id.toString(),
-                                accountType = determineAccountType(selectedAccount),
+                                accountType = Constants.SAVINGS_ACCOUNT,
                                 accountId = selectedAccount.id,
                             ),
                         )
@@ -148,18 +146,10 @@ class RecentTransactionViewModel(
         }
     }
 
-    private fun determineAccountType(account: Any): String {
-        return when (account) {
-            is SavingAccount -> Constants.SAVINGS_ACCOUNT
-            is LoanAccount -> Constants.LOAN_ACCOUNT
-            else -> Constants.SAVINGS_ACCOUNT // Default fallback
-        }
-    }
-
     private fun fetchAccounts() {
         viewModelScope.launch {
             accountsRepositoryImpl.loadAccounts(
-                clientId = mutableUiState.value.clientId,
+                clientId = _uiState.value.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
             ).collect { dataState ->
                 if (dataState is DataState.Success) {
@@ -176,15 +166,15 @@ class RecentTransactionViewModel(
         isRefreshing: Boolean = false,
         isPaginating: Boolean = false,
     ) {
-        val currentState = mutableUiState.value
+        val currentState = _uiState.value
         val selectedAccount = currentState.selectedAccount
 
         if (selectedAccount == null) {
-            mutableUiState.update { it.copy(viewState = ViewState.Empty) }
+            _uiState.update { it.copy(viewState = ViewState.Empty) }
             return
         }
 
-        mutableUiState.update {
+        _uiState.update {
             it.copy(
                 isRefreshing = isRefreshing,
                 isPaginating = isPaginating,
@@ -199,7 +189,7 @@ class RecentTransactionViewModel(
             )
                 .catch { e -> handleAction(Internal.LoadFailed(e)) }
                 .onCompletion {
-                    mutableUiState.update { it.copy(isRefreshing = false, isPaginating = false) }
+                    _uiState.update { it.copy(isRefreshing = false, isPaginating = false) }
                 }
                 .collect { dataState ->
                     when (dataState) {
@@ -217,7 +207,7 @@ class RecentTransactionViewModel(
     }
 
     private fun applyLocalFilters() {
-        val currentType = mutableUiState.value.filterType
+        val currentType = _uiState.value.filterType
 
         val filteredList = if (currentType == TransactionFilterType.ALL) {
             originalTransactionList
@@ -228,7 +218,7 @@ class RecentTransactionViewModel(
             }
         }
 
-        mutableUiState.update {
+        _uiState.update {
             it.copy(
                 transactions = filteredList,
                 viewState = if (filteredList.isEmpty()) ViewState.Empty else ViewState.Content(filteredList),
@@ -238,7 +228,7 @@ class RecentTransactionViewModel(
     }
 
     private fun handleLoadFailed(action: Internal.LoadFailed) {
-        mutableUiState.update {
+        _uiState.update {
             it.copy(
                 isRefreshing = false,
                 viewState = ViewState.Error(action.error?.message),

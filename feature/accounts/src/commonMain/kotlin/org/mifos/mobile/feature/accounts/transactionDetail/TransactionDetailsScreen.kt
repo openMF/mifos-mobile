@@ -334,8 +334,8 @@ fun DetailItem(
 
 @DevicePreview
 @Composable
-@Suppress("UnusedPrivateMember")
-private fun TransactionDetailContentPreview() {
+@Suppress("UnusedMember")
+fun TransactionDetailContentPreview() {
     val sampleTransaction = UiTransactionDetails(
         id = 12345L,
         date = listOf(2025, 12, 13),
