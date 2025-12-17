@@ -9,6 +9,9 @@
  */
 package org.mifos.mobile.feature.loan.application.component
 
+/**
+* Represents the specific categories of documents required for a loan application.
+*/
 enum class DocumentType {
     BANK_STATEMENT,
     PROPERTY_DOCUMENT,
