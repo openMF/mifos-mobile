@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.model.entity
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.client.Type
@@ -23,7 +22,6 @@ data class TransactionDetails(
 
     val officeName: String? = null,
 
-    @OptIn(ExperimentalSerializationApi::class)
     @SerialName("transactionType")
     val type: Type? = null,
 

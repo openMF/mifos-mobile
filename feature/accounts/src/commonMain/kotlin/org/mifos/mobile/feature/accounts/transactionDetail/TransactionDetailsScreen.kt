@@ -132,7 +132,6 @@ fun TransactionDetailContent(
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-        // 2. Details Section
         Column(
             modifier = Modifier
                 .fillMaxWidth()
