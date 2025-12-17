@@ -10,8 +10,6 @@
 package org.mifos.mobile.core.model.entity.client
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
@@ -22,7 +20,7 @@ data class ClientAccounts(
     val savingsAccounts: List<SavingAccount>? = emptyList(),
     val shareAccounts: List<ShareAccount> = emptyList(),
 
-){
+) {
 
     fun recurringSavingsAccounts(): List<SavingAccount> {
         return getSavingsAccounts(true)

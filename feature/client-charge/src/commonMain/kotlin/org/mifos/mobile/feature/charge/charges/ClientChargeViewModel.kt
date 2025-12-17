@@ -19,10 +19,10 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.charges
 import mifos_mobile.feature.client_charge.generated.resources.client_charges
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charge_share_charges
 import mifos_mobile.feature.client_charge.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
-import mifos_mobile.feature.client_charge.generated.resources.feature_client_charge_share_charges
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
