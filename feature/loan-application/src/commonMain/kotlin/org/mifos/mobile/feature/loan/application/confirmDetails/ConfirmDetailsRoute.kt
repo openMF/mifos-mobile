@@ -15,6 +15,16 @@ import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
+/**
+ * Defines the type-safe route arguments required to display the loan confirmation details.
+ *
+ * @param loanProductId The unique identifier for the selected loan product.
+ * @param applicantName The name of the applicant.
+ * @param loanProductName The display name of the loan product.
+ * @param loanPurpose The stated purpose for the loan.
+ * @param disbursementDate The scheduled date for funds disbursement.
+ * @param principalAmount The requested loan amount.
+ */
 @Serializable
 data class ConfirmDetailsRoute(
     val loanProductId: Long,
@@ -25,6 +35,16 @@ data class ConfirmDetailsRoute(
     val principalAmount: String,
 )
 
+/**
+ * Navigates to the Confirm Details screen with the specified application data.
+ *
+ * @param loanProductId The unique identifier for the selected loan product.
+ * @param applicantName The name of the applicant.
+ * @param loanProductName The display name of the loan product.
+ * @param loanPurpose The stated purpose for the loan.
+ * @param disbursementDate The scheduled date for funds disbursement.
+ * @param principalAmount The requested loan amount.
+ */
 fun NavController.navigateToConfirmDetailsScreen(
     loanProductId: Long,
     applicantName: String,
@@ -46,6 +66,13 @@ fun NavController.navigateToConfirmDetailsScreen(
         navOptions,
     )
 
+/**
+ * Registers the Confirm Details screen in the navigation graph.
+ *
+ * @param navigateToAuthenticateScreen Callback to proceed to authentication (e.g., PIN/Biometric).
+ * @param navigateToStatusScreen Callback to show the final success/failure status after confirmation.
+ * @param navigateBack Callback to return to the previous screen.
+ */
 fun NavGraphBuilder.confirmDetailsDestination(
     navigateToAuthenticateScreen: () -> Unit,
     navigateToStatusScreen: (String, String, String, String, String) -> Unit,

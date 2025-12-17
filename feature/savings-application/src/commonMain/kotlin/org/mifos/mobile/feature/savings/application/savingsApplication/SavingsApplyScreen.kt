@@ -51,6 +51,18 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * A stateful composable that serves as the entry point for the "Apply for Savings" screen.
+ *
+ * This function connects to the [SavingsApplyViewModel] to observe UI state and handle
+ * one-time events. It is responsible for orchestrating navigation to the next step
+ * in the application process.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToFillDetailsScreen A lambda to navigate to the detailed application form,
+ *   passing product and officer information.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun SavingsApplyScreen(
     navigateBack: () -> Unit,
@@ -87,6 +99,15 @@ internal fun SavingsApplyScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [SavingsApplicationDialogState].
+ *
+ * This function handles the presentation of error dialogs and confirmation dialogs
+ * for unsaved changes.
+ *
+ * @param dialogState The current state of the dialog to be displayed.
+ * @param onAction A callback to send actions (like dismiss or confirm) to the ViewModel.
+ */
 @Composable
 internal fun SavingsAccountDialog(
     dialogState: SavingsApplicationDialogState?,
@@ -114,6 +135,16 @@ internal fun SavingsAccountDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Apply for Savings" screen.
+ *
+ * It conditionally displays UI based on the [ScreenUiState] (e.g., loading, error, success).
+ * The success state includes dropdowns for selecting a savings product and a field officer.
+ *
+ * @param state The current [SavingsApplicationState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SavingsAccountContent(
     state: SavingsApplicationState,

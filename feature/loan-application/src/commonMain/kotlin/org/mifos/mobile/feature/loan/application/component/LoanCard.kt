@@ -39,6 +39,15 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
+/**
+ * A compact loan summary card displaying an image background with overlay text.
+ *
+ * @param cardImage The background image resource for the card.
+ * @param title The loan product title (e.g., "Home Loan").
+ * @param amount The formatted loan amount string.
+ * @param interestRate The interest rate string to display.
+ * @param onClick Optional callback invoked when the card is clicked.
+ */
 @Composable
 fun LoanCard(
     cardImage: DrawableResource,
@@ -124,6 +133,17 @@ fun LoanCardPreview() {
     )
 }
 
+/**
+ * An expanded loan card featuring a top-section image followed by a colored content area.
+ *
+ * @param cardImage The hero image displayed at the top of the card.
+ * @param title The loan product title.
+ * @param amount The formatted loan amount string.
+ * @param interestRate The interest rate string.
+ * @param backgroundColor The background color for the text content area.
+ * @param contentColor The color used for text elements.
+ * @param onClick Optional callback invoked when the card is clicked.
+ */
 @Composable
 fun LoanCardCustom(
     cardImage: DrawableResource,

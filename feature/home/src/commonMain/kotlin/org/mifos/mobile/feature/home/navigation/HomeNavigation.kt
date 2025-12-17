@@ -25,12 +25,11 @@ fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
     navigate(HomeRoute, navOptions)
 
 sealed class HomeNavigationDestination {
-    // Add more as needed
     object Notification : HomeNavigationDestination()
     object Charge : HomeNavigationDestination()
     object Faq : HomeNavigationDestination()
     object Beneficiary : HomeNavigationDestination()
-    object Transaction : HomeNavigationDestination()
+    object TransactionHistory : HomeNavigationDestination()
     object ApplyLoan : HomeNavigationDestination()
     object ApplySavings : HomeNavigationDestination()
     object ApplyShare : HomeNavigationDestination()
