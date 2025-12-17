@@ -22,7 +22,7 @@ import mifos_mobile.feature.client_charge.generated.resources.client_charges
 import mifos_mobile.feature.client_charge.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
-import mifos_mobile.feature.client_charge.generated.resources.share_charges
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charge_share_charges
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
@@ -62,7 +62,7 @@ internal class ClientChargeViewModel(
             ChargeType.CLIENT -> Res.string.client_charges
             ChargeType.SAVINGS -> Res.string.savings_charges
             ChargeType.LOAN -> Res.string.loan_charges
-            ChargeType.SHARE -> Res.string.share_charges
+            ChargeType.SHARE -> Res.string.feature_client_charge_share_charges
         }
 
         ClientChargeState(

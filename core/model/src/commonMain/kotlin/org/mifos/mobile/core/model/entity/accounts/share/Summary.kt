@@ -10,11 +10,8 @@
 package org.mifos.mobile.core.model.entity.accounts.share
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 
 @Serializable
-@Parcelize
 data class Summary(
     val id: Long? = null,
     val accountNo: String? = null,
@@ -25,4 +22,4 @@ data class Summary(
     val timeline: Timeline? = null,
     val totalApprovedShares: Int? = null,
     val totalPendingForApprovalShares: Int? = null,
-) : Parcelable
+)

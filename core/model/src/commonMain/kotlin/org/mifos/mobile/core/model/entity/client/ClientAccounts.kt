@@ -17,13 +17,12 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 
 @Serializable
-@Parcelize
 data class ClientAccounts(
     val loanAccounts: List<LoanAccount> = emptyList(),
     val savingsAccounts: List<SavingAccount>? = emptyList(),
     val shareAccounts: List<ShareAccount> = emptyList(),
 
-) : Parcelable {
+){
 
     fun recurringSavingsAccounts(): List<SavingAccount> {
         return getSavingsAccounts(true)

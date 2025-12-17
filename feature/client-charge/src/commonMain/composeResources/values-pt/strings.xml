@@ -20,7 +20,7 @@
     <string name="amount_outstanding">Em aberto:</string>
     <string name="amount_waived">Dispensado:</string>
     <string name="amount_paid">Pago:</string>
-    <string name="share_charges">Encargos de Ações</string>
+    <string name="feature_client_charge_share_charges">Encargos de Ações</string>
 
     <string name="charge_details">Detalhes da Taxa</string>
     <string name="paid_success_message">Você pagou esta taxa completamente com sucesso</string>

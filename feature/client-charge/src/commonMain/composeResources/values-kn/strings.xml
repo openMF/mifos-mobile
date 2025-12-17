@@ -20,7 +20,7 @@
     <string name="amount_outstanding">ಬಾಕಿ ಇರುವ:</string>
     <string name="amount_waived">ತೊಡಗಿಸಲಾದ:</string>
     <string name="amount_paid">ಪಾವತಿಸಲಾದ:</string>
-    <string name="share_charges">ಷೇರು ಶುಲ್ಕಗಳು</string>
+    <string name="feature_client_charge_share_charges">ಷೇರು ಶುಲ್ಕಗಳು</string>
 
     <string name="charge_details">ಶುಲ್ಕ ವಿವರಗಳು</string>
     <string name="paid_success_message">ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಂಪೂರ್ಣವಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ</string>

@@ -20,7 +20,7 @@
     <string name="amount_outstanding">Tunggakan:</string>
     <string name="amount_waived">Dihapus:</string>
     <string name="amount_paid">Dibayar:</string>
-    <string name="share_charges">Biaya Saham</string>
+    <string name="feature_client_charge_share_charges">Biaya Saham</string>
 
     <string name="charge_details">Detail Biaya</string>
     <string name="paid_success_message">Anda telah berhasil membayar biaya ini sepenuhnya</string>

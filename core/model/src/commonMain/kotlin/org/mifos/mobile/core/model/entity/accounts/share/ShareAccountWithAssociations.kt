@@ -10,12 +10,9 @@
 package org.mifos.mobile.core.model.entity.accounts.share
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.model.entity.Charge
 
 @Serializable
-@Parcelize
 data class ShareAccountWithAssociations(
     val id: Long? = null,
     val accountNo: String? = null,
@@ -43,4 +40,4 @@ data class ShareAccountWithAssociations(
     val charges: List<Charge> = emptyList(),
     val purchasedShares: List<Transactions> = emptyList(),
     val dividends: List<String> = emptyList(),
-) : Parcelable
+)

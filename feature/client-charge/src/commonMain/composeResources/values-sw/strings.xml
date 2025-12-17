@@ -20,7 +20,7 @@
     <string name="amount_outstanding">Inayobaki:</string>
     <string name="amount_waived">Imesamehewa:</string>
     <string name="amount_paid">Imelipwa:</string>
-    <string name="share_charges">Gharama za Hisa</string>
+    <string name="feature_client_charge_share_charges">Gharama za Hisa</string>
 
     <string name="charge_details">Maelezo ya Malipo</string>
     <string name="paid_success_message">Umefanikiwa kulipa malipo haya kikamilifu</string>

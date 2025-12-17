@@ -10,11 +10,8 @@
 package org.mifos.mobile.core.model.entity.accounts.share
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 
 @Serializable
-@Parcelize
 data class Transactions(
     val accountId: Long? = null,
     val amount: Double? = null,
@@ -26,4 +23,4 @@ data class Transactions(
     val purchasedPrice: Double? = null,
     val status: EnumOptionData? = null,
     val type: EnumOptionData? = null,
-) : Parcelable
+)

@@ -10,13 +10,15 @@
 package org.mifos.mobile.core.model.entity.accounts.share
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 
+/**
+ * A generic data model representing an enumerated option returned by the Share Account API.
+ * This class is used to map dropdown options, status fields, or types (like share status,
+ * lock-in period type, etc.)
+ */
 @Serializable
-@Parcelize
 data class EnumOptionData(
     val id: Long? = null,
     val code: String? = null,
     val value: String? = null,
-) : Parcelable
+)

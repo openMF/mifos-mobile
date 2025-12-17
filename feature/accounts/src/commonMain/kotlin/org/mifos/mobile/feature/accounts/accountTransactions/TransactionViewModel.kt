@@ -336,7 +336,9 @@ internal class AccountsTransactionViewModel(
                 updateState {
                     it.copy(
                         isRefreshing = false,
-                        uiState = if (dataState.exception.cause is IOException) {
+                        uiState = if (dataState.exception is IOException ||
+                            dataState.exception.cause is IOException
+                        ) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
