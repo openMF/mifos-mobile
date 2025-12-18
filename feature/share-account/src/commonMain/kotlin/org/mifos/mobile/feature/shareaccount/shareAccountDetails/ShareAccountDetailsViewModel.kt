@@ -164,7 +164,7 @@ internal class ShareAccountDetailsViewModel(
             ),
             LabelValueItem(
                 Res.string.feature_share_account_pending_shares,
-                account.summary?.totalPendingForApprovalShares.toString() ?: "0",
+                account.summary?.totalPendingForApprovalShares?.toString() ?: "0",
             ),
 
             LabelValueItem(
