@@ -29,9 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
-import mifos_mobile.feature.share_account.generated.resources.feature_account_details_action
-import mifos_mobile.feature.share_account.generated.resources.feature_account_details_top_bar_title
-import mifos_mobile.feature.share_account.generated.resources.feature_share_status
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_details_action
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_details_top_bar_title
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_status
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -95,7 +95,7 @@ internal fun ShareAccountDetailsContent(
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(ShareAccountDetailsAction.OnNavigateBack) },
-        topBarTitle = stringResource(Res.string.feature_account_details_top_bar_title),
+        topBarTitle = stringResource(Res.string.feature_share_account_details_top_bar_title),
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -174,7 +174,7 @@ internal fun AccountDetailsGrid(
                         modifier = Modifier.height(64.dp).weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_share_status) {
+                        color = if (isActive && item.label == Res.string.feature_share_account_status) {
                             AppColors.customEnable
                         } else {
                             MaterialTheme.colorScheme.onBackground
@@ -193,7 +193,7 @@ internal fun ShareAccountActions(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large)) {
         Text(
-            text = stringResource(Res.string.feature_account_details_action),
+            text = stringResource(Res.string.feature_share_account_details_action),
             style = MifosTypography.labelLargeEmphasized,
             color = MaterialTheme.colorScheme.onSurface,
         )

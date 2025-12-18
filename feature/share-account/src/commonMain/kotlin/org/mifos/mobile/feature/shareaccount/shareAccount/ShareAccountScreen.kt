@@ -35,9 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
-import mifos_mobile.feature.share_account.generated.resources.feature_account_empty_share_accounts
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_dashboard
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_empty_share_accounts
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_items
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -193,7 +193,7 @@ internal fun ShareAccountContent(
             ScreenUiState.Empty -> {
                 EmptyDataView(
                     icon = MifosIcons.Info,
-                    error = Res.string.feature_account_empty_share_accounts,
+                    error = Res.string.feature_share_account_empty_share_accounts,
                 )
             }
 
@@ -269,7 +269,7 @@ internal fun ShareAccountContent(
                     ) {
                         EmptyDataView(
                             icon = MifosIcons.Info,
-                            error = Res.string.feature_account_empty_share_accounts,
+                            error = Res.string.feature_share_account_empty_share_accounts,
                         )
                     }
                 } else {

@@ -19,16 +19,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
 import mifos_mobile.feature.share_account.generated.resources.Res
-import mifos_mobile.feature.share_account.generated.resources.feature_generic_error_server
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_activation_date
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_application_date
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_approved_shares
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_currency
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_generic_error_server
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_market_price
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_number
-import mifos_mobile.feature.share_account.generated.resources.feature_share_activation_date
-import mifos_mobile.feature.share_account.generated.resources.feature_share_application_date
-import mifos_mobile.feature.share_account.generated.resources.feature_share_approved_shares
-import mifos_mobile.feature.share_account.generated.resources.feature_share_currency
-import mifos_mobile.feature.share_account.generated.resources.feature_share_market_price
-import mifos_mobile.feature.share_account.generated.resources.feature_share_pending_shares
-import mifos_mobile.feature.share_account.generated.resources.feature_share_product_name
-import mifos_mobile.feature.share_account.generated.resources.feature_share_status
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_pending_shares
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_product_name
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_status
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -130,7 +130,7 @@ internal class ShareAccountDetailsViewModel(
                         ) {
                             ScreenUiState.Network
                         } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            ScreenUiState.Error(Res.string.feature_share_account_generic_error_server)
                         },
                     )
                 }
@@ -150,25 +150,25 @@ internal class ShareAccountDetailsViewModel(
 
         val displayItems = listOf(
             LabelValueItem(Res.string.feature_share_account_number, account.accountNo ?: "-"),
-            LabelValueItem(Res.string.feature_share_product_name, account.productName ?: "-"),
+            LabelValueItem(Res.string.feature_share_account_product_name, account.productName ?: "-"),
 
-            LabelValueItem(Res.string.feature_share_status, account.status?.value ?: "-"),
+            LabelValueItem(Res.string.feature_share_account_status, account.status?.value ?: "-"),
             LabelValueItem(
-                Res.string.feature_share_currency,
+                Res.string.feature_share_account_currency,
                 account.currency?.displayLabel ?: currencyCode ?: "",
             ),
 
             LabelValueItem(
-                Res.string.feature_share_approved_shares,
+                Res.string.feature_share_account_approved_shares,
                 account.summary?.totalApprovedShares?.toString() ?: "0",
             ),
             LabelValueItem(
-                Res.string.feature_share_pending_shares,
+                Res.string.feature_share_account_pending_shares,
                 account.summary?.totalPendingForApprovalShares.toString() ?: "0",
             ),
 
             LabelValueItem(
-                Res.string.feature_share_market_price,
+                Res.string.feature_share_account_market_price,
                 CurrencyFormatter.format(
                     account.currentMarketPrice ?: 0.0,
                     currencyCode,
@@ -176,8 +176,8 @@ internal class ShareAccountDetailsViewModel(
                 ),
             ),
 
-            LabelValueItem(Res.string.feature_share_application_date, appDate),
-            LabelValueItem(Res.string.feature_share_activation_date, actDate),
+            LabelValueItem(Res.string.feature_share_account_application_date, appDate),
+            LabelValueItem(Res.string.feature_share_account_activation_date, actDate),
 
         )
 

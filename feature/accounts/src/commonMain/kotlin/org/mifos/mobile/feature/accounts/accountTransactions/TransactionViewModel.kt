@@ -391,7 +391,7 @@ internal class AccountsTransactionViewModel(
         currency: Currency?,
     ) = UiTransaction(
         id = id,
-        date = purchasedDate,
+        date = if (purchasedDate.size >= 3) purchasedDate else listOf(1970, 1, 1),
         amount = amount,
         type = null,
         typeValue = type?.value,
