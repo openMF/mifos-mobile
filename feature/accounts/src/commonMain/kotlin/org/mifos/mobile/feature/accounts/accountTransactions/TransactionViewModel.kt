@@ -164,6 +164,11 @@ internal class AccountsTransactionViewModel(
             is AccountTransactionAction.Internal.ReceiveShareTransactions -> {
                 handleShareTransactionsResult(action.dataState)
             }
+
+            is AccountTransactionAction.OnTransactionClick -> {
+                val id = action.id ?: return
+                sendEvent(AccountTransactionEvent.NavigateToDetails(id.toString()))
+            }
         }
     }
 
@@ -818,6 +823,7 @@ internal data class AccountTransactionState(
  * @property GetFilterResults Action to get the results of the filter dialog.
  * @property ReceiveNetworkResult Action to receive the result of the network status check.
  * @property ToggleCheckbox Action to toggle a specific checkbox filter.
+ * @property OnTransactionClick Action to navigate to transactionDetails screen.
  */
 internal sealed interface AccountTransactionAction {
     data object Refresh : AccountTransactionAction
@@ -827,6 +833,8 @@ internal sealed interface AccountTransactionAction {
     data object ResetFilters : AccountTransactionAction
     data object GetFilterResults : AccountTransactionAction
     data class ReceiveNetworkResult(val isOnline: Boolean) : AccountTransactionAction
+
+    data class OnTransactionClick(val id: Long?) : AccountTransactionAction
 
     /**
      * Action to toggle a specific checkbox filter.
@@ -882,9 +890,11 @@ internal sealed interface AccountTransactionAction {
 /**
  * Sealed interface representing one-time events to be sent to the UI.
  * @property OnNavigateBack Event to navigate back to the previous screen.
+ * @property NavigateToDetails Event to navigate to the transaction details screen with a specific ID.
  */
 sealed interface AccountTransactionEvent {
     data object OnNavigateBack : AccountTransactionEvent
+    data class NavigateToDetails(val id: String) : AccountTransactionEvent
 }
 
 /**
