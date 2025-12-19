@@ -71,7 +71,7 @@
     <string name="loan_account_withdrawn_successfully">Solicitud de Crédito Cancelada Exitosamente</string>
     <string name="review">Revisión</string>
     <string name="submit_loan">Enviar Solicitud de Crédito</string>
-    <string name="new_loan_application">Nueva Solicitud de Cŕedito para</string>
+    <string name="new_loan_application">Nueva Solicitud de Crédito para</string>
     <string name="update_loan_application">Actualizar Solicitud de Crédito para</string>
     <string name="loan_interest_type">Tipo de Interés</string>
     <string name="amortization">Amortización</string>
@@ -120,7 +120,7 @@
     <string name="create_an_account">Crear una Cuenta</string>
     <string name="first_name">Nombre</string>
     <string name="last_name">Apellido</string>
-    <string name="phone_number">Télefono</string>
+    <string name="phone_number">Teléfono</string>
     <string name="register">Registrar</string>
     <string name="request_id">ID de Petición</string>
     <string name="authentication_token">Código de Autenticación</string>
@@ -130,7 +130,7 @@
     <string name="verified">Usuario ha sido verificado correctamente</string>
     <string name="rb_mobile">Móvil</string>
     <string name="rb_email">correo electrónico</string>
-    <string name="verification_mode">Modo de verificación</string>
+    <string name="verification_mode">Modo de Verificación</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Importar QR</string>
     <string name="use_touch_id">Usar Touch Id</string>
@@ -163,7 +163,7 @@
     <string name="other">Otro</string>
     <string name="gender">Genero</string>
     <string name="no">No</string>
-    <string name="found">encontrado</string>x
+    <string name="found">encontrado</string>
 
     <string name="password_key" translatable="false">Contraseña</string>
     <string name="change_passcode">Cambiar PIN</string>
@@ -260,7 +260,7 @@
     <string name="penalties_waived">Sanciones exentas</string>
     <string name="fees_waived">Tarifa exenta</string>
     <string name="outstanding_balance">Saldo pendiente</string>
-    <string name="next_installment">Next Installment</string>
+    <string name="next_installment">Siguiente Parcialidad</string>
     <string name="due_date">Fecha de vencimiento</string>
     <string name="make_payment">Realizar pago</string>
     <string name="loan_type">Clase de crédito</string>
@@ -340,13 +340,13 @@
     <string name="show_hide_total_saving_amount">Mostrar u ocultar el importe total de ahorro</string>
     <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del préstamo</string>
     <string name="hidden_amount">*****</string>
-    <string name="survey">Surveys</string>
-    <string name="activation_date">Activation Date</string>
-    <string name="groups">Groups</string>
-    <string name="user_details">User Details</string>
-    <string name="client_type">Client Type</string>
-    <string name="client_classification">Client Classification</string>
-    <string name="select_mode">Select Mode</string>
+    <string name="survey">Encuestas</string>
+    <string name="activation_date">Fecha de Activación</string>
+    <string name="groups">Grupos</string>
+    <string name="user_details">Detalles de Usuario</string>
+    <string name="client_type">Tipo de Cliente</string>
+    <string name="client_classification">Clasificación de Cliente</string>
+    <string name="select_mode">Seleccionar Modo</string>
     <string name="add_beneficiary_option">Agregue beneficiarios externos a su cuenta. Ingrese manualmente o escanee el código QR de la cuenta</string>
     <string name="income_generating_loan">Crédito Generador de Ingresos</string>
     <string name="not_applicable">No aplicable</string>
@@ -510,7 +510,7 @@
     <string name="feature_account_interest_posting">Publicación de intereses</string>
     <string name="feature_account_fee_deduction">Deducción de tarifa</string>
     <string name="feature_account_withdrawal_transfer">Transferencia de retiro</string>
-    <string name="feature_account_rejected_transfer">Rejected Transfer</string>
+    <string name="feature_account_rejected_transfer">Transferencia Rechazada</string>
     <string name="feature_account_overdraft_fee">Cargo por sobregiro</string>
     <string name="savings_account_transaction">Transacción de Cuenta de Ahorros</string>
     <string name="transaction_period">Período de transacción</string>
@@ -531,14 +531,14 @@
     <string name="change_app_theme">Cambiar tema</string>
 
     <string-array name="languages" translatable="false">
-        <item>Idioma del sistema</item>
+        <item>Idiomas de la Aplicación</item>
         <item>Inglés</item>
         <item>हिंदी</item>
         <item>عربى</item>
         <item>اُردُو</item>
         <item>বাঙালি</item>
         <item>Español</item>
-        <item>Frances</item>
+        <item>Francés</item>
         <item>bahasa Indonesia</item>
         <item>ភាសាខ្មែរ</item>
         <item>ಕನ್ನಡ</item>
