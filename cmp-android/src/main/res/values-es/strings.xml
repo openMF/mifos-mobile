@@ -120,7 +120,7 @@
     <string name="create_an_account">Crear una Cuenta</string>
     <string name="first_name">Nombre</string>
     <string name="last_name">Apellido</string>
-    <string name="phone_number">Télefono</string>
+    <string name="phone_number">Teléfono</string>
     <string name="register">Registrar</string>
     <string name="request_id">ID de Petición</string>
     <string name="authentication_token">Código de Autenticación</string>

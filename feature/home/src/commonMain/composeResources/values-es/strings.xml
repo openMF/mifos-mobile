@@ -25,7 +25,7 @@
     <string name="total_saving">Total Ahorros</string>
     <string name="hidden_amount">*****</string>
     <string name="total_loan">Total Crédito</string>
-    <string name="need_help">Contactanos</string>
+    <string name="need_help">Contáctanos</string>
     <string name="home">Inicio</string>
     <string name="help_line_number" translatable="false">8000000000</string>
     <string name="contact_email" translatable="false">support@mifos.org</string>
