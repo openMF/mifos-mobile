@@ -103,7 +103,7 @@
     <string name="repayment_schedule">Calendario de Pagos</string>
     <string name="feature_loan_disbursement_date_label">Fecha de Dispersión</string>
     <string name="feature_loan_installments_paid_label">Parcialidades Pagadas</string>
-    <string name="feature_loan_installments_left_label">Parcialidades Pagadas</string>
+    <string name="feature_loan_installments_left_label">Parcialidades Pendientes</string>
     <string name="feature_loan_total_installments_label">Total de Parcialidades</string>
     <string name="feature_loan_installment_number">%1$s Parcialidad</string>
     <string name="feature_loan_repayment_pay">Pagar %1$s</string>
