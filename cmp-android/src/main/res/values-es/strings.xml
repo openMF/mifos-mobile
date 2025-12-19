@@ -168,7 +168,7 @@
     <string name="password_key" translatable="false">Contraseña</string>
     <string name="change_passcode">Cambiar PIN</string>
     <string name="change_app_passcode">Cambiar PIN</string>
-    <string name="change_password">Change Contraseña</string>
+    <string name="change_password">Cambiar Contraseña</string>
     <string name="string_changed_successfully">%1$s cambiado correctamente</string>
 
     <string name="account_not_active_to_perform_deposit">La cuenta debe estar Activa para realizar un depósito</string>
