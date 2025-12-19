@@ -12,6 +12,12 @@ package org.mifos.mobile.feature.recent.transaction.navigation
 const val RECENT_TRANSACTION_NAVIGATION_ROUTE_BASE = "recent_transaction_base_route"
 const val RECENT_TRANSACTION_SCREEN_ROUTE = "recent_transaction_screen_route"
 
+
+/**
+ * A sealed class that encapsulates all navigation routes related to the recent transactions feature.
+ *
+ * @param route The unique string identifier for a navigation destination.
+ */
 sealed class RecentTransactionNavigation(val route: String) {
     data object RecentTransactionBase : RecentTransactionNavigation(
         route = RECENT_TRANSACTION_NAVIGATION_ROUTE_BASE,

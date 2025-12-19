@@ -65,6 +65,16 @@ import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiStat
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
 
+/**
+ * The main screen for displaying recent transaction history.
+ *
+ * This screen uses a [Scaffold] to manage the top app bar, content area, and a modal
+ * bottom sheet for filtering. It observes the UI state from [RecentTransactionViewModel]
+ * to display loading, error, empty, or content views.
+ *
+ * @param navigateBack Callback to navigate to the previous screen.
+ * @param viewModel Instance of [RecentTransactionViewModel] for state management.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecentTransactionScreen(

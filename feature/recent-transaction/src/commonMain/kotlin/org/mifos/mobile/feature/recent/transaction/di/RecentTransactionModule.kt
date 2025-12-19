@@ -13,6 +13,9 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
 
+/**
+ * Koin module that provides the [RecentTransactionViewModel] for dependency injection.
+ */
 val recentTransactionModule = module {
     viewModelOf(::RecentTransactionViewModel)
 }

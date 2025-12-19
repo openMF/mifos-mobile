@@ -32,6 +32,23 @@ import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiStat
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState.ViewState
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
 
+
+/**
+ * Manages the UI state and data logic for the Recent Transactions screen.
+ *
+ * This ViewModel is responsible for fetching all savings accounts for a client,
+ * loading transaction history for a selected account,
+ * and applying filters (e.g., by credit or debit)
+ * to the displayed transaction list. It uses a MVI-style
+ *  architecture with [RecentTransactionAction]
+ * to process user intents and data-loading events.
+ *
+ * @param accountsRepositoryImpl Repository for fetching client accounts.
+ * @param savingsAccountRepositoryImpl Repository for fetching savings
+ * account details and transactions.
+ * @param networkMonitor Monitors the device's network connectivity status.
+ * @param userPreferencesRepository Repository for accessing stored user data like client ID.
+ */
 class RecentTransactionViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
@@ -44,6 +61,10 @@ class RecentTransactionViewModel(
     )
     val uiState = _uiState.asStateFlow()
 
+    /**
+    * Stores the complete, unfiltered list of transactions for the selected account.
+    * This is used as the source of truth when applying different filters locally.
+    */
     private var originalTransactionList: List<Transactions> = emptyList()
 
     init {
@@ -63,6 +84,11 @@ class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Central handler for all UI actions and internal data events.
+     *
+     * @param action The [RecentTransactionAction] to be processed.
+     */
     fun handleAction(action: RecentTransactionAction) {
         when (action) {
             is RecentTransactionAction.LoadInitial -> fetchAccounts()
@@ -139,6 +165,12 @@ class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Loads the transaction history for the currently selected savings account.
+     *
+     * @param isRefreshing Indicates if the load is a pull-to-refresh action.
+     * @param isPaginating Indicates if more items are being loaded for pagination.
+     */
     private fun loadTransactions(
         isRefreshing: Boolean = false,
         isPaginating: Boolean = false,
@@ -183,6 +215,10 @@ class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Applies the selected filter ([TransactionFilterType]) to the `originalTransactionList`
+     * and updates the UI state with the filtered results.
+     */
     private fun applyLocalFilters() {
         val currentType = _uiState.value.filterType
 
@@ -204,6 +240,11 @@ class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Updates the UI state to show an error message when a data loading operation fails.
+     *
+     * @param action The internal action containing the error details.
+     */
     private fun handleLoadFailed(action: Internal.LoadFailed) {
         _uiState.update {
             it.copy(
@@ -213,6 +254,12 @@ class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Determines if a transaction is a credit (deposit) based on its type information.
+     *
+     * @param transaction The transaction to analyze.
+     * @return `true` if the transaction is a credit, `false` otherwise.
+     */
     private fun isTransactionCreditLogic(transaction: Transactions): Boolean {
         val type = transaction.transactionType?.value?.lowercase().orEmpty()
 
