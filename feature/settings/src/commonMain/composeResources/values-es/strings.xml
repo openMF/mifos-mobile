@@ -52,19 +52,19 @@
         <item>فارسی</item>
     </string-array>
 
-    <string name="feature_settings_action_profile">Perfile</string>
+    <string name="feature_settings_action_profile">Perfil</string>
     <string name="feature_settings_action_profile_tip">Change your mail, name, phone number etc</string>
 
-    <string name="feature_settings_action_password">Password</string>
+    <string name="feature_settings_action_password">Contraseña</string>
     <string name="feature_settings_action_password_tip">Change your old password</string>
 
     <string name="feature_settings_action_auth_passcode">Auth Passcode</string>
     <string name="feature_settings_action_auth_passcode_tip">Change your login authorization passcode</string>
 
-    <string name="feature_settings_action_language">Language</string>
+    <string name="feature_settings_action_language">Idioma</string>
     <string name="feature_settings_action_language_tip">Choose your app language</string>
 
-    <string name="feature_settings_action_theme">Theme</string>
+    <string name="feature_settings_action_theme">Diseño</string>
     <string name="feature_settings_action_theme_tip">Choose your app theme</string>
 
     <string name="feature_settings_action_endpoint">Endpoint</string>
