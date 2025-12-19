@@ -19,7 +19,7 @@
     <string name="progress_message_login">Ingresando</string>
     <string name="progress_message_loading">Cargando</string>
     <string name="password">Contraseña</string>
-    <string name="correo electrónico">Correo electrónico</string>
+    <string name="email">Correo electrónico</string>
     <string name="accounts">Cuentas</string>
     <string name="clients">Clientes</string>
     <string name="funds_transfer">Transferencias</string>
