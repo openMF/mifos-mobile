@@ -32,6 +32,15 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.onClick
 
+/**
+ * A bottom bar for the loan application screen, featuring a terms agreement
+ * checkbox and a submission button.
+ *
+ * @param checked The current selection state of the terms agreement checkbox.
+ * @param isEnabled Controls whether the 'Apply' button is clickable.
+ * @param onCheckedChange Callback invoked when the terms checkbox is toggled.
+ * @param onApplyClick Action to perform when the 'Apply' button is clicked.
+ */
 @Composable
 fun ApplyLoanBottomBar(
     checked: Boolean,

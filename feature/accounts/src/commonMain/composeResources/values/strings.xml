@@ -73,4 +73,24 @@
 
     <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
 
+    <!--    Transaction Details -->
+    <string name="feature_transaction_details">Transaction Details</string>
+    <string name="feature_transaction_detail_id">Transaction ID</string>
+    <string name="feature_transaction_detail_date">Date</string>
+    <string name="feature_transaction_detail_status">Status</string>
+    <string name="feature_transaction_detail_status_success">Success</string>
+    <string name="feature_transaction_detail_account_ref">Account Ref</string>
+    <string name="feature_transaction_detail_payment_method">Payment Method</string>
+    <string name="feature_transaction_detail_type">Type</string>
+    <string name="feature_transaction_detail_status_reversed">Reversed</string>
+    <string name="feature_transaction_detail_receipt">Receipt #</string>
+    <string name="feature_transaction_detail_external_id">External ID</string>
+    <string name="feature_transaction_detail_breakdown">Breakdown</string>
+    <string name="feature_transaction_detail_principal">Principal</string>
+    <string name="feature_transaction_detail_interest">Interest</string>
+    <string name="feature_transaction_detail_fees">Fees</string>
+    <string name="feature_transaction_detail_penalties">Penalties</string>
+    <string name="feature_transaction_detail_balance">Balance Remaining</string>
+    <string name="feature_transaction_detail_default_type">Transaction</string>
+
 </resources>

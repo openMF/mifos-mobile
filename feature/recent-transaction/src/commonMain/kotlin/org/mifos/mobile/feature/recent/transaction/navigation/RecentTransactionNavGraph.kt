@@ -30,6 +30,7 @@ fun NavController.navigateToRecentTransactionScreen() {
  */
 fun NavGraphBuilder.recentTransactionNavGraph(
     navController: NavController,
+    navigateToDetails: (String, String, Long) -> Unit,
 ) {
     navigation(
         startDestination = RecentTransactionNavigation.RecentTransactionScreen.route,
@@ -37,6 +38,7 @@ fun NavGraphBuilder.recentTransactionNavGraph(
     ) {
         recentTransactionScreenRoute(
             navigateBack = navController::popBackStack,
+            navigateToDetails = navigateToDetails,
         )
     }
 }
@@ -48,12 +50,14 @@ fun NavGraphBuilder.recentTransactionNavGraph(
  */
 fun NavGraphBuilder.recentTransactionScreenRoute(
     navigateBack: () -> Unit,
+    navigateToDetails: (String, String, Long) -> Unit,
 ) {
     composable(
         route = RecentTransactionNavigation.RecentTransactionScreen.route,
     ) {
         RecentTransactionScreen(
             navigateBack = navigateBack,
+            navigateToDetails = navigateToDetails,
         )
     }
 }

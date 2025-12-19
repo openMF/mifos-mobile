@@ -44,6 +44,14 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Entry point for the Loan Type Selection screen.
+ * Fetches available loan products via the ViewModel and handles navigation to the product details.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToLoanProductDetailsScreen Callback to navigate to the details of a selected product ID.
+ * @param viewModel The state holder responsible for fetching and mapping loan products.
+ */
 @Composable
 internal fun SelectLoanTypeScreen(
     navigateBack: () -> Unit,
@@ -77,6 +85,12 @@ internal fun SelectLoanTypeScreen(
     )
 }
 
+/**
+ * Renders modal dialogs (specifically error alerts) based on the current screen state.
+ *
+ * @param state The current state containing potential error messages.
+ * @param onAction Callback to dismiss the dialog or navigate back.
+ */
 @Composable
 internal fun SelectLoanTypeDialog(
     state: SelectLoanTypeState,
@@ -96,6 +110,13 @@ internal fun SelectLoanTypeDialog(
     }
 }
 
+/**
+ * Displays the visual layout including the header and a staggered grid of available loan products.
+ * Handles Loading, Error, Empty, and Success UI states.
+ *
+ * @param state The current UI state containing the list of loan options.
+ * @param onAction Callback to handle card clicks and retry actions.
+ */
 @Composable
 internal fun SelectLoanTypeScreenContent(
     state: SelectLoanTypeState,

@@ -52,6 +52,16 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.loan.application.component.UploadDocumentsSection
 import org.mifos.mobile.feature.loan.application.uploadDocs.component.BottomSheetContent
 
+/**
+ * Entry point for the Document Upload screen.
+ * Orchestrates the UI state, handles navigation side effects, and manages the display of
+ * dialogs and bottom sheets.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToNext Callback to proceed to the next stage after successful uploads.
+ * @param navigateToPreviewDoc Callback to view a specific uploaded document.
+ * @param viewModel The state holder managing document selection and upload logic.
+ */
 @Composable
 internal fun UploadDocsScreen(
     navigateBack: () -> Unit,
@@ -86,6 +96,14 @@ internal fun UploadDocsScreen(
     )
 }
 
+/**
+ * Renders overlay UIs such as error alerts or the signature capture bottom sheet based on
+ * the active dialog state.
+ * Handles the transition between the standard bottom sheet and the full-screen signature canvas.
+ *
+ * @param dialogState The current state determining which dialog or sheet to show.
+ * @param onAction Callback to handle dialog interactions (dismissal, mode switching).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UploadDocsDialogs(
@@ -153,6 +171,13 @@ internal fun UploadDocsDialogs(
     }
 }
 
+/**
+ * Displays the main layout containing the document list, upload controls, and the submission
+ * button.
+ *
+ * @param state The current UI state containing the list of required and uploaded documents.
+ * @param onAction Callback to handle user interactions like clicking upload or submit.
+ */
 @Composable
 internal fun UploadDocsScreenContent(
     state: UploadDocsState,

@@ -13,8 +13,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.accounts.accountTransactions.AccountsTransactionViewModel
 import org.mifos.mobile.feature.accounts.accounts.AccountsViewModel
+import org.mifos.mobile.feature.accounts.transactionDetail.TransactionDetailsViewModel
 
 val AccountsModule = module {
     viewModelOf(::AccountsViewModel)
     viewModelOf(::AccountsTransactionViewModel)
+    viewModelOf(::TransactionDetailsViewModel)
 }

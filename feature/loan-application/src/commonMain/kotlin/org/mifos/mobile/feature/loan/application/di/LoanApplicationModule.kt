@@ -17,6 +17,10 @@ import org.mifos.mobile.feature.loan.application.loanProductDescription.LoanProd
 import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeViewModel
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsViewModel
 
+/**
+ * Defines the Koin dependency injection module for the Loan Application feature.
+ * Registers the ViewModels used across the loan selection, documentation, and confirmation screens.
+ */
 val loanApplicationModule = module {
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)

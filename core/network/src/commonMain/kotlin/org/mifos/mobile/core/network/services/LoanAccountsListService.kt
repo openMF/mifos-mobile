@@ -17,6 +17,7 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
+import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
@@ -57,4 +58,10 @@ interface LoanAccountsListService {
         @Path("loanId") loanId: Long,
         @Body loanWithdraw: LoanWithdraw?,
     ): HttpResponse
+
+    @GET(ApiEndPoints.LOANS + "/{loanId}/transactions/{transactionId}")
+    fun getLoanTransactionDetails(
+        @Path("loanId") loanId: Long,
+        @Path("transactionId") transactionId: Long,
+    ): Flow<TransactionDetails>
 }
