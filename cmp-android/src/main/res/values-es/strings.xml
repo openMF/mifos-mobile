@@ -130,7 +130,7 @@
     <string name="verified">Usuario ha sido verificado correctamente</string>
     <string name="rb_mobile">Móvil</string>
     <string name="rb_email">correo electrónico</string>
-    <string name="verification_mode">Verification Mode</string>
+    <string name="verification_mode">Modo de Verificación</string>
     <string name="blank">&#160;</string>
     <string name="import_qr">Importar QR</string>
     <string name="use_touch_id">Usar Touch Id</string>
@@ -531,7 +531,7 @@
     <string name="change_app_theme">Cambiar tema</string>
 
     <string-array name="languages" translatable="false">
-        <item>Idioma del sistema</item>
+        <item>Idiomas de la Aplicación</item>
         <item>Inglés</item>
         <item>हिंदी</item>
         <item>عربى</item>

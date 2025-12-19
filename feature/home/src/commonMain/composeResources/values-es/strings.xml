@@ -56,7 +56,7 @@
 
     <string name="feature_home_saving_account">Cuenta de Ahorro</string>
     <string name="feature_home_loan_account">Cuenta de Crédito</string>
-    <string name="feature_home_savings_tip">Obten rendimimientos con depositos en cuentas de plazo fijo y deposito recurrente.</string>
+    <string name="feature_home_savings_tip">Obten rendimimientos con depósitos en cuentas de plazo fijo y deposito recurrente.</string>
     <string name="feature_home_loan_tip">Solicita un credito para tus requerimientos de negocio, educacion o consumo.</string>
 
     <string name="feature_home_total_available_savings">Saldo Disponible de Ahorros</string>
