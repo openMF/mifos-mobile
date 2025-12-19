@@ -35,9 +35,9 @@
     <string name="feature_account_action_make_payment">Pagar</string>
     <string name="feature_account_action_make_payment_tip">Pagar cuota vencida</string>
     <string name="feature_account_action_loan_summary">Resumen del Crédito</string>
-    <string name="feature_account_action_loan_summary_tip">Vea brevemente los detalles del crédito</string>
+    <string name="feature_account_action_loan_summary_tip">Ver los detalles del crédito</string>
     <string name="feature_account_action_repayment_schedule">Calendario de pagos</string>
-    <string name="feature_account_action_repayment_schedule_tip">Ver gráfico del cronograma de pagos</string>
+    <string name="feature_account_action_repayment_schedule_tip">Ver el cronograma de pagos</string>
     <string name="feature_account_action_transactions">Transacciones</string>
     <string name="feature_account_action_transactions_tip">Transacciones recientes de esta cuenta</string>
     <string name="feature_account_action_charges">Cargos</string>
