@@ -11,13 +11,13 @@
 <resources>
     <string name="beneficiaries">Beneficiarios</string>
     <string name="survey">Encuestas</string>
-    <string name="apply_for_loan">Solicitar Cŕedito</string>
+    <string name="apply_for_loan">Solicitar Crédito</string>
     <string name="apply_for_savings">Solicitar Ahorros</string>
     <string name="apply_for_share">Solicitar Inversión</string>
     <string name="charges">Cargos</string>
     <string name="transfer">Transferir</string>
     <string name="accounts">Cuentas</string>
-    <string name="recent_transactions">Transactiones Recientes</string>
+    <string name="recent_transactions">Transacciones Recientes</string>
     <string name="error_fetching_client">Falló en la carga de datos del cliente</string>
     <string name="no_internet_connection">Sin conexión a internet</string>
     <string name="hello_client">Hola, %1$s</string>
@@ -56,7 +56,7 @@
 
     <string name="feature_home_saving_account">Cuenta de Ahorro</string>
     <string name="feature_home_loan_account">Cuenta de Crédito</string>
-    <string name="feature_home_savings_tip">Obten rendimdimientos con depositos en cuentas de plazo fijo y deposito recurrente.</string>
+    <string name="feature_home_savings_tip">Obten rendimimientos con depositos en cuentas de plazo fijo y deposito recurrente.</string>
     <string name="feature_home_loan_tip">Solicita un credito para tus requerimientos de negocio, educacion o consumo.</string>
 
     <string name="feature_home_total_available_savings">Saldo Disponible de Ahorros</string>
