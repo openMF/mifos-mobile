@@ -10,20 +10,20 @@
 -->
 <resources>
 
-    <string name="feature_loan_account_filter_active">Activo</string>
+    <string name="feature_loan_account_filter_active">Activa</string>
     <string name="feature_loan_account_filter_approval_pending">Pendiente de Aprobación</string>
-    <string name="feature_loan_account_filter_closed">Cerrado</string>
+    <string name="feature_loan_account_filter_closed">Cerrada</string>
     <string name="feature_loan_account_filter_disburse">Pendiente de Desembolso</string>
-    <string name="feature_loan_account_filter_overpaid">Sobrepagado</string>
+    <string name="feature_loan_account_filter_overpaid">Sobrepagada</string>
     <string name="feature_loan_account_filter_in_arrears">En mora</string>
-    <string name="feature_loan_account_filter_withdrawn">Cancelado</string>
-    <string name="feature_loan_account_filter_matured">Vencido</string>
-    <string name="feature_loan_account_filter_rejected">Rechazado</string>
+    <string name="feature_loan_account_filter_withdrawn">Cancelada</string>
+    <string name="feature_loan_account_filter_matured">Vencida</string>
+    <string name="feature_loan_account_filter_rejected">Rechazada</string>
 
     <string name="feature_loan_account_filter_personal">Personal</string>
     <string name="feature_loan_account_filter_bronze">Bronce</string>
 
-    <string name="feature_account_empty_loan_accounts">No tienes cuentas de Crédito</string>
+    <string name="feature_account_empty_loan_accounts">No tiene cuentas de Crédito</string>
     <string name="feature_account_empty_filtered_loan_accounts">No hay cuentas de Crédito con el filtro seleccionado</string>
 
     <string name="feature_loan_account_dashboard">Total de Créditos</string>
