@@ -13,7 +13,7 @@
     <string name="feature_loan_account_filter_active">Activo</string>
     <string name="feature_loan_account_filter_approval_pending">Pendiente de Aprobación</string>
     <string name="feature_loan_account_filter_closed">Cerrado</string>
-    <string name="feature_loan_account_filter_disburse">Pendiente de Dispersión</string>
+    <string name="feature_loan_account_filter_disburse">Pendiente de Desembolso</string>
     <string name="feature_loan_account_filter_overpaid">Sobrepagado</string>
     <string name="feature_loan_account_filter_in_arrears">En mora</string>
     <string name="feature_loan_account_filter_withdrawn">Cancelado</string>
@@ -26,7 +26,7 @@
     <string name="feature_account_empty_loan_accounts">No tienes cuentas de Crédito</string>
     <string name="feature_account_empty_filtered_loan_accounts">No hay cuentas de Crédito con el filtro seleccionado</string>
 
-    <string name="feature_loan_account_dashboard">Crédito totales</string>
+    <string name="feature_loan_account_dashboard">Total de Créditos</string>
     <string name="feature_loan_account">Cuenta de Crédito</string>
     <string name="feature_loan_account_items">%1$d Elementos</string>
 
@@ -43,7 +43,7 @@
     <string name="feature_account_action_charges">Cargos</string>
     <string name="feature_account_action_charges_tip">Comisiones y cargos en esta cuenta</string>
     <string name="feature_account_action_qr">Código QR</string>
-    <string name="feature_account_action_qr_tip">Generar Codigo QR</string>
+    <string name="feature_account_action_qr_tip">Generar Código QR</string>
 
 
     <string name="feature_loan_account_number_label">Número de Cuenta</string>
@@ -60,7 +60,7 @@
     <string name="feature_loan_payoff_details_title">Detalles de Liquidación</string>
     <string name="feature_loan_charges_title">Cargos</string>
     <string name="feature_loan_waivers_title">Condonaciones</string>
-    <string name="feature_loan_paid_off_details_title">Detalles Liquidaciones</string>
+    <string name="feature_loan_paid_off_details_title">Detalles de Liquidaciones</string>
     <string name="feature_loan_outstanding_details_title">Detalles de Pendientes</string>
     <string name="feature_loan_installment_details_title">Detalles de Parcialidad</string>
 
@@ -82,10 +82,10 @@
     <!-- Waivers -->
     <string name="feature_loan_interest_waived_label">Interés condonado</string>
     <string name="feature_loan_penalty_waived_label">Penalidad condonada</string>
-    <string name="feature_loan_fees_waived_label">Comision condonada</string>
+    <string name="feature_loan_fees_waived_label">Comisión condonada</string>
 
     <!-- Paid-off Details -->
-    <string name="feature_loan_interest_paid_off_label">Intereses pagado</string>
+    <string name="feature_loan_interest_paid_off_label">Interes pagado</string>
     <string name="feature_loan_principal_paid_off_label">Capital pagado</string>
 
     <!-- Outstanding Details -->
@@ -101,7 +101,7 @@
     <string name="feature_loan_linked_account_label">Cuenta de Ahorros Enlazada</string>
 
     <string name="repayment_schedule">Calendario de Pagos</string>
-    <string name="feature_loan_disbursement_date_label">Fecha de Dispersión</string>
+    <string name="feature_loan_disbursement_date_label">Fecha de Desembolso</string>
     <string name="feature_loan_installments_paid_label">Parcialidades Pagadas</string>
     <string name="feature_loan_installments_left_label">Parcialidades Pendientes</string>
     <string name="feature_loan_total_installments_label">Total de Parcialidades</string>
