@@ -14,7 +14,7 @@
     <string name="feature_account_approval_pending">Pendiente de Aprobación</string>
     <string name="feature_account_matured">Vencida</string>
     <string name="feature_account_closed">Cerrada</string>
-    <string name="feature_account_empty_savings_accounts">No tiene cuentas de Débito</string>
+    <string name="feature_account_empty_savings_accounts">No tiene cuentas de Ahorros</string>
     <string name="feature_account_submitted">Enviada</string>
     <string name="feature_account_string_and_string">%1$s %2$s</string>
 
@@ -23,7 +23,7 @@
     <string name="feature_savings_account">Cuenta de Ahorros</string>
     <string name="feature_savings_account_items">%1$d Elementos</string>
 
-    <string name="feature_common_error">Ocurrio un error</string>
+    <string name="feature_common_error">Ocurrió un error</string>
 
     <string name="content_description_search">Buscar</string>
     <string name="content_description_filter">Filtrar</string>
@@ -34,7 +34,7 @@
     <string name="feature_savings_filter_nb_account">Cuenta NB</string>
 
     <string name="feature_savings_filter_active_account">Activa</string>
-    <string name="feature_savings_filter_pending_account">Pendiente de Aproación</string>
+    <string name="feature_savings_filter_pending_account">Pendiente de Aprobación</string>
     <string name="feature_savings_filter_closed_account">Cerrada</string>
     <string name="feature_savings_filter_matured_account">Vencida</string>
     <string name="feature_savings_filter_approved_account">Aprobada</string>
@@ -59,7 +59,7 @@
     <string name="feature_savings_available_balance_label">Saldo Disponible</string>
     <string name="feature_savings_status_label">Estado de la Cuenta</string>
     <string name="feature_savings_nominal_interest_rate_label">Tasa de Interés Nominal</string>
-    <string name="feature_savings_total_deposits_label">Total de Dépositos</string>
+    <string name="feature_savings_total_deposits_label">Total de Depósitos</string>
     <string name="feature_savings_total_withdrawals_label">Total de Retiros</string>
     <string name="feature_savings_transaction_amount_label">Monto</string>
     <string name="feature_savings_transaction_date_label">Fecha</string>
@@ -69,11 +69,11 @@
 
     <string name="feature_savings_update_topbar_title">Actualizar Detalles</string>
     <string name="feature_savings_update_client_name_label">Nombre del Cliente</string>
-    <string name="feature_savings_update_submission_date_label">Fecha de envio</string>
+    <string name="feature_savings_update_submission_date_label">Fecha de envío</string>
     <string name="feature_savings_update_account_number_label">Número de Cuenta</string>
     <string name="feature_savings_update_product_label">Producto</string>
     <string name="feature_savings_update_request_update">Actualizar Solicitud</string>
-    <string name="feature_savings_new_product_label">Nueva Producto</string>
+    <string name="feature_savings_new_product_label">Nuevo Producto</string>
 
     <string name="feature_savings_savings_product_empty">Actualmente los productos de préstamo no están disponibles</string>
 

@@ -60,7 +60,7 @@
     <string name="amount">Monto</string>
     <string name="remark">Descripción</string>
     <string name="expected_disbursement_date">Fecha esperada de dispersión</string>
-    <string name="submission_date">Fecha de envio</string>
+    <string name="submission_date">Fecha de envío</string>
     <string name="feature_account_submitted">Enviado</string>
     <string name="feature_account_disbursement">Dispersión</string>
     <string name="transfer_date">Fecha de Transferencia</string>
@@ -75,7 +75,7 @@
     <string name="update_loan_application">Actualizar Solicitud de Crédito para</string>
     <string name="loan_interest_type">Tipo de Interés</string>
     <string name="amortization">Amortización</string>
-    <string name="interest_calculation_period">Periodo de Calculo de Interés</string>
+    <string name="interest_calculation_period">Periodo de Cálculo de Interés</string>
     <string name="repayment_strategy">Estrategia de Reembolso</string>
     <string name="pay_to">Pagar a</string>
     <string name="pay_from">Pagar desde</string>
@@ -161,7 +161,7 @@
     <string name="edit">Editar</string>
     <string name="passcode">PIN</string>
     <string name="other">Otro</string>
-    <string name="gender">Genero</string>
+    <string name="gender">Género</string>
     <string name="no">No</string>
     <string name="found">encontrado</string>
 
@@ -174,8 +174,8 @@
     <string name="account_not_active_to_perform_deposit">La cuenta debe estar Activa para realizar un depósito</string>
     <string name="account_not_active_to_perform_transfer">La cuenta debe estar Activa para realizar una transferencia</string>
 
-    <string name="empty_requestid">ID de peticion no debe estar vacia</string>
-    <string name="empty_authentication_token">Código de autenticación no debe estar vacio</string>
+    <string name="empty_requestid">ID de petición no debe estar vacía</string>
+    <string name="empty_authentication_token">Código de autenticación no debe estar vacío</string>
     <string name="feature_account_empty_savings_accounts">No hay Cuenta de Ahorros asociada contigo</string>
     <string name="feature_account_empty_loan_accounts">No hay ninguna cuenta de préstamo asociada contigo</string>
     <string name="feature_account_empty_share_accounts">No hay una cuenta de acciones asociada contigo</string>
@@ -359,7 +359,7 @@
     <string name="incorrect_passcode">Código de acceso incorrecto</string>
     <string name="incorrect_passcode_more_than_three">Ha ingresado una contraseña incorrecta más de 3 veces</string>
     <string name="skip">Saltar</string>
-    <string name="save">Ahorrar</string>
+    <string name="save">Guardar</string>
     <string name="passcode_setup">Configurar una contraseña para iniciar sesión</string>
     <string name="reenter_passcode">Por favor, vuelva a introducir su contraseña</string>
     <string name="passcode_does_not_match">El código de acceso no coincide.</string>
