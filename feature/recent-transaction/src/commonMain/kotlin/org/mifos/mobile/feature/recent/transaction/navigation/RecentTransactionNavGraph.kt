@@ -15,10 +15,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import org.mifos.mobile.feature.recent.transaction.screen.RecentTransactionScreen
 
+/**
+ * Navigates to the recent transactions feature graph.
+ */
 fun NavController.navigateToRecentTransactionScreen() {
     navigate(RecentTransactionNavigation.RecentTransactionBase.route)
 }
 
+/**
+ * Defines the nested navigation graph for the recent transactions feature.
+ *
+ * This graph includes all screens related to recent transactions.
+ *
+ * @param navController The [NavController] used to handle navigation events.
+ */
 fun NavGraphBuilder.recentTransactionNavGraph(
     navController: NavController,
 ) {
@@ -32,6 +42,11 @@ fun NavGraphBuilder.recentTransactionNavGraph(
     }
 }
 
+/**
+ * Defines the composable route for the main [RecentTransactionScreen].
+ *
+ * @param navigateBack Callback to navigate back to the previous screen.
+ */
 fun NavGraphBuilder.recentTransactionScreenRoute(
     navigateBack: () -> Unit,
 ) {

@@ -32,6 +32,19 @@ import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiStat
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState.ViewState
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
 
+/**
+ * Manages the UI state and data logic for the Recent Transactions screen.
+ *
+ * This ViewModel is responsible for fetching all savings accounts for a client, loading the
+ * transaction history for a selected account, and applying filters (e.g., by credit or debit)
+ * to the displayed transaction list. It uses a MVI-style architecture with [RecentTransactionAction]
+ * to process user intents and data-loading events.
+ *
+ * @param accountsRepositoryImpl Repository for fetching client accounts.
+ * @param savingsAccountRepositoryImpl Repository for fetching savings account details and transactions.
+ * @param networkMonitor Monitors the device's network connectivity status.
+ * @param userPreferencesRepository Repository for accessing stored user data like client ID.
+ */
 class RecentTransactionViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
