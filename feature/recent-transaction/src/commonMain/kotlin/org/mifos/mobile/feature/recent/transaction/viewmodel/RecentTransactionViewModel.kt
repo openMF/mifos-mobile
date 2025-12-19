@@ -32,7 +32,6 @@ import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiStat
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState.ViewState
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
 
-
 /**
  * Manages the UI state and data logic for the Recent Transactions screen.
  *
@@ -62,9 +61,9 @@ class RecentTransactionViewModel(
     val uiState = _uiState.asStateFlow()
 
     /**
-    * Stores the complete, unfiltered list of transactions for the selected account.
-    * This is used as the source of truth when applying different filters locally.
-    */
+     * Stores the complete, unfiltered list of transactions for the selected account.
+     * This is used as the source of truth when applying different filters locally.
+     */
     private var originalTransactionList: List<Transactions> = emptyList()
 
     init {
