@@ -16,10 +16,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.toDomain
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransactionDetails
@@ -53,6 +55,7 @@ class LoanRepositoryImp(
     ): Flow<DataState<TransactionDetails>> {
         return dataManager.loanAccountsListApi
             .getLoanTransactionDetails(loanId, transactionId)
+            .map { it.toDomain() }
             .asDataStateFlow()
             .flowOn(ioDispatcher)
     }

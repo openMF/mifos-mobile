@@ -130,26 +130,25 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-        val accountNumber = this.accountNo ?: "N/A"
-        val isReversed = (this.reversed == true) || (this.manuallyReversed == true)
-        val statusKey = if (isReversed) "reversed" else "success"
-        val balance = this.outstandingLoanBalance ?: this.runningBalance
+        val statusKey = if (this.isReversed) "reversed" else "success"
+
+        // Flatten balances for the UI
+        val balance = this.balances.running
 
         return UiTransactionDetails(
             id = this.id,
             date = this.date,
             amount = this.amount,
-            typeValue = this.type?.value,
+            typeValue = this.transactionName,
             isCredit = this.isCredit,
-            currency = this.currency?.code ?: "USD",
-            accountNo = accountNumber,
+            currency = this.currencyCode,
+            accountNo = this.accountNo,
             status = statusKey,
-            externalId = this.externalId,
             outstandingBalance = balance,
-            principal = this.principalPortion,
-            interest = this.interestPortion,
-            fees = this.feeChargesPortion,
-            penalties = this.penaltyChargesPortion,
+            principal = this.balances.principal,
+            interest = this.balances.interest,
+            fees = this.balances.fee,
+            penalties = this.balances.penalty,
         )
     }
 
@@ -171,6 +170,5 @@ data class UiTransactionDetails(
     val interest: Double? = null,
     val fees: Double? = null,
     val penalties: Double? = null,
-    val externalId: String? = null,
     val outstandingBalance: Double? = null,
 )
