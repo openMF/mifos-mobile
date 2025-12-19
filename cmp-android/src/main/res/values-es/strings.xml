@@ -58,7 +58,7 @@
     <string name="purpose_of_loan">Propósito del Crédito*</string>
     <string name="principal_amount">Monto de Capital*</string>
     <string name="amount">Monto</string>
-    <string name="remark">Observación</string>
+    <string name="remark">Descripción</string>
     <string name="expected_disbursement_date">Fecha esperada de dispersión</string>
     <string name="submission_date">Fecha de envio</string>
     <string name="feature_account_submitted">Enviado</string>
@@ -102,7 +102,7 @@
     <string name="search">Buscar</string>
     <string name="select_pay_to">Seleccionar Cuenta para Depositar</string>
     <string name="select_pay_from">Seleccionar Cuenta para Retirar</string>
-    <string name="enter_remarks">Ingresar Observación para Transferencia</string>
+    <string name="enter_remarks">Ingresar Descripción para Transferencia</string>
     <string name="select_beneficiary">Seleccionar Beneficiario</string>
     <string name="continue_str">Continuar</string>
     <string name="close">Cerrar</string>
