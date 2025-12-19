@@ -67,7 +67,7 @@
     <!-- Account Details -->
     <string name="feature_loan_type_label">Tipo de Crédito</string>
     <string name="feature_loan_scheme_label">Esquema de Crédito</string>
-    <string name="feature_loan_account_status_label">Estado de Cuenta</string>
+    <string name="feature_loan_account_status_label">Estado de la Cuenta</string>
 
     <!-- Pay-off Details -->
     <string name="feature_loan_expected_payoff_label">Pago esperado</string>
@@ -85,13 +85,13 @@
     <string name="feature_loan_fees_waived_label">Comisión condonada</string>
 
     <!-- Paid-off Details -->
-    <string name="feature_loan_interest_paid_off_label">Interes pagado</string>
+    <string name="feature_loan_interest_paid_off_label">Interés pagado</string>
     <string name="feature_loan_principal_paid_off_label">Capital pagado</string>
 
     <!-- Outstanding Details -->
-    <string name="feature_loan_interest_outstanding_label">Interés Pendiente</string>
-    <string name="feature_loan_principal_outstanding_label">Capital Pendiente</string>
-    <string name="feature_loan_total_outstanding_label">Total Pendiente</string>
+    <string name="feature_loan_interest_outstanding_label">Interés pendiente</string>
+    <string name="feature_loan_principal_outstanding_label">Capital pendiente</string>
+    <string name="feature_loan_total_outstanding_label">Total pendiente</string>
 
     <!-- Installment Details -->
     <string name="feature_loan_regular_payment_label">Pago Normal</string>
