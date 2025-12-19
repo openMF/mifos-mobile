@@ -14,7 +14,6 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
@@ -30,6 +29,8 @@ import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTr
 import org.mifos.mobile.feature.accounts.accounts.AccountNavRoute
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
+import org.mifos.mobile.feature.accounts.transactionDetail.navigateToTransactionDetails
+import org.mifos.mobile.feature.accounts.transactionDetail.transactionDetailDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
@@ -163,6 +164,17 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         accountTransactionsDestination(
             navigateBack = navController::popBackStack,
+            navigateToDetails = { transactionId, accountType, accountId ->
+                navController.navigateToTransactionDetails(
+                    transactionId = transactionId,
+                    accountType = accountType,
+                    accountId = accountId,
+                )
+            },
+        )
+
+        transactionDetailDestination(
+            navigateBack = navController::popBackStack,
         )
 
         clientChargeNavGraph(
@@ -273,6 +285,13 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         recentTransactionNavGraph(
             navController = navController,
+            navigateToDetails = { transactionId, accountType, accountId ->
+                navController.navigateToTransactionDetails(
+                    transactionId = transactionId,
+                    accountType = accountType,
+                    accountId = accountId,
+                )
+            },
         )
 
         beneficiaryNavGraph(

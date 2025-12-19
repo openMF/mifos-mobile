@@ -44,6 +44,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,6 +62,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction
+import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionEvent
 import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState
 import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
@@ -77,11 +79,22 @@ import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionVi
 @Composable
 fun RecentTransactionScreen(
     navigateBack: () -> Unit,
+    navigateToDetails: (String, String, Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecentTransactionViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    LaunchedEffect(viewModel.eventFlow) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is RecentTransactionEvent.NavigateToDetails -> {
+                    navigateToDetails(event.transactionId, event.accountType, event.accountId)
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -158,7 +171,9 @@ fun RecentTransactionScreen(
                 is RecentTransactionUiState.ViewState.Content -> {
                     TransactionList(
                         transactions = viewState.list,
-
+                        onTransactionClick = { transaction ->
+                            viewModel.handleAction(RecentTransactionAction.OnTransactionClick(transaction))
+                        },
                     )
                 }
             }
@@ -265,6 +280,7 @@ private fun formatDate(dateList: List<Int>?): String {
 fun TransactionList(
     transactions: List<Transactions>,
     modifier: Modifier = Modifier,
+    onTransactionClick: (Transactions) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -275,6 +291,7 @@ fun TransactionList(
 
             TransactionItem(
                 transaction = transaction,
+                onClick = { onTransactionClick(transaction) },
             )
 
             if (index != transactions.size - 1) {

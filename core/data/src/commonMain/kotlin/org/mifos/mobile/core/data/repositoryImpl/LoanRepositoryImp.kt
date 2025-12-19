@@ -22,6 +22,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
@@ -45,6 +46,16 @@ class LoanRepositoryImp(
             emit(DataState.Error(exception))
         }
     }.flowOn(ioDispatcher)
+
+    override fun getLoanTransactionDetails(
+        loanId: Long,
+        transactionId: Long,
+    ): Flow<DataState<TransactionDetails>> {
+        return dataManager.loanAccountsListApi
+            .getLoanTransactionDetails(loanId, transactionId)
+            .asDataStateFlow()
+            .flowOn(ioDispatcher)
+    }
 
     override suspend fun withdrawLoanAccount(
         loanId: Long?,

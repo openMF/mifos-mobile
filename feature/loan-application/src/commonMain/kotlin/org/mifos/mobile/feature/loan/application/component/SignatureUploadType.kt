@@ -9,6 +9,9 @@
  */
 package org.mifos.mobile.feature.loan.application.component
 
+/**
+ * Defines the available methods for providing a user signature during the loan application.
+ */
 enum class SignatureUploadType {
     SIGN,
     CAPTURE,
