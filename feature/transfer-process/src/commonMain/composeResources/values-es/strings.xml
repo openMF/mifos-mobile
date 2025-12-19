@@ -21,16 +21,16 @@
     <string name="pay_to">Pagar a Cuenta</string>
     <string name="remarks">Descripciones</string>
     <string name="error_icon_description">Error</string>
-    <string name="error_description">El monto no debe tener caracteres invalidos</string>
+    <string name="error_description">El monto no debe tener caracteres inválidos</string>
 
     <string name="transfer_failed">Transferencia Fallida</string>
-    <string name="transfer_successful">Transfencia Exitosa</string>
+    <string name="transfer_successful">Transferencia Exitosa</string>
     <string name="back_to_accounts">Regresar al Inicio</string>
     <string name="transfer_id_prefix">Id de la Transferencia:</string>
 
     <string name="feature_make_transfer_error_amount_required">Monto es requerido</string>
-    <string name="feature_make_transfer_error_amount_invalid">Ingresa un monto valido</string>
-    <string name="feature_make_transfer_error_remarks_empty">Descripción no puede esta vacía</string>
-    <string name="feature_make_transfer_error_remarks_invalid">Descripción invalida</string>
+    <string name="feature_make_transfer_error_amount_invalid">Ingresa un monto válido</string>
+    <string name="feature_make_transfer_error_remarks_empty">Descripción no puede estar vacía</string>
+    <string name="feature_make_transfer_error_remarks_invalid">Descripción inválida</string>
     <string name="feature_make_transfer_error_server">El problema del servidor de nuestra parte no puede continuar. Inténtalo nuevamente después de un momento.</string>
 </resources>
