@@ -43,6 +43,8 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_principal_amount
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_title
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_message
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
@@ -177,7 +179,8 @@ internal fun LoanAccountDialog(
         is LoanApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_loan_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_loan_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(LoanApplicationAction.DismissDialog) },
                 onConfirm = { onAction(LoanApplicationAction.ConfirmNavigation) },
@@ -215,7 +218,9 @@ internal fun LoanAccountContent(
             }
         },
     ) {
-        if (state.loanApplicationDialogState == null) {
+        if (state.loanApplicationDialogState != LoanApplicationDialogState.Loading
+            && state.loanApplicationDialogState != LoanApplicationDialogState.Network
+        ) {
             Column(
                 modifier = Modifier
                     .padding(DesignToken.padding.large)
