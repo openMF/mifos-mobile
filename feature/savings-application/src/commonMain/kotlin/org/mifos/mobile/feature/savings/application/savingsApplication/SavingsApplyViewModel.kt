@@ -24,7 +24,6 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_too_many_attempts
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -506,9 +505,7 @@ internal class SavingsApplyViewModel(
         if (state.hasChanges) {
             mutableStateFlow.update {
                 it.copy(
-                    savingsApplicationDialogState = SavingsApplicationDialogState.UnsavedChanges(
-                        Res.string.feature_apply_savings_unsaved_changes_message,
-                    ),
+                    savingsApplicationDialogState = SavingsApplicationDialogState.UnsavedChanges,
                 )
             }
         } else {
@@ -611,9 +608,8 @@ internal sealed interface SavingsApplicationDialogState {
 
     /**
      * Represents a dialog to confirm navigation with unsaved changes.
-     * @property message The [StringResource] for the confirmation message.
      */
-    data class UnsavedChanges(val message: StringResource) : SavingsApplicationDialogState
+    data object UnsavedChanges : SavingsApplicationDialogState
 }
 
 /**

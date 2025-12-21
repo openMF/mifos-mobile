@@ -20,7 +20,6 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_submit_failed
-import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_unsaved_changes_message
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -326,9 +325,7 @@ internal class ShareApplyViewModel(
         if (state.hasChanges) {
             mutableStateFlow.update {
                 it.copy(
-                    dialogState = ShareApplicationDialogState.UnsavedChanges(
-                        Res.string.feature_apply_share_unsaved_changes_message,
-                    ),
+                    dialogState = ShareApplicationDialogState.UnsavedChanges,
                 )
             }
         } else {
@@ -429,9 +426,8 @@ sealed interface ShareApplicationUiState {
 internal sealed interface ShareApplicationDialogState {
     /**
      * Represents a dialog to confirm navigation with unsaved changes.
-     * @property message The [StringResource] for the confirmation message.
      */
-    data class UnsavedChanges(val message: StringResource) : ShareApplicationDialogState
+    data object UnsavedChanges : ShareApplicationDialogState
 }
 
 /**
