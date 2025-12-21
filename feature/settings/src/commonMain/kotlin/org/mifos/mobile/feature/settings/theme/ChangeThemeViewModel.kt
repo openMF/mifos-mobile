@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_based_on_time
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_dark
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_light
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_system
@@ -136,6 +137,7 @@ internal data class ThemeState(
             MifosThemeConfig.FOLLOW_SYSTEM to Res.string.feature_settings_theme_system,
             MifosThemeConfig.DARK to Res.string.feature_settings_theme_dark,
             MifosThemeConfig.LIGHT to Res.string.feature_settings_theme_light,
+            MifosThemeConfig.BASED_ON_TIME to Res.string.feature_settings_theme_based_on_time,
         )
 }
 

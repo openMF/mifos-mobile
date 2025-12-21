@@ -209,4 +209,5 @@
     <string name="feature_settings_theme_dark">Dark Theme</string>
     <string name="feature_settings_theme_system">Default System Theme</string>
     <string name="feature_settings_apply_theme">Apply Theme</string>
+    <string name="feature_settings_theme_based_on_time">Based on Time</string>
 </resources>

@@ -114,6 +114,15 @@ object DateHelper {
         )
     }
 
+    @OptIn(ExperimentalTime::class)
+    fun isDarkModeBasedOnTime(): Boolean {
+        val time = Clock.System.now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .time.hour
+
+        return time !in 6..18
+    }
+
     private val monthMap = mapOf(
         "Jan" to 1, "Feb" to 2, "Mar" to 3, "Apr" to 4,
         "May" to 5, "Jun" to 6, "Jul" to 7, "Aug" to 8,

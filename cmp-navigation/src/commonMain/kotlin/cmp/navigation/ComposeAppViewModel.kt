@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LanguageConfig
@@ -153,6 +154,7 @@ class ComposeAppViewModel(
             }
             MifosThemeConfig.DARK -> true
             MifosThemeConfig.LIGHT -> false
+            MifosThemeConfig.BASED_ON_TIME -> DateHelper.isDarkModeBasedOnTime()
         }
 
         mutableStateFlow.update {
