@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
+import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_unsaved_changes_message
+import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_unsaved_changes_title
 import mifos_mobile.feature.share_application.generated.resources.feature_share_button_next
 import mifos_mobile.feature.share_application.generated.resources.feature_share_label_applicant_name
 import mifos_mobile.feature.share_application.generated.resources.feature_share_label_product_name
@@ -107,7 +109,8 @@ internal fun ShareApplicationDialog(
         is ShareApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_share_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_share_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(ShareApplicationAction.DismissDialog) },
                 onConfirm = { onAction(ShareApplicationAction.ConfirmNavigation) },
