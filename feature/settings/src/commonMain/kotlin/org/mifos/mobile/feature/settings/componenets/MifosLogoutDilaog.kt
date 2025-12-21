@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_action
@@ -33,7 +32,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 
@@ -102,7 +100,6 @@ fun MifosLogoutDialog(
                 Text(
                     text = stringResource(visibilityState.title),
                     style = MifosTypography.headlineSmallEmphasized,
-                    color = AppColors.customBlack,
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("AlertTitleText"),
@@ -118,7 +115,6 @@ fun MifosLogoutDialog(
                         .testTag("AlertContentText"),
                 )
             },
-            containerColor = Color.White,
             shape = DesignToken.shapes.medium,
         )
     }
