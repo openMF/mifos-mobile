@@ -11,10 +11,10 @@ package org.mifos.mobile.core.data.mapper
 
 import org.mifos.mobile.core.model.entity.TransactionBalances
 import org.mifos.mobile.core.model.entity.TransactionDetails
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanTransactionDetailsDto
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsTransactionDetailsDto
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanTransactionDetailsResponse
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsTransactionDetailsResponse
 
-fun LoanTransactionDetailsDto.toDomain(): TransactionDetails {
+fun LoanTransactionDetailsResponse.toDomain(): TransactionDetails {
     val type = this.loanType
 
     val isCreditResolved = when {
@@ -43,7 +43,7 @@ fun LoanTransactionDetailsDto.toDomain(): TransactionDetails {
     )
 }
 
-fun SavingsTransactionDetailsDto.toDomain(): TransactionDetails {
+fun SavingsTransactionDetailsResponse.toDomain(): TransactionDetails {
     val type = this.savingsType
 
     val code = type?.code?.lowercase().orEmpty()

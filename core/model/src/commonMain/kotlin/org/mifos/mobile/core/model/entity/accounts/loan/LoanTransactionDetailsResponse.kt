@@ -13,7 +13,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoanTransactionDetailsDto(
+data class LoanTransactionDetailsResponse(
     val id: Long,
     val amount: Double? = null,
     val date: List<Int>? = null,
@@ -25,5 +25,5 @@ data class LoanTransactionDetailsDto(
     val penaltyChargesPortion: Double? = null,
     val currency: Currency? = null,
     @SerialName("type")
-    val loanType: LoanTypeDto? = null,
+    val loanType: LoanTypeResponse? = null,
 )

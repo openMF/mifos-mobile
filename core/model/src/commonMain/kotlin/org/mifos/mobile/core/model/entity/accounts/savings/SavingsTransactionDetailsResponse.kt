@@ -9,17 +9,18 @@
  */
 package org.mifos.mobile.core.model.entity.accounts.savings
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SavingsTypeDto(
-    val value: String? = null,
-    val code: String? = null,
-    val deposit: Boolean = false,
-    val withdrawal: Boolean = false,
-    val feeDeduction: Boolean = false,
-    val initiateTransfer: Boolean = false,
-    val approveTransfer: Boolean = false,
-    val withdrawTransfer: Boolean = false,
-    val rejectTransfer: Boolean = false,
+data class SavingsTransactionDetailsResponse(
+    val id: Long,
+    val accountNo: String? = null,
+    val amount: Double? = null,
+    val date: List<Int>? = null,
+    val reversed: Boolean? = null,
+    val runningBalance: Double? = null,
+    val currency: Currency? = null,
+    @SerialName("transactionType")
+    val savingsType: SavingsTypeResponse? = null,
 )
