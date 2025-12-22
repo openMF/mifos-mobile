@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.RealEstateAgent
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.WifiOff
@@ -253,6 +254,8 @@ object MifosIcons {
     val QuestionCircle = FluentIcons.Filled.QuestionCircle
     val ChatMultiple = FluentIcons.Filled.ChatMultiple
     val AppRecent = FluentIcons.Filled.AppRecent
+
+    val RateUs = Icons.Filled.Star
     val SignOut = FluentIcons.Filled.SignOut
 
     val Receipt = FluentIcons.Regular.Receipt
