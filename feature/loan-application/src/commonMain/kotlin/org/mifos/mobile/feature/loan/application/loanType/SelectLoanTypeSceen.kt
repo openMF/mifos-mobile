@@ -185,6 +185,7 @@ internal fun SelectLoanTypeScreenContent(
                             LazyVerticalStaggeredGrid(
                                 columns = StaggeredGridCells.Fixed(2),
                                 horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                                verticalItemSpacing = DesignToken.spacing.medium,
                                 content = {
                                     items(productOptions) { loanType ->
                                         MifosExploreCard(

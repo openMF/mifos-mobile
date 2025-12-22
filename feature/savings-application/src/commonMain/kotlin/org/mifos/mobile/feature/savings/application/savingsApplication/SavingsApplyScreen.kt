@@ -32,6 +32,8 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_savings_product
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_title
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -124,7 +126,8 @@ internal fun SavingsAccountDialog(
         is SavingsApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_savings_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_savings_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(SavingsApplicationAction.DismissDialog) },
                 onConfirm = { onAction(SavingsApplicationAction.ConfirmNavigation) },

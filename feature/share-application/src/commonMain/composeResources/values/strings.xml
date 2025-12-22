@@ -26,6 +26,7 @@
     <string name="feature_apply_share_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
     <string name="feature_apply_share_error_submit_failed">Failed to submit savings application. Please try again.</string>
 
+    <string name="feature_apply_share_unsaved_changes_title">Unsaved Changes!</string>
     <string name="feature_apply_share_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
     <string name="feature_share_no_products_available">No Share Products Available for applying share account</string>
 
