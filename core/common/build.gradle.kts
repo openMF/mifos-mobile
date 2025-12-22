@@ -42,10 +42,12 @@ kotlin {
             api(libs.jb.kotlin.stdlib)
             api(libs.kotlinx.datetime)
             implementation(libs.jb.composeRuntime)
+            implementation(libs.paging.common)
         }
 
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.paging.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

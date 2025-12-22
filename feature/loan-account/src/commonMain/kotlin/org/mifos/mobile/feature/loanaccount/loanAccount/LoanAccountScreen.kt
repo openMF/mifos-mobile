@@ -87,6 +87,9 @@ fun LoanAccountScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    val pagingItems =
+        state.accountsFlow?.collectAsLazyPagingItems()
+
     LaunchedEffect(refreshSignal) {
         if (state.firstLaunch) {
             viewModel.trySendAction(LoanAccountsAction.OnFirstLaunched)

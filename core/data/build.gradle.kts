@@ -37,6 +37,7 @@ kotlin {
             api(projects.core.model)
             implementation(projects.core.network)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.paging.common)
         }
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)

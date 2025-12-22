@@ -10,7 +10,12 @@
 package org.mifos.mobile.feature.loanaccount.loanAccount
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.filter
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
@@ -23,6 +28,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.accounts.AccountUiModel
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -45,7 +51,7 @@ class LoanAccountsViewmodel(
 ) : BaseViewModel<LoanAccountsState, LoanAccountsEvent, LoanAccountsAction>(
     initialState = LoanAccountsState(
         clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
-        loanAccounts = emptyList(),
+//        loanAccounts = emptyList(),
     ),
 ) {
 
@@ -91,9 +97,6 @@ class LoanAccountsViewmodel(
 
             is LoanAccountsAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
 
-            is LoanAccountsAction.Internal.ReceiveLoanAccounts -> {
-                handleReceivedAccounts(action.dataState, action.filters)
-            }
         }
     }
 
@@ -178,84 +181,53 @@ class LoanAccountsViewmodel(
     private fun loadAccounts(
         selectedFilters: List<StringResource?>,
     ) {
-        viewModelScope.launch {
-            updateState { it.copy(uiState = ScreenUiState.Loading) }
-            accountsRepositoryImpl.loadAccounts(
-                clientId = state.clientId ?: return@launch,
-                accountType = Constants.LOAN_ACCOUNTS,
-            ).collect { clientAccounts ->
-                sendAction(
-                    LoanAccountsAction.Internal.ReceiveLoanAccounts(
-                        filters = selectedFilters,
-                        dataState = clientAccounts,
-                    ),
+
+        val clientId = state.clientId ?: return
+
+        val flow =
+            accountsRepositoryImpl
+                .loadAccounts(
+                    clientId = clientId,
+                    accountType = Constants.LOAN_ACCOUNTS
                 )
-            }
+                .map { pagingData ->
+                    pagingData.filter { account ->
+                        filterAccounts(account, selectedFilters)
+                    }
+                }
+                .cachedIn(viewModelScope)
+
+        updateState {
+            it.copy(
+                accountsFlow = flow,
+                selectedFilters = selectedFilters
+            )
         }
     }
 
-    /**
-     * Handles the result of the repository call and updates the state.
-     *
-     * @param dataState Result of fetching loan accounts (Success, Error, Loading).
-     * @param selectedFilters Filters applied to the list.
-     */
-    private fun handleReceivedAccounts(
-        dataState: DataState<ClientAccounts>,
-        selectedFilters: List<StringResource?>,
-    ) {
-        sendEvent(LoanAccountsEvent.LoadingCompleted)
-        when (dataState) {
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
-            }
+    fun onVisibleItemsChanged(items: List<AccountUiModel>) {
+        val loans = items.filterIsInstance<AccountUiModel.Loan>()
+        if (loans.isEmpty()) return
 
-            DataState.Loading -> {
-                updateState {
-                    it.copy(uiState = ScreenUiState.Loading)
-                }
-            }
+        val amount = loans.sumOf { it.data.loanBalance }
 
-            is DataState.Success -> {
-                val loanAccounts = dataState.data.loanAccounts
-                val filtered = filterAccounts(selectedFilters, loanAccounts)
-                updateState {
-                    it.copy(
-                        decimals = filtered.firstOrNull()?.currency?.decimalPlaces?.toInt() ?: 2,
-                    )
-                }
-                if (loanAccounts.isNotEmpty()) {
-                    getTotalLoanAmount(dataState.data.loanAccounts)
-                }
-                updateState {
-                    val isEmptyAccounts = loanAccounts.isEmpty()
-                    val isFilteredEmpty = filtered.isEmpty()
+        val currency = loans.first().data.currency
+        val formatted = CurrencyFormatter.format(
+            amount,
+            currency?.code,
+            currency?.decimalPlaces?.toInt() ?: 2
+        )
 
-                    it.copy(
-                        items = filtered.size,
-                        isFilteredEmpty = isFilteredEmpty,
-                        currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
-                        loanAccounts = filtered,
-                        originalAccounts = loanAccounts,
-                        selectedFilters = selectedFilters,
-                        uiState = if (isEmptyAccounts) {
-                            ScreenUiState.Empty
-                        } else {
-                            ScreenUiState.Success
-                        },
-                    )
-                }
-            }
+        updateState {
+            it.copy(
+                totalLoanAmount = formatted,
+                currency = currency?.displaySymbol,
+                decimals = currency?.decimalPlaces?.toInt() ?: 2
+            )
         }
     }
+
+
 
     /**
      * Filters the accounts based on the selected filters (status).
@@ -265,18 +237,19 @@ class LoanAccountsViewmodel(
      * @return List of accounts that match the applied filters.
      */
     private fun filterAccounts(
-        selectedFilters: List<StringResource?>,
-        accounts: List<LoanAccount>,
-    ): List<LoanAccount> {
-        val filteredByStatus = if (selectedFilters.isNotEmpty()) {
-            selectedFilters
-                .mapNotNull { FilterUtil.fromLabel(it) }
-                .flatMap { filter -> accounts.filter(filter.matchCondition) }
-        } else {
-            accounts
-        }
+        account: AccountUiModel,
+        selectedFilters: List<StringResource?>
+    ): Boolean {
+        if (selectedFilters.isEmpty()) return true
 
-        return filteredByStatus.distinct()
+        return when (account) {
+            is AccountUiModel.Loan ->
+                selectedFilters
+                    .mapNotNull { FilterUtil.fromLabel(it) }
+                    .any { it.matchCondition(account.data) }
+
+            else -> false
+        }
     }
 
     /**
@@ -325,8 +298,11 @@ class LoanAccountsViewmodel(
  * @property uiState The overall state of the screen.
  */
 data class LoanAccountsState(
-    val loanAccounts: List<LoanAccount>?,
-    val originalAccounts: List<LoanAccount>? = null,
+
+    val accountsFlow: Flow<PagingData<AccountUiModel>>? = null,
+
+//    val loanAccounts: List<LoanAccount>?,
+//    val originalAccounts: List<LoanAccount>? = null,
     val isFilteredEmpty: Boolean = false,
 
     val firstLaunch: Boolean = true,
@@ -433,22 +409,6 @@ sealed interface LoanAccountsAction {
      */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : LoanAccountsAction
 
-    /**
-     * Internal-only actions triggered by repository/data flow.
-     */
-    sealed interface Internal : LoanAccountsAction {
-
-        /**
-         * Action to receive the loan accounts from the repository.
-         *
-         * @param filters The filters that were applied.
-         * @param dataState The result of the data fetch.
-         */
-        data class ReceiveLoanAccounts(
-            val filters: List<StringResource?>,
-            val dataState: DataState<ClientAccounts>,
-        ) : LoanAccountsAction
-    }
 }
 
 /**

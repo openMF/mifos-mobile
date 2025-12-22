@@ -31,6 +31,7 @@ kotlin {
             api(projects.core.model)
             api(projects.core.common)
             implementation(projects.core.qrcode)
+            implementation(libs.paging.compose)
         }
     }
 }

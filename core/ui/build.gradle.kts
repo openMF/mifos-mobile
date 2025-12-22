@@ -28,6 +28,7 @@ kotlin{
             implementation(libs.androidx.compose.runtime)
             implementation(libs.accompanist.pager)
             implementation(libs.google.oss.licenses)
+            implementation(libs.paging.compose)
         }
         commonMain.dependencies {
             api(projects.core.designsystem)
@@ -47,6 +48,7 @@ kotlin{
             implementation(libs.filekit.dialog.compose)
             implementation(libs.compottie.resources)
             implementation(libs.compottie.lite)
+            implementation(libs.paging.common)
         }
     }
 }

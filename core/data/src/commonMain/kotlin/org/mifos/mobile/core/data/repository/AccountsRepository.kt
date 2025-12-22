@@ -9,11 +9,13 @@
  */
 package org.mifos.mobile.core.data.repository
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.model.entity.accounts.AccountUiModel
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 
 interface AccountsRepository {
 
-    fun loadAccounts(clientId: Long?, accountType: String?): Flow<DataState<ClientAccounts>>
+    fun loadAccounts(clientId: Long?, accountType: String?): Flow<PagingData<AccountUiModel>>
 }

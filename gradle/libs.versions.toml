@@ -64,6 +64,7 @@ kotlinxDatetime = "0.7.1"
 kotlinxImmutable = "0.3.8"
 kotlinxSerializationJson = "1.8.1"
 ksp = "2.1.20-2.0.1"
+paging = "3.4.0-beta01"
 
 # Ktor & Ktorfit
 ktorVersion = "3.1.2"
@@ -198,7 +199,9 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 twitter-detekt-compose = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "twitter-detekt-compose" }
 ui = { module = "com.attafitamim.krop:ui", version.ref = "uiVersion" }
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
-
+paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+paging-testing = { module = "androidx.paging:paging-testing", version.ref = "paging" }
 # [New KMP Dependencies]
 
 # jb Compose
