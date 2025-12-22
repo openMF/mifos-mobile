@@ -33,8 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.cancel
+import mifos_mobile.feature.settings.generated.resources.dialog_action_ok
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme
 import mifos_mobile.feature.settings.generated.resources.feature_settings_apply_theme
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_apply
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_ends_at
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_starts_at
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_time
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.datastore.model.TimeBasedTheme
@@ -174,20 +180,20 @@ fun TimeBasedThemeDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Choose Dark Mode Time",
+                text = stringResource(Res.string.feature_settings_theme_choose_dark_mode_time),
                 style = MifosTypography.titleLarge,
             )
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 TimeRow(
-                    label = "Dark mode starts at",
+                    label = stringResource(Res.string.feature_settings_theme_choose_dark_mode_starts_at),
                     time = "$startHour:$startMinute",
                     onClick = { showStartPicker = true },
                 )
 
                 TimeRow(
-                    label = "Dark mode ends at",
+                    label = stringResource(Res.string.feature_settings_theme_choose_dark_mode_ends_at),
                     time = "$endHour:$endMinute",
                     onClick = { showEndPicker = true },
                 )
@@ -206,7 +212,7 @@ fun TimeBasedThemeDialog(
                     )
                 },
             ) {
-                Text("Apply")
+                Text(stringResource(Res.string.feature_settings_theme_apply))
             }
         },
         dismissButton = {
@@ -214,7 +220,7 @@ fun TimeBasedThemeDialog(
                 onClick = onDismiss,
                 colors = androidx.compose.material3.ButtonDefaults.textButtonColors(),
             ) {
-                Text("Cancel")
+                Text(stringResource(Res.string.cancel))
             }
         },
     )
@@ -299,7 +305,7 @@ private fun TimePickerDialog(
                     onConfirm(state.hour, state.minute)
                 },
             ) {
-                Text("OK")
+                Text(stringResource(Res.string.dialog_action_ok))
             }
         },
         dismissButton = {
@@ -307,7 +313,7 @@ private fun TimePickerDialog(
                 onClick = onDismiss,
                 colors = androidx.compose.material3.ButtonDefaults.textButtonColors(),
             ) {
-                Text("Cancel")
+                Text(stringResource(Res.string.cancel))
             }
         },
         text = {
