@@ -66,7 +66,6 @@ class ClientChargeRepositoryImp(
     override fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
-                // response.charges is already List<Charge>
                 DataState.Success(response.charges)
             }
             .catch { exception ->

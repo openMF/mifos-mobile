@@ -353,7 +353,6 @@ internal class AccountsTransactionViewModel(
             }
             DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Success -> {
-                // MAP ShareTransactions -> UiTransaction
                 val transactions = dataState.data.purchasedShares.map { it.toUiTransaction(dataState.data.currency) }
 
                 val groupedTransactions = transactions.groupBy { transaction ->
@@ -401,9 +400,9 @@ internal class AccountsTransactionViewModel(
         type = null,
         typeValue = type?.value,
         isCredit = when {
-            type?.value?.contains("Purchase", ignoreCase = true) == true -> false // Red (Debit)
-            type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false // Red (Debit)
-            else -> true // Green (Credit)
+            type?.value?.contains("Purchase", ignoreCase = true) == true -> false
+            type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false
+            else -> true
         },
         currency = currency?.code ?: "USD",
     )

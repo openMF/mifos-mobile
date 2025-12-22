@@ -133,7 +133,6 @@ internal fun ShareAccountDetailsContent(
                         isActive = state.isActive,
                     )
 
-                    // (Bottom Section)
                     ShareAccountActions(
                         visibleActions = state.allowedActions,
                         onActionClick = { onAction(ShareAccountDetailsAction.OnNavigateToAction(it)) },
