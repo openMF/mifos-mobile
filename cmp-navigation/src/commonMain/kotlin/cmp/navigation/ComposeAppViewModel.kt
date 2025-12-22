@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -47,6 +48,11 @@ class ComposeAppViewModel(
     init {
         networkStatus
             .onEach { handleNetworkStatus(it) }
+            .launchIn(viewModelScope)
+
+        userPreferencesRepository
+            .observeTimeBasedThemeConfig
+            .onEach { trySendAction(AppAction.Internal.TimeBasedThemeUpdate(it)) }
             .launchIn(viewModelScope)
 
         userPreferencesRepository
@@ -138,6 +144,30 @@ class ComposeAppViewModel(
             is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
 
             is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
+
+            is AppAction.Internal.TimeBasedThemeUpdate -> handleTimeBasedThemeUpdate(action)
+        }
+    }
+
+    private fun handleTimeBasedThemeUpdate(action: AppAction.Internal.TimeBasedThemeUpdate) {
+        val currentThemeConfig = mutableStateFlow.value.themeConfig
+
+        val isDark = if (currentThemeConfig == MifosThemeConfig.BASED_ON_TIME) {
+            DateHelper.isDarkModeBasedOnTime(
+                startHour = action.timeBasedTheme.hourStart,
+                startMinute = action.timeBasedTheme.timeStart,
+                endHour = action.timeBasedTheme.hourEnd,
+                endMinute = action.timeBasedTheme.timeEnd,
+            )
+        } else {
+            mutableStateFlow.value.darkTheme
+        }
+
+        mutableStateFlow.update {
+            it.copy(
+                darkTheme = isDark,
+                timeBasedTheme = action.timeBasedTheme,
+            )
         }
     }
 
@@ -148,13 +178,20 @@ class ComposeAppViewModel(
     }
 
     private fun handleAppThemeUpdated(action: AppAction.Internal.ThemeUpdate) {
+        val state = mutableStateFlow.value
+
         val isDark = when (action.theme) {
-            MifosThemeConfig.FOLLOW_SYSTEM -> {
-                mutableStateFlow.value.darkTheme
-            }
+            MifosThemeConfig.FOLLOW_SYSTEM -> state.darkTheme
             MifosThemeConfig.DARK -> true
             MifosThemeConfig.LIGHT -> false
-            MifosThemeConfig.BASED_ON_TIME -> DateHelper.isDarkModeBasedOnTime()
+            MifosThemeConfig.BASED_ON_TIME -> {
+                DateHelper.isDarkModeBasedOnTime(
+                    startHour = state.timeBasedTheme.hourStart,
+                    startMinute = state.timeBasedTheme.timeStart,
+                    endHour = state.timeBasedTheme.hourEnd,
+                    endMinute = state.timeBasedTheme.timeEnd,
+                )
+            }
         }
 
         mutableStateFlow.update {
@@ -163,6 +200,7 @@ class ComposeAppViewModel(
                 themeConfig = action.theme,
             )
         }
+
         sendEvent(AppEvent.UpdateAppTheme(osValue = action.theme.osValue))
     }
 
@@ -184,6 +222,12 @@ data class AppState(
     val isDynamicColorsEnabled: Boolean,
     val networkBanner: NetworkBannerState = NetworkBannerState.None,
     val themeConfig: MifosThemeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
+    val timeBasedTheme: TimeBasedTheme = TimeBasedTheme(
+        hourStart = 6,
+        hourEnd = 18,
+        timeStart = 0,
+        timeEnd = 0,
+    ),
 )
 
 sealed interface AppEvent {
@@ -212,5 +256,9 @@ sealed interface AppAction {
         ) : Internal()
 
         data class SystemThemeUpdate(val isSystemDark: Boolean) : Internal()
+
+        data class TimeBasedThemeUpdate(
+            val timeBasedTheme: TimeBasedTheme,
+        ) : Internal()
     }
 }

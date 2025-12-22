@@ -9,10 +9,12 @@
  */
 package org.mifos.mobile.core.datastore.model
 
-enum class AppTheme(
-    val themeName: String,
-) {
-    SYSTEM(themeName = "System Theme"),
-    LIGHT(themeName = "Light Theme"),
-    DARK(themeName = "Dark Theme"),
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class TimeBasedTheme(
+    val hourStart: Int,
+    val hourEnd: Int,
+    val timeStart: Int,
+    val timeEnd: Int,
+)

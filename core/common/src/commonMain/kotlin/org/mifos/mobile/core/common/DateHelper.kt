@@ -115,12 +115,27 @@ object DateHelper {
     }
 
     @OptIn(ExperimentalTime::class)
-    fun isDarkModeBasedOnTime(): Boolean {
-        val time = Clock.System.now()
+    fun isDarkModeBasedOnTime(
+        startHour: Int,
+        startMinute: Int,
+        endHour: Int,
+        endMinute: Int,
+    ): Boolean {
+        val now = Clock.System.now()
             .toLocalDateTime(TimeZone.currentSystemDefault())
-            .time.hour
+            .time
 
-        return time !in 6..18
+        val currentMinutes = now.hour * 60 + now.minute
+        val startMinutes = startHour * 60 + startMinute
+        val endMinutes = endHour * 60 + endMinute
+
+        return if (startMinutes < endMinutes) {
+            // Same-day range (e.g., 06:00 → 18:00)
+            currentMinutes in startMinutes until endMinutes
+        } else {
+            // Cross-midnight range (e.g., 18:00 → 06:00)
+            currentMinutes !in endMinutes..<startMinutes
+        }
     }
 
     private val monthMap = mapOf(
