@@ -13,11 +13,14 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpClientPlugin
 import io.ktor.client.request.HttpRequestPipeline
 import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponsePipeline
+import io.ktor.http.HttpStatusCode
 import io.ktor.util.AttributeKey
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 
 class KtorInterceptor(
     private val getToken: () -> String?,
+    private val onUnauthorized: (suspend () -> Unit)?,
 ) {
     companion object Plugin : HttpClientPlugin<Config, KtorInterceptor> {
         private const val HEADER_TENANT = "Fineract-Platform-TenantId"
@@ -39,17 +42,28 @@ class KtorInterceptor(
                     }
                 }
             }
+            scope.responsePipeline.intercept(HttpResponsePipeline.After) {
+                // Trigger onUnauthorized handler when response code is 401
+                if (context.response.status == HttpStatusCode.Unauthorized) {
+                    plugin.onUnauthorized?.invoke()
+                }
+                proceed()
+            }
         }
 
         override fun prepare(block: Config.() -> Unit): KtorInterceptor {
             val config = Config().apply(block)
-            return KtorInterceptor(config.getToken)
+            return KtorInterceptor(
+                getToken = config.getToken,
+                onUnauthorized = config.onUnauthorized,
+            )
         }
     }
 }
 
 class Config {
     lateinit var getToken: () -> String?
+    var onUnauthorized: (suspend () -> Unit)? = null
 }
 
 class KtorInterceptorRe(

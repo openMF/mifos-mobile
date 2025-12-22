@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import org.mifos.mobile.core.common.authEvent.AuthEvent
+import org.mifos.mobile.core.common.authEvent.AuthEventBus
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.model.AuthState
@@ -22,6 +24,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 class RootNavViewModel(
     userDataRepository: UserDataRepository,
+    authEventBus: AuthEventBus,
 ) : BaseViewModel<RootNavState, Unit, RootNavAction>(
     initialState = RootNavState.Splash,
 ) {
@@ -36,6 +39,14 @@ class RootNavViewModel(
                 settingsData = settingsData,
             )
         }.onEach(::handleAction)
+            .launchIn(viewModelScope)
+
+        authEventBus.events
+            .onEach { event ->
+                when (event) {
+                    AuthEvent.LoggedOut -> mutableStateFlow.update { RootNavState.Auth }
+                }
+            }
             .launchIn(viewModelScope)
     }
 

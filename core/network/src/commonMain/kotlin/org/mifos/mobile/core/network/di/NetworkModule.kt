@@ -12,6 +12,8 @@ package org.mifos.mobile.core.network.di
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.Auth
 import org.koin.dsl.module
+import org.mifos.mobile.core.common.authEvent.AuthEvent
+import org.mifos.mobile.core.common.authEvent.AuthEventBus
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.KtorfitClient
@@ -23,11 +25,17 @@ val NetworkModule = module {
 
     single<HttpClient>(KtorClient) {
         val preferencesRepository = get<UserPreferencesRepository>()
+        val authEventBus: AuthEventBus = get()
 
         ktorHttpClient.config {
             install(Auth)
             install(KtorInterceptor) {
                 getToken = { preferencesRepository.token.value }
+
+                onUnauthorized = suspend {
+                    preferencesRepository.logOut()
+                    authEventBus.emit(AuthEvent.LoggedOut)
+                }
             }
         }
     }
