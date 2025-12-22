@@ -7,19 +7,15 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.model.entity.accounts.savings
+package org.mifos.mobile.core.model.entity.accounts.loan
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SavingsTypeResponse(
+data class LoanTransactionType(
     val value: String? = null,
     val code: String? = null,
-    val deposit: Boolean = false,
-    val withdrawal: Boolean = false,
-    val feeDeduction: Boolean = false,
-    val initiateTransfer: Boolean = false,
-    val approveTransfer: Boolean = false,
-    val withdrawTransfer: Boolean = false,
-    val rejectTransfer: Boolean = false,
+    val disbursement: Boolean = false,
+    val repayment: Boolean = false,
+    val waiveCharges: Boolean = false,
 )
