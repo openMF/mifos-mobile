@@ -41,6 +41,8 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_ends_at
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_starts_at
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_choose_dark_mode_time
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_dark
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_light
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.datastore.model.TimeBasedTheme
@@ -120,23 +122,26 @@ internal fun ThemeScreenContent(
                 MifosRadioButton(
                     label = if (theme == MifosThemeConfig.BASED_ON_TIME) {
                         stringResource(labelRes) +
-                            "\nDark Mode [" +
-                            uiState.timeBasedTheme.hourStart + ":" +
-                            uiState.timeBasedTheme.timeStart +
-                            " - " +
-                            uiState.timeBasedTheme.hourEnd + ":" +
-                            uiState.timeBasedTheme.timeEnd +
-                            "]" +
-                            "\nLight Mode [" +
-                            uiState.timeBasedTheme.hourEnd + ":" +
-                            uiState.timeBasedTheme.timeEnd +
-                            " - " +
-                            uiState.timeBasedTheme.hourStart + ":" +
-                            uiState.timeBasedTheme.timeStart +
-                            "]"
+                                "\n" +
+                                stringResource(Res.string.feature_settings_theme_dark) + " [" +
+                                uiState.timeBasedTheme.hourStart + ":" +
+                                uiState.timeBasedTheme.timeStart +
+                                " - " +
+                                uiState.timeBasedTheme.hourEnd + ":" +
+                                uiState.timeBasedTheme.timeEnd +
+                                "]" +
+                                "\n" +
+                                stringResource(Res.string.feature_settings_theme_light) + " [" +
+                                uiState.timeBasedTheme.hourEnd + ":" +
+                                uiState.timeBasedTheme.timeEnd +
+                                " - " +
+                                uiState.timeBasedTheme.hourStart + ":" +
+                                uiState.timeBasedTheme.timeStart +
+                                "]"
                     } else {
                         stringResource(labelRes)
                     },
+
                     modifier = Modifier.fillMaxWidth(),
                     selected = uiState.currentTheme == theme,
                     onClick = { onAction(ThemeAction.ThemeSelection(theme)) },
