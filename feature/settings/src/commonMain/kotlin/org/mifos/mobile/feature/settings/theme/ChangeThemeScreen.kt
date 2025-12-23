@@ -117,7 +117,25 @@ internal fun ThemeScreenContent(
         ) {
             uiState.themeOptions.forEach { (theme, labelRes) ->
                 MifosRadioButton(
-                    label = stringResource(labelRes),
+                    label = if (theme == MifosThemeConfig.BASED_ON_TIME) {
+                        stringResource(labelRes) +
+                            "\nDark Mode [" +
+                            uiState.timeBasedTheme.hourStart + ":" +
+                            uiState.timeBasedTheme.timeStart +
+                            " - " +
+                            uiState.timeBasedTheme.hourEnd + ":" +
+                            uiState.timeBasedTheme.timeEnd +
+                            "]" +
+                            "\nLight Mode [" +
+                            uiState.timeBasedTheme.hourEnd + ":" +
+                            uiState.timeBasedTheme.timeEnd +
+                            " - " +
+                            uiState.timeBasedTheme.hourStart + ":" +
+                            uiState.timeBasedTheme.timeStart +
+                            "]"
+                    } else {
+                        stringResource(labelRes)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     selected = uiState.currentTheme == theme,
                     onClick = { onAction(ThemeAction.ThemeSelection(theme)) },
