@@ -122,22 +122,22 @@ internal fun ThemeScreenContent(
                 MifosRadioButton(
                     label = if (theme == MifosThemeConfig.BASED_ON_TIME) {
                         stringResource(labelRes) +
-                                "\n" +
-                                stringResource(Res.string.feature_settings_theme_dark) + " [" +
-                                uiState.timeBasedTheme.hourStart + ":" +
-                                uiState.timeBasedTheme.timeStart +
-                                " - " +
-                                uiState.timeBasedTheme.hourEnd + ":" +
-                                uiState.timeBasedTheme.timeEnd +
-                                "]" +
-                                "\n" +
-                                stringResource(Res.string.feature_settings_theme_light) + " [" +
-                                uiState.timeBasedTheme.hourEnd + ":" +
-                                uiState.timeBasedTheme.timeEnd +
-                                " - " +
-                                uiState.timeBasedTheme.hourStart + ":" +
-                                uiState.timeBasedTheme.timeStart +
-                                "]"
+                            "\n" +
+                            stringResource(Res.string.feature_settings_theme_dark) + " [" +
+                            uiState.timeBasedTheme.hourStart + ":" +
+                            uiState.timeBasedTheme.timeStart +
+                            " - " +
+                            uiState.timeBasedTheme.hourEnd + ":" +
+                            uiState.timeBasedTheme.timeEnd +
+                            "]" +
+                            "\n" +
+                            stringResource(Res.string.feature_settings_theme_light) + " [" +
+                            uiState.timeBasedTheme.hourEnd + ":" +
+                            uiState.timeBasedTheme.timeEnd +
+                            " - " +
+                            uiState.timeBasedTheme.hourStart + ":" +
+                            uiState.timeBasedTheme.timeStart +
+                            "]"
                     } else {
                         stringResource(labelRes)
                     },
