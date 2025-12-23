@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_set_new_password_action_tip
@@ -58,6 +56,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun SetPasswordScreen(
@@ -137,25 +136,25 @@ internal fun SetPasswordScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(top = DesignToken.padding.large)
-                        .padding(DesignToken.padding.large)
+                        .padding(top = KptTheme.spacing.md)
+                        .padding(KptTheme.spacing.md)
                         .statusBarsPadding(),
                 ) {
                     Text(
                         text = stringResource(Res.string.feature_set_new_password_title),
                         style = MifosTypography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = KptTheme.colorScheme.onBackground,
                     )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
                     Text(
                         text = stringResource(Res.string.feature_set_new_password_message),
                         style = MifosTypography.bodySmall,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = KptTheme.colorScheme.secondary,
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.dp24))
 
                     SetPasswordInputBox(
                         state = state,
@@ -186,13 +185,13 @@ internal fun SetPasswordInputBox(
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             MifosPasswordField(
                 label = stringResource(Res.string.feature_set_new_password_new_password_label),
                 value = state.password,
                 onValueChange = { onAction(SetPasswordAction.OnPasswordChange(it)) },
-                shape = DesignToken.shapes.medium,
+                shape = KptTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth(),
                 showPassword = state.isPasswordVisible,
                 showPasswordChange = {
@@ -228,7 +227,7 @@ internal fun SetPasswordInputBox(
             label = stringResource(Res.string.feature_set_new_password_confirm_password_label),
             value = state.confirmPassword,
             onValueChange = { onAction(SetPasswordAction.OnConfirmPasswordChange(it)) },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
             showPassword = state.isConfirmPasswordVisible,
             showPasswordChange = {
@@ -245,7 +244,7 @@ internal fun SetPasswordInputBox(
             onClick = {
                 onAction(SetPasswordAction.OnSubmit)
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_set_new_password_submit),
@@ -260,16 +259,16 @@ internal fun SetPasswordInputBox(
             Text(
                 text = stringResource(Res.string.feature_set_new_password_tip),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
+                color = KptTheme.colorScheme.secondary,
             )
 
-            Spacer(modifier = Modifier.width(DesignToken.spacing.small))
+            Spacer(modifier = Modifier.width(KptTheme.spacing.sm))
 
             Text(
                 modifier = Modifier.clickable { onAction.invoke(SetPasswordAction.OnLogIn) },
                 text = stringResource(Res.string.feature_set_new_password_action_tip),
                 style = MifosTypography.labelMediumEmphasized,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
         }
     }

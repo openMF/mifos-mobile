@@ -23,14 +23,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_due
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_installment_number
@@ -46,6 +44,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.accounts.loan.Periods
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -82,23 +81,23 @@ fun RepaymentScheduleItem(
         modifier = modifier
             .fillMaxWidth()
             .border(
-                1.dp,
-                MaterialTheme.colorScheme.secondaryContainer,
-                DesignToken.shapes.medium,
+                DesignToken.strokes.thin,
+                KptTheme.colorScheme.secondaryContainer,
+                KptTheme.shapes.medium,
             ),
     ) {
         Row(
             modifier = Modifier
-                .padding(DesignToken.padding.large)
+                .padding(KptTheme.spacing.md)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(DesignToken.sizes.iconExtraLarge)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(KptTheme.colorScheme.primary),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -128,14 +127,14 @@ fun RepaymentScheduleItem(
                             }}"
                         } ?: "-",
                     ),
-                    color = MaterialTheme.colorScheme.outline,
+                    color = KptTheme.colorScheme.outline,
                     style = MifosTypography.labelMediumEmphasized,
                 )
 
                 Text(
                     text = dueDate,
                     style = MifosTypography.labelLargeEmphasized,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = KptTheme.colorScheme.onSurface,
                 )
             }
             if (canPay) {
@@ -163,13 +162,13 @@ fun RepaymentScheduleItem(
                             stringResource(Res.string.feature_loan_due)
                         },
                         style = MifosTypography.labelSmall.copy(
-                            color = if (isPaid) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                            color = if (isPaid) AppColors.customEnable else KptTheme.colorScheme.error,
                         ),
                     )
                     Text(
                         text = amount,
                         style = MifosTypography.titleSmallEmphasized,
-                        color = if (isPaid) AppColors.customEnable else MaterialTheme.colorScheme.error,
+                        color = if (isPaid) AppColors.customEnable else KptTheme.colorScheme.error,
                     )
                 }
             }

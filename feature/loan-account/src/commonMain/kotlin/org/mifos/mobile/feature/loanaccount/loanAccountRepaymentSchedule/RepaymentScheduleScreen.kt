@@ -46,6 +46,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.RepaymentScheduleItem
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * The main composable for the repayment schedule screen.
@@ -152,13 +153,13 @@ internal fun RepaymentScreenContent(
                         .verticalScroll(rememberScrollState())
                         .padding(
                             vertical = DesignToken.padding.extraLarge,
-                            horizontal = DesignToken.padding.large,
+                            horizontal = KptTheme.spacing.md,
                         ),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     MifosDetailsCard(keyValuePairs = state.basicDetails)
 
-                    Spacer(Modifier.height(DesignToken.padding.large))
+                    Spacer(Modifier.height(KptTheme.spacing.md))
 
                     RepaymentScheduleList(
                         periods = state.getPeriods,
@@ -247,7 +248,7 @@ internal fun RepaymentDialogs(
 private fun Repayment_Preview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.padding(DesignToken.padding.large),
+            modifier = Modifier.padding(KptTheme.spacing.md),
         ) {
             RepaymentScreenContent(
                 state = RepaymentScheduleState(dialogState = null),

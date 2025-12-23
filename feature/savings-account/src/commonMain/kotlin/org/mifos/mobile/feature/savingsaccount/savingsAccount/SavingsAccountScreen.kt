@@ -24,7 +24,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.content_description_filter
@@ -61,6 +59,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the main entry point for the Savings Account list screen.
@@ -169,7 +168,7 @@ internal fun SavingsAccountContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(DesignToken.padding.large),
+            .padding(KptTheme.spacing.md),
     ) {
         when (state.uiState) {
             ScreenUiState.Loading -> {
@@ -200,7 +199,7 @@ internal fun SavingsAccountContent(
             }
 
             ScreenUiState.Success -> {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                 MifosDashboardCard(
                     isSingleLine = true,
@@ -222,7 +221,7 @@ internal fun SavingsAccountContent(
                         Text(
                             text = stringResource(Res.string.feature_savings_account),
                             style = MifosTypography.titleMediumEmphasized,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = KptTheme.colorScheme.onBackground,
                         )
                         Text(
                             text = stringResource(
@@ -230,7 +229,7 @@ internal fun SavingsAccountContent(
                                 state.items ?: 0,
                             ),
                             style = MifosTypography.labelMedium,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = KptTheme.colorScheme.secondary,
                         )
                     }
 
@@ -238,7 +237,7 @@ internal fun SavingsAccountContent(
                         Icon(
                             modifier = Modifier
                                 .clickable { filtersClicked() }
-                                .size(20.dp),
+                                .size(DesignToken.sizes.iconDp20),
                             imageVector = MifosIcons.Filter,
                             contentDescription = stringResource(Res.string.content_description_filter),
                         )
@@ -250,7 +249,7 @@ internal fun SavingsAccountContent(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.99997.dp),
+                        .height(DesignToken.strokes.thin),
                 )
 
                 if (state.isFilteredEmpty) {
@@ -272,14 +271,14 @@ internal fun SavingsAccountContent(
                             .fillMaxSize()
                             .weight(1f),
                     ) {
-                        item { Spacer(modifier = Modifier.height(DesignToken.spacing.small)) }
+                        item { Spacer(modifier = Modifier.height(KptTheme.spacing.sm)) }
 
                         items(accounts) { account ->
                             val color = when (account.status?.value) {
                                 SavingStatus.ACTIVE.status -> AppColors.customEnable
                                 SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
-                                SavingStatus.INACTIVE.status -> MaterialTheme.colorScheme.error
-                                else -> MaterialTheme.colorScheme.onSurface
+                                SavingStatus.INACTIVE.status -> KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.onSurface
                             }
 
                             val accountStatus = if (account.status?.active == true) {

@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.guarantor.generated.resources.Res
@@ -46,11 +45,13 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextField
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorType
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun AddGuarantorScreen(
@@ -148,8 +149,8 @@ private fun AddGuarantorContent(
     Column(
         modifier = modifier
             .verticalScroll(state = scrollState)
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 16.dp),
+            .padding(horizontal = KptTheme.spacing.md)
+            .padding(bottom = KptTheme.spacing.md),
     ) {
         MifosDropDownTextField(
             optionsList = guarantorTypeOptions.filter { it.id == 3L }.mapNotNull { it.value },
@@ -186,7 +187,7 @@ private fun AddGuarantorContent(
             label = stringResource(Res.string.city),
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.dp10))
 
         MifosButton(
             content = { Text(stringResource(Res.string.submit)) },

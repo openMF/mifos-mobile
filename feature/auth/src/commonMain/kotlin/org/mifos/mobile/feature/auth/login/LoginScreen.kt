@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
@@ -69,6 +67,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun LoginScreen(
@@ -176,8 +175,8 @@ private fun LoginScreenContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 100.dp)
-            .padding(DesignToken.padding.large)
+            .padding(top = DesignToken.padding.dp100)
+            .padding(KptTheme.spacing.md)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = {
@@ -204,19 +203,19 @@ fun LogoBox(
         modifier = modifier,
     ) {
         Image(
-            modifier = Modifier.height(48.dp).width(165.dp),
+            modifier = Modifier.height(DesignToken.sizes.imageDp48).width(DesignToken.sizes.imageDp165),
             painter = painterResource(
                 mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
             ),
             contentDescription = null,
         )
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.dp50))
 
         Text(
             text = stringResource(Res.string.feature_sign_in_title),
             style = MifosTypography.headlineMedium,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
@@ -224,7 +223,7 @@ fun LogoBox(
         Text(
             text = stringResource(Res.string.feature_sign_in_sub_title),
             style = MifosTypography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = KptTheme.colorScheme.secondary,
         )
     }
 }
@@ -245,7 +244,7 @@ fun InputBox(
                 onAction(LoginAction.UsernameChanged(it))
             },
             label = stringResource(Res.string.feature_sign_in_username_label),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.isError,
@@ -255,7 +254,7 @@ fun InputBox(
                         Icon(
                             imageVector = MifosIcons.ErrorCircle,
                             contentDescription = "Error",
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = KptTheme.colorScheme.error,
                         )
                     }
                 } else {
@@ -270,7 +269,7 @@ fun InputBox(
             onValueChange = {
                 onAction(LoginAction.PasswordChanged(it))
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
             showPassword = state.isPasswordVisible,
             showPasswordChange = {
@@ -288,7 +287,7 @@ fun InputBox(
                 },
             text = stringResource(Res.string.feature_sign_in_forgot_password),
             style = MifosTypography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
+            color = KptTheme.colorScheme.primary,
         )
 
         MifosButton(
@@ -297,7 +296,7 @@ fun InputBox(
             onClick = {
                 onAction(LoginAction.LoginClicked)
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_sign_in_Sign_in),
@@ -316,7 +315,7 @@ fun InputBox(
             )
 
             Spacer(
-                modifier = Modifier.width(DesignToken.spacing.extraSmall),
+                modifier = Modifier.width(KptTheme.spacing.xs),
             )
 
             Text(
@@ -325,7 +324,7 @@ fun InputBox(
                 },
                 text = stringResource(Res.string.feature_sign_in_sign_up),
                 style = MifosTypography.labelMediumEmphasized,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
         }
     }

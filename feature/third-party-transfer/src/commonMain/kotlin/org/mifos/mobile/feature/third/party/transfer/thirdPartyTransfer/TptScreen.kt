@@ -21,7 +21,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,6 +59,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function for the Third Party Transfer screen.
@@ -151,7 +151,7 @@ internal fun TprContent(
         onNavigateBack = { },
         actions = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 // TODO : once ui/ux team gives this flow uncomment and implement
 //                Image(
@@ -164,7 +164,7 @@ internal fun TprContent(
                     modifier = Modifier.clickable {
                         onAction(TptAction.OnNotificationClicked)
                     },
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                    colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                 )
             }
         },
@@ -212,7 +212,7 @@ internal fun TptForm(
 ) {
     Column(
         modifier = modifier
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
     ) {
@@ -243,14 +243,14 @@ internal fun TptForm(
         )
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
         ) {
             Text(
                 text = stringResource(Res.string.feature_tpt_tip),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
+                color = KptTheme.colorScheme.secondary,
             )
 
             Text(
@@ -260,7 +260,7 @@ internal fun TptForm(
                     },
                 text = stringResource(Res.string.feature_tpt_tip_action),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
         }
 
@@ -268,7 +268,7 @@ internal fun TptForm(
             value = state.amount,
             onValueChange = { onAction(TptAction.OnAmountChanged(it)) },
             label = stringResource(Res.string.feature_tpt_label_amount),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.amountError != null,
@@ -280,7 +280,7 @@ internal fun TptForm(
                         Icon(
                             imageVector = MifosIcons.ErrorCircle,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = KptTheme.colorScheme.error,
                         )
                     }
                 } else {
@@ -296,7 +296,7 @@ internal fun TptForm(
             value = state.remark,
             onValueChange = { onAction(TptAction.OnRemarksChanged(it)) },
             label = stringResource(Res.string.feature_tpt_label_remarks),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.remarkError != null,
@@ -308,7 +308,7 @@ internal fun TptForm(
                         Icon(
                             imageVector = MifosIcons.ErrorCircle,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = KptTheme.colorScheme.error,
                         )
                     }
                 } else {
@@ -325,7 +325,7 @@ internal fun TptForm(
                 onAction(TptAction.OnMakeTransferClicked)
             },
             enabled = state.isEnabled,
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_tpt_transfer_button),

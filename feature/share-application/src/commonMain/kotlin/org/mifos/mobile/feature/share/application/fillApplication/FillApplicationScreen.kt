@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,6 +60,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A Composable function that represents the Share Fill Application screen.
@@ -218,14 +218,14 @@ internal fun ShareFillApplicationForm(
 ) {
     Column(
         modifier = modifier
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Text(
             text = stringResource(Res.string.feature_apply_share_label_terms),
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
 
         MifosOutlineDropdown(
@@ -240,7 +240,7 @@ internal fun ShareFillApplicationForm(
             value = state.currentPrice,
             onValueChange = { onAction(ShareApplicationAction.CurrentPriceChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_current_price),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.currentPriceError != null,
@@ -256,7 +256,7 @@ internal fun ShareFillApplicationForm(
             value = state.totalNumberOfShares,
             onValueChange = { onAction(ShareApplicationAction.TotalNumberOfSharesChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_total_number_of_shares),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.sharesError != null,
@@ -284,14 +284,14 @@ internal fun ShareFillApplicationForm(
         Text(
             text = stringResource(Res.string.feature_apply_share_section_minimum_active_period),
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
 
         MifosOutlinedTextField(
             value = state.mapFrequency,
             onValueChange = { onAction(ShareApplicationAction.MapFrequencyChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_minimum_frequency),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.mapFrequencyError != null,
@@ -315,14 +315,14 @@ internal fun ShareFillApplicationForm(
         Text(
             text = stringResource(Res.string.feature_apply_share_section_lockin_period),
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
 
         MifosOutlinedTextField(
             value = state.lipFrequency,
             onValueChange = { onAction(ShareApplicationAction.LipFrequencyChange(it)) },
             label = stringResource(Res.string.feature_apply_share_label_lockin_frequency),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.lipFrequencyError != null,
@@ -349,7 +349,7 @@ internal fun ShareFillApplicationForm(
             onClick = {
                 onAction(ShareApplicationAction.NavigateToAuthentication)
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_share_button_next),

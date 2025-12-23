@@ -26,12 +26,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_loan_account
 import mifos_mobile.feature.home.generated.resources.feature_home_loan_tip
@@ -45,6 +43,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.feature.home.HomeAction
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun BottomSheetContent(
@@ -70,7 +69,7 @@ internal fun BottomSheetContent(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+            modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             BottomSheetIconContainer(
@@ -94,23 +93,23 @@ internal fun BottomSheetIconContainer(
             modifier = Modifier
                 .fillMaxWidth()
                 .border(
-                    1.dp,
-                    MaterialTheme.colorScheme.secondaryContainer,
-                    DesignToken.shapes.medium,
+                    DesignToken.strokes.thin,
+                    KptTheme.colorScheme.secondaryContainer,
+                    KptTheme.shapes.medium,
                 ),
             onClick = { onClick(it) },
             variant = CardVariant.OUTLINED,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(DesignToken.padding.large),
+                modifier = Modifier.padding(KptTheme.spacing.md),
             ) {
                 Box(
                     modifier = Modifier.size(DesignToken.sizes.inputHeight)
                         .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            DesignToken.shapes.medium,
+                            DesignToken.strokes.thin,
+                            KptTheme.colorScheme.secondaryContainer,
+                            KptTheme.shapes.medium,
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -125,8 +124,8 @@ internal fun BottomSheetIconContainer(
                 }
                 Column(
                     horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
-                    modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+                    modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
                 ) {
                     Text(
                         text = when (it) {
@@ -134,7 +133,7 @@ internal fun BottomSheetIconContainer(
                             BottomSheetItemType.SAVINGS -> stringResource(Res.string.feature_home_saving_account)
                         },
                         style = MifosTypography.bodyMediumEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
                     Text(
@@ -143,7 +142,7 @@ internal fun BottomSheetIconContainer(
                             BottomSheetItemType.SAVINGS -> stringResource(Res.string.feature_home_savings_tip)
                         },
                         style = MifosTypography.bodySmallEmphasized,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = KptTheme.colorScheme.secondary,
                     )
                 }
             }

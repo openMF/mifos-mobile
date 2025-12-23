@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
@@ -58,6 +56,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Savings Account Details" screen.
@@ -182,8 +181,8 @@ internal fun SavingsAccountDetailsContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(DesignToken.padding.large),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                        .padding(KptTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     ActionBar(
                         isUpdatable = state.isUpdatable,
@@ -244,14 +243,14 @@ internal fun ActionBar(
                 onAction(SavingsAccountDetailsAction.OnUpdateAccount)
             },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = stringResource(Res.string.feature_account_action_update),
                 color = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
+                    KptTheme.colorScheme.primary
                 } else {
-                    MaterialTheme.colorScheme.inversePrimary
+                    KptTheme.colorScheme.inversePrimary
                 },
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -261,9 +260,9 @@ internal fun ActionBar(
                 imageVector = MifosIcons.EditRegular,
                 contentDescription = null,
                 tint = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
+                    KptTheme.colorScheme.primary
                 } else {
-                    MaterialTheme.colorScheme.inversePrimary
+                    KptTheme.colorScheme.inversePrimary
                 },
 
             )
@@ -296,7 +295,7 @@ internal fun AccountDetailsGrid(
             Text(
                 text = label,
                 style = MifosTypography.labelLargeEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = KptTheme.colorScheme.onSurface,
             )
         }
         if (details != null) {
@@ -309,7 +308,7 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .height(64.dp)
+                            .height(DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
@@ -317,7 +316,7 @@ internal fun AccountDetailsGrid(
                             AppColors
                                 .customEnable
                         } else {
-                            MaterialTheme
+                            KptTheme
                                 .colorScheme.onBackground
                         },
                     )
@@ -342,12 +341,12 @@ internal fun SavingsAccountActions(
     onActionClick: (String) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Text(
             text = "Actions",
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
         FlowRow(
             modifier = Modifier.fillMaxWidth(),

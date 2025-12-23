@@ -25,7 +25,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
@@ -56,6 +54,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the main "Settings" screen.
@@ -156,7 +155,7 @@ internal fun SettingsScreenContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(vertical = DesignToken.padding.large)
+                        .padding(vertical = KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
 
                 ) {
@@ -182,7 +181,7 @@ internal fun SettingsScreenContent(
                         HorizontalDivider(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(0.99997.dp),
+                                .height(DesignToken.strokes.thin),
                         )
                         SettingsActions(state.settingsItems) {
                             if (it.route == Constants.LOGOUT) {
@@ -220,24 +219,24 @@ internal fun SettingsProfileCard(
             modifier = Modifier
                 .size(DesignToken.sizes.profile)
                 .clip(CircleShape)
-                .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape),
+                .border(DesignToken.strokes.thin, KptTheme.colorScheme.primary, CircleShape),
         ) {
             MifosUserImage(
                 bitmap = state.profileImage,
-                modifier = Modifier.size(100.dp),
+                modifier = Modifier.size(DesignToken.sizes.imageDp100),
                 username = state.client?.displayName,
             )
         }
 
-        Spacer(modifier = Modifier.width(DesignToken.spacing.large))
+        Spacer(modifier = Modifier.width(KptTheme.spacing.md))
 
         Column(
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = state.client?.displayName ?: "",
                 style = MifosTypography.labelMediumEmphasized,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
 
 //            TODO email is not receiving from api response
@@ -246,7 +245,7 @@ internal fun SettingsProfileCard(
             Text(
                 text = stringResource(Res.string.feature_settings_customer_account_no, state.client?.accountNo ?: ""),
                 style = MifosTypography.labelMediumEmphasized,
-                color = MaterialTheme.colorScheme.secondary,
+                color = KptTheme.colorScheme.secondary,
             )
         }
     }
@@ -270,7 +269,7 @@ internal fun SettingsActions(
         ) {
             items.forEach { item ->
                 MifosActionCard(
-                    modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+                    modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,
@@ -281,7 +280,7 @@ internal fun SettingsActions(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.99997.dp),
+                        .height(DesignToken.strokes.thin),
                 )
             }
         }

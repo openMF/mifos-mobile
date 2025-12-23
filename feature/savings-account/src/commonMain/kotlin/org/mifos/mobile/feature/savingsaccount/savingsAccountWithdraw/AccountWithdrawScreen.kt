@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,6 +45,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Account Withdraw" screen.
@@ -164,9 +164,9 @@ internal fun AccountWithdrawScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large)
+                .padding(KptTheme.spacing.md)
                 .padding(top = DesignToken.padding.medium),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             MifosDetailsCard(
                 keyValuePairs = state.details,
@@ -181,12 +181,12 @@ internal fun AccountWithdrawScreenContent(
                         onAction(AccountWithdrawAction.RemarkChange(it))
                     },
                     label = stringResource(Res.string.feature_savings_withdraw_remarks_label),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                     textStyle = MifosTypography.bodyLarge,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                        errorBorderColor = MaterialTheme.colorScheme.error,
+                        focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                        unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                        errorBorderColor = KptTheme.colorScheme.error,
                     ),
                 )
                 MifosButton(
@@ -202,9 +202,9 @@ internal fun AccountWithdrawScreenContent(
                     },
 
                     enabled = state.remark.isNotBlank(),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
+                        containerColor = KptTheme.colorScheme.primary,
                     ),
                 )
             }
@@ -223,7 +223,7 @@ internal fun AccountWithdrawScreenContent(
 private fun Account_Update_Preview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
+            modifier = Modifier.fillMaxSize().padding(KptTheme.spacing.md),
         ) {
             AccountWithdrawScreenContent(
                 state = AccountWithdrawState(accountId = -1L, dialogState = null),

@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_authorization_passcode
@@ -42,6 +41,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that manages the "Update Passcode" screen.
@@ -106,7 +106,7 @@ internal fun UpdatePasscodeScreen(
         PasscodeScreenContent(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = DesignToken.padding.large)
+                .padding(horizontal = KptTheme.spacing.md)
                 .statusBarsPadding(),
             passcodeData = state,
             onAction = onAction,
@@ -130,7 +130,7 @@ internal fun PasscodeScreenContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 24.dp)
+            .padding(top = DesignToken.spacing.dp24)
             .verticalScroll(
                 rememberScrollState(),
             ),
@@ -149,7 +149,7 @@ internal fun PasscodeScreenContent(
             showPasswordChange = { onAction(PasscodeAction.OldPasscodeVisibleClick) },
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
         MifosPasswordField(
             value = passcodeData.newPasscode,
@@ -165,7 +165,7 @@ internal fun PasscodeScreenContent(
             showPasswordChange = { onAction(PasscodeAction.NewPasscodeVisibleClick) },
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
         MifosPasswordField(
             value = passcodeData.confirmPasscode,
@@ -183,7 +183,7 @@ internal fun PasscodeScreenContent(
             showPasswordChange = { onAction(PasscodeAction.ConfirmPasscodeVisibleClick) },
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.dp24))
 
         MifosButton(
             text = {
