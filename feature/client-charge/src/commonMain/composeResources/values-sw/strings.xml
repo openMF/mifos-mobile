@@ -20,6 +20,7 @@
     <string name="amount_outstanding">Inayobaki:</string>
     <string name="amount_waived">Imesamehewa:</string>
     <string name="amount_paid">Imelipwa:</string>
+    <string name="feature_client_charge_share_charges">Gharama za Hisa</string>
 
     <string name="charge_details">Maelezo ya Malipo</string>
     <string name="paid_success_message">Umefanikiwa kulipa malipo haya kikamilifu</string>
@@ -36,5 +37,7 @@
     <string name="paid">Imelipwa</string>
     <string name="waived">Imesamehewa</string>
     <string name="outstanding">Inayobaki</string>
+
+    <string name="feature_generic_error_server">Tatizo la seva kutoka upande wetu, hatuwezi kuendelea. Jaribu tena baada ya muda</string>
 
 </resources>

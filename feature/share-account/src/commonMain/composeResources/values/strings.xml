@@ -10,17 +10,44 @@
 -->
 <resources>
 
-    <string name="feature_account_active">Active</string>
-    <string name="feature_account_approved">Approved</string>
-    <string name="feature_account_approval_pending">Approval Pending</string>
-    <string name="feature_account_closed">Closed</string>
-    <string name="feature_account_rejected">Rejected</string>
+    <string name="feature_share_account_active">Active</string>
+    <string name="feature_share_account_approved">Approved</string>
+    <string name="feature_share_account_approval_pending">Approval Pending</string>
+    <string name="feature_share_account_closed">Closed</string>
+    <string name="feature_share_account_rejected">Rejected</string>
 
-    <string name="feature_account_empty_share_accounts">There is no ShareAccount associated with you</string>
+    <string name="feature_share_account_empty_share_accounts">There is no ShareAccount associated with you</string>
     <string name="feature_share_account_dashboard">Total Borrowings</string>
     <string name="feature_share_account">Share Account</string>
     <string name="feature_share_account_items">%1$d Items</string>
 
-    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+    <string name="feature_share_account_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+
+
+    <string name="feature_share_account_number">Account Number</string>
+    <string name="feature_share_account_product_name">Product Name</string>
+    <string name="feature_share_account_currency">Currency</string>
+    <string name="feature_share_account_status">Status</string>
+    <string name="feature_share_account_approved_shares">Approved Shares</string>
+    <string name="feature_share_account_pending_shares">Pending Shares</string>
+    <string name="feature_share_account_market_price">Market Price</string>
+    <string name="feature_share_account_application_date">Application Date</string>
+    <string name="feature_share_account_activation_date">Activation Date</string>
+
+    <string name="feature_share_account_details_top_bar_title">Share Account Details</string>
+    <string name="feature_share_account_details_action">Actions</string>
+
+    <string name="feature_share_account_action_charges">Charges</string>
+    <string name="feature_share_account_action_charges_subtitle">View account charges</string>
+
+    <string name="feature_share_account_action_transactions">Transactions</string>
+    <string name="feature_share_account_action_transactions_subtitle">View purchase history</string>
+
+    <string name="feature_share_account_action_qr_code">QR Code</string>
+    <string name="feature_share_account_action_qr_code_subtitle">Share account details</string>
+
+    <string name="feature_share_account_purchased_shares">Purchased Shares</string>
+    <string name="feature_share_account_purchased_date">Purchase Date</string>
+
 
 </resources>

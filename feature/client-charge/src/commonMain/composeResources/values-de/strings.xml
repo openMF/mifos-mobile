@@ -20,6 +20,7 @@
     <string name="amount_outstanding">Ausstehend:</string>
     <string name="amount_waived">Erlassen:</string>
     <string name="amount_paid">Bezahlt:</string>
+    <string name="feature_client_charge_share_charges">Aktiengebühren</string>
 
     <string name="charge_details">Gebührendetails</string>
     <string name="paid_success_message">Sie haben diese Gebühr erfolgreich vollständig bezahlt</string>
@@ -36,5 +37,7 @@
     <string name="paid">Bezahlt</string>
     <string name="waived">Erlassen</string>
     <string name="outstanding">Ausstehend</string>
+
+    <string name="feature_generic_error_server">Serverproblem auf unserer Seite, Vorgang kann nicht fortgesetzt werden. Bitte versuchen Sie es später erneut</string>
 
 </resources>

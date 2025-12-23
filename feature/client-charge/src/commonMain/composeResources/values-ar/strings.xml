@@ -20,6 +20,7 @@
     <string name="amount_outstanding">المستحق:</string>
     <string name="amount_waived">تم التنازل عنها:</string>
     <string name="amount_paid">مدفوع:</string>
+    <string name="feature_client_charge_share_charges">رسوم الأسهم</string>
 
     <string name="charge_details">تفاصيل الرسوم</string>
     <string name="paid_success_message">لقد دفعت هذه الرسوم بالكامل بنجاح</string>
@@ -36,5 +37,7 @@
     <string name="paid">مدفوع</string>
     <string name="waived">تم التنازل عنها</string>
     <string name="outstanding">المستحق</string>
+
+    <string name="feature_generic_error_server">مشكلة في الخادم من جانبنا، لا يمكن المتابعة. يرجى المحاولة مرة أخرى بعد لحظات</string>
 
 </resources>

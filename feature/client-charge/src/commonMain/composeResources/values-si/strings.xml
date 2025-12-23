@@ -20,6 +20,7 @@
     <string name="amount_outstanding">නොගෙවූ:</string>
     <string name="amount_waived">අත්හැරුණු:</string>
     <string name="amount_paid">ගෙවූ:</string>
+    <string name="feature_client_charge_share_charges">කොටස් ගාස්තු</string>
 
     <string name="charge_details">ගාස්තු විස්තර</string>
     <string name="paid_success_message">ඔබ මෙම ගාස්තුව සාර්ථකව සම්පූර්ණයෙන් ගෙවා ඇත</string>
@@ -36,5 +37,7 @@
     <string name="paid">ගෙවූ</string>
     <string name="waived">අත්හැරුණු</string>
     <string name="outstanding">නොගෙවූ</string>
+
+    <string name="feature_generic_error_server">අපගේ පැත්තෙන් සේවාදායකයේ ගැටළුවක් ඇත, ඉදිරියට යා නොහැක. මොහොතකට පසු නැවත උත්සාහ කරන්න</string>
 
 </resources>

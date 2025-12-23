@@ -20,6 +20,7 @@
     <string name="amount_outstanding">Fennálló:</string>
     <string name="amount_waived">Elengedve:</string>
     <string name="amount_paid">Fizetve:</string>
+    <string name="feature_client_charge_share_charges">Részvénydíjak</string>
 
     <string name="charge_details">Díj részletei</string>
     <string name="paid_success_message">Sikeresen teljesen kifizette ezt a díjat</string>
@@ -36,5 +37,7 @@
     <string name="paid">Fizetve</string>
     <string name="waived">Elengedve</string>
     <string name="outstanding">Fennálló</string>
+
+    <string name="feature_generic_error_server">Szerverhiba nálunk, nem tudjuk folytatni. Kérjük, próbálja újra később</string>
 
 </resources>

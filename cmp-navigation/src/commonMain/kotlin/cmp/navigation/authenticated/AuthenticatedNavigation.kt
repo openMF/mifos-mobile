@@ -64,6 +64,8 @@ import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.faq.navigateToFaq
 import org.mifos.mobile.feature.share.application.navigation.navigateToShareApplicationGraph
 import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
+import org.mifos.mobile.feature.shareaccount.navigation.shareNavGraph
+import org.mifos.mobile.feature.shareaccount.shareAccountDetails.navigateToShareAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
@@ -158,6 +160,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     navController.navigateToSavingsAccountDetailsScreen(accountId)
                 } else if (accountType == Constants.LOAN_ACCOUNT) {
                     navController.navigateToLoanAccountDetailsScreen(accountId)
+                } else if (accountType == Constants.SHARE_ACCOUNTS) {
+                    navController.navigateToShareAccountDetailsScreen(accountId)
                 }
             },
         )
@@ -257,6 +261,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToLoanAccountTransactionScreen = {
                 navController.navigateToAccountTransactionsScreen(Constants.LOAN_ACCOUNT, it)
             },
+        )
+
+        shareNavGraph(
+            navController = navController,
+            navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
+            navigateToShareAccountTransactionScreen = { accountId ->
+                navController.navigateToAccountTransactionsScreen(Constants.SHARE_ACCOUNTS, accountId)
+            },
+            navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
         )
 
         loanApplicationNavGraph(
