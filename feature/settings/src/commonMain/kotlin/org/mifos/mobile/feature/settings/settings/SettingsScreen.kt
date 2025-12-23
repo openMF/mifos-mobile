@@ -54,8 +54,8 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
-import template.core.base.platform.LocalAppReviewManager
 import template.core.base.designsystem.theme.KptTheme
+import template.core.base.platform.LocalAppReviewManager
 
 /**
  * A stateful composable that serves as the entry point for the main "Settings" screen.
