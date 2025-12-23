@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that constructs the "Language" screen. It observes state from the
@@ -93,8 +93,8 @@ internal fun LanguageScreenContent(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(DesignToken.sizes.buttonHeight)
-                    .padding(horizontal = DesignToken.padding.large),
-                shape = DesignToken.shapes.medium,
+                    .padding(horizontal = KptTheme.spacing.md),
+                shape = KptTheme.shapes.medium,
                 onClick = { onAction(LanguageAction.SetLanguage(uiState.selectedLanguage)) },
             ) {
                 Text(
@@ -125,7 +125,7 @@ internal fun LanguageSelectionContent(
     onSetLanguage: (LanguageConfig) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier.padding(DesignToken.padding.large),
+        modifier = modifier.padding(KptTheme.spacing.md),
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
     ) {
         items(LanguageConfig.entries) {
@@ -140,7 +140,7 @@ internal fun LanguageSelectionContent(
                     color = AppColors.primaryBlue,
                 ),
                 unselectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
-                    MaterialTheme.colorScheme.onSurface,
+                    KptTheme.colorScheme.onSurface,
                 ),
             )
         }

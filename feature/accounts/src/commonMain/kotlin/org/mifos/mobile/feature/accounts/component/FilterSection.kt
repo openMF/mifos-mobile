@@ -27,13 +27,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_filters_count
 import org.jetbrains.compose.resources.StringResource
@@ -44,6 +42,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.onClick
 import org.mifos.mobile.feature.accounts.model.CheckboxStatus
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function for the Filter Section.
@@ -76,8 +75,8 @@ internal fun FilterSection(
     ) {
         Column(
             modifier = Modifier.padding(
-                start = DesignToken.spacing.extraLargeIncreased,
-                end = DesignToken.spacing.small,
+                start = KptTheme.spacing.xl,
+                end = KptTheme.spacing.sm,
                 top = DesignToken.padding.medium,
             ),
             verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
@@ -92,17 +91,17 @@ internal fun FilterSection(
                 Text(
                     text = title,
                     style = MifosTypography.labelLargeEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = KptTheme.colorScheme.onBackground,
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+                    horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (filtersSelected != 0) {
                         Text(
                             text = stringResource(Res.string.feature_filters_count, filtersSelected),
                             style = MifosTypography.labelSmall,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = KptTheme.colorScheme.secondary,
                         )
                     }
                     Icon(
@@ -153,7 +152,7 @@ internal fun FilterSection(
         HorizontalDivider(
             modifier = Modifier
                 .padding(top = DesignToken.padding.medium)
-                .height(1.dp),
+                .height(DesignToken.strokes.thin),
         )
     }
 }
@@ -198,11 +197,11 @@ fun FilterCheckboxUI(
             )
         }
 
-        Spacer(modifier = Modifier.width(DesignToken.spacing.small))
+        Spacer(modifier = Modifier.width(KptTheme.spacing.sm))
         Text(
             text = stringResource(statusLabel),
             style = MifosTypography.labelMediumEmphasized,
-            color = MaterialTheme.colorScheme.secondary,
+            color = KptTheme.colorScheme.secondary,
         )
     }
 }

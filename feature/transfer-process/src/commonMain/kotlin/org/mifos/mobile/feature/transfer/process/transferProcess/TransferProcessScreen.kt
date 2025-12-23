@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +49,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun TransferProcessScreen(
@@ -142,9 +142,9 @@ private fun TransferProcessContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.padding.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         MifosDetailsCard(
             keyValuePairs = mapOf(
@@ -163,11 +163,11 @@ private fun TransferProcessContent(
             onClick = {
                 onAction(TransferProcessAction.OnNavigate)
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.cancel),
-                style = MaterialTheme.typography.labelLarge,
+                style = KptTheme.typography.labelLarge,
             )
         }
 

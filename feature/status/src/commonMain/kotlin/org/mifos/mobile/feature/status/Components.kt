@@ -29,11 +29,11 @@ import mifos_mobile.core.ui.generated.resources.ic_icon_success
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosStatusComponent
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -76,7 +76,7 @@ internal fun StatusScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
             verticalArrangement = Arrangement.Center,
         ) {
             MifosStatusComponent(

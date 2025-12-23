@@ -24,7 +24,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
 import mifos_mobile.feature.share_account.generated.resources.feature_account_empty_share_accounts
@@ -57,6 +55,7 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.orEmpty
 
 /**
@@ -167,7 +166,7 @@ internal fun ShareAccountContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(DesignToken.padding.large),
+            .padding(KptTheme.spacing.md),
     ) {
         when (state.uiState) {
             ScreenUiState.Loading -> {
@@ -198,7 +197,7 @@ internal fun ShareAccountContent(
             }
 
             ScreenUiState.Success -> {
-                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                 MifosDashboardCard(
                     isSingleLine = true,
@@ -220,7 +219,7 @@ internal fun ShareAccountContent(
                         Text(
                             text = stringResource(Res.string.feature_share_account),
                             style = MifosTypography.titleMediumEmphasized,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = KptTheme.colorScheme.onBackground,
                         )
                         Text(
                             text = stringResource(
@@ -228,7 +227,7 @@ internal fun ShareAccountContent(
                                 state.items ?: 0,
                             ),
                             style = MifosTypography.labelMedium,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = KptTheme.colorScheme.secondary,
                         )
                     }
 
@@ -238,14 +237,14 @@ internal fun ShareAccountContent(
                         Icon(
                             modifier = Modifier
                                 .clickable {}
-                                .size(20.dp),
+                                .size(DesignToken.sizes.iconDp20),
                             imageVector = MifosIcons.SearchNew,
                             contentDescription = null,
                         )
                         Icon(
                             modifier = Modifier
                                 .clickable { filtersClicked() }
-                                .size(20.dp),
+                                .size(DesignToken.sizes.iconDp20),
                             imageVector = MifosIcons.Filter,
                             contentDescription = null,
                         )
@@ -257,7 +256,7 @@ internal fun ShareAccountContent(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.99997.dp),
+                        .height(DesignToken.strokes.thin),
                 )
 
                 if (state.isFilteredEmpty) {
@@ -279,15 +278,15 @@ internal fun ShareAccountContent(
                             .weight(1f),
                     ) {
                         item {
-                            Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                            Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
                         }
                         items(state.shareAccounts.orEmpty()) { account ->
                             val color = when (account.status?.value) {
                                 LoanStatus.ACTIVE.status -> AppColors.customEnable
                                 LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
                                 LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
-                                    MaterialTheme.colorScheme.error
-                                else -> MaterialTheme.colorScheme.onSurface
+                                    KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.onSurface
                             }
 
                             MifosAccountCard(

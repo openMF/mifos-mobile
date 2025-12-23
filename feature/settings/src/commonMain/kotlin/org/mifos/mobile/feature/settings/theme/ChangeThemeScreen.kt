@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,6 +37,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that constructs the "Change Theme" screen.
@@ -95,7 +95,7 @@ internal fun ThemeScreenContent(
         },
     ) {
         Column(
-            modifier = Modifier.padding(DesignToken.padding.large),
+            modifier = Modifier.padding(KptTheme.spacing.md),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
         ) {
@@ -109,7 +109,7 @@ internal fun ThemeScreenContent(
                         color = AppColors.primaryBlue,
                     ),
                     unselectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
-                        MaterialTheme.colorScheme.onSurface,
+                        KptTheme.colorScheme.onSurface,
                     ),
                 )
             }
@@ -118,7 +118,7 @@ internal fun ThemeScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(DesignToken.sizes.buttonHeight),
-                shape = DesignToken.shapes.medium,
+                shape = KptTheme.shapes.medium,
                 onClick = {
                     onAction(ThemeAction.SetTheme)
                 },

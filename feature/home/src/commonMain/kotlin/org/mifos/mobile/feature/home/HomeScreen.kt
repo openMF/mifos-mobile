@@ -27,7 +27,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -40,7 +39,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
@@ -68,6 +66,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.components.BottomSheetContent
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun HomeScreen(
@@ -130,7 +129,7 @@ internal fun HomeContent(
         onNavigateBack = {},
         actions = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 // TODO : once ui/ux team gives this flow uncomment and implement
 //                Image(
@@ -140,7 +139,7 @@ internal fun HomeContent(
                 Image(
                     imageVector = MifosIcons.Alert,
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                    colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                     modifier = Modifier.clickable {
                         onAction(HomeAction.OnNotificationClick)
                     },
@@ -171,19 +170,19 @@ internal fun HomeContent(
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                        .padding(DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md),
                 ) {
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
                     Text(
                         text = stringResource(
                             Res.string.feature_home_greet,
                             state.firstName.toString(),
                         ),
                         style = MifosTypography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                     if (state.isAccountsPresent) {
                         MifosDashboardCard(
@@ -206,10 +205,10 @@ internal fun HomeContent(
                     Text(
                         text = stringResource(Res.string.feature_home_services),
                         style = MifosTypography.titleMediumEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                     ServiceBox(
                         items = state.items,
@@ -261,8 +260,8 @@ internal fun ServiceItemCard(
 ) {
     Column(
         modifier = modifier
-            .padding(vertical = DesignToken.padding.small),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+            .padding(vertical = KptTheme.spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -274,21 +273,21 @@ internal fun ServiceItemCard(
             Image(
                 modifier = Modifier
                     .border(
-                        1.dp,
-                        MaterialTheme.colorScheme.secondaryContainer,
-                        DesignToken.shapes.medium,
+                        DesignToken.strokes.thin,
+                        KptTheme.colorScheme.secondaryContainer,
+                        KptTheme.shapes.medium,
                     )
-                    .padding(DesignToken.padding.medium + 2.dp),
+                    .padding(DesignToken.padding.dp14),
                 imageVector = icon,
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.tertiary),
+                colorFilter = ColorFilter.tint(KptTheme.colorScheme.tertiary),
             )
         }
 
         Text(
             text = stringResource(title),
             style = MifosTypography.bodySmallEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         )
     }
@@ -325,7 +324,7 @@ private fun HomeScreenDialog(
                     onAction(HomeAction.OnDismissDialog)
                 },
                 sheetState = sheetState,
-                containerColor = MaterialTheme.colorScheme.surface,
+                containerColor = KptTheme.colorScheme.surface,
                 contentWindowInsets = {
                     BottomSheetDefaults.windowInsets
                 },

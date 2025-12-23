@@ -19,14 +19,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_account_details_action
@@ -57,6 +55,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.LoanActionItems
 import org.mifos.mobile.feature.loanaccount.component.loanAccountActions
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * The main composable for the loan account details screen.
@@ -186,8 +185,8 @@ internal fun LoanAccountDetailsContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(DesignToken.padding.large),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                        .padding(KptTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     AccountDetailsGrid(
                         details = state.displayItems,
@@ -235,7 +234,7 @@ internal fun AccountDetailsGrid(
             Text(
                 text = label,
                 style = MifosTypography.labelLargeEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = KptTheme.colorScheme.onSurface,
             )
         }
         if (details != null) {
@@ -248,7 +247,7 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .height(64.dp)
+                            .height(DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
@@ -256,7 +255,7 @@ internal fun AccountDetailsGrid(
                             AppColors
                                 .customEnable
                         } else {
-                            MaterialTheme.colorScheme.onBackground
+                            KptTheme.colorScheme.onBackground
                         },
                     )
                 }
@@ -277,12 +276,12 @@ internal fun SavingsAccountActions(
     onActionClick: (String) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Text(
             text = stringResource(Res.string.feature_account_details_action),
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
         FlowRow(
             modifier = Modifier.fillMaxWidth(),

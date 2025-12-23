@@ -24,9 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.passcode.generated.resources.Res
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_confirm
@@ -52,6 +49,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun PasscodeScreen(
@@ -100,7 +98,7 @@ private fun PasscodeScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(DesignToken.padding.large)
+                    .padding(KptTheme.spacing.md)
                     .weight(1f),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -110,14 +108,14 @@ private fun PasscodeScreenContent(
                     contentDescription = null,
                     modifier = Modifier
                         .background(
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            color = KptTheme.colorScheme.primary.copy(alpha = 0.2f),
                             shape = CircleShape,
                         )
-                        .padding(DesignToken.padding.small),
-                    tint = MaterialTheme.colorScheme.primary,
+                        .padding(KptTheme.spacing.sm),
+                    tint = KptTheme.colorScheme.primary,
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(DesignToken.spacing.dp24))
 
                 Text(
                     text = when (state.mode) {
@@ -125,41 +123,41 @@ private fun PasscodeScreenContent(
                         PasscodeMode.Confirm -> stringResource(Res.string.feature_passcode_confirm)
                     },
                     style = MifosTypography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = KptTheme.colorScheme.onBackground,
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
 
                 Text(
                     text = stringResource(Res.string.feature_passcode_tip),
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = KptTheme.colorScheme.secondary,
                     textAlign = TextAlign.Center,
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.xl))
 
-                Row(horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
                     repeat(state.maxDigits) { index ->
                         val filled = index < state.filledDots
                         val color = when {
-                            state.passcodeError -> MaterialTheme.colorScheme.error
-                            filled -> MaterialTheme.colorScheme.primary
+                            state.passcodeError -> KptTheme.colorScheme.error
+                            filled -> KptTheme.colorScheme.primary
                             else -> Color.Transparent
                         }
                         val borderColor =
                             if (state.passcodeError) {
-                                MaterialTheme.colorScheme.error
+                                KptTheme.colorScheme.error
                             } else {
-                                MaterialTheme.colorScheme.primary
+                                KptTheme.colorScheme.primary
                             }
                         Box(
                             modifier = Modifier
-                                .size(16.dp)
+                                .size(DesignToken.sizes.iconSmall)
                                 .clip(CircleShape)
                                 .background(color)
                                 .border(
-                                    1.dp,
+                                    DesignToken.strokes.thin,
                                     borderColor,
                                     CircleShape,
                                 ),
@@ -200,15 +198,15 @@ fun NumericKeyboard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(DesignToken.padding.large),
+            .background(KptTheme.colorScheme.surface)
+            .padding(KptTheme.spacing.md),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
         layout.forEach { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             ) {
                 row.forEach { key ->
                     when (key) {
@@ -221,7 +219,7 @@ fun NumericKeyboard(
 
                         PasscodeKey.Backspace -> KeyButton(
                             modifier = Modifier.weight(1f),
-                            backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            backgroundColor = KptTheme.colorScheme.tertiaryContainer,
                             content = {
                                 Icon(
                                     imageVector = MifosIcons.Backspace,
@@ -233,7 +231,7 @@ fun NumericKeyboard(
 
                         PasscodeKey.Send -> KeyButton(
                             modifier = Modifier.weight(1f),
-                            backgroundColor = MaterialTheme.colorScheme.inversePrimary,
+                            backgroundColor = KptTheme.colorScheme.inversePrimary,
                             content = {
                                 Icon(
                                     imageVector = MifosIcons.Send,
@@ -274,9 +272,9 @@ fun KeyButton(
 ) {
     Box(
         modifier = modifier
-            .width(107.33333.dp)
-            .height(41.dp)
-            .clip(RoundedCornerShape(100.dp))
+            .width(DesignToken.sizes.boxDp107)
+            .height(DesignToken.sizes.boxDp41)
+            .clip(DesignToken.shapes.dp100)
             .background(backgroundColor)
             .clickable(onClick = onClick, enabled = enabled),
         contentAlignment = Alignment.Center,
@@ -294,27 +292,27 @@ fun DigitKeyButton(
 ) {
     Box(
         modifier = modifier
-            .width(107.33333.dp)
-            .height(41.dp)
-            .clip(RoundedCornerShape(100.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainerLow)
+            .width(DesignToken.sizes.boxDp107)
+            .height(DesignToken.sizes.boxDp41)
+            .clip(DesignToken.shapes.dp100)
+            .background(KptTheme.colorScheme.surfaceContainerLow)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = digit,
                 style = MifosTypography.keyBoardNumeric,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = KptTheme.colorScheme.onBackground,
             )
             if (letters.isNotEmpty()) {
                 Text(
                     text = letters,
                     style = MifosTypography.keyBoardAlpha,
-                    color = MaterialTheme.colorScheme.outline,
+                    color = KptTheme.colorScheme.outline,
                 )
             }
         }
