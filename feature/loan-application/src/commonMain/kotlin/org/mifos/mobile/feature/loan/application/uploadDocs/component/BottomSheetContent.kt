@@ -72,6 +72,13 @@ import org.mifos.mobile.feature.loan.application.component.SignatureUploadType
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
 import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Orchestrates the bottom sheet UI, transitioning between the document upload method selection
+ * and the digital signature drawing canvas based on the current mode.
+ *
+ * @param onAction Callback to handle upload selection or signature submission events.
+ * @param isSignatureMode Determines whether to display the drawing canvas (true) or selection grid (false).
+ */
 @Composable
 internal fun BottomSheetContent(
     onAction: (UploadDocsAction) -> Unit,
@@ -133,6 +140,13 @@ internal fun BottomSheetContent(
     }
 }
 
+/**
+ * Renders a single action item (Icon + Label) within the upload method selection grid.
+ *
+ * @param text The label resource to display below the icon.
+ * @param icon The icon vector to display.
+ * @param onClick Action to perform when this item is selected.
+ */
 @Composable
 internal fun BottomSheetIconContainer(
     text: StringResource,
@@ -171,6 +185,12 @@ internal fun BottomSheetIconContainer(
     }
 }
 
+/**
+ * Provides an interactive canvas for capturing the user's digital signature.
+ * Handles the logic for clearing the canvas and exporting the drawing to a Base64 string.
+ *
+ * @param onAction Callback to send the generated signature data or dismiss the screen.
+ */
 @Composable
 private fun SignatureContent(
     modifier: Modifier = Modifier,

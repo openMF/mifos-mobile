@@ -21,6 +21,12 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsState
 
+/**
+ * Renders the document upload section, switching between upload prompts and file summaries based on the current state.
+ *
+ * @param state The current state containing file data for bank statements, property documents, and signatures.
+ * @param onAction Callback to handle user interactions like uploading, removing, or re-selecting documents.
+ */
 @Composable
 internal fun UploadDocumentsSection(
     state: UploadDocsState,

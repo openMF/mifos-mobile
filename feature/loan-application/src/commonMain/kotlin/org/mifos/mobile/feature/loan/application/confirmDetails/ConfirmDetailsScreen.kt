@@ -45,6 +45,15 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Entry point for the Loan Confirmation screen.
+ * Orchestrates the ViewModel state, handles navigation side effects, and delegates UI rendering.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToStatusScreen Callback to navigate to the final status/result screen.
+ * @param navigateToAuthenticateScreen Callback to proceed to the authentication flow.
+ * @param viewModel The view model managing the business logic for this screen.
+ */
 @Composable
 internal fun ConfirmDetailsScreen(
     navigateBack: () -> Unit,
@@ -86,6 +95,12 @@ internal fun ConfirmDetailsScreen(
     )
 }
 
+/**
+ * Displays modal dialogs (such as error alerts) based on the current dialog state.
+ *
+ * @param dialogState The current state determining which dialog (if any) to show.
+ * @param onAction Callback to handle dialog interactions, such as dismissing.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ConfirmDetailsDialog(
@@ -106,6 +121,13 @@ internal fun ConfirmDetailsDialog(
     }
 }
 
+/**
+ * Renders the visual layout for the confirmation screen, handling Loading, Error, and Success states.
+ * Displays the loan summary card and the final confirmation button when data is successfully loaded.
+ *
+ * @param state The current UI state containing loan details and loading status.
+ * @param onAction Callback to handle user intent (e.g., clicking 'Confirm' or 'Back').
+ */
 @Composable
 internal fun ConfirmDetailsScreenContent(
     state: ConfirmDetailsState,

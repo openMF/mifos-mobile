@@ -11,6 +11,7 @@ package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
@@ -24,6 +25,11 @@ interface SavingsAccountRepository {
         accountId: Long?,
         associationType: String?,
     ): Flow<DataState<SavingsWithAssociations>>
+
+    fun getSavingsAccountTransactionDetails(
+        accountId: Long,
+        transactionId: Long,
+    ): Flow<DataState<TransactionDetails>>
 
     fun getSavingAccountApplicationTemplate(clientId: Long?): Flow<DataState<SavingsAccountTemplate>>
 

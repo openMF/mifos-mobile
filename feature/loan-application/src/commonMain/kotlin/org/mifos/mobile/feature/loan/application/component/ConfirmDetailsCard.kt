@@ -29,6 +29,11 @@ import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.component1
 import kotlin.collections.component2
 
+/**
+ * Displays a summary card containing a list of labeled details, typically used for confirmation screens.
+ *
+ * @param keyValuePairs A map where the key is the label resource and the value is the detail text to display.
+ */
 @Composable
 fun ConfirmDetailsCard(
     keyValuePairs: Map<StringResource, String>,

@@ -14,7 +14,9 @@ package org.mifos.mobile.feature.accounts.accountTransactions
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 
 /**
@@ -49,11 +51,25 @@ fun NavController.navigateToAccountTransactionsScreen(
  * Adds the Account Transactions Screen to the navigation graph.
  *
  * @param navigateBack The function to be called when the back button is pressed.
+ * @param navigateToDetails The callback function to navigate to the transaction details screen.
  */
 fun NavGraphBuilder.accountTransactionsDestination(
     navigateBack: () -> Unit,
+    // Update signature to pass back all necessary data (id, type, accountId)
+    navigateToDetails: (String, String, Long) -> Unit,
 ) {
-    composableWithSlideTransitions<AccountTransactionsNavRoute> {
-        TransactionScreen(navigateBack)
+    composableWithSlideTransitions<AccountTransactionsNavRoute> { backStackEntry ->
+        val route = backStackEntry.toRoute<AccountTransactionsNavRoute>()
+
+        TransactionScreen(
+            navigateBack = navigateBack,
+            navigateToDetails = { transactionId ->
+                if (route.accountId > 0L &&
+                    route.accountType in listOf(Constants.SAVINGS_ACCOUNT, Constants.LOAN_ACCOUNT)
+                ) {
+                    navigateToDetails(transactionId, route.accountType, route.accountId)
+                }
+            },
+        )
     }
 }

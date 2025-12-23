@@ -21,6 +21,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
@@ -42,6 +43,16 @@ class SavingsAccountRepositoryImp(
             accountId!!,
             associationType,
         ).asDataStateFlow().flowOn(ioDispatcher)
+    }
+
+    override fun getSavingsAccountTransactionDetails(
+        accountId: Long,
+        transactionId: Long,
+    ): Flow<DataState<TransactionDetails>> {
+        return dataManager.savingAccountsListApi
+            .getSavingsAccountTransactionDetails(accountId, transactionId)
+            .asDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 
     override fun getSavingAccountApplicationTemplate(
