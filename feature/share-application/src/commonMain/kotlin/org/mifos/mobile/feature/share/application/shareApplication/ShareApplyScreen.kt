@@ -51,6 +51,7 @@ import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A Composable function that represents the Share Apply screen.
@@ -201,15 +202,15 @@ internal fun ShareApplicationForm(
 ) {
     Column(
         modifier = modifier
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         MifosOutlinedTextField(
             value = state.applicantName,
             onValueChange = { },
             label = stringResource(Res.string.feature_share_label_applicant_name),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             textStyle = MifosTypography.bodyLarge,
             config = MifosTextFieldConfig(
                 enabled = false,
@@ -231,7 +232,7 @@ internal fun ShareApplicationForm(
                     )
                 },
             ),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         )
 
         MifosOutlineDropdown(
@@ -250,7 +251,7 @@ internal fun ShareApplicationForm(
             onClick = {
                 onAction(ShareApplicationAction.NavigateToConfirmDetails)
             },
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_share_button_next),

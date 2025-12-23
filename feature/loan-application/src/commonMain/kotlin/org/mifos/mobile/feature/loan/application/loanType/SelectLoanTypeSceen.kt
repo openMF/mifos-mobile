@@ -43,6 +43,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Entry point for the Loan Type Selection screen.
@@ -170,8 +171,8 @@ internal fun SelectLoanTypeScreenContent(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large)
-                        .padding(top = DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md)
+                        .padding(top = KptTheme.spacing.md),
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),

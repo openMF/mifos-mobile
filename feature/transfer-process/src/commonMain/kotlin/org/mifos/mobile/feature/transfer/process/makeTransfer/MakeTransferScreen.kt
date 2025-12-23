@@ -20,7 +20,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,6 +55,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun MakeTransferScreen(
@@ -146,8 +146,8 @@ internal fun MakeTransferScreenContent(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                         .padding(
-                            horizontal = DesignToken.padding.large,
-                            vertical = DesignToken.padding.extraLargeIncreased,
+                            horizontal = KptTheme.spacing.md,
+                            vertical = KptTheme.spacing.xl,
                         ),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
                 ) {
@@ -180,7 +180,7 @@ internal fun MakeTransferScreenContent(
                         value = state.amount,
                         onValueChange = { onAction(MakeTransferAction.OnAmountChanged(it)) },
                         label = stringResource(Res.string.amount),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             enabled = state.outstandingBalance == null,
@@ -191,7 +191,7 @@ internal fun MakeTransferScreenContent(
                                     Icon(
                                         imageVector = MifosIcons.ErrorCircle,
                                         contentDescription = stringResource(Res.string.error_description),
-                                        tint = MaterialTheme.colorScheme.error,
+                                        tint = KptTheme.colorScheme.error,
                                     )
                                 }
                             } else {
@@ -207,7 +207,7 @@ internal fun MakeTransferScreenContent(
                         value = state.remark,
                         onValueChange = { onAction(MakeTransferAction.OnRemarksChanged(it)) },
                         label = stringResource(Res.string.remarks),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.remarkError != null,
@@ -219,7 +219,7 @@ internal fun MakeTransferScreenContent(
                                     Icon(
                                         imageVector = MifosIcons.ErrorCircle,
                                         contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.error,
+                                        tint = KptTheme.colorScheme.error,
                                     )
                                 }
                             } else {

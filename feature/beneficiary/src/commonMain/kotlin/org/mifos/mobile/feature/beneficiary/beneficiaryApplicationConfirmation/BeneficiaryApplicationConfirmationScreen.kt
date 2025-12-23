@@ -37,6 +37,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function to render the beneficiary application confirmation screen.
@@ -145,7 +146,7 @@ fun BeneficiaryApplicationConfirmationScreenContent(
 
             ScreenUiState.Success -> {
                 Column(
-                    Modifier.padding(DesignToken.padding.large),
+                    Modifier.padding(KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
                 ) {
                     Text(

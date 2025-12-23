@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import mifos_mobile.feature.qr.generated.resources.Res
@@ -48,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun QrCodeDisplayScreen(
@@ -112,8 +111,8 @@ private fun QrCodeDisplayContent(
     Box(
         modifier = modifier
             .padding(
-                horizontal = DesignToken.padding.large,
-                vertical = DesignToken.padding.extraLargeIncreased,
+                horizontal = KptTheme.spacing.md,
+                vertical = KptTheme.spacing.xl,
             )
             .fillMaxSize(),
     ) {
@@ -125,7 +124,7 @@ private fun QrCodeDisplayContent(
             Text(
                 text = stringResource(Res.string.scan_your_qr),
                 style = MifosTypography.titleLargeEmphasized,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
 
             Spacer(Modifier.height(DesignToken.padding.largeIncreased))
@@ -142,7 +141,7 @@ private fun QrCodeDisplayContent(
                 painter = painter,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(212.dp),
+                    .size(DesignToken.sizes.imageDp212),
             )
 
             Spacer(Modifier.height(DesignToken.padding.extraExtraLarge))
@@ -157,7 +156,7 @@ private fun QrCodeDisplayContent(
         Text(
             text = stringResource(Res.string.generated_on) + date,
             style = MifosTypography.bodySmall,
-            color = MaterialTheme.colorScheme.primary,
+            color = KptTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.BottomCenter),
         )
     }

@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -56,6 +55,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.ShareUtils
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that constructs the "Help" screen, including its scaffold and top bar.
@@ -109,7 +109,7 @@ internal fun HelpScreenContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(
-                horizontal = DesignToken.padding.large,
+                horizontal = KptTheme.spacing.md,
                 vertical = DesignToken.padding.medium,
             )
             .statusBarsPadding(),
@@ -145,7 +145,7 @@ private fun FAQCard(
                 style = MifosTypography.titleSmallEmphasized,
                 color = Color.White,
             )
-            Spacer(modifier = Modifier.height(DesignToken.padding.small))
+            Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
             Text(
                 text = stringResource(Res.string.feature_settings_doubt_message),
                 style = MifosTypography.labelMedium,
@@ -255,7 +255,7 @@ private fun SupportCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = DesignToken.padding.small),
+                .padding(top = KptTheme.spacing.sm),
         ) {
             SupportCardContent(
                 titleRes = titleRes,
@@ -292,7 +292,7 @@ private fun SupportCardContent(
 ) {
     Column(
         modifier = modifier.padding(DesignToken.padding.extraLarge),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.padding.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Text(
             text = stringResource(titleRes),
@@ -349,7 +349,7 @@ private fun HelpActionButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White.copy(alpha = 0.3f),
         ),
-        shape = RoundedCornerShape(DesignToken.padding.small),
+        shape = KptTheme.shapes.small,
         contentPadding = PaddingValues(
             horizontal = DesignToken.padding.extraLarge,
             vertical = DesignToken.padding.medium,

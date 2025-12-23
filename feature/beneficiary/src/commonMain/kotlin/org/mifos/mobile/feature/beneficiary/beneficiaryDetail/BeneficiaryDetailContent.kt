@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +41,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosBeneficiaryTopCard
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function to display beneficiary details.
@@ -59,7 +59,7 @@ internal fun BeneficiaryDetailContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
     ) {
@@ -145,11 +145,11 @@ internal fun ActionBar(
                 onAction(BeneficiaryDetailAction.ShowDeleteConfirmation)
             },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = "Delete",
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -157,7 +157,7 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Delete,
                 contentDescription = "",
-                tint = MaterialTheme.colorScheme.primary,
+                tint = KptTheme.colorScheme.primary,
             )
         }
 
@@ -168,11 +168,11 @@ internal fun ActionBar(
                 onAction(BeneficiaryDetailAction.OnUpdateBeneficiary)
             },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = "Update",
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -180,7 +180,7 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Edit,
                 contentDescription = "",
-                tint = MaterialTheme.colorScheme.primary,
+                tint = KptTheme.colorScheme.primary,
             )
         }
     }

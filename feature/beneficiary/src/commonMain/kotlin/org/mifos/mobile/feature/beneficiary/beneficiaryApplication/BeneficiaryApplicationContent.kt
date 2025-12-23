@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,6 +48,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.enums.BeneficiaryState
 import org.mifos.mobile.core.ui.component.MifosDropDownTextField
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function to display a beneficiary application form.
@@ -69,8 +69,8 @@ internal fun BeneficiaryApplicationContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(
-                horizontal = DesignToken.padding.large,
-                vertical = DesignToken.padding.extraLargeIncreased,
+                horizontal = KptTheme.spacing.md,
+                vertical = KptTheme.spacing.xl,
             ),
     ) {
         MifosOutlinedTextField(
@@ -151,7 +151,7 @@ internal fun BeneficiaryApplicationContent(
             ),
         )
 
-        Spacer(Modifier.height(DesignToken.padding.large))
+        Spacer(Modifier.height(KptTheme.spacing.md))
 
         MifosButton(
             modifier = Modifier
@@ -166,13 +166,13 @@ internal fun BeneficiaryApplicationContent(
             enabled = state.isEnabled,
         )
 
-        Spacer(Modifier.height(DesignToken.padding.extraLargeIncreased))
+        Spacer(Modifier.height(KptTheme.spacing.xl))
 
         if (state.beneficiaryState == BeneficiaryState.CREATE_MANUAL) {
             Text(
                 text = buildAnnotatedString {
                     append(stringResource(Res.string.skip_the_form))
-                    withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                    withStyle(style = SpanStyle(color = KptTheme.colorScheme.primary)) {
                         append(stringResource(Res.string.upload_or_scan_qr_code))
                     }
                 },

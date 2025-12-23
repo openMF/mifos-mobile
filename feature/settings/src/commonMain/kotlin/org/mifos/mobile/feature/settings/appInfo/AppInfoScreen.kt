@@ -21,12 +21,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_about_logo_content_description
@@ -47,6 +45,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.feature.settings.util.appVersion
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * The main composable for the App Info screen, which acts as a stateful wrapper
@@ -125,7 +124,7 @@ internal fun AppInfoContent(
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(DesignToken.padding.small),
+                            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
                         ) {
                             Image(
                                 painter = painterResource(Res.drawable.mifos_icon),
@@ -136,7 +135,7 @@ internal fun AppInfoContent(
                             )
                             Text(
                                 text = stringResource(Res.string.feature_settings_about_mifos),
-                                color = MaterialTheme.colorScheme.primary,
+                                color = KptTheme.colorScheme.primary,
                                 style = MifosTypography.titleLarge,
                             )
                         }
@@ -155,7 +154,7 @@ internal fun AppInfoContent(
                         Text(
                             text = stringResource(Res.string.feature_settings_appinfo_app_name),
                             style = MifosTypography.titleMediumEmphasized,
-                            modifier = Modifier.padding(top = DesignToken.padding.small),
+                            modifier = Modifier.padding(top = KptTheme.spacing.sm),
                             color = AppColors.customBlack,
                         )
 
@@ -168,7 +167,7 @@ internal fun AppInfoContent(
                                     text = point,
                                     style = MifosTypography.bodySmall,
                                     modifier = Modifier.padding(
-                                        vertical = DesignToken.padding.small,
+                                        vertical = KptTheme.spacing.sm,
                                     ),
                                     color = AppColors.customBlack,
                                 )
@@ -184,7 +183,7 @@ internal fun AppInfoContent(
                             contentDescription =
                             stringResource(Res.string.feature_settings_appinfo_logo_content_description),
                             modifier = Modifier
-                                .size(150.dp)
+                                .size(DesignToken.sizes.imageDp150)
                                 .align(Alignment.BottomEnd).zIndex(0f),
                         )
                     }

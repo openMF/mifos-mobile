@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,10 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.attafitamim.krop.core.crop.CropError
 import com.attafitamim.krop.core.crop.CropperLoading
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun CropErrorDialog(error: CropError, onDismiss: () -> Unit) {
@@ -55,11 +55,11 @@ fun LoadingDialog(
     var dismissed by remember(status) { mutableStateOf(false) }
     if (!dismissed) {
         Dialog(onDismissRequest = { dismissed = true }) {
-            Surface(shape = MaterialTheme.shapes.small) {
+            Surface(shape = KptTheme.shapes.small) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
+                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.dp6, Alignment.CenterVertically),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = modifier.padding(16.dp),
+                    modifier = modifier.padding(KptTheme.spacing.md),
                 ) {
                     CircularProgressIndicator()
                     Text(text = status.getMessage())

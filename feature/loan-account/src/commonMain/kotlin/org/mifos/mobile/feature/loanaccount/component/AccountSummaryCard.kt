@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_number_label
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_status_label
@@ -49,6 +47,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.component1
 import kotlin.collections.component2
 
@@ -74,17 +73,17 @@ fun AccountSummaryCard(
         modifier = modifier
             .fillMaxWidth()
             .border(
-                1.dp,
-                MaterialTheme.colorScheme.secondaryContainer,
-                DesignToken.shapes.medium,
+                DesignToken.strokes.thin,
+                KptTheme.colorScheme.secondaryContainer,
+                KptTheme.shapes.medium,
             ),
-        shape = DesignToken.shapes.medium,
+        shape = KptTheme.shapes.medium,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { isExpanded = !isExpanded }
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
         ) {
             Row(
                 modifier = Modifier
@@ -95,13 +94,13 @@ fun AccountSummaryCard(
                 Text(
                     text = title,
                     style = MifosTypography.titleSmallEmphasized,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = KptTheme.colorScheme.onSurface,
                 )
                 Icon(
                     modifier = Modifier.size(DesignToken.sizes.iconSmall),
                     imageVector = if (isExpanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
                     contentDescription = if (isExpanded) "Collapse" else "Expand",
-                    tint = MaterialTheme.colorScheme.onSurface,
+                    tint = KptTheme.colorScheme.onSurface,
                 )
             }
 
@@ -115,13 +114,13 @@ fun AccountSummaryCard(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = DesignToken.padding.small),
+                                .padding(vertical = KptTheme.spacing.sm),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             Text(
                                 text = "${stringResource(key)} :",
                                 style = MifosTypography.labelMediumEmphasized,
-                                color = MaterialTheme.colorScheme.secondary,
+                                color = KptTheme.colorScheme.secondary,
                             )
                             Text(
                                 text = value ?: "",
@@ -130,7 +129,7 @@ fun AccountSummaryCard(
                                 color = if (key == Res.string.feature_loan_account_status_label) {
                                     AppColors.customEnable
                                 } else {
-                                    MaterialTheme.colorScheme.secondary
+                                    KptTheme.colorScheme.secondary
                                 },
                             )
                         }
@@ -148,7 +147,7 @@ private fun Account_Card_Preview() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
         ) {
             AccountSummaryCard(
                 keyValuePairs = mapOf(

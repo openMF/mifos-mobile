@@ -33,7 +33,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -44,6 +43,8 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
+import template.core.base.designsystem.theme.KptTheme
+
 /**
  * Composable function that displays the Client Charges Screen.
  *
@@ -151,7 +152,7 @@ private fun ClientChargeScreen(
 
             ScreenUiState.Success -> {
                 ClientChargeContent(
-                    modifier = Modifier.padding(DesignToken.padding.large),
+                    modifier = Modifier.padding(KptTheme.spacing.md),
                     chargesList = state.charges,
                     onChargeClick = {
                         onAction(ClientChargeAction.OnChargeClick(it))

@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,6 +47,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Account Update" screen.
@@ -189,9 +189,9 @@ internal fun AccountUpdateScreenContent(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .padding(top = DesignToken.padding.medium),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     MifosDetailsCard(
                         keyValuePairs = state.details,
@@ -222,9 +222,9 @@ internal fun AccountUpdateScreenContent(
                             },
 
                             enabled = state.selectedProductId != null,
-                            shape = DesignToken.shapes.medium,
+                            shape = KptTheme.shapes.medium,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
+                                containerColor = KptTheme.colorScheme.primary,
                             ),
                         )
                     }
@@ -251,7 +251,7 @@ internal fun AccountUpdateScreenContent(
 private fun Account_Update_Preview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
+            modifier = Modifier.fillMaxSize().padding(KptTheme.spacing.md),
         ) {
             AccountUpdateScreenContent(
                 state = AccountUpdateState(clientId = 1, accountId = -1L, dialogState = null),
