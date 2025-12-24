@@ -39,7 +39,7 @@
         <item>اُردُو</item>
         <item>বাঙালি</item>
         <item>Español</item>
-        <item>français</item>
+        <item>Français</item>
         <item>bahasa Indonesia</item>
         <item>ភាសាខ្មែរ</item>
         <item>ಕನ್ನಡ</item>
@@ -53,39 +53,39 @@
     </string-array>
 
     <string name="feature_settings_action_profile">Perfil</string>
-    <string name="feature_settings_action_profile_tip">Change your mail, name, phone number etc</string>
+    <string name="feature_settings_action_profile_tip">Cambia tu correo, nombre, número de teléfono, etc.</string>
 
     <string name="feature_settings_action_password">Contraseña</string>
-    <string name="feature_settings_action_password_tip">Change your old password</string>
+    <string name="feature_settings_action_password_tip">Cambia tu antigua contraseña</string>
 
-    <string name="feature_settings_action_auth_passcode">Auth Passcode</string>
-    <string name="feature_settings_action_auth_passcode_tip">Change your login authorization passcode</string>
+    <string name="feature_settings_action_auth_passcode">PIN</string>
+    <string name="feature_settings_action_auth_passcode_tip">Cambiar su PIN de autorización</string>
 
     <string name="feature_settings_action_language">Idioma</string>
-    <string name="feature_settings_action_language_tip">Choose your app language</string>
+    <string name="feature_settings_action_language_tip">Elige el idioma de tu aplicación</string>
 
     <string name="feature_settings_action_theme">Diseño</string>
-    <string name="feature_settings_action_theme_tip">Choose your app theme</string>
+    <string name="feature_settings_action_theme_tip">Elige el tema de tu aplicación</string>
 
-    <string name="feature_settings_action_endpoint">Endpoint</string>
-    <string name="feature_settings_action_endpoint_tip">Change your endpoint configuration</string>
+    <string name="feature_settings_action_endpoint">URL</string>
+    <string name="feature_settings_action_endpoint_tip">Cambiar la configuración de la URL</string>
 
-    <string name="feature_settings_action_about_us">About Us</string>
-    <string name="feature_settings_action_about_us_tip">Find more about our initiative</string>
+    <string name="feature_settings_action_about_us">Información</string>
+    <string name="feature_settings_action_about_us_tip">Descubra más sobre nuestra iniciativa</string>
 
-    <string name="feature_settings_action_faq">FAQ</string>
-    <string name="feature_settings_action_faq_tip">Frequently asked questions by users</string>
+    <string name="feature_settings_action_faq">Preguntas Frecuentes</string>
+    <string name="feature_settings_action_faq_tip">Preguntas frecuentes</string>
 
-    <string name="feature_settings_action_help">Help</string>
-    <string name="feature_settings_action_help_tip">Chat with our customer care</string>
+    <string name="feature_settings_action_help">Ayuda</string>
+    <string name="feature_settings_action_help_tip">Conversa con nuestro servicio de atención al cliente</string>
 
-    <string name="feature_settings_action_app_info">App Info</string>
-    <string name="feature_settings_action_app_info_tip">Find the app version details</string>
+    <string name="feature_settings_action_app_info">Información de la aplicación</string>
+    <string name="feature_settings_action_app_info_tip">Encuentra los detalles de la versión de la aplicación</string>
 
     <string name="feature_settings_action_logout">Salir</string>
-    <string name="feature_settings_action_logout_tip">Logout from all devices</string>
+    <string name="feature_settings_action_logout_tip">Cerrar sesión en todos los dispositivos</string>
 
-    <string name="feature_settings_top_bar_title">Settings</string>
+    <string name="feature_settings_top_bar_title">Ajustes</string>
 
     <string name="feature_settings_error_fetching_client">Failed to fetch client information.</string>
     <string name="feature_settings_error_fetching_profile_image">Failed to fetch profile image.</string>
