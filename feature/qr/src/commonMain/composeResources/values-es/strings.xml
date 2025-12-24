@@ -30,8 +30,7 @@
     <string name="scan_your_qr">Escanea tu QR</string>
     <string name="qr_scan_instruction">Importa los detalles de la cuenta en tu aplicación escaneando este código QR.</string>
     <string name="qr_alignment_instruction">Por favor, alinee el código QR dentro del marco para que el escaneo sea fácilmente detectable.</string>
-    <string name="generated_on">Generado el : </string>
-
+    <string name="generated_on">Generado el: </string>
 
     <!-- QR Code Scan   -->
     <string name="feature_qr_invalid">No puede realizar ninguna acción en su cuenta, escanee el código QR de la cuenta de ahorros ó cŕedito de otro usuario</string>
