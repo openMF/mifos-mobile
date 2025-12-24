@@ -24,6 +24,7 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
@@ -64,5 +65,11 @@ class ShareAccountRepositoryImp(
                 DataState.Error(Exception("Server error: ${e.message}"), null)
             }
         }
+    }
+
+    override fun getShareAccountDetails(accountId: Long): Flow<DataState<ShareAccountWithAssociations>> {
+        return dataManager.shareAccountApi.getShareAccountDetails(accountId)
+            .asDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 }

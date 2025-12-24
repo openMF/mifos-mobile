@@ -106,6 +106,7 @@ object Constants {
     const val FAQ = "faq"
     const val HELP = "help"
     const val APP_INFO = "app_info"
+    const val RATE_US = "rate_us"
     const val LOGOUT = "logout"
 
     const val APPLY_LOAN = "apply_loan"

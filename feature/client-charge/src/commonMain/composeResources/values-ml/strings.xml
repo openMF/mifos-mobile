@@ -20,6 +20,7 @@
     <string name="amount_outstanding">ബാക്കിയുള്ള:</string>
     <string name="amount_waived">വായിവ്ഡ്:</string>
     <string name="amount_paid">പെയ്ഡ്:</string>
+    <string name="feature_client_charge_share_charges">ഓഹരി നിരക്കുകൾ</string>
 
     <string name="charge_details">ചാർജ് വിശദാംശങ്ങൾ</string>
     <string name="paid_success_message">നിങ്ങൾ ഈ ചാർജ് പൂർണ്ണമായി വിജയകരമായി അടച്ചുകഴിഞ്ഞു</string>
@@ -36,5 +37,7 @@
     <string name="paid">പെയ്ഡ്</string>
     <string name="waived">വായിവ്ഡ്</string>
     <string name="outstanding">ബാക്കിയുള്ള</string>
+
+    <string name="feature_generic_error_server">ഞങ്ങളുടെ ഭാഗത്ത് സെർവർ തകരാറുള്ളതിനാൽ മുന്നോട്ട് പോകാനാവില്ല. അൽപസമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക</string>
 
 </resources>

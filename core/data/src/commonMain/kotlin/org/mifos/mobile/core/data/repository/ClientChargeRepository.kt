@@ -24,4 +24,6 @@ interface ClientChargeRepository {
     fun clientLocalCharges(): Flow<DataState<Page<Charge>>>
 
     suspend fun syncCharges(charges: Page<Charge>?): DataState<Page<Charge>?>
+
+    fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>>
 }
