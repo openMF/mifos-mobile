@@ -38,10 +38,12 @@ fun NavController.navigateToShareAccountScreen(navOptions: NavOptions? = null) =
  */
 fun NavGraphBuilder.shareAccountDestination(
     navigateBack: () -> Unit,
+    onAccountClicked: (Long) -> Unit,
 ) {
     composableWithSlideTransitions<ShareAccountRoute> {
         ShareAccountScreen(
             navigateBack = navigateBack,
+            onAccountClicked = { _, id -> onAccountClicked(id) },
         )
     }
 }

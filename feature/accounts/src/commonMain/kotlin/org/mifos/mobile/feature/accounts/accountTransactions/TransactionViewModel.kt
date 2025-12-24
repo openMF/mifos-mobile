@@ -39,6 +39,7 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Page
@@ -47,6 +48,8 @@ import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
+import org.mifos.mobile.core.model.entity.accounts.share.Currency
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.model.TransactionCheckboxStatus
@@ -55,7 +58,7 @@ import org.mifos.mobile.feature.accounts.utils.StatusUtils
 import kotlin.collections.map
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
-
+import org.mifos.mobile.core.model.entity.accounts.share.Transactions as ShareTransactions
 /**
  * ViewModel for managing the state and logic of the account transactions screen.
  *
@@ -65,6 +68,7 @@ import kotlin.time.ExperimentalTime
  *
  * @property savingsAccountRepositoryImpl The repository for savings account data.
  * @property loanAccountRepositoryImpl The repository for loan account data.
+ * @property shareAccountRepositoryImpl the repository for share account data
  * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
 @Suppress("TooManyFunctions")
@@ -73,6 +77,7 @@ internal class AccountsTransactionViewModel(
     private val recentTransactionRepositoryImpl: RecentTransactionRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
     private val loanAccountRepositoryImpl: LoanRepository,
+    private val shareAccountRepositoryImpl: ShareAccountRepository,
     private val networkMonitor: NetworkMonitor,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AccountTransactionState, AccountTransactionEvent, AccountTransactionAction>(
@@ -154,6 +159,10 @@ internal class AccountsTransactionViewModel(
 
             is AccountTransactionAction.Internal.ReceiveLoanTransactions -> {
                 handleLoanTransactionsResult(action.dataState)
+            }
+
+            is AccountTransactionAction.Internal.ReceiveShareTransactions -> {
+                handleShareTransactionsResult(action.dataState)
             }
 
             is AccountTransactionAction.OnTransactionClick -> {
@@ -297,9 +306,106 @@ internal class AccountsTransactionViewModel(
         when (state.accountType) {
             Constants.SAVINGS_ACCOUNT -> loadSavingsWithAssociations()
             Constants.LOAN_ACCOUNT -> loadLoanTransactions()
+            Constants.SHARE_ACCOUNTS -> loadShareWithAssociations()
             else -> loadRecentTransactions()
         }
     }
+
+    /**
+     * Loads share account transactions by fetching account details with associations.
+     *
+     * This triggers a fetch for the Share Account details (which includes the transaction history)
+     * and dispatches the result to [AccountTransactionAction.Internal.ReceiveShareTransactions].
+     */
+
+    private fun loadShareWithAssociations() {
+        viewModelScope.launch {
+            shareAccountRepositoryImpl.getShareAccountDetails(state.accountId)
+                .collect { dataState ->
+                    sendAction(AccountTransactionAction.Internal.ReceiveShareTransactions(dataState))
+                }
+        }
+    }
+
+    /**
+     * Handles the result of the share account transactions API call by updating the UI state
+     * based on [DataState] — success, loading, or error.
+     *
+     * In the Success state, it maps the share-specific `purchasedShares` list to the generic
+     * [UiTransaction] format used by the UI.
+     */
+
+    private fun handleShareTransactionsResult(dataState: DataState<ShareAccountWithAssociations>) {
+        when (dataState) {
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        isRefreshing = false,
+                        uiState = if (dataState.exception is IOException ||
+                            dataState.exception.cause is IOException
+                        ) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                    )
+                }
+            }
+            DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
+            is DataState.Success -> {
+                val transactions = dataState.data.purchasedShares.map { it.toUiTransaction(dataState.data.currency) }
+
+                val groupedTransactions = transactions.groupBy { transaction ->
+                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                }
+
+                updateState {
+                    if (transactions.isEmpty()) {
+                        it.copy(
+                            isRefreshing = false,
+                            data = emptyList(),
+                            filteredData = emptyMap(),
+                            isFilteredRecordsEmpty = true,
+                            uiState = ScreenUiState.Empty,
+                        )
+                    } else {
+                        it.copy(
+                            isRefreshing = false,
+                            data = transactions,
+                            filteredData = groupedTransactions,
+                            isFilteredRecordsEmpty = groupedTransactions.isEmpty(),
+                            uiState = ScreenUiState.Success,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Converts a Share Account `Transactions` object to a UI-friendly `UiTransaction` object.
+     *
+     * Since Share Transactions do not natively contain currency information, this function
+     * takes the parent Account's [currency] to format the amounts correctly.
+     *
+     * @param currency The currency object from the Share Account details.
+     * @return A [UiTransaction] object ready for display.
+     */
+    private fun ShareTransactions.toUiTransaction(
+        currency: Currency?,
+    ) = UiTransaction(
+        id = id,
+        date = if (purchasedDate.size >= 3) purchasedDate else listOf(1970, 1, 1),
+        amount = amount,
+        type = null,
+        typeValue = type?.value,
+        isCredit = when {
+            type?.value?.contains("Purchase", ignoreCase = true) == true -> false
+            type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false
+            else -> true
+        },
+        currency = currency?.code ?: "USD",
+    )
 
     /**
      * Loads recent transactions from the [RecentTransactionRepository] for the current client.
@@ -772,6 +878,11 @@ internal sealed interface AccountTransactionAction {
         /**
          * Action representing the result of a loan account transaction fetch operation.**/
         data class ReceiveLoanTransactions(val dataState: DataState<LoanWithAssociations?>) : Internal
+
+        /**
+         * Action representing the result of a share account transaction fetch operation.**/
+
+        data class ReceiveShareTransactions(val dataState: DataState<ShareAccountWithAssociations>) : Internal
     }
 }
 

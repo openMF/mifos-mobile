@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
 import mifos_mobile.feature.share_account.generated.resources.Res
-import mifos_mobile.feature.share_account.generated.resources.feature_generic_error_server
+import mifos_mobile.feature.share_account.generated.resources.feature_share_account_generic_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
@@ -211,7 +211,7 @@ class ShareAccountsViewmodel(
                         uiState = if (dataState.exception.cause is IOException) {
                             ScreenUiState.Network
                         } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            ScreenUiState.Error(Res.string.feature_share_account_generic_error_server)
                         },
                     )
                 }

@@ -9,6 +9,8 @@
  */
 plugins {
     alias(libs.plugins.cmp.feature.convention)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -23,10 +25,14 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.kotlinx.serialization.json)
+
 
             api(projects.core.ui)
             api(projects.core.model)
             api(projects.core.common)
+            implementation(projects.core.qrcode)
+
         }
     }
 }

@@ -20,6 +20,7 @@
     <string name="amount_outstanding">બાકી:</string>
     <string name="amount_waived">માફ કરેલ:</string>
     <string name="amount_paid">ચૂકવણી કરેલ:</string>
+    <string name="feature_client_charge_share_charges">શેર શુલ્ક</string>
 
     <string name="charge_details">ચાર્જ વિગતો</string>
     <string name="paid_success_message">તમે આ ચાર્જની સંપૂર્ણ ચૂકવણી સફળતાપૂર્વક કરી છે</string>
@@ -36,5 +37,7 @@
     <string name="paid">ચૂકવણી કરેલ</string>
     <string name="waived">માફ કરેલ</string>
     <string name="outstanding">બાકી</string>
+
+    <string name="feature_generic_error_server">અમારા તરફથી સર્વર સમસ્યા છે, આગળ વધી શકાતું નથી. થોડી વાર પછી ફરી પ્રયાસ કરો</string>
 
 </resources>

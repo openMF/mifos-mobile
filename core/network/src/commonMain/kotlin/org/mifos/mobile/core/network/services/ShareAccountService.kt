@@ -17,6 +17,7 @@ import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
@@ -39,4 +40,10 @@ interface ShareAccountService {
     suspend fun submitShareApplication(
         @Body payload: ShareApplicationPayload?,
     ): HttpResponse
+
+    @GET(ApiEndPoints.SHARE_ACCOUNTS + "/{accountId}")
+    fun getShareAccountDetails(
+        @Path("accountId") accountId: Long,
+        @Query("associations") associations: String = "all",
+    ): Flow<ShareAccountWithAssociations>
 }

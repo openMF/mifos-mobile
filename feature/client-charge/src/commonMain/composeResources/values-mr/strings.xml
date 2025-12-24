@@ -20,6 +20,7 @@
     <string name="amount_outstanding">बाकी:</string>
     <string name="amount_waived">माफ केले:</string>
     <string name="amount_paid">भरले:</string>
+    <string name="feature_client_charge_share_charges">शेअर शुल्क</string>
 
     <string name="charge_details">चार्ज तपशील</string>
     <string name="paid_success_message">तुम्ही हे चार्ज पूर्णपणे यशस्वीरित्या भरले आहे</string>
@@ -36,5 +37,7 @@
     <string name="paid">भरले</string>
     <string name="waived">माफ केले</string>
     <string name="outstanding">बाकी</string>
+
+    <string name="feature_generic_error_server">आमच्या बाजूने सर्व्हरची समस्या आहे, पुढे जाऊ शकत नाही. कृपया थोड्या वेळाने पुन्हा प्रयत्न करा</string>
 
 </resources>

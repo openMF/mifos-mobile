@@ -20,6 +20,7 @@
     <string name="amount_outstanding">Em aberto:</string>
     <string name="amount_waived">Dispensado:</string>
     <string name="amount_paid">Pago:</string>
+    <string name="feature_client_charge_share_charges">Encargos de Ações</string>
 
     <string name="charge_details">Detalhes da Taxa</string>
     <string name="paid_success_message">Você pagou esta taxa completamente com sucesso</string>
@@ -36,5 +37,7 @@
     <string name="paid">Pago</string>
     <string name="waived">Dispensado</string>
     <string name="outstanding">Em aberto</string>
+
+    <string name="feature_generic_error_server">Erro no servidor do nosso lado, não é possível prosseguir. Tente novamente em breve</string>
 
 </resources>
