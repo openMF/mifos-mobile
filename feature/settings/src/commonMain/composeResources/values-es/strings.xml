@@ -190,4 +190,11 @@
     <!-- Change Language   -->
     <string name="feature_settings_language">Idioma</string>
     <string name="feature_settings_change_language">Cambiar Idioma</string>
+
+     <!--  Theme  -->
+    <string name="feature_settings_theme_light">Tema ligero</string>
+    <string name="feature_settings_theme_dark">Tema oscuro</string>
+    <string name="feature_settings_theme_system">Tema predeterminado del sistema</string>
+    <string name="feature_settings_apply_theme">Aplicar tema</string>
+
 </resources>
