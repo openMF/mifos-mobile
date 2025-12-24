@@ -6,7 +6,7 @@
     If a copy of the MPL was not distributed with this file,
     You can obtain one at https://mozilla.org/MPL/2.0/.
 
-    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+    See https://github.com/openMF/mifos-mobile/blob/master/LICENSE.md
 -->
 <resources>
     <string name="add_beneficiary">Agregar beneficiario</string>
@@ -21,11 +21,11 @@
     <string name="dialog_message_write_storage_permission_never_ask_again">Ha denegado el permiso para escribir en el almacenamiento. Sin este permiso, no podrá agregar beneficiarios mediante el código QR. 
     ¿Está seguro de que desea denegar este permiso?
     </string>
-    <string name="proceed">Continuer</string>
+    <string name="proceed">Continuar</string>
     <string name="import_qr">Importar Código QR</string>
     <string name="import_another_qr">Importar otro Código QR</string>
     <string name="error_reading_qr">Error al leer el código QR, asegúrese de seleccionar la región adecuada</string>
-    <string name="invalid_qr">No puede realizar ninguna acción en su cuenta. Escanee el código QR de la cuenta de ahorros ó cŕedito de otro usuario.
+    <string name="invalid_qr">No puede realizar ninguna acción en su cuenta. Escanee el código QR de la cuenta de ahorros ó crédito de otro usuario.
     </string>
     <string name="scan_your_qr">Escanea tu QR</string>
     <string name="qr_scan_instruction">Importa los detalles de la cuenta en tu aplicación escaneando este código QR.</string>
@@ -33,7 +33,7 @@
     <string name="generated_on">Generado el: </string>
 
     <!-- QR Code Scan   -->
-    <string name="feature_qr_invalid">No puede realizar ninguna acción en su cuenta, escanee el código QR de la cuenta de ahorros ó cŕedito de otro usuario</string>
+    <string name="feature_qr_invalid">No puede realizar ninguna acción en su cuenta, escanee el código QR de la cuenta de ahorros ó crédito de otro usuario</string>
     <string name="feature_qr_error">Error al leer el código QR</string>
     <string name="feature_qr_instruction">Por favor, alinee el código QR dentro del marco para que el escaneo sea fácilmente detectable.</string>
     <string name="feature_qr_warning_title">Advertencia</string>

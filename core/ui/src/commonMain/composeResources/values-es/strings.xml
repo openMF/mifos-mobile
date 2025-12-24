@@ -6,7 +6,7 @@
     If a copy of the MPL was not distributed with this file,
     You can obtain one at https://mozilla.org/MPL/2.0/.
 
-    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+    See https://github.com/openMF/mifos-mobile/blob/master/LICENSE.md
 -->
 <resources>
     <string name="no_internet">Sin conexión a internet</string>
@@ -47,7 +47,7 @@
 
     <!-- General Password UI Labels -->
     <string name="password_requirements_title">Requisitos de contraseña</string>
-    <string name="password_feedback_title">Password Suggestions</string>
+    <string name="password_feedback_title">Sugerencias de contraseña</string>
     <string name="password_feedback_all_good">¡Tu contraseña cumple todos los requisitos!</string>
     <string name="character_count">%1$d caracteres</string>
     <string name="character_count_with_limit">%1$d / %2$d caracteres</string>
@@ -115,10 +115,10 @@
     <string name="validation_amount_invalid_increment">El importe debe estar en incrementos válidos para esta moneda</string>
 
     <string name="savings_account">Cuenta de ahorros</string>
-    <string name="available_balance">Nombre del cliente</string>
+    <string name="available_balance">Saldo disponible</string>
     <string name="select_other_payment_account">Seleccione otra cuenta de pago</string>
     <string name="pay_from">Pagar desde</string>
-    <string name="available_balance_formatted">Available Balance - %1$s</string>
+    <string name="available_balance_formatted">Saldo disponible - %1$s</string>
 
     <string name="feature_dashboard_welcome_back">Bienvenido de nuevo a Mifos</string>
     <string name="feature_dashboard_no_accounts_title">Aún no hay cuentas</string>
