@@ -48,7 +48,8 @@ class KtorInterceptor(
                     runCatching {
                         plugin.onUnauthorized?.invoke()
                     }.onFailure { throwable ->
-                        null
+                        // Handle the exception if needed
+                        throwable.printStackTrace()
                     }
                 }
                 proceed()
