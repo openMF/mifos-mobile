@@ -31,6 +31,8 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_password_tip
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_rate_us
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_rate_us_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme
 import mifos_mobile.feature.settings.generated.resources.feature_settings_action_theme_tip
 import org.jetbrains.compose.resources.StringResource
@@ -128,6 +130,15 @@ sealed class SettingsItems(
         route = Constants.FAQ,
     )
 
+    /** Represents the 'Rate Us' action to trigger app review. */
+    @Serializable
+    data object RateUs : SettingsItems(
+        title = Res.string.feature_settings_action_rate_us,
+        subTitle = Res.string.feature_settings_action_rate_us_tip,
+        icon = MifosIcons.RateUs,
+        route = Constants.RATE_US,
+    )
+
     /** Represents the 'Help' or support screen. */
     @Serializable
     data object Help : SettingsItems(
@@ -168,6 +179,7 @@ internal val settingsItems: ImmutableList<SettingsItems> = persistentListOf(
     SettingsItems.Theme,
 //    SettingsItems.Endpoint,
     SettingsItems.AboutUs,
+    SettingsItems.RateUs,
     SettingsItems.FAQ,
     SettingsItems.Help,
     SettingsItems.AppInfo,

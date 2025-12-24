@@ -106,6 +106,8 @@ dependencies {
 
     implementation(projects.core.ui)
 
+    implementation(projects.coreBase.platform)
+
     // Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -55,6 +55,7 @@ import org.mifos.mobile.feature.settings.componenets.LogoutDialogState
 import org.mifos.mobile.feature.settings.componenets.MifosLogoutDialog
 import org.mifos.mobile.feature.settings.componenets.SettingsItems
 import template.core.base.designsystem.theme.KptTheme
+import template.core.base.platform.LocalAppReviewManager
 
 /**
  * A stateful composable that serves as the entry point for the main "Settings" screen.
@@ -75,11 +76,16 @@ internal fun SettingsScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    val reviewManager = LocalAppReviewManager.current
+
     EventsEffect(viewModel.eventFlow) { events ->
         when (events) {
             SettingsEvents.NavigateBack -> navigateBack.invoke()
             is SettingsEvents.NavigateTo -> {
                 navigateToScreen.invoke(events.item)
+            }
+            SettingsEvents.RateApp -> {
+                reviewManager.promptForReview()
             }
         }
     }
@@ -184,10 +190,10 @@ internal fun SettingsScreenContent(
                                 .height(DesignToken.strokes.thin),
                         )
                         SettingsActions(state.settingsItems) {
-                            if (it.route == Constants.LOGOUT) {
-                                onAction(SettingsAction.LogoutDialog)
-                            } else {
-                                onAction(SettingsAction.NavigateTo(it))
+                            when (it.route) {
+                                Constants.LOGOUT -> onAction(SettingsAction.LogoutDialog)
+                                Constants.RATE_US -> onAction(SettingsAction.RateApp)
+                                else -> onAction(SettingsAction.NavigateTo(it))
                             }
                         }
                     }

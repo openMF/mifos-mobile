@@ -45,6 +45,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  * @param homeRepositoryImpl Repository for fetching home-related data, such as client info and image.
  * @param userPreferencesRepositoryImpl Repository for accessing user preferences, including the client ID.
  * @param userDataRepositoryImpl Repository for logout user.
+ * @param appReviewManager Manager for handling in-app reviews.
  */
 internal class SettingsViewModel(
     private val homeRepositoryImpl: HomeRepository,
@@ -113,6 +114,7 @@ internal class SettingsViewModel(
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
             is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
+            SettingsAction.RateApp -> sendEvent(SettingsEvents.RateApp)
         }
     }
 
@@ -361,6 +363,9 @@ internal sealed interface SettingsAction {
     /** Action to observe network status */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : SettingsAction
 
+    /** Action to rate application */
+    data object RateApp : SettingsAction
+
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
      */
@@ -388,4 +393,5 @@ internal sealed interface SettingsEvents {
     data object NavigateBack : SettingsEvents
 
     data class NavigateTo(val item: SettingsItems) : SettingsEvents
+    data object RateApp : SettingsEvents
 }

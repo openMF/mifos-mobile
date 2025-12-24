@@ -74,6 +74,9 @@
     <string name="feature_settings_action_about_us">About Us</string>
     <string name="feature_settings_action_about_us_tip">Find more about our initiative</string>
 
+    <string name="feature_settings_action_rate_us">Rate Us</string>
+    <string name="feature_settings_action_rate_us_tip">Rate our app on PlayStore</string>
+
     <string name="feature_settings_action_faq">FAQ</string>
     <string name="feature_settings_action_faq_tip">Frequently asked questions by users</string>
 

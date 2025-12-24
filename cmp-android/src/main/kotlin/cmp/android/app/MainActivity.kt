@@ -24,6 +24,7 @@ import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.ui.utils.ShareUtils
+import template.core.base.platform.LocalManagerProvider
 import java.util.Locale
 import kotlin.getValue
 
@@ -63,22 +64,24 @@ class MainActivity : ComponentActivity() {
          * @see setContent
          */
         setContent {
-            SharedApp(
-                handleThemeMode = {
-                    AppCompatDelegate.setDefaultNightMode(it)
-                },
-                handleAppLocale = {
-                    it?.let {
-                        AppCompatDelegate.setApplicationLocales(
-                            LocaleListCompat.forLanguageTags(it),
-                        )
-                        Locale.setDefault(Locale(it))
-                    }
-                },
-                onSplashScreenRemoved = {
-                    shouldShowSplashScreen = false
-                },
-            )
+            LocalManagerProvider(context = this) {
+                SharedApp(
+                    handleThemeMode = {
+                        AppCompatDelegate.setDefaultNightMode(it)
+                    },
+                    handleAppLocale = {
+                        it?.let {
+                            AppCompatDelegate.setApplicationLocales(
+                                LocaleListCompat.forLanguageTags(it),
+                            )
+                            Locale.setDefault(Locale(it))
+                        }
+                    },
+                    onSplashScreenRemoved = {
+                        shouldShowSplashScreen = false
+                    },
+                )
+            }
         }
     }
 }
