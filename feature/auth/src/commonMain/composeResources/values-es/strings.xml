@@ -9,7 +9,7 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <string name="no_internet_connection">Sin conexion a internet</string>
+    <string name="no_internet_connection">Sin conexión a internet</string>
     <string name="register">Registrar</string>
     <string name="login_failed">Inicio de sesión fallido. Intenta nuevamente.</string>
     <string name="toast_welcome">Hola %1$s</string>
@@ -17,13 +17,13 @@
     <string name="login">Ingresar</string>
     <string name="create_an_account">Crear una cuenta</string>
     <string name="rb_mobile">Teléfono móvil</string>
-    <string name="rb_email">Correo Eléctronico</string>
+    <string name="rb_email">Correo Electrónico</string>
     <string name="account_number">Número de Cuenta</string>
     <string name="username">Usuario</string>
     <string name="first_name">Nombre</string>
     <string name="last_name">Apellido</string>
     <string name="phone_number">Teléfono móvil</string>
-    <string name="email">Correo Eléctronico</string>
+    <string name="email">Correo Electrónico</string>
     <string name="confirm_password">Confirmar Contraseña</string>
     <string name="verification_mode">Modo de Verificación</string>
     <string name="dialog_cancel_registration_message">¿Confirmas la cancelación?</string>
@@ -52,7 +52,7 @@
     <string name="error_invalid_password">Contraseña debe tener al menos 8 caracteres de longitud</string>
     <string name="error_invalid_email">ID invalido de correo</string>
     <string name="error_password_not_match">La contraseña no coincide</string>
-    <string name="error_enter_email">Ingresa un correo eléctronico valido</string>
+    <string name="error_enter_email">Ingresa un correo electrónico valido</string>
     <string name="error_mobile_length">El teléfono móvil debe tener 10 digitos</string>
     <string name="error_enter_account_number">Ingresa tu numero de cuenta</string>
     <string name="error_enter_mobile_number">Ingresa tu numero de telefono móvil</string>
@@ -64,13 +64,13 @@
 
     <string name="feature_sign_in_title">Ingresar</string>
     <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para inciar sesión</string>
-    <string name="feature_sign_in_username_label">Usuario o correo electronico</string>
+    <string name="feature_sign_in_username_label">Usuario o correo electrónico</string>
     <string name="feature_sign_in_password_label">Contraseña</string>
     <string name="feature_sign_in_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="feature_sign_in_Sign_in">Ingresar</string>
     <string name="feature_sign_in_dont_have_an_account">¿No tienes una cuenta?</string>
     <string name="feature_sign_in_sign_up">Crear Cuenta</string>
-    <string name="feature_sign_in_username_error">Correo Eléctronico no encontrado</string>
+    <string name="feature_sign_in_username_error">Correo Electrónico no encontrado</string>
     <string name="feature_sign_in_password_error">Contraseña incorrecta</string>
 
     <string name="feature_signup_title">Crear cuenta</string>
@@ -93,9 +93,9 @@
     <string name="feature_signup_error_first_name_empty">El nombre no puede estar vacio</string>
     <string name="feature_signup_error_middle_name_empty">El Segundo Apellido no puede estar vacio</string>
     <string name="feature_signup_error_last_name_empty">El Primer Apellido no puede estar vacio</string>
-    <string name="feature_signup_error_invalid_email">Direccion de correo electronico invalida</string>
+    <string name="feature_signup_error_invalid_email">Direccion de correo electrónico invalida</string>
     <string name="feature_signup_error_invalid_mobile_number">Número de telefono móvil invalido</string>
-    <string name="feature_signup_error_customer_account_empty">La cuenta del Cliente es requerida/string>
+    <string name="feature_signup_error_customer_account_empty">La cuenta del Cliente es requerida</string>
     <string name="feature_signup_error_customer_account_not_valid">Proporciona una cuenta de Cliente valida</string>
     <string name="feature_signup_error_password_required_error">Contraseña es requerida</string>
     <string name="feature_signup_error_password_short">Contraseña debe contar con al menos 6 caracteres</string>
@@ -103,7 +103,7 @@
     <string name="feature_signup_error_name_contains_digits">El nombre no debe contener digitos</string>
     <string name="feature_signup_error_name_contains_symbols">El nombre no debe contener simbolos</string>
     <string name="feature_signup_error_name_contains_emoji">El texto no debe contener emojis ni caracteres especiales</string>
-    <string name="feature_signup_user_registered_successfully">El usuario se resitro correctamente</string>
+    <string name="feature_signup_user_registered_successfully">El usuario se registró correctamente</string>
     <string name="feature_signup_user_registered_successfully_tip">Ahora puedes iniciar sesion con tu usuario y contraseña.</string>
     <string name="feature_signup_user_registered_failed">Fallo en el registro del usuario</string>
     <string name="feature_signup_user_registered_failed_tip">Error al registrar el usuario. Intenta nuevamente.</string>
@@ -135,14 +135,14 @@
     <string name="feature_upload_id_upload_success">Archivo cargado correctamente</string>
     <string name="feature_upload_id_upload_failed">Error al cargar el archivo. Intenta nuevamente.</string>
     <string name="feature_upload_id_error_invalid_dob">La fecha de nacimiento no puede ser hoy ni una fecha futura</string>
-    <string name="feature_upload_id_generic_error">Ocurrio un error. Intenta nuevamente.</string>
+    <string name="feature_upload_id_generic_error">Ocurrió un error. Intenta nuevamente.</string>
 
     <string name="feature_otp_title">Código OTP de autenticación</string>
-    <string name="feature_otp_subtitle">Revisa tu correo eléctronico</string>
-    <string name="feature_otp_message">Para completar el registro, revisa tu correo electronico. Deberías haber recibido un código de autenticación (si no recibes el correo electrónico, selecciona la opción de reenviarlo). Debes proporcionarlo a continuación.</string>
+    <string name="feature_otp_subtitle">Revisa tu correo electrónico</string>
+    <string name="feature_otp_message">Para completar el registro, revisa tu correo electrónico. Deberías haber recibido un código de autenticación (si no recibes el correo electrónico, selecciona la opción de reenviarlo). Debes proporcionarlo a continuación.</string>
     <string name="feature_otp_tip">¿No has recibido el código?</string>
     <string name="feature_otp_action_tip">Reenviar ahora</string>
-    <string name="feature_otp_authentication_code_label">Codigo de autenticación</string>
+    <string name="feature_otp_authentication_code_label">Código de autenticación</string>
     <string name="feature_otp_request_id_label">Id de petición</string>
 
     <string name="feature_common_next">Siguiente</string>
@@ -150,7 +150,7 @@
 
     <string name="feature_otp_required_error">OTP es requerido</string>
     <string name="feature_otp_invalid_error">Ingresa un OTP valido</string>
-    <string name="feature_otp_request_id_error">ID de peticion es requerido</string>
+    <string name="feature_otp_request_id_error">ID de petición es requerido</string>
 
     <!--Set New Password-->
 
@@ -168,14 +168,14 @@
 
 
     <!--Recover Password-->
-    <string name="feature_recover_now_title">Recuperar ahora/string>
+    <string name="feature_recover_now_title">Recuperar ahora</string>
     <string name="feature_recover_now_message">¿Olvidaste tu contraseña? ¡No te preocupes! Te ayudamos. ¡Restablece tu contraseña ahora!</string>
     <string name="feature_recover_now_phone_number_label">Teléfono móvil</string>
-    <string name="feature_recover_now_email_label">Correo electronico</string>
+    <string name="feature_recover_now_email_label">Correo electrónico</string>
     <string name="feature_recover_now_verifying">Verificando</string>
-    <string name="feature_recover_now_email_required">Correo electronico es requerido</string>
+    <string name="feature_recover_now_email_required">Correo electrónico es requerido</string>
     <string name="feature_recover_now_phone_number_required">Teléfono móvil es requerido</string>
-    <string name="feature_recover_now_email_format_error">Correo electronico invalido</string>
+    <string name="feature_recover_now_email_format_error">Correo electrónico invalido</string>
     <string name="feature_recover_now_phone_number_error">Teléfono móvil invalido</string>
     <string name="feature_recover_now_invalid_phone_number_error">El numero telefonico no puede contener letras ni simbolos</string>
     <string name="feature_recover_now_remember_your_password">¿Recordar contraseña?</string>
