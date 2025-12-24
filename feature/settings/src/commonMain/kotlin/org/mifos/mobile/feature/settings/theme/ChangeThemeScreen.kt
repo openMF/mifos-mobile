@@ -45,6 +45,7 @@ import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_light
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
@@ -124,19 +125,20 @@ internal fun ThemeScreenContent(
                         stringResource(labelRes) +
                             "\n" +
                             stringResource(Res.string.feature_settings_theme_dark) + " [" +
-                            uiState.timeBasedTheme.hourStart + ":" +
-                            uiState.timeBasedTheme.timeStart +
-                            " - " +
-                            uiState.timeBasedTheme.hourEnd + ":" +
-                            uiState.timeBasedTheme.timeEnd +
-                            "]" +
-                            "\n" +
+                            DateHelper.formatTimeRange(
+                                uiState.timeBasedTheme.hourStart,
+                                uiState.timeBasedTheme.timeStart,
+                                uiState.timeBasedTheme.hourEnd,
+                                uiState.timeBasedTheme.timeEnd,
+                            ) +
+                            "]\n" +
                             stringResource(Res.string.feature_settings_theme_light) + " [" +
-                            uiState.timeBasedTheme.hourEnd + ":" +
-                            uiState.timeBasedTheme.timeEnd +
-                            " - " +
-                            uiState.timeBasedTheme.hourStart + ":" +
-                            uiState.timeBasedTheme.timeStart +
+                            DateHelper.formatTimeRange(
+                                uiState.timeBasedTheme.hourEnd,
+                                uiState.timeBasedTheme.timeEnd,
+                                uiState.timeBasedTheme.hourStart,
+                                uiState.timeBasedTheme.timeStart,
+                            ) +
                             "]"
                     } else {
                         stringResource(labelRes)

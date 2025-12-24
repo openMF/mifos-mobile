@@ -138,6 +138,24 @@ object DateHelper {
         }
     }
 
+    fun formatTimeRange(
+        startHour: Int,
+        startMinute: Int,
+        endHour: Int,
+        endMinute: Int,
+    ): String {
+        fun format(hour: Int, minute: Int): String {
+            val period = if (hour < 12) "AM" else "PM"
+            val hour12 = when (hour % 12) {
+                0 -> 12
+                else -> hour % 12
+            }
+            return "$hour12:${minute.toString().padStart(2, '0')} $period"
+        }
+
+        return "${format(startHour, startMinute)} - ${format(endHour, endMinute)}"
+    }
+
     private val monthMap = mapOf(
         "Jan" to 1, "Feb" to 2, "Mar" to 3, "Apr" to 4,
         "May" to 5, "Jun" to 6, "Jul" to 7, "Aug" to 8,
