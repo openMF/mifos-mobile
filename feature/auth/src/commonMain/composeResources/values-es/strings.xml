@@ -29,24 +29,24 @@
     <string name="dialog_cancel_registration_message">¿Confirmas la cancelación?</string>
     <string name="dialog_cancel_registration_title">Cancelar Registro</string>
     <string name="request_id">ID de Petición</string>
-    <string name="empty_requestid">ID de Petición no puede estar vacia</string>
+    <string name="empty_requestid">ID de Petición no puede estar vacía</string>
     <string name="authentication_token">Código de Autenticación</string>
-    <string name="empty_authentication_token">El Código de Autenticación no puede estar vacio</string>
+    <string name="empty_authentication_token">El Código de Autenticación no puede estar vacío</string>
     <string name="verify">Verificar</string>
     <string name="verified">El usuario ha sido verificado correctamente</string>
-    <string name="yes">Si</string>
+    <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="could_not_register_user_error">No es posible registrar el usuario.</string>
-    <string name="password_strength_weak">Debil</string>
+    <string name="password_strength_weak">Débil</string>
     <string name="password_strength_medium">Regular</string>
     <string name="password_strength_strong">Fuerte</string>
     <string name="password_strength_very_strong">Muy fuerte</string>
     <string name="error_message_server">Error al cargar la respuesta del servidor</string>
-    <string name="error_validation_blank">%1$s no puede estar vacio</string>
+    <string name="error_validation_blank">%1$s no puede estar vacío</string>
     <string name="error_validation_minimum_chars">%1$s no puede ser menor a %2$d caracteres</string>
     <string name="error_validation_cannot_contain_spaces">%1$s no puede contener %2$s</string>
     <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s no puede iniciar o terminar con espacios vacios</string>
-    <string name="error_username_greater_than_six">El usuario debe ser mayour a 6 caracteres</string>
+    <string name="error_username_greater_than_six">El usuario debe ser mayor a 6 caracteres</string>
     <string name="not_contain_username">Espacios</string>
     <string name="invalid_phn_number">Número de Teléfono invalido</string>
     <string name="error_invalid_password">Contraseña debe tener al menos 8 caracteres de longitud</string>
@@ -54,16 +54,16 @@
     <string name="error_password_not_match">La contraseña no coincide</string>
     <string name="error_enter_email">Ingresa un correo electrónico valido</string>
     <string name="error_mobile_length">El teléfono móvil debe tener 10 digitos</string>
-    <string name="error_enter_account_number">Ingresa tu numero de cuenta</string>
-    <string name="error_enter_mobile_number">Ingresa tu numero de telefono móvil</string>
+    <string name="error_enter_account_number">Ingresa tu número de cuenta</string>
+    <string name="error_enter_mobile_number">Ingresa tu número de teléfono móvil</string>
     <string name="error_enter_first_name">Ingresa tu nombre</string>
     <string name="error_enter_last_name">Ingresa tu apellido</string>
     <string name="error_enter_user_name">Ingresa tu nombre de usuario</string>
-    <string name="error_enter_country">Ingresa tu pais</string>
+    <string name="error_enter_country">Ingresa tu país</string>
 
 
     <string name="feature_sign_in_title">Ingresar</string>
-    <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para inciar sesión</string>
+    <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para iniciar sesión</string>
     <string name="feature_sign_in_username_label">Usuario o correo electrónico</string>
     <string name="feature_sign_in_password_label">Contraseña</string>
     <string name="feature_sign_in_forgot_password">¿Olvidaste tu contraseña?</string>
@@ -90,21 +90,21 @@
 
     <!-- Error messages -->
     <string name="feature_signup_error_invalid_name">Nombre contiene caracteres invalidos</string>
-    <string name="feature_signup_error_first_name_empty">El nombre no puede estar vacio</string>
-    <string name="feature_signup_error_middle_name_empty">El Segundo Apellido no puede estar vacio</string>
-    <string name="feature_signup_error_last_name_empty">El Primer Apellido no puede estar vacio</string>
+    <string name="feature_signup_error_first_name_empty">El nombre no puede estar vacío</string>
+    <string name="feature_signup_error_middle_name_empty">El Segundo Apellido no puede estar vacío</string>
+    <string name="feature_signup_error_last_name_empty">El Primer Apellido no puede estar vacío</string>
     <string name="feature_signup_error_invalid_email">Direccion de correo electrónico invalida</string>
-    <string name="feature_signup_error_invalid_mobile_number">Número de telefono móvil invalido</string>
+    <string name="feature_signup_error_invalid_mobile_number">Número de teléfono móvil invalido</string>
     <string name="feature_signup_error_customer_account_empty">La cuenta del Cliente es requerida</string>
     <string name="feature_signup_error_customer_account_not_valid">Proporciona una cuenta de Cliente valida</string>
     <string name="feature_signup_error_password_required_error">Contraseña es requerida</string>
     <string name="feature_signup_error_password_short">Contraseña debe contar con al menos 6 caracteres</string>
     <string name="feature_signup_error_password_mismatch">La contraseña no coincide</string>
     <string name="feature_signup_error_name_contains_digits">El nombre no debe contener digitos</string>
-    <string name="feature_signup_error_name_contains_symbols">El nombre no debe contener simbolos</string>
+    <string name="feature_signup_error_name_contains_symbols">El nombre no debe contener símbolos</string>
     <string name="feature_signup_error_name_contains_emoji">El texto no debe contener emojis ni caracteres especiales</string>
     <string name="feature_signup_user_registered_successfully">El usuario se registró correctamente</string>
-    <string name="feature_signup_user_registered_successfully_tip">Ahora puedes iniciar sesion con tu usuario y contraseña.</string>
+    <string name="feature_signup_user_registered_successfully_tip">Ahora puedes iniciar sesión con tu usuario y contraseña.</string>
     <string name="feature_signup_user_registered_failed">Fallo en el registro del usuario</string>
     <string name="feature_signup_user_registered_failed_tip">Error al registrar el usuario. Intenta nuevamente.</string>
 
@@ -115,11 +115,11 @@
     <string name="feature_upload_id_upload_your_photo">Carga tu foto</string>
     <string name="feature_upload_id_remove_file">Eliminar archivo</string>
     <string name="feature_upload_id_view_file">Ver archivo</string>
-    <string name="feature_upload_id_select_new_file">Selecionar nuevo archivo</string>
+    <string name="feature_upload_id_select_new_file">Seleccionar nuevo archivo</string>
     <string name="feature_upload_id_identification_doc_label">Documento de Identificación</string>
     <string name="feature_upload_id_profile_photo_label">Foto de Perfil</string>
     <string name="feature_upload_id_mobile_label">Teléfono móvil</string>
-    <string name="feature_upload_id_national_id_label">Clave de Identificacion Nacional</string>
+    <string name="feature_upload_id_national_id_label">Clave de Identificación Nacional</string>
     <string name="feature_upload_id_dob_label">Fecha de nacimiento</string>
     <string name="feature_upload_id_edit_prompt">¿Quieres editar los detalles personales?</string>
     <string name="feature_upload_id_take_me_back">Regresar</string>
@@ -127,8 +127,8 @@
     <string name="feature_upload_id_cancel">Cancelar</string>
     <string name="feature_common_submit">Enviar</string>
 
-    <string name="feature_upload_id_error_field_empty">Este campo no puede estar vacio</string>
-    <string name="feature_upload_id_error_mobile_not_valid">Ingresa un numero de teléfono móvil con 10 digitos</string>
+    <string name="feature_upload_id_error_field_empty">Este campo no puede estar vacío</string>
+    <string name="feature_upload_id_error_mobile_not_valid">Ingresa un número de teléfono móvil con 10 digitos</string>
     <string name="feature_upload_id_error_id_required">Carga tu Identificación</string>
     <string name="feature_upload_id_error_photo_required">Carga tu fotografía</string>
     <string name="feature_upload_id_error_dob_required">Fecha de nacimiento es requerida</string>
@@ -177,7 +177,7 @@
     <string name="feature_recover_now_phone_number_required">Teléfono móvil es requerido</string>
     <string name="feature_recover_now_email_format_error">Correo electrónico invalido</string>
     <string name="feature_recover_now_phone_number_error">Teléfono móvil invalido</string>
-    <string name="feature_recover_now_invalid_phone_number_error">El numero telefonico no puede contener letras ni simbolos</string>
+    <string name="feature_recover_now_invalid_phone_number_error">El número telefónico no puede contener letras ni símbolos</string>
     <string name="feature_recover_now_remember_your_password">¿Recordar contraseña?</string>
     <string name="feature_recover_now_log_in">Ingresar</string>
 
