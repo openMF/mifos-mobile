@@ -69,50 +69,50 @@
     <string name="validation_email_local_invalid_characters">La parte local contiene caracteres no válidos</string>
 
     <!-- Email Domain Part Validation -->
-    <string name="validation_email_domain_empty">Domain part cannot be empty</string>
-    <string name="validation_email_domain_max_length">Domain part exceeds maximum length of 253 characters</string>
-    <string name="validation_email_domain_missing_dot">Domain must contain at least one dot</string>
-    <string name="validation_email_domain_starts_ends_with_dot">Domain cannot start or end with a dot</string>
-    <string name="validation_email_domain_starts_ends_with_hyphen">Domain cannot start or end with a hyphen</string>
-    <string name="validation_email_domain_insufficient_parts">Domain must have at least two parts separated by dots</string>
-    <string name="validation_email_tld_invalid">Top-level domain must be at least 2 letters long and contain only letters</string>
+    <string name="validation_email_domain_empty">La parte del dominio no puede estar vacía</string>
+    <string name="validation_email_domain_max_length">La parte del dominio excede la longitud máxima de 253 caracteres</string>
+    <string name="validation_email_domain_missing_dot">El dominio debe contener al menos un punto</string>
+    <string name="validation_email_domain_starts_ends_with_dot">El dominio no puede comenzar ni terminar con un punto</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">El dominio no puede comenzar ni terminar con un guion</string>
+    <string name="validation_email_domain_insufficient_parts">El dominio debe tener al menos dos partes separadas por puntos</string>
+    <string name="validation_email_tld_invalid">El dominio de nivel superior debe tener al menos 2 letras y contener solo letras</string>
 
     <!-- Email Domain Label Validation -->
-    <string name="validation_email_label_empty">Domain label cannot be empty</string>
-    <string name="validation_email_label_max_length">Domain label exceeds maximum length of 63 characters</string>
-    <string name="validation_email_label_starts_with_hyphen">Domain label cannot start with a hyphen</string>
-    <string name="validation_email_label_ends_with_hyphen">Domain label cannot end with a hyphen</string>
-    <string name="validation_email_label_invalid_characters">Domain label contains invalid characters</string>
+    <string name="validation_email_label_empty">La etiqueta del dominio no puede estar vacía</string>
+    <string name="validation_email_label_max_length">La etiqueta de dominio excede la longitud máxima de 63 caracteres</string>
+    <string name="validation_email_label_starts_with_hyphen">La etiqueta de dominio no puede comenzar con un guion</string>
+    <string name="validation_email_label_ends_with_hyphen">La etiqueta de dominio no puede terminar con un guion</string>
+    <string name="validation_email_label_invalid_characters">La etiqueta del dominio contiene caracteres no válidos</string>
 
     <!-- Spanish Phone Number Validation -->
-    <string name="validation_phone_empty">Phone number cannot be empty</string>
-    <string name="validation_phone_too_short">Phone number is too short</string>
-    <string name="validation_phone_too_long">Phone number is too long</string>
-    <string name="validation_phone_invalid_characters">Phone number contains invalid characters</string>
-    <string name="validation_phone_spanish_country_code_required">Please use Spanish country code (+34)</string>
-    <string name="validation_phone_spanish_format_invalid">Invalid Spanish phone number format</string>
+    <string name="validation_phone_empty">El número de teléfono no puede estar vacío</string>
+    <string name="validation_phone_too_short">El número de teléfono es demasiado corto</string>
+    <string name="validation_phone_too_long">El número de teléfono es demasiado largo</string>
+    <string name="validation_phone_invalid_characters">El número de teléfono contiene caracteres no válidos</string>
+    <string name="validation_phone_spanish_country_code_required">Por favor utilice el código de país México (+52)</string>
+    <string name="validation_phone_spanish_format_invalid">Formato de número de teléfono en México no válido</string>
 
-    <string name="validation_phone_invalid_for_country">Phone number is not valid for the selected country</string>
-    <string name="validation_phone_no_valid_country_found">Phone number format is not recognized for any supported country</string>
+    <string name="validation_phone_invalid_for_country">El número de teléfono no es válido para el país seleccionado</string>
+    <string name="validation_phone_no_valid_country_found">El formato del número de teléfono no es reconocido por ningún país admitido</string>
 
     <!-- Name Validation Messages -->
-    <string name="validation_name_empty">Name cannot be empty</string>
-    <string name="validation_name_invalid_characters">Name contains invalid characters</string>
+    <string name="validation_name_empty">El nombre no puede estar vacío</string>
+    <string name="validation_name_invalid_characters">El nombre contiene caracteres no válidos</string>
 
     <!-- General Validation Messages -->
-    <string name="validation_field_required">This field is required</string>
-    <string name="validation_format_invalid">Invalid format</string>
-    <string name="validation_length_exceeded">Maximum length exceeded</string>
-    <string name="validation_length_insufficient">Minimum length not met</string>
+    <string name="validation_field_required">Este campo es obligatorio</string>
+    <string name="validation_format_invalid">Formato no válido</string>
+    <string name="validation_length_exceeded">Longitud máxima excedida</string>
+    <string name="validation_length_insufficient">Longitud mínima no alcanzada</string>
 
-    <string name="validation_amount_empty">Amount cannot be empty</string>
-    <string name="validation_amount_invalid_format">Please enter a valid amount format (e.g., 99.99)</string>
-    <string name="validation_amount_invalid_number">Please enter a valid number</string>
-    <string name="validation_amount_negative">Amount cannot be negative</string>
-    <string name="validation_amount_too_small">Amount must be at least 0.01</string>
-    <string name="validation_amount_too_large">Amount cannot exceed 999,999,999.99</string>
-    <string name="validation_amount_invalid_decimal_places">Amount has too many decimal places for this currency</string>
-    <string name="validation_amount_invalid_increment">Amount must be in valid increments for this currency</string>
+    <string name="validation_amount_empty">El importe no puede estar vacío</string>
+    <string name="validation_amount_invalid_format">Ingrese un formato de cantidad válido (por ejemplo, 99.90)</string>
+    <string name="validation_amount_invalid_number">Por favor, introduzca un número válido</string>
+    <string name="validation_amount_negative">El importe no puede ser negativo</string>
+    <string name="validation_amount_too_small">El importe debe ser al menos 0,01</string>
+    <string name="validation_amount_too_large">El importe no puede exceder 99,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">El monto tiene demasiados decimales para esta moneda</string>
+    <string name="validation_amount_invalid_increment">El importe debe estar en incrementos válidos para esta moneda</string>
 
     <string name="savings_account">Cuenta de ahorros</string>
     <string name="available_balance">Nombre del cliente</string>
