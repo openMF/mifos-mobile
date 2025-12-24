@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
+import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.model.MifosThemeConfig
@@ -72,6 +73,9 @@ class UserPreferencesRepositoryImpl(
     override val observeDarkThemeConfig: Flow<MifosThemeConfig>
         get() = preferenceManager.observeDarkThemeConfig
 
+    override val observeTimeBasedThemeConfig: Flow<TimeBasedTheme>
+        get() = preferenceManager.observeTimeBasedThemeConfig
+
     override val observeDynamicColorPreference: Flow<Boolean>
         get() = preferenceManager.observeDynamicColorPreference
 
@@ -90,6 +94,15 @@ class UserPreferencesRepositoryImpl(
     override suspend fun updateTheme(theme: MifosThemeConfig): DataState<Unit> {
         return try {
             val result = preferenceManager.updateTheme(theme)
+            DataState.Success(result)
+        } catch (e: Exception) {
+            DataState.Error(e)
+        }
+    }
+
+    override suspend fun updateTimeBasedTheme(theme: TimeBasedTheme): DataState<Unit> {
+        return try {
+            val result = preferenceManager.updateTimeBasedTheme(theme)
             DataState.Success(result)
         } catch (e: Exception) {
             DataState.Error(e)

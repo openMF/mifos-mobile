@@ -25,10 +25,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_based_on_time
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_dark
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_light
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_system
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -54,6 +56,12 @@ internal class ChangeThemeViewModel(
                 trySendAction(ThemeAction.Internal.LoadTheme(theme))
             }
             .launchIn(viewModelScope)
+
+        repository.observeTimeBasedThemeConfig
+            .onEach {
+                trySendAction(ThemeAction.Internal.LoadTimeBasedTheme(it))
+            }
+            .launchIn(viewModelScope)
     }
 
     /**
@@ -69,6 +77,38 @@ internal class ChangeThemeViewModel(
                 sendEvent(ThemeEvent.OnNavigateBack)
             }
             is ThemeAction.Internal.LoadTheme -> handleLoadTheme(action)
+            ThemeAction.HideTimeBasedDialog -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        showTimeBasedDialog = false,
+                    )
+                }
+            }
+            ThemeAction.ShowTimeBasedDialog -> {
+                mutableStateFlow.update {
+                    it.copy(
+                        showTimeBasedDialog = true,
+                    )
+                }
+            }
+            is ThemeAction.UpdateTimeBasedTheme -> {
+                viewModelScope.launch {
+                    repository.updateTimeBasedTheme(action.theme)
+                    repository.updateTheme(MifosThemeConfig.BASED_ON_TIME)
+
+                    mutableStateFlow.update {
+                        it.copy(
+                            currentTheme = MifosThemeConfig.BASED_ON_TIME,
+                            timeBasedTheme = action.theme,
+                            showTimeBasedDialog = false,
+                        )
+                    }
+                }
+            }
+
+            is ThemeAction.Internal.LoadTimeBasedTheme -> {
+                handleLoadTimeBasedTheme(action)
+            }
         }
     }
 
@@ -81,10 +121,17 @@ internal class ChangeThemeViewModel(
      * @param theme The [MifosThemeConfig] selected by the user.
      */
     private fun handleThemeSelection(theme: MifosThemeConfig) {
-        mutableStateFlow.update {
-            it.copy(
-                currentTheme = theme,
-            )
+        if (theme == MifosThemeConfig.BASED_ON_TIME) {
+            mutableStateFlow.update {
+                it.copy(
+                    showTimeBasedDialog = true,
+                    currentTheme = theme,
+                )
+            }
+        } else {
+            mutableStateFlow.update {
+                it.copy(currentTheme = theme)
+            }
         }
     }
 
@@ -118,6 +165,12 @@ internal class ChangeThemeViewModel(
             it.copy(currentTheme = action.theme)
         }
     }
+
+    private fun handleLoadTimeBasedTheme(action: ThemeAction.Internal.LoadTimeBasedTheme) {
+        mutableStateFlow.update {
+            it.copy(timeBasedTheme = action.theme)
+        }
+    }
 }
 
 /**
@@ -127,6 +180,13 @@ internal class ChangeThemeViewModel(
  */
 internal data class ThemeState(
     val currentTheme: MifosThemeConfig,
+    val showTimeBasedDialog: Boolean = false,
+    val timeBasedTheme: TimeBasedTheme = TimeBasedTheme(
+        hourStart = 6,
+        hourEnd = 18,
+        timeStart = 0,
+        timeEnd = 0,
+    ),
 ) {
     /**
      * A list of all available theme options and their corresponding string resource IDs.
@@ -136,6 +196,7 @@ internal data class ThemeState(
             MifosThemeConfig.FOLLOW_SYSTEM to Res.string.feature_settings_theme_system,
             MifosThemeConfig.DARK to Res.string.feature_settings_theme_dark,
             MifosThemeConfig.LIGHT to Res.string.feature_settings_theme_light,
+            MifosThemeConfig.BASED_ON_TIME to Res.string.feature_settings_theme_based_on_time,
         )
 }
 
@@ -170,6 +231,12 @@ internal sealed interface ThemeAction {
      */
     data object NavigateBack : ThemeAction
 
+    data object ShowTimeBasedDialog : ThemeAction
+
+    data object HideTimeBasedDialog : ThemeAction
+
+    data class UpdateTimeBasedTheme(val theme: TimeBasedTheme) : ThemeAction
+
     /**
      * Actions that are internal to the ViewModel and should not be sent from the UI.
      */
@@ -180,5 +247,7 @@ internal sealed interface ThemeAction {
          * @property theme The [MifosThemeConfig] loaded from the repository.
          */
         data class LoadTheme(val theme: MifosThemeConfig) : Internal
+
+        data class LoadTimeBasedTheme(val theme: TimeBasedTheme) : Internal
     }
 }

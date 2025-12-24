@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import okio.ByteString.Companion.encodeUtf8
 import org.mifos.mobile.core.datastore.model.AppSettings
+import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.model.MifosThemeConfig
@@ -83,6 +84,9 @@ class UserPreferencesDataSource(
     val observeDarkThemeConfig: Flow<MifosThemeConfig>
         get() = _settingsInfo.map { it.appTheme }
 
+    val observeTimeBasedThemeConfig: Flow<TimeBasedTheme>
+        get() = _settingsInfo.map { it.timeBasedTheme }
+
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
             settings.putSettingsPreference(appSettings)
@@ -132,6 +136,14 @@ class UserPreferencesDataSource(
     suspend fun updateTheme(theme: MifosThemeConfig) {
         withContext(dispatcher) {
             val newPreference = settings.getSettingsPreference().copy(appTheme = theme)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+    }
+
+    suspend fun updateTimeBasedTheme(timeBasedTheme: TimeBasedTheme) {
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(timeBasedTheme = timeBasedTheme)
             settings.putSettingsPreference(newPreference)
             _settingsInfo.value = newPreference
         }

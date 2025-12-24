@@ -212,4 +212,9 @@
     <string name="feature_settings_theme_dark">Dark Theme</string>
     <string name="feature_settings_theme_system">Default System Theme</string>
     <string name="feature_settings_apply_theme">Apply Theme</string>
+    <string name="feature_settings_theme_based_on_time">Based on Time</string>
+    <string name="feature_settings_theme_choose_dark_mode_time">Choose Dark Mode Time</string>
+    <string name="feature_settings_theme_choose_dark_mode_starts_at">Dark mode starts at</string>
+    <string name="feature_settings_theme_choose_dark_mode_ends_at">Dark mode ends at</string>
+    <string name="feature_settings_theme_apply">Apply</string>
 </resources>
