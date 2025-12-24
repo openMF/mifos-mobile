@@ -46,10 +46,10 @@ class KtorInterceptor(
                 // Trigger onUnauthorized handler when response code is 401
                 if (context.response.status == HttpStatusCode.Unauthorized) {
                     runCatching {
-                                   plugin.onUnauthorized?.invoke()
-                               }.onFailure { throwable ->
-                                    null
-                               }
+                        plugin.onUnauthorized?.invoke()
+                    }.onFailure { throwable ->
+                        null
+                    }
                 }
                 proceed()
             }
