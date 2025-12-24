@@ -9,19 +9,53 @@
  */
 package org.mifos.mobile.feature.charge.charges
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -32,9 +66,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
-import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -42,17 +80,9 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.feature.charge.components.ChargeFilterUtil
 import org.mifos.mobile.feature.charge.components.ClientChargeItem
-import template.core.base.designsystem.theme.KptTheme
 
-/**
- * Composable function that displays the Client Charges Screen.
- *
- * @param navigateBack A lambda function that is called when the user navigates back.
- * @param onChargeClick A lambda function that is called when the user clicks on a charge.
- * @param modifier Modifier to be applied to the layout.
- * @param viewModel ViewModel that provides the state and actions for the screen.
- */
 @Composable
 internal fun ClientChargeScreen(
     navigateBack: () -> Unit,
@@ -95,23 +125,59 @@ internal fun ClientChargeScreen(
     )
 }
 
-/**
- * Composable function that displays the Client Charges Screen.
- *
- * @param state State of the screen.
- * @param modifier Modifier to be applied to the layout.
- * @param onAction A lambda function that is called when the user performs an action.
- */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ClientChargeScreen(
     state: ClientChargeState,
     modifier: Modifier = Modifier,
     onAction: (ClientChargeAction) -> Unit,
 ) {
-    MifosElevatedScaffold(
-        topBarTitle = stringResource(state.topBarTitleResId),
-        onNavigateBack = { onAction(ClientChargeAction.OnNavigate) },
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    Scaffold(
         modifier = modifier,
+        containerColor = Color.White,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Column {
+                        Text(
+                            text = stringResource(state.topBarTitleResId),
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
+                        )
+                        state.selectedAccountNo?.let { accountNo ->
+                            Text(
+                                text = accountNo,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                },
+                navigationIcon = {
+                    IconButton(onClick = { onAction(ClientChargeAction.OnNavigate) }) {
+                        Icon(imageVector = MifosIcons.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { onAction(ClientChargeAction.ToggleFilter) }) {
+                        Icon(
+                            imageVector = MifosIcons.Filter,
+                            contentDescription = "Filter",
+                            tint = if (
+                                state.activeFilter != ChargeFilterUtil.ALL || state.selectedAccountNo != null
+                            ) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
+                        )
+                    }
+                },
+            )
+        },
         bottomBar = {
             Surface {
                 MifosPoweredCard(
@@ -121,56 +187,74 @@ private fun ClientChargeScreen(
                 )
             }
         },
-    ) {
-        when (state.uiState) {
-            ScreenUiState.Empty -> {
-                EmptyDataView(
-                    modifier = Modifier.fillMaxSize(),
-                    image = Res.drawable.database_warning,
-                    error = Res.string.error_no_charge,
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            when (state.uiState) {
+                ScreenUiState.Empty -> {
+                    EmptyDataView(
+                        modifier = Modifier.fillMaxSize(),
+                        image = Res.drawable.database_warning,
+                        error = Res.string.error_no_charge,
+                    )
+                }
 
-                )
+                is ScreenUiState.Error -> {
+                    MifosErrorComponent(
+                        isRetryEnabled = true,
+                        message = stringResource(state.uiState.message),
+                        onRetry = { onAction(ClientChargeAction.Retry) },
+                    )
+                }
+
+                ScreenUiState.Loading -> MifosProgressIndicator()
+
+                ScreenUiState.Network -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = state.networkStatus,
+                        isRetryEnabled = true,
+                        onRetry = { onAction(ClientChargeAction.Retry) },
+                    )
+                }
+
+                ScreenUiState.Success -> {
+                    ClientChargeContent(
+                        modifier = Modifier.padding(DesignToken.padding.large),
+                        chargesList = state.charges,
+                        onChargeClick = {
+                            onAction(ClientChargeAction.OnChargeClick(it))
+                        },
+                    )
+                }
+                else -> { }
             }
+        }
 
-            is ScreenUiState.Error -> {
-                MifosErrorComponent(
-                    isRetryEnabled = true,
-                    message = stringResource(state.uiState.message),
-                    onRetry = { onAction(ClientChargeAction.Retry) },
-                )
-            }
-
-            ScreenUiState.Loading -> MifosProgressIndicator()
-
-            ScreenUiState.Network -> {
-                MifosErrorComponent(
-                    isNetworkConnected = state.networkStatus,
-                    isRetryEnabled = true,
-                    onRetry = { onAction(ClientChargeAction.Retry) },
-                )
-            }
-
-            ScreenUiState.Success -> {
-                ClientChargeContent(
-                    modifier = Modifier.padding(KptTheme.spacing.md),
-                    chargesList = state.charges,
-                    onChargeClick = {
-                        onAction(ClientChargeAction.OnChargeClick(it))
+        if (state.showFilter) {
+            ModalBottomSheet(
+                onDismissRequest = { onAction(ClientChargeAction.ToggleFilter) },
+                sheetState = sheetState,
+                containerColor = MaterialTheme.colorScheme.surface,
+            ) {
+                ChargeFilterSheetContent(
+                    state = state,
+                    onApply = { accountObj, type, filter ->
+                        onAction(
+                            ClientChargeAction.ApplyFilter(
+                                accountObj,
+                                type,
+                                filter,
+                            ),
+                        )
+                    },
+                    onClear = {
+                        onAction(ClientChargeAction.ClearFilter)
                     },
                 )
             }
-            else -> { }
         }
     }
 }
 
-/**
- * Composable function that displays the content of the Client Charges Screen.
- *
- * @param chargesList List of charges to be displayed.
- * @param onChargeClick A lambda function that is called when the user clicks on a charge.
- * @param modifier Modifier to be applied to the layout.
- */
 @Composable
 private fun ClientChargeContent(
     chargesList: List<Charge>,
@@ -186,12 +270,6 @@ private fun ClientChargeContent(
     }
 }
 
-/**
- * Composable function that displays the dialogs of the Client Charges Screen.
- *
- * @param dialogState Dialog state used for showing loading or error.
- * @param onDismissRequest A lambda function that is called when the user dismisses the dialog.
- */
 @Composable
 private fun ClientChargeDialogs(
     dialogState: ClientChargeState.DialogState?,
@@ -206,8 +284,336 @@ private fun ClientChargeDialogs(
                 onDismissRequest = onDismissRequest,
             )
         }
-
         null -> Unit
+    }
+}
+
+@Composable
+fun ChargeFilterSheetContent(
+    state: ClientChargeState,
+    onApply: (Any?, ChargeType, ChargeFilterUtil) -> Unit,
+    onClear: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    // 1. Manage State
+    var selectedTabLabel by remember {
+        mutableStateOf(
+            when {
+                state.selectedLoanAccount != null || state.chargeType == ChargeType.LOAN -> "Loan"
+                state.selectedShareAccount != null || state.chargeType == ChargeType.SHARE -> "Shares"
+                else -> "Savings"
+            },
+        )
+    }
+
+    var selectedAccountObject by remember {
+        mutableStateOf<Any?>(
+            state.selectedSavingsAccount ?: state.selectedLoanAccount ?: state.selectedShareAccount,
+        )
+    }
+
+    var selectedFilter by remember { mutableStateOf(state.activeFilter) }
+
+    // 2. Prepare Data
+    val currentAccountList: List<Any> = when (selectedTabLabel) {
+        "Savings" -> state.savingsAccounts
+        "Loan" -> state.loanAccounts
+        "Shares" -> state.shareAccounts
+        else -> emptyList()
+    }
+
+    // 3. UI Layout
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+    ) {
+        FilterHeader(onClear = onClear)
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+        if (state.canSwitchAccounts) {
+            AccountTypeSection(
+                selectedTabLabel = selectedTabLabel,
+                onTabSelected = { newTab ->
+                    selectedTabLabel = newTab
+                    selectedAccountObject = null
+                },
+            )
+
+            if (currentAccountList.isNotEmpty()) {
+                AccountDropdownSection(
+                    label = selectedTabLabel,
+                    accounts = currentAccountList,
+                    selectedAccount = selectedAccountObject,
+                    onAccountSelected = { selectedAccountObject = it },
+                )
+            }
+        }
+
+        ChargeStatusSection(
+            selectedFilter = selectedFilter,
+            onFilterSelected = { selectedFilter = it },
+        )
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        FilterApplyButton(
+            onClick = {
+                val targetType = when (selectedTabLabel) {
+                    "Savings" -> ChargeType.SAVINGS
+                    "Loan" -> ChargeType.LOAN
+                    "Shares" -> ChargeType.SHARE
+                    else -> ChargeType.CLIENT
+                }
+                onApply(selectedAccountObject, targetType, selectedFilter)
+            },
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Composable
+private fun FilterHeader(onClear: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = "Filter Charges",
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+            ),
+        )
+        TextButton(onClick = onClear) {
+            Text(
+                text = "Clear All",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold,
+                ),
+            )
+        }
+    }
+}
+
+@Composable
+private fun AccountTypeSection(
+    selectedTabLabel: String,
+    onTabSelected: (String) -> Unit,
+) {
+    Column {
+        Text(
+            text = "Account Type:",
+            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+            modifier = Modifier.padding(vertical = 8.dp),
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            val types = listOf("Savings", "Loan", "Shares")
+            types.forEach { type ->
+                FilterOptionChip(
+                    label = type,
+                    isSelected = selectedTabLabel == type,
+                    onClick = { onTabSelected(type) },
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun AccountDropdownSection(
+    label: String,
+    accounts: List<Any>,
+    selectedAccount: Any?,
+    onAccountSelected: (Any?) -> Unit,
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+
+    Column {
+        Text(
+            text = "Select $label Account:",
+            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+
+        Box {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { isExpanded = true },
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.5f)),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(0.dp),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val (_, accNo) = getAccountDetails(selectedAccount)
+                    Text(
+                        text = accNo ?: "All Accounts",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                    )
+                    Icon(
+                        imageVector = MifosIcons.ArrowDropDown,
+                        contentDescription = null,
+                        tint = Color.Black,
+                    )
+                }
+            }
+
+            DropdownMenu(
+                expanded = isExpanded,
+                onDismissRequest = { isExpanded = false },
+                modifier = Modifier.fillMaxWidth(0.9f).background(Color.White),
+            ) {
+                DropdownMenuItem(
+                    text = { Text("All Accounts", fontWeight = FontWeight.Bold) },
+                    onClick = {
+                        onAccountSelected(null)
+                        isExpanded = false
+                    },
+                )
+
+                accounts.forEach { account ->
+                    val (productName, accountNo) = getAccountDetails(account)
+                    DropdownMenuItem(
+                        text = {
+                            Column {
+                                Text(
+                                    text = productName ?: "Account",
+                                    fontWeight = FontWeight.Bold,
+                                )
+                                Text(
+                                    text = accountNo ?: "",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                        },
+                        onClick = {
+                            onAccountSelected(account)
+                            isExpanded = false
+                        },
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+    }
+}
+
+@Composable
+private fun ChargeStatusSection(
+    selectedFilter: ChargeFilterUtil,
+    onFilterSelected: (ChargeFilterUtil) -> Unit,
+) {
+    Column {
+        Text(
+            text = "Charge Status:",
+            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+            modifier = Modifier.padding(bottom = 12.dp),
+        )
+
+        val filtersFirstRow = listOf(ChargeFilterUtil.ALL, ChargeFilterUtil.PAID)
+        val filtersSecondRow = listOf(ChargeFilterUtil.PENDING, ChargeFilterUtil.WAIVED)
+
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                filtersFirstRow.forEach { filter ->
+                    FilterOptionChip(
+                        label = stringResource(filter.label),
+                        isSelected = selectedFilter == filter,
+                        onClick = { onFilterSelected(filter) },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                filtersSecondRow.forEach { filter ->
+                    FilterOptionChip(
+                        label = stringResource(filter.label),
+                        isSelected = selectedFilter == filter,
+                        onClick = { onFilterSelected(filter) },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FilterApplyButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth().height(50.dp),
+        shape = RoundedCornerShape(25.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+    ) {
+        Text(text = "Apply Filters", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+// Helper to handle the "Any?" casting logic cleanly
+private fun getAccountDetails(account: Any?): Pair<String?, String?> {
+    return when (account) {
+        is SavingAccount -> account.productName to account.accountNo
+        is LoanAccount -> account.productName to account.accountNo
+        is ShareAccount -> account.productName to account.accountNo
+        else -> null to null
+    }
+}
+
+@Composable
+fun FilterOptionChip(
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier.height(40.dp),
+        shape = RoundedCornerShape(20.dp),
+        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+        border = if (!isSelected) {
+            BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+            )
+        } else {
+            null
+        },
+        onClick = onClick,
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Text(
+                text = label,
+                color = if (isSelected) {
+                    MaterialTheme.colorScheme.onPrimary
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+            )
+        }
     }
 }
 

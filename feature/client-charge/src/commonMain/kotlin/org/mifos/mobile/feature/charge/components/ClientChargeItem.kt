@@ -21,10 +21,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
@@ -38,7 +40,6 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.Charge
-import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function that displays a charge item.
@@ -60,7 +61,7 @@ fun ClientChargeItem(
             .clickable {
                 onChargeClick()
             }
-            .padding(vertical = KptTheme.spacing.md),
+            .padding(vertical = DesignToken.padding.large),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -71,14 +72,14 @@ fun ClientChargeItem(
                 painterResource(Res.drawable.database_warning)
             },
             contentDescription = "Charges Symbol",
-            tint = KptTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             modifier = Modifier
-                .size(DesignToken.sizes.iconExtraLarge)
+                .size(36.dp)
                 .background(
-                    color = KptTheme.colorScheme.background.copy(alpha = 0.3f),
+                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
                     shape = CircleShape,
                 )
-                .padding(KptTheme.spacing.sm),
+                .padding(DesignToken.padding.small),
 
         )
         Spacer(Modifier.width(DesignToken.padding.medium))
@@ -94,11 +95,12 @@ fun ClientChargeItem(
                 text = "ChargeId : ${charge.chargeId}",
                 style = MifosTypography.bodySmall,
             )
+
             Text(
-                text = if (charge.dueDate.isNotEmpty()) {
+                text = if (!charge.dueDate.isEmpty() && charge.dueDate.size >= 3) {
                     DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
                 } else {
-                    ""
+                    "N/A"
                 },
                 style = MifosTypography.bodySmall,
             )
@@ -106,7 +108,7 @@ fun ClientChargeItem(
         Spacer(Modifier.width(DesignToken.padding.medium))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Column(
                 horizontalAlignment = Alignment.End,
@@ -121,7 +123,7 @@ fun ClientChargeItem(
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        KptTheme.colorScheme.error
+                        MaterialTheme.colorScheme.error
                     },
                 )
                 Text(
@@ -146,14 +148,14 @@ fun ClientChargeItem(
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        KptTheme.colorScheme.error
+                        MaterialTheme.colorScheme.error
                     },
                 )
             }
             Icon(
                 imageVector = MifosIcons.ChevronRight,
                 contentDescription = "",
-                modifier = Modifier.size(DesignToken.sizes.iconDp20),
+                modifier = Modifier.size(20.dp),
             )
         }
     }
