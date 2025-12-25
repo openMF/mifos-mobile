@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <!-- Error messages -->
+    <string name="feature_tpt_error_amount_required">Monto es requerido</string>
+    <string name="feature_tpt_error_amount_invalid">Ingresar un monto válido</string>
+    <string name="feature_tpt_error_remarks_empty">Descripción no puede estar vacía</string>
+    <string name="feature_tpt_error_remarks_invalid">Comentarios no válidos ingresados</string>
+    <string name="feature_tpt_error_server">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtalo de nuevo.</string>
+
+    <!-- Labels -->
+    <string name="feature_tpt_label_origin_account">Cuenta Origen</string>
+    <string name="feature_tpt_label_origin_account_hint">Seleccionar otra Cuenta de Ahorros</string>
+    <string name="feature_tpt_label_destination">Cuenta Destino</string>
+    <string name="feature_tpt_label_amount">Monto</string>
+    <string name="feature_tpt_label_remarks">Descripción</string>
+    <string name="feature_tpt_tip">¿No encuentra el beneficiario?</string>
+    <string name="feature_tpt_tip_action">Agregar beneficiario</string>
+
+    <!-- Button texts -->
+    <string name="feature_tpt_transfer_button">Monto a Transferir</string>
+
+</resources>
