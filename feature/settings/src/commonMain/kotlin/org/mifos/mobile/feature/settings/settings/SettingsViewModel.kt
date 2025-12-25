@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
-import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -169,7 +169,7 @@ internal class SettingsViewModel(
         mutableStateFlow.update {
             it.copy(
                 dialogState = SettingsState.DialogState.Logout(
-                    title = Res.string.feature_settings_logout_title,
+                    title = Res.string.feature_settings_action_logout_tip,
                     message = Res.string.feature_settings_logout_description,
                 ),
             )

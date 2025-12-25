@@ -86,8 +86,8 @@
     <string name="feature_settings_action_app_info">App Info</string>
     <string name="feature_settings_action_app_info_tip">Find the app version details</string>
 
-    <string name="feature_settings_logout_now">Logout Now</string>
-    <string name="feature_settings_logout_title">Are You Sure You Want To Logout? </string>
+    <string name="feature_settings_action_logout">Logout Now</string>
+    <string name="feature_settings_action_logout_tip">Are You Sure You Want To Logout? </string>
     <string name="feature_settings_logout_description">Logging out will end your current and all active sessions for security purposes. You’ll need to log in again to access your account.</string>
     <string name="feature_settings_logout_message">I don’t want to logout?</string>
     <string name="feature_settings_logout_action">Back to home</string>
