@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SavingsTransactionDetails(
-    val id: Long,
+    val id: Long? = null,
     val accountNo: String? = null,
     val amount: Double? = null,
     val date: List<Int>? = null,

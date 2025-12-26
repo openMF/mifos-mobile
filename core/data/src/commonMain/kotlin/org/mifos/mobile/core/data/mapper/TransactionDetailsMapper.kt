@@ -25,7 +25,7 @@ fun LoanTransactionDetails.toDomain(): TransactionDetails {
     }
 
     return TransactionDetails(
-        id = this.id,
+        id = this.id ?: -1L,
         transactionName = type?.value ?: "Loan Transaction",
         isCredit = isCreditResolved,
         amount = this.amount ?: 0.0,
@@ -67,7 +67,7 @@ fun SavingsTransactionDetails.toDomain(): TransactionDetails {
     }
 
     return TransactionDetails(
-        id = this.id,
+        id = this.id ?: -1L,
         transactionName = type?.value ?: "Savings Transaction",
         isCredit = isCreditResolved,
         amount = this.amount ?: 0.0,

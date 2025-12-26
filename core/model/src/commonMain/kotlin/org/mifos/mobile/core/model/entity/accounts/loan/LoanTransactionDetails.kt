@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoanTransactionDetails(
-    val id: Long,
+    val id: Long? = null,
     val amount: Double? = null,
     val date: List<Int>? = null,
     val manuallyReversed: Boolean? = null,
