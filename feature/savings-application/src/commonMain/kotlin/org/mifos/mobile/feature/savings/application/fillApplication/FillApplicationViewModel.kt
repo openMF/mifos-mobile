@@ -24,7 +24,6 @@ import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_invalid
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_required
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_too_many_attempts
@@ -354,12 +353,13 @@ internal class SavingsFillApplicationViewModel(
             }
 
             is AmountValidationResult.Invalid -> {
-                //this is to bypass empty validation error without having any logical changes
-                //in loan application
+                // this is to bypass empty validation error without having any logical changes
+                // in loan application
                 if (result.errorResource == mifos_mobile.core.ui.generated.resources.Res.string.validation_amount_empty) {
                     ValidationResult.Success
-                } else ValidationResult.Error(result.errorResource)
-
+                } else {
+                    ValidationResult.Error(result.errorResource)
+                }
             }
         }
     }
