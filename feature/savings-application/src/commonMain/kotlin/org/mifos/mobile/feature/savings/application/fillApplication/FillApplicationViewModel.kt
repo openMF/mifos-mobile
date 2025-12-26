@@ -580,10 +580,10 @@ internal class SavingsFillApplicationViewModel(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_savings_status_failure),
-                        subtitle = getString(
+                        subtitle = "${response.message}, ${getString(
                             Res.string.feature_apply_savings_status_failure_tip,
                             state.fieldOfficerName,
-                        ),
+                        )}",
                         buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
                     ),
                 )
