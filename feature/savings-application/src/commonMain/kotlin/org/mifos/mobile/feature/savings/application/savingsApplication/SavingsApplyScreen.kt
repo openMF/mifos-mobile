@@ -230,22 +230,12 @@ internal fun SavingsAccountContent(
                         onItemSelected = { id, product ->
                             onAction(SavingsApplicationAction.SavingsProductChange(id, product))
                         },
-                        label = stringResource(Res.string.feature_apply_savings_label_savings_product),
-                    )
-
-                    MifosOutlineDropdown(
-                        selectedText = state.selectedFieldOfficer,
-                        items = state.savingsFieldOfficer,
-                        enabled = state.selectedSavingsProduct.isNotBlank(),
-                        onItemSelected = { id, officer ->
-                            onAction(SavingsApplicationAction.FieldOfficerChange(id, officer))
-                        },
-                        label = stringResource(Res.string.feature_apply_savings_label_field_officer),
+                        label =  stringResource(Res.string.feature_apply_savings_label_savings_product),
                     )
 
                     MifosButton(
                         modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                        enabled = state.isFormValid,
+                        enabled = state.selectedSavingsProductId != 0L,
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToConfirmDetails)
                         },

@@ -304,7 +304,6 @@ internal fun SavingsFillApplicationContent(
 
                     MifosButton(
                         modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                        enabled = state.isFormValid,
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToAuthentication)
                         },
