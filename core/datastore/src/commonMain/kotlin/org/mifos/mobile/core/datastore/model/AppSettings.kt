@@ -28,6 +28,7 @@ data class AppSettings(
     val language: LanguageConfig,
     val showOnboarding: Boolean,
     val firstTimeState: Boolean,
+    val timeBasedTheme: TimeBasedTheme,
 ) {
     companion object {
         val DEFAULT = AppSettings(
@@ -44,6 +45,7 @@ data class AppSettings(
             isAuthenticated = false,
             passcode = "",
             isUnlocked = false,
+            timeBasedTheme = TimeBasedTheme(hourStart = 6, hourEnd = 0, timeStart = 17, timeEnd = 59),
         )
     }
 }

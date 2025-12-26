@@ -23,18 +23,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun TransactionScreenItem(
@@ -66,31 +65,31 @@ fun TransactionScreenItem(
                     MifosIcons.DrawerSubtract
                 },
                 contentDescription = "Symbol",
-                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+                tint = KptTheme.colorScheme.onBackground.copy(alpha = 0.3f),
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(DesignToken.sizes.iconExtraLarge)
                     .background(
-                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.2f),
+                        color = KptTheme.colorScheme.background.copy(alpha = 0.2f),
                         shape = CircleShape,
                     )
-                    .padding(DesignToken.padding.small),
+                    .padding(KptTheme.spacing.sm),
             )
 
             Spacer(modifier = Modifier.width(DesignToken.spacing.medium))
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 Text(
                     text = title,
                     style = MifosTypography.titleSmallEmphasized,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = KptTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = if (time.isNotEmpty()) "$time; $date" else date,
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = KptTheme.colorScheme.secondary,
                 )
             }
 
@@ -106,7 +105,7 @@ fun TransactionScreenItem(
                 color = if (isCredited) {
                     AppColors.customEnable
                 } else {
-                    MaterialTheme.colorScheme.error
+                    KptTheme.colorScheme.error
                 },
             )
         }
@@ -120,7 +119,7 @@ private fun TransactionScreenItem_Preview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
         ) {
             TransactionScreenItem(
                 title = "Add-Money Bank Card",

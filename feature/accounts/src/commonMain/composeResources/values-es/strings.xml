@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_account_title">Cuentas</string>
+    <string name="feature_loan_account_title">Cuentas de Crédito</string>
+    <string name="feature_saving_account_title">Cuentas de Ahorros</string>
+    <string name="feature_share_account_title">Cuentas de Inversión</string>
+
+    <string name="feature_accounts_filter_status">Estado</string>
+    <string name="feature_accounts_filter_type">Tipo</string>
+
+<!--    Loan Account Filters-->
+
+    <string name="feature_loan_account_filter_active">Activa</string>
+    <string name="feature_loan_account_filter_approval_pending">Pendiente de Aprobación</string>
+    <string name="feature_loan_account_filter_closed">Cerrada</string>
+    <string name="feature_loan_account_filter_disburse">Esperando desembolso</string>
+    <string name="feature_loan_account_filter_overpaid">Sobrepagada</string>
+    <string name="feature_loan_account_filter_in_arrears">En mora</string>
+    <string name="feature_loan_account_filter_withdrawn">Cancelada</string>
+    <string name="feature_loan_account_filter_matured">Vencida</string>
+    <string name="feature_loan_account_filter_rejected">Rechazada</string>
+
+    <string name="feature_loan_account_filter_personal">Personal</string>
+    <string name="feature_loan_account_filter_bronze">Bronce</string>
+
+    <!--    Savings account filters-->
+    <string name="feature_savings_filter_wallet_account">Cuenta de Monedero</string>
+    <string name="feature_savings_filter_bank_account">Cuenta de Banco</string>
+    <string name="feature_savings_filter_group_account">Cuenta grupal</string>
+    <string name="feature_savings_filter_nb_account">Cuenta NB</string>
+
+    <string name="feature_savings_filter_active_account">Activa</string>
+    <string name="feature_savings_filter_pending_account">Pendiente de Aprobación</string>
+    <string name="feature_savings_filter_closed_account">Cerrada</string>
+    <string name="feature_savings_filter_matured_account">Vencida</string>
+    <string name="feature_savings_filter_approved_account">Aprobada</string>
+
+    <string name="feature_savings_filter">Filtros</string>
+    <string name="feature_savings_reset">Limpiar</string>
+    <string name="feature_savings_apply">Aplicar</string>
+    <string name="feature_filters_count">%1$s Seleccionada</string>
+
+    <string name="feature_transaction_transaction_history">Historial de transacciones</string>
+    <string name="feature_transaction_statement">Estado de Cuenta</string>
+    <string name="feature_transaction_download_icon_description">Icono de Descarga</string>
+    <string name="feature_transaction_filter">Filtro</string>
+    <string name="feature_transaction_filter_icon_description">Icon de Filtro</string>
+
+    <!--    Transaction filters -->
+    <string name="feature_transaction_filter_credit">Crédito</string>
+    <string name="feature_transaction_filter_debit">Débito</string>
+
+    <string name="feature_transaction_filter_past_month">Mes anterior</string>
+    <string name="feature_transaction_filter_past_3_months">3 meses anteriores</string>
+    <string name="feature_transaction_filter_past_6_months">6 meses anteriores</string>
+    <string name="feature_transaction_filter_past_1_year">Año anterior</string>
+    <string name="feature_transaction_filter_past_2_years">2 Años anteriores</string>
+
+    <string name="feature_transaction_type">Tipo de transacción</string>
+    <string name="feature_duration">Duración</string>
+    <string name="feature_no_transactions_found">Sin transacciones</string>
+    <string name="feature_no__filtered_transactions_found">No se encontraron transacciones para los filtros seleccionados</string>
+
+    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+
+    <!--    Transaction Details -->
+    <string name="feature_transaction_details">Detalles de la transacción</string>
+    <string name="feature_transaction_detail_id">Id Transacción</string>
+    <string name="feature_transaction_detail_date">Fecha</string>
+    <string name="feature_transaction_detail_status">Estado</string>
+    <string name="feature_transaction_detail_status_success">Exitosa</string>
+    <string name="feature_transaction_detail_account_ref">Referencia de Cuenta</string>
+    <string name="feature_transaction_detail_payment_method">Método de pago</string>
+    <string name="feature_transaction_detail_type">Tipo</string>
+    <string name="feature_transaction_detail_status_reversed">Reversada</string>
+    <string name="feature_transaction_detail_receipt">Número de Recibo</string>
+    <string name="feature_transaction_detail_external_id">Id externo</string>
+    <string name="feature_transaction_detail_breakdown">Detalle</string>
+    <string name="feature_transaction_detail_principal">Capital</string>
+    <string name="feature_transaction_detail_interest">Interés</string>
+    <string name="feature_transaction_detail_fees">Comisiones</string>
+    <string name="feature_transaction_detail_penalties">Penalizaciones</string>
+    <string name="feature_transaction_detail_balance">Saldo disponible</string>
+    <string name="feature_transaction_detail_default_type">Transacción</string>
+
+</resources>

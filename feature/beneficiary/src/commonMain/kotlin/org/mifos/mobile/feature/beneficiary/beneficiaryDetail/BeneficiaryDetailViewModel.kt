@@ -19,7 +19,6 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary_confirmation
 import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
@@ -220,7 +219,7 @@ internal class BeneficiaryDetailViewModel(
                     }
                     setDialogState(
                         BeneficiaryDetailState.DialogState.Error(
-                            Res.string.feature_generic_error_server,
+                            response.message,
                         ),
                     )
                 }
@@ -299,7 +298,7 @@ data class BeneficiaryDetailState(
     val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
-        data class Error(val message: StringResource) : DialogState
+        data class Error(val message: String) : DialogState
 
         data class Confirmation(val message: String) : DialogState
     }

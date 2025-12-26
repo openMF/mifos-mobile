@@ -18,8 +18,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * The main background for the app.
@@ -37,10 +37,10 @@ fun MifosBackground(
     val tonalElevation = LocalBackgroundTheme.current.tonalElevation
     Surface(
         color = if (color == Color.Unspecified) Color.Transparent else color,
-        tonalElevation = if (tonalElevation == Dp.Unspecified) 0.dp else tonalElevation,
+        tonalElevation = if (tonalElevation == Dp.Unspecified) KptTheme.elevation.level0 else tonalElevation,
         modifier = modifier.fillMaxSize(),
     ) {
-        CompositionLocalProvider(LocalAbsoluteTonalElevation provides 0.dp) {
+        CompositionLocalProvider(LocalAbsoluteTonalElevation provides KptTheme.elevation.level0) {
             content()
         }
     }
@@ -57,7 +57,7 @@ annotation class ThemePreview
 @Composable
 fun BackgroundDefault() {
     MifosMobileTheme {
-        MifosBackground(Modifier.size(100.dp), content = {})
+        MifosBackground(Modifier.size(DesignToken.sizes.backgroundDp100), content = {})
     }
 }
 
@@ -65,7 +65,7 @@ fun BackgroundDefault() {
 @Composable
 fun BackgroundDynamic() {
     MifosMobileTheme {
-        MifosBackground(Modifier.size(100.dp), content = {})
+        MifosBackground(Modifier.size(DesignToken.sizes.backgroundDp100), content = {})
     }
 }
 
@@ -73,6 +73,6 @@ fun BackgroundDynamic() {
 @Composable
 fun BackgroundAndroid() {
     MifosMobileTheme {
-        MifosBackground(Modifier.size(100.dp), content = {})
+        MifosBackground(Modifier.size(DesignToken.sizes.backgroundDp100), content = {})
     }
 }

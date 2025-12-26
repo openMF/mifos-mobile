@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.no_data
@@ -40,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosErrorComponent(
@@ -95,7 +94,7 @@ fun NoInternetComponent(
                     .height(DesignToken.sizes.buttonHeight)
                     .align(Alignment.CenterHorizontally),
                 onClick = { onRetry.invoke() },
-                shape = DesignToken.shapes.medium,
+                shape = KptTheme.shapes.medium,
             ) {
                 Text(
                     text = stringResource(Res.string.retry),
@@ -116,7 +115,7 @@ fun EmptyDataComponent(
 ) {
     Column(
         modifier = modifier.fillMaxSize()
-            .padding(DesignToken.padding.large),
+            .padding(KptTheme.spacing.md),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -146,7 +145,7 @@ fun EmptyDataComponent(
                     .height(DesignToken.sizes.inputHeight)
                     .align(Alignment.CenterHorizontally),
                 onClick = { onRetry.invoke() },
-                shape = DesignToken.shapes.medium,
+                shape = KptTheme.shapes.medium,
             ) {
                 Text(
                     text = stringResource(Res.string.retry),
@@ -171,18 +170,18 @@ fun EmptyDataComponentWithModifiedMessageAndIcon(
     ) {
         Icon(
             modifier = Modifier
-                .size(100.dp)
-                .padding(bottom = 12.dp),
+                .size(DesignToken.sizes.iconDp100)
+                .padding(bottom = DesignToken.padding.medium),
             imageVector = if (isEmptyData) icon else MifosIcons.Info,
             contentDescription = "Info Icon",
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            modifier = Modifier.padding(horizontal = DesignToken.padding.largeIncreased),
             text = if (isEmptyData) message else stringResource(Res.string.something_went_wrong),
             style = TextStyle(fontSize = 20.sp),
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.error,
+            color = KptTheme.colorScheme.error,
 
         )
     }

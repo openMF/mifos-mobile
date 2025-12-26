@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,13 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosHiddenTextRow(
@@ -54,7 +54,7 @@ fun MifosHiddenTextRow(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             modifier = Modifier
                 .alpha(0.7f)
                 .weight(1f),
@@ -65,15 +65,15 @@ fun MifosHiddenTextRow(
             } else {
                 hiddenText
             },
-            style = MaterialTheme.typography.bodyLarge,
+            style = KptTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
             color = hiddenColor,
         )
         IconButton(
             onClick = { isHidden = !isHidden },
             modifier = Modifier
-                .padding(start = 6.dp)
-                .size(24.dp),
+                .padding(start = DesignToken.padding.dp6)
+                .size(DesignToken.sizes.iconMedium),
         ) {
             Icon(
                 painter = if (isHidden) {
@@ -96,7 +96,7 @@ fun MifosHiddenTextRowPreview(
         MifosHiddenTextRow(
             title = "Title",
             hiddenText = "Hidden Text",
-            hiddenColor = MaterialTheme.colorScheme.primary,
+            hiddenColor = KptTheme.colorScheme.primary,
             hidingText = "Hiding Text",
             visibilityIconId = Res.drawable.core_ui_money_in,
             visibilityOffIconId = Res.drawable.core_ui_money_in,

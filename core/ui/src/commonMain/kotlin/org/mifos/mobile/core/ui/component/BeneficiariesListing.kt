@@ -35,6 +35,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosBeneficiariesCard(
@@ -47,7 +48,7 @@ fun MifosBeneficiariesCard(
             .fillMaxWidth()
             .clickable { onBeneficiaryClick() }
             .padding(
-                DesignToken.padding.large,
+                KptTheme.spacing.md,
             ),
     ) {
         Row(
@@ -68,7 +69,7 @@ fun MifosBeneficiariesCard(
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 Text(
                     text = beneficiary.name ?: "",

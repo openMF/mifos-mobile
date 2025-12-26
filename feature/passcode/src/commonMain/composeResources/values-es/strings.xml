@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_passcode_setup">Establece PIN de autenticación</string>
+    <string name="feature_passcode_tip">Introduzca su PIN de autenticación de 4 dígitos para configurar la capa de autenticación</string>
+    <string name="feature_passcode_confirm">Confirma el PIN de autenticación</string>
+    <string name="feature_passcode_setup_successful">Exitoso</string>
+    <string name="feature_passcode_setup_successful_msg">El PIN de autenticación se configuró correctamente. Se usará con frecuencia en la aplicación.</string>
+    <string name="feature_passcode_setup_failure">Fallo</string>
+    <string name="feature_passcode_setup_failure_msg">No se pudo configurar el PIN de autenticación. Se usará con frecuencia en la aplicación, así que inténtalo de nuevo.</string>
+
+    <string name="feature_passcode_common_continue">Continuar</string>
+    <string name="feature_passcode_common_try_again">Intentar nuevamente</string>
+
+    <string name="feature_passcode_authenticate">Ingresa el PIN de autenticación</string>
+    <string name="feature_passcode_authenticate_tip">Confirma que eres tú ingresando tu PIN de autenticación de 4 dígitos para completar tu acción</string>
+</resources>

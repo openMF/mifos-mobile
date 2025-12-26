@@ -24,9 +24,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.available_balance
@@ -53,6 +50,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosPayFromDropdownUI(
@@ -87,11 +85,11 @@ fun MifosDropDownPayFromComponent(
     label: String,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.padding(top = DesignToken.padding.small)) {
+    Box(modifier = modifier.padding(top = KptTheme.spacing.sm)) {
         Box(
             modifier = Modifier
-                .clip(DesignToken.shapes.large)
-                .height(128.dp)
+                .clip(KptTheme.shapes.large)
+                .height(DesignToken.sizes.boxDp128)
                 .fillMaxWidth(),
         ) {
             Image(
@@ -105,7 +103,7 @@ fun MifosDropDownPayFromComponent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = DesignToken.padding.large,
+                        horizontal = KptTheme.spacing.md,
                         vertical = DesignToken.padding.largeIncreased,
                     ),
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -140,18 +138,18 @@ fun MifosDropDownPayFromComponent(
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 16.dp, y = (-DesignToken.padding.small))
+                .offset(x = KptTheme.spacing.md, y = (-KptTheme.spacing.sm))
                 .zIndex(1f)
                 .background(
-                    color = MaterialTheme.colorScheme.background,
-                    shape = DesignToken.shapes.medium,
+                    color = KptTheme.colorScheme.background,
+                    shape = KptTheme.shapes.medium,
                 )
-                .padding(horizontal = DesignToken.padding.small),
+                .padding(horizontal = KptTheme.spacing.sm),
         ) {
             Text(
                 text = label,
                 style = MifosTypography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = KptTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
@@ -173,13 +171,13 @@ fun AccountDropdownItem(
         Text(
             text = accountNumber,
             style = MifosTypography.titleMediumEmphasized,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = KptTheme.colorScheme.onPrimary,
         )
-        Spacer(modifier = Modifier.height(DesignToken.padding.extraSmall))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
         Text(
             text = balance,
             style = MifosTypography.bodySmall,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = KptTheme.colorScheme.onPrimary,
         )
     }
 }
@@ -196,8 +194,8 @@ fun AccountDropdownList(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
-            .background(MaterialTheme.colorScheme.tertiary),
+            .clip(DesignToken.shapes.bottomCornerDp12)
+            .background(KptTheme.colorScheme.tertiary),
     ) {
         Column(
             Modifier.fillMaxWidth(),
@@ -205,17 +203,17 @@ fun AccountDropdownList(
             Box(
                 Modifier
                     .fillMaxWidth()
-                    .height(DesignToken.padding.small)
-                    .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
-                    .background(MaterialTheme.colorScheme.background),
+                    .height(KptTheme.spacing.sm)
+                    .clip(DesignToken.shapes.bottomCornerDp12)
+                    .background(KptTheme.colorScheme.background),
             )
             Row(
                 modifier = Modifier
-                    .padding(DesignToken.padding.small)
+                    .padding(KptTheme.spacing.sm)
                     .clickable { expanded = !expanded }
                     .align(Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.padding.extraSmall),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 Text(
                     text = stringResource(Res.string.select_other_payment_account),
@@ -225,7 +223,7 @@ fun AccountDropdownList(
                 Icon(
                     imageVector = if (expanded) MifosIcons.ChevronUp else MifosIcons.ChevronDown,
                     contentDescription = "Arrow icon",
-                    modifier = Modifier.size(12.dp),
+                    modifier = Modifier.size(DesignToken.sizes.iconTiny),
                     tint = AppColors.customWhite,
                 )
             }
@@ -241,9 +239,9 @@ fun AccountDropdownList(
                         accountNumber = accountNumber,
                         balance = balance,
                         modifier = if (selectedAccount == accountNumber) {
-                            Modifier.background(MaterialTheme.colorScheme.onTertiaryContainer)
+                            Modifier.background(KptTheme.colorScheme.onTertiaryContainer)
                         } else {
-                            Modifier.background(MaterialTheme.colorScheme.tertiary)
+                            Modifier.background(KptTheme.colorScheme.tertiary)
                         },
                         onClick = {
                             expanded = !expanded
@@ -263,7 +261,7 @@ private fun MifosDropDownPayFromComponentPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
         ) {
             MifosPayFromDropdownUI(
                 accounts = listOf(

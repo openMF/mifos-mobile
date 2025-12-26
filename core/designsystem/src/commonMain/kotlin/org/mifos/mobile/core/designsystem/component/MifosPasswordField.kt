@@ -13,7 +13,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -35,9 +34,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.utils.nonLetterColorVisualTransformation
 import org.mifos.mobile.core.designsystem.utils.tabNavigation
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosPasswordField(
@@ -47,11 +46,11 @@ fun MifosPasswordField(
     showPasswordChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    shape: Shape = DesignToken.shapes.medium,
+    shape: Shape = KptTheme.shapes.medium,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-        unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-        errorBorderColor = MaterialTheme.colorScheme.error,
+        focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+        unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+        errorBorderColor = KptTheme.colorScheme.error,
     ),
     isError: Boolean = false,
     readOnly: Boolean = false,
@@ -91,9 +90,9 @@ fun MifosPasswordField(
             errorText = hint,
             trailingIcon = {
                 val color = if (isError) {
-                    MaterialTheme.colorScheme.error
+                    KptTheme.colorScheme.error
                 } else {
-                    MaterialTheme
+                    KptTheme
                         .colorScheme.onSurface
                 }
                 IconButton(

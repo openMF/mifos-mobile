@@ -10,7 +10,6 @@
 package org.mifos.mobile.core.designsystem.component
 
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +18,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosBasicDialog(
@@ -42,7 +42,7 @@ fun MifosBasicDialog(
                 {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = KptTheme.typography.headlineSmall,
                         modifier = Modifier.testTag("AlertTitleText"),
                     )
                 }
@@ -50,11 +50,11 @@ fun MifosBasicDialog(
             text = {
                 Text(
                     text = visibilityState.message,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = KptTheme.typography.bodyMedium,
                     modifier = Modifier.testTag("AlertContentText"),
                 )
             },
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = KptTheme.colorScheme.surfaceContainerHigh,
             modifier = Modifier.semantics {
                 testTag = "AlertPopup"
             },
@@ -96,7 +96,7 @@ fun MifosBasicDialog(
                 {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = KptTheme.typography.headlineSmall,
                         modifier = Modifier.testTag("AlertTitleText"),
                     )
                 }
@@ -104,11 +104,11 @@ fun MifosBasicDialog(
             text = {
                 Text(
                     text = visibilityState.message,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = KptTheme.typography.bodyMedium,
                     modifier = Modifier.testTag("AlertContentText"),
                 )
             },
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = KptTheme.colorScheme.surfaceContainerHigh,
             modifier = Modifier.semantics {
                 testTag = "AlertPopup"
             },

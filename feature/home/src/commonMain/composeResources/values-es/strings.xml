@@ -11,49 +11,60 @@
 <resources>
     <string name="beneficiaries">Beneficiarios</string>
     <string name="survey">Encuestas</string>
-    <string name="apply_for_loan">Solicitar préstamo</string>
+    <string name="apply_for_loan">Solicitar Crédito</string>
+    <string name="apply_for_savings">Solicitar Ahorros</string>
+    <string name="apply_for_share">Solicitar Inversión</string>
     <string name="charges">Cargos</string>
     <string name="transfer">Transferir</string>
     <string name="accounts">Cuentas</string>
-    <string name="recent_transactions">Transacciones recientes</string>
-    <string name="error_fetching_client">Error al obtener el cliente</string>
-    <string name="no_internet_connection">Sin conexión a Internet</string>
+    <string name="recent_transactions">Transacciones Recientes</string>
+    <string name="error_fetching_client">Falló en la carga de datos del cliente</string>
+    <string name="no_internet_connection">Sin conexión a internet</string>
     <string name="hello_client">Hola, %1$s</string>
-    <string name="accounts_overview">Resumen de cuentas</string>
-    <string name="total_saving">Ahorros totales</string>
+    <string name="accounts_overview">Resumen de cuenta</string>
+    <string name="total_saving">Total Ahorros</string>
     <string name="hidden_amount">*****</string>
-    <string name="total_loan">Préstamo total</string>
+    <string name="total_loan">Total Crédito</string>
     <string name="need_help">Contáctanos</string>
     <string name="home">Inicio</string>
     <string name="help_line_number" translatable="false">8000000000</string>
     <string name="contact_email" translatable="false">support@mifos.org</string>
     <string name="app_name">Mifos Móvil</string>
-    <string name="third_party_transfer">Transferencia a terceros</string>
-    <string name="manage_beneficiaries">Gestionar beneficiarios</string>
-    <string name="settings">Configuración</string>
-    <string name="about_us">Acerca de nosotros</string>
+    <string name="third_party_transfer">Transferencia a Tercero</string>
+    <string name="manage_beneficiaries">Administrar Beneficiarios</string>
+    <string name="settings">Propiedades</string>
+    <string name="about_us">Información</string>
     <string name="help">Ayuda</string>
-    <string name="share">Compartir</string>
-    <string name="app_info">Información de la aplicación</string>
-    <string name="logout">Cerrar sesión</string>
-    <string name="user_query">Consulta del usuario</string>
-    <string name="no_app_to_support_action">No hay ninguna aplicación que admita esta acción</string>
+    <string name="share">Inversión</string>
+    <string name="app_info">Información de la Aplicación</string>
+    <string name="logout">Salir</string>
+    <string name="user_query">Consulta del Usuario</string>
+    <string name="no_app_to_support_action">La aplicación no soporta esta acción</string>
     <string name="cancel">Cancelar</string>
-    <string name="dialog_logout">¿Estás seguro de que quieres cerrar sesión?</string>
+    <string name="dialog_logout">¿Confirmas que deseas salir de la aplicación?</string>
 
     <string name="feature_home_greet">Hola %1$s,</string>
     <string name="feature_home_services">Servicios</string>
-    <string name="feature_home_saving_accounts">Cuentas de ahorro</string>
-    <string name="feature_home_loan_accounts">Cuentas de préstamo</string>
-    <string name="feature_home_share_accounts">Cuentas de acciones</string>
-    <string name="feature_home_apply_for_loan">Solicitar préstamo</string>
-    <string name="feature_home_transaction_history">Historial de transacciones</string>
+    <string name="feature_home_saving_accounts">Cuentas de Ahorros</string>
+    <string name="feature_home_loan_accounts">Cuentas de Créditos</string>
+    <string name="feature_home_share_accounts">Cuentas de Inversión</string>
+    <string name="feature_home_apply_for_loan">Solicitud de Crédito</string>
+    <string name="feature_home_transaction_history">Historial de Transacciones</string>
     <string name="feature_home_charges">Cargos</string>
     <string name="feature_home_beneficiary">Beneficiario</string>
-    <string name="feature_home_faq">Preguntas frecuentes</string>
+    <string name="feature_home_faq">Preguntas Frecuentes</string>
 
-    <string name="feature_home_total_available_savings">Ahorros totales disponibles</string>
-    <string name="feature_home_total_available_loan">Préstamo total disponible</string>
+    <string name="feature_home_saving_account">Cuenta de Ahorro</string>
+    <string name="feature_home_loan_account">Cuenta de Crédito</string>
+    <string name="feature_home_savings_tip">Obtén rendimientos con depósitos en cuentas de plazo fijo y depósito recurrente.</string>
+    <string name="feature_home_loan_tip">Solicita un crédito para tus requerimientos de negocio, educación o consumo.</string>
 
-    <string name="feature_home_common_error">Algo salió mal</string>
+    <string name="feature_home_total_available_savings">Saldo Disponible de Ahorros</string>
+    <string name="feature_home_total_available_loan">Saldo de Créditos</string>
+
+    <string name="feature_home_common_error">Ocurrió un error</string>
+
+    <string name="feature_server_error">Ocurrió un error. Por Favor intenta más tarde.</string>
+
+
 </resources>

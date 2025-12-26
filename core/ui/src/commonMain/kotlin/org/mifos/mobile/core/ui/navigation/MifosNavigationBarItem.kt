@@ -12,18 +12,17 @@ package org.mifos.mobile.core.ui.navigation
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun RowScope.MifosNavigationBarItem(
@@ -44,20 +43,20 @@ fun RowScope.MifosNavigationBarItem(
         },
         label = {
             Text(
-                modifier = Modifier.padding(DesignToken.padding.extraSmall),
+                modifier = Modifier.padding(KptTheme.spacing.xs),
                 text = stringResource(label),
                 style = MifosTypography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = KptTheme.colorScheme.onSurface,
             )
         },
         selected = isSelected,
         alwaysShowLabel = true,
         onClick = onClick,
-        modifier = modifier.padding(vertical = 6.dp),
+        modifier = modifier.padding(vertical = DesignToken.padding.dp6),
         colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = MaterialTheme.colorScheme.primary,
-            unselectedIconColor = MaterialTheme.colorScheme.primary,
-            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            selectedIconColor = KptTheme.colorScheme.primary,
+            unselectedIconColor = KptTheme.colorScheme.primary,
+            indicatorColor = KptTheme.colorScheme.primary.copy(alpha = 0.3f),
         ),
     )
 }

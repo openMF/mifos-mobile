@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,8 +29,8 @@ import mifos_mobile.core.ui.generated.resources.back_online
 import mifos_mobile.core.ui.generated.resources.no_internet
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.AppColors
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun NetworkBanner(
@@ -43,7 +42,7 @@ fun NetworkBanner(
 
     when (bannerState) {
         NetworkBannerState.Offline -> {
-            bannerColor = MaterialTheme.colorScheme.error
+            bannerColor = KptTheme.colorScheme.error
             bannerText = stringResource(Res.string.no_internet)
         }
         NetworkBannerState.BackOnline -> {
@@ -71,7 +70,7 @@ fun NetworkBanner(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(bannerColor)
-                .padding(DesignToken.padding.extraSmall),
+                .padding(KptTheme.spacing.xs),
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
