@@ -24,9 +24,6 @@ class AccountsRepositoryImp(
 ) : AccountsRepository {
 
     override fun loadAccounts(clientId: Long?, accountType: String?): Flow<DataState<ClientAccounts>> {
-//        return dataManager.clientsApi.getAccounts(clientId!!, accountType)
-//            .asDataStateFlow().flowOn(ioDispatcher)
-
         val clientsApi = requireNotNull(dataManager.clientsApi) {
             "ClientService must be provided"
         }
