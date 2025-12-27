@@ -25,15 +25,20 @@ import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class BeneficiaryRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
+
+    val beneficiaryApi = requireNotNull(dataManager.beneficiaryApi) {
+        "BeneficiaryService must be provided"
+    }
+
     override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> = flow {
         try {
-            dataManager.beneficiaryApi.beneficiaryTemplate()
+            beneficiaryApi.beneficiaryTemplate()
                 .collect { response ->
                     emit(DataState.Success(response))
                 }
@@ -45,7 +50,7 @@ class BeneficiaryRepositoryImp(
     override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+                val response = beneficiaryApi.createBeneficiary(beneficiaryPayload)
 
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
@@ -65,7 +70,7 @@ class BeneficiaryRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload)
+                val response = beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -81,7 +86,7 @@ class BeneficiaryRepositoryImp(
     override suspend fun deleteBeneficiary(beneficiaryId: Long?): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
+                val response = beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
 
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
@@ -97,7 +102,7 @@ class BeneficiaryRepositoryImp(
 
     override fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> = flow {
         try {
-            dataManager.beneficiaryApi.beneficiaryList()
+            beneficiaryApi.beneficiaryList()
                 .collect { response ->
                     emit(DataState.Success(response))
                 }

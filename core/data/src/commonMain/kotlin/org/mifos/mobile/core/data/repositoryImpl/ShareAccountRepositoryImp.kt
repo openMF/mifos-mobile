@@ -28,15 +28,19 @@ import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssocia
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class ShareAccountRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ShareAccountRepository {
 
+    val shareAccountApi = requireNotNull(dataManager.shareAccountApi) {
+        "ShareAccountService must be provided"
+    }
+
     override fun getShareProducts(clientId: Long?): Flow<DataState<Page<ShareProduct>>> {
-        return dataManager.shareAccountApi.getShareProducts(clientId)
+        return shareAccountApi.getShareProducts(clientId)
             .map { response -> DataState.Success(response) }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
@@ -46,7 +50,7 @@ class ShareAccountRepositoryImp(
         productId: Long,
         clientId: Long?,
     ): Flow<DataState<ShareProductDetails>> {
-        return dataManager.shareAccountApi.getShareProductById(productId, clientId)
+        return shareAccountApi.getShareProductById(productId, clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -54,7 +58,7 @@ class ShareAccountRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.shareAccountApi.submitShareApplication(payload)
+                    shareAccountApi.submitShareApplication(payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -68,7 +72,7 @@ class ShareAccountRepositoryImp(
     }
 
     override fun getShareAccountDetails(accountId: Long): Flow<DataState<ShareAccountWithAssociations>> {
-        return dataManager.shareAccountApi.getShareAccountDetails(accountId)
+        return shareAccountApi.getShareAccountDetails(accountId)
             .asDataStateFlow()
             .flowOn(ioDispatcher)
     }

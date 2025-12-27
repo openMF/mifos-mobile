@@ -26,19 +26,23 @@ import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class LoanRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : LoanRepository {
+
+    val loanAccountsListApi = requireNotNull(dataManager.loanAccountsListApi) {
+        "LoanAccountsListService must be provided"
+    }
 
     override fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
     ): Flow<DataState<LoanWithAssociations?>> = flow {
         try {
-            dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
+            loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
                 .collect { response ->
                     emit(DataState.Success(response))
                 }
@@ -51,7 +55,7 @@ class LoanRepositoryImp(
         loanId: Long,
         transactionId: Long,
     ): Flow<DataState<TransactionDetails>> {
-        return dataManager.loanAccountsListApi
+        return loanAccountsListApi
             .getLoanTransactionDetails(loanId, transactionId)
             .asDataStateFlow()
             .flowOn(ioDispatcher)
@@ -64,7 +68,7 @@ class LoanRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
+                    loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -78,12 +82,12 @@ class LoanRepositoryImp(
     }
 
     override fun template(clientId: Long?): Flow<DataState<LoanTemplate?>> {
-        return dataManager.loanAccountsListApi.getLoanTemplate(clientId = clientId)
+        return loanAccountsListApi.getLoanTemplate(clientId = clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override fun getLoanTemplateByProduct(clientId: Long?, productId: Int?): Flow<DataState<LoanTemplate?>> {
-        return dataManager.loanAccountsListApi.getLoanTemplateByProduct(clientId, productId)
+        return loanAccountsListApi.getLoanTemplateByProduct(clientId, productId)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }

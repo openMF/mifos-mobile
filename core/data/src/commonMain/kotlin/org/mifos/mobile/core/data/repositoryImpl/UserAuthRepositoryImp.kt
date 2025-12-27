@@ -23,19 +23,31 @@ import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.payload.LoginPayload
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.model.entity.register.UserVerify
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class UserAuthRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : UserAuthRepository {
+
+    val registrationApi = requireNotNull(dataManager.registrationApi) {
+        "RegistrationService must be provided"
+    }
+
+    val authenticationApi = requireNotNull(dataManager.authenticationApi) {
+        "AuthenticationService must be provided"
+    }
+
+    val userDetailsApi = requireNotNull(dataManager.userDetailsApi) {
+        "UserDetailsService must be provided"
+    }
 
     override suspend fun registerUser(
         registerPayload: RegisterPayload,
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.registrationApi.registerUser(registerPayload)
+                val response = registrationApi.registerUser(registerPayload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -55,7 +67,7 @@ class UserAuthRepositoryImp(
         )
         return try {
             withContext(ioDispatcher) {
-                val user = dataManager.authenticationApi.authenticate(loginPayload)
+                val user = authenticationApi.authenticate(loginPayload)
                 if (user.base64EncodedAuthenticationKey != null) {
                     DataState.Success(user)
                 } else {
@@ -82,7 +94,7 @@ class UserAuthRepositoryImp(
         )
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.registrationApi.verifyUser(userVerify)
+                val response = registrationApi.verifyUser(userVerify)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -105,7 +117,7 @@ class UserAuthRepositoryImp(
         )
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.userDetailsApi.updateAccountPassword(payload)
+                val response = userDetailsApi.updateAccountPassword(payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)

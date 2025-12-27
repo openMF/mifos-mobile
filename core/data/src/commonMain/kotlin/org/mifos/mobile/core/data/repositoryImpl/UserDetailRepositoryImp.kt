@@ -18,17 +18,20 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.UserDetailRepository
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class UserDetailRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : UserDetailRepository {
 
+    val notificationApi = requireNotNull(dataManager.notificationApi) {
+        "NotificationService must be provided"
+    }
     override suspend fun registerNotification(payload: NotificationRegisterPayload?): DataState<String> {
         return try {
             withContext(ioDispatcher) {
-                dataManager.notificationApi.registerNotification(payload)
+                notificationApi.registerNotification(payload)
             }
             DataState.Success("Notification Registered Successfully")
         } catch (e: Exception) {
@@ -37,7 +40,7 @@ class UserDetailRepositoryImp(
     }
 
     override fun getUserNotificationId(id: Long): Flow<DataState<NotificationUserDetail>> {
-        return dataManager.notificationApi.getUserNotificationId(id)
+        return notificationApi.getUserNotificationId(id)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -47,7 +50,7 @@ class UserDetailRepositoryImp(
     ): DataState<String> {
         return try {
             withContext(ioDispatcher) {
-                dataManager.notificationApi.updateRegisterNotification(id, payload)
+                notificationApi.updateRegisterNotification(id, payload)
             }
             DataState.Success("Notification Updated Successfully")
         } catch (e: Exception) {

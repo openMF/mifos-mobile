@@ -22,12 +22,21 @@ import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class TransferRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : TransferRepository {
+
+    val savingAccountsListApi = requireNotNull(dataManager.savingAccountsListApi) {
+        "SavingAccountsListService must be provided"
+    }
+
+    val thirdPartyTransferApi = requireNotNull(dataManager.thirdPartyTransferApi) {
+        "ThirdPartyTransferService must be provided"
+    }
+
     override suspend fun makeTransfer(
         payload: TransferPayload,
         transferType: TransferType?,
@@ -35,8 +44,8 @@ class TransferRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = when (transferType) {
-                    TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(payload)
-                    else -> dataManager.thirdPartyTransferApi.makeTransfer(payload)
+                    TransferType.SELF -> savingAccountsListApi.makeTransfer(payload)
+                    else -> thirdPartyTransferApi.makeTransfer(payload)
                 }
 
                 val transferResponse = Json.decodeFromString<TransferResponse>(response.bodyAsText())
@@ -47,7 +56,7 @@ class TransferRepositoryImp(
             } catch (e: IOException) {
                 DataState.Error(Exception("Network error: ${e.message ?: "Please check your connection"}"), null)
             } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error: ${e.message}"), null)
+                DataState.Error(Exception("Something went wrong on our end. Please try again later."), null)
             }
         }
     }

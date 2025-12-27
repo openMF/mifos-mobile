@@ -21,23 +21,30 @@ import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class ClientChargeRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
 //    private val chargeDao: ChargeDao,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientChargeRepository {
 
+    val clientChargeApi = requireNotNull(dataManager.clientChargeApi) {
+        "ClientChargeService must be provided"
+    }
+
+    val shareAccountApi = requireNotNull(dataManager.shareAccountApi) {
+        "ShareAccountService must be provided"
+    }
     override fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
-        return dataManager.clientChargeApi.getClientChargeList(clientId)
+        return clientChargeApi.getClientChargeList(clientId)
             .map { response -> DataState.Success(response) }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
     }
 
     override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
-        return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
+        return clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
             .map { response -> DataState.Success(response) }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
@@ -64,7 +71,7 @@ class ClientChargeRepositoryImp(
     }
 
     override fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>> {
-        return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
+        return shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
                 DataState.Success(response.charges)
             }

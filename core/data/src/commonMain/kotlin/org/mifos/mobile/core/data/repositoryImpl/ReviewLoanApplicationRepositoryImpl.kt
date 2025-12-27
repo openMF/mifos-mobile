@@ -19,12 +19,16 @@ import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class ReviewLoanApplicationRepositoryImpl(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ReviewLoanApplicationRepository {
+
+    val loanAccountsListApi = requireNotNull(dataManager.loanAccountsListApi) {
+        "LoanAccountsListService must be provided"
+    }
 
     override suspend fun submitLoan(
         loanState: LoanState,
@@ -35,12 +39,12 @@ class ReviewLoanApplicationRepositoryImpl(
             try {
                 when (loanState) {
                     LoanState.CREATE -> {
-                        val response = dataManager.loanAccountsListApi.createLoansAccount(loansPayload)
+                        val response = loanAccountsListApi.createLoansAccount(loansPayload)
                         println("response $response")
                         return@withContext DataState.Success("Loan Created Successfully")
                     }
                     LoanState.UPDATE -> {
-                        val response = dataManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
+                        val response = loanAccountsListApi.updateLoanAccount(loanId, loansPayload)
                         println("response $response")
                         return@withContext DataState.Success("Loan Updated Successfully")
                     }

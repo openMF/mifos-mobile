@@ -23,6 +23,10 @@ android {
         }
     }
 
+    sourceSets["test"].resources.srcDirs(
+        "src/commonTest/resources"
+    )
+
 //    defaultConfig {
 //        consumerProguardFiles("consumer-rules.pro")
 //    }
@@ -42,6 +46,14 @@ kotlin {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.tracing.ktx)
             implementation(libs.koin.android)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test.annotations.common)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+
+            implementation(libs.koin.test)
         }
     }
 }

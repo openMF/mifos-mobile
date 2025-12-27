@@ -20,25 +20,29 @@ import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class HomeRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val notificationRepository: NotificationRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) : HomeRepository {
 
+    val clientsApi = requireNotNull(dataManager.clientsApi) {
+        "ClientService must be provided"
+    }
+
     override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> =
-        dataManager.clientsApi.getClientAccounts(clientId)
+        clientsApi.getClientAccounts(clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
-        return dataManager.clientsApi.getClientForId(clientId)
+        return clientsApi.getClientForId(clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override fun clientImage(clientId: Long): Flow<DataState<String>> {
-        return dataManager.clientsApi.getClientImage(clientId)
+        return clientsApi.getClientImage(clientId)
             .asDataStateFlow()
             .map { response ->
                 when (response) {

@@ -16,15 +16,24 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class AccountsRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : AccountsRepository {
 
     override fun loadAccounts(clientId: Long?, accountType: String?): Flow<DataState<ClientAccounts>> {
-        return dataManager.clientsApi.getAccounts(clientId!!, accountType)
-            .asDataStateFlow().flowOn(ioDispatcher)
+//        return dataManager.clientsApi.getAccounts(clientId!!, accountType)
+//            .asDataStateFlow().flowOn(ioDispatcher)
+
+        val clientsApi = requireNotNull(dataManager.clientsApi) {
+            "ClientService must be provided"
+        }
+
+        return clientsApi
+            .getAccounts(clientId!!, accountType)
+            .asDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 }

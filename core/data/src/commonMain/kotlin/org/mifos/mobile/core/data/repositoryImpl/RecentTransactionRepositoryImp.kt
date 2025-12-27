@@ -17,18 +17,23 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class RecentTransactionRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : RecentTransactionRepository {
+
+    val recentTransactionsApi = requireNotNull(dataManager.recentTransactionsApi) {
+        "RecentTransactionsService must be provided"
+    }
+
     override fun recentTransactions(
         clientId: Long?,
         offset: Int?,
         limit: Int?,
     ): Flow<DataState<Page<Transaction>>> {
-        return dataManager.recentTransactionsApi.getRecentTransactionsList(
+        return recentTransactionsApi.getRecentTransactionsList(
             clientId!!,
             offset,
             limit,

@@ -23,15 +23,18 @@ import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class GuarantorRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : GuarantorRepository {
 
+    val guarantorApi = requireNotNull(dataManager.guarantorApi) {
+        "GuarantorService must be provided"
+    }
     override fun getGuarantorTemplate(loanId: Long?): Flow<DataState<GuarantorTemplatePayload?>> {
-        return dataManager.guarantorApi.getGuarantorTemplate(loanId!!)
+        return guarantorApi.getGuarantorTemplate(loanId!!)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -41,7 +44,7 @@ class GuarantorRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload)
+                val response = guarantorApi.createGuarantor(loanId!!, payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -57,7 +60,7 @@ class GuarantorRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.guarantorApi.updateGuarantor(
+                val response = guarantorApi.updateGuarantor(
                     payload,
                     loanId!!,
                     guarantorId!!,
@@ -73,7 +76,7 @@ class GuarantorRepositoryImp(
     override suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
+                val response = guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)

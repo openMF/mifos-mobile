@@ -17,15 +17,19 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.client.Client
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class ClientRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ClientRepository {
 
+    val clientsApi = requireNotNull(dataManager.clientsApi) {
+        "ClientService must be provided"
+    }
+
     override fun loadClient(): Flow<DataState<Page<Client>>> {
-        return dataManager.clientsApi.clients()
+        return clientsApi.clients()
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }

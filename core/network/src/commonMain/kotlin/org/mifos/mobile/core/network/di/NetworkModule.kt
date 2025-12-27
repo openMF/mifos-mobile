@@ -14,6 +14,7 @@ import io.ktor.client.plugins.auth.Auth
 import org.koin.dsl.module
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 import org.mifos.mobile.core.network.KtorfitClient
 import org.mifos.mobile.core.network.ktorHttpClient
 import org.mifos.mobile.core.network.utils.BaseURL
@@ -39,7 +40,7 @@ val NetworkModule = module {
             .build()
     }
 
-    single {
+    single<DataManagerProvider> {
         DataManager(ktorfitClient = get(MifosClient))
     }
 }

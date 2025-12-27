@@ -28,18 +28,22 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdra
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class SavingsAccountRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : SavingsAccountRepository {
+
+    val savingAccountsListApi = requireNotNull(dataManager.savingAccountsListApi) {
+        "SavingAccountsListService must be provided"
+    }
 
     override fun getSavingsWithAssociations(
         accountId: Long?,
         associationType: String?,
     ): Flow<DataState<SavingsWithAssociations>> {
-        return dataManager.savingAccountsListApi.getSavingsWithAssociations(
+        return savingAccountsListApi.getSavingsWithAssociations(
             accountId!!,
             associationType,
         ).asDataStateFlow().flowOn(ioDispatcher)
@@ -49,7 +53,7 @@ class SavingsAccountRepositoryImp(
         accountId: Long,
         transactionId: Long,
     ): Flow<DataState<TransactionDetails>> {
-        return dataManager.savingAccountsListApi
+        return savingAccountsListApi
             .getSavingsAccountTransactionDetails(accountId, transactionId)
             .asDataStateFlow()
             .flowOn(ioDispatcher)
@@ -58,7 +62,7 @@ class SavingsAccountRepositoryImp(
     override fun getSavingAccountApplicationTemplate(
         clientId: Long?,
     ): Flow<DataState<SavingsAccountTemplate>> {
-        return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplate(clientId)
+        return savingAccountsListApi.getSavingsAccountApplicationTemplate(clientId)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -66,7 +70,7 @@ class SavingsAccountRepositoryImp(
         clientId: Long?,
         productId: Long?,
     ): Flow<DataState<SavingsAccountTemplate>> {
-        return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplateByProduct(
+        return savingAccountsListApi.getSavingsAccountApplicationTemplateByProduct(
             clientId,
             productId,
         ).asDataStateFlow().flowOn(ioDispatcher)
@@ -78,7 +82,7 @@ class SavingsAccountRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.savingAccountsListApi.submitSavingAccountApplication(payload)
+                    savingAccountsListApi.submitSavingAccountApplication(payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -98,7 +102,7 @@ class SavingsAccountRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.savingAccountsListApi.updateSavingsAccountUpdate(accountId!!, payload)
+                    savingAccountsListApi.updateSavingsAccountUpdate(accountId!!, payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -118,7 +122,7 @@ class SavingsAccountRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.savingAccountsListApi.submitWithdrawSavingsAccount(accountId!!, payload)
+                    savingAccountsListApi.submitWithdrawSavingsAccount(accountId!!, payload)
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -135,7 +139,7 @@ class SavingsAccountRepositoryImp(
         accountId: Long?,
         accountType: Long?,
     ): Flow<DataState<AccountOptionsTemplate>> {
-        return dataManager.savingAccountsListApi.accountTransferTemplate(accountId!!, accountType)
+        return savingAccountsListApi.accountTransferTemplate(accountId!!, accountType)
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }

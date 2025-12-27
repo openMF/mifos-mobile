@@ -16,14 +16,19 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
-import org.mifos.mobile.core.network.DataManager
+import org.mifos.mobile.core.network.DataManagerProvider
 
 class ThirdPartyTransferRepositoryImp(
-    private val dataManager: DataManager,
+    private val dataManager: DataManagerProvider,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ThirdPartyTransferRepository {
+
+    val thirdPartyTransferApi = requireNotNull(dataManager.thirdPartyTransferApi) {
+        "ThirdPartyTransferService must be provided"
+    }
+
     override fun thirdPartyTransferTemplate(): Flow<DataState<AccountOptionsTemplate>> {
-        return dataManager.thirdPartyTransferApi.accountTransferTemplate()
+        return thirdPartyTransferApi.accountTransferTemplate()
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }

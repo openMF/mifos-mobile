@@ -11,31 +11,31 @@ package org.mifos.mobile.core.network
 
 class DataManager(
     private val ktorfitClient: KtorfitClient,
-) {
+) : DataManagerProvider {
 
-    val authenticationApi by lazy { ktorfitClient.authenticationApi }
+    override val authenticationApi by lazy { ktorfitClient.authenticationApi }
 
-    val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
+    override val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
 
-    val clientsApi by lazy { ktorfitClient.clientsApi }
+    override val clientsApi by lazy { ktorfitClient.clientsApi }
 
-    val loanAccountsListApi by lazy { ktorfitClient.loanAccountsListApi }
+    override val loanAccountsListApi by lazy { ktorfitClient.loanAccountsListApi }
 
-    val savingAccountsListApi by lazy { ktorfitClient.savingAccountsListApi }
+    override val savingAccountsListApi by lazy { ktorfitClient.savingAccountsListApi }
 
-    val recentTransactionsApi by lazy { ktorfitClient.recentTransactionsApi }
+    override val recentTransactionsApi by lazy { ktorfitClient.recentTransactionsApi }
 
-    val clientChargeApi by lazy { ktorfitClient.clientChargeApi }
+    override val clientChargeApi by lazy { ktorfitClient.clientChargeApi }
 
-    val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
+    override val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
 
-    val registrationApi by lazy { ktorfitClient.registrationApi }
+    override val registrationApi by lazy { ktorfitClient.registrationApi }
 
-    val notificationApi by lazy { ktorfitClient.notificationApi }
+    override val notificationApi by lazy { ktorfitClient.notificationApi }
 
-    val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
+    override val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
 
-    val guarantorApi by lazy { ktorfitClient.guarantorApi }
+    override val guarantorApi by lazy { ktorfitClient.guarantorApi }
 
-    val shareAccountApi by lazy { ktorfitClient.shareAccountApi }
+    override val shareAccountApi by lazy { ktorfitClient.shareAccountApi }
 }
