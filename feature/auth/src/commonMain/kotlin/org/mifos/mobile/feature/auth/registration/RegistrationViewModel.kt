@@ -519,7 +519,7 @@ class RegistrationViewModel(
                     authenticationMode = "email",
                     email = state.email,
                     firstName = state.firstName,
-                    middleName = state.middleName,
+                    middleName = if (state.middleName.isNotEmpty()) state.middleName else null,
                     lastName = state.lastName,
                     mobileNumber = state.mobileNumber,
                     password = state.password,
