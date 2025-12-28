@@ -22,7 +22,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
-import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
@@ -489,11 +488,11 @@ class RegistrationViewModel(
         }
 
         val errorFree = isSuccess(firstNameError) &&
-                isSuccess(lastNameError) &&
-                isSuccess(emailError) &&
-                isSuccess(accountError) &&
-                isSuccess(passwordResult) &&
-                isSuccess(confirmPasswordResult)
+            isSuccess(lastNameError) &&
+            isSuccess(emailError) &&
+            isSuccess(accountError) &&
+            isSuccess(passwordResult) &&
+            isSuccess(confirmPasswordResult)
 
         if (errorFree) {
             registerUser()
@@ -605,7 +604,7 @@ data class SignUpState(
     val passwordError: StringResource? = null,
     val confirmPasswordError: StringResource? = null,
 
-    ) {
+) {
     /**
      * Dialogs to show loading or error states during sign-up.
      */
@@ -618,11 +617,11 @@ data class SignUpState(
      */
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
-                firstName.isNotBlank() &&
-                lastName.isNotBlank() &&
-                email.isNotBlank() &&
-                password.isNotBlank() &&
-                confirmPassword.isNotBlank()
+            firstName.isNotBlank() &&
+            lastName.isNotBlank() &&
+            email.isNotBlank() &&
+            password.isNotBlank() &&
+            confirmPassword.isNotBlank()
 }
 
 /**
