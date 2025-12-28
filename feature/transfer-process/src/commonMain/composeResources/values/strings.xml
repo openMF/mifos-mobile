@@ -18,7 +18,7 @@
     <string name="cancel">Cancel</string>
     <string name="remark">Remark</string>
     <string name="make_transfer">Make Transfer</string>
-    <string name="pay_to">Pay To Account</string>
+    <string name="pay_to">Pay To</string>
     <string name="remarks">Remarks</string>
     <string name="error_icon_description">Error</string>
     <string name="error_description">Amount Should not contain Invalid Characters</string>
@@ -33,4 +33,10 @@
     <string name="feature_make_transfer_error_remarks_empty">Remarks cannot be empty</string>
     <string name="feature_make_transfer_error_remarks_invalid">Invalid remarks entered</string>
     <string name="feature_make_transfer_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
+
+    <string name="feature_make_transfer_account_number">Account Number</string>
+    <string name="feature_make_transfer_customer_name">Customer Name</string>
+    <string name="feature_make_transfer_beneficiary_name">Beneficiary Name</string>
+    <string name="feature_make_transfer_details">Transfer Details</string>
+
 </resources>
