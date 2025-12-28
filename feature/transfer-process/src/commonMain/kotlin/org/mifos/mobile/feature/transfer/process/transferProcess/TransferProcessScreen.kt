@@ -216,6 +216,8 @@ private fun TransferProcessContent(
             )
         }
 
+        Spacer(Modifier.height(KptTheme.spacing.sm))
+
         MifosButton(
             modifier = Modifier
                 .fillMaxWidth()
