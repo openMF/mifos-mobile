@@ -151,15 +151,6 @@ class RegistrationViewModel(
                 middleNameError = null,
             )
         }
-
-        debounceValidation {
-            val result = validateName(name, "middle")
-            mutableStateFlow.update {
-                it.copy(
-                    middleNameError = if (result is ValidationResult.Error) result.message else null,
-                )
-            }
-        }
     }
 
     /**
@@ -191,7 +182,6 @@ class RegistrationViewModel(
         if (name.isEmpty()) {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
-                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
@@ -295,6 +285,7 @@ class RegistrationViewModel(
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
         )
+
         account.length > 32 -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_not_valid,
         )
@@ -399,7 +390,10 @@ class RegistrationViewModel(
     /**
      * Validates if confirm password matches the password and meets strength requirements.
      */
-    private fun validateConfirmPassword(confirmPassword: String, password: String): ValidationResult? = when {
+    private fun validateConfirmPassword(
+        confirmPassword: String,
+        password: String,
+    ): ValidationResult? = when {
         confirmPassword.isEmpty() -> ValidationResult.Error(Res.string.feature_signup_error_password_required_error)
         confirmPassword.length < 8 -> ValidationResult.Error(Res.string.feature_signup_error_password_short)
         password != confirmPassword -> ValidationResult.Error(Res.string.feature_signup_error_password_mismatch)
@@ -459,7 +453,6 @@ class RegistrationViewModel(
         validationJob?.cancel()
 
         val firstNameError = validateName(state.firstName, "first")
-        val middleNameError = validateName(state.middleName, "middle")
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
         val mobileNumberError = validateMobileNumber(state.mobileNumber)
@@ -473,11 +466,6 @@ class RegistrationViewModel(
         mutableStateFlow.update {
             it.copy(
                 firstNameError = if (firstNameError is ValidationResult.Error) firstNameError.message else null,
-                middleNameError = if (middleNameError is ValidationResult.Error) {
-                    middleNameError.message
-                } else {
-                    null
-                },
                 lastNameError = if (lastNameError is ValidationResult.Error) lastNameError.message else null,
                 emailError = if (emailError is ValidationResult.Error) emailError.message else null,
                 customerAccountError = if (accountError is ValidationResult.Error) {
@@ -501,12 +489,11 @@ class RegistrationViewModel(
         }
 
         val errorFree = isSuccess(firstNameError) &&
-            isSuccess(middleNameError) &&
-            isSuccess(lastNameError) &&
-            isSuccess(emailError) &&
-            isSuccess(accountError) &&
-            isSuccess(passwordResult) &&
-            isSuccess(confirmPasswordResult)
+                isSuccess(lastNameError) &&
+                isSuccess(emailError) &&
+                isSuccess(accountError) &&
+                isSuccess(passwordResult) &&
+                isSuccess(confirmPasswordResult)
 
         if (errorFree) {
             registerUser()
@@ -618,7 +605,7 @@ data class SignUpState(
     val passwordError: StringResource? = null,
     val confirmPasswordError: StringResource? = null,
 
-) {
+    ) {
     /**
      * Dialogs to show loading or error states during sign-up.
      */
@@ -631,12 +618,11 @@ data class SignUpState(
      */
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
-            firstName.isNotBlank() &&
-            middleName.isNotBlank() &&
-            lastName.isNotBlank() &&
-            email.isNotBlank() &&
-            password.isNotBlank() &&
-            confirmPassword.isNotBlank()
+                firstName.isNotBlank() &&
+                lastName.isNotBlank() &&
+                email.isNotBlank() &&
+                password.isNotBlank() &&
+                confirmPassword.isNotBlank()
 }
 
 /**
