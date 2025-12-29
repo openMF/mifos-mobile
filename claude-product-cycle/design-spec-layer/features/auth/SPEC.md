@@ -101,37 +101,91 @@ The Auth feature provides comprehensive authentication flows including login, re
 
 ```kotlin
 // Login State
-@Immutable
 data class LoginState(
     val username: String = "",
     val password: String = "",
     val isPasswordVisible: Boolean = false,
+    val clientName: String = "",
+    val isError: Boolean = false,
     val userNameError: StringResource? = null,
     val passwordError: StringResource? = null,
-    val showOverlay: Boolean = false,
     val dialogState: DialogState? = null,
-    val uiState: ScreenUiState = ScreenUiState.Loading,
-)
+    val uiState: ScreenUiState?,
+    val showOverlay: Boolean = false,
+) {
+    sealed interface DialogState {
+        data class Error(val message: String) : DialogState
+    }
+
+    val isLoginButtonEnabled: Boolean
+        get() = username.isNotEmpty() && password.length >= 8
+}
+
+// Login Events
+sealed interface LoginEvent {
+    data object NavigateToSignup : LoginEvent
+    data object NavigateToPasscode : LoginEvent
+    data object NavigateToForgotPassword : LoginEvent
+    data class ShowToast(val message: String) : LoginEvent
+}
+
+// Login Actions
+sealed interface LoginAction {
+    data class UsernameChanged(val username: String) : LoginAction
+    data class PasswordChanged(val password: String) : LoginAction
+    data object TogglePasswordVisibility : LoginAction
+    data object ErrorDialogDismiss : LoginAction
+    data object LoginClicked : LoginAction
+    data object SignupClicked : LoginAction
+    data object NavigateToForgotPassword : LoginAction
+}
 
 // Registration State
-@Immutable
 data class SignUpState(
+    val customerAccount: String = "",
     val firstName: String = "",
     val middleName: String = "",
     val lastName: String = "",
     val email: String = "",
-    val mobileNumber: String = "",
-    val customerAccount: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val passwordStrengthState: PasswordStrengthState = PasswordStrengthState.NONE,
+    val mobileNumber: String = "",
+    val dialogState: SignUpDialog? = null,
+    val uiState: ScreenUiState = ScreenUiState.Success,
     val showOverlay: Boolean = false,
-)
+    val isPasswordChanged: Boolean = false,
+    val isPasswordVisible: Boolean = false,
+    val isConfirmPasswordVisible: Boolean = false,
+    val passwordFeedback: List<StringResource> = emptyList(),
+    val passwordStrengthState: PasswordStrengthState = PasswordStrengthState.NONE,
+    // Validation errors
+    val firstNameError: StringResource? = null,
+    val middleNameError: StringResource? = null,
+    val lastNameError: StringResource? = null,
+    val emailError: StringResource? = null,
+    val mobileNumberError: StringResource? = null,
+    val customerAccountError: StringResource? = null,
+    val passwordError: StringResource? = null,
+    val confirmPasswordError: StringResource? = null,
+) {
+    sealed interface SignUpDialog {
+        data class Error(val message: String) : SignUpDialog
+    }
 
-sealed interface LoginScreenState {
-    data object Loading : LoginScreenState
-    data object Success : LoginScreenState
-    data class Error(val message: StringResource) : LoginScreenState
+    val isSubmitButtonEnabled: Boolean
+        get() = customerAccount.isNotBlank() &&
+            firstName.isNotBlank() &&
+            lastName.isNotBlank() &&
+            email.isNotBlank() &&
+            password.isNotBlank() &&
+            confirmPassword.isNotBlank()
+}
+
+// Registration Events
+sealed interface SignUpEvent {
+    data class ShowToast(val message: String) : SignUpEvent
+    data object NavigateToUploadDocuments : SignUpEvent
+    data object NavigateToLogin : SignUpEvent
 }
 ```
 
@@ -197,4 +251,5 @@ AUTH_GRAPH (Start: LoginRoute)
 
 | Date | Change |
 |------|--------|
+| 2025-12-29 | Updated state models to match actual implementation, added Events/Actions |
 | 2025-12-27 | Initial spec from codebase analysis |

@@ -83,10 +83,11 @@ The Home Dashboard is the main screen after login, displaying the client's finan
 
 ```kotlin
 @Immutable
-data class HomeState(
-    val clientId: Long? = null,
+internal data class HomeState(
+    val clientId: Long? = 0,
     val firstName: String? = "",
     val currency: String? = "",
+    val decimals: Int = 2,
     val isAccountsPresent: Boolean = true,
     val username: String = "",
     val clientAccounts: ClientAccounts? = null,
@@ -98,13 +99,35 @@ data class HomeState(
     val items: ImmutableList<ServiceItem>,
     val networkStatus: Boolean = true,
     val uiState: HomeScreenState?,
-)
+) {
+    sealed interface DialogState {
+        data class Error(val message: StringResource) : DialogState
+        data class ShowAccountApplyBottomBar(val isVisible: Boolean) : DialogState
+    }
+}
 
 sealed interface HomeScreenState {
     data object Loading : HomeScreenState
     data object Success : HomeScreenState
     data class Error(val message: StringResource) : HomeScreenState
     data object Network : HomeScreenState
+}
+
+// Home Events
+sealed interface HomeEvent {
+    data class Navigate(val route: String) : HomeEvent
+    data object NavigateToNotification : HomeEvent
+}
+
+// Home Actions
+sealed interface HomeAction {
+    data class OnNavigate(val route: String) : HomeAction
+    data object OnNotificationClick : HomeAction
+    data object OnDismissDialog : HomeAction
+    data object ToggleAmountVisible : HomeAction
+    data class ObserveNetworkStatus(val isOnline: Boolean) : HomeAction
+    data object Retry : HomeAction
+    data object BottomBarPicker : HomeAction
 }
 ```
 
@@ -146,4 +169,5 @@ sealed interface HomeScreenState {
 
 | Date | Change |
 |------|--------|
+| 2025-12-29 | Updated state models to match actual implementation, added Events/Actions |
 | 2025-12-26 | Initial spec |
