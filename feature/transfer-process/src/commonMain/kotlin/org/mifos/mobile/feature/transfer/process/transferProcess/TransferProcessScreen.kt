@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,6 +30,10 @@ import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.amount
 import mifos_mobile.feature.transfer_process.generated.resources.cancel
 import mifos_mobile.feature.transfer_process.generated.resources.date
+import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_account_number
+import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_beneficiary_name
+import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_customer_name
+import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_details
 import mifos_mobile.feature.transfer_process.generated.resources.pay_from
 import mifos_mobile.feature.transfer_process.generated.resources.pay_to
 import mifos_mobile.feature.transfer_process.generated.resources.remark
@@ -41,6 +46,8 @@ import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedButton
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -128,7 +135,8 @@ private fun TransferProcessScreen(
                     MifosProgressIndicatorOverlay()
                 }
             }
-            else -> { }
+
+            else -> {}
         }
     }
 }
@@ -144,17 +152,54 @@ private fun TransferProcessContent(
             .fillMaxSize()
             .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
+        Text(
+            text = stringResource(Res.string.pay_from),
+            style = MifosTypography.labelLarge,
+            modifier = Modifier.padding(start = KptTheme.spacing.xs),
+        )
+
+        MifosDetailsCard(
+            keyValuePairs = mapOf(
+                Res.string.feature_make_transfer_account_number to state.transferPayload?.fromAccountId.toString(),
+                Res.string.feature_make_transfer_customer_name to state.fromClientName.toString(),
+
+            ),
+        )
+
+        Spacer(Modifier.height(KptTheme.spacing.sm))
+
+        Text(
+            text = stringResource(Res.string.pay_to),
+            style = MifosTypography.labelLarge,
+            modifier = Modifier.padding(start = KptTheme.spacing.xs),
+        )
+
+        MifosDetailsCard(
+            keyValuePairs = mapOf(
+                Res.string.feature_make_transfer_account_number to state.transferPayload?.toAccountId.toString(),
+                Res.string.feature_make_transfer_beneficiary_name to state.toClientName.toString(),
+            ),
+        )
+
+        Spacer(Modifier.height(KptTheme.spacing.sm))
+
+        Text(
+            text = stringResource(Res.string.feature_make_transfer_details),
+            style = MifosTypography.labelLarge,
+            modifier = Modifier.padding(start = KptTheme.spacing.xs),
+        )
+
         MifosDetailsCard(
             keyValuePairs = mapOf(
                 Res.string.amount to state.transferPayload?.transferAmount.toString(),
-                Res.string.pay_to to state.transferPayload?.toAccountId.toString(),
-                Res.string.pay_from to state.transferPayload?.fromAccountId.toString(),
                 Res.string.date to state.transferPayload?.transferDate.toString(),
                 Res.string.remark to state.transferPayload?.transferDescription.toString(),
             ),
         )
+
+        Spacer(Modifier.height(KptTheme.spacing.sm))
 
         MifosOutlinedButton(
             modifier = Modifier
@@ -170,6 +215,8 @@ private fun TransferProcessContent(
                 style = KptTheme.typography.labelLarge,
             )
         }
+
+        Spacer(Modifier.height(KptTheme.spacing.sm))
 
         MifosButton(
             modifier = Modifier
@@ -188,6 +235,21 @@ private fun TransferProcessScreenPreview() {
         TransferProcessScreen(
             state = TransferProcessState(
                 transferType = TransferType.SELF,
+                transferPayload = TransferPayload(
+                    fromOfficeId = 1,
+                    fromClientId = 10234L,
+                    fromAccountType = 2,
+                    fromAccountId = "56789",
+                    toOfficeId = 1,
+                    toClientId = 20456L,
+                    toAccountType = 1,
+                    toAccountId = "98765",
+                    transferDate = "27 September 2025",
+                    transferAmount = 2500.00,
+                    transferDescription = "Monthly loan repayment",
+                    dateFormat = "dd MMMM yyyy",
+                    locale = "en",
+                ),
             ),
             onAction = { },
             modifier = Modifier,
