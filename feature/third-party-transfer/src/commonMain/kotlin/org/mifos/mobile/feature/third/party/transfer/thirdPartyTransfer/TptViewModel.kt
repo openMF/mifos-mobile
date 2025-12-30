@@ -329,7 +329,7 @@ internal class TptViewModel(
             remark.isEmpty() ->
                 ValidationResult.Error(Res.string.feature_tpt_error_remarks_empty)
 
-            !ValidationHelper.isValidName(remark) ->
+            !ValidationHelper.isValidDescription(remark) ->
                 ValidationResult.Error(Res.string.feature_tpt_error_remarks_invalid)
 
             else -> ValidationResult.Success
