@@ -314,7 +314,7 @@ internal class TptViewModel(
      */
     private fun validateAmount(amount: String) = when {
         amount.isBlank() -> ValidationResult.Error(Res.string.feature_tpt_error_amount_required)
-        amount.toIntOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
+        amount.toFloatOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
         else -> ValidationResult.Success
     }
 
