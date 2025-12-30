@@ -303,7 +303,7 @@ internal class MakeTransferViewModel(
             remark.isEmpty() ->
                 ValidationResult.Error(Res.string.feature_make_transfer_error_remarks_empty)
 
-            !ValidationHelper.isValidName(remark) ->
+            !ValidationHelper.isValidDescription(remark) ->
                 ValidationResult.Error(Res.string.feature_make_transfer_error_remarks_invalid)
 
             else -> ValidationResult.Success
