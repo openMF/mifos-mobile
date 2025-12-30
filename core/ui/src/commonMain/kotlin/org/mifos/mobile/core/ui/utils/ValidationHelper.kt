@@ -294,19 +294,6 @@ object ValidationHelper {
         return true
     }
 
-    fun isValidDescription(description: String): Boolean {
-        if (description.isBlank()) return false
-
-        val trimmedName = description.trim()
-
-        for (char in trimmedName) {
-            if (!(char.isLetterOrDigit() || char == ' ')) {
-                return false
-            }
-        }
-        return true
-    }
-
     private fun isValidNameCharacter(char: Char): Boolean {
         return when {
             char.isLetter() -> true
