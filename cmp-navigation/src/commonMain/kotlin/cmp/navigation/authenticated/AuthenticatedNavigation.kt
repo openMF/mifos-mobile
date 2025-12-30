@@ -55,7 +55,7 @@ import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
 import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
-import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionDestination
 import org.mifos.mobile.feature.savings.application.navigation.navigateToSavingsApplicationGraph
 import org.mifos.mobile.feature.savings.application.navigation.savingsApplicationNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
@@ -296,8 +296,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         locationsNavGraph()
 
-        recentTransactionNavGraph(
-            navController = navController,
+        recentTransactionDestination(
+            navigateBack = navController::popBackStack,
             navigateToDetails = { transactionId, accountType, accountId ->
                 navController.navigateToTransactionDetails(
                     transactionId = transactionId,

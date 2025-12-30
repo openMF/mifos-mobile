@@ -9,6 +9,7 @@
  */
 plugins {
     alias(libs.plugins.cmp.feature.convention)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {

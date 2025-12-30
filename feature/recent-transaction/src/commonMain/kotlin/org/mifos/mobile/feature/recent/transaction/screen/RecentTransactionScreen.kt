@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.recent.transaction.screen
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,14 +19,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,279 +34,264 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import mifos_mobile.feature.recent_transaction.generated.resources.Res
+import mifos_mobile.feature.recent_transaction.generated.resources.account_number_label
+import mifos_mobile.feature.recent_transaction.generated.resources.all
+import mifos_mobile.feature.recent_transaction.generated.resources.apply_filters
+import mifos_mobile.feature.recent_transaction.generated.resources.balance
+import mifos_mobile.feature.recent_transaction.generated.resources.clear_all
+import mifos_mobile.feature.recent_transaction.generated.resources.credits
+import mifos_mobile.feature.recent_transaction.generated.resources.debits
+import mifos_mobile.feature.recent_transaction.generated.resources.filter
+import mifos_mobile.feature.recent_transaction.generated.resources.filter_by_account
+import mifos_mobile.feature.recent_transaction.generated.resources.filter_transactions
+import mifos_mobile.feature.recent_transaction.generated.resources.no_transaction
+import mifos_mobile.feature.recent_transaction.generated.resources.recent_transactions
+import mifos_mobile.feature.recent_transaction.generated.resources.select_account
+import mifos_mobile.feature.recent_transaction.generated.resources.transaction_type
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
+import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionEvent
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState
-import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.EmptyDataView
+import org.mifos.mobile.core.ui.component.MifosErrorComponent
+import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.component.MifosProgressIndicator
+import org.mifos.mobile.core.ui.component.TransactionScreenItem
+import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionAction
+import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionEvent
+import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionUiState
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
+import org.mifos.mobile.feature.recent.transaction.viewmodel.TransactionFilterType
 import template.core.base.designsystem.theme.KptTheme
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecentTransactionScreen(
+internal fun RecentTransactionScreen(
     navigateBack: () -> Unit,
     navigateToDetails: (String, String, Long) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: RecentTransactionViewModel = koinViewModel(),
 ) {
-    val state by viewModel.uiState.collectAsState()
+    val state by viewModel.stateFlow.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    LaunchedEffect(viewModel.eventFlow) {
-        viewModel.eventFlow.collect { event ->
-            when (event) {
-                is RecentTransactionEvent.NavigateToDetails -> {
-                    navigateToDetails(event.transactionId, event.accountType, event.accountId)
-                }
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is RecentTransactionEvent.NavigateToDetails -> {
+                navigateToDetails(event.transactionId, event.accountType, event.accountId)
             }
+
+            is RecentTransactionEvent.NavigateBack -> navigateBack.invoke()
         }
     }
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = navigateBack) {
-                                Icon(
-                                    imageVector = MifosIcons.ArrowBack,
-                                    contentDescription = "Back",
-                                )
-                            }
+    RecentTransactionScreenContent(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+    )
 
-                            Text(
-                                text = "Transaction History",
-                                style = KptTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                                modifier = Modifier.padding(end = KptTheme.spacing.sm),
-                            )
-                        }
-                        state.selectedAccount?.let { account ->
-                            Text(
-                                text = account.accountNo ?: "Selected Account",
-                                style = KptTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = KptTheme.colorScheme.onSurfaceVariant,
+    RecentTransactionScreenDialog(
+        state = state,
+        onAction = remember(viewModel) {
+            { viewModel.trySendAction(it) }
+        },
+        sheetState = sheetState,
+    )
+}
 
-                            )
-                        }
-                    }
-                },
+@Composable
+internal fun RecentTransactionScreenContent(
+    state: RecentTransactionUiState,
+    onAction: (RecentTransactionAction) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val pullToRefreshState = rememberMifosPullToRefreshState(
+        isEnabled = true,
+        isRefreshing = state.isRefreshing,
+        onRefresh = {
+            onAction(RecentTransactionAction.Refresh)
+        },
+    )
 
-                actions = {
-                    IconButton(onClick = {
-                        viewModel.handleAction(RecentTransactionAction.ToggleFilter)
-                    }) {
+    MifosElevatedScaffold(
+        onNavigateBack = {
+            onAction(RecentTransactionAction.OnNavigateBackClick)
+        },
+        topBarTitle = stringResource(Res.string.recent_transactions),
+        pullToRefreshState = pullToRefreshState,
+        bottomBar = {
+            Surface {
+                MifosPoweredCard(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
+                )
+            }
+        },
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(KptTheme.spacing.md),
+        ) {
+            if (state.viewState != ScreenUiState.Loading) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(
+                        text = state.selectedAccount?.accountNo.orEmpty(),
+                        style = MifosTypography.bodyMedium,
+                        modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                    )
+
+                    IconButton(
+                        onClick = { onAction(RecentTransactionAction.ToggleFilter) },
+                    ) {
                         Icon(
                             imageVector = MifosIcons.Filter,
-                            contentDescription = "Filter",
+                            contentDescription = stringResource(Res.string.filter),
                             tint =
-                            if (
-                                state.filterType != TransactionFilterType.ALL
-                            ) {
+                            if (state.filterType != TransactionFilterType.ALL) {
                                 KptTheme.colorScheme.primary
                             } else {
                                 KptTheme.colorScheme.onSurface
                             },
                         )
                     }
-                },
-            )
-        },
-    ) { paddingValues ->
-
-        Box(modifier = Modifier.padding(paddingValues)) {
-            when (val viewState = state.viewState) {
-                is RecentTransactionUiState.ViewState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                }
-                is RecentTransactionUiState.ViewState.Error -> {
-                    ErrorScreen(
-                        message = viewState.message ?: "Unknown Error",
-                        onRetry = { viewModel.handleAction(RecentTransactionAction.LoadInitial) },
-                    )
-                }
-                is RecentTransactionUiState.ViewState.Empty -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("No recent transactions found.")
-                    }
-                }
-                is RecentTransactionUiState.ViewState.Content -> {
-                    TransactionList(
-                        transactions = viewState.list,
-                        onTransactionClick = { transaction ->
-                            viewModel.handleAction(RecentTransactionAction.OnTransactionClick(transaction))
-                        },
-                    )
                 }
             }
-        }
 
-        if (state.showFilter) {
+            when (state.viewState) {
+                ScreenUiState.Empty -> {
+                    EmptyDataView(
+                        error = Res.string.no_transaction,
+                        icon = MifosIcons.Info,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+
+                is ScreenUiState.Error -> {
+                    MifosErrorComponent(
+                        isRetryEnabled = true,
+                        message = stringResource(state.viewState.message),
+                        onRetry = { onAction(RecentTransactionAction.Refresh) },
+                    )
+                }
+
+                ScreenUiState.Loading -> MifosProgressIndicator()
+
+                ScreenUiState.Network -> {
+                    MifosErrorComponent(
+                        isNetworkConnected = state.networkStatus,
+                        isRetryEnabled = true,
+                        onRetry = { onAction(RecentTransactionAction.Refresh) },
+                    )
+                }
+
+                ScreenUiState.Success -> {
+                    LazyColumn {
+                        state.groupedTransactions.forEach { (date, transactions) ->
+                            item(key = date) {
+                                Text(
+                                    text = date,
+                                    style = MifosTypography.labelLargeEmphasized,
+                                    modifier = Modifier.padding(vertical = DesignToken.padding.medium),
+                                )
+                            }
+
+                            items(
+                                items = transactions,
+                                key = { transaction ->
+                                    transaction.id
+                                        ?: "${date}_${transaction.amount}_${transaction.typeValue}"
+                                },
+                            ) { transaction ->
+                                TransactionScreenItem(
+                                    title = transaction.typeValue.orEmpty(),
+                                    date = DateHelper.getDateAsString(transaction.date),
+                                    time = "",
+                                    transactionAmount = CurrencyFormatter.format(
+                                        balance = transaction.amount,
+                                        currencyCode = transaction.currency,
+                                        maximumFractionDigits = 3,
+                                    ),
+                                    isCredited = transaction.isCredit,
+                                    onClick = {
+                                        transaction.id?.let {
+                                            onAction(
+                                                RecentTransactionAction.OnTransactionClick(it),
+                                            )
+                                        }
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+
+                else -> Unit
+            }
+        }
+    }
+}
+
+/**
+ * Composable function for the Account Transactions Dialog.
+ *
+ * @param state The current state of the Account Transactions Screen.
+ * @param onAction The function to be called when an action is performed.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun RecentTransactionScreenDialog(
+    state: RecentTransactionUiState,
+    onAction: (RecentTransactionAction) -> Unit,
+    sheetState: SheetState,
+) {
+    when (state.dialogState) {
+        RecentTransactionUiState.DialogState.Filters -> {
             ModalBottomSheet(
-                onDismissRequest = { viewModel.handleAction(RecentTransactionAction.ToggleFilter) },
+                onDismissRequest = { onAction(RecentTransactionAction.DismissFilter) },
                 sheetState = sheetState,
                 containerColor = KptTheme.colorScheme.surface,
             ) {
                 TransactionFilterSheetContent(
-                    accounts = state.accounts,
-                    currentAccount = state.selectedAccount,
-                    currentFilterType = state.filterType,
-                    onApply = { account, type ->
-                        viewModel.handleAction(RecentTransactionAction.ApplyFilter(account, type))
-                    },
-                    onClear = {
-                        viewModel.handleAction(RecentTransactionAction.ClearFilter)
-                    },
+                    state = state,
+                    onAction = onAction,
                 )
             }
         }
-    }
-}
 
-/**
- * NEW: The redesigned TransactionItem composable matching the image.
- */
-@Composable
-fun TransactionItem(
-    transaction: Transactions,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-) {
-    val isCredit = transaction.transactionType?.deposit == true
-    val amountColor = if (isCredit) Color(0xFF0A7E48) else Color.Red
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(horizontal = KptTheme.spacing.md, vertical = DesignToken.padding.medium),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
-        ) {
-            Text(
-                text = if (isCredit) "CREDIT" else "DEBIT",
-                style = KptTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                color = KptTheme.colorScheme.onSurface,
-            )
-            Text(
-                text = formatDate(transaction.date),
-                style = KptTheme.typography.bodyMedium,
-                color = KptTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        Text(
-            text = "${if (isCredit) "+ " else "- "}${CurrencyFormatter.format(
-                transaction.amount ?: 0.0,
-                transaction.currency?.code ?: "USD",
-                8,
-            )}",
-            style = KptTheme.typography.bodyLarge.copy(
-                color = amountColor,
-                fontWeight = FontWeight.SemiBold,
-            ),
-        )
-    }
-}
-
-/**
- * Helper to format date list e.g. [2025, 9, 15] into "15 Sep 2025"
- */
-private fun formatDate(dateList: List<Int>?): String {
-    if (dateList == null || dateList.size < 3) return "Invalid Date"
-    val year = dateList[0]
-    val month = when (dateList[1]) {
-        1 -> "Jan"
-        2 -> "Feb"
-        3 -> "Mar"
-        4 -> "Apr"
-        5 -> "May"
-        6 -> "Jun"
-        7 -> "Jul"
-        8 -> "Aug"
-        9 -> "Sep"
-        10 -> "Oct"
-        11 -> "Nov"
-        12 -> "Dec"
-        else -> ""
-    }
-    val day = dateList[2]
-    return "$day $month $year"
-}
-
-@Composable
-fun TransactionList(
-    transactions: List<Transactions>,
-    modifier: Modifier = Modifier,
-    onTransactionClick: (Transactions) -> Unit,
-) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-    ) {
-        itemsIndexed(
-            items = transactions,
-        ) { index, transaction ->
-
-            TransactionItem(
-                transaction = transaction,
-                onClick = { onTransactionClick(transaction) },
-            )
-
-            if (index != transactions.size - 1) {
-                HorizontalDivider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = KptTheme.spacing.md),
-                    color = KptTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun ErrorScreen(message: String, onRetry: () -> Unit, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(text = message, color = KptTheme.colorScheme.error)
-        Button(onClick = onRetry) {
-            Text("Retry")
-        }
+        null -> Unit
     }
 }
 
@@ -319,22 +303,19 @@ fun ErrorScreen(message: String, onRetry: () -> Unit, modifier: Modifier = Modif
  * - Large "Apply Filters" button
  */
 @Composable
-fun TransactionFilterSheetContent(
-    accounts: List<SavingAccount>,
-    currentAccount: SavingAccount?,
-    currentFilterType: TransactionFilterType,
-    onApply: (SavingAccount, TransactionFilterType) -> Unit,
-    onClear: () -> Unit,
+internal fun TransactionFilterSheetContent(
+    state: RecentTransactionUiState,
+    onAction: (RecentTransactionAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedAccount by remember { mutableStateOf(currentAccount ?: accounts.firstOrNull()) }
-    var selectedType by remember { mutableStateOf(currentFilterType) }
-    var isAccountDropdownExpanded by remember { mutableStateOf(false) }
+    var selectedAccount by rememberSaveable { mutableStateOf(state.selectedAccount) }
+    var selectedType by rememberSaveable { mutableStateOf(state.filterType) }
+    var isAccountDropdownExpanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = DesignToken.spacing.dp24, vertical = KptTheme.spacing.md),
+            .padding(KptTheme.spacing.md),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -342,15 +323,20 @@ fun TransactionFilterSheetContent(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Filter Transactions",
+                text = stringResource(Res.string.filter_transactions),
                 style = KptTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                 ),
             )
-            TextButton(onClick = onClear) {
+            TextButton(
+                enabled = state.hasActiveFilters,
+                onClick = {
+                    onAction(RecentTransactionAction.ClearFilter)
+                },
+            ) {
                 Text(
-                    text = "Clear All",
+                    text = stringResource(Res.string.clear_all),
                     style = KptTheme.typography.bodyMedium.copy(
                         color = KptTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold,
@@ -362,7 +348,7 @@ fun TransactionFilterSheetContent(
         HorizontalDivider(modifier = Modifier.padding(vertical = KptTheme.spacing.sm))
 
         Text(
-            text = "Filter By Account :",
+            text = stringResource(Res.string.filter_by_account),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(vertical = DesignToken.padding.medium),
         )
@@ -374,7 +360,10 @@ fun TransactionFilterSheetContent(
                     .clickable { isAccountDropdownExpanded = true },
                 shape = KptTheme.shapes.medium,
                 border = BorderStroke(DesignToken.strokes.thin, Color.Gray.copy(alpha = 0.5f)),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(
+                    containerColor = KptTheme.colorScheme.surface,
+                    contentColor = KptTheme.colorScheme.onSurface,
+                ),
                 elevation = CardDefaults.cardElevation(KptTheme.elevation.level0),
             ) {
                 Row(
@@ -386,21 +375,28 @@ fun TransactionFilterSheetContent(
                 ) {
                     Column {
                         Text(
-                            text = "A/c No: ${selectedAccount?.accountNo ?: "Select Account"}",
+                            text = stringResource(
+                                Res.string.account_number_label,
+                                selectedAccount?.accountNo
+                                    ?: stringResource(Res.string.select_account),
+                            ),
                             style = KptTheme.typography.bodyLarge
                                 .copy(fontWeight = FontWeight.Bold),
                         )
                         Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
                         Text(
-                            text = "Balance: ${selectedAccount?.accountBalance ?: "0.0"} " +
-                                (selectedAccount?.currency?.code ?: ""),
+                            text = stringResource(
+                                Res.string.balance,
+                                selectedAccount?.accountBalance?.toString() ?: "0.0",
+                                selectedAccount?.currency?.code.orEmpty(),
+                            ),
                             style = KptTheme.typography.bodySmall.copy(color = Color.Gray),
                         )
                     }
                     Icon(
                         imageVector = MifosIcons.ArrowDropDown,
-                        contentDescription = "Select Account",
-                        tint = Color.Black,
+                        contentDescription = stringResource(Res.string.select_account),
+                        tint = KptTheme.colorScheme.onSurface,
                     )
                 }
             }
@@ -409,14 +405,16 @@ fun TransactionFilterSheetContent(
                 expanded = isAccountDropdownExpanded,
                 onDismissRequest = { isAccountDropdownExpanded = false },
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .background(Color.White),
+                    .fillMaxWidth(0.9f),
             ) {
-                accounts.forEach { account ->
+                state.accounts.forEach { account ->
                     DropdownMenuItem(
                         text = {
                             Column {
-                                Text(text = account.productName ?: "Account", fontWeight = FontWeight.Bold)
+                                Text(
+                                    text = account.productName ?: stringResource(Res.string.select_account),
+                                    fontWeight = FontWeight.Bold,
+                                )
                                 Text(text = account.accountNo ?: "", style = KptTheme.typography.bodySmall)
                             }
                         },
@@ -432,7 +430,7 @@ fun TransactionFilterSheetContent(
         Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
         Text(
-            text = "Transaction Type:",
+            text = stringResource(Res.string.transaction_type),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(bottom = DesignToken.padding.medium),
         )
@@ -442,19 +440,19 @@ fun TransactionFilterSheetContent(
             horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
         ) {
             FilterOptionChip(
-                label = "All",
+                label = stringResource(Res.string.all),
                 isSelected = selectedType == TransactionFilterType.ALL,
                 onClick = { selectedType = TransactionFilterType.ALL },
                 modifier = Modifier.weight(1f),
             )
             FilterOptionChip(
-                label = "Debits",
+                label = stringResource(Res.string.debits),
                 isSelected = selectedType == TransactionFilterType.DEBIT,
                 onClick = { selectedType = TransactionFilterType.DEBIT },
                 modifier = Modifier.weight(1f),
             )
             FilterOptionChip(
-                label = "Credits",
+                label = stringResource(Res.string.credits),
                 isSelected = selectedType == TransactionFilterType.CREDIT,
                 onClick = { selectedType = TransactionFilterType.CREDIT },
                 modifier = Modifier.weight(1f),
@@ -466,7 +464,7 @@ fun TransactionFilterSheetContent(
         Button(
             onClick = {
                 if (selectedAccount != null) {
-                    onApply(selectedAccount!!, selectedType)
+                    onAction(RecentTransactionAction.ApplyFilter(selectedAccount!!, selectedType))
                 }
             },
             modifier = Modifier
@@ -478,7 +476,7 @@ fun TransactionFilterSheetContent(
             ),
         ) {
             Text(
-                text = "Apply Filters",
+                text = stringResource(Res.string.apply_filters),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
             )

@@ -14,4 +14,19 @@
     <string name="no_transaction">No Transaction</string>
     <string name="atm_icon">ATM Icon</string>
     <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="filter">Filter</string>
+    <string name="filter_transactions">Filter Transactions</string>
+    <string name="clear_all">Clear All</string>
+    <string name="filter_by_account">Filter By Account :</string>
+    <string name="account_number_label">A/c No: %1$s</string>
+    <string name="select_account">Select Account</string>
+    <string name="balance">Balance: %1$s %2$s</string>
+    <string name="account">Account</string>
+    <string name="transaction_type">Transaction Type:</string>
+    <string name="all">All</string>
+    <string name="debits">Debits</string>
+    <string name="credits">Credits</string>
+    <string name="apply_filters">Apply Filters</string>
 </resources>
