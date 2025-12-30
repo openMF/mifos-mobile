@@ -22,7 +22,6 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_last_name_empty
-import mifos_mobile.feature.auth.generated.resources.feature_signup_error_middle_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
@@ -151,15 +150,6 @@ class RegistrationViewModel(
                 middleNameError = null,
             )
         }
-
-        debounceValidation {
-            val result = validateName(name, "middle")
-            mutableStateFlow.update {
-                it.copy(
-                    middleNameError = if (result is ValidationResult.Error) result.message else null,
-                )
-            }
-        }
     }
 
     /**
@@ -191,7 +181,6 @@ class RegistrationViewModel(
         if (name.isEmpty()) {
             return when (nameType) {
                 "first" -> ValidationResult.Error(Res.string.feature_signup_error_first_name_empty)
-                "middle" -> ValidationResult.Error(Res.string.feature_signup_error_middle_name_empty)
                 "last" -> ValidationResult.Error(Res.string.feature_signup_error_last_name_empty)
                 else -> ValidationResult.Error(Res.string.feature_signup_error_invalid_name)
             }
@@ -295,6 +284,7 @@ class RegistrationViewModel(
         account.isBlank() -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_empty,
         )
+
         account.length > 32 -> ValidationResult.Error(
             Res.string.feature_signup_error_customer_account_not_valid,
         )
@@ -399,7 +389,10 @@ class RegistrationViewModel(
     /**
      * Validates if confirm password matches the password and meets strength requirements.
      */
-    private fun validateConfirmPassword(confirmPassword: String, password: String): ValidationResult? = when {
+    private fun validateConfirmPassword(
+        confirmPassword: String,
+        password: String,
+    ): ValidationResult? = when {
         confirmPassword.isEmpty() -> ValidationResult.Error(Res.string.feature_signup_error_password_required_error)
         confirmPassword.length < 8 -> ValidationResult.Error(Res.string.feature_signup_error_password_short)
         password != confirmPassword -> ValidationResult.Error(Res.string.feature_signup_error_password_mismatch)
@@ -459,7 +452,6 @@ class RegistrationViewModel(
         validationJob?.cancel()
 
         val firstNameError = validateName(state.firstName, "first")
-        val middleNameError = validateName(state.middleName, "middle")
         val lastNameError = validateName(state.lastName, "last")
         val emailError = validateEmail(state.email)
         val mobileNumberError = validateMobileNumber(state.mobileNumber)
@@ -473,11 +465,6 @@ class RegistrationViewModel(
         mutableStateFlow.update {
             it.copy(
                 firstNameError = if (firstNameError is ValidationResult.Error) firstNameError.message else null,
-                middleNameError = if (middleNameError is ValidationResult.Error) {
-                    middleNameError.message
-                } else {
-                    null
-                },
                 lastNameError = if (lastNameError is ValidationResult.Error) lastNameError.message else null,
                 emailError = if (emailError is ValidationResult.Error) emailError.message else null,
                 customerAccountError = if (accountError is ValidationResult.Error) {
@@ -501,7 +488,6 @@ class RegistrationViewModel(
         }
 
         val errorFree = isSuccess(firstNameError) &&
-            isSuccess(middleNameError) &&
             isSuccess(lastNameError) &&
             isSuccess(emailError) &&
             isSuccess(accountError) &&
@@ -533,7 +519,7 @@ class RegistrationViewModel(
                     authenticationMode = "email",
                     email = state.email,
                     firstName = state.firstName,
-                    middleName = state.middleName,
+                    middleName = if (state.middleName.isNotEmpty()) state.middleName else null,
                     lastName = state.lastName,
                     mobileNumber = state.mobileNumber,
                     password = state.password,
@@ -632,7 +618,6 @@ data class SignUpState(
     val isSubmitButtonEnabled: Boolean
         get() = customerAccount.isNotBlank() &&
             firstName.isNotBlank() &&
-            middleName.isNotBlank() &&
             lastName.isNotBlank() &&
             email.isNotBlank() &&
             password.isNotBlank() &&
