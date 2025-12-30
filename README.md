@@ -29,7 +29,7 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 ### Demo credentials
 - **Fineract Instance**: `gsoc.mifos.community`
 - **Username**: `maria`
-- **Password**: `password`
+- **Password**: `Mifos@mifos25`
 
 ### How to Contribute
 Thank you for your interest in contributing to the Mifos Mobile project by Mifos! We welcome all contributions and encourage you to follow these guidelines to ensure a smooth and efficient collaboration process.
