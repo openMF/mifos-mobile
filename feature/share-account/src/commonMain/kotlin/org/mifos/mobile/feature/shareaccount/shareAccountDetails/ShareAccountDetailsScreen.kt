@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_details_action
@@ -171,7 +170,7 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .heightIn(min = 64.dp)
+                            .heightIn(min = DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
