@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -191,14 +192,12 @@ internal fun SavingsAccountDetailsContent(
 
                     AccountDetailsGrid(
                         details = state.displayItems,
-                        isActive = state.isActive,
                     )
 
                     if (state.transactionList.isNotEmpty()) {
                         AccountDetailsGrid(
                             label = "Last Transactions",
                             details = state.transactionList,
-                            isActive = state.isActive,
                         )
                     }
 
@@ -278,13 +277,11 @@ internal fun ActionBar(
  *
  * @param label An optional string for the section's title.
  * @param details A list of [LabelValueItem]s to display in the grid.
- * @param isActive A boolean to conditionally color the status field.
  */
 @Composable
 internal fun AccountDetailsGrid(
     label: String? = null,
     details: List<LabelValueItem>? = emptyList(),
-    isActive: Boolean = false,
 ) {
     Column(
         modifier = Modifier
@@ -308,16 +305,19 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .height(DesignToken.sizes.cardDp64)
+                            .heightIn(min = DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_savings_status_label) {
-                            AppColors
-                                .customEnable
+                        color = if (item.label == Res.string.feature_savings_status_label) {
+                            when (item.value) {
+                                SavingStatus.ACTIVE.status -> AppColors.customEnable
+                                SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                SavingStatus.INACTIVE.status -> KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.onSurface
+                            }
                         } else {
-                            KptTheme
-                                .colorScheme.onBackground
+                            KptTheme.colorScheme.onBackground
                         },
                     )
                 }

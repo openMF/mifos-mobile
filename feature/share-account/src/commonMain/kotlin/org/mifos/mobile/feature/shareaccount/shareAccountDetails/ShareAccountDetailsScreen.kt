@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -40,6 +40,7 @@ import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -49,6 +50,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.shareaccount.component.ShareActionItems
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun ShareAccountDetailsScreen(
@@ -130,7 +132,6 @@ internal fun ShareAccountDetailsContent(
                 ) {
                     AccountDetailsGrid(
                         details = state.displayItems,
-                        isActive = state.isActive,
                     )
 
                     ShareAccountActions(
@@ -148,7 +149,6 @@ internal fun ShareAccountDetailsContent(
 internal fun AccountDetailsGrid(
     label: StringResource? = null,
     details: List<LabelValueItem>? = emptyList(),
-    isActive: Boolean = false,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -170,13 +170,21 @@ internal fun AccountDetailsGrid(
             ) {
                 details.forEach { item ->
                     MifosLabelValueCard(
-                        modifier = Modifier.height(64.dp).weight(1f),
+                        modifier = Modifier
+                            .heightIn(min = 64.dp)
+                            .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_share_account_status) {
-                            AppColors.customEnable
+                        color = if (item.label == Res.string.feature_share_account_status) {
+                            when (item.value) {
+                                LoanStatus.ACTIVE.status -> AppColors.customEnable
+                                LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
+                                    KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.secondary
+                            }
                         } else {
-                            MaterialTheme.colorScheme.onBackground
+                            KptTheme.colorScheme.secondary
                         },
                     )
                 }
