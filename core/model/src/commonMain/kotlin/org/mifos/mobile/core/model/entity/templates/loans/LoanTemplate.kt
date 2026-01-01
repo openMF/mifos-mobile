@@ -36,6 +36,9 @@ data class LoanTemplate(
 
     val loanProductName: String? = null,
 
+    val minPrincipal: Double? = null,
+    val maxPrincipal: Double? = null,
+
     @SerialName("isLoanProductLinkedToFloatingRate")
     val loanProductLinkedToFloatingRate: Boolean? = null,
 

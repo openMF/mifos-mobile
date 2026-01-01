@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan_application.generated.resources.Res
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_multiple
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_large
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_small
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_date_empty
@@ -46,6 +47,8 @@ import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
+import kotlin.math.pow
+import kotlin.math.roundToLong
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
@@ -245,6 +248,7 @@ internal class LoanApplyViewModel(
      * @param template The [DataState] of the generic loan template.
      * @param purpose The [DataState] of the product-specific loan purpose template.
      */
+    @OptIn(ExperimentalTime::class)
     private fun handleClientAndTemplateResult(
         client: DataState<Client?>,
         template: DataState<LoanTemplate?>,
@@ -274,8 +278,43 @@ internal class LoanApplyViewModel(
                     }
                 }
 
+                val productTemplate = purpose.data
+                val defaultPrincipal = productTemplate?.principal ?: 0.0
+
+                val minPrincipal = if (productTemplate?.minPrincipal != null && productTemplate.minPrincipal!! > 0) {
+                    productTemplate.minPrincipal!!
+                } else {
+                    defaultPrincipal
+                }
+
+                val maxPrincipal = if (productTemplate?.maxPrincipal != null && productTemplate.maxPrincipal!! > 0) {
+                    productTemplate.maxPrincipal!!
+                } else {
+                    defaultPrincipal
+                }
+
+                val currency = template.data?.currency ?: Currency(
+                    code = "USD", name = "US Dollar", decimalPlaces = 2.0, inMultiplesOf = 0,
+                    displaySymbol = "$", nameCode = "currency.USD", displayLabel = "US Dollar ($)",
+                )
+
+                val decimals = currency.decimalPlaces?.toInt() ?: 2
+                val initialAmount = if (decimals == 0) {
+                    minPrincipal.toInt().toString()
+                } else {
+                    minPrincipal.format(decimals)
+                }
+
+                val todayMillis = Clock.System.now().toEpochMilliseconds()
+                val activationMillis = client.data?.activationDate?.let {
+                    DateHelper.getDateAsLongFromList(it)
+                } ?: 0L
+                val effectiveMillis = maxOf(todayMillis, activationMillis)
+                val defaultDate = DateHelper.getDateMonthYearString(effectiveMillis)
+
                 updateState {
                     it.copy(
+                        applicantName = client.data?.displayName ?: "",
                         currency = template.data?.currency ?: Currency(
                             code = "USD",
                             name = "US Dollar",
@@ -286,6 +325,10 @@ internal class LoanApplyViewModel(
                             displayLabel = "US Dollar ($)",
                         ),
                         loanPurposeOptions = mappedLoanPurposeOptions,
+                        minPrincipal = minPrincipal,
+                        maxPrincipal = maxPrincipal,
+                        principalAmount = initialAmount,
+                        disbursementDate = defaultDate,
                         uiState = ScreenUiState.Success,
                     )
                 }
@@ -366,23 +409,35 @@ internal class LoanApplyViewModel(
     private fun validatePrincipalAmount(
         amount: String,
         currency: ModelCurrency,
+        min: Double,
+        max: Double,
     ): ValidationResult {
         return when (val result = ValidationHelper.validateAmountWithDetails(amount, currency)) {
             is AmountValidationResult.Valid -> {
                 val value = result.normalizedAmount
-                return if (value in 1000.0..10000.0) {
+
+                val isMultiple = if (currency.inMultiplesOf > 0) {
+                    val remainder = value % currency.inMultiplesOf
+                    remainder < 0.0001 || (currency.inMultiplesOf - remainder) < 0.0001
+                } else {
+                    true
+                }
+
+                val error = when {
+                    min > 0 && value < min -> Res.string.feature_apply_loan_error_amount_too_small
+                    max != Double.MAX_VALUE && value > max -> Res.string.feature_apply_loan_error_amount_too_large
+                    !isMultiple -> Res.string.feature_apply_loan_error_amount_multiple
+                    else -> null
+                }
+
+
+                if (error != null) {
+                    ValidationResult.Error(error)
+                } else {
                     mutableStateFlow.update {
                         it.copy(principalAmount = value.toString())
                     }
                     ValidationResult.Success
-                } else {
-                    ValidationResult.Error(
-                        if (value < 1000.0) {
-                            Res.string.feature_apply_loan_error_amount_too_small
-                        } else {
-                            Res.string.feature_apply_loan_error_amount_too_large
-                        },
-                    )
                 }
             }
 
@@ -441,7 +496,12 @@ internal class LoanApplyViewModel(
         }
         debounceValidation {
             val result =
-                validatePrincipalAmount(state.principalAmount, state.currency.toModelCurrency())
+                validatePrincipalAmount(
+                    state.principalAmount,
+                    state.currency.toModelCurrency(),
+                    state.minPrincipal,
+                    state.maxPrincipal,
+                )
             mutableStateFlow.update {
                 it.copy(
                     principalAmountError = if (result is ValidationResult.Error) result.message else null,
@@ -508,7 +568,12 @@ internal class LoanApplyViewModel(
         }
         val nameResult = validateApplicantName(state.applicantName)
         val amountResult = state.currency.toModelCurrency().let { currency ->
-            validatePrincipalAmount(state.principalAmount, currency)
+            validatePrincipalAmount(
+                state.principalAmount,
+                currency,
+                state.minPrincipal,
+                state.maxPrincipal,
+            )
         }
         val dateResult = validateDisbursementDate(state.disbursementDate)
 
@@ -622,6 +687,24 @@ internal class LoanApplyViewModel(
     }
 }
 
+private fun Double.format(decimals: Int): String {
+    if (decimals <= 0) {
+        return this.roundToLong().toString()
+    }
+
+    val multiplier = 10.0.pow(decimals)
+
+    val roundedValue = (this * multiplier).roundToLong()
+    val stringValue = roundedValue.toString()
+
+    val paddedString = stringValue.padStart(decimals + 1, '0')
+
+    val integerPart = paddedString.dropLast(decimals)
+    val fractionalPart = paddedString.takeLast(decimals)
+
+    return "$integerPart.$fractionalPart"
+}
+
 /**
  * Represents the UI state for the loan application screen.
  *
@@ -666,6 +749,8 @@ internal data class LoanApplicationState(
     val disbursementDateError: StringResource? = null,
     val hasChanges: Boolean = false,
     val networkStatus: Boolean = false,
+    val minPrincipal: Double = 0.0,
+    val maxPrincipal: Double = Double.MAX_VALUE,
 
     val uiState: ScreenUiState? = ScreenUiState.Loading,
     val showDatePicker: Boolean = false,
