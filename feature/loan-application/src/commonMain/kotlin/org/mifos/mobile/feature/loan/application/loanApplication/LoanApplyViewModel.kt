@@ -430,7 +430,6 @@ internal class LoanApplyViewModel(
                     else -> null
                 }
 
-
                 if (error != null) {
                     ValidationResult.Error(error)
                 } else {
