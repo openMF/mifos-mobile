@@ -60,7 +60,7 @@ fun ClientChargeItem(
             .clickable {
                 onChargeClick()
             }
-            .padding(vertical = KptTheme.spacing.md),
+            .padding(vertical = DesignToken.padding.large),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -78,7 +78,7 @@ fun ClientChargeItem(
                     color = KptTheme.colorScheme.background.copy(alpha = 0.3f),
                     shape = CircleShape,
                 )
-                .padding(KptTheme.spacing.sm),
+                .padding(DesignToken.padding.small),
 
         )
         Spacer(Modifier.width(DesignToken.padding.medium))
@@ -94,11 +94,12 @@ fun ClientChargeItem(
                 text = "ChargeId : ${charge.chargeId}",
                 style = MifosTypography.bodySmall,
             )
+
             Text(
-                text = if (charge.dueDate.isNotEmpty()) {
+                text = if (!charge.dueDate.isEmpty() && charge.dueDate.size >= 3) {
                     DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
                 } else {
-                    ""
+                    "N/A"
                 },
                 style = MifosTypography.bodySmall,
             )
@@ -106,7 +107,7 @@ fun ClientChargeItem(
         Spacer(Modifier.width(DesignToken.padding.medium))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
         ) {
             Column(
                 horizontalAlignment = Alignment.End,

@@ -19,36 +19,28 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.charges
 import mifos_mobile.feature.client_charge.generated.resources.client_charges
-import mifos_mobile.feature.client_charge.generated.resources.feature_client_charge_share_charges
 import mifos_mobile.feature.client_charge.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.feature.charge.components.ChargeFilterUtil
 
-/**
- * ViewModel responsible for managing the state of client, loan, and savings charges.
- *
- * Handles:
- * - Fetching charges based on charge type (CLIENT, LOAN, SAVINGS)
- * - Displaying loading or error states
- * - Listening to network status updates
- * - Emitting UI events (toast, navigation)
- *
- * @property clientChargeRepositoryImp Repository for retrieving charge data
- * @property networkMonitor Used to observe current network connectivity
- * @property userPreferencesRepositoryImpl Provides client-specific information like clientId
- * @property savedStateHandle Retrieves navigation arguments via `ClientChargesRoute`
- */
 internal class ClientChargeViewModel(
+    private val accountsRepositoryImpl: AccountsRepository,
     private val clientChargeRepositoryImp: ClientChargeRepository,
     userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
@@ -56,89 +48,289 @@ internal class ClientChargeViewModel(
 ) : BaseViewModel<ClientChargeState, ClientChargeEvent, ClientChargeAction>(
     initialState = run {
         val chargeRoute = savedStateHandle.toRoute<ClientChargesRoute>()
-        val chargeType = ChargeType.valueOf(chargeRoute.chargeType.uppercase())
+        val initialType = ChargeType.valueOf(chargeRoute.chargeType.uppercase())
 
-        val topBarId = when (chargeType) {
+        val topBarId = when (initialType) {
             ChargeType.CLIENT -> Res.string.client_charges
             ChargeType.SAVINGS -> Res.string.savings_charges
             ChargeType.LOAN -> Res.string.loan_charges
-            ChargeType.SHARE -> Res.string.feature_client_charge_share_charges
+            else -> Res.string.charges
         }
 
+        val canSwitch = initialType == ChargeType.CLIENT
+
         ClientChargeState(
-            chargeType = ChargeType.valueOf(chargeRoute.chargeType),
+            chargeType = initialType,
             chargeTypeId = chargeRoute.chargeTypeId,
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
             topBarTitleResId = topBarId,
+            canSwitchAccounts = canSwitch,
             isOnline = false,
         )
     },
 ) {
 
+    private var originalChargeList: List<Charge> = emptyList()
+
     init {
         observeNetworkStatus()
     }
 
-    /**
-     * Observes the network connectivity status and updates the UI state accordingly.
-     * If the network is unavailable, it sets the `networkStatus` flag in the state
-     * and shows a network-related dialog.
-     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
-
                     sendAction(ClientChargeAction.ReceiveNetworkResult(isOnline = isOnline))
                 }
         }
     }
 
-    /**
-     * Updates the UI state by applying a transformation.
-     */
     private fun updateState(update: (ClientChargeState) -> ClientChargeState) {
         mutableStateFlow.update(update)
     }
 
-    /**
-     * Handles all dispatched actions.
-     */
     override fun handleAction(action: ClientChargeAction) {
         when (action) {
-            is ClientChargeAction.RefreshCharges -> refreshCharges()
-
             is ClientChargeAction.OnNavigate -> sendEvent(ClientChargeEvent.Navigate)
+            is ClientChargeAction.OnDismissDialog -> mutableStateFlow.update {
+                it.copy(dialogState = null)
+            }
+            is ClientChargeAction.OnChargeClick -> sendEvent(
+                ClientChargeEvent.OnChargeClick(action.charge),
+            )
 
-            is ClientChargeAction.OnDismissDialog -> dismissDialog()
-
-            is ClientChargeAction.OnChargeClick -> sendEvent(ClientChargeEvent.OnChargeClick(action.charge))
-
+            is ClientChargeAction.RefreshCharges -> loadCharges()
+            is ClientChargeAction.Retry -> {
+                viewModelScope.launch {
+                    if (!state.networkStatus) {
+                        updateState { it.copy(uiState = ScreenUiState.Network) }
+                    } else {
+                        loadCharges()
+                    }
+                }
+            }
             is ClientChargeAction.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
 
-            is ClientChargeAction.Retry -> retry()
+            is ClientChargeAction.ToggleFilter,
+            is ClientChargeAction.ClearFilter,
+            is ClientChargeAction.ApplyFilter,
+            -> handleFilterAction(action)
 
+            is ClientChargeAction.Internal -> handleInternalAction(action)
+        }
+    }
+
+    private fun handleFilterAction(action: ClientChargeAction) {
+        when (action) {
+            is ClientChargeAction.ToggleFilter -> {
+                updateState { it.copy(showFilter = !it.showFilter) }
+            }
+            is ClientChargeAction.ClearFilter -> performClearFilter()
+            is ClientChargeAction.ApplyFilter -> performApplyFilter(action)
+            else -> Unit
+        }
+    }
+
+    private fun handleInternalAction(action: ClientChargeAction.Internal) {
+        when (action) {
             is ClientChargeAction.Internal.ReceiveClientChargesResult ->
                 handleClientChargesResult(action.result)
 
             is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult ->
                 handleLoanOrSavingsChargesResult(action.result)
 
-            is ClientChargeAction.Internal.ReceiveShareChargesResult ->
-                handleShareChargesResult(action.result)
+            is ClientChargeAction.Internal.SavingsAccountsLoaded ->
+                updateAccounts(action.accounts)
+
+            is ClientChargeAction.Internal.LoanAccountsLoaded ->
+                updateAccounts(action.accounts)
+
+            is ClientChargeAction.Internal.ShareAccountsLoaded ->
+                updateAccounts(action.accounts)
         }
     }
 
-    /**
-     * Handles the result of the network status.
-     *
-     * @param isOnline Boolean indicating if the network is online.
-     */
-    private fun handleNetworkResult(isOnline: Boolean) {
-        updateState {
-            it.copy(networkStatus = isOnline)
+    private fun performClearFilter() {
+        if (state.canSwitchAccounts) {
+            updateState {
+                it.copy(
+                    selectedSavingsAccount = null,
+                    selectedLoanAccount = null,
+                    selectedShareAccount = null,
+                    activeFilter = ChargeFilterUtil.ALL,
+                    chargeType = ChargeType.CLIENT,
+                    chargeTypeId = null,
+                    topBarTitleResId = Res.string.client_charges,
+                    showFilter = false,
+                )
+            }
+            loadCharges()
+        } else {
+            updateState {
+                it.copy(
+                    activeFilter = ChargeFilterUtil.ALL,
+                    showFilter = false,
+                )
+            }
+            applyLocalFilter()
         }
+    }
+
+    private fun performApplyFilter(action: ClientChargeAction.ApplyFilter) {
+        val previousId = state.chargeTypeId
+        val previousType = state.chargeType
+
+        val newAccountObject = action.accountObject
+        val newChargeType = action.targetType
+        val newFilter = action.filter
+
+        val newId = when (newChargeType) {
+            ChargeType.SAVINGS -> (newAccountObject as? SavingAccount)?.id
+            ChargeType.LOAN -> (newAccountObject as? LoanAccount)?.id
+            ChargeType.SHARE -> (newAccountObject as? ShareAccount)?.id
+            ChargeType.CLIENT -> null
+        }
+
+        val newTitle = when (newChargeType) {
+            ChargeType.SAVINGS -> Res.string.savings_charges
+            ChargeType.LOAN -> Res.string.loan_charges
+            ChargeType.SHARE -> Res.string.charges
+            else -> Res.string.client_charges
+        }
+
+        updateState {
+            it.copy(
+                selectedSavingsAccount = if (newChargeType == ChargeType.SAVINGS) {
+                    newAccountObject as? SavingAccount
+                } else {
+                    null
+                },
+                selectedLoanAccount = if (newChargeType == ChargeType.LOAN) {
+                    newAccountObject as? LoanAccount
+                } else {
+                    null
+                },
+                selectedShareAccount = if (newChargeType == ChargeType.SHARE) {
+                    newAccountObject as? ShareAccount
+                } else {
+                    null
+                },
+                activeFilter = newFilter,
+                showFilter = false,
+                chargeType = newChargeType,
+                topBarTitleResId = newTitle,
+                chargeTypeId = newId,
+            )
+        }
+
+        if (previousId != newId || previousType != newChargeType) {
+            loadCharges()
+        } else {
+            applyLocalFilter()
+        }
+    }
+
+    private fun updateAccounts(accounts: List<Any>) {
+        if (accounts.isEmpty()) return
+        val first = accounts.first()
+
+        updateState { state ->
+            when (first) {
+                is SavingAccount -> {
+                    val typedList = accounts.filterIsInstance<SavingAccount>()
+                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
+                    val isSavings = state.chargeType == ChargeType.SAVINGS
+                    val shouldSelectDefault = !state.canSwitchAccounts && isSavings
+
+                    state.copy(
+                        savingsAccounts = typedList,
+                        selectedSavingsAccount = if (shouldSelectDefault) {
+                            default
+                        } else {
+                            state.selectedSavingsAccount
+                        },
+                    )
+                }
+                is LoanAccount -> {
+                    val typedList = accounts.filterIsInstance<LoanAccount>()
+                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
+                    val isLoan = state.chargeType == ChargeType.LOAN
+                    val shouldSelectDefault = !state.canSwitchAccounts && isLoan
+
+                    state.copy(
+                        loanAccounts = typedList,
+                        selectedLoanAccount = if (shouldSelectDefault) {
+                            default
+                        } else {
+                            state.selectedLoanAccount
+                        },
+                    )
+                }
+                is ShareAccount -> {
+                    val typedList = accounts.filterIsInstance<ShareAccount>()
+                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
+                    val isShare = state.chargeType == ChargeType.SHARE
+                    val shouldSelectDefault = !state.canSwitchAccounts && isShare
+
+                    state.copy(
+                        shareAccounts = typedList,
+                        selectedShareAccount = if (shouldSelectDefault) {
+                            default
+                        } else {
+                            state.selectedShareAccount
+                        },
+                    )
+                }
+                else -> state
+            }
+        }
+    }
+
+    private fun fetchAccounts(accountType: String) {
+        viewModelScope.launch {
+            accountsRepositoryImpl.loadAccounts(
+                clientId = state.clientId,
+                accountType = accountType,
+            ).collect { dataState ->
+                if (dataState is DataState.Success) {
+                    val accounts = when (accountType) {
+                        Constants.SAVINGS_ACCOUNTS -> dataState.data.savingsAccounts.orEmpty()
+                        Constants.LOAN_ACCOUNTS -> dataState.data.loanAccounts
+                        Constants.SHARE_ACCOUNTS -> dataState.data.shareAccounts
+                        else -> emptyList()
+                    }.filter { isAccountActive(it) }
+
+                    when (accountType) {
+                        Constants.SAVINGS_ACCOUNTS -> sendAction(
+                            ClientChargeAction.Internal.SavingsAccountsLoaded(
+                                accounts.filterIsInstance<SavingAccount>(),
+                            ),
+                        )
+                        Constants.LOAN_ACCOUNTS -> sendAction(
+                            ClientChargeAction.Internal.LoanAccountsLoaded(
+                                accounts.filterIsInstance<LoanAccount>(),
+                            ),
+                        )
+                        Constants.SHARE_ACCOUNTS -> sendAction(
+                            ClientChargeAction.Internal.ShareAccountsLoaded(
+                                accounts.filterIsInstance<ShareAccount>(),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isAccountActive(account: Any): Boolean {
+        return (account as? SavingAccount)?.status?.active == true ||
+            (account as? LoanAccount)?.status?.active == true ||
+            (account as? ShareAccount)?.status?.active == true
+    }
+
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState { it.copy(networkStatus = isOnline) }
         if (!isOnline) {
             updateState { current ->
                 if (current.uiState is ScreenUiState.Loading ||
@@ -153,70 +345,21 @@ internal class ClientChargeViewModel(
             }
         } else {
             loadCharges()
-        }
-    }
-
-    /**
-     * Retries loading charges if the network is available.
-     * If the network is not available, it sets the UI state to Network.
-     */
-    private fun retry() {
-        viewModelScope.launch {
-            if (!state.networkStatus) {
-                updateState { it.copy(uiState = ScreenUiState.Network) }
+            if (state.canSwitchAccounts) {
+                fetchAccounts(Constants.SAVINGS_ACCOUNTS)
+                fetchAccounts(Constants.LOAN_ACCOUNTS)
+                fetchAccounts(Constants.SHARE_ACCOUNTS)
             } else {
-                loadCharges()
+                if (state.chargeType == ChargeType.SAVINGS) fetchAccounts(Constants.SAVINGS_ACCOUNTS)
+                if (state.chargeType == ChargeType.LOAN) fetchAccounts(Constants.LOAN_ACCOUNTS)
+                if (state.chargeType == ChargeType.SHARE) fetchAccounts(Constants.SHARE_ACCOUNTS)
             }
         }
     }
 
-    /**
-     * Clears any active dialog.
-     */
-    private fun dismissDialog() {
-        mutableStateFlow.update {
-            it.copy(dialogState = null)
-        }
-    }
-
-    /**
-     * Handles result of loan/savings charge API.
-     */
     private fun handleLoanOrSavingsChargesResult(result: DataState<List<Charge>>) {
         when (result) {
-            is DataState.Loading -> updateState {
-                it.copy(uiState = ScreenUiState.Loading)
-            }
-
-            is DataState.Error -> updateState {
-                it.copy(
-                    uiState = if (result.exception.cause is IOException) {
-                        ScreenUiState.Network
-                    } else {
-                        ScreenUiState.Error(Res.string.feature_generic_error_server)
-                    },
-                )
-            }
-
-            is DataState.Success -> updateState {
-                if (result.data.isEmpty()) {
-                    it.copy(uiState = ScreenUiState.Empty)
-                } else {
-                    it.copy(uiState = ScreenUiState.Success)
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     * Handles result of Share charge API.
-     */
-
-    private fun handleShareChargesResult(result: DataState<List<Charge>>) {
-        when (result) {
             is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
-
             is DataState.Error -> updateState {
                 it.copy(
                     uiState = if (result.exception.cause is IOException) {
@@ -226,26 +369,16 @@ internal class ClientChargeViewModel(
                     },
                 )
             }
-
-            is DataState.Success -> updateState {
-                if (result.data.isEmpty()) {
-                    it.copy(uiState = ScreenUiState.Empty, charges = emptyList())
-                } else {
-                    it.copy(uiState = ScreenUiState.Success, charges = result.data)
-                }
+            is DataState.Success -> {
+                originalChargeList = result.data
+                applyLocalFilter()
             }
         }
     }
 
-    /**
-     * Handles result of client charge API.
-     */
     private fun handleClientChargesResult(result: DataState<Page<Charge>>) {
         when (result) {
-            is DataState.Loading -> updateState {
-                it.copy(uiState = ScreenUiState.Loading)
-            }
-
+            is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Error -> updateState {
                 it.copy(
                     uiState = if (result.exception.cause is IOException) {
@@ -255,38 +388,40 @@ internal class ClientChargeViewModel(
                     },
                 )
             }
-
-            is DataState.Success -> updateState {
-                if (result.data.pageItems.isEmpty()) {
-                    it.copy(uiState = ScreenUiState.Empty)
-                } else {
-                    it.copy(uiState = ScreenUiState.Success)
-                }
+            is DataState.Success -> {
+                originalChargeList = result.data.pageItems
+                applyLocalFilter()
             }
         }
     }
 
-    /**
-     * Starts loading charges based on the charge type.
-     */
+    private fun applyLocalFilter() {
+        val filter = state.activeFilter
+        val filteredList = if (filter == ChargeFilterUtil.ALL) {
+            originalChargeList
+        } else {
+            originalChargeList.filter { filter.matchCondition(it) }
+        }
+
+        updateState {
+            it.copy(
+                charges = filteredList,
+                uiState = if (filteredList.isEmpty()) ScreenUiState.Empty else ScreenUiState.Success,
+            )
+        }
+    }
+
     private fun loadCharges() {
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
+
         viewModelScope.launch {
             when (state.chargeType) {
                 ChargeType.CLIENT -> processClientCharges()
-                ChargeType.LOAN, ChargeType.SAVINGS -> processLoanOrSavingsCharges()
-                ChargeType.SHARE -> processShareCharges()
+                ChargeType.LOAN, ChargeType.SAVINGS, ChargeType.SHARE -> processLoanOrSavingsCharges()
             }
         }
     }
 
-    /**
-     * Reloads charge list on refresh.
-     */
-    private fun refreshCharges() = loadCharges()
-
-    /**
-     * Processes charges when type is CLIENT.
-     */
     private fun processClientCharges() {
         viewModelScope.launch {
             clientChargeRepositoryImp.getCharges(state.clientId)
@@ -296,48 +431,23 @@ internal class ClientChargeViewModel(
         }
     }
 
-    /**
-     * Processes charges when type is LOAN or SAVINGS.
-     */
     private fun processLoanOrSavingsCharges() {
         viewModelScope.launch {
-            clientChargeRepositoryImp.getLoanOrSavingsCharges(
-                state.chargeType,
-                state.chargeTypeId ?: -1L,
-            ).collect { result ->
-                sendAction(ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult(result))
-            }
-        }
-    }
+            val idToFetch = state.chargeTypeId ?: -1L
 
-    /**
-     * Processes charges when type is Share.
-     * Uses the dedicated repository function we created.
-     */
-    private fun processShareCharges() {
-        viewModelScope.launch {
-            clientChargeRepositoryImp.getShareAccountCharges(
-                state.chargeTypeId ?: -1L,
-            ).collect { result ->
-                sendAction(ClientChargeAction.Internal.ReceiveShareChargesResult(result))
+            val flow = if (state.chargeType == ChargeType.SHARE) {
+                clientChargeRepositoryImp.getShareAccountCharges(idToFetch)
+            } else {
+                clientChargeRepositoryImp.getLoanOrSavingsCharges(state.chargeType, idToFetch)
+            }
+
+            flow.collect { result ->
+                sendAction(ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult(result))
             }
         }
     }
 }
 
-/**
- * Represents the UI state of the Client Charges screen.
- *
- * @property clientId ID of the current client.
- * @property chargeType Type of charge (CLIENT, LOAN, SAVINGS).
- * @property chargeTypeId Optional ID used for LOAN or SAVINGS charge types.
- * @property isOnline Whether the device is currently connected to the internet.
- * @property isEmpty Whether there are no charges to display.
- * @property topBarTitleResId Title shown in the app bar.
- * @property dialogState Dialog state used for showing loading or error.
- * @property charges List of fetched charges.
- * @property uiState holds the state of screen
- */
 data class ClientChargeState(
     val networkStatus: Boolean = false,
     val clientId: Long,
@@ -348,57 +458,51 @@ data class ClientChargeState(
     val topBarTitleResId: StringResource = Res.string.charges,
     val charges: List<Charge> = emptyList(),
 
+    val savingsAccounts: List<SavingAccount> = emptyList(),
+    val loanAccounts: List<LoanAccount> = emptyList(),
+    val shareAccounts: List<ShareAccount> = emptyList(),
+
+    val selectedSavingsAccount: SavingAccount? = null,
+    val selectedLoanAccount: LoanAccount? = null,
+    val selectedShareAccount: ShareAccount? = null,
+
+    val activeFilter: ChargeFilterUtil = ChargeFilterUtil.ALL,
+    val showFilter: Boolean = false,
+    val canSwitchAccounts: Boolean = true,
+
     val dialogState: DialogState? = null,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
-    /**
-     * Represents the possible dialog states in the UI.
-     */
+
+    val selectedAccountNo: String?
+        get() = selectedSavingsAccount?.accountNo
+            ?: selectedLoanAccount?.accountNo
+            ?: selectedShareAccount?.accountNo
+
     sealed interface DialogState {
-        /** Error dialog with a message */
         data class Error(val message: String) : DialogState
     }
 }
 
-/**
- * UI events emitted from the ViewModel to be handled by the UI layer.
- *
- * @property ShowToast Shows a toast message.
- * @property Navigate Navigates to the charge creation screen.
- * @property OnChargeClick Triggered when a user clicks on a charge item.
- */
-sealed interface ClientChargeEvent {
-    data class ShowToast(val message: String) : ClientChargeEvent
-
-    data object Navigate : ClientChargeEvent
-
-    data class OnChargeClick(val charge: Charge) : ClientChargeEvent
-}
-
-/**
- * Actions dispatched from the UI or internal processes.
- *
- * @property RefreshCharges Refreshes the list of charges.
- * @property OnNavigate Navigates to the charge creation screen.
- * @property OnDismissDialog Dismisses any open dialog (error/loading).
- * @property OnChargeClick Triggered when a user clicks on a charge item.
- */
 sealed interface ClientChargeAction {
 
     data object RefreshCharges : ClientChargeAction
-
     data object OnNavigate : ClientChargeAction
-
     data object OnDismissDialog : ClientChargeAction
-
     data class OnChargeClick(val charge: Charge) : ClientChargeAction
-
     data class ReceiveNetworkResult(val isOnline: Boolean) : ClientChargeAction
-
     data object Retry : ClientChargeAction
 
-    sealed class Internal : ClientChargeAction {
+    data object ToggleFilter : ClientChargeAction
+    data object ClearFilter : ClientChargeAction
 
+    data class ApplyFilter(
+        val accountObject: Any?,
+        val targetType: ChargeType,
+        val filter: ChargeFilterUtil,
+    ) : ClientChargeAction
+
+    sealed class Internal : ClientChargeAction {
         data class ReceiveLoanOrSavingsChargesResult(
             val result: DataState<List<Charge>>,
         ) : Internal()
@@ -407,8 +511,14 @@ sealed interface ClientChargeAction {
             val result: DataState<Page<Charge>>,
         ) : Internal()
 
-        data class ReceiveShareChargesResult(
-            val result: DataState<List<Charge>>,
-        ) : Internal()
+        data class SavingsAccountsLoaded(val accounts: List<SavingAccount>) : Internal()
+        data class LoanAccountsLoaded(val accounts: List<LoanAccount>) : Internal()
+        data class ShareAccountsLoaded(val accounts: List<ShareAccount>) : Internal()
     }
+}
+
+sealed interface ClientChargeEvent {
+    data class ShowToast(val message: String) : ClientChargeEvent
+    data object Navigate : ClientChargeEvent
+    data class OnChargeClick(val charge: Charge) : ClientChargeEvent
 }
