@@ -54,3 +54,12 @@ playStorePublishServiceCredentialsFile.json
 # Ruby stuff we don't care about
 .bundle/
 vendor/
+
+# CocoaPods
+cmp-ios/Pods/
+cmp-ios/Podfile.lock
+
+# Xcode user-specific data
+*.xcuserdata/
+xcuserdata/
+*.xcworkspace/xcuserdata/
