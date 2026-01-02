@@ -17,19 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<string>11</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>We use the camera to scan QR codes for payments and to add beneficiaries. No images or video are stored.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow access to choose a photo or document you decide to upload (e.g., profile photo or ID).</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to choose a photo or document you decide to upload (e.g., profile photo or ID).</string>
+	<string>Allow access to add photos to your library so you can save artworks directly to your device and view them offline.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

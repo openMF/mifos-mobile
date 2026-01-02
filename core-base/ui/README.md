@@ -381,29 +381,6 @@ internal fun rememberDefaultImageLoader(context: PlatformContext): ImageLoader {
 The `maxSizePercent` call is crucial—it adapts the cache size to the device's available memory,
 ensuring efficient resource usage across a wide range of devices.
 
-### Request Optimization
-
-The image request builder includes memory cache optimization:
-
-```kotlin
-@Composable
-fun rememberImageRequest(
-    context: PlatformContext,
-    wallpaper: String,
-): ImageRequest {
-    return remember(wallpaper) {
-        ImageRequest.Builder(context)
-            .data(wallpaper)
-            .memoryCacheKey(wallpaper)
-            .placeholderMemoryCacheKey(wallpaper)
-            .build()
-    }
-}
-```
-
-The use of `memoryCacheKey` and `placeholderMemoryCacheKey` ensures that images with the same URL
-share the same cache entry, reducing memory usage and improving load times.
-
 ### Common Use Patterns
 
 For profile pictures and avatars:
@@ -411,8 +388,7 @@ For profile pictures and avatars:
 ```kotlin
 @Composable
 fun CircularProfileImage(url: String, size: Dp = 48.dp) {
-    val context = LocalPlatformContext.current
-    val imageLoader = rememberImageLoader(context)
+    val imageLoader = rememberImageLoader()
 
     AsyncImage(
         model = rememberImageRequest(context, url),
@@ -434,8 +410,7 @@ For background images:
 ```kotlin
 @Composable
 fun BackgroundImage(url: String, overlay: Color = Color.Black.copy(alpha = 0.3f)) {
-    val context = LocalPlatformContext.current
-    val imageLoader = rememberImageLoader(context)
+    val imageLoader = rememberImageLoader()
 
     Box {
         AsyncImage(

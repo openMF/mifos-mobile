@@ -1,0 +1,15 @@
+name: Cleanup Cache
+
+on:
+  pull_request:
+    types: [ closed ]
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    uses: openMF/mifos-x-actionhub/.github/workflows/cache-cleanup.yaml@v1.0.2
+    with:
+      cleanup_pr: ${{ github.event_name == 'pull_request' && github.event.repository.private == true }}
+      cleanup_all: ${{ github.event_name == 'workflow_dispatch' }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

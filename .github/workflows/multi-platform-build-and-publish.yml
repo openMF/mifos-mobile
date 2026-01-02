@@ -71,7 +71,7 @@ on:
 
       target_branch:
         type: string
-        default: 'development'
+        default: 'dev'
         description: 'Target branch for release'
 
       distribute_ios_firebase:
@@ -89,16 +89,6 @@ on:
         default: false
         description: Distribute iOS App to Appstore
 
-      distribute_macos_testflight:
-        type: boolean
-        default: false
-        description: Distribute macOS App via TestFlight (App Store Connect)
-
-      distribute_macos_appstore:
-        type: boolean
-        default: false
-        description: Distribute macOS App to Appstore
-
 permissions:
   contents: write
   id-token: write
@@ -111,32 +101,27 @@ concurrency:
 jobs:
   multi_platform_build_and_publish:
     name: Multi-Platform Build and Publish
-    uses: openMF/mifos-x-actionhub/.github/workflows/multi-platform-build-and-publish.yaml@v1.0.7
+    uses: openMF/mifos-x-actionhub/.github/workflows/multi-platform-build-and-publish.yaml@v1.0.3
     with:
-      java-version: 21
       release_type: ${{ inputs.release_type }}
       target_branch: ${{ inputs.target_branch }}
-      android_package_name: 'cmp-android'
-      ios_package_name: 'cmp-ios'
-      desktop_package_name: 'cmp-desktop'
-      web_package_name: 'cmp-web'
-      tester_groups: 'mifos-mobile-apps'
-      app_identifier: 'org.mifos.mobile'
+      android_package_name: 'cmp-android' # <-- Change this to your android package name
+      ios_package_name: 'cmp-ios' # <-- Change this to your ios package name
+      desktop_package_name: 'cmp-desktop' # <-- Change this to your desktop package name
+      web_package_name: 'cmp-web'   # <-- Change this to your web package name
+      tester_groups: 'mifos-mobile-apps' # <-- Change this to your Firebase tester group
+      app_identifier: 'org.mifos.kmp.template'
       git_url: 'git@github.com:openMF/ios-provisioning-profile.git'
-      git_branch: 'mifos-mobile'
+      git_branch: 'master'
       match_type: 'adhoc'
-      provisioning_profile_name: 'match AdHoc org.mifos.mobile'
-      firebase_app_id: '1:728434912738:ios:ee2e0815a6915b351a1dbb'
-      metadata_path: './fastlane/metadata/ios'
+      provisioning_profile_name: 'match AdHoc org.mifos.kmp.template'
+      firebase_app_id: '1:728434912738:ios:1d81f8e53ca7a6f31a1dbb'
+      metadata_path: './fastlane/metadata'
       use_cocoapods: true         # <-- Set to true if using CocoaPods integration for KMP
       shared_module: ':cmp-shared' # <-- Gradle path to your shared KMP module (e.g., :shared)
-      cmp_desktop_dir: 'cmp-desktop'
-      keychain_name: signing.keychain-db # optional
       distribute_ios_firebase: ${{ inputs.distribute_ios_firebase }}
       distribute_ios_testflight: ${{ inputs.distribute_ios_testflight }}
       distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
-      distribute_macos_testflight: ${{ inputs.distribute_macos_testflight }}
-      distribute_macos_appstore: ${{ inputs.distribute_macos_appstore }}
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
       original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
@@ -151,12 +136,6 @@ jobs:
       notarization_apple_id: ${{ secrets.NOTARIZATION_APPLE_ID }}
       notarization_password: ${{ secrets.NOTARIZATION_PASSWORD }}
       notarization_team_id: ${{ secrets.NOTARIZATION_TEAM_ID }}
-      keychain_password: ${{ secrets.KEYCHAIN_PASSWORD }}
-      certificates_password: ${{ secrets.CERTIFICATES_PASSWORD }}
-      mac_app_distribution_certificate_b64: ${{ secrets.MAC_APP_DISTRIBUTION_CERTIFICATE_B64 }}
-      mac_installer_distribution_certificate_b64: ${{ secrets.MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64 }}
-      mac_embedded_provision_b64: ${{ secrets.MAC_EMBEDDED_PROVISION_B64 }}
-      mac_runtime_provision_b64: ${{ secrets.MAC_RUNTIME_PROVISION_B64 }}
       appstore_key_id: ${{ secrets.APPSTORE_KEY_ID }}
       appstore_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
       appstore_auth_key: ${{ secrets.APPSTORE_AUTH_KEY }}
