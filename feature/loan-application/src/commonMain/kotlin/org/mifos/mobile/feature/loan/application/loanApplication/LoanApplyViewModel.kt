@@ -295,7 +295,11 @@ internal class LoanApplyViewModel(
 
                 val decimals = currency.decimalPlaces?.toInt() ?: 2
 
-                val initialAmount = CurrencyFormatter.format(minPrincipal, currency.code, decimals)
+                val initialAmount = CurrencyFormatter.format(
+                    minPrincipal,
+                    currency.code,
+                    decimals
+                ).replace(Regex("[^\\d.]"), "")
 
                 val todayMillis = Clock.System.now().toEpochMilliseconds()
                 val activationMillis = client.data?.activationDate?.let {
@@ -426,7 +430,13 @@ internal class LoanApplyViewModel(
                     ValidationResult.Error(error)
                 } else {
                     mutableStateFlow.update {
-                        it.copy(principalAmount = value.toString())
+                        it.copy(
+                            principalAmount = CurrencyFormatter.format(
+                                value,
+                                currency.code,
+                                currency.decimalPlaces
+                            ).replace(Regex("[^\\d.]"), "")
+                        )
                     }
                     ValidationResult.Success
                 }
