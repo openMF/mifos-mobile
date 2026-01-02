@@ -34,6 +34,7 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
 import okio.IOException
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -47,8 +48,6 @@ import org.mifos.mobile.core.ui.utils.AmountValidationResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
-import kotlin.math.pow
-import kotlin.math.roundToLong
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
@@ -279,19 +278,15 @@ internal class LoanApplyViewModel(
                 }
 
                 val productTemplate = purpose.data
-                val defaultPrincipal = productTemplate?.principal ?: 0.0
+                val defaultPrincipal = productTemplate?.product?.principal
+                    ?: productTemplate?.principal
+                    ?: 0.0
 
-                val minPrincipal = if (productTemplate?.minPrincipal != null && productTemplate.minPrincipal!! > 0) {
-                    productTemplate.minPrincipal!!
-                } else {
-                    defaultPrincipal
-                }
+                val minPrincipal = productTemplate?.product?.minPrincipal
+                    ?: defaultPrincipal
 
-                val maxPrincipal = if (productTemplate?.maxPrincipal != null && productTemplate.maxPrincipal!! > 0) {
-                    productTemplate.maxPrincipal!!
-                } else {
-                    defaultPrincipal
-                }
+                val maxPrincipal = productTemplate?.product?.maxPrincipal
+                    ?: defaultPrincipal
 
                 val currency = template.data?.currency ?: Currency(
                     code = "USD", name = "US Dollar", decimalPlaces = 2.0, inMultiplesOf = 0,
@@ -299,11 +294,8 @@ internal class LoanApplyViewModel(
                 )
 
                 val decimals = currency.decimalPlaces?.toInt() ?: 2
-                val initialAmount = if (decimals == 0) {
-                    minPrincipal.toInt().toString()
-                } else {
-                    minPrincipal.format(decimals)
-                }
+
+                val initialAmount = CurrencyFormatter.format(minPrincipal, currency.code, decimals)
 
                 val todayMillis = Clock.System.now().toEpochMilliseconds()
                 val activationMillis = client.data?.activationDate?.let {
@@ -684,24 +676,6 @@ internal class LoanApplyViewModel(
         super.onCleared()
         validationJob?.cancel()
     }
-}
-
-private fun Double.format(decimals: Int): String {
-    if (decimals <= 0) {
-        return this.roundToLong().toString()
-    }
-
-    val multiplier = 10.0.pow(decimals)
-
-    val roundedValue = (this * multiplier).roundToLong()
-    val stringValue = roundedValue.toString()
-
-    val paddedString = stringValue.padStart(decimals + 1, '0')
-
-    val integerPart = paddedString.dropLast(decimals)
-    val fractionalPart = paddedString.takeLast(decimals)
-
-    return "$integerPart.$fractionalPart"
 }
 
 /**

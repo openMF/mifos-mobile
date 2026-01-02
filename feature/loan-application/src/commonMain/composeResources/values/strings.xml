@@ -46,7 +46,7 @@
     <string name="feature_apply_loan_error_amount_too_small">Principal amount is too small</string>
     <string name="feature_apply_loan_error_amount_too_large">Principal amount exceeds maximum limit</string>
     <string name="feature_apply_loan_error_amount_invalid_decimal">Amount has too many decimal places for selected currency</string>
-    <string name="feature_apply_loan_error_amount_multiple">Amount must be in multiples of %s</string>
+    <string name="feature_apply_loan_error_amount_multiple">Amount is not in valid multiples</string>
 
     <!-- Disbursement Date Validation -->
     <string name="feature_apply_loan_error_date_empty">Disbursement date is required</string>
