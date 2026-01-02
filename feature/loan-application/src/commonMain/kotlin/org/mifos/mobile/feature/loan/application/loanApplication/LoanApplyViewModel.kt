@@ -298,7 +298,7 @@ internal class LoanApplyViewModel(
                 val initialAmount = CurrencyFormatter.format(
                     minPrincipal,
                     currency.code,
-                    decimals
+                    decimals,
                 ).replace(Regex("[^\\d.]"), "")
 
                 val todayMillis = Clock.System.now().toEpochMilliseconds()
@@ -434,8 +434,8 @@ internal class LoanApplyViewModel(
                             principalAmount = CurrencyFormatter.format(
                                 value,
                                 currency.code,
-                                currency.decimalPlaces
-                            ).replace(Regex("[^\\d.]"), "")
+                                currency.decimalPlaces,
+                            ).replace(Regex("[^\\d.]"), ""),
                         )
                     }
                     ValidationResult.Success
