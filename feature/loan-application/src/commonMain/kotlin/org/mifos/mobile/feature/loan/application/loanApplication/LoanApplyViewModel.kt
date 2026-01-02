@@ -31,7 +31,6 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_server
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_submit_failed
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_message
 import okio.IOException
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
@@ -587,9 +586,7 @@ internal class LoanApplyViewModel(
         if (state.hasChanges) {
             mutableStateFlow.update {
                 it.copy(
-                    loanApplicationDialogState = LoanApplicationDialogState.UnsavedChanges(
-                        Res.string.feature_apply_loan_unsaved_changes_message,
-                    ),
+                    loanApplicationDialogState = LoanApplicationDialogState.UnsavedChanges,
                 )
             }
         } else {
@@ -762,9 +759,8 @@ internal sealed interface LoanApplicationDialogState {
 
     /**
      * Represents a dialog to confirm navigation with unsaved changes.
-     * @property message The [StringResource] for the confirmation message.
      */
-    data class UnsavedChanges(val message: StringResource) : LoanApplicationDialogState
+    data object UnsavedChanges : LoanApplicationDialogState
 }
 
 /**

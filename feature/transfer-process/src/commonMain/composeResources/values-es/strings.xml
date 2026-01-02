@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">Transferir</string>
+    <string name="transferred_successfully">Transferencia exitosa</string>
+    <string name="amount">Monto</string>
+    <string name="transfer_from_savings">Transferir desde Cuenta de Ahorros</string>
+    <string name="pay_from">Pagar desde</string>
+    <string name="date">Fecha</string>
+    <string name="cancel">Cancelar</string>
+    <string name="remark">Descripción</string>
+    <string name="make_transfer">Hacer Transferencia</string>
+    <string name="pay_to">Pagar a Cuenta</string>
+    <string name="remarks">Descripción</string>
+    <string name="error_icon_description">Error</string>
+    <string name="error_description">El monto no debe tener caracteres inválidos</string>
+
+    <string name="transfer_failed">Transferencia Fallida</string>
+    <string name="transfer_successful">Transferencia Exitosa</string>
+    <string name="back_to_accounts">Regresar a Cuentas</string>
+    <string name="transfer_id_prefix">Id de la Transferencia:</string>
+
+    <string name="feature_make_transfer_error_amount_required">Monto es requerido</string>
+    <string name="feature_make_transfer_error_amount_invalid">Ingresa un monto válido</string>
+    <string name="feature_make_transfer_error_remarks_empty">Descripción no puede estar vacía</string>
+    <string name="feature_make_transfer_error_remarks_invalid">Descripción inválida</string>
+    <string name="feature_make_transfer_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+</resources>

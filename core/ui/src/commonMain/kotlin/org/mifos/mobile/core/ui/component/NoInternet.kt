@@ -24,13 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.no_internet
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
@@ -50,8 +50,8 @@ fun NoInternet(
     ) {
         Icon(
             modifier = Modifier
-                .size(100.dp)
-                .padding(bottom = 12.dp),
+                .size(DesignToken.sizes.iconDp100)
+                .padding(bottom = DesignToken.padding.medium),
             imageVector = icon,
             contentDescription = "No Internet Icon",
         )
@@ -61,7 +61,7 @@ fun NoInternet(
             style = TextStyle(fontSize = 20.sp),
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
         if (isRetryEnabled) {
             FilledTonalButton(onClick = { retry.invoke() }) {
                 Text(text = "Retry")

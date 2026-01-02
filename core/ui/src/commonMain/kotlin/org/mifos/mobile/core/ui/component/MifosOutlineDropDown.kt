@@ -21,7 +21,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -34,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
@@ -42,6 +40,7 @@ import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -72,9 +71,9 @@ fun MifosOutlineDropdown(
                         imageVector = if (expanded) MifosIcons.CaretUp else MifosIcons.CaretDown,
                         contentDescription = null,
                         tint = if (enabled) {
-                            MaterialTheme.colorScheme.onSurface
+                            KptTheme.colorScheme.onSurface
                         } else {
-                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                            KptTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                         },
                     )
                 },
@@ -90,11 +89,11 @@ fun MifosOutlineDropdown(
                     textFieldSize = it.size.toSize()
                 }
                 .then(if (enabled) Modifier.clickable { expanded = true } else Modifier),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
+                focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                errorBorderColor = KptTheme.colorScheme.error,
             ),
         )
 
@@ -104,22 +103,22 @@ fun MifosOutlineDropdown(
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
                 .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondaryContainer,
-                    shape = DesignToken.shapes.medium,
+                    width = DesignToken.strokes.thin,
+                    color = KptTheme.colorScheme.secondaryContainer,
+                    shape = KptTheme.shapes.medium,
                 ),
-            tonalElevation = 2.dp,
-            shadowElevation = 2.dp,
-            containerColor = MaterialTheme.colorScheme.inverseOnSurface,
-            shape = DesignToken.shapes.large,
+            tonalElevation = DesignToken.elevation.dp2,
+            shadowElevation = DesignToken.elevation.dp2,
+            containerColor = KptTheme.colorScheme.inverseOnSurface,
+            shape = KptTheme.shapes.large,
         ) {
             items.forEach { (productID, product) ->
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = product,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = KptTheme.typography.bodyLarge,
+                            color = KptTheme.colorScheme.onSurfaceVariant,
                         )
                     },
                     onClick = {
@@ -140,7 +139,7 @@ private fun MifosOutlinedDropdownPreview() {
 
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(KptTheme.spacing.md),
         ) {
             MifosOutlineDropdown(
                 selectedText = selected,

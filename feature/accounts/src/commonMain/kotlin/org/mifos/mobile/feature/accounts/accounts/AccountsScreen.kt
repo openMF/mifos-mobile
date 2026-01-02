@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_accounts_filter_status
@@ -53,6 +52,8 @@ import org.mifos.mobile.feature.accounts.model.FilterType
 import org.mifos.mobile.feature.loanaccount.loanAccount.LoanAccountScreen
 import org.mifos.mobile.feature.savingsaccount.savingsAccount.SavingsAccountScreen
 import org.mifos.mobile.feature.shareaccount.shareAccount.ShareAccountScreen
+import template.core.base.designsystem.theme.KptTheme
+
 /**
  * Composable function that displays the Accounts Screen.
  *
@@ -145,8 +146,8 @@ internal fun SavingsAccountFilters(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(DesignToken.padding.large)
-            .padding(top = DesignToken.padding.large),
+            .padding(KptTheme.spacing.md)
+            .padding(top = KptTheme.spacing.md),
     ) {
         FilterTopSection(
             isAnyFilterSelected = state.isAnyFilterSelected,
@@ -163,7 +164,7 @@ internal fun SavingsAccountFilters(
 
         Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
 
-        HorizontalDivider(modifier = Modifier.height(1.dp))
+        HorizontalDivider(modifier = Modifier.height(DesignToken.strokes.thin))
 
         FilterSection(
             title = stringResource(Res.string.feature_accounts_filter_type),

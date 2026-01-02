@@ -15,12 +15,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.feature_savings_apply
 import mifos_mobile.core.ui.generated.resources.feature_savings_filter
@@ -29,6 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun FilterTopSection(
@@ -39,9 +38,9 @@ fun FilterTopSection(
     modifier: Modifier = Modifier,
 ) {
     val resetColor = if (isAnyFilterSelected) {
-        MaterialTheme.colorScheme.primary
+        KptTheme.colorScheme.primary
     } else {
-        MaterialTheme.colorScheme.inversePrimary
+        KptTheme.colorScheme.inversePrimary
     }
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -49,11 +48,11 @@ fun FilterTopSection(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         ) {
             Icon(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(DesignToken.sizes.iconDp20)
                     .clickable { dismissDialog.invoke() },
                 imageVector = MifosIcons.Dismiss,
                 contentDescription = null,
@@ -61,7 +60,7 @@ fun FilterTopSection(
             Text(
                 text = stringResource(Res.string.feature_savings_filter),
                 style = MifosTypography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = KptTheme.colorScheme.onBackground,
             )
         }
 
@@ -91,7 +90,7 @@ fun FilterTopSection(
                 )
 
                 Icon(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(DesignToken.sizes.iconDp20),
                     imageVector = MifosIcons.ArrowCounterClockWise,
                     contentDescription = null,
                     tint = resetColor,
@@ -111,11 +110,11 @@ fun FilterTopSection(
 
                     text = stringResource(Res.string.feature_savings_apply),
                     style = MifosTypography.bodySmallEmphasized,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = KptTheme.colorScheme.primary,
                 )
 
                 Icon(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(DesignToken.sizes.iconDp20),
                     imageVector = MifosIcons.CheckMark,
                     contentDescription = null,
                 )

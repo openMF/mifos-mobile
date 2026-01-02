@@ -14,11 +14,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,11 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosLoadingDialog(
@@ -48,9 +46,9 @@ fun MifosLoadingDialog(
                 ),
             ) {
                 Card(
-                    shape = RoundedCornerShape(28.dp),
+                    shape = KptTheme.shapes.extraLarge,
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        containerColor = KptTheme.colorScheme.surfaceContainerHigh,
                     ),
                     modifier = modifier
                         .semantics {
@@ -69,16 +67,16 @@ fun MifosLoadingDialog(
                             modifier = Modifier
                                 .testTag("AlertTitleText")
                                 .padding(
-                                    top = 24.dp,
-                                    bottom = 8.dp,
+                                    top = KptTheme.spacing.lg,
+                                    bottom = KptTheme.spacing.sm,
                                 ),
                         )
                         CircularProgressIndicator(
                             modifier = Modifier
                                 .testTag("AlertProgressIndicator")
                                 .padding(
-                                    top = 8.dp,
-                                    bottom = 24.dp,
+                                    top = KptTheme.spacing.sm,
+                                    bottom = KptTheme.spacing.lg,
                                 ),
                         )
                     }

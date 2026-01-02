@@ -13,17 +13,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun AboutUsItemCard(
@@ -33,26 +32,26 @@ fun AboutUsItemCard(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(KptTheme.spacing.md),
     ) {
         iconUrl?.let { painterResource(it) }?.let {
             Icon(
                 painter = it,
                 contentDescription = "About Us Icon URL",
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier.padding(end = KptTheme.spacing.sm),
             )
         }
         Column {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(end = 8.dp),
+                style = KptTheme.typography.bodyLarge,
+                modifier = Modifier.padding(end = KptTheme.spacing.sm),
             )
             if (subtitle != null) {
                 Text(
                     text = stringResource(subtitle),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(end = 8.dp),
+                    style = KptTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(end = KptTheme.spacing.sm),
                 )
             }
         }

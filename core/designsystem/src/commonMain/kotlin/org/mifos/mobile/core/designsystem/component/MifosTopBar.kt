@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -28,13 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +47,7 @@ fun MifosTopBar(
         title = {
             Text(
                 text = topBarTitle,
-                style = MaterialTheme.typography.titleMedium,
+                style = KptTheme.typography.titleMedium,
             )
         },
         navigationIcon = {
@@ -62,7 +61,7 @@ fun MifosTopBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = KptTheme.colorScheme.surface,
         ),
         actions = actions,
         modifier = modifier,
@@ -82,7 +81,7 @@ fun MifosTopBar(
         title = {
             Text(
                 text = topBarTitle,
-                style = MaterialTheme.typography.titleMedium,
+                style = KptTheme.typography.titleMedium,
             )
         },
         navigationIcon = {
@@ -98,7 +97,7 @@ fun MifosTopBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = KptTheme.colorScheme.surface,
         ),
         actions = actions,
         modifier = modifier,
@@ -120,7 +119,7 @@ fun MifosRoundedTopAppBar(
                 Text(
                     text = title,
                     style = MifosTypography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = KptTheme.colorScheme.onBackground,
                 )
             }
         },
@@ -134,7 +133,7 @@ fun MifosRoundedTopAppBar(
                         painter = painterResource(brandIcon),
                         contentDescription = "Brand Icon",
                         modifier = Modifier
-                            .size(96.dp, 28.dp)
+                            .size(DesignToken.sizes.imageDp96, DesignToken.sizes.imageDp28)
                             .align(Alignment.TopStart),
                     )
                 }
@@ -150,18 +149,18 @@ fun MifosRoundedTopAppBar(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = KptTheme.colorScheme.surface,
         ),
         modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = DesignToken.elevation.elevation,
                 shape = DesignToken.shapes.topBar,
-                spotColor = MaterialTheme.colorScheme.onSurface,
-                ambientColor = MaterialTheme.colorScheme.onSurface,
+                spotColor = KptTheme.colorScheme.onSurface,
+                ambientColor = KptTheme.colorScheme.onSurface,
             )
             .clip(DesignToken.shapes.topBar)
-            .background(MaterialTheme.colorScheme.surface),
+            .background(KptTheme.colorScheme.surface),
     )
 }
 

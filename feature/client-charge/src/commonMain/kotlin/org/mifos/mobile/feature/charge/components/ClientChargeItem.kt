@@ -21,12 +21,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
@@ -40,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.Charge
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function that displays a charge item.
@@ -61,7 +60,7 @@ fun ClientChargeItem(
             .clickable {
                 onChargeClick()
             }
-            .padding(vertical = DesignToken.padding.large),
+            .padding(vertical = KptTheme.spacing.md),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -72,14 +71,14 @@ fun ClientChargeItem(
                 painterResource(Res.drawable.database_warning)
             },
             contentDescription = "Charges Symbol",
-            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            tint = KptTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             modifier = Modifier
-                .size(36.dp)
+                .size(DesignToken.sizes.iconExtraLarge)
                 .background(
-                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
+                    color = KptTheme.colorScheme.background.copy(alpha = 0.3f),
                     shape = CircleShape,
                 )
-                .padding(DesignToken.padding.small),
+                .padding(KptTheme.spacing.sm),
 
         )
         Spacer(Modifier.width(DesignToken.padding.medium))
@@ -107,7 +106,7 @@ fun ClientChargeItem(
         Spacer(Modifier.width(DesignToken.padding.medium))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Column(
                 horizontalAlignment = Alignment.End,
@@ -122,7 +121,7 @@ fun ClientChargeItem(
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        MaterialTheme.colorScheme.error
+                        KptTheme.colorScheme.error
                     },
                 )
                 Text(
@@ -147,14 +146,14 @@ fun ClientChargeItem(
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        MaterialTheme.colorScheme.error
+                        KptTheme.colorScheme.error
                     },
                 )
             }
             Icon(
                 imageVector = MifosIcons.ChevronRight,
                 contentDescription = "",
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(DesignToken.sizes.iconDp20),
             )
         }
     }

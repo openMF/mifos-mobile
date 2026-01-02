@@ -21,7 +21,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,6 +61,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable serving as the entry point for the "Fill Savings Application" screen.
@@ -207,14 +207,14 @@ internal fun SavingsFillApplicationContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     Text(
                         text = stringResource(Res.string.feature_apply_savings_label_details),
                         style = MifosTypography.labelLargeEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
                     MifosOutlineDropdown(
@@ -229,7 +229,7 @@ internal fun SavingsFillApplicationContent(
                         value = state.minOpeningBalance,
                         onValueChange = { onAction(SavingsApplicationAction.MinimumOpeningBalanceChange(it)) },
                         label = stringResource(Res.string.feature_apply_savings_label_minimum_opening_balance),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.minOpeningBalanceError != null,
@@ -244,14 +244,14 @@ internal fun SavingsFillApplicationContent(
                     Text(
                         text = stringResource(Res.string.feature_apply_savings_label_lock_in_period),
                         style = MifosTypography.labelLargeEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
                     MifosOutlinedTextField(
                         value = state.frequency,
                         onValueChange = { onAction(SavingsApplicationAction.FrequencyChange(it)) },
                         label = stringResource(Res.string.feature_apply_savings_label_frequency),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.frequencyError != null,
@@ -276,7 +276,7 @@ internal fun SavingsFillApplicationContent(
                         Text(
                             text = stringResource(Res.string.feature_apply_savings_label_overdraft),
                             style = MifosTypography.labelLargeEmphasized,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = KptTheme.colorScheme.onSurface,
                         )
 
                         Row(
@@ -308,7 +308,7 @@ internal fun SavingsFillApplicationContent(
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToAuthentication)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_button_next),

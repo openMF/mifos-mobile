@@ -33,7 +33,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +44,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.niyajali.compose.sign.ComposeSign
 import com.niyajali.compose.sign.exportSignature
@@ -72,6 +70,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.feature.loan.application.component.SignatureUploadType
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Orchestrates the bottom sheet UI, transitioning between the document upload method selection
@@ -109,7 +108,7 @@ internal fun BottomSheetContent(
             )
         } else {
             Column(
-                modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+                modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
             ) {
                 Row {
                     BottomSheetIconContainer(
@@ -157,14 +156,14 @@ internal fun BottomSheetIconContainer(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(horizontal = DesignToken.padding.large),
+        modifier = modifier.padding(horizontal = KptTheme.spacing.md),
     ) {
         Box(
             modifier = Modifier.size(DesignToken.sizes.inputHeight)
                 .border(
-                    1.dp,
-                    MaterialTheme.colorScheme.secondaryContainer,
-                    DesignToken.shapes.medium,
+                    DesignToken.strokes.thin,
+                    KptTheme.colorScheme.secondaryContainer,
+                    KptTheme.shapes.medium,
                 )
                 .clickable { onClick() },
             contentAlignment = Alignment.Center,
@@ -176,12 +175,12 @@ internal fun BottomSheetIconContainer(
             )
         }
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
 
         Text(
             text = stringResource(text),
             style = MifosTypography.bodySmallEmphasized,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = KptTheme.colorScheme.onBackground,
         )
     }
 }
@@ -215,8 +214,8 @@ private fun SignatureContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                .padding(KptTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             val signatureState = rememberSignatureState()
             var size = remember { Size.Zero }
@@ -236,11 +235,11 @@ private fun SignatureContent(
                     modifier = modifier
                         .fillMaxWidth()
                         .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            DesignToken.shapes.medium,
+                            DesignToken.strokes.thin,
+                            KptTheme.colorScheme.secondaryContainer,
+                            KptTheme.shapes.medium,
                         ),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                 ) {
                     ComposeSign(
                         modifier = Modifier
@@ -271,7 +270,7 @@ private fun SignatureContent(
                 ) {
                     MifosButton(
                         modifier = Modifier.weight(0.4f),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         onClick = signatureState::clear,
                     ) {
                         Text(
@@ -283,7 +282,7 @@ private fun SignatureContent(
                     val scope = rememberCoroutineScope()
                     MifosButton(
                         modifier = Modifier.weight(0.4f),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         onClick = {
                             scope.launch {
                                 val data = signatureState.exportSignature(

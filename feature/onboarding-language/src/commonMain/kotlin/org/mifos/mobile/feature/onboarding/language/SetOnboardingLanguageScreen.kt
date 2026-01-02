@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.onboarding_language.generated.resources.Res
@@ -51,6 +49,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun OnboardingLanguageScreen(
@@ -85,9 +84,9 @@ internal fun OnboardingLanguageScreenContent(
                 MifosButton(
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .height(DesignToken.sizes.buttonHeight),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                     onClick = { onAction(OnboardingLanguageAction.SetLanguage(selectedLanguage)) },
                 ) {
                     Text(
@@ -102,15 +101,15 @@ internal fun OnboardingLanguageScreenContent(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 75.dp),
+                .padding(top = DesignToken.padding.dp75),
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = DesignToken.padding.large),
+                    .padding(horizontal = KptTheme.spacing.md),
             ) {
                 Image(
-                    modifier = Modifier.height(48.dp).width(165.dp),
+                    modifier = Modifier.height(DesignToken.sizes.imageDp48).width(DesignToken.sizes.imageDp165),
                     painter = painterResource(
                         mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
                     ),
@@ -122,7 +121,7 @@ internal fun OnboardingLanguageScreenContent(
                 Text(
                     text = stringResource(Res.string.feature_onboarding_choose_your_app_language),
                     style = MifosTypography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = KptTheme.colorScheme.onSurface,
                 )
 
                 Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
@@ -132,10 +131,10 @@ internal fun OnboardingLanguageScreenContent(
                         Res.string.feature_onboarding_chosen_language_can_be_changed_later_in_the_settings,
                     ),
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = KptTheme.colorScheme.secondary,
                 )
 
-                Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                 LanguageSelectionContent(
                     selectedLanguage = selectedLanguage,
@@ -168,7 +167,7 @@ internal fun LanguageSelectionContent(
                     color = AppColors.primaryBlue,
                 ),
                 unselectedTextStyle = MifosTypography.titleSmallEmphasized.copy(
-                    MaterialTheme.colorScheme.onSurface,
+                    KptTheme.colorScheme.onSurface,
                 ),
             )
         }

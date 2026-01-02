@@ -16,7 +16,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -32,11 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.utils.mirrorIfRtl
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,11 +93,11 @@ fun MifosTopAppBar(
     }
 
     val topAppBarColors = TopAppBarDefaults.largeTopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.surface,
-        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
-        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-        titleContentColor = MaterialTheme.colorScheme.onSurface,
-        actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        containerColor = KptTheme.colorScheme.surface,
+        scrolledContainerColor = KptTheme.colorScheme.surfaceContainer,
+        navigationIconContentColor = KptTheme.colorScheme.onSurface,
+        titleContentColor = KptTheme.colorScheme.onSurface,
+        actionIconContentColor = KptTheme.colorScheme.onSurfaceVariant,
     )
 
     if (titleTextHasOverflow) {
@@ -111,7 +110,7 @@ fun MifosTopAppBar(
                 // making adding any arguments for softWrap and minLines superfluous.
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = KptTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.testTag("PageTitleLabel"),
                 )
@@ -127,7 +126,7 @@ fun MifosTopAppBar(
             title = {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = KptTheme.typography.titleLarge,
                     maxLines = 1,
                     softWrap = false,
                     overflow = TextOverflow.Ellipsis,
@@ -172,11 +171,11 @@ fun MifosTopAppBar(
     }
 
     val topAppBarColors = TopAppBarDefaults.largeTopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.surface,
-        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
-        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-        titleContentColor = MaterialTheme.colorScheme.onSurface,
-        actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        containerColor = KptTheme.colorScheme.surface,
+        scrolledContainerColor = KptTheme.colorScheme.surfaceContainer,
+        navigationIconContentColor = KptTheme.colorScheme.onSurface,
+        titleContentColor = KptTheme.colorScheme.onSurface,
+        actionIconContentColor = KptTheme.colorScheme.onSurfaceVariant,
     )
 
     LargeTopAppBar(
@@ -185,20 +184,20 @@ fun MifosTopAppBar(
         navigationIcon = navigationIconContent,
         title = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 // The height of the component is controlled and will only allow for 1 extra row,
                 // making adding any arguments for softWrap and minLines superfluous.
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = KptTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.testTag("PageTitleLabel"),
                 )
 
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = KptTheme.typography.bodyMedium,
                     modifier = Modifier.testTag("PageTitleSubTitle"),
                 )
             }

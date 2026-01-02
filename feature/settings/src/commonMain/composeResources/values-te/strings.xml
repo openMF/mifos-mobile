@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">థీమ్‌ను మార్చండి</string>
+    <string name="settings">సెట్టింగ్స్</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">పాస్‌కోడ్‌ను మార్చండి</string>
+    <string name="change_app_passcode">యాప్ పాస్‌కోడ్‌ను మార్చండి</string>
+    <string name="change_password">పాస్‌వర్డ్‌ను మార్చండి</string>
+    <string name="change_account_password">మీ ఖాతా పాస్‌వర్డ్‌ను మార్చుకోండి</string>
+    <string name="language">భాష</string>
+    <string name="choose_language">మీ భాషను ఎంచుకోండి</string>
+    <string name="other">ఇతర</string>
+    <string name="accounts">ఖాతాలు</string>
+    <string name="theme">థీమ్</string>
+    <string name="pref_base_url_title">ఎండ్‌పాయింట్‌ను అప్‌డేట్ చేయండి</string>
+    <string name="pref_base_url_desc">మీ ఎండ్‌పాయింట్ కాన్ఫిగరేషన్‌లను మార్చడానికి ఇక్కడ క్లిక్ చేయండి</string>
+    <string name="enter_base_url">బేస్ URLని నమోదు చేయండి</string>
+    <string name="enter_tenant">టెనెంట్‌ను నమోదు చేయండి</string>
+    <string name="cancel">రద్దు చేయి</string>
+    <string name="dialog_action_ok">సరే</string>
+    <string name="base_url_tenant_id_required">బేస్ URL మరియు టెనెంట్ ID తప్పనిసరి</string>
+
+    <string name="feature_settings_action_profile">ప్రొఫైల్</string>
+    <string name="feature_settings_action_profile_tip">మీ మెయిల్, పేరు, ఫోన్ నంబర్ మొదలైనవి మార్చుకోండి</string>
+
+    <string name="feature_settings_action_password">పాస్‌వర్డ్</string>
+    <string name="feature_settings_action_password_tip">మీ పాత పాస్‌వర్డ్‌ను మార్చుకోండి</string>
+
+    <string name="feature_settings_action_auth_passcode">ఆథ్ పాస్‌కోడ్</string>
+    <string name="feature_settings_action_auth_passcode_tip">మీ లాగిన్ అధికారిక పాస్‌కోడ్‌ను మార్చుకోండి</string>
+
+    <string name="feature_settings_action_language">భాష</string>
+    <string name="feature_settings_action_language_tip">మీ యాప్ భాషను ఎంచుకోండి</string>
+
+    <string name="feature_settings_action_theme">థీమ్</string>
+    <string name="feature_settings_action_theme_tip">మీ యాప్ థీమ్‌ను ఎంచుకోండి</string>
+
+    <string name="feature_settings_action_endpoint">ఎండ్‌పాయింట్</string>
+    <string name="feature_settings_action_endpoint_tip">మీ ఎండ్‌పాయింట్ కాన్ఫిగరేషన్‌ను మార్చుకోండి</string>
+
+    <string name="feature_settings_action_about_us">మా గురించి</string>
+    <string name="feature_settings_action_about_us_tip">మా చొరవ గురించి మరింత తెలుసుకోండి</string>
+
+    <string name="feature_settings_action_faq">తరచుగా అడిగే ప్రశ్నలు (FAQ)</string>
+    <string name="feature_settings_action_faq_tip">వినియోగదారులు తరచుగా అడిగే ప్రశ్నలు</string>
+
+    <string name="feature_settings_action_help">సహాయం</string>
+    <string name="feature_settings_action_help_tip">మా కస్టమర్ కేర్‌తో చాట్ చేయండి</string>
+
+    <string name="feature_settings_action_app_info">యాప్ సమాచారం</string>
+    <string name="feature_settings_action_app_info_tip">యాప్ వెర్షన్ వివరాలను కనుగొనండి</string>
+
+    <string name="feature_settings_action_logout">ఇప్పుడే లాగ్ అవుట్ చేయండి</string>
+    <string name="feature_settings_action_logout_tip">మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?</string>
+    <string name="feature_settings_logout_description">భద్రతా కారణాల దృష్ట్యా లాగ్ అవుట్ చేయడం వల్ల మీ ప్రస్తుత మరియు అన్ని క్రియాశీల సెషన్‌లు ముగిసిపోతాయి. మీ ఖాతాను ప్రాసెస్ చేయడానికి మీరు మళ్ళీ లాగిన్ చేయాలి.</string>
+    <string name="feature_settings_logout_message">నేను లాగ్ అవుట్ చేయకూడదు?</string>
+    <string name="feature_settings_logout_action">హోమ్‌కి తిరిగి వెళ్ళు</string>
+
+    <string name="feature_settings_top_bar_title">సెట్టింగ్స్</string>
+
+    <string name="feature_settings_error_fetching_client">క్లయింట్ సమాచారాన్ని పొందడంలో విఫలమైంది.</string>
+    <string name="feature_settings_error_fetching_profile_image">ప్రొఫైల్ చిత్రాన్ని పొందడంలో విఫలమైంది.</string>
+    <string name="feature_settings_internet_not_connected">ఇంటర్నెట్ కనెక్షన్ లేదు.</string>
+    <string name="feature_settings_error_invalid_profile_image">చెల్లని ప్రొఫైల్ ఇమేజ్ ఫార్మాట్.</string>
+    <string name="feature_settings_customer_account_no">కస్టమర్ ఖాతా: %1$s</string>
+
+    <string name="feature_settings_about_topbar_title">మా గురించి</string>
+    <string name="feature_settings_about_mifos">మిఫోస్ (Mifos)</string>
+    <string name="feature_settings_about_logo_content_description">మిఫోస్ చిత్రం</string>
+    <string name="feature_settings_about_who_are_we">మేము ఎవరము?</string>
+    <string name="feature_settings_about_what_does_mifos_do">మిఫోస్ ఏం చేస్తుంది?</string>
+    <string name="feature_settings_about_who_are_we_desc">మిఫోస్ అనేది ప్రజలకు ప్రాథమిక ఆర్థిక సేవలను అందించే లాభాపేక్షలేని సంస్థ. ఇది ఒక ఓపెన్-సోర్స్ ప్లాట్‌ఫారమ్ ద్వారా ఈ సేవలను అందిస్తుంది.</string>
+    <string name="feature_settings_about_point_1">ఇది ఆర్థిక సంస్థలకు ఆధునిక ఆర్థిక సేవలను అందించడంలో సహాయపడుతుంది</string>
+    <string name="feature_settings_about_point_2">ఇది ప్రజలకు రుణాలు పొందడానికి, డబ్బు ఆదా చేయడానికి మరియు మరిన్ని చేయడానికి వీలు కల్పిస్తుంది</string>
+    <string name="feature_settings_about_point_3">ఇది ప్రపంచవ్యాప్తంగా మిలియన్ల మంది ప్రజలకు సేవలందించే ఆర్థిక సంస్థలకు మద్దతు ఇస్తుంది</string>
+
+    <string name="feature_settings_doubt">అనేక సందేహాలు తరచుగా అడిగే ప్రశ్నలలో (FAQ) పరిష్కరించబడ్డాయి!</string>
+    <string name="feature_settings_doubt_message">లేదు, నేను వాటిని చూడలేదు, నన్ను అక్కడికి తీసుకెళ్ళండి!</string>
+
+    <string name="feature_settings_still_have_doubt">ఇంకా సందేహాలు ఉన్నాయా?</string>
+    <string name="feature_settings_still_have_doubt_message">సమస్య ఎదురవుతుందా? అస్సలు చింతించకండి!\nమా కస్టమర్ కేర్‌కు కాల్ చేయండి.\nమీకు సహాయం చేయడానికి మేము పగలు మరియు రాత్రి ఇక్కడే ఉన్నాము!</string>
+    <string name="feature_settings_still_have_doubt_action">మాకు కాల్ చేయండి</string>
+
+    <string name="feature_settings_still_have_issue">మీ సమస్యలను మెయిల్ చేస్తారా?</string>
+    <string name="feature_settings_still_have_issue_message">మద్దతు కావాలి కానీ వ్రాయడానికి ఇష్టపడతారా?\nపగలు లేదా రాత్రి మాకు ఇమెయిల్ పంపండి.\nమా బృందం వేగంగా స్పందించి మీకు కావాల్సిన సహాయాన్ని అందిస్తుంది!</string>
+    <string name="feature_settings_still_have_issue_action">మాకు మెయిల్ చేయండి</string>
+
+    <string name="feature_settings_appinfo_topbar_title">యాప్ సమాచారం</string>
+    <string name="feature_settings_appinfo_mobile">మొబైల్</string>
+    <string name="feature_settings_appinfo_logo_content_description">మిఫోస్ చిత్రం</string>
+    <string name="feature_settings_appinfo_app_name">మిఫోస్ మొబైల్</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">మిఫోస్ ఎలక్ట్రానిక్ బ్యాంకింగ్</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">సర్వ హక్కులు రిజర్వు చేయబడినవి</string>
+    <string name="feature_settings_appinfo_version">వెర్షన్</string>
+    <string name="feature_settings_appinfo_privacy_policy">గోప్యతా విధానం</string>
+    <string name="feature_settings_appinfo_terms_conditions">నిబంధనలు మరియు షరతులు</string>
+
+    <string name="feature_settings_update_passcode">పాస్‌కోడ్‌ని అప్‌డేట్ చేయండి</string>
+    <string name="feature_settings_old_passcode">పాత పాస్‌కోడ్</string>
+    <string name="feature_settings_new_passcode">కొత్త పాస్‌కోడ్</string>
+    <string name="feature_settings_confirm_new_passcode">కొత్త పాస్‌కోడ్‌ని నిర్ధారించండి</string>
+    <string name="feature_settings_authorization_passcode">అధికారిక పాస్‌కోడ్</string>
+    <string name="feature_settings_passcode_length_error">పాస్‌కోడ్ 4 అంకెల పొడవు ఉండాలి.</string>
+    <string name="feature_settings_passcode_empty_error">పాస్‌కోడ్ ఖాళీగా ఉండకూడదు.</string>
+    <string name="feature_settings_passcode_invalid_error">పాస్‌కోడ్‌లో ఎటువంటి అక్షరాలు ఉండకూడదు.</string>
+    <string name="feature_settings_passcode_confirm_error">కొత్త మరియు నిర్ధారణ పాస్‌కోడ్ ఒకేలా ఉండాలి.</string>
+    <string name="feature_settings_passcode_old_passcode_error">పాత పాస్‌కోడ్ సరైనది అయి ఉండాలి.</string>
+    <string name="feature_settings_passcode_updated_successfully">పాస్‌కోడ్ విజయవంతంగా అప్‌డేట్ చేయబడింది.</string>
+    <string name="feature_settings_passcode_updated_message">యాప్ సేవలను ఉపయోగించడానికి మీరు కొత్త పాస్‌కోడ్‌ను నమోదు చేయాలి.</string>
+    <string name="feature_settings_next">తర్వాత</string>
+
+    <string name="feature_settings_update_password">పాస్‌వర్డ్‌ని అప్‌డేట్ చేయండి</string>
+    <string name="feature_settings_old_password">పాత పాస్‌వర్డ్</string>
+    <string name="feature_settings_new_password">కొత్త పాస్‌వర్డ్</string>
+    <string name="feature_settings_confirm_new_password">కొత్త పాస్‌వర్డ్‌ని నిర్ధారించండి</string>
+
+    <string name="password_empty_error">పాస్‌వర్డ్ ఖాళీగా ఉండకూడదు</string>
+    <string name="password_empty_error_repeat">వరుసగా పునరావృతమయ్యే అక్షరాలు అనుమతించబడవు</string>
+    <string name="password_length_error">పాస్‌వర్డ్ కనీసం 12 అక్షరాల పొడవు ఉండాలి</string>
+    <string name="password_current_incorrect_error">ప్రస్తుత పాస్‌వర్డ్ తప్పు</string>
+    <string name="password_validation_error">పాస్‌వర్డ్ భద్రతా అవసరాలను తీర్చడం లేదు</string>
+    <string name="password_same_as_current_error">కొత్త పాస్‌వర్డ్ ప్రస్తుత పాస్‌వర్డ్ కంటే భిన్నంగా ఉండాలి</string>
+    <string name="password_personal_info_error">పాస్‌వర్డ్‌లో వ్యక్తిగత సమాచారం ఉండకూడదు</string>
+    <string name="password_confirm_mismatch_error">పాస్‌వర్డ్‌లు సరిపోలడం లేదు</string>
+    <string name="feature_settings_password">పాస్‌వర్డ్</string>
+    <string name="password_too_many_attempts">చాలా సార్లు విఫలయత్నాలు జరిగాయి. దయచేసి కాసేపు ఆగి మళ్ళీ ప్రయత్నించండి.</string>
+
+    <string name="password_update_success">పాస్‌వర్డ్ విజయవంతంగా అప్‌డేట్ చేయబడింది</string>
+    <string name="password_update_success_message">యాప్ సేవలను ఉపయోగించడానికి మీరు మళ్ళీ లాగిన్ అవ్వాలి.</string>
+    <string name="password_update_failed">పాస్‌వర్డ్ అప్‌డేట్ చేయడం విఫలమైంది. మళ్ళీ ప్రయత్నించండి</string>
+    <string name="password_update_dialog_button">ఇప్పుడే లాగిన్ అవ్వండి</string>
+
+    <string name="no_questions_found">ప్రశ్నలు ఏవీ కనుగొనబడలేదు</string>
+    <string-array name="faq_qs">
+        <item>నేను కొత్త లోన్ ఖాతా కోసం ఎలా దరఖాస్తు చేయాలి?</item>
+        <item>నేను నా ప్రొఫైల్ సమాచారాన్ని ఎక్కడ చూడగలను?</item>
+        <item>నేను నా పొదుపు ఖాతా లావాదేవీలను ఎక్కడ చూడగలను?</item>
+        <item>QR కోడ్ యొక్క ఉపయోగం ఏమిటి?</item>
+        <item>QR కోడ్‌ని ఉపయోగించి లబ్ధిదారుడిని ఎలా సృష్టించాలి?</item>
+        <item>లోన్ ఖాతా కోసం చెల్లింపు ఎలా చేయాలి?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>లోన్ ఖాతా కోసం దరఖాస్తు చేయడానికి, హోమ్ స్క్రీన్‌పై ఉన్న \"లోన్ కోసం దరఖాస్తు చేయండి\" పై క్లిక్ చేయండి.</item>
+        <item>హోమ్ స్క్రీన్‌పై ఉన్న యూజర్ చిత్రంపై క్లిక్ చేయడం ద్వారా మీరు మీ ప్రొఫైల్ సమాచారాన్ని చూడవచ్చు.</item>
+        <item>మీ పొదుపు ఖాతా లావాదేవీలను చూడటానికి, ఖాతాల విభాగాలకు వెళ్లి, అవసరమైన పొదుపు ఖాతాపై క్లిక్ చేసి, పైన కుడివైపున ఉన్న మూడు చుక్కలపై క్లిక్ చేసి, లావాదేవీల ఎంపికను ఎంచుకోండి.</item>
+        <item>ఏదైనా లోన్ లేదా పొదుపు ఖాతాల కోసం QR కోడ్‌ను ఇతర వినియోగదారులతో పంచుకోవచ్చు, ఇది వారిని లబ్ధిదారునిగా సృష్టించడానికి అనుమతిస్తుంది.</item>
+        <item>లబ్ధిదారుడిని సృష్టించడానికి, హోమ్ స్క్రీన్ నుండి లబ్ధిదారుని ఎంపికకు వెళ్లి, దిగువ కుడివైపున ఉన్న సర్క్యులర్ బటన్‌పై క్లిక్ చేసి, స్కాన్ చేసే ఎంపికను ఎంచుకోండి, అవతలి వ్యక్తి యొక్క QR కోడ్‌ను స్కాన్ చేయండి, వివరాలను నింపిన తర్వాత మీరు లబ్ధిదారుడిని సృష్టించవచ్చు.</item>
+        <item>లోన్ ఖాతా కోసం చెల్లింపు చేయడానికి, ఖాతాల విభాగాలకు వెళ్లి, LOAN ఎంచుకుని, ఆపై మీ లోన్ ఖాతాను తెరిచి, మేక్ పేమెంట్ ఎంపికపై క్లిక్ చేయండి.</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">ఇంకా సందేహం ఉందా?</string>
+    <string name="feature_settings_faq_contact_us"> మమ్మల్ని సంప్రదించండి</string>
+
+    <string name="feature_settings_language">భాష</string>
+    <string name="feature_settings_change_language">భాషను మార్చండి</string>
+
+    <string name="feature_settings_theme_light">లైట్ థీమ్</string>
+    <string name="feature_settings_theme_dark">డార్క్ థీమ్</string>
+    <string name="feature_settings_theme_system">డిఫాల్ట్ సిస్టమ్ థీమ్</string>
+    <string name="feature_settings_apply_theme">థీమ్‌ను వర్తింపజేయండి</string>
+</resources>

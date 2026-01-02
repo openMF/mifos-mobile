@@ -13,6 +13,7 @@ enum class MifosThemeConfig(val configName: String, val osValue: Int) {
     FOLLOW_SYSTEM("Follow System", -1),
     LIGHT("Light", 1),
     DARK("Dark", 2),
+    BASED_ON_TIME("Based on Time", 3),
     ;
 
     companion object {

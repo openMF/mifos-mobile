@@ -43,6 +43,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Entry point for the Loan Confirmation screen.
@@ -166,7 +167,7 @@ internal fun ConfirmDetailsScreenContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .padding(top = DesignToken.padding.medium)
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraLarge),
@@ -178,7 +179,7 @@ internal fun ConfirmDetailsScreenContent(
                         onClick = {
                             onAction(ConfirmDetailsAction.NavigateToAuthenticate)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_apply_loan_title),

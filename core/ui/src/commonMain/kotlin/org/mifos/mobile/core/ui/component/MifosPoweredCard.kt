@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,6 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosPoweredCard(
@@ -47,11 +47,11 @@ fun MifosPoweredCard(
             .shadow(
                 elevation = DesignToken.elevation.elevation,
                 shape = DesignToken.shapes.bottomSheet,
-                ambientColor = MaterialTheme.colorScheme.onSurface,
-                spotColor = MaterialTheme.colorScheme.onSurface,
+                ambientColor = KptTheme.colorScheme.onSurface,
+                spotColor = KptTheme.colorScheme.onSurface,
                 clip = false,
             )
-            .background(MaterialTheme.colorScheme.surface, shape = DesignToken.shapes.bottomSheet),
+            .background(KptTheme.colorScheme.surface, shape = DesignToken.shapes.bottomSheet),
     ) {
         Row(
             modifier = Modifier
@@ -62,9 +62,9 @@ fun MifosPoweredCard(
             Text(
                 text = text ?: "",
                 style = MifosTypography.tag,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
-            Spacer(modifier = Modifier.width(DesignToken.spacing.extraSmall))
+            Spacer(modifier = Modifier.width(KptTheme.spacing.xs))
             if (icon != null) {
                 Image(
                     painter = painterResource(

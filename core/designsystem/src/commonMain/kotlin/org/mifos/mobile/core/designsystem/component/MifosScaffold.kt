@@ -25,7 +25,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHost
@@ -38,11 +37,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.AppColors
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,8 +50,8 @@ fun MifosScaffold(
     onNavigationIconClick: () -> Unit,
     modifier: Modifier = Modifier,
     topBarTitle: String? = null,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    containerColor: Color = KptTheme.colorScheme.surface,
+    contentColor: Color = KptTheme.colorScheme.onSurface,
     floatingActionButtonContent: FloatingActionButtonContent? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     contentWindowInsets: WindowInsets = ScaffoldDefaults
@@ -83,7 +83,7 @@ fun MifosScaffold(
         snackbarHost = snackbarHost,
         containerColor = containerColor,
         contentColor = contentColor,
-        contentWindowInsets = WindowInsets(0.dp),
+        contentWindowInsets = WindowInsets(DesignToken.padding.none),
         content = { paddingValues ->
             val internalPullToRefreshState = rememberPullToRefreshState()
             Box(
@@ -131,8 +131,8 @@ fun MifosScaffold(
     modifier: Modifier = Modifier,
     onNavigationIconClick: () -> Unit = {},
     topBarTitle: String? = null,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    containerColor: Color = KptTheme.colorScheme.surface,
+    contentColor: Color = KptTheme.colorScheme.onSurface,
     floatingActionButtonContent: FloatingActionButtonContent? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     contentWindowInsets: WindowInsets = ScaffoldDefaults
@@ -165,7 +165,7 @@ fun MifosScaffold(
         snackbarHost = snackbarHost,
         containerColor = containerColor,
         contentColor = contentColor,
-        contentWindowInsets = WindowInsets(0.dp),
+        contentWindowInsets = WindowInsets(DesignToken.padding.none),
         content = { paddingValues ->
             val internalPullToRefreshState = rememberPullToRefreshState()
             Box(
@@ -214,8 +214,8 @@ fun MifosElevatedScaffold(
     modifier: Modifier = Modifier,
     brandIcon: DrawableResource? = null,
     bottomBar: @Composable () -> Unit = {},
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    containerColor: Color = KptTheme.colorScheme.surface,
+    contentColor: Color = KptTheme.colorScheme.onSurface,
     floatingActionButtonContent: FloatingActionButtonContent? = null,
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     contentWindowInsets: WindowInsets = ScaffoldDefaults
@@ -245,7 +245,7 @@ fun MifosElevatedScaffold(
         },
         bottomBar = bottomBar,
         snackbarHost = snackbarHost,
-        contentWindowInsets = WindowInsets(0.dp),
+        contentWindowInsets = WindowInsets(DesignToken.padding.none),
         containerColor = containerColor,
         contentColor = contentColor,
         content = { paddingValues ->
@@ -273,8 +273,8 @@ fun MifosElevatedScaffold(
                         modifier = Modifier.align(Alignment.TopCenter),
                         isRefreshing = pullToRefreshState.isRefreshing,
                         state = internalPullToRefreshState,
-                        containerColor = MaterialTheme.colorScheme.tertiary,
-                        color = MaterialTheme.colorScheme.primary,
+                        containerColor = KptTheme.colorScheme.tertiary,
+                        color = KptTheme.colorScheme.primary,
                     )
                 }
             }
@@ -293,8 +293,8 @@ fun MifosScaffold(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    containerColor: Color = KptTheme.colorScheme.surface,
+    contentColor: Color = KptTheme.colorScheme.onSurface,
     contentWindowInsets: WindowInsets = ScaffoldDefaults
         .contentWindowInsets
         .only(WindowInsetsSides.Horizontal),
@@ -339,8 +339,8 @@ fun MifosScaffold(
                         modifier = Modifier.align(Alignment.TopCenter),
                         isRefreshing = pullToRefreshState.isRefreshing,
                         state = internalPullToRefreshState,
-                        containerColor = MaterialTheme.colorScheme.tertiary,
-                        color = MaterialTheme.colorScheme.primary,
+                        containerColor = KptTheme.colorScheme.tertiary,
+                        color = KptTheme.colorScheme.primary,
                     )
                 }
             }

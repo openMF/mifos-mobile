@@ -23,7 +23,6 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,6 +45,8 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_principal_amount
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_section_fill_details
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_message
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.DateHelper
@@ -64,6 +65,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -141,7 +143,8 @@ internal fun LoanAccountDialog(
         is LoanApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_loan_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_loan_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(LoanApplicationAction.DismissDialog) },
                 onConfirm = { onAction(LoanApplicationAction.ConfirmNavigation) },
@@ -201,15 +204,15 @@ internal fun LoanAccountContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     MifosOutlinedTextField(
                         value = state.applicantName,
                         onValueChange = { onAction(LoanApplicationAction.ApplicantNameChange(it)) },
                         label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.applicantNameError != null,
@@ -253,7 +256,7 @@ internal fun LoanAccountContent(
                                 )
                             },
                         ),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosOutlinedTextField(
@@ -268,7 +271,7 @@ internal fun LoanAccountContent(
                                 imeAction = ImeAction.Done,
                             ),
                         ),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosButton(
@@ -277,11 +280,11 @@ internal fun LoanAccountContent(
                         onClick = {
                             onAction(LoanApplicationAction.NavigateToConfirmDetails)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_apply_loan_button_continue),
-                            style = MaterialTheme.typography.labelLarge,
+                            style = KptTheme.typography.labelLarge,
                         )
                     }
 

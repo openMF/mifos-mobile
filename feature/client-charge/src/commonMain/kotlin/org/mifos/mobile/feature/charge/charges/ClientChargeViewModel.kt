@@ -19,6 +19,7 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.charges
 import mifos_mobile.feature.client_charge.generated.resources.client_charges
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charge_share_charges
 import mifos_mobile.feature.client_charge.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.client_charge.generated.resources.loan_charges
 import mifos_mobile.feature.client_charge.generated.resources.savings_charges
@@ -61,6 +62,7 @@ internal class ClientChargeViewModel(
             ChargeType.CLIENT -> Res.string.client_charges
             ChargeType.SAVINGS -> Res.string.savings_charges
             ChargeType.LOAN -> Res.string.loan_charges
+            ChargeType.SHARE -> Res.string.feature_client_charge_share_charges
         }
 
         ClientChargeState(
@@ -122,6 +124,9 @@ internal class ClientChargeViewModel(
 
             is ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult ->
                 handleLoanOrSavingsChargesResult(action.result)
+
+            is ClientChargeAction.Internal.ReceiveShareChargesResult ->
+                handleShareChargesResult(action.result)
         }
     }
 
@@ -204,6 +209,35 @@ internal class ClientChargeViewModel(
     }
 
     /**
+     *
+     * Handles result of Share charge API.
+     */
+
+    private fun handleShareChargesResult(result: DataState<List<Charge>>) {
+        when (result) {
+            is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
+
+            is DataState.Error -> updateState {
+                it.copy(
+                    uiState = if (result.exception.cause is IOException) {
+                        ScreenUiState.Network
+                    } else {
+                        ScreenUiState.Error(Res.string.feature_generic_error_server)
+                    },
+                )
+            }
+
+            is DataState.Success -> updateState {
+                if (result.data.isEmpty()) {
+                    it.copy(uiState = ScreenUiState.Empty, charges = emptyList())
+                } else {
+                    it.copy(uiState = ScreenUiState.Success, charges = result.data)
+                }
+            }
+        }
+    }
+
+    /**
      * Handles result of client charge API.
      */
     private fun handleClientChargesResult(result: DataState<Page<Charge>>) {
@@ -240,6 +274,7 @@ internal class ClientChargeViewModel(
             when (state.chargeType) {
                 ChargeType.CLIENT -> processClientCharges()
                 ChargeType.LOAN, ChargeType.SAVINGS -> processLoanOrSavingsCharges()
+                ChargeType.SHARE -> processShareCharges()
             }
         }
     }
@@ -271,6 +306,20 @@ internal class ClientChargeViewModel(
                 state.chargeTypeId ?: -1L,
             ).collect { result ->
                 sendAction(ClientChargeAction.Internal.ReceiveLoanOrSavingsChargesResult(result))
+            }
+        }
+    }
+
+    /**
+     * Processes charges when type is Share.
+     * Uses the dedicated repository function we created.
+     */
+    private fun processShareCharges() {
+        viewModelScope.launch {
+            clientChargeRepositoryImp.getShareAccountCharges(
+                state.chargeTypeId ?: -1L,
+            ).collect { result ->
+                sendAction(ClientChargeAction.Internal.ReceiveShareChargesResult(result))
             }
         }
     }
@@ -356,6 +405,10 @@ sealed interface ClientChargeAction {
 
         data class ReceiveClientChargesResult(
             val result: DataState<Page<Charge>>,
+        ) : Internal()
+
+        data class ReceiveShareChargesResult(
+            val result: DataState<List<Charge>>,
         ) : Internal()
     }
 }

@@ -12,7 +12,6 @@ package org.mifos.mobile.core.ui.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -20,16 +19,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosItemCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    elevation: Dp = 1.dp,
-    shape: Shape = RoundedCornerShape(8.dp),
+    elevation: Dp = KptTheme.elevation.level1,
+    shape: Shape = KptTheme.shapes.small,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(

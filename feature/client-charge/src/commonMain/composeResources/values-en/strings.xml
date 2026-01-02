@@ -20,6 +20,8 @@
     <string name="amount_outstanding">Outstanding:</string>
     <string name="amount_waived">Waved:</string>
     <string name="amount_paid">Paid:</string>
+    <string name="feature_client_charge_share_charges">Share Charges</string>
+
 
     <string name="charge_details">Charge Details</string>
     <string name="paid_success_message">You have successfully paid this charge completely</string>
@@ -36,5 +38,7 @@
     <string name="paid">Paid</string>
     <string name="waived">Waived</string>
     <string name="outstanding">Outstanding</string>
+
+    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
 
 </resources>

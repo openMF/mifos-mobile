@@ -46,6 +46,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loanaccount.component.AccountSummaryCard
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.orEmpty
 
 /**
@@ -158,7 +159,7 @@ internal fun LoanAccountSummaryContent(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {

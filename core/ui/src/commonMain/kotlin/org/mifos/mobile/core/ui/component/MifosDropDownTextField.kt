@@ -18,10 +18,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults.colors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,14 +30,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.retry
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosDropDownTextField(
@@ -72,7 +71,7 @@ fun MifosDropDownTextField(
                 .fillMaxWidth(),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelMedium,
+            textStyle = KptTheme.typography.labelMedium,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -90,9 +89,9 @@ fun MifosDropDownTextField(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
+                focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                errorBorderColor = KptTheme.colorScheme.error,
             ),
         )
 
@@ -100,7 +99,7 @@ fun MifosDropDownTextField(
             expanded = expanded && isEnabled,
             modifier = Modifier
                 .fillMaxWidth(0.92f)
-                .heightIn(max = 200.dp),
+                .heightIn(max = DesignToken.sizes.dropDownMenuHeightInDp200),
             onDismissRequest = { expanded = false },
         ) {
             optionsList.forEachIndexed { index, item ->
@@ -147,7 +146,7 @@ fun MifosDropDownDoubleTextField(
                 .fillMaxWidth(),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelSmall,
+            textStyle = KptTheme.typography.labelSmall,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -165,9 +164,9 @@ fun MifosDropDownDoubleTextField(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
+                focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                errorBorderColor = KptTheme.colorScheme.error,
             ),
         )
 
@@ -175,7 +174,7 @@ fun MifosDropDownDoubleTextField(
             expanded = expanded && isEnabled,
             modifier = Modifier
                 .fillMaxWidth(0.92f)
-                .heightIn(max = 200.dp),
+                .heightIn(max = DesignToken.sizes.dropDownMenuHeightInDp200),
             onDismissRequest = { expanded = false },
         ) {
             optionsList.forEachIndexed { index, item ->

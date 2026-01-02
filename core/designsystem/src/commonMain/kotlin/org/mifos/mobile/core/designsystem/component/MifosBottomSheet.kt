@@ -13,7 +13,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -23,10 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.arkivanov.essenty.backhandler.BackCallback
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mifos.mobile.core.designsystem.theme.DesignToken
+import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +54,7 @@ fun MifosBottomSheet(
 
     AnimatedVisibility(visible = showBottomSheet) {
         ModalBottomSheet(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = KptTheme.colorScheme.surface,
             onDismissRequest = {
                 showBottomSheet = false
                 dismissSheet()
@@ -73,7 +73,7 @@ fun MifosBottomSheetPreview() {
     MifosBottomSheet(
         content = {
             Box {
-                Modifier.height(100.dp)
+                Modifier.height(DesignToken.sizes.boxDp100)
             }
         },
         onDismiss = {},

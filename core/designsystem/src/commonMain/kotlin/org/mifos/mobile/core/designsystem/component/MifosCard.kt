@@ -31,14 +31,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +49,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import fluent.ui.system.icons.FluentIcons
 import fluent.ui.system.icons.filled.Document
 import mifos_mobile.core.designsystem.generated.resources.Res
@@ -64,12 +61,13 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosCard(
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(8.dp),
-    elevation: Dp = 1.dp,
+    shape: Shape = KptTheme.shapes.small,
+    elevation: Dp = KptTheme.elevation.level1,
     onClick: (() -> Unit)? = null,
     colors: CardColors = CardDefaults.cardColors(),
     content: @Composable ColumnScope.() -> Unit,
@@ -166,7 +164,7 @@ fun MifosUploadStateCard(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    height: Dp = 112.dp,
+    height: Dp = DesignToken.sizes.cardDp112,
 ) {
     MifosCustomCard(
         modifier = Modifier
@@ -175,17 +173,17 @@ fun MifosUploadStateCard(
         onClick = onClick,
         enabled = true,
         variant = CardVariant.FILLED,
-        shape = DesignToken.shapes.medium,
+        shape = KptTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(
-            defaultElevation = DesignToken.elevation.none,
+            defaultElevation = KptTheme.elevation.level0,
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface,
+            contentColor = KptTheme.colorScheme.onSurface,
         ),
         borderStroke = BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.secondaryContainer,
+            DesignToken.strokes.thin,
+            KptTheme.colorScheme.secondaryContainer,
         ),
     ) {
         MifosUploadStateCardContent(
@@ -214,11 +212,11 @@ fun MifosUploadStateCardContent(
             contentDescription = null,
             modifier = Modifier.size(DesignToken.sizes.iconMedium),
         )
-        Spacer(modifier = Modifier.height(DesignToken.spacing.extraSmall))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
         Text(
             text = text,
             style = MifosTypography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = KptTheme.colorScheme.secondary,
         )
     }
 }
@@ -236,7 +234,7 @@ fun MifosUploadedStateCard(
     removeText: String = stringResource(Res.string.feature_upload_id_remove_file),
     selectText: String = stringResource(Res.string.feature_upload_id_select_new_file),
     viewText: String = stringResource(Res.string.feature_upload_id_view_file),
-    height: Dp = 112.dp,
+    height: Dp = DesignToken.sizes.cardDp112,
 ) {
     Box(modifier = modifier.fillMaxWidth()) {
         MifosCustomCard(
@@ -245,10 +243,10 @@ fun MifosUploadedStateCard(
                 .height(height),
             enabled = false,
             variant = CardVariant.OUTLINED,
-            shape = DesignToken.shapes.medium,
-            elevation = CardDefaults.cardElevation(defaultElevation = DesignToken.elevation.none),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onPrimary),
-            borderStroke = BorderStroke(1.dp, MaterialTheme.colorScheme.secondaryContainer),
+            shape = KptTheme.shapes.medium,
+            elevation = CardDefaults.cardElevation(defaultElevation = KptTheme.elevation.level0),
+            colors = CardDefaults.cardColors(containerColor = KptTheme.colorScheme.onPrimary),
+            borderStroke = BorderStroke(DesignToken.strokes.thin, KptTheme.colorScheme.secondaryContainer),
         ) {
             MifosUploadedCardContent(
                 icon = icon,
@@ -265,14 +263,14 @@ fun MifosUploadedStateCard(
 
         Box(
             modifier = Modifier
-                .padding(start = DesignToken.padding.large)
-                .offset(y = (-7).dp),
+                .padding(start = KptTheme.spacing.md)
+                .offset(y = DesignToken.spacing.negativeDp7),
         ) {
             Text(
                 text = label,
                 style = MifosTypography.bodySmall,
                 modifier = Modifier
-                    .padding(horizontal = DesignToken.padding.extraSmall),
+                    .padding(horizontal = KptTheme.spacing.xs),
             )
         }
     }
@@ -299,50 +297,50 @@ fun MifosUploadedCardContent(
     ) {
         Box(
             modifier = Modifier
-                .size(DesignToken.sizes.avatarSmall + 4.dp)
+                .size(DesignToken.sizes.boxDp36)
                 .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = DesignToken.shapes.small,
+                    color = KptTheme.colorScheme.primary,
+                    shape = KptTheme.shapes.small,
                 ),
             contentAlignment = Alignment.Center,
         ) {
             Image(
                 imageVector = icon,
                 contentDescription = "file icon",
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .size(DesignToken.sizes.iconMedium)
                     .align(Alignment.Center),
             )
         }
 
-        Spacer(modifier = Modifier.width(DesignToken.spacing.large))
+        Spacer(modifier = Modifier.width(KptTheme.spacing.md))
 
         Column {
             Text(
                 text = fileName,
                 style = MifosTypography.titleSmallEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = KptTheme.colorScheme.onSurface,
             )
 
             Text(
                 text = fileSize,
                 style = MifosTypography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
+                color = KptTheme.colorScheme.secondary,
             )
 
             Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
 
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 Text(
                     modifier = Modifier.clickable {
                         onRemoveClick()
                     },
                     text = removeText,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = KptTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
 
@@ -351,7 +349,7 @@ fun MifosUploadedCardContent(
                         onViewClick()
                     },
                     text = viewText,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = KptTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
 
@@ -360,7 +358,7 @@ fun MifosUploadedCardContent(
                         onSelectNewClick()
                     },
                     text = selectText,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = KptTheme.colorScheme.primary,
                     style = MifosTypography.labelMedium,
                 )
             }
@@ -381,27 +379,27 @@ fun MifosExploreCard(
         modifier = modifier
             .height(DesignToken.sizes.inputHeight)
             .border(
-                1.dp,
-                MaterialTheme.colorScheme.secondaryContainer,
-                DesignToken.shapes.medium,
+                DesignToken.strokes.thin,
+                KptTheme.colorScheme.secondaryContainer,
+                KptTheme.shapes.medium,
             ),
         variant = CardVariant.OUTLINED,
         onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface,
+            contentColor = KptTheme.colorScheme.onSurface,
         ),
     ) {
         Row(
-            modifier = Modifier.padding(DesignToken.padding.large),
+            modifier = Modifier.padding(KptTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         ) {
             Image(
                 imageVector = icon,
                 contentDescription = text,
                 modifier = Modifier.size(DesignToken.sizes.iconMedium),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
             )
 
             Text(
@@ -426,8 +424,8 @@ fun MifosExploreCard(
 @Composable
 private fun Mifos_Explore_Card_Preview() {
     Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(KptTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
         Row {
             // Method 1: Automatic multiline (spaces become line breaks)
@@ -469,7 +467,7 @@ private fun Mifos_Explore_Card_Preview() {
 private fun Upload_Card_Preview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
+            modifier = Modifier.fillMaxSize().padding(KptTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
         ) {
             Text(
@@ -480,25 +478,25 @@ private fun Upload_Card_Preview() {
                 MifosCustomCard(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(112.dp),
+                        .height(DesignToken.sizes.cardDp112),
                     onClick = {},
                     enabled = true,
                     variant = it,
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = if (it == CardVariant.ELEVATED) {
                             DesignToken.elevation.elevation
                         } else {
-                            DesignToken.elevation.none
+                            KptTheme.elevation.level0
                         },
                     ),
                     colors = CardDefaults.cardColors(
                         containerColor = Color.Transparent,
-                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        contentColor = KptTheme.colorScheme.onSurface,
                     ),
                     borderStroke = BorderStroke(
-                        1.dp,
-                        MaterialTheme.colorScheme.secondaryContainer,
+                        DesignToken.strokes.thin,
+                        KptTheme.colorScheme.secondaryContainer,
                     ),
                 ) {
                     Column(
@@ -513,11 +511,11 @@ private fun Upload_Card_Preview() {
                             contentDescription = null,
                             modifier = Modifier.size(DesignToken.sizes.iconMedium),
                         )
-                        Spacer(modifier = Modifier.height(DesignToken.spacing.extraSmall))
+                        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
                         Text(
                             text = "Upload Documents",
                             style = MifosTypography.bodySmall,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = KptTheme.colorScheme.secondary,
                         )
                     }
                 }
@@ -542,7 +540,7 @@ private fun Upload_Card_Preview() {
 fun FloatingTitleCardPreview() {
     MifosMobileTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(DesignToken.padding.large),
+            modifier = Modifier.fillMaxSize().padding(KptTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
         ) {
             MifosUploadedStateCard(

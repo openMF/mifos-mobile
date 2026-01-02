@@ -20,6 +20,7 @@
     <string name="amount_outstanding">बकाया:</string>
     <string name="amount_waived">छूट दिया गया:</string>
     <string name="amount_paid">भुगतान किया गया:</string>
+    <string name="feature_client_charge_share_charges">शेयर शुल्क</string>
 
     <string name="charge_details">शुल्क विवरण</string>
     <string name="paid_success_message">आपने इस शुल्क का सफलतापूर्वक पूरा भुगतान कर दिया है</string>
@@ -36,5 +37,7 @@
     <string name="paid">भुगतान किया गया</string>
     <string name="waived">छूट दिया गया</string>
     <string name="outstanding">बकाया</string>
+
+    <string name="feature_generic_error_server">हमारी ओर से सर्वर की समस्या है, आगे नहीं बढ़ सकते। कृपया कुछ देर बाद पुनः प्रयास करें</string>
 
 </resources>

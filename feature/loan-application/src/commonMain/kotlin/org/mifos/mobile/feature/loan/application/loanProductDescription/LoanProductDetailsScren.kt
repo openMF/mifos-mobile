@@ -67,6 +67,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loan.application.component.ApplyLoanBottomBar
 import org.mifos.mobile.feature.loan.application.component.LoanCard
 import org.mifos.mobile.feature.loan.application.component.TermsAndConditionItem
+import template.core.base.designsystem.theme.KptTheme
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
@@ -206,8 +207,8 @@ internal fun LoanProductDetailsScreenContent(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large)
-                        .padding(top = DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md)
+                        .padding(top = KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {
                     item {
@@ -231,7 +232,7 @@ internal fun LoanProductDetailsScreenContent(
                         Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+                            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                         ) {
                             TermsAndConditionItem(
                                 title = Res.string.feature_loan_sanction_and_disbursement,

@@ -32,6 +32,8 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_savings_product
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_title
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -50,6 +52,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Apply for Savings" screen.
@@ -124,7 +127,8 @@ internal fun SavingsAccountDialog(
         is SavingsApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_savings_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_savings_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(SavingsApplicationAction.DismissDialog) },
                 onConfirm = { onAction(SavingsApplicationAction.ConfirmNavigation) },
@@ -186,15 +190,15 @@ internal fun SavingsAccountContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     MifosOutlinedTextField(
                         value = state.applicantName,
                         onValueChange = { },
                         label = stringResource(Res.string.feature_apply_savings_label_applicant_name),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             enabled = false,
@@ -216,7 +220,7 @@ internal fun SavingsAccountContent(
                                 )
                             },
                         ),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosOutlineDropdown(
@@ -245,7 +249,7 @@ internal fun SavingsAccountContent(
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToConfirmDetails)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_apply_savings_button_continue),

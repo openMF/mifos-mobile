@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
@@ -45,6 +46,7 @@ fun MFStepProcess(
     processState: StepProcessState = StepProcessState.INACTIVE,
     content: @Composable (Modifier) -> Unit,
 ) {
+    // TODO use DesignToken, currently it throws error
     var barHeight by remember { mutableStateOf(0.dp) }
     val localDensity = LocalDensity.current
 
@@ -52,7 +54,7 @@ fun MFStepProcess(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Column(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(DesignToken.sizes.stepIndicatorDp40)
                     .clip(CircleShape)
                     .background(
                         color = if (processState == StepProcessState.INACTIVE) {
@@ -72,7 +74,7 @@ fun MFStepProcess(
                 Box(
                     modifier = Modifier
                         .height(barHeight)
-                        .width(4.dp)
+                        .width(DesignToken.sizes.boxDp4)
                         .background(
                             color = if (processState == StepProcessState.INACTIVE) {
                                 deactivateColor
@@ -85,7 +87,7 @@ fun MFStepProcess(
         }
         content(
             Modifier
-                .padding(start = 10.dp, end = 6.dp)
+                .padding(start = DesignToken.padding.dp10, end = DesignToken.padding.dp6)
                 .onGloballyPositioned { barHeight = with(localDensity) { it.size.height.toDp() } },
         )
     }

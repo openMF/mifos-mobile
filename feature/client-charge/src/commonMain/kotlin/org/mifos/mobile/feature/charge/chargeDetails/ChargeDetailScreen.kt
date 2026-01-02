@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_success
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -48,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 import mifos_mobile.core.ui.generated.resources.Res as uiRes
 
 /**
@@ -93,7 +92,7 @@ internal fun ChargeDetailScreen(
                     .verticalScroll(rememberScrollState())
                     .padding(
                         vertical = DesignToken.padding.extraLarge,
-                        horizontal = DesignToken.padding.large,
+                        horizontal = KptTheme.spacing.md,
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -138,30 +137,30 @@ fun ChargeDetailsPaidComponent(
     ) {
         Text(
             text = stringResource(Res.string.paid_success_message),
-            style = MaterialTheme.typography.bodySmall,
+            style = KptTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.height(DesignToken.padding.medium))
         Image(
             modifier = Modifier
-                .height(60.dp)
-                .width(60.dp),
+                .height(DesignToken.sizes.imageDp60)
+                .width(DesignToken.sizes.imageDp60),
             painter = painterResource(uiRes.drawable.ic_icon_success),
             contentDescription = "Status icon",
         )
         Spacer(Modifier.height(DesignToken.padding.medium))
         Text(
             text = stringResource(Res.string.ref_no, refNo),
-            style = MaterialTheme.typography.bodySmall,
+            style = KptTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
         )
-        Spacer(Modifier.height(DesignToken.padding.small))
+        Spacer(Modifier.height(KptTheme.spacing.sm))
         if (paidOn.isNotEmpty()) {
             Text(
                 text = stringResource(Res.string.paid_on, paidOn),
                 style = MifosTypography.bodySmallEmphasized,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
             )
         }
     }
@@ -189,16 +188,16 @@ fun ChargeDetailsUnPaidComponent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             onClick = onPayOutStanding,
         ) {
             Text(stringResource(Res.string.pay_outstanding))
         }
-        Spacer(Modifier.height(DesignToken.padding.large))
+        Spacer(Modifier.height(KptTheme.spacing.md))
         if (amountPaidOn.isNotEmpty()) {
             Text(
                 text = stringResource(Res.string.partial_amount_paid_on, amountPaidOn),
-                style = MaterialTheme.typography.bodySmall,
+                style = KptTheme.typography.bodySmall,
             )
         }
     }
