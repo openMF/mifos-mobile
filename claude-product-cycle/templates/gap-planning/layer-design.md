@@ -7,19 +7,69 @@
 
 ---
 
-### Gaps Identified
+### Phase Overview
+
+| Phase | Description | Status | Progress |
+|-------|-------------|:------:|:--------:|
+| Phase 1 | Specifications (SPEC.md, API.md, MOCKUP.md) | ✅ Done | 100% |
+| Phase 2 | Mockup Generation (mockups/) | 🔄 In Progress | {{MOCKUPS_PCT}}% |
+| Phase 3 | Figma Export | ⏳ Pending | 0% |
+
+---
+
+### Phase 1: Specifications (DONE)
+
+- [x] All 17 features have SPEC.md ✅
+- [x] All 17 features have API.md ✅
+- [x] All 17 features have MOCKUP.md v2.0 ✅
+- [x] All 17 features have STATUS.md ✅
+
+---
+
+### Phase 2: Mockup Generation (IN PROGRESS)
+
+Generate Google Stitch prompts from MOCKUP.md for each feature:
+
+{{MOCKUP_GENERATION_TASKS}}
+
+---
+
+### Current Task: {{CURRENT_MOCKUP_FEATURE}}
+
+**Execute**: `/design {{CURRENT_MOCKUP_FEATURE}} mockup`
+
+**Steps**:
+1. Read `features/{{CURRENT_MOCKUP_FEATURE}}/MOCKUP.md`
+2. Generate `features/{{CURRENT_MOCKUP_FEATURE}}/mockups/PROMPTS.md` (Google Stitch format)
+3. Generate `features/{{CURRENT_MOCKUP_FEATURE}}/mockups/design-tokens.json`
+4. User: Copy prompt to Google Stitch
+5. User: Generate design and export to Figma
+6. User: Update `features/{{CURRENT_MOCKUP_FEATURE}}/mockups/FIGMA_LINKS.md` with URL
+
+---
+
+### Phase 3: Figma Export (PENDING)
+
+After all mockups generated, export to Figma:
+1. Connect Figma MCP: `claude mcp add figma`
+2. Run `/implement [feature]` to generate code from Figma
+
+---
+
+### After Completion
+
+1. Run `/gap-analysis design` to see updated status
+2. Continue with `/gap-planning design` for next feature
+3. Session can end - progress tracked in `mockups/` directories
+4. Resume with `/session-start` to continue where you left off
+
+---
+
+### Legacy Gaps (if any)
 
 | # | Feature | Missing | Priority | Effort |
 |---|---------|---------|:--------:|:------:|
 {{DESIGN_GAPS_TABLE}}
-
----
-
-### Tasks Overview
-
-| # | Task | Files | Priority | Effort |
-|---|------|-------|:--------:|:------:|
-{{TASKS_TABLE}}
 
 ---
 

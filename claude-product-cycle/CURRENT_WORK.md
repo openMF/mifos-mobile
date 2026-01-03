@@ -2,7 +2,7 @@
 
 **Last Updated**: 2026-01-03
 **Branch**: feature/design-specifications
-**Session Note**: Refactored gap-analysis and gap-planning commands with template approach
+**Session Note**: Added mockups sub-section to Design Layer with /design [feature] mockup command
 
 ---
 
@@ -10,33 +10,47 @@
 
 | # | Task | Feature | Status | Files | Notes |
 |---|------|---------|:------:|-------|-------|
-| 1 | v2.0 UI Implementation | dashboard | Planned | feature/dashboard/ | New module needed |
-| 2 | Template System | commands | ✅ Done | .claude/commands/*.md | Refactored to ~100 lines |
-| 3 | Session Commands | commands | ✅ Done | .claude/commands/session-*.md | Just created |
+| 1 | Mockup Generation | auth | ⏳ Next | features/auth/mockups/ | Run `/design auth mockup` |
+| 2 | v2.0 UI Implementation | dashboard | Planned | feature/dashboard/ | After mockups done |
+| 3 | Template System | commands | ✅ Done | .claude/commands/*.md | Refactored |
+| 4 | Session Commands | commands | ✅ Done | .claude/commands/session-*.md | Created |
+| 5 | Mockup Integration | design | ✅ Done | templates/gap-*/layer-design.md | Integrated |
 
 ---
 
 ## In Progress
 
-### Dashboard Feature (P0)
+### Design Layer - Phase 2: Mockup Generation
 
 **What was done**:
-- Created comprehensive SPEC.md, API.md, MOCKUP.md
-- Ran /gap-planning dashboard - identified 8 implementation tasks
-- Template system fully working
+- Integrated mockups sub-section into Design Layer
+- Updated `/gap-analysis design` to show mockups status
+- Updated `/gap-planning design` to include Phase 2 mockup tasks
+- Added `/design [feature] mockup` sub-command
 
-**What's next**:
+**What's next** (16 features pending):
+1. Run `/design auth mockup` to generate auth mockups
+2. Run `/design home mockup` to generate home mockups
+3. Continue through all 16 remaining features
+4. Use Google Stitch to generate visual designs
+5. Export to Figma
+
+**Commands**:
+```
+/gap-analysis design      # See mockups status
+/gap-planning design      # Get step-by-step plan
+/design [feature] mockup  # Generate mockups for feature
+```
+
+### Dashboard Feature (After Mockups)
+
+**Status**: Waiting for mockups to be generated first
+
+**What's next after mockups**:
 - Create `feature/dashboard/` module
 - Implement DashboardViewModel
 - Implement DashboardScreen with v2.0 design
 - Wire up navigation
-
-**Key files to create**:
-- `feature/dashboard/build.gradle.kts`
-- `feature/dashboard/src/commonMain/.../DashboardViewModel.kt`
-- `feature/dashboard/src/commonMain/.../DashboardScreen.kt`
-- `feature/dashboard/src/commonMain/.../di/DashboardModule.kt`
-- `feature/dashboard/src/commonMain/.../navigation/DashboardNavigation.kt`
 
 ---
 
