@@ -2,7 +2,7 @@
 
 **Last Updated**: 2026-01-03
 **Branch**: feature/design-specifications
-**Session Note**: Added sub-section support to /gap-analysis and /gap-planning commands
+**Session Note**: Generated auth mockups, added MCP integration for AI design tools
 
 ---
 
@@ -10,11 +10,11 @@
 
 | # | Task | Feature | Status | Files | Notes |
 |---|------|---------|:------:|-------|-------|
-| 1 | Mockup Generation | auth | ⏳ Next | features/auth/mockups/ | Run `/design auth mockup` |
-| 2 | v2.0 UI Implementation | dashboard | Planned | feature/dashboard/ | After mockups done |
-| 3 | Sub-Section Templates | templates | ✅ Done | templates/gap-*/subsection/*.md | 14 templates created |
-| 4 | Sub-Section Commands | commands | ✅ Done | .claude/commands/gap-*.md | Added {layer} {sub-section} syntax |
-| 5 | Mockup Integration | design | ✅ Done | templates/gap-*/layer-design.md | Integrated |
+| 1 | Mockup Generation | home | ⏳ Next | features/home/mockups/ | Run `/design home mockup` |
+| 2 | Mockup Generation | auth | ✅ Done | features/auth/mockups/ | PROMPTS.md + design-tokens.json |
+| 3 | v2.0 UI Implementation | dashboard | Planned | feature/dashboard/ | After mockups done |
+| 4 | MCP Integration | design | ✅ Done | TOOL_CONFIG.md | Stitch MCP installed |
+| 5 | Commands README | commands | ✅ Done | .claude/commands/README.md | Full reference |
 
 ---
 
@@ -22,42 +22,43 @@
 
 ### Design Layer - Phase 2: Mockup Generation
 
-**What was done**:
-- Integrated mockups sub-section into Design Layer
-- Updated `/gap-analysis design` to show mockups status
-- Updated `/gap-planning design` to include Phase 2 mockup tasks
-- Added `/design [feature] mockup` sub-command
-- Added `/gap-analysis {layer} {sub-section}` syntax
-- Added `/gap-planning {layer} {sub-section}` syntax
-- Created 14 sub-section templates in `templates/gap-*/subsection/`
+**Progress**: 2/17 features (12%)
+- ✅ dashboard - mockups generated
+- ✅ auth - mockups generated (this session)
+- ⏳ home - next
+- ⏳ 14 more features pending
 
-**What's next** (16 features pending):
-1. Run `/design auth mockup` to generate auth mockups
+**MCP Status**:
+```
+stitch-ai: ✅ Installed (restart to connect)
+figma:     ⚠️ Needs authentication
+```
+
+**What was done this session**:
+- Generated auth mockups (8 screens)
+- Added AI tool selection to `/design [feature] mockup`
+- Added MCP setup prompts
+- Created TOOL_CONFIG.md
+- Installed Google Stitch MCP
+- Updated commands README with full reference
+
+**What's next** (15 features pending):
+1. Restart Claude Code to activate Stitch MCP
 2. Run `/design home mockup` to generate home mockups
-3. Continue through all 16 remaining features
+3. Continue through remaining features
 4. Use Google Stitch to generate visual designs
 5. Export to Figma
 
 **Commands**:
 ```
-/gap-analysis                    # Brief overview of all layers
-/gap-analysis design             # Design layer status
-/gap-analysis design mockup      # Mockups sub-section only
-/gap-planning                    # Brief overview of what needs planning
-/gap-planning design             # Plan design layer work
-/gap-planning design mockup      # Plan mockup generation specifically
+/gap-analysis design mockup      # See mockup progress (2/17)
+/gap-planning design mockup      # Step-by-step plan
 /design [feature] mockup         # Generate mockups for feature
 ```
 
 ### Dashboard Feature (After Mockups)
 
-**Status**: Waiting for mockups to be generated first
-
-**What's next after mockups**:
-- Create `feature/dashboard/` module
-- Implement DashboardViewModel
-- Implement DashboardScreen with v2.0 design
-- Wire up navigation
+**Status**: Waiting for all mockups to be generated
 
 ---
 
@@ -65,13 +66,12 @@
 
 | Date | Task | Feature | Outcome |
 |------|------|---------|---------|
+| 2026-01-03 | Auth mockups | auth | Generated PROMPTS.md + design-tokens.json |
+| 2026-01-03 | MCP integration | design | Added tool selection, installed stitch-ai |
+| 2026-01-03 | Commands README | commands | Full reference with all sub-commands |
 | 2026-01-03 | Sub-section support | gap-analysis | Added {layer} {sub-section} syntax |
 | 2026-01-03 | Sub-section support | gap-planning | Added {layer} {sub-section} syntax |
 | 2026-01-03 | Sub-section templates | templates | Created 14 templates in subsection/ |
-| 2026-01-03 | Template refactoring | gap-analysis | Reduced from 747 → 102 lines |
-| 2026-01-03 | Template refactoring | gap-planning | Reduced from 500 → 114 lines |
-| 2026-01-03 | 5-layer structure | PRODUCT_MAP | Design → Server → Client → Feature → Platform |
-| 2026-01-03 | Mockup consolidation | design-spec-layer | Moved mockup-layer into design-spec-layer |
 
 ---
 
@@ -79,16 +79,24 @@
 
 ### Key Files to Read
 1. This file (`CURRENT_WORK.md`)
-2. `claude-product-cycle/PRODUCT_MAP.md` - Master status
-3. `claude-product-cycle/design-spec-layer/features/dashboard/` - Current focus
+2. `.claude/commands/README.md` - Full command reference
+3. `design-spec-layer/TOOL_CONFIG.md` - AI tool settings
+4. `features/auth/mockups/` - Example of generated mockups
 
 ### Key Commands
 - `/session-start` - Load this context
-- `/gap-analysis` - Brief overview of all layers
-- `/gap-analysis design mockup` - Mockups sub-section status
-- `/gap-planning design mockup` - Plan mockup generation
-- `/design [feature] mockup` - Generate mockups for feature
-- `/implement dashboard` - Execute implementation
+- `/gap-analysis design mockup` - See mockup progress
+- `/design home mockup` - Generate next feature mockups
+- `claude mcp list` - Check MCP status
+
+### MCP Setup (if needed)
+```bash
+# Google Stitch (already installed)
+claude mcp add stitch-ai -- npx -y stitch-ai-mcp
+
+# Figma (optional)
+claude mcp add figma  # Follow auth flow
+```
 
 ### Architecture Notes
 - KMP: Android, iOS, Desktop, Web
@@ -101,10 +109,10 @@
 ## Resume Instructions
 
 1. Run `/session-start` to load context
-2. Run `/gap-analysis` to see brief overview of all layers
-3. Run `/gap-planning design mockup` to see mockup generation plan
-4. Run `/design auth mockup` to generate first feature mockups
-5. Continue with remaining features
+2. Check MCP: `claude mcp list`
+3. Run `/gap-analysis design mockup` to see progress
+4. Run `/design home mockup` to continue mockup generation
+5. Repeat for remaining 14 features
 
 ---
 
@@ -112,4 +120,5 @@
 
 | Date | Focus | Outcome |
 |------|-------|---------|
+| 2026-01-03 | Mockup generation | Auth mockups done, MCP integrated, 2/17 complete |
 | 2026-01-03 | Command refactoring | Created template system, 5-layer structure |
