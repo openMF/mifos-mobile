@@ -9,8 +9,21 @@
 ## Quick Resume Commands
 
 ```bash
-# Check current status
-/projectstatus
+# Full 5-layer gap analysis dashboard
+/gap-analysis
+
+# Layer-specific analysis
+/gap-analysis design      # Design layer (SPEC, MOCKUP, API docs)
+/gap-analysis server      # Server layer (Fineract endpoints)
+/gap-analysis client      # Client layer (Network, Data)
+/gap-analysis feature     # Feature layer (ViewModel, Screen)
+/gap-analysis platform    # Platform layer (Android, iOS, Desktop, Web)
+
+# Feature-specific analysis (all 5 layers)
+/gap-analysis [feature-name]
+
+# Plan improvements
+/gap-planning [feature-name]
 
 # Continue design work on specific feature
 /design [feature-name]
@@ -20,6 +33,9 @@
 
 # Verify implementation matches spec
 /verify [feature-name]
+
+# Check current status
+/projectstatus
 ```
 
 ---
@@ -55,19 +71,48 @@
 
 ---
 
+## 5-Layer Product Lifecycle
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    PRODUCT LIFECYCLE                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  1. DESIGN LAYER     →  SPEC + MOCKUP + API documentation   │
+│         ↓                                                    │
+│  2. SERVER LAYER     →  Fineract API endpoints (actual)     │
+│         ↓                                                    │
+│  3. CLIENT LAYER     →  Network services, Repositories      │
+│         ↓                                                    │
+│  4. FEATURE LAYER    →  ViewModels, Screens, Navigation     │
+│         ↓                                                    │
+│  5. PLATFORM LAYER   →  Android, iOS, Desktop, Web          │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ## Layer Definitions
 
-### 1. Design Layer (`/design`)
-**Location**: `claude-product-cycle/design-spec-layer/features/[feature]/`
+### 1. Design Layer (`/design`, `/gap-analysis design`)
+**Location**: `claude-product-cycle/design-spec-layer/`
 
-| File | Purpose |
-|------|---------|
-| `SPEC.md` | Feature specification, user stories, acceptance criteria |
-| `API.md` | API endpoints, request/response schemas |
-| `MOCKUP.md` | ASCII UI mockups, component specs, animations |
-| `STATUS.md` | Current implementation status |
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| SPEC.md | `features/[feature]/SPEC.md` | Requirements, user stories |
+| MOCKUP.md | `features/[feature]/MOCKUP.md` | UI/UX designs, v2.0 patterns |
+| API.md | `features/[feature]/API.md` | Endpoint definitions |
+| STATUS.md | `features/[feature]/STATUS.md` | Implementation status |
+| mockup-tools/ | `mockup-tools/` | Figma plugin, templates |
 
-### 2. Client Layer (`/client`)
+### 2. Server Layer (`/gap-analysis server`)
+**Location**: `claude-product-cycle/server-layer/`
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| FINERACT_API.md | `server-layer/FINERACT_API.md` | All available endpoints |
+| Base URL | `https://tt.mifos.community/fineract-provider/api/v1/self/` | Demo server |
+
+### 3. Client Layer (`/client`, `/gap-analysis client`)
 **Location**: `core/network/` + `core/data/`
 
 | Component | Location |
@@ -76,7 +121,7 @@
 | Repository | `core/data/repository/[Feature]Repository.kt` |
 | Models | `core/model/[feature]/` |
 
-### 3. Feature Layer (`/feature`)
+### 4. Feature Layer (`/feature`, `/gap-analysis feature`)
 **Location**: `feature/[feature]/`
 
 | Component | Location |
@@ -85,6 +130,16 @@
 | Screen | `feature/[feature]/src/.../ui/` |
 | Navigation | `cmp-navigation/src/.../navigation/` |
 | DI Module | `feature/[feature]/src/.../di/` |
+
+### 5. Platform Layer (`/gap-analysis platform`)
+**Location**: `cmp-android/`, `cmp-ios/`, `cmp-desktop/`, `cmp-web/`
+
+| Platform | Module | Status |
+|----------|--------|--------|
+| 🤖 Android | `cmp-android/` | Production Ready |
+| 🍎 iOS | `cmp-ios/` | Production Ready |
+| 🖥️ Desktop | `cmp-desktop/` | Beta |
+| 🌐 Web | `cmp-web/` | Alpha |
 
 ---
 
