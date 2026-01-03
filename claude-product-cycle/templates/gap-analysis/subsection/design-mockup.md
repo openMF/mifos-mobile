@@ -7,6 +7,66 @@
 
 ---
 
+### 🔌 Design Tools & MCP Connections
+
+Before generating mockups, ensure your design tools are configured:
+
+#### AI Design Tools
+
+| Tool | Status | Website | MCP Available |
+|------|:------:|---------|:-------------:|
+| Google Stitch | {{STITCH_STATUS}} | [stitch.withgoogle.com](https://stitch.withgoogle.com/) | ✅ [stitch-ai-mcp](https://github.com/StitchAI/stitch-ai-mcp) |
+| Figma | {{FIGMA_STATUS}} | [figma.com](https://www.figma.com/) | ✅ [figma-mcp](https://github.com/anthropics/claude-code/tree/main/docs/mcp) |
+| Uizard | {{UIZARD_STATUS}} | [uizard.io](https://uizard.io/) | ❌ |
+| Visily | {{VISILY_STATUS}} | [visily.ai](https://www.visily.ai/) | ❌ |
+
+**Recommended**: Google Stitch (Material Design 3 native, has MCP)
+
+#### MCP Connection Status
+
+```
+MCP SERVERS
+├── figma          {{FIGMA_MCP_STATUS}}
+├── stitch-ai      {{STITCH_MCP_STATUS}}
+└── (other)        {{OTHER_MCP_STATUS}}
+```
+
+#### Setup MCP (if not connected)
+
+**Google Stitch MCP** (Recommended):
+```bash
+claude mcp add stitch-ai -- npx -y stitch-ai-mcp
+```
+
+**Figma MCP**:
+```bash
+claude mcp add figma -- npx -y figma-mcp --token YOUR_FIGMA_TOKEN
+```
+
+**Check MCP Status**:
+```bash
+claude mcp list
+```
+
+---
+
+### 🎨 Choose Your AI Design Tool
+
+Select which AI tool to use for mockup generation:
+
+| Option | Tool | Best For | Prompt Format |
+|:------:|------|----------|---------------|
+| **1** | Google Stitch | Material Design 3, Android/KMP | Detailed MD3 prompts |
+| **2** | Figma + AI | Custom designs, team collaboration | Figma-native prompts |
+| **3** | Uizard | Quick prototypes | Concise feature prompts |
+| **4** | Visily | Component-focused | Checklist prompts |
+
+**Current Selection**: {{SELECTED_TOOL}}
+
+To change: Update `design-spec-layer/TOOL_CONFIG.md` or select when running `/design [feature] mockup`
+
+---
+
 ### Status Overview
 
 ```
@@ -52,24 +112,65 @@ MOCKUP GENERATION PROGRESS
 
 ---
 
-### Next Action
+### Next Actions
 
-**Execute**: `/design {{NEXT_FEATURE}} mockup`
+**1. Setup MCP (if not configured)**:
+```bash
+claude mcp add stitch-ai -- npx -y stitch-ai-mcp
+```
 
-Or run `/gap-planning design mockup` for step-by-step plan.
+**2. Generate mockups for next feature**:
+```
+/design {{NEXT_FEATURE}} mockup
+```
+
+**3. Or run full planning**:
+```
+/gap-planning design mockup
+```
 
 ---
 
 ### Workflow Reference
 
 ```
-MOCKUP.md (ASCII v2.0)
-       ↓
-/design [feature] mockup
-       ↓
-mockups/PROMPTS.md + design-tokens.json
-       ↓
-User: Google Stitch → Figma
-       ↓
-User: Update FIGMA_LINKS.md
+┌─────────────────────────────────────────────────────────────────┐
+│                 MOCKUP GENERATION WORKFLOW                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  1. MOCKUP.md (ASCII v2.0 design)                               │
+│         ↓                                                        │
+│  2. /design [feature] mockup                                     │
+│         ↓                                                        │
+│     ┌───────────────────────────────────────┐                   │
+│     │ Generates:                             │                   │
+│     │ • mockups/PROMPTS.md (AI tool prompts)│                   │
+│     │ • mockups/design-tokens.json          │                   │
+│     └───────────────────────────────────────┘                   │
+│         ↓                                                        │
+│  3. AI Design Tool (choose one):                                │
+│     • Google Stitch (via MCP or web)                            │
+│     • Figma AI                                                   │
+│     • Uizard / Visily                                           │
+│         ↓                                                        │
+│  4. Export to Figma                                              │
+│         ↓                                                        │
+│  5. Update mockups/FIGMA_LINKS.md                               │
+│         ↓                                                        │
+│  6. /implement [feature] (reads from Figma MCP)                 │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+### MCP Integration Benefits
+
+| With MCP | Without MCP |
+|----------|-------------|
+| Claude can directly generate designs | Manual copy/paste prompts |
+| Auto-export to Figma | Manual export |
+| Read designs back for implementation | Manual reference |
+| Seamless workflow | Multiple tool switches |
+
+**Recommended Setup**: Google Stitch MCP + Figma MCP for end-to-end automation
