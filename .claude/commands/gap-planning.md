@@ -1,36 +1,76 @@
 # Gap Planning Command
 
-Plan concrete implementation tasks based on gaps identified by `/gap-analysis`.
+Brief entry point to plan implementation tasks. Creates step-by-step plans that persist across sessions.
 
 ## Usage
 
 ```
-/gap-planning                    # Full planning dashboard (all layers)
-/gap-planning design             # Plan design layer fixes
-/gap-planning server             # Plan server layer fixes
-/gap-planning client             # Plan client layer fixes
-/gap-planning feature            # Plan feature layer fixes
-/gap-planning platform           # Plan platform layer fixes
-/gap-planning [feature-name]     # Plan specific feature fixes
+/gap-planning                        # Brief overview (what needs planning)
+/gap-planning design                 # Plan design layer work
+/gap-planning design mockup          # Plan mockup generation specifically
+/gap-planning design spec            # Plan specification work
+/gap-planning server                 # Plan server layer work
+/gap-planning client                 # Plan client layer work
+/gap-planning client network         # Plan network services
+/gap-planning client data            # Plan repositories
+/gap-planning feature                # Plan feature layer work
+/gap-planning feature [name]         # Plan specific feature
+/gap-planning platform               # Plan platform layer work
+/gap-planning platform android       # Plan Android-specific work
+/gap-planning [feature-name]         # Plan specific feature (all layers)
+```
+
+## Brief Overview Output (No Parameters)
+
+When `/gap-planning` is called without parameters, show a **brief summary**:
+
+```
+## Gap Planning - What Needs Work
+
+| Layer | Gaps | Priority | Next Plan |
+|-------|:----:|:--------:|-----------|
+| Design | mockups (16) | P1 | /gap-planning design mockup |
+| Server | - | - | - |
+| Client | 1 service | P2 | /gap-planning client |
+| Feature | dashboard | P0 | /gap-planning feature dashboard |
+| Platform | web fixes | P2 | /gap-planning platform web |
+
+**Current Focus**: Design Layer → Mockup Generation (Phase 2)
+**Next Step**: Run `/gap-planning design mockup` to get step-by-step tasks.
 ```
 
 ## Prerequisites
 
-Run `/gap-analysis` first to identify gaps.
+Run `/gap-analysis` first to identify gaps, or run `/gap-planning` directly to see what needs work.
 
 ## Instructions
 
 ### Step 1: Determine Template
 
+**Layer Parameters**:
 | Parameter | Template | Plans For |
 |-----------|----------|-----------|
-| (none) | `templates/gap-planning/dashboard.md` | All layers prioritized |
-| `design` | `templates/gap-planning/layer-design.md` | Missing specs/mockups |
-| `server` | `templates/gap-planning/layer-server.md` | Undocumented endpoints |
-| `client` | `templates/gap-planning/layer-client.md` | Missing services/repos |
-| `feature` | `templates/gap-planning/layer-feature.md` | Missing features, v2.0 UI |
-| `platform` | `templates/gap-planning/layer-platform.md` | Platform-specific fixes |
-| `[name]` | See Step 2 | Specific feature |
+| (none) | Brief summary | What needs planning |
+| `design` | `layer-design.md` | Design layer (specs + mockups) |
+| `server` | `layer-server.md` | Server documentation |
+| `client` | `layer-client.md` | Network + Data layers |
+| `feature` | `layer-feature.md` | Feature implementation |
+| `platform` | `layer-platform.md` | Platform-specific work |
+| `[name]` | `feature-*.md` | Specific feature |
+
+**Sub-Section Parameters** (layer + sub-section):
+| Parameters | Template | Plans For |
+|------------|----------|-----------|
+| `design mockup` | `subsection/design-mockup.md` | Mockup generation (Google Stitch) |
+| `design spec` | `subsection/design-spec.md` | Specification updates |
+| `design api` | `subsection/design-api.md` | API documentation |
+| `client network` | `subsection/client-network.md` | Network services |
+| `client data` | `subsection/client-data.md` | Repositories |
+| `feature [name]` | `subsection/feature-single.md` | Single feature plan |
+| `platform android` | `subsection/platform-android.md` | Android-specific |
+| `platform ios` | `subsection/platform-ios.md` | iOS-specific |
+| `platform desktop` | `subsection/platform-desktop.md` | Desktop-specific |
+| `platform web` | `subsection/platform-web.md` | Web-specific |
 
 ### Step 2: For Feature Parameter
 

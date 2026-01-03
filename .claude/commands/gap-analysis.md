@@ -1,42 +1,81 @@
 # Gap Analysis Command
 
-Analyze implementation status across the 5-layer product lifecycle.
+Brief entry point to analyze implementation status. Shows where work is needed across the 5-layer lifecycle.
 
 ## Usage
 
 ```
-/gap-analysis                    # Full dashboard
-/gap-analysis design             # Design layer (SPEC + MOCKUP + API)
-/gap-analysis server             # Server layer (Fineract endpoints)
-/gap-analysis client             # Client layer (Network + Data)
-/gap-analysis feature            # Feature layer (ViewModel + Screen)
-/gap-analysis platform           # Platform layer (Android, iOS, Desktop, Web)
-/gap-analysis [feature-name]     # Specific feature (all 5 layers)
+/gap-analysis                        # Brief overview (all layers summary)
+/gap-analysis design                 # Design layer status
+/gap-analysis design mockup          # Design → Mockup sub-section only
+/gap-analysis design spec            # Design → Spec sub-section only
+/gap-analysis server                 # Server layer status
+/gap-analysis client                 # Client layer status
+/gap-analysis client network         # Client → Network sub-section
+/gap-analysis client data            # Client → Data sub-section
+/gap-analysis feature                # Feature layer status
+/gap-analysis feature [name]         # Feature → specific feature
+/gap-analysis platform               # Platform layer status
+/gap-analysis platform android       # Platform → Android only
+/gap-analysis [feature-name]         # Specific feature (all 5 layers)
 ```
 
-## 5-Layer Lifecycle
+## 5-Layer Lifecycle with Sub-Sections
 
 ```
-1. Design   → SPEC.md + MOCKUP.md + API.md
-2. Server   → Fineract API endpoints
-3. Client   → Network services + Repositories
-4. Feature  → ViewModel + Screen + Navigation
-5. Platform → Android, iOS, Desktop, Web
+1. Design   → spec | mockup | api | status
+2. Server   → endpoints | availability
+3. Client   → network | data | model
+4. Feature  → viewmodel | screen | navigation | di
+5. Platform → android | ios | desktop | web
+```
+
+## Brief Overview Output (No Parameters)
+
+When `/gap-analysis` is called without parameters, show a **brief summary**:
+
+```
+## Gap Analysis - Quick Overview
+
+| Layer | Progress | Gaps | Next Action |
+|-------|:--------:|:----:|-------------|
+| Design | 85% | mockups/ (16) | /gap-analysis design mockup |
+| Server | 100% | - | - |
+| Client | 95% | 1 service | /gap-analysis client |
+| Feature | 94% | dashboard | /gap-analysis feature |
+| Platform | 90% | web fixes | /gap-analysis platform |
+
+**Next Step**: Run `/gap-analysis [layer]` for details, or `/gap-planning [layer]` to plan.
 ```
 
 ## Instructions
 
 ### Step 1: Determine Output Type
 
+**Layer Parameters**:
 | Parameter | Template | Action |
 |-----------|----------|--------|
-| (none) | `templates/gap-analysis/dashboard.md` | Full dashboard |
-| `design` | `templates/gap-analysis/layer-design.md` | Design layer |
-| `server` | `templates/gap-analysis/layer-server.md` | Server layer |
-| `client` | `templates/gap-analysis/layer-client.md` | Client layer |
-| `feature` | `templates/gap-analysis/layer-feature.md` | Feature layer |
-| `platform` | `templates/gap-analysis/layer-platform.md` | Platform layer |
-| `[name]` | `templates/gap-analysis/feature-detail.md` | Feature detail |
+| (none) | Brief summary | Quick overview of all layers |
+| `design` | `layer-design.md` | Full design layer status |
+| `server` | `layer-server.md` | Server layer status |
+| `client` | `layer-client.md` | Client layer status |
+| `feature` | `layer-feature.md` | Feature layer status |
+| `platform` | `layer-platform.md` | Platform layer status |
+| `[name]` | `feature-detail.md` | Specific feature (all layers) |
+
+**Sub-Section Parameters** (layer + sub-section):
+| Parameters | Template | Action |
+|------------|----------|--------|
+| `design mockup` | `subsection/design-mockup.md` | Mockup generation status |
+| `design spec` | `subsection/design-spec.md` | Specification status |
+| `design api` | `subsection/design-api.md` | API documentation status |
+| `client network` | `subsection/client-network.md` | Network services status |
+| `client data` | `subsection/client-data.md` | Repository status |
+| `feature [name]` | `subsection/feature-single.md` | Single feature status |
+| `platform android` | `subsection/platform-android.md` | Android-only status |
+| `platform ios` | `subsection/platform-ios.md` | iOS-only status |
+| `platform desktop` | `subsection/platform-desktop.md` | Desktop-only status |
+| `platform web` | `subsection/platform-web.md` | Web-only status |
 
 ### Step 2: Read Status Files
 

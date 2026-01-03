@@ -2,7 +2,7 @@
 
 **Last Updated**: 2026-01-03
 **Branch**: feature/design-specifications
-**Session Note**: Added mockups sub-section to Design Layer with /design [feature] mockup command
+**Session Note**: Added sub-section support to /gap-analysis and /gap-planning commands
 
 ---
 
@@ -12,8 +12,8 @@
 |---|------|---------|:------:|-------|-------|
 | 1 | Mockup Generation | auth | ⏳ Next | features/auth/mockups/ | Run `/design auth mockup` |
 | 2 | v2.0 UI Implementation | dashboard | Planned | feature/dashboard/ | After mockups done |
-| 3 | Template System | commands | ✅ Done | .claude/commands/*.md | Refactored |
-| 4 | Session Commands | commands | ✅ Done | .claude/commands/session-*.md | Created |
+| 3 | Sub-Section Templates | templates | ✅ Done | templates/gap-*/subsection/*.md | 14 templates created |
+| 4 | Sub-Section Commands | commands | ✅ Done | .claude/commands/gap-*.md | Added {layer} {sub-section} syntax |
 | 5 | Mockup Integration | design | ✅ Done | templates/gap-*/layer-design.md | Integrated |
 
 ---
@@ -27,6 +27,9 @@
 - Updated `/gap-analysis design` to show mockups status
 - Updated `/gap-planning design` to include Phase 2 mockup tasks
 - Added `/design [feature] mockup` sub-command
+- Added `/gap-analysis {layer} {sub-section}` syntax
+- Added `/gap-planning {layer} {sub-section}` syntax
+- Created 14 sub-section templates in `templates/gap-*/subsection/`
 
 **What's next** (16 features pending):
 1. Run `/design auth mockup` to generate auth mockups
@@ -37,9 +40,13 @@
 
 **Commands**:
 ```
-/gap-analysis design      # See mockups status
-/gap-planning design      # Get step-by-step plan
-/design [feature] mockup  # Generate mockups for feature
+/gap-analysis                    # Brief overview of all layers
+/gap-analysis design             # Design layer status
+/gap-analysis design mockup      # Mockups sub-section only
+/gap-planning                    # Brief overview of what needs planning
+/gap-planning design             # Plan design layer work
+/gap-planning design mockup      # Plan mockup generation specifically
+/design [feature] mockup         # Generate mockups for feature
 ```
 
 ### Dashboard Feature (After Mockups)
@@ -58,6 +65,9 @@
 
 | Date | Task | Feature | Outcome |
 |------|------|---------|---------|
+| 2026-01-03 | Sub-section support | gap-analysis | Added {layer} {sub-section} syntax |
+| 2026-01-03 | Sub-section support | gap-planning | Added {layer} {sub-section} syntax |
+| 2026-01-03 | Sub-section templates | templates | Created 14 templates in subsection/ |
 | 2026-01-03 | Template refactoring | gap-analysis | Reduced from 747 → 102 lines |
 | 2026-01-03 | Template refactoring | gap-planning | Reduced from 500 → 114 lines |
 | 2026-01-03 | 5-layer structure | PRODUCT_MAP | Design → Server → Client → Feature → Platform |
@@ -74,8 +84,10 @@
 
 ### Key Commands
 - `/session-start` - Load this context
-- `/gap-analysis` - Full 5-layer dashboard
-- `/gap-planning dashboard` - Detailed implementation plan
+- `/gap-analysis` - Brief overview of all layers
+- `/gap-analysis design mockup` - Mockups sub-section status
+- `/gap-planning design mockup` - Plan mockup generation
+- `/design [feature] mockup` - Generate mockups for feature
 - `/implement dashboard` - Execute implementation
 
 ### Architecture Notes
@@ -89,9 +101,10 @@
 ## Resume Instructions
 
 1. Run `/session-start` to load context
-2. Run `/gap-planning dashboard` to see implementation plan
-3. Start with Task 1: Create feature module structure
-4. Use `/implement dashboard` when ready to code
+2. Run `/gap-analysis` to see brief overview of all layers
+3. Run `/gap-planning design mockup` to see mockup generation plan
+4. Run `/design auth mockup` to generate first feature mockups
+5. Continue with remaining features
 
 ---
 
