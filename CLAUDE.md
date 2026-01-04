@@ -132,6 +132,10 @@ Android has two product flavors:
 
 ## Git Commit & PR Guidelines
 
+- **Always use feature branches**: NEVER push directly to `development` branch
+  - Create a feature branch: `git checkout -b feature/[description]`
+  - Push to feature branch: `git push origin feature/[description]`
+  - Create PR targeting `development` branch
 - **No Claude references**: Do NOT add Claude attribution, co-author lines, or "Generated with Claude Code" footers to commits or PRs
 - Keep commit messages clean and focused on the changes made
 - PR descriptions should only contain relevant technical information
