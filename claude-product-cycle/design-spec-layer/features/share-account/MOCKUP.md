@@ -1723,3 +1723,50 @@ sealed class ShareTransactionFlow {
 |------|---------|--------|
 | 2025-12-29 | 1.0 | Initial share account mockups |
 | 2025-12-30 | 2.0 | Complete redesign with 2025 investment patterns: portfolio dashboard, performance charts, dividend tracking, DRIP settings, investment streaks, price alerts, member governance, dividend calculator, achievements system |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Account List | See `accounts/API.md` | `shareAccounts[]` from client accounts |
+| Account Detail | `4. Get Share Account Details` | `totalApprovedShares`, `purchasedShares[]`, `status` |
+| Purchase History | `4. Get Share Account Details` | `purchasedShares[]` embedded in response |
+| Share Products | `1. Get Share Products` | Products list |
+| Product Detail | `2. Get Share Product Details` | Product specifications |
+| Apply for Shares | `3. Submit Share Application` | POST with `requestedShares` |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Portfolio Performance | Client-side | Calculated from purchase history |
+| Dividend History | Not available | Not in Fineract API |
+| Investment Streak | DataStore | Gamification layer |
+| Price Alerts | DataStore | Client-side notifications |
+| Dividend Calculator | Client-side | Projection calculation |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Pull to Refresh | `4. Get Share Account Details` | Reload account |
+| View Products | `1. Get Share Products` | → Products List |
+| Apply for Shares | `3. Submit Share Application` | → Application Flow |
+
+### API Limitations
+
+See `API.md → Note on Limited API` - Share API has fewer features than Savings/Loans:
+- No transaction detail endpoint
+- No charges endpoint
+- Dividend tracking not available
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

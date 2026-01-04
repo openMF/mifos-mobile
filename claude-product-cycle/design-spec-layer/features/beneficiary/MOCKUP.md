@@ -1528,3 +1528,42 @@ class ContactDetailViewModel : ViewModel() {
 |---------|------|---------|
 | 1.0 | 2025-12-29 | Initial design with basic list/detail |
 | 2.0 | 2025-12-30 | Complete redesign with Trusted Contacts Hub, smart suggestions, transfer history per contact, relationship tags, favorites, quick send actions, AI-powered suggestions |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Beneficiary List | `1. Get Beneficiary List` | `name`, `accountNumber`, `accountType`, `transferLimit` |
+| Add Beneficiary | `2. Get Beneficiary Template` + `3. Create Beneficiary` | Template options → POST payload |
+| Edit Beneficiary | `4. Update Beneficiary` | `name`, `transferLimit` only |
+| Delete Beneficiary | `5. Delete Beneficiary` | DELETE by ID |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Favorites | DataStore | Local preference |
+| Relationship Tags | DataStore | Client-side categorization |
+| Recent Recipients | DataStore | Local transfer history |
+| Smart Suggestions | Client-side | Based on usage patterns |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load List | `1. Get Beneficiary List` | Display contacts |
+| Add New | `2. Get Template` → `3. Create` | → Add Flow |
+| Edit | `4. Update Beneficiary` | Name/limit only |
+| Delete | `5. Delete Beneficiary` | Confirmation dialog |
+| Quick Transfer | See `transfer/API.md` | → Transfer Flow |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

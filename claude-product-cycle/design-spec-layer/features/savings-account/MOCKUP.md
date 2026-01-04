@@ -1465,3 +1465,45 @@ Savings accounts are reimagined as **engaging savings experiences** following 20
 |------|---------|--------|
 | 2025-12-30 | 1.0 | Initial mockup creation |
 | 2025-12-30 | 2.0 | Enhanced with 2025 patterns: Savings goals with progress rings, Gamification (streaks, badges, challenges), Auto-save rules (round-ups, scheduled, smart), Interest visualization, Savings calculator, Quick deposits, Challenge system |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Account List | `Endpoints Required → 1. Savings Account Summary` | `savingsAccounts[]` from client accounts |
+| Account Detail | `Endpoints Required → 2. Savings Account Details` | `summary`, `accountNo`, `status`, `timeline` |
+| Transactions | `Endpoints Required → 3. Savings Transactions` | `transactions[]` with associations |
+| Transaction Detail | `Endpoints Required → 4. Savings Transaction Detail` | Full transaction object |
+| Account Charges | `Endpoints Required → 9. Savings Account Charges` | `charges[]` |
+| Update Account | `Endpoints Required → 6. Update Savings Account` | PUT request payload |
+| Withdraw Application | `Endpoints Required → 7. Withdraw Application` | POST with command |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Savings Goals / Pockets | DataStore | Not in Fineract API |
+| Auto-save Rules | DataStore | Client-side automation |
+| Savings Streak | DataStore | Gamification layer |
+| Interest Calculator | Client-side | Projection calculation |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Pull to Refresh | `2. Savings Account Details` | Reload with transactions |
+| Tap Transaction | `4. Savings Transaction Detail` | → Transaction Detail |
+| Update Account | `6. Update Savings Account` | Submit form |
+| Withdraw Application | `7. Withdraw Application` | Confirmation flow |
+| View Charges | `9. Savings Account Charges` | → Charges List |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

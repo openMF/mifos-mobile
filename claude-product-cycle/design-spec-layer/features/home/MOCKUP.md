@@ -977,3 +977,48 @@ fun HomeScreen(
 - Enhanced gamification with streaks
 - Improved micro-interactions
 - Added comprehensive accessibility specs
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen Component | API.md Section | Key Fields |
+|------------------|----------------|------------|
+| Hero Balance Card | `Endpoints Required → 1. Client Info` | Calculated from accounts |
+| Greeting Section | `Endpoints Required → 1. Client Info` | `displayName`, `firstname` |
+| Avatar Image | `Endpoints Required → 2. Client Image` | Binary image |
+| Accounts Summary | `Endpoints Required → 3. Client Accounts` | `savingsAccounts[]`, `loanAccounts[]` |
+| Recent Transactions | `Endpoints Required → 4. Recent Transactions` | `pageItems[]` |
+| Notification Badge | `Endpoints Required → 5. Notifications` | `totalFilteredRecords` |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Total Balance Calculation | Client-side | Sum savings + shares - loans |
+| Spending Analytics | DataStore | Not in Fineract API |
+| Recent Recipients | DataStore | Local history |
+| Financial Health Score | Client-side | Calculated from account data |
+| Savings Streak | DataStore | Gamification layer |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Pull to Refresh | `1. Client Info` + `3. Client Accounts` | Reload data |
+| Tap Account Card | See `accounts/API.md` | → Account Detail |
+| Tap Transaction | `4. Recent Transactions` | → Transaction Detail |
+| Tap Notification | `5. Notifications` | → Notifications |
+
+### Data Refresh Strategy
+
+| Event | API.md Sections to Refresh |
+|-------|----------------------------|
+| Screen Load | `1`, `3`, `4` |
+| Pull to Refresh | All sections |
+| Return from Transfer | `3. Client Accounts` |

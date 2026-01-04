@@ -1690,3 +1690,49 @@ fun AchievementUnlockOverlay(...)
 - Comprehensive dark mode support
 - Full accessibility specifications
 - Detailed animation and micro-interaction specs
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Client Info | `1. Client Details` | `displayName`, profile data |
+| All Accounts | `2. Client Accounts Overview` | `savingsAccounts[]`, `loanAccounts[]`, `shareAccounts[]` |
+| Profile Image | `3. Client Profile Image` | Binary image |
+| Recent Transactions | `4. Client Transactions` | For sparkline chart |
+| Savings Detail | `5. Savings Account Details` | Full savings data |
+| Loan Detail | `6. Loan Account Details` | Full loan data |
+| Beneficiaries | `7. Beneficiary List` | For quick transfer |
+| Transfer Template | `8. Transfer Template` | Account options |
+| Execute Transfer | `9. Execute Transfer` | POST transfer |
+| Third-Party Transfer | `10. Third-Party Transfer` | TPT support |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Net Worth Calculation | Client-side | Sum accounts |
+| Portfolio Allocation | Client-side | Calculate percentages |
+| Financial Health Score | Client-side | Based on account patterns |
+| AI Insights | Client-side | Generated recommendations |
+| Achievement Badges | DataStore | Gamification |
+| Sparkline Chart | Client-side | From transaction data |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Dashboard | `1. Client Details` + `2. Client Accounts` | Initial load |
+| View Savings | `5. Savings Account Details` | → Savings Detail |
+| View Loan | `6. Loan Account Details` | → Loan Detail |
+| Quick Transfer | `8. Transfer Template` → `9. Execute Transfer` | → Transfer Flow |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

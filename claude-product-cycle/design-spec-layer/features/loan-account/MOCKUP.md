@@ -2091,3 +2091,48 @@ sealed class PaymentFlow {
 |------|---------|--------|
 | 2025-12-29 | 1.0 | Initial loan account mockups |
 | 2025-12-30 | 2.0 | Complete redesign with 2025 fintech patterns: debt freedom countdown, payment streaks, milestone gamification, early payoff calculator, smart AI suggestions, achievements system |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Account List | `Endpoints Required → 1. Loan Account Summary` | `loanAccounts[]` from client accounts |
+| Account Detail | `Endpoints Required → 2. Loan Account Details` | `summary`, `principal`, `interestRatePerPeriod`, `status` |
+| Repayment Schedule | `Endpoints Required → 3. Loan Repayment Schedule` | `repaymentSchedule.periods[]` |
+| Transactions | `Endpoints Required → 4. Loan Transactions` | `transactions[]` with associations |
+| Transaction Detail | `Endpoints Required → 5. Loan Transaction Detail` | Full transaction with portions |
+| Guarantors | `Endpoints Required → 6. Loan Guarantors` | `guarantors[]` |
+| Add Guarantor | `Endpoints Required → 7. Create Guarantor` | POST request payload |
+| Loan Charges | `Endpoints Required → 8. Loan Charges` | `charges[]` |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Debt Freedom Countdown | Client-side | Calculated from repaymentSchedule |
+| Payment Streak | DataStore | Gamification layer |
+| Milestones (25%, 50%, 75%) | DataStore | Progress tracking |
+| Early Payoff Calculator | Client-side | Projection calculation |
+| Progress Bar | Client-side | `amountPaid / principal * 100` |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Pull to Refresh | `2. Loan Account Details` | Reload with all associations |
+| View Schedule | `3. Loan Repayment Schedule` | → Schedule Screen |
+| Tap Transaction | `5. Loan Transaction Detail` | → Transaction Detail |
+| View Guarantors | `6. Loan Guarantors` | → Guarantors List |
+| Add Guarantor | `7. Create Guarantor` | → Add Guarantor Flow |
+| View Charges | `8. Loan Charges` | → Charges List |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

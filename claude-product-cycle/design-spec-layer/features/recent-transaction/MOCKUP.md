@@ -1452,3 +1452,48 @@ class TransactionViewModel : ViewModel() {
 |---------|------|---------|
 | 1.0 | 2025-12-29 | Initial design with Revolut-style transaction list |
 | 2.0 | 2025-12-30 | Complete redesign with Smart Money Intelligence Hub: spending analytics, category budgets, saving streaks, smart search, recurring transaction detection, AI insights, gamification |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Transaction List | `Endpoints Required → 1. Recent Transactions` | `pageItems[]`, `totalFilteredRecords` |
+| Savings Transaction Detail | `Endpoints Required → 2. Savings Transaction Detail` | Full transaction object |
+| Loan Transaction Detail | `Endpoints Required → 3. Loan Transaction Detail` | Full transaction with portions |
+
+### Pagination
+
+See `API.md → 1. Recent Transactions` for pagination parameters:
+- `offset`: Starting position
+- `limit`: Records per page (default 50)
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Spending Analytics | Client-side | Calculated from transactions |
+| Category Budgets | DataStore | Local feature |
+| Transaction Tags | DataStore | Local categorization |
+| Smart Search | Client-side | Filter by amount/date/type |
+| Recurring Detection | Client-side | Pattern analysis |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Initial | `1. Recent Transactions` (offset=0) | First page |
+| Load More | `1. Recent Transactions` (offset+=limit) | Pagination |
+| Tap Savings Tx | `2. Savings Transaction Detail` | → Transaction Detail |
+| Tap Loan Tx | `3. Loan Transaction Detail` | → Transaction Detail |
+| Pull to Refresh | `1. Recent Transactions` (offset=0) | Reload |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

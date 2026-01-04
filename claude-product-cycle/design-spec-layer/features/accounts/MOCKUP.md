@@ -1538,3 +1538,45 @@ ANIMATION SEQUENCE:
 |------|---------|--------|
 | 2025-12-30 | 1.0 | Initial mockup creation |
 | 2025-12-30 | 2.0 | Enhanced with 2025 fintech patterns: Financial Health Score, Spending Analytics, AI Insights, Gamification, Goals Tab, Swipe Actions, Category Drill-down |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen Component | API.md Section | Key Fields |
+|------------------|----------------|------------|
+| Account Type Tabs | `1. Client Accounts Overview` | `savingsAccounts[]`, `loanAccounts[]`, `shareAccounts[]` |
+| Savings Account Card | `1. Client Accounts Overview` | `accountNo`, `productName`, `accountBalance`, `status` |
+| Loan Account Card | `1. Client Accounts Overview` | `accountNo`, `loanBalance`, `principal`, `amountPaid`, `inArrears` |
+| Share Account Card | `1. Client Accounts Overview` | `accountNo`, `totalApprovedShares`, `totalPendingForApprovalShares` |
+| Savings Detail | `2. Savings Account Details with Transactions` | Full account with transactions |
+| Loan Detail | `3. Loan Account Details with Transactions` | Full loan with repayment schedule |
+| Share Detail | `4. Share Account Details` | Full share account |
+| Transaction Detail | `6. Savings Transaction Details` / `7. Loan Transaction Details` | Transaction specifics |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Financial Health Score | Client-side | Calculated from account data |
+| Spending Analytics | DataStore | Not in Fineract API |
+| Account Nicknames | DataStore | Local customization |
+| Progress Bar (Loan) | Client-side | `amountPaid / principal * 100` |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Pull to Refresh | `1. Client Accounts Overview` | Reload list |
+| Tap Savings Card | `2. Savings Account Details` | → Savings Detail |
+| Tap Loan Card | `3. Loan Account Details` | → Loan Detail |
+| Tap Share Card | `4. Share Account Details` | → Share Detail |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

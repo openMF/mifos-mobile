@@ -1963,3 +1963,40 @@ enum class ShieldState {
 |------|---------|---------|
 | 2025-12-30 | 2.0 | Major redesign: Biometric-first pattern, security score gamification, panic mode, trust ring visualization, enhanced animations |
 | 2025-12-30 | 1.0 | Initial mockup with basic vibrant design |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Passcode Feature - Fully Client-Side
+
+See `API.md → No Backend API Required` - Passcode has NO Fineract APIs.
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Passcode Hash | DataStore (encrypted) | See `API.md → Local Storage Mechanism` |
+| Biometric Setup | Platform Keystore | See `API.md → Platform-Specific Storage` |
+| Failed Attempts | DataStore | Lockout tracking |
+| Security Score | DataStore | Gamification layer |
+
+### Storage Operations
+
+See `API.md → Storage Operations` for:
+- Save passcode hash
+- Verify passcode
+- Enable/disable biometric
+- Reset passcode
+
+### Integration Points
+
+| Action | Result |
+|--------|--------|
+| Successful auth | Navigate to main app |
+| Failed auth | Increment counter, show error |
+| Max failures | Lock app, require recovery |
+| Biometric success | Decrypt stored credentials |

@@ -1023,3 +1023,41 @@ Dark Mode Example - Login Screen:
 | Biometric Setup | `BiometricSetupScreen` | - |
 | Server Selection | `ServerSelectionScreen` | `LoginViewModel` |
 | Success | `LoginSuccessScreen` | - |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Login | `Endpoints Required → 1. Login Authentication` | `username`, `password` → `User` response |
+| Registration | `Endpoints Required → 2. User Registration` | `accountNumber`, `firstName`, `lastName`, `email`, `mobileNumber`, `username`, `password` |
+| OTP Verification | `Endpoints Required → 3. Verify OTP` | `requestId`, `authenticationToken` |
+| Forgot Password | N/A | Not available in Fineract Self-Service API |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Biometric Authentication | Platform Keystore | No API required |
+| Remember Me | DataStore | Local username storage |
+| Server Selection | DataStore | Base URL configuration |
+| Passcode | DataStore (encrypted) | Local app lock |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Tap Login | `1. Login Authentication` | → Passcode/Home |
+| Tap Register | `2. User Registration` | → OTP Screen |
+| Tap Verify OTP | `3. Verify OTP` | → Login Screen |
+| Tap Resend OTP | `2. User Registration` | Resend flow |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes and messages.

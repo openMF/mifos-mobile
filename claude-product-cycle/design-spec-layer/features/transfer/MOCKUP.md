@@ -1286,3 +1286,42 @@ START                    SWIPING                    COMPLETE
 |------|---------|--------|
 | 2025-12-30 | 1.0 | Initial mockup creation |
 | 2025-12-30 | 2.0 | Enhanced with 2025 patterns: Mode tabs (Send/Request/Split), Smart suggestions, Recent recipients with history, Swipe to pay, Recurring payments, QR codes, Social notes with emoji |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Self-Transfer Template | `1. Self-Transfer Template` | `fromAccountOptions[]`, `toAccountOptions[]` |
+| Third-Party Template | `2. Third-Party Transfer Template` | Template with beneficiary support |
+| Execute Self-Transfer | `3. Execute Self-Transfer` | POST with account IDs and amount |
+| Execute TPT | `4. Execute Third-Party Transfer` | POST with `?type=tpt` |
+| Beneficiary Selection | See `beneficiary/API.md` | `GET /beneficiaries/tpt` |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Request Money | Not available | Not in Fineract API |
+| Split Bill | Not available | Not in Fineract API |
+| Recurring Transfers | DataStore | Client-side scheduling |
+| Recent Recipients | DataStore | Local transfer history |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Self Template | `1. Self-Transfer Template` | Show own accounts |
+| Load TPT Template | `2. Third-Party Transfer Template` | Show with beneficiaries |
+| Execute Self Transfer | `3. Execute Self-Transfer` | Confirmation → Success |
+| Execute TPT | `4. Execute Third-Party Transfer` | Confirmation → Success |
+
+### Error Handling
+
+See `API.md → 8. Error Responses` for complete error codes.

@@ -1571,3 +1571,47 @@ fun InvalidQrDialog(
 |------|---------|---------|
 | 2025-12-30 | 2.0 | Major redesign: Smart Pay Hub pattern, 3-mode selector, Request/Split mode, Dynamic QR with timer, QR wallet history, trust indicators, social features |
 | 2025-12-29 | 1.0 | Initial mockup with basic scanner and QR display |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### QR Feature - Mostly Client-Side
+
+See `API.md → Local-Only Architecture` - QR code generation/scanning has NO dedicated Fineract APIs.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| My QR (Generate) | See `home/API.md` or `accounts/API.md` | Client info + accounts for QR data |
+| Scan & Pay | See `transfer/API.md` | Execute transfer after scan |
+| Add Beneficiary | See `beneficiary/API.md` | Create from scanned QR |
+
+### QR Data Format
+
+See `API.md → QR Code Data Format` for JSON structure specification.
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| QR Code Generation | Client-side | See `API.md → QR Code Generation` |
+| QR Code Scanning | Camera/Gallery | See `API.md → QR Code Decoding` |
+| Recent Scans | DataStore | Local history |
+| Request Mode | Client-side | Split bill feature |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load My QR | `home/API.md` + `accounts/API.md` | Get client/account data |
+| Scan & Pay | `transfer/API.md → Execute Transfer` | → Transfer Flow |
+| Add Beneficiary | `beneficiary/API.md → Create` | Save scanned contact |
+
+### Error Handling
+
+See `API.md → Error Handling` for QR-specific errors.

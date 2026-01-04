@@ -1964,3 +1964,44 @@ fun LocationFilterSheet(
 |------|---------|---------|
 | 2025-12-30 | 1.0 | Initial mockup with basic map and list views |
 | 2025-12-30 | 2.0 | Complete redesign with 2025 fintech patterns: AI recommendations, AR mode, wait times, appointment booking, voice search, gamification, enhanced UI |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Branch List | `Static Data` (offices embedded) | Office name, address, coordinates |
+| Branch Detail | `Static Data` | Full office info |
+| Map Display | `Map Display Logic` | Platform-specific implementation |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| User Location | Platform Location API | See `API.md → External Service Dependencies` |
+| Distance Calculation | Client-side | Haversine formula |
+| Map Display | Platform SDK | See `API.md → Map Display Logic` |
+| Favorites | DataStore | Local storage |
+| AR Mode | Platform SDK | Client-only |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Branches | `Static Data` | Display list/map |
+| Get Directions | Platform Maps Intent | External navigation |
+| Call Branch | Platform Phone Intent | External dialer |
+| Save Favorite | DataStore | Local storage |
+
+### API Limitations
+
+See `API.md → Notes` - Location feature has limited Fineract API support:
+- Basic office data only
+- Most features are client-side (map, distance, directions)
+- Wait times, appointments not available

@@ -1696,3 +1696,41 @@ fun DeleteConfirmationDialog(
 |------|---------|---------|
 | 2025-12-30 | 2.0 | Major redesign: Trust Network Hub pattern, coverage ring visualization, AI suggestions, verification badges, trust rating system, timeline history, coverage impact preview |
 | 2025-12-30 | 1.0 | Initial mockup with Revolut-style design |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Trust Network Hub | `Endpoints Required → 1. Get Guarantors` | `guarantors[]`, coverage calculation |
+| Add Guarantor | `Endpoints Required → 2. Create Guarantor` | POST with guarantor details |
+| Update Guarantor | `Endpoints Required → 3. Update Guarantor` | PUT with updated fields |
+| Remove Guarantor | `Endpoints Required → 4. Delete Guarantor` | DELETE by ID |
+| Guarantor Template | `Endpoints Required → 5. Guarantor Template` | Options for types |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Trust Score | Client calculation | Based on coverage %, verified count |
+| Coverage Ring Animation | Client-side | UI animation only |
+| AI Suggestions | Client-side | Contact analysis |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| View Trust Network | `1. Get Guarantors` | Display list |
+| Add Guarantor | `2. Create Guarantor` | → Add Flow |
+| Update Guarantor | `3. Update Guarantor` | Edit details |
+| Remove Guarantor | `4. Delete Guarantor` | Confirmation |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

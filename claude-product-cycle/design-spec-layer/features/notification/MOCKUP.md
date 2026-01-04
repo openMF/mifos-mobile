@@ -1786,3 +1786,39 @@ interface NotificationWebSocket {
 | | | - Added rich contextual actions |
 | | | - Enhanced accessibility support |
 | 2025-12-29 | 1.0.0 | Initial mockup creation |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Notification List | `Endpoints Required → 1. Get Notifications` | `pageItems[]`, `totalFilteredRecords` |
+| Device Registration | `Endpoints Required → 2. Register Device` | FCM token, device info |
+| Update Registration | `Endpoints Required → 3. Update Registration` | Updated FCM token |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| AI Priority Sorting | Client-side | Sorting logic |
+| Focus Mode / Quiet Hours | DataStore | Local preference |
+| Daily Digest | Client-side | Aggregation |
+| Inbox Zero Streaks | DataStore | Gamification |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Notifications | `1. Get Notifications` | Display list |
+| Register Push | `2. Register Device` | On first launch |
+| Update Token | `3. Update Registration` | On token refresh |
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

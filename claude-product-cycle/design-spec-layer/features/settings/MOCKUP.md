@@ -1397,3 +1397,48 @@ enum class AppTheme { LIGHT, DARK, SYSTEM, SCHEDULED }
 | | | - Enhanced accessibility support |
 | | | - Added dark mode specifications |
 | 2025-12-29 | 1.0.0 | Initial mockup creation |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| User Profile | `Endpoints Required → 1. Client Info` | `displayName`, `firstname`, `lastname` |
+| Profile Image | `Endpoints Required → 2. Client Image` | Binary image |
+| Change Password | `Endpoints Required → 3. Change Password` | `newPassword`, `confirmPassword` |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Theme Selection | DataStore | Light/Dark/System |
+| Biometric Settings | Platform Keystore | Device security |
+| Passcode Settings | DataStore | App lock |
+| Notification Preferences | DataStore | Local settings |
+| Language | DataStore | Locale preference |
+| Privacy Settings | DataStore | Local preferences |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Profile | `1. Client Info` | Display settings |
+| Change Password | `3. Change Password` | Password flow |
+| Logout | N/A | Clear local auth tokens |
+
+### API Limitations
+
+See `API.md → Local Storage (No API Required)` - Settings is mostly client-side:
+- Profile data (read-only)
+- Password change is the only write operation
+- Most preferences stored in DataStore
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.

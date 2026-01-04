@@ -1477,3 +1477,49 @@ fun PaymentSuccessScreen(
 |------|---------|---------|
 | 2025-12-30 | 1.0 | Initial mockup with basic charge list and details |
 | 2025-12-30 | 2.0 | Complete redesign with 2025 fintech patterns: Payment streak gamification, autopay setup, split payments, calendar view, charge insights, waiver requests, enhanced success screens |
+
+---
+
+## Data Binding Reference
+
+> **For `/implement` command**: Maps UI components to API.md sections.
+> **Source of Truth**: See `API.md` for complete endpoint details.
+
+### Screen → API.md Mapping
+
+| Screen | API.md Section | Key Fields |
+|--------|----------------|------------|
+| Client Charges | `Endpoints Required → 1. Client Charges` | `chargeData[]` |
+| Loan Charges | `Endpoints Required → 2. Loan Charges` | Per-loan charges |
+| Savings Charges | `Endpoints Required → 3. Savings Charges` | Per-savings charges |
+| Charge Detail | From loaded list | `name`, `amount`, `amountOutstanding`, `dueDate` |
+| Pay Client Charge | `Endpoints Required → 4. Pay Client Charge` | POST with amount |
+| Pay Loan Charge | `Endpoints Required → 5. Pay Loan Charge` | POST with amount |
+| Pay Savings Charge | `Endpoints Required → 6. Pay Savings Charge` | POST with amount |
+
+### Client-Only Features
+
+| Feature | Storage | Notes |
+|---------|---------|-------|
+| Payment Streak | DataStore | Track on-time payments |
+| Streak Badges | DataStore | Gamification |
+| Calendar View | Client-side | UI for due dates |
+| Autopay Setup | DataStore | Not in Fineract API |
+
+### Actions → API.md Mapping
+
+| User Action | API.md Reference | Navigation |
+|-------------|------------------|------------|
+| Load Charges | `1`, `2`, `3` (all charge endpoints) | Aggregate list |
+| Pay Charge | `4`, `5`, or `6` (by charge type) | → Payment Flow |
+| View Detail | From loaded list | → Charge Detail |
+
+### API Limitations
+
+See `API.md → Notes` for limitations:
+- Autopay not supported
+- Waiver requests need custom backend
+
+### Error Handling
+
+See `API.md → Error Responses` for complete error codes.
