@@ -129,3 +129,9 @@ Android has two product flavors:
 - Pull requests target the `development` branch
 - Commit message format: `<type>(<scope>): <subject>` (feat, fix, docs, refactor, test, chore)
 - Demo credentials: Instance `gsoc.mifos.community`, Username `maria`, Password `password`
+
+## Git Commit & PR Guidelines
+
+- **No Claude references**: Do NOT add Claude attribution, co-author lines, or "Generated with Claude Code" footers to commits or PRs
+- Keep commit messages clean and focused on the changes made
+- PR descriptions should only contain relevant technical information
