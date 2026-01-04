@@ -1,0 +1,270 @@
+{
+  "feature": "location",
+  "version": "2.0",
+  "designPattern": "Location Intelligence Hub",
+  "lastUpdated": "2025-01-04",
+  "colors": {
+    "primary": {
+      "default": "#667EEA",
+      "dark": "#5A6FD6"
+    },
+    "secondary": {
+      "default": "#764BA2",
+      "dark": "#6A4292"
+    },
+    "success": {
+      "default": "#00D09C",
+      "light": "#00D09C15"
+    },
+    "error": {
+      "default": "#FF4757",
+      "light": "#FF475715"
+    },
+    "warning": {
+      "default": "#FFB800",
+      "light": "#FFB80015"
+    },
+    "surface": {
+      "light": "#FFFFFF",
+      "dark": "#1A1F2E"
+    },
+    "background": {
+      "light": "#F8F9FA",
+      "dark": "#0D1117"
+    },
+    "map": {
+      "overlay": "rgba(0,0,0,0.5)",
+      "searchBar": "#FFFFFF",
+      "userLocation": "#2196F3"
+    },
+    "text": {
+      "primary": {
+        "light": "#1F2937",
+        "dark": "#F0F6FC"
+      },
+      "secondary": {
+        "light": "#6B7280",
+        "dark": "#8B949E"
+      },
+      "onGradient": "#FFFFFF"
+    }
+  },
+  "gradients": {
+    "primary": {
+      "type": "linear",
+      "angle": 135,
+      "stops": [
+        { "color": "#667EEA", "position": 0 },
+        { "color": "#764BA2", "position": 100 }
+      ]
+    },
+    "heroOverlay": {
+      "type": "linear",
+      "angle": 180,
+      "stops": [
+        { "color": "transparent", "position": 0 },
+        { "color": "rgba(0,0,0,0.6)", "position": 100 }
+      ]
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Inter",
+      "mono": "JetBrains Mono"
+    },
+    "styles": {
+      "h1": { "size": 28, "weight": 700, "lineHeight": 1.2 },
+      "h2": { "size": 24, "weight": 700, "lineHeight": 1.3 },
+      "h3": { "size": 20, "weight": 600, "lineHeight": 1.4 },
+      "branchName": { "size": 18, "weight": 600, "lineHeight": 1.4 },
+      "subtitle": { "size": 16, "weight": 500, "lineHeight": 1.5 },
+      "body": { "size": 14, "weight": 400, "lineHeight": 1.5 },
+      "caption": { "size": 12, "weight": 400, "lineHeight": 1.4 },
+      "distance": { "size": 12, "weight": 600, "lineHeight": 1.4 }
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "xxl": 48
+  },
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "xxl": 24,
+    "sheet": 24,
+    "pill": 100
+  },
+  "elevation": {
+    "card": "0 2px 8px rgba(0,0,0,0.08)",
+    "floating": "0 4px 12px rgba(0,0,0,0.15)",
+    "sheet": "0 -4px 16px rgba(0,0,0,0.12)"
+  },
+  "markers": {
+    "branch": {
+      "type": "gradient",
+      "size": 48,
+      "iconSize": 24,
+      "shadow": "0 4px 8px rgba(102, 126, 234, 0.4)"
+    },
+    "atm": {
+      "fill": "#2196F3",
+      "size": 40,
+      "iconSize": 20
+    },
+    "partner": {
+      "fill": "#9CA3AF",
+      "size": 36,
+      "iconSize": 18
+    },
+    "userLocation": {
+      "fill": "#2196F3",
+      "size": 24,
+      "pulseSize": 48,
+      "pulseOpacity": 0.3
+    },
+    "cluster": {
+      "minSize": 40,
+      "maxSize": 56,
+      "fontSize": 14
+    }
+  },
+  "components": {
+    "searchBar": {
+      "height": 48,
+      "radius": 24,
+      "iconSize": 20,
+      "padding": 16
+    },
+    "filterChip": {
+      "height": 36,
+      "padding": 16,
+      "radius": 18,
+      "gap": 8
+    },
+    "locationCard": {
+      "minHeight": 96,
+      "padding": 16,
+      "radius": 16,
+      "iconSize": 40,
+      "gap": 12,
+      "variants": {
+        "default": { "bg": "#FFFFFF" },
+        "selected": { "bg": "#667EEA10", "border": "#667EEA" }
+      }
+    },
+    "bottomSheet": {
+      "peekHeight": 160,
+      "expandedHeight": "70%",
+      "handleHeight": 4,
+      "handleWidth": 40,
+      "handleColor": "#E1E4E8",
+      "radius": 24
+    },
+    "waitTimeBadge": {
+      "height": 28,
+      "paddingHorizontal": 12,
+      "radius": 14,
+      "fontSize": 12,
+      "background": "#FFB80015",
+      "textColor": "#FFB800"
+    },
+    "statusBadge": {
+      "height": 24,
+      "padding": 8,
+      "radius": 12,
+      "variants": {
+        "open": { "bg": "#00D09C15", "text": "#00D09C" },
+        "closed": { "bg": "#FF475715", "text": "#FF4757" }
+      }
+    },
+    "serviceCard": {
+      "padding": 16,
+      "radius": 12,
+      "iconSize": 32,
+      "gap": 12
+    },
+    "timeSlot": {
+      "height": 44,
+      "paddingHorizontal": 16,
+      "radius": 22,
+      "gap": 8,
+      "variants": {
+        "available": { "bg": "#F8F9FA", "border": "#E1E4E8" },
+        "selected": { "bg": "gradient", "border": "none" },
+        "unavailable": { "bg": "#F8F9FA", "opacity": 0.5 }
+      }
+    },
+    "quickAction": {
+      "size": 64,
+      "iconSize": 24,
+      "radius": 16,
+      "gap": 12
+    },
+    "heroImage": {
+      "height": 200,
+      "overlayHeight": 80
+    },
+    "ratingStars": {
+      "size": 16,
+      "gap": 2,
+      "filledColor": "#FFB800",
+      "emptyColor": "#E1E4E8"
+    },
+    "reviewCard": {
+      "padding": 16,
+      "radius": 12,
+      "avatarSize": 40,
+      "gap": 12
+    },
+    "busyChart": {
+      "barWidth": 20,
+      "barRadius": 4,
+      "maxHeight": 60,
+      "gap": 4
+    }
+  },
+  "animation": {
+    "markerBounce": {
+      "duration": 300,
+      "easing": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+    },
+    "markerSelect": {
+      "scale": 1.2,
+      "duration": 200
+    },
+    "sheetDrag": {
+      "duration": 200,
+      "easing": "cubic-bezier(0.4, 0.0, 0.2, 1)"
+    },
+    "userPulse": {
+      "duration": 2000,
+      "type": "infinite",
+      "scale": 2
+    },
+    "cardPress": {
+      "scale": 0.98,
+      "duration": 150
+    },
+    "listStagger": {
+      "duration": 300,
+      "staggerDelay": 50
+    }
+  },
+  "screens": [
+    "branchFinderMap",
+    "branchListView",
+    "branchDetail",
+    "bookAppointmentService",
+    "bookAppointmentDateTime",
+    "bookAppointmentConfirm",
+    "appointmentSuccess",
+    "arBranchFinder",
+    "branchReviews"
+  ]
+}

@@ -1,16 +1,26 @@
 # Auth - Figma Links
 
 > **Feature**: Authentication Flow
-> **Last Updated**: (pending export)
-> **Status**: ⏳ Pending Figma export
+> **Last Updated**: 2026-01-03
+> **Status**: ⚠️ Flow diagram created, UI mockups pending
 
 ---
 
-## Main Figma File
+## User Flow Diagram (FigJam)
 
 | Property | Value |
 |----------|-------|
-| **File URL** | `(add after export)` |
+| **Diagram URL** | [Auth User Flow](https://www.figma.com/online-whiteboard/create-diagram/28749b96-55e0-4f0d-98b3-dabe150a3f5f?utm_source=chatgpt&utm_content=edit_in_figjam&oai_id=&request_id=e5358ddf-7de3-4e4a-9beb-e035f510673c) |
+| **Type** | FigJam Flowchart |
+| **Generated** | 2026-01-03 via Figma MCP |
+
+---
+
+## Main Figma File (UI Mockups)
+
+| Property | Value |
+|----------|-------|
+| **File URL** | `(add after creating mockups)` |
 | **Project** | Mifos Mobile v2.0 |
 | **Page** | Auth Flow |
 
