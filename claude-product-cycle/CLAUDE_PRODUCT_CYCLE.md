@@ -364,11 +364,243 @@ After ANY implementation:
 
 ## Getting Started
 
-1. **Check Status**: Run `/projectstatus` to see current state
-2. **Pick Feature**: Choose a feature that needs work
-3. **Design First**: Run `/design [Feature]` to create/review spec
-4. **Implement**: Run `/implement [Feature]` for full implementation
-5. **Verify**: Run `/verify [Feature]` to validate
+This section provides everything you need to effectively use the Claude Product Cycle framework.
+
+### Prerequisites
+
+Before starting, ensure you have:
+
+| Requirement | Details |
+|-------------|---------|
+| Claude Code CLI | Anthropic's CLI tool with slash command support |
+| Project Access | Clone of `mifos-mobile` repository |
+| Branch | Work from `development` or feature branches |
+| Fineract Server | Access to demo: `gsoc.mifos.community` (demo credentials in CLAUDE.md) |
+
+### Session Workflow
+
+Always use session commands to maintain context across conversations:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    SESSION WORKFLOW                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│   /session-start              # Load context from previous       │
+│        │                      # session (CURRENT_WORK.md)        │
+│        ▼                                                         │
+│   ┌─────────────────────┐                                       │
+│   │   DO YOUR WORK      │     # Use gap-analysis, design,       │
+│   │   • /gap-analysis   │     # implement, verify commands      │
+│   │   • /design         │                                       │
+│   │   • /implement      │                                       │
+│   │   • /verify         │                                       │
+│   └─────────────────────┘                                       │
+│        │                                                         │
+│        ▼                                                         │
+│   /session-end                # Save context for next session    │
+│                               # (updates CURRENT_WORK.md)        │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 5-Layer Lifecycle
+
+Every feature flows through 5 layers:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     5-LAYER LIFECYCLE                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│   Layer 1: DESIGN                                               │
+│   ├── SPEC.md      → What to build (screens, flows)             │
+│   ├── MOCKUP.md    → How it looks (ASCII/visual mockups)        │
+│   ├── API.md       → What APIs needed (endpoints, payloads)     │
+│   └── STATUS.md    → Implementation progress                    │
+│                                                                  │
+│   Layer 2: SERVER                                               │
+│   └── Fineract API → External API availability check            │
+│                                                                  │
+│   Layer 3: CLIENT                                               │
+│   ├── Network      → core/network/services/*Service.kt          │
+│   ├── Data         → core/data/repository/*Repository.kt        │
+│   └── Model        → core/network/model/*.kt                    │
+│                                                                  │
+│   Layer 4: FEATURE                                              │
+│   ├── ViewModel    → feature/*/viewmodel/*ViewModel.kt          │
+│   ├── Screen       → feature/*/screens/*Screen.kt               │
+│   ├── Navigation   → feature/*/navigation/*Navigation.kt        │
+│   └── DI           → feature/*/di/*Module.kt                    │
+│                                                                  │
+│   Layer 5: PLATFORM                                             │
+│   ├── Android      → cmp-android/                               │
+│   ├── iOS          → cmp-ios/                                   │
+│   ├── Desktop      → cmp-desktop/                               │
+│   └── Web          → cmp-web/                                   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Gap Analysis & Planning
+
+Use these commands to understand what's done vs what's needed:
+
+```bash
+# Quick overview - all layers summary
+/gap-analysis
+
+# Layer-specific analysis
+/gap-analysis design           # Design specs, mockups, API docs status
+/gap-analysis server           # Fineract API availability
+/gap-analysis client           # Network services, repositories status
+/gap-analysis feature          # ViewModels, Screens status
+/gap-analysis platform         # Platform-specific builds status
+
+# Sub-section analysis
+/gap-analysis design mockup    # Mockup generation status only
+/gap-analysis design spec      # Specification status only
+/gap-analysis client network   # Network services only
+/gap-analysis feature auth     # Single feature status
+
+# Feature-specific (all 5 layers for one feature)
+/gap-analysis auth             # Auth feature across all layers
+/gap-analysis transfer         # Transfer feature across all layers
+
+# Plan improvements
+/gap-planning auth             # Generate plan to fill gaps for auth
+/gap-planning design mockup    # Plan for mockup generation
+```
+
+### Design Layer Workflow
+
+The design layer has 4 sub-sections per feature:
+
+```
+features/[name]/
+├── SPEC.md       # WHAT to build
+│   ├── Feature Overview
+│   ├── User Stories
+│   ├── Screen Descriptions
+│   ├── User Flows
+│   └── State Management
+│
+├── MOCKUP.md     # HOW it looks
+│   ├── ASCII Mockups (all screens)
+│   ├── Component Breakdown
+│   ├── Interaction Patterns
+│   └── Data Binding Reference → References API.md
+│
+├── API.md        # WHAT APIs (Single Source of Truth)
+│   ├── Endpoints Required
+│   ├── Request/Response Schemas
+│   ├── Error Responses
+│   └── Dependencies
+│
+└── STATUS.md     # Progress tracking
+    ├── Design Phase (%)
+    ├── Client Phase (%)
+    ├── Feature Phase (%)
+    └── Platform Phase (%)
+```
+
+**Generating Mockups**:
+```bash
+# Generate mockups for a feature
+/design auth                   # Opens design workflow
+# Then select "mockup" sub-section when prompted
+```
+
+### Implementation Workflow
+
+```bash
+# Full E2E implementation (all layers)
+/implement auth
+
+# OR layer-by-layer implementation
+/client auth                   # Network + Data layers only
+/feature auth                  # UI layer only (requires client layer)
+
+# After implementation
+/verify auth                   # Validate against spec
+```
+
+**Implementation Order**:
+```
+1. /design [feature]      → Create specifications
+2. /implement [feature]   → Full implementation
+   - OR -
+2a. /client [feature]     → Network + Repository
+2b. /feature [feature]    → ViewModel + Screen
+3. /verify [feature]      → Validate completeness
+```
+
+### Common Scenarios
+
+#### Scenario 1: Start New Feature
+
+```bash
+/session-start                 # Load previous context
+/gap-analysis                  # See what's missing
+/design new-feature            # Create specs (uses Opus model)
+/implement new-feature         # Implement E2E
+/verify new-feature            # Validate
+/session-end                   # Save context
+```
+
+#### Scenario 2: Fix Gaps in Existing Feature
+
+```bash
+/session-start
+/gap-analysis auth             # Find gaps in auth feature
+/gap-planning auth             # Get action plan
+/implement auth                # Fill the gaps
+/verify auth
+/session-end
+```
+
+#### Scenario 3: Update Mockups Only
+
+```bash
+/session-start
+/gap-analysis design mockup    # See which mockups are missing
+/design auth                   # Then choose mockup sub-section
+/session-end
+```
+
+#### Scenario 4: Check Before PR
+
+```bash
+/session-start
+/gap-analysis                  # Full project overview
+/verify [feature]              # Verify your changes
+./ci-prepush.sh                # Run pre-push checks
+/session-end
+```
+
+### Key Context Files
+
+| File | Purpose | When to Check |
+|------|---------|---------------|
+| `CURRENT_WORK.md` | Active work, next actions | Start of session |
+| `PRODUCT_MAP.md` | Master status tracker | Project overview |
+| `design-spec-layer/STATUS.md` | Design layer progress | Before design work |
+| `features/*/STATUS.md` | Per-feature progress | Before feature work |
+
+### Quick Reference
+
+| Task | Command |
+|------|---------|
+| See project status | `/projectstatus` |
+| Find gaps | `/gap-analysis` or `/gap-analysis [layer]` |
+| Plan improvements | `/gap-planning [feature]` |
+| Design a feature | `/design [feature]` |
+| Implement E2E | `/implement [feature]` |
+| Client layer only | `/client [feature]` |
+| UI layer only | `/feature [feature]` |
+| Validate work | `/verify [feature]` |
+| Start session | `/session-start` |
+| End session | `/session-end` |
 
 ---
 
