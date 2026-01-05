@@ -442,7 +442,7 @@ private fun AccountDropdownSection(
                     .clickable { isExpanded = true },
                 shape = DesignToken.shapes.medium,
                 border = BorderStroke(
-                    DesignToken.strokes.thin, 
+                    DesignToken.strokes.thin,
                     KptTheme.colorScheme.secondary.copy(alpha = 0.5f),
                 ),
                 colors = CardDefaults.cardColors(containerColor = KptTheme.colorScheme.onPrimary),
