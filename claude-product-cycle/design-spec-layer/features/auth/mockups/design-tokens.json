@@ -1,0 +1,286 @@
+{
+  "feature": "auth",
+  "generated": "2026-01-03",
+  "tool": "google-stitch",
+  "version": "2.0",
+  "tokens": {
+    "colors": {
+      "primary": {
+        "gradient": {
+          "start": "#667EEA",
+          "end": "#764BA2",
+          "angle": 45
+        },
+        "solid": "#667EEA"
+      },
+      "secondary": {
+        "gradient": {
+          "start": "#11998E",
+          "end": "#38EF7D"
+        }
+      },
+      "surface": {
+        "light": "#FFFFFF",
+        "dark": "#0D1117"
+      },
+      "background": {
+        "light": "#FFFFFF",
+        "dark": "#0D1117"
+      },
+      "card": {
+        "light": "#FFFFFF",
+        "dark": "#21262D"
+      },
+      "text": {
+        "primary": {
+          "light": "#1F2937",
+          "dark": "#F0F6FC"
+        },
+        "secondary": {
+          "light": "#6B7280",
+          "dark": "#8B949E"
+        },
+        "placeholder": {
+          "light": "#9CA3AF",
+          "dark": "#6E7681"
+        }
+      },
+      "border": {
+        "default": {
+          "light": "#E5E7EB",
+          "dark": "#30363D"
+        },
+        "focus": "#667EEA"
+      },
+      "semantic": {
+        "success": "#00D09C",
+        "error": "#FF4757",
+        "warning": "#FFB800",
+        "info": "#667EEA"
+      }
+    },
+    "typography": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "display": {
+        "size": "36sp",
+        "weight": "800",
+        "lineHeight": "44dp"
+      },
+      "headline": {
+        "large": {
+          "size": "28sp",
+          "weight": "700",
+          "lineHeight": "36dp"
+        },
+        "medium": {
+          "size": "24sp",
+          "weight": "700",
+          "lineHeight": "32dp"
+        }
+      },
+      "title": {
+        "large": {
+          "size": "20sp",
+          "weight": "600",
+          "lineHeight": "28dp"
+        },
+        "medium": {
+          "size": "16sp",
+          "weight": "600",
+          "lineHeight": "24dp"
+        }
+      },
+      "body": {
+        "large": {
+          "size": "16sp",
+          "weight": "400",
+          "lineHeight": "24dp"
+        },
+        "medium": {
+          "size": "14sp",
+          "weight": "400",
+          "lineHeight": "20dp"
+        }
+      },
+      "label": {
+        "large": {
+          "size": "14sp",
+          "weight": "500",
+          "lineHeight": "20dp"
+        },
+        "medium": {
+          "size": "12sp",
+          "weight": "500",
+          "lineHeight": "16dp"
+        }
+      }
+    },
+    "spacing": {
+      "xs": "4dp",
+      "sm": "8dp",
+      "md": "12dp",
+      "lg": "16dp",
+      "xl": "20dp",
+      "xxl": "24dp",
+      "xxxl": "32dp"
+    },
+    "radius": {
+      "sm": "8dp",
+      "md": "12dp",
+      "lg": "16dp",
+      "xl": "24dp",
+      "full": "9999dp"
+    },
+    "shadow": {
+      "button": {
+        "offsetY": "4dp",
+        "blur": "12dp",
+        "color": "rgba(102, 126, 234, 0.3)"
+      },
+      "card": {
+        "offsetY": "2dp",
+        "blur": "8dp",
+        "color": "rgba(0, 0, 0, 0.08)"
+      },
+      "focus": {
+        "blur": "8dp",
+        "color": "rgba(102, 126, 234, 0.2)"
+      }
+    }
+  },
+  "screens": [
+    {
+      "id": "splash",
+      "name": "Splash Screen",
+      "description": "Brand introduction with premium animation",
+      "components": ["logo", "loading-dots"]
+    },
+    {
+      "id": "welcome",
+      "name": "Welcome/Onboarding Screen",
+      "description": "First-time user value propositions carousel",
+      "components": ["illustration", "page-indicators", "primary-button", "text-link", "trust-badge"]
+    },
+    {
+      "id": "login-hub",
+      "name": "Login Hub Screen",
+      "description": "Multiple authentication options",
+      "components": ["logo", "phone-input", "country-picker", "primary-button", "divider", "auth-card", "server-info", "trust-badge"]
+    },
+    {
+      "id": "otp-verify",
+      "name": "OTP Verification Screen",
+      "description": "6-digit code verification",
+      "components": ["back-button", "icon-header", "otp-input", "countdown-timer", "text-link"]
+    },
+    {
+      "id": "email-login",
+      "name": "Email/Password Login Screen",
+      "description": "Alternative username/password login",
+      "components": ["back-button", "logo", "text-input", "password-input", "primary-button", "auth-card"]
+    },
+    {
+      "id": "biometric-setup",
+      "name": "Biometric Setup Screen",
+      "description": "Face ID/Fingerprint enrollment",
+      "components": ["skip-link", "illustration", "primary-button", "text-button", "info-badge"]
+    },
+    {
+      "id": "server-selection",
+      "name": "Server Selection Screen",
+      "description": "Instance switching for deployments",
+      "components": ["back-button", "server-card", "text-input", "primary-button"]
+    },
+    {
+      "id": "success",
+      "name": "Login Success Screen",
+      "description": "Celebration moment before home",
+      "components": ["success-animation", "progress-bar"]
+    }
+  ],
+  "components": [
+    {
+      "id": "primary-button",
+      "name": "Primary Button",
+      "specs": {
+        "height": "56dp",
+        "radius": "16dp",
+        "background": "gradient",
+        "textSize": "16sp",
+        "textWeight": "600",
+        "textColor": "#FFFFFF",
+        "shadow": "button"
+      }
+    },
+    {
+      "id": "text-input",
+      "name": "Text Input Field",
+      "specs": {
+        "height": "56dp",
+        "radius": "12dp",
+        "border": "1dp",
+        "borderColor": "#E5E7EB",
+        "focusBorder": "2dp #667EEA",
+        "iconSize": "20dp",
+        "textSize": "16sp"
+      }
+    },
+    {
+      "id": "otp-input",
+      "name": "OTP Input Box",
+      "specs": {
+        "width": "48dp",
+        "height": "56dp",
+        "gap": "12dp",
+        "radius": "8dp",
+        "border": "2dp",
+        "textSize": "24sp",
+        "textWeight": "700"
+      }
+    },
+    {
+      "id": "auth-card",
+      "name": "Authentication Option Card",
+      "specs": {
+        "height": "56dp",
+        "radius": "12dp",
+        "border": "1dp #E5E7EB",
+        "iconSize": "24dp",
+        "textSize": "14sp"
+      }
+    },
+    {
+      "id": "trust-badge",
+      "name": "Trust/Security Badge",
+      "specs": {
+        "textSize": "12sp",
+        "textColor": "#9CA3AF",
+        "iconSize": "14dp"
+      }
+    }
+  ],
+  "animations": {
+    "pageTransition": {
+      "type": "slide",
+      "duration": "300ms",
+      "easing": "FastOutSlowIn"
+    },
+    "buttonPress": {
+      "scale": "0.98",
+      "duration": "100ms"
+    },
+    "inputFocus": {
+      "duration": "200ms",
+      "easing": "ease"
+    },
+    "successCelebration": {
+      "checkmarkDraw": "300ms",
+      "confettiBurst": "600ms",
+      "haptic": "success"
+    },
+    "errorShake": {
+      "translateX": "[-10, 10, -5, 5, 0]",
+      "duration": "300ms"
+    }
+  }
+}

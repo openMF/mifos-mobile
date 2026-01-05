@@ -19,7 +19,6 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.Res
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_invalid
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_required
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_empty
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_invalid
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
@@ -31,7 +30,6 @@ import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.core.ui.utils.ValidationHelper
 
 /**
  * ViewModel for the Make Transfer screen.
@@ -314,7 +312,7 @@ internal class TptViewModel(
      */
     private fun validateAmount(amount: String) = when {
         amount.isBlank() -> ValidationResult.Error(Res.string.feature_tpt_error_amount_required)
-        amount.toIntOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
+        amount.toDoubleOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
         else -> ValidationResult.Success
     }
 
@@ -328,9 +326,6 @@ internal class TptViewModel(
         when {
             remark.isEmpty() ->
                 ValidationResult.Error(Res.string.feature_tpt_error_remarks_empty)
-
-            !ValidationHelper.isValidName(remark) ->
-                ValidationResult.Error(Res.string.feature_tpt_error_remarks_invalid)
 
             else -> ValidationResult.Success
         }
@@ -553,7 +548,8 @@ internal sealed interface TptAction {
          * Internal action representing the result of fetching account options.
          * @property dataState The result of the fetch operation.
          */
-        data class ReceiveTransferTemplateResult(val dataState: DataState<AccountOptionsTemplate>) : Internal
+        data class ReceiveTransferTemplateResult(val dataState: DataState<AccountOptionsTemplate>) :
+            Internal
     }
 }
 

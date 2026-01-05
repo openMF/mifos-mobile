@@ -17,10 +17,10 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountWithdrawPayload
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsTransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
@@ -75,5 +75,5 @@ interface SavingAccountsListService {
     fun getSavingsAccountTransactionDetails(
         @Path("accountId") savingsId: Long,
         @Path("transactionId") transactionId: Long,
-    ): Flow<TransactionDetails>
+    ): Flow<SavingsTransactionDetails>
 }

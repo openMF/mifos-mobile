@@ -2,6 +2,41 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Quick Context (Start Here)
+
+**Current Focus**: v2.0 UI Redesign (2025 Fintech Patterns)
+
+### Session Workflow (Never Lose Context)
+
+```bash
+# START of session
+/session-start                # Load context from previous session
+
+# DURING session - use these commands
+/gap-analysis                 # What's done vs what's needed (5 layers)
+/gap-analysis [layer]         # Layer-specific (design|server|client|feature|platform)
+/gap-planning [feature]       # Plan specific improvements
+/implement [feature]          # Execute implementation
+/verify [feature]             # Confirm implementation
+
+# END of session
+/session-end                  # Save context for next session
+```
+
+### Key Context Files
+
+| File | Purpose |
+|------|---------|
+| `claude-product-cycle/CURRENT_WORK.md` | Active work, next actions |
+| `claude-product-cycle/PRODUCT_MAP.md` | Master status tracker |
+| `design-spec-layer/features/*/STATUS.md` | Per-feature status |
+
+### 5-Layer Lifecycle
+
+```
+Design → Server → Client → Feature → Platform
+```
+
 ## Project Overview
 
 Mifos Mobile is a Kotlin Multiplatform (KMP) application for the MifosX Self-Service platform, enabling end-users to view/transact on their accounts and loans. It targets Android, iOS, Desktop (JVM), and Web (Kotlin/JS + WASM).
@@ -94,3 +129,13 @@ Android has two product flavors:
 - Pull requests target the `development` branch
 - Commit message format: `<type>(<scope>): <subject>` (feat, fix, docs, refactor, test, chore)
 - Demo credentials: Instance `gsoc.mifos.community`, Username `maria`, Password `password`
+
+## Git Commit & PR Guidelines
+
+- **Always use feature branches**: NEVER push directly to `development` branch
+  - Create a feature branch: `git checkout -b feature/[description]`
+  - Push to feature branch: `git push origin feature/[description]`
+  - Create PR targeting `development` branch
+- **No Claude references**: Do NOT add Claude attribution, co-author lines, or "Generated with Claude Code" footers to commits or PRs
+- Keep commit messages clean and focused on the changes made
+- PR descriptions should only contain relevant technical information

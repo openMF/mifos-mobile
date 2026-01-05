@@ -21,7 +21,6 @@ import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_amount_invalid
 import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_amount_required
 import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_remarks_empty
-import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_remarks_invalid
 import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
@@ -38,7 +37,6 @@ import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTempla
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.ui.utils.ValidationHelper
 
 /**
  * ViewModel for the Make Transfer screen.
@@ -71,7 +69,8 @@ internal class MakeTransferViewModel(
                 null
             },
             transferType = route.transferType,
-            transferSuccessDestination = route.transferSuccessDestination ?: StatusNavigationDestination.HOME.name,
+            transferSuccessDestination = route.transferSuccessDestination
+                ?: StatusNavigationDestination.HOME.name,
             uiState = MakeTransferState.MakeTransferScreenState.Loading,
         )
     },
@@ -260,6 +259,7 @@ internal class MakeTransferViewModel(
         amount.isBlank() -> ValidationResult.Error(Res.string.feature_make_transfer_error_amount_required)
         !Regex("^\\d+(\\.\\d+)?$").matches(amount) ->
             ValidationResult.Error(Res.string.feature_make_transfer_error_amount_invalid)
+
         else -> ValidationResult.Success
     }
 
@@ -302,9 +302,6 @@ internal class MakeTransferViewModel(
         when {
             remark.isEmpty() ->
                 ValidationResult.Error(Res.string.feature_make_transfer_error_remarks_empty)
-
-            !ValidationHelper.isValidName(remark) ->
-                ValidationResult.Error(Res.string.feature_make_transfer_error_remarks_invalid)
 
             else -> ValidationResult.Success
         }
@@ -400,6 +397,7 @@ internal class MakeTransferViewModel(
                     )
                 }
             }
+
             DataState.Loading -> {
                 updateState {
                     it.copy(
@@ -420,14 +418,16 @@ internal class MakeTransferViewModel(
                                 it.accountType?.value == AccountType.SAVINGS.value
                             }
 
-                            val prepopulatedFromAccount = when (current.transferSuccessDestination) {
-                                StatusNavigationDestination.SAVINGS_ACCOUNT.name,
-                                StatusNavigationDestination.LOAN_ACCOUNT.name,
-                                -> {
-                                    savingsFromAccounts.firstOrNull { it.accountId?.toLong() == current.accountId }
+                            val prepopulatedFromAccount =
+                                when (current.transferSuccessDestination) {
+                                    StatusNavigationDestination.SAVINGS_ACCOUNT.name,
+                                    StatusNavigationDestination.LOAN_ACCOUNT.name,
+                                    -> {
+                                        savingsFromAccounts.firstOrNull { it.accountId?.toLong() == current.accountId }
+                                    }
+
+                                    else -> current.fromAccount
                                 }
-                                else -> current.fromAccount
-                            }
 
                             val prepopulatedToAccount = when (current.transferSuccessDestination) {
                                 StatusNavigationDestination.LOAN_ACCOUNT.name -> {
@@ -435,6 +435,7 @@ internal class MakeTransferViewModel(
                                         it.accountId?.toLong() == current.accountId
                                     }
                                 }
+
                                 else -> current.toAccount
                             }
 
@@ -457,6 +458,7 @@ internal class MakeTransferViewModel(
                                 uiState = MakeTransferState.MakeTransferScreenState.Success,
                             )
                         }
+
                         else -> {
                             current.copy(
                                 accountOptionsTemplate = template,
@@ -474,7 +476,8 @@ internal class MakeTransferViewModel(
     private fun handleActiveAccountsResult(result: DataState<ClientAccounts>) {
         when (result) {
             is DataState.Success -> {
-                val activeAccount = result.data.loanAccounts.firstOrNull { it.status?.active == true }
+                val activeAccount =
+                    result.data.loanAccounts.firstOrNull { it.status?.active == true }
                 activeAccount?.let { acc ->
                     updateState {
                         it.copy(
@@ -700,7 +703,8 @@ internal sealed interface MakeTransferAction {
          * Internal action representing the result of fetching account options.
          * @param dataState The result of the fetch operation.
          */
-        data class ReceiveAccountOptionsTemplateResult(val dataState: DataState<AccountOptionsTemplate>) : Internal
+        data class ReceiveAccountOptionsTemplateResult(val dataState: DataState<AccountOptionsTemplate>) :
+            Internal
 
         data class ReceiveActiveAccountsResult(val dataState: DataState<ClientAccounts>) : Internal
 

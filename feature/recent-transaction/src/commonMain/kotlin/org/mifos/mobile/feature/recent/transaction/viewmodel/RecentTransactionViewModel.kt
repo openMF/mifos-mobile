@@ -9,133 +9,185 @@
  */
 package org.mifos.mobile.feature.recent.transaction.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionAction.Internal
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionEvent
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState
-import org.mifos.mobile.feature.recent.transaction.utils.RecentTransactionUiState.ViewState
-import org.mifos.mobile.feature.recent.transaction.utils.TransactionFilterType
+import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
 
-class RecentTransactionViewModel(
+internal class RecentTransactionViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
-    networkMonitor: NetworkMonitor,
+    private val networkMonitor: NetworkMonitor,
     private val userPreferencesRepository: UserPreferencesRepository,
-) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(
-        RecentTransactionUiState(viewState = ViewState.Loading),
-    )
-    val uiState = _uiState.asStateFlow()
-
-    private val eventChannel = Channel<RecentTransactionEvent>()
-    val eventFlow = eventChannel.receiveAsFlow()
-
-    private var originalTransactionList: List<Transactions> = emptyList()
+) : BaseViewModel<RecentTransactionUiState, RecentTransactionEvent, RecentTransactionAction>(
+    initialState = run {
+        val clientId = userPreferencesRepository.clientId.value
+        RecentTransactionUiState(
+            viewState = ScreenUiState.Loading,
+            clientId = clientId.takeIf { it != null },
+        )
+    },
+) {
 
     init {
-        networkMonitor.isOnline
-            .onEach { isOnline ->
-                _uiState.update { it.copy(isNetworkAvailable = isOnline) }
-            }
-            .launchIn(viewModelScope)
+        observeNetworkStatus()
+    }
 
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * If the network is unavailable, it sets the `networkStatus` flag in the state
+     * and shows a network-related dialog.
+     */
+    private fun observeNetworkStatus() {
         viewModelScope.launch {
-            userPreferencesRepository.clientId.collect { clientId ->
-                if (clientId != null) {
-                    _uiState.update { it.copy(clientId = clientId) }
-                    handleAction(RecentTransactionAction.LoadInitial)
+            networkMonitor.isOnline
+                .distinctUntilChanged()
+                .collect { isOnline ->
+                    sendAction(RecentTransactionAction.ReceiveNetworkResult(isOnline = isOnline))
                 }
+        }
+    }
+
+    private fun updateState(state: (RecentTransactionUiState) -> RecentTransactionUiState) {
+        mutableStateFlow.update(state)
+    }
+
+    /**
+     * Handles the network result by updating the network status and UI state.
+     *
+     * @param isOnline Boolean indicating whether the network is online.
+     */
+    private fun handleNetworkResult(isOnline: Boolean) {
+        updateState {
+            it.copy(networkStatus = isOnline)
+        }
+        if (!isOnline) {
+            updateState { current ->
+                if (current.viewState is ScreenUiState.Loading ||
+                    current.viewState is ScreenUiState.Error ||
+                    current.viewState is ScreenUiState.Empty ||
+                    current.viewState is ScreenUiState.Network
+                ) {
+                    current.copy(viewState = ScreenUiState.Network)
+                } else {
+                    current
+                }
+            }
+        } else {
+            fetchAccounts()
+        }
+    }
+
+    /**
+     * Handles the refresh action by checking the network status and loading transactions.
+     */
+    private fun handleRefresh() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(viewState = ScreenUiState.Network) }
+            } else {
+                fetchAccounts()
             }
         }
     }
 
-    fun handleAction(action: RecentTransactionAction) {
-        when (action) {
-            is RecentTransactionAction.LoadInitial -> fetchAccounts()
-            is RecentTransactionAction.Refresh -> loadTransactions(isRefreshing = true)
-            is RecentTransactionAction.LoadMore -> {
-                if (_uiState.value.canPaginate && !_uiState.value.isPaginating) {
-                    loadTransactions(isPaginating = true)
-                }
+    private fun loadTransactionsAfterFilter() {
+        viewModelScope.launch {
+            if (!state.networkStatus) {
+                updateState { it.copy(viewState = ScreenUiState.Network) }
+            } else {
+                loadTransactions()
             }
+        }
+    }
+
+    override fun handleAction(action: RecentTransactionAction) {
+        when (action) {
+            is RecentTransactionAction.OnNavigateBackClick ->
+                sendEvent(RecentTransactionEvent.NavigateBack)
+
+            is RecentTransactionAction.ReceiveNetworkResult -> handleNetworkResult(action.isOnline)
+
+            is RecentTransactionAction.Refresh -> handleRefresh()
+
             is RecentTransactionAction.ToggleFilter -> {
-                _uiState.update { it.copy(showFilter = !it.showFilter) }
+                updateState { it.copy(dialogState = RecentTransactionUiState.DialogState.Filters) }
+            }
+
+            is RecentTransactionAction.DismissFilter -> updateState {
+                it.copy(
+                    dialogState = null,
+                    filterAccount = null,
+                )
             }
             is RecentTransactionAction.ApplyFilter -> {
-                val previousAccount = _uiState.value.selectedAccount
+                val previousAccount = state.selectedAccount
                 val newAccount = action.account
                 val newType = action.type
 
-                _uiState.update {
+                updateState {
                     it.copy(
                         selectedAccount = newAccount,
+                        filterAccount = newAccount,
                         filterType = newType,
-                        showFilter = false,
+                        dialogState = null,
                     )
                 }
 
                 if (previousAccount?.id != newAccount.id) {
-                    loadTransactions(isRefreshing = true)
+                    loadTransactionsAfterFilter()
                 } else {
                     applyLocalFilters()
                 }
             }
             is RecentTransactionAction.ClearFilter -> {
-                val firstAccount = _uiState.value.accounts.firstOrNull()
-                _uiState.update {
+                val firstAccount = state.accounts.firstOrNull()
+                updateState {
                     it.copy(
                         selectedAccount = firstAccount,
                         filterType = TransactionFilterType.ALL,
-                        showFilter = false,
+                        dialogState = null,
                     )
                 }
-                loadTransactions(isRefreshing = true)
+                loadTransactionsAfterFilter()
             }
-            is Internal.AccountsLoaded -> {
+
+            is RecentTransactionAction.Internal.AccountsLoaded -> {
                 val defaultAccount = action.accounts.firstOrNull()
-                _uiState.update {
+                updateState {
                     it.copy(
                         accounts = action.accounts,
                         selectedAccount = defaultAccount,
                     )
                 }
-                loadTransactions()
+                loadTransactionsAfterFilter()
             }
-            is Internal.TransactionsLoaded -> {
-                originalTransactionList = action.items
-                applyLocalFilters()
-            }
-            is Internal.LoadFailed -> handleLoadFailed(action)
+
+            is RecentTransactionAction.Internal.HandleTransactions -> handleTransactions(action.dataState)
 
             is RecentTransactionAction.OnTransactionClick -> {
-                val transaction = action.transaction
-                val selectedAccount = _uiState.value.selectedAccount
+                val transactionId = action.transactionId
+                val selectedAccount = state.selectedAccount
 
-                if (transaction.id != null && selectedAccount?.id != null) {
+                if (selectedAccount?.id != null) {
                     viewModelScope.launch {
-                        eventChannel.send(
+                        sendEvent(
                             RecentTransactionEvent.NavigateToDetails(
-                                transactionId = transaction.id.toString(),
+                                transactionId = transactionId.toString(),
                                 accountType = Constants.SAVINGS_ACCOUNT,
                                 accountId = selectedAccount.id,
                             ),
@@ -147,106 +199,275 @@ class RecentTransactionViewModel(
     }
 
     private fun fetchAccounts() {
+        if (state.clientId == null) return
+
         viewModelScope.launch {
             accountsRepositoryImpl.loadAccounts(
-                clientId = _uiState.value.clientId,
+                clientId = state.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
             ).collect { dataState ->
-                if (dataState is DataState.Success) {
-                    val savingsAccounts = dataState.data.savingsAccounts.orEmpty().filter { it.status?.active == true }
-                    handleAction(Internal.AccountsLoaded(savingsAccounts))
-                } else if (dataState is DataState.Error) {
-                    handleAction(Internal.LoadFailed(dataState.exception))
+                when (dataState) {
+                    is DataState.Success -> {
+                        val savingsAccounts =
+                            dataState.data.savingsAccounts.orEmpty().filter {
+                                it.status?.active == true
+                            }
+                        handleAction(RecentTransactionAction.Internal.AccountsLoaded(savingsAccounts))
+                    }
+                    is DataState.Loading -> {
+                        updateState {
+                            it.copy(viewState = ScreenUiState.Loading)
+                        }
+                    }
+                    is DataState.Error -> {
+                        updateState {
+                            it.copy(
+                                viewState = ScreenUiState.ErrorString(
+                                    dataState.exception.message ?: "Something went wrong",
+                                ),
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun loadTransactions(
-        isRefreshing: Boolean = false,
-        isPaginating: Boolean = false,
-    ) {
-        val currentState = _uiState.value
-        val selectedAccount = currentState.selectedAccount
-
+    private fun loadTransactions() {
+        val selectedAccount = state.selectedAccount
         if (selectedAccount == null) {
-            _uiState.update { it.copy(viewState = ViewState.Empty) }
+            updateState { it.copy(viewState = ScreenUiState.Empty) }
             return
         }
 
-        _uiState.update {
-            it.copy(
-                isRefreshing = isRefreshing,
-                isPaginating = isPaginating,
-                viewState = if (!isRefreshing && !isPaginating) ViewState.Loading else it.viewState,
-            )
-        }
+        updateState { it.copy(viewState = ScreenUiState.Loading) }
 
         viewModelScope.launch {
-            savingsAccountRepositoryImpl.getSavingsWithAssociations(
-                accountId = selectedAccount.id,
-                associationType = Constants.TRANSACTIONS,
-            )
-                .catch { e -> handleAction(Internal.LoadFailed(e)) }
-                .onCompletion {
-                    _uiState.update { it.copy(isRefreshing = false, isPaginating = false) }
-                }
-                .collect { dataState ->
-                    when (dataState) {
-                        is DataState.Success -> {
-                            val transactions = dataState.data.transactions ?: emptyList()
-                            handleAction(Internal.TransactionsLoaded(transactions))
-                        }
-                        is DataState.Error -> {
-                            handleAction(Internal.LoadFailed(dataState.exception))
-                        }
-                        is DataState.Loading -> { }
+            savingsAccountRepositoryImpl
+                .getSavingsWithAssociations(
+                    accountId = selectedAccount.id,
+                    associationType = Constants.TRANSACTIONS,
+                )
+                .catch { e ->
+                    updateState {
+                        it.copy(
+                            viewState = ScreenUiState.ErrorString(
+                                e.message ?: "Something went wrong",
+                            ),
+                        )
                     }
                 }
+                .collect { dataState ->
+                    sendAction(RecentTransactionAction.Internal.HandleTransactions(dataState))
+                }
+        }
+    }
+
+    private fun handleTransactions(dataState: DataState<SavingsWithAssociations>) {
+        when (dataState) {
+            is DataState.Success -> {
+                val transactions = dataState.data.transactions
+                    .map { it.toUiTransaction() }
+
+                val grouped = transactions.groupBy {
+                    DateHelper.getFormattedDateWithPrefix(it.date)
+                }
+
+                updateState {
+                    it.copy(
+                        transactions = transactions,
+                        groupedTransactions = grouped,
+                        viewState = if (grouped.isEmpty()) {
+                            ScreenUiState.Empty
+                        } else {
+                            ScreenUiState.Success
+                        },
+                    )
+                }
+            }
+
+            is DataState.Error -> {
+                updateState {
+                    it.copy(
+                        viewState = ScreenUiState.ErrorString(
+                            dataState.exception.message ?: "Something went wrong",
+                        ),
+                    )
+                }
+            }
+
+            is DataState.Loading -> {
+                updateState { it.copy(viewState = ScreenUiState.Loading) }
+            }
         }
     }
 
     private fun applyLocalFilters() {
-        val currentType = _uiState.value.filterType
+        val currentType = state.filterType
 
-        val filteredList = if (currentType == TransactionFilterType.ALL) {
-            originalTransactionList
-        } else {
-            originalTransactionList.filter { transaction ->
-                val isCredit = isTransactionCreditLogic(transaction)
-                if (currentType == TransactionFilterType.CREDIT) isCredit else !isCredit
-            }
+        val filteredTransactions = when (currentType) {
+            TransactionFilterType.ALL ->
+                state.transactions
+
+            TransactionFilterType.CREDIT ->
+                state.transactions.filter { it.isCredit }
+
+            TransactionFilterType.DEBIT ->
+                state.transactions.filter { !it.isCredit }
         }
 
-        _uiState.update {
+        val groupedTransactions = filteredTransactions.groupBy { transaction ->
+            DateHelper.getFormattedDateWithPrefix(transaction.date)
+        }
+
+        updateState {
             it.copy(
-                transactions = filteredList,
-                viewState = if (filteredList.isEmpty()) ViewState.Empty else ViewState.Content(filteredList),
-                canPaginate = false,
+                groupedTransactions = groupedTransactions,
+                viewState = if (groupedTransactions.isEmpty()) {
+                    ScreenUiState.Empty
+                } else {
+                    ScreenUiState.Success
+                },
             )
         }
     }
 
-    private fun handleLoadFailed(action: Internal.LoadFailed) {
-        _uiState.update {
-            it.copy(
-                isRefreshing = false,
-                viewState = ViewState.Error(action.error?.message),
-            )
-        }
-    }
+    /**
+     * Converts a domain `Transactions` object to a UI-friendly `UiTransaction` object.
+     *
+     * @return A `UiTransaction` object.
+     */
+    fun Transactions.toUiTransaction() = UiTransaction(
+        id = id?.toLong(),
+        date = date,
+        amount = amount,
+        type = transactionType,
+        typeValue = transactionType?.value,
+        isCredit = transactionType.isCredit(),
+        currency = currency?.code ?: "USD",
+    )
 
-    private fun isTransactionCreditLogic(transaction: Transactions): Boolean {
-        val type = transaction.transactionType?.value?.lowercase().orEmpty()
-
+    /**
+     * Determines if a transaction type represents a credit.
+     *
+     * @return `true` if the transaction is a credit, `false` otherwise.
+     */
+    internal fun TransactionType?.isCredit(): Boolean {
         return when {
-            transaction.transactionType?.deposit == true -> true
-            transaction.transactionType?.withdrawal == true -> false
-            type.contains("deposit") -> true
-            type.contains("interest") -> true
-            type.contains("withdrawal") -> false
-            type.contains("fee") -> false
+            this?.deposit == true -> true
+            this?.interestPosting == true -> true
+            this?.rejectTransfer == true -> true
+
+            this?.dividendPayout == true -> false
+            this?.withdrawal == true -> false
+            this?.feeDeduction == true -> false
+            this?.initiateTransfer == true -> false
+            this?.approveTransfer == true -> false
+            this?.withdrawTransfer == true -> false
+            this?.overdraftFee == true -> false
+
             else -> false
         }
     }
+}
+
+/**
+ * A data class representing a transaction for the UI.
+ *
+ * @property id The unique ID of the transaction.
+ * @property date A list of integers representing the date (e.g., [year, month, day]).
+ * @property amount The transaction amount.
+ * @property type The transaction type from the domain model.
+ * @property typeValue The string value of the transaction type.
+ * @property isCredit A boolean indicating if the transaction is a credit (true) or debit (false).
+ * @property currency The currency code (e.g., "USD").
+ */
+internal data class UiTransaction(
+    val id: Long?,
+    val date: List<Int>,
+    val amount: Double?,
+    val type: TransactionType? = null,
+    val typeValue: String? = null,
+    val isCredit: Boolean,
+    val currency: String,
+)
+
+/**
+ * Defines the different types of transaction filters available to the user.
+ */
+enum class TransactionFilterType {
+    ALL,
+    DEBIT,
+    CREDIT,
+}
+
+/**
+ * Represents the complete UI state for the RecentTransactionScreen.
+ *
+ * @param clientId The ID of the current user.
+ * @param viewState The current display state (Loading, Content, Empty, Error).
+ * @param transactions The list of transactions currently displayed.
+ * @param accounts The full list of available savings accounts for the filter.
+ * @param selectedAccount The currently selected account in the filter.
+ * @param filterType The currently selected transaction type filter (ALL, DEBIT, CREDIT).
+ * @param isRefreshing True if a pull-to-refresh action is in progress.
+ * @param networkStatus True if the device has an active network connection.
+ */
+internal data class RecentTransactionUiState(
+    val clientId: Long? = null,
+    val viewState: ScreenUiState,
+    val dialogState: DialogState? = null,
+    val transactions: List<UiTransaction> = emptyList(),
+    val groupedTransactions: Map<String, List<UiTransaction>> = emptyMap(),
+    val accounts: List<SavingAccount> = emptyList(),
+    val selectedAccount: SavingAccount? = null,
+    val filterAccount: SavingAccount? = null,
+    val filterType: TransactionFilterType = TransactionFilterType.ALL,
+    val isRefreshing: Boolean = false,
+    val networkStatus: Boolean = false,
+) {
+    /**
+     * Sealed interface representing the different states of the dialog.
+     */
+    sealed interface DialogState {
+        data object Filters : DialogState
+    }
+
+    val hasActiveFilters: Boolean
+        get() = filterType != TransactionFilterType.ALL ||
+            filterAccount != null
+}
+
+/**
+ * Defines all possible user interactions and internal events for the RecentTransactionScreen.
+ */
+sealed interface RecentTransactionAction {
+    // User-initiated actions
+    data object OnNavigateBackClick : RecentTransactionAction
+    data object Refresh : RecentTransactionAction
+    data object ToggleFilter : RecentTransactionAction
+    data object DismissFilter : RecentTransactionAction
+    data class ApplyFilter(val account: SavingAccount, val type: TransactionFilterType) : RecentTransactionAction
+    data class ReceiveNetworkResult(val isOnline: Boolean) : RecentTransactionAction
+    data object ClearFilter : RecentTransactionAction
+
+    data class OnTransactionClick(val transactionId: Long) : RecentTransactionAction
+
+    sealed interface Internal : RecentTransactionAction {
+        data class AccountsLoaded(val accounts: List<SavingAccount>) : Internal
+        data class HandleTransactions(val dataState: DataState<SavingsWithAssociations>) : Internal
+    }
+}
+
+/**
+ * Events sent from ViewModel to UI
+ */
+sealed interface RecentTransactionEvent {
+    data object NavigateBack : RecentTransactionEvent
+
+    data class NavigateToDetails(
+        val transactionId: String,
+        val accountType: String,
+        val accountId: Long,
+    ) : RecentTransactionEvent
 }

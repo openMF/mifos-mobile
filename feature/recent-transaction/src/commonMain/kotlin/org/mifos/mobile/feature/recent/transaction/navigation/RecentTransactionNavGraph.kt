@@ -7,40 +7,29 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("MatchingDeclarationName")
+
 package org.mifos.mobile.feature.recent.transaction.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.ui.composableWithSlideTransitions
 import org.mifos.mobile.feature.recent.transaction.screen.RecentTransactionScreen
 
+@Serializable
+data object RecentTransactionRoute
+
 fun NavController.navigateToRecentTransactionScreen() {
-    navigate(RecentTransactionNavigation.RecentTransactionBase.route)
+    this.navigate(RecentTransactionRoute)
 }
 
-fun NavGraphBuilder.recentTransactionNavGraph(
-    navController: NavController,
-    navigateToDetails: (String, String, Long) -> Unit,
-) {
-    navigation(
-        startDestination = RecentTransactionNavigation.RecentTransactionScreen.route,
-        route = RecentTransactionNavigation.RecentTransactionBase.route,
-    ) {
-        recentTransactionScreenRoute(
-            navigateBack = navController::popBackStack,
-            navigateToDetails = navigateToDetails,
-        )
-    }
-}
-
-fun NavGraphBuilder.recentTransactionScreenRoute(
+fun NavGraphBuilder.recentTransactionDestination(
     navigateBack: () -> Unit,
     navigateToDetails: (String, String, Long) -> Unit,
 ) {
-    composable(
-        route = RecentTransactionNavigation.RecentTransactionScreen.route,
-    ) {
+    composableWithSlideTransitions<RecentTransactionRoute> {
         RecentTransactionScreen(
             navigateBack = navigateBack,
             navigateToDetails = navigateToDetails,
