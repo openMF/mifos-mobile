@@ -50,7 +50,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -444,7 +443,7 @@ private fun AccountDropdownSection(
                 shape = DesignToken.shapes.medium,
                 border = BorderStroke(
                     DesignToken.strokes.thin, 
-                    KptTheme.colorScheme.secondary.copy(alpha = 0.5f)
+                    KptTheme.colorScheme.secondary.copy(alpha = 0.5f),
                 ),
                 colors = CardDefaults.cardColors(containerColor = KptTheme.colorScheme.onPrimary),
                 elevation = CardDefaults.cardElevation(KptTheme.elevation.level0),
