@@ -137,7 +137,7 @@ complexity:
     threshold: 15
   ComplexCondition:
     active: true
-    threshold: 5
+    threshold: 4
   ComplexInterface:
     active: false
     threshold: 10
@@ -146,7 +146,7 @@ complexity:
     ignoreOverloaded: false
   CyclomaticComplexMethod:
     active: true
-    threshold: 25
+    threshold: 15
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -168,7 +168,7 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
-    threshold: 180 #60
+    threshold: 150 #60
   LongParameterList:
     active: true
     # Updating Common values based on current scenario
@@ -186,7 +186,7 @@ complexity:
     ignoreArgumentsMatchingNames: false
   NestedBlockDepth:
     active: true
-    threshold: 6
+    threshold: 4
   NestedScopeFunctions:
     active: false
     threshold: 1
@@ -232,7 +232,7 @@ complexity:
     thresholdInFiles: 20
     thresholdInClasses: 20
     thresholdInInterfaces: 20
-    thresholdInObjects: 22
+    thresholdInObjects: 20
     thresholdInEnums: 20
     ignoreDeprecated: false
     ignorePrivate: false
@@ -432,6 +432,7 @@ naming:
         "**/androidInstrumentedTest/**",
         "**/jsTest/**",
         "**/iosTest/**",
+        "**/generated/**",
       ]
     functionPattern: "[a-z][a-zA-Z0-9]*"
     excludeClassPattern: "$^"
@@ -689,7 +690,7 @@ style:
     active: false
   DestructuringDeclarationWithTooManyEntries:
     active: true
-    maxDestructuringEntries: 4
+    maxDestructuringEntries: 3
   DoubleNegativeLambda:
     active: false
     negativeFunctions:

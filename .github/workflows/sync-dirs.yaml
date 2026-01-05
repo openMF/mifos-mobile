@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: development
+          ref: dev
 
       - name: Setup Git config
         run: |
@@ -32,12 +32,14 @@ jobs:
 
       - name: Add upstream remote and fetch
         run: |
+          set -euo pipefail
           UPSTREAM="${{ inputs.upstream || 'https://github.com/openMF/kmp-project-template.git' }}"
           git remote add upstream "$UPSTREAM" || true
           git fetch upstream || exit 1
 
       - name: Check upstream/dev exists
         run: |
+          set -euo pipefail
           if ! git rev-parse --verify upstream/dev >/dev/null 2>&1; then
             echo "Error: upstream/dev branch does not exist"
             exit 1
@@ -45,12 +47,16 @@ jobs:
 
       - name: Create and checkout temporary branch
         run: |
+          set -euo pipefail
           TEMP_BRANCH="temp-sync-branch-${{ github.run_number }}"
           git checkout -b "$TEMP_BRANCH" upstream/dev || exit 1
           echo "TEMP_BRANCH=$TEMP_BRANCH" >> $GITHUB_ENV
 
       - name: Sync directories and files
+        shell: bash
         run: |
+          set -euo pipefail
+
           # Declare directories and files to sync
           DIRS=(
             "cmp-android"
@@ -66,14 +72,14 @@ jobs:
             ".github"
             ".run"
           )
-          
+
           FILES=(
             "Gemfile"
             "Gemfile.lock"
             "ci-prepush.bat"
             "ci-prepush.sh"
           )
-          
+
           # Define exclusions
           declare -A EXCLUSIONS=(
             ["cmp-android"]="src/main/res dependencies src/main/ic_launcher-playstore.png google-services.json"
@@ -82,25 +88,27 @@ jobs:
             ["cmp-ios"]="iosApp/Assets.xcassets"
             ["root"]="secrets.env"
           )
-          
+
           # Function to check if path should be excluded
           should_exclude() {
             local dir=$1
             local path=$2
-          
-            # Check for root exclusions
-            if [[ "$dir" == "." && -n "${EXCLUSIONS["root"]}" ]]; then
-              local root_excluded_paths=(${EXCLUSIONS["root"]})
+
+            # Check for root exclusions (when dir is "." or "root")
+            if [[ "$dir" == "." || "$dir" == "root" ]] && [[ -v "EXCLUSIONS[root]" ]]; then
+              local root_excluded_paths
+              IFS=' ' read -ra root_excluded_paths <<< "${EXCLUSIONS[root]}"
               for excluded in "${root_excluded_paths[@]}"; do
                 if [[ "$path" == *"$excluded"* ]]; then
                   return 0
                 fi
               done
             fi
-          
+
             # Check directory-specific exclusions
-            if [[ -n "${EXCLUSIONS[$dir]}" ]]; then
-              local excluded_paths=(${EXCLUSIONS[$dir]})
+            if [[ -v "EXCLUSIONS[$dir]" ]]; then
+              local excluded_paths
+              IFS=' ' read -ra excluded_paths <<< "${EXCLUSIONS[$dir]}"
               for excluded in "${excluded_paths[@]}"; do
                 if [[ "$path" == *"$excluded"* ]]; then
                   return 0
@@ -109,29 +117,31 @@ jobs:
             fi
             return 1
           }
-          
+
           # Function to preserve excluded paths
           preserve_excluded() {
             local dir=$1
-            if [[ -n "${EXCLUSIONS[$dir]}" ]]; then
-              local excluded_paths=(${EXCLUSIONS[$dir]})
+            if [[ -v "EXCLUSIONS[$dir]" ]]; then
+              local excluded_paths
+              IFS=' ' read -ra excluded_paths <<< "${EXCLUSIONS[$dir]}"
               for excluded in "${excluded_paths[@]}"; do
                 local full_path="$dir/$excluded"
                 if [[ -e "$full_path" ]]; then
                   echo "Preserving excluded path: $full_path"
                   local temp_path="temp_excluded/$full_path"
                   mkdir -p "$(dirname "$temp_path")"
-                  cp -r "$full_path" "$(dirname "$temp_path")"
+                  cp -r "$full_path" "$(dirname "$temp_path")/"
                 fi
               done
             fi
           }
-          
+
           # Function to restore excluded paths
           restore_excluded() {
             local dir=$1
-            if [[ -n "${EXCLUSIONS[$dir]}" ]]; then
-              local excluded_paths=(${EXCLUSIONS[$dir]})
+            if [[ -v "EXCLUSIONS[$dir]" ]]; then
+              local excluded_paths
+              IFS=' ' read -ra excluded_paths <<< "${EXCLUSIONS[$dir]}"
               for excluded in "${excluded_paths[@]}"; do
                 local full_path="$dir/$excluded"
                 local temp_path="temp_excluded/$full_path"
@@ -139,16 +149,17 @@ jobs:
                   echo "Restoring excluded path: $full_path"
                   mkdir -p "$(dirname "$full_path")"
                   rm -rf "$full_path"
-                  cp -r "$temp_path" "$(dirname "$full_path")"
+                  cp -r "$temp_path" "$(dirname "$full_path")/"
                 fi
               done
             fi
           }
-          
+
           # Function to preserve root-level excluded files
           preserve_root_files() {
-            if [[ -n "${EXCLUSIONS["root"]}" ]]; then
-              local excluded_paths=(${EXCLUSIONS["root"]})
+            if [[ -v "EXCLUSIONS[root]" ]]; then
+              local excluded_paths
+              IFS=' ' read -ra excluded_paths <<< "${EXCLUSIONS[root]}"
               for excluded in "${excluded_paths[@]}"; do
                 if [[ -e "$excluded" ]]; then
                   echo "Preserving root-level excluded file: $excluded"
@@ -158,11 +169,12 @@ jobs:
               done
             fi
           }
-          
+
           # Function to restore root-level excluded files
           restore_root_files() {
-            if [[ -n "${EXCLUSIONS["root"]}" ]]; then
-              local excluded_paths=(${EXCLUSIONS["root"]})
+            if [[ -v "EXCLUSIONS[root]" ]]; then
+              local excluded_paths
+              IFS=' ' read -ra excluded_paths <<< "${EXCLUSIONS[root]}"
               for excluded in "${excluded_paths[@]}"; do
                 if [[ -e "temp_excluded/root/$excluded" ]]; then
                   echo "Restoring root-level excluded file: $excluded"
@@ -171,63 +183,81 @@ jobs:
               done
             fi
           }
-          
+
           # Create temp directory for exclusions
           mkdir -p temp_excluded
-          
+
           # Preserve root-level exclusions before sync
           preserve_root_files
-          
-          # Switch to development branch
-          git checkout development
-          
+
+          # Switch to dev branch
+          git checkout dev
+
           # Sync directories
           for dir in "${DIRS[@]}"; do
-            if [ ! -d "$dir" ]; then
+            if [[ ! -d "$dir" ]]; then
               echo "Creating $dir..."
               mkdir -p "$dir"
             fi
-          
+
             # Preserve excluded paths before sync
             if [[ -d "$dir" ]]; then
               preserve_excluded "$dir"
             fi
-          
+
             echo "Syncing $dir..."
-            git checkout "${{ env.TEMP_BRANCH }}" -- "$dir" || exit 1
-          
+            if ! git checkout "${{ env.TEMP_BRANCH }}" -- "$dir" 2>/dev/null; then
+              echo "Warning: Could not sync directory $dir (may not exist in upstream)"
+            fi
+
             # Restore excluded paths after sync
             restore_excluded "$dir"
           done
-          
+
           # Sync files
           for file in "${FILES[@]}"; do
-            dir=$(dirname "$file")
-            if ! should_exclude "$dir" "$file"; then
-              echo "Syncing $file..."
-              git checkout "${{ env.TEMP_BRANCH }}" -- "$file" || true
-            else
+            file_dir=$(dirname "$file")
+            file_name=$(basename "$file")
+
+            # Check root exclusions for root-level files
+            if [[ "$file_dir" == "." ]]; then
+              if should_exclude "root" "$file_name"; then
+                echo "Skipping excluded file: $file"
+                continue
+              fi
+            elif should_exclude "$file_dir" "$file"; then
               echo "Skipping excluded file: $file"
+              continue
+            fi
+
+            echo "Syncing $file..."
+            if ! git checkout "${{ env.TEMP_BRANCH }}" -- "$file" 2>/dev/null; then
+              echo "Warning: Could not sync file $file (may not exist in upstream)"
             fi
           done
-          
+
           # Restore root-level excluded files
           restore_root_files
-          
+
           # Cleanup temp directory
           rm -rf temp_excluded
 
+          echo "Sync completed successfully!"
+
       - name: Clean up temporary branch
         if: always()
-        run: git branch -D "${{ env.TEMP_BRANCH }}" || true
+        run: git branch -D "${{ env.TEMP_BRANCH }}" 2>/dev/null || true
 
       - name: Check for changes
         id: check_changes
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected:"
+            git status --short
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
           fi
 
       - name: Create Pull Request
@@ -239,35 +269,37 @@ jobs:
           title: "chore: Sync directories and files from upstream"
           body: |
             Automated sync of directories and files from upstream repository.
-            
+
             Changes included in this sync:
-            
-            Directories:
+
+            **Directories:**
             - cmp-android (excluding src/main/res, dependencies, ic_launcher-playstore.png, google-services.json)
             - cmp-desktop (excluding icons)
             - cmp-ios (excluding iosApp/Assets.xcassets)
             - cmp-web (excluding src/jsMain/resources, src/wasmJsMain/resources)
             - cmp-shared
+            - core-base
             - build-logic
             - fastlane
             - scripts
             - config
             - .github
             - .run
-            
-            Files:
+
+            **Files:**
             - Gemfile
             - Gemfile.lock
             - ci-prepush.bat
             - ci-prepush.sh
-            
-            Root-level exclusions:
+
+            **Root-level exclusions:**
             - secrets.env
-            
+
+            ---
             Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           branch: sync-dirs-${{ github.run_number }}
           delete-branch: true
           labels: |
             sync
             automated pr
-          base: development
+          base: dev

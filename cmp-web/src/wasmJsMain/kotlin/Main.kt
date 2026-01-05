@@ -37,7 +37,7 @@ fun main() {
      * This window uses the canvas element with the ID "ComposeTarget" and has the title "WebApp".
      */
     CanvasBasedWindow(
-        title = "Mifos Mobile", // Window title
+        title = "WebApp", // Window title
         canvasElementId = "ComposeTarget", // The canvas element where the Compose UI will be rendered
     ) {
         /*
@@ -45,9 +45,11 @@ fun main() {
          * This function is responsible for setting up the entire UI structure of the app.
          */
         SharedApp(
+            updateScreenCapture = {},
+            handleRecreate = {},
             handleThemeMode = {},
             handleAppLocale = {},
-            onSplashScreenRemoved = {},
+            onSplashScreenRemoved = {}
         )
     }
 }

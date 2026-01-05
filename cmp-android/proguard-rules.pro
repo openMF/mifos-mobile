@@ -6,6 +6,9 @@
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
 
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
 # Proguard Kotlin Example https://github.com/Guardsquare/proguard/blob/master/examples/application-kotlin/proguard.pro
 
 -keepattributes *Annotation*
@@ -129,7 +132,6 @@
 -dontwarn io.ktor.client.network.sockets.SocketTimeoutException
 -dontwarn java.lang.management.RuntimeMXBean
 
--keep class org.mifospay.core.network.services.* { *;}
 -keep class de.jensklingenberg.ktorfit.converter.** { *; }
 -keep class de.jensklingenberg.ktorfit.** { *; }
 -keeppackagenames de.jensklingenberg.ktorfit.*

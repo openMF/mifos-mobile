@@ -17,11 +17,9 @@ plugins {
 }
 
 kotlin {
-    jvm {
-        withJava()
-    }
+    jvm()
 
-    jvmToolchain(21)
+    jvmToolchain(17)
 
     sourceSets {
         jvmMain.dependencies {
@@ -33,32 +31,19 @@ kotlin {
             implementation(libs.kotlin.reflect)
 
             implementation(libs.koin.core)
-
-            implementation(compose.components.resources)
         }
     }
 }
 
-val appName: String = libs.versions.packageName.get()
-val packageNameSpace: String = libs.versions.packageNamespace.get()
-val appVersion: String = libs.versions.packageVersion.get()
+val appName: String = libs.versions.desktopPackageName.get()
+val packageNameSpace: String = libs.versions.desktopPackageNamespace.get()
+val appVersion: String = libs.versions.desktopPackageVersion.get()
 
 compose.desktop {
     application {
         mainClass = "MainKt"
-
-        val buildNumber: String = (project.findProperty("buildNumber") as String?) ?: "1"
-        val isAppStoreRelease: Boolean =
-            (project.findProperty("macOsAppStoreRelease") as String?)?.toBoolean() ?: false
-
         nativeDistributions {
-            targetFormats(
-                TargetFormat.Pkg,
-                TargetFormat.Dmg,
-                TargetFormat.Msi,
-                TargetFormat.Exe,
-                TargetFormat.Deb
-            )
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = appName
             packageVersion = appVersion
             description = "Desktop Application"
@@ -66,39 +51,16 @@ compose.desktop {
             vendor = "Mifos Initiative"
             licenseFile.set(project.file("../LICENSE"))
             includeAllModules = true
-            outputBaseDir.set(project.layout.buildDirectory.dir("release"))
 
             macOS {
                 bundleID = packageNameSpace
                 dockName = appName
                 iconFile.set(project.file("icons/ic_launcher.icns"))
-                minimumSystemVersion = "12.0"
-                appStore = isAppStoreRelease
-
-                infoPlist {
-                    packageBuildVersion = buildNumber
-                    extraKeysRawXml = """
-                    <key>ITSAppUsesNonExemptEncryption</key>
-                    <false/>
-                """.trimIndent()
-                }
-
-                if (isAppStoreRelease) {
-                    signing {
-                        sign.set(true)
-                        identity.set("The Mifos Initiative")
-                    }
-                    provisioningProfile.set(project.file("embedded.provisionprofile"))
-                    runtimeProvisioningProfile.set(project.file("runtime.provisionprofile"))
-                    entitlementsFile.set(project.file("entitlements.plist"))
-                    runtimeEntitlementsFile.set(project.file("runtime-entitlements.plist"))
-                } else {
-                    notarization {
-                        val providers = project.providers
-                        appleID.set(providers.environmentVariable("NOTARIZATION_APPLE_ID"))
-                        password.set(providers.environmentVariable("NOTARIZATION_PASSWORD"))
-                        teamID.set(providers.environmentVariable("NOTARIZATION_TEAM_ID"))
-                    }
+                notarization {
+                    val providers = project.providers
+                    appleID.set(providers.environmentVariable("NOTARIZATION_APPLE_ID"))
+                    password.set(providers.environmentVariable("NOTARIZATION_PASSWORD"))
+                    teamID.set(providers.environmentVariable("NOTARIZATION_TEAM_ID"))
                 }
             }
 
@@ -116,36 +78,9 @@ compose.desktop {
             }
         }
         buildTypes.release.proguard {
-            isEnabled = false
-//            configurationFiles.from(file("compose-desktop.pro"))
-//            obfuscate.set(true)
-//            optimize.set(true)
+            configurationFiles.from(file("compose-desktop.pro"))
+            obfuscate.set(true)
+            optimize.set(true)
         }
     }
-}
-
-/**
- * Removes the `com.apple.quarantine` extended attribute from the built `.app`.
- *
- * Why:
- * Gatekeeper may mark files from the Internet with `com.apple.quarantine`.
- * If any such file ends up inside the `.app`, App Store validation can fail.
- */
-val unquarantineApp = tasks.register<Exec>("unquarantineMacApp") {
-    group = "macOS"
-    description = "Remove com.apple.quarantine from the built .app before signing"
-    onlyIf { org.gradle.internal.os.OperatingSystem.current().isMacOsX }
-
-    dependsOn("createReleaseDistributable")
-
-    val appName = "$appName.app" // set to your final .app name
-    val appPath = layout.buildDirectory
-        .dir("release/main-release/app/$appName")
-        .map { it.asFile.absolutePath }
-
-    commandLine("xattr", "-dr", "com.apple.quarantine", appPath.get())
-}
-
-tasks.matching { it.name == "packageReleasePkg" }.configureEach {
-    dependsOn(unquarantineApp)
 }

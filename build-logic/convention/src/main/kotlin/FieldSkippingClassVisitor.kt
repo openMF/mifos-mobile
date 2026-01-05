@@ -31,8 +31,8 @@ class FieldSkippingClassVisitor(
 
         override fun createClassVisitor(
             classContext: ClassContext,
-            nextClassVisitor: ClassVisitor,
-        ): ClassVisitor {
+            nextClassVisitor: org.objectweb.asm.ClassVisitor,
+        ): org.objectweb.asm.ClassVisitor {
             return FieldSkippingClassVisitor(
                 apiVersion = instrumentationContext.apiVersion.get(),
                 nextClassVisitor = nextClassVisitor,

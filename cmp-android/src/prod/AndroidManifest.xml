@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application>
+
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="true"
+            tools:replace="android:value" />
+
+        <!-- Enable Firebase analytics for `prod` builds -->
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="false"
+            tools:replace="android:value" />
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="true"
+            tools:replace="android:value" />
+    </application>
+
+</manifest>
