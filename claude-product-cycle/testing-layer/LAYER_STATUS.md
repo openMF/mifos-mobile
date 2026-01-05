@@ -10,10 +10,62 @@
 |--------|:-------:|:------:|:--------:|
 | ViewModel Tests | 0/49 | 49 | [░░░░░░░░░░] 0% |
 | Screen Tests | 0/63 | 63 | [░░░░░░░░░░] 0% |
-| Fake Repositories | 0/17 | 17 | [░░░░░░░░░░] 0% |
-| TestTags Objects | 0/17 | 17 | [░░░░░░░░░░] 0% |
+| Fake Repositories | 6/17 | 17 | [███░░░░░░░] 35% |
+| TestTags Objects | 17/17 | 17 | [██████████] 100% |
+| Test Fixtures | 3/10 | 10 | [███░░░░░░░] 30% |
 | Integration Tests | 0/5 | 5 | [░░░░░░░░░░] 0% |
 | Screenshot Tests | 0/20 | 20 | [░░░░░░░░░░] 0% |
+
+---
+
+## core:testing Module (KMP)
+
+**Location**: `core/testing/`
+**Status**: ✅ Active
+**Platforms**: Android, iOS, Desktop, Native
+
+### Module Structure
+
+```
+core/testing/src/
+├── commonMain/kotlin/org/mifos/mobile/core/testing/
+│   ├── di/TestModule.kt                    # Koin test module
+│   ├── fake/                               # Fake repositories (6)
+│   │   ├── FakeUserAuthRepository.kt
+│   │   ├── FakeHomeRepository.kt
+│   │   ├── FakeAccountsRepository.kt
+│   │   ├── FakeBeneficiaryRepository.kt
+│   │   ├── FakeTransferRepository.kt
+│   │   └── FakeNotificationRepository.kt
+│   ├── fixture/                            # Test fixtures (3)
+│   │   ├── UserFixture.kt
+│   │   ├── ClientAccountsFixture.kt
+│   │   └── BeneficiaryFixture.kt
+│   ├── rule/MainDispatcherRule.kt          # Coroutine testing (KMP)
+│   └── util/
+│       ├── TestTags.kt                     # TestTags for all 17 features
+│       ├── FlowTestExtensions.kt           # Flow testing helpers
+│       └── TestCoroutineExtensions.kt      # Coroutine helpers
+├── androidMain/kotlin/org/mifos/mobile/core/testing/
+│   ├── rule/MainDispatcherTestRule.kt      # JUnit4 TestRule
+│   └── ComposeTestHelpers.kt               # Compose UI test extensions
+├── iosMain/kotlin/org/mifos/mobile/core/testing/
+│   └── IosTestUtils.kt                     # iOS accessibility helpers
+├── desktopMain/kotlin/org/mifos/mobile/core/testing/
+│   └── DesktopTestUtils.kt                 # Desktop/Swing helpers
+└── nativeMain/kotlin/org/mifos/mobile/core/testing/
+    └── NativeTestUtils.kt                  # Native platform helpers
+```
+
+### Platform-Specific Features
+
+| Platform | Source Set | Features |
+|----------|------------|----------|
+| Common | `commonMain` | TestTags, Fakes, Fixtures, MainDispatcherRule |
+| Android | `androidMain` | JUnit4 TestRule, Compose UI test helpers |
+| iOS | `iosMain` | Accessibility ID conversion, XCTest helpers |
+| Desktop | `desktopMain` | Swing dispatcher, Desktop test setup |
+| Native | `nativeMain` | Native dispatcher setup, timing utils |
 
 ---
 
@@ -21,26 +73,45 @@
 
 | # | Feature | VMs | VM Tests | Screens | Screen Tests | Fakes | TestTags | Status |
 |:-:|---------|:---:|:--------:|:-------:|:------------:|:-----:|:--------:|:------:|
-| 1 | auth | 5 | 0 | 6 | 0 | ❌ | ❌ | Not Started |
-| 2 | home | 1 | 0 | 1 | 0 | ❌ | ❌ | Not Started |
-| 3 | accounts | 3 | 0 | 3 | 0 | ❌ | ❌ | Not Started |
-| 4 | savings-account | 3 | 0 | 4 | 0 | ❌ | ❌ | Not Started |
-| 5 | loan-account | 4 | 0 | 4 | 0 | ❌ | ❌ | Not Started |
-| 6 | share-account | 2 | 0 | 2 | 0 | ❌ | ❌ | Not Started |
-| 7 | beneficiary | 4 | 0 | 4 | 0 | ❌ | ❌ | Not Started |
-| 8 | transfer | 2 | 0 | 2 | 0 | ❌ | ❌ | Not Started |
-| 9 | recent-transaction | 1 | 0 | 1 | 0 | ❌ | ❌ | Not Started |
-| 10 | notification | 1 | 0 | 1 | 0 | ❌ | ❌ | Not Started |
-| 11 | settings | 5 | 0 | 9 | 0 | ❌ | ❌ | Not Started |
-| 12 | passcode | 2 | 0 | 2 | 0 | ❌ | ❌ | Not Started |
-| 13 | guarantor | 3 | 0 | 3 | 0 | ❌ | ❌ | Not Started |
-| 14 | qr | 3 | 0 | 3 | 0 | ❌ | ❌ | Not Started |
-| 15 | location | 0 | 0 | 1 | 0 | ❌ | ❌ | Not Started |
-| 16 | client-charge | 2 | 0 | 2 | 0 | ❌ | ❌ | Not Started |
-| 17 | dashboard | 0 | 0 | 0 | 0 | ❌ | ❌ | Not Started |
-| | **TOTAL** | **41** | **0** | **48** | **0** | **0/17** | **0/17** | |
+| 1 | auth | 5 | 0 | 6 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 2 | home | 1 | 0 | 1 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 3 | accounts | 3 | 0 | 3 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 4 | savings-account | 3 | 0 | 4 | 0 | ❌ | ✅ | TestTags Ready |
+| 5 | loan-account | 4 | 0 | 4 | 0 | ❌ | ✅ | TestTags Ready |
+| 6 | share-account | 2 | 0 | 2 | 0 | ❌ | ✅ | TestTags Ready |
+| 7 | beneficiary | 4 | 0 | 4 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 8 | transfer | 2 | 0 | 2 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 9 | recent-transaction | 1 | 0 | 1 | 0 | ❌ | ✅ | TestTags Ready |
+| 10 | notification | 1 | 0 | 1 | 0 | ✅ | ✅ | Infrastructure Ready |
+| 11 | settings | 5 | 0 | 9 | 0 | ❌ | ✅ | TestTags Ready |
+| 12 | passcode | 2 | 0 | 2 | 0 | ❌ | ✅ | TestTags Ready |
+| 13 | guarantor | 3 | 0 | 3 | 0 | ❌ | ✅ | TestTags Ready |
+| 14 | qr | 3 | 0 | 3 | 0 | ❌ | ✅ | TestTags Ready |
+| 15 | location | 0 | 0 | 1 | 0 | ❌ | ✅ | TestTags Ready |
+| 16 | client-charge | 2 | 0 | 2 | 0 | ❌ | ✅ | TestTags Ready |
+| 17 | dashboard | 0 | 0 | 0 | 0 | ❌ | ✅ | TestTags Ready |
+| | **TOTAL** | **41** | **0** | **48** | **0** | **6/17** | **17/17** | |
 
 **Legend**: ✅ Complete | ⚠️ Partial | ❌ Missing
+
+### Fake Repositories Available (6)
+
+| Fake | Interface | Key Methods |
+|------|-----------|-------------|
+| `FakeUserAuthRepository` | `UserAuthRepository` | login, register, logout |
+| `FakeHomeRepository` | `HomeRepository` | getClientAccounts, getUserData |
+| `FakeAccountsRepository` | `AccountsRepository` | getLoanAccounts, getSavingsAccounts |
+| `FakeBeneficiaryRepository` | `BeneficiaryRepository` | getBeneficiaries, createBeneficiary |
+| `FakeTransferRepository` | `TransferRepository` | makeTransfer, getTransferTemplate |
+| `FakeNotificationRepository` | `NotificationRepository` | getNotifications, markAsRead |
+
+### Test Fixtures Available (3)
+
+| Fixture | Entity | Factory Methods |
+|---------|--------|-----------------|
+| `UserFixture` | `User` | createDefault, createAdmin, createUnauthenticated |
+| `ClientAccountsFixture` | `ClientAccounts` | createEmpty, createWithSampleData, createWithLoansOnly |
+| `BeneficiaryFixture` | `Beneficiary` | createDefault, createList, createPayload |
 
 ---
 

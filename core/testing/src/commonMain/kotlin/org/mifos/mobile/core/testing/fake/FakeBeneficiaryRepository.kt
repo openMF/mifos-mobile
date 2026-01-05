@@ -38,10 +38,10 @@ import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTempl
  */
 class FakeBeneficiaryRepository : BeneficiaryRepository {
 
-    private val _beneficiaryTemplateFlow = MutableStateFlow<DataState<BeneficiaryTemplate>>(
+    private val beneficiaryTemplateState = MutableStateFlow<DataState<BeneficiaryTemplate>>(
         DataState.Success(BeneficiaryTemplate()),
     )
-    private val _beneficiaryListFlow = MutableStateFlow<DataState<List<Beneficiary>>>(
+    private val beneficiaryListState = MutableStateFlow<DataState<List<Beneficiary>>>(
         DataState.Success(emptyList()),
     )
 
@@ -62,23 +62,23 @@ class FakeBeneficiaryRepository : BeneficiaryRepository {
         private set
 
     fun setBeneficiaryTemplate(result: DataState<BeneficiaryTemplate>) {
-        _beneficiaryTemplateFlow.value = result
+        beneficiaryTemplateState.value = result
     }
 
     fun setBeneficiaryList(result: DataState<List<Beneficiary>>) {
-        _beneficiaryListFlow.value = result
+        beneficiaryListState.value = result
     }
 
     fun emitBeneficiaryListLoading() {
-        _beneficiaryListFlow.value = DataState.Loading
+        beneficiaryListState.value = DataState.Loading
     }
 
     fun emitBeneficiaryListSuccess(beneficiaries: List<Beneficiary>) {
-        _beneficiaryListFlow.value = DataState.Success(beneficiaries)
+        beneficiaryListState.value = DataState.Success(beneficiaries)
     }
 
     fun emitBeneficiaryListError(error: Throwable) {
-        _beneficiaryListFlow.value = DataState.Error(error)
+        beneficiaryListState.value = DataState.Error(error)
     }
 
     fun setCreateResult(result: DataState<String>) {
@@ -94,8 +94,8 @@ class FakeBeneficiaryRepository : BeneficiaryRepository {
     }
 
     fun reset() {
-        _beneficiaryTemplateFlow.value = DataState.Success(BeneficiaryTemplate())
-        _beneficiaryListFlow.value = DataState.Success(emptyList())
+        beneficiaryTemplateState.value = DataState.Success(BeneficiaryTemplate())
+        beneficiaryListState.value = DataState.Success(emptyList())
         createResult = DataState.Success("Beneficiary created")
         updateResult = DataState.Success("Beneficiary updated")
         deleteResult = DataState.Success("Beneficiary deleted")
@@ -107,7 +107,7 @@ class FakeBeneficiaryRepository : BeneficiaryRepository {
     }
 
     override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> {
-        return _beneficiaryTemplateFlow.asStateFlow()
+        return beneficiaryTemplateState.asStateFlow()
     }
 
     override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): DataState<String> {
@@ -131,6 +131,6 @@ class FakeBeneficiaryRepository : BeneficiaryRepository {
     }
 
     override fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> {
-        return _beneficiaryListFlow.asStateFlow()
+        return beneficiaryListState.asStateFlow()
     }
 }

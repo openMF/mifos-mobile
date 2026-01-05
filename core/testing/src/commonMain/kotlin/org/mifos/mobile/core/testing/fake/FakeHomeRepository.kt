@@ -37,68 +37,68 @@ import org.mifos.mobile.core.model.entity.client.ClientAccounts
  */
 class FakeHomeRepository : HomeRepository {
 
-    private val _clientAccountsFlow = MutableStateFlow<DataState<ClientAccounts>>(
+    private val clientAccountsState = MutableStateFlow<DataState<ClientAccounts>>(
         DataState.Success(ClientAccounts()),
     )
-    private val _currentClientFlow = MutableStateFlow<DataState<Client>>(
+    private val currentClientState = MutableStateFlow<DataState<Client>>(
         DataState.Success(createDefaultClient()),
     )
-    private val _clientImageFlow = MutableStateFlow<DataState<String>>(
+    private val clientImageState = MutableStateFlow<DataState<String>>(
         DataState.Success(""),
     )
-    private val _unreadNotificationsFlow = MutableStateFlow<DataState<Int>>(
+    private val unreadNotificationsState = MutableStateFlow<DataState<Int>>(
         DataState.Success(0),
     )
 
     fun setClientAccounts(result: DataState<ClientAccounts>) {
-        _clientAccountsFlow.value = result
+        clientAccountsState.value = result
     }
 
     fun emitClientAccountsLoading() {
-        _clientAccountsFlow.value = DataState.Loading
+        clientAccountsState.value = DataState.Loading
     }
 
     fun emitClientAccountsSuccess(accounts: ClientAccounts) {
-        _clientAccountsFlow.value = DataState.Success(accounts)
+        clientAccountsState.value = DataState.Success(accounts)
     }
 
     fun emitClientAccountsError(error: Throwable) {
-        _clientAccountsFlow.value = DataState.Error(error)
+        clientAccountsState.value = DataState.Error(error)
     }
 
     fun setCurrentClient(result: DataState<Client>) {
-        _currentClientFlow.value = result
+        currentClientState.value = result
     }
 
     fun setClientImage(result: DataState<String>) {
-        _clientImageFlow.value = result
+        clientImageState.value = result
     }
 
     fun setUnreadNotificationsCount(count: Int) {
-        _unreadNotificationsFlow.value = DataState.Success(count)
+        unreadNotificationsState.value = DataState.Success(count)
     }
 
     fun reset() {
-        _clientAccountsFlow.value = DataState.Success(ClientAccounts())
-        _currentClientFlow.value = DataState.Success(createDefaultClient())
-        _clientImageFlow.value = DataState.Success("")
-        _unreadNotificationsFlow.value = DataState.Success(0)
+        clientAccountsState.value = DataState.Success(ClientAccounts())
+        currentClientState.value = DataState.Success(createDefaultClient())
+        clientImageState.value = DataState.Success("")
+        unreadNotificationsState.value = DataState.Success(0)
     }
 
     override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> {
-        return _clientAccountsFlow.asStateFlow()
+        return clientAccountsState.asStateFlow()
     }
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
-        return _currentClientFlow.asStateFlow()
+        return currentClientState.asStateFlow()
     }
 
     override fun clientImage(clientId: Long): Flow<DataState<String>> {
-        return _clientImageFlow.asStateFlow()
+        return clientImageState.asStateFlow()
     }
 
     override fun unreadNotificationsCount(): Flow<DataState<Int>> {
-        return _unreadNotificationsFlow.asStateFlow()
+        return unreadNotificationsState.asStateFlow()
     }
 
     private fun createDefaultClient(): Client {

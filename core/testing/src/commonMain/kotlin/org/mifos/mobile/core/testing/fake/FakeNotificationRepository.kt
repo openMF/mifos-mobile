@@ -35,10 +35,10 @@ import org.mifos.mobile.core.model.entity.MifosNotification
  */
 class FakeNotificationRepository : NotificationRepository {
 
-    private val _notificationsFlow = MutableStateFlow<DataState<List<MifosNotification>>>(
+    private val notificationsState = MutableStateFlow<DataState<List<MifosNotification>>>(
         DataState.Success(emptyList()),
     )
-    private val _unreadCountFlow = MutableStateFlow<DataState<Int>>(
+    private val unreadCountState = MutableStateFlow<DataState<Int>>(
         DataState.Success(0),
     )
 
@@ -53,30 +53,30 @@ class FakeNotificationRepository : NotificationRepository {
         private set
 
     fun setNotifications(result: DataState<List<MifosNotification>>) {
-        _notificationsFlow.value = result
+        notificationsState.value = result
     }
 
     fun emitNotificationsLoading() {
-        _notificationsFlow.value = DataState.Loading
+        notificationsState.value = DataState.Loading
     }
 
     fun emitNotificationsSuccess(notifications: List<MifosNotification>) {
-        _notificationsFlow.value = DataState.Success(notifications)
+        notificationsState.value = DataState.Success(notifications)
     }
 
     fun emitNotificationsError(error: Throwable) {
-        _notificationsFlow.value = DataState.Error(error)
+        notificationsState.value = DataState.Error(error)
     }
 
     fun setUnreadCount(count: Int) {
-        _unreadCountFlow.value = DataState.Success(count)
+        unreadCountState.value = DataState.Success(count)
     }
 
     fun getSavedNotifications(): List<MifosNotification> = savedNotifications.toList()
 
     fun reset() {
-        _notificationsFlow.value = DataState.Success(emptyList())
-        _unreadCountFlow.value = DataState.Success(0)
+        notificationsState.value = DataState.Success(emptyList())
+        unreadCountState.value = DataState.Success(0)
         savedNotifications.clear()
         saveCallCount = 0
         deleteOldCallCount = 0
@@ -84,11 +84,11 @@ class FakeNotificationRepository : NotificationRepository {
     }
 
     override fun loadNotifications(): Flow<DataState<List<MifosNotification>>> {
-        return _notificationsFlow.asStateFlow()
+        return notificationsState.asStateFlow()
     }
 
     override fun getUnReadNotificationCount(): Flow<DataState<Int>> {
-        return _unreadCountFlow.asStateFlow()
+        return unreadCountState.asStateFlow()
     }
 
     override suspend fun saveNotification(notification: MifosNotification) {

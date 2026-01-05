@@ -30,14 +30,19 @@ kotlin {
             api(projects.core.model)
             api(projects.core.network)
 
-            // Coroutines Test
+            // Coroutines Test - KMP compatible
             api(libs.kotlinx.coroutines.test)
 
-            // Koin Test
+            // Koin Test - KMP compatible
             api(libs.koin.test)
 
-            // Kotlin Test
+            // Kotlin Test - KMP compatible
             api(libs.kotlin.test)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
 
         androidMain.dependencies {
@@ -46,9 +51,9 @@ kotlin {
             api(libs.androidx.test.rules)
             api(libs.androidx.test.espresso.core)
 
-            // Compose Test
-            api(libs.androidx.compose.ui.test)
-            api(libs.androidx.compose.ui.test.manifest)
+            // Note: Compose UI Test dependencies (ui-test-junit4, ui-test-manifest)
+            // should be added by consuming modules that need them, as they require
+            // the Compose BOM for version management.
 
             // Turbine for Flow testing
             api(libs.turbine)
@@ -61,6 +66,23 @@ kotlin {
 
             // Koin Android Test
             api(libs.koin.test.junit4)
+        }
+
+        iosMain.dependencies {
+            // iOS-specific test utilities if needed
+        }
+
+        desktopMain.dependencies {
+            // Desktop-specific test utilities
+            api(libs.kotlinx.coroutines.swing)
+        }
+
+        jsMain.dependencies {
+            // JS-specific test utilities
+        }
+
+        nativeMain.dependencies {
+            // Native-specific test utilities
         }
     }
 }

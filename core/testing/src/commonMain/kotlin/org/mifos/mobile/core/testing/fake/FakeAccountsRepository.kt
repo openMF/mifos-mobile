@@ -32,7 +32,7 @@ import org.mifos.mobile.core.model.entity.client.ClientAccounts
  */
 class FakeAccountsRepository : AccountsRepository {
 
-    private val _accountsFlow = MutableStateFlow<DataState<ClientAccounts>>(
+    private val accountsState = MutableStateFlow<DataState<ClientAccounts>>(
         DataState.Success(ClientAccounts()),
     )
 
@@ -45,23 +45,23 @@ class FakeAccountsRepository : AccountsRepository {
         private set
 
     fun setAccounts(result: DataState<ClientAccounts>) {
-        _accountsFlow.value = result
+        accountsState.value = result
     }
 
     fun emitLoading() {
-        _accountsFlow.value = DataState.Loading
+        accountsState.value = DataState.Loading
     }
 
     fun emitSuccess(accounts: ClientAccounts) {
-        _accountsFlow.value = DataState.Success(accounts)
+        accountsState.value = DataState.Success(accounts)
     }
 
     fun emitError(error: Throwable) {
-        _accountsFlow.value = DataState.Error(error)
+        accountsState.value = DataState.Error(error)
     }
 
     fun reset() {
-        _accountsFlow.value = DataState.Success(ClientAccounts())
+        accountsState.value = DataState.Success(ClientAccounts())
         loadAccountsCallCount = 0
         lastClientId = null
         lastAccountType = null
@@ -71,6 +71,6 @@ class FakeAccountsRepository : AccountsRepository {
         loadAccountsCallCount++
         lastClientId = clientId
         lastAccountType = accountType
-        return _accountsFlow.asStateFlow()
+        return accountsState.asStateFlow()
     }
 }
