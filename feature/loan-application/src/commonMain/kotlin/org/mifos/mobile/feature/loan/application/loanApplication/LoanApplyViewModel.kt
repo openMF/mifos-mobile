@@ -34,7 +34,6 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
 import okio.IOException
 import org.jetbrains.compose.resources.StringResource
-import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -288,18 +287,11 @@ internal class LoanApplyViewModel(
                 val maxPrincipal = productTemplate?.product?.maxPrincipal
                     ?: defaultPrincipal
 
-                val currency = template.data?.currency ?: Currency(
-                    code = "USD", name = "US Dollar", decimalPlaces = 2.0, inMultiplesOf = 0,
-                    displaySymbol = "$", nameCode = "currency.USD", displayLabel = "US Dollar ($)",
-                )
-
-                val decimals = currency.decimalPlaces?.toInt() ?: 2
-
-                val initialAmount = CurrencyFormatter.format(
-                    minPrincipal,
-                    currency.code,
-                    decimals,
-                ).replace(Regex("[^\\d.]"), "")
+                val initialAmount = if (minPrincipal % 1 == 0.0) {
+                    minPrincipal.toLong().toString()
+                } else {
+                    minPrincipal.toString()
+                }
 
                 val todayMillis = Clock.System.now().toEpochMilliseconds()
                 val activationMillis = client.data?.activationDate?.let {
@@ -429,14 +421,14 @@ internal class LoanApplyViewModel(
                 if (error != null) {
                     ValidationResult.Error(error)
                 } else {
+                    val cleanAmount = if (value % 1 == 0.0) {
+                        value.toLong().toString()
+                    } else {
+                        value.toString()
+                    }
+
                     mutableStateFlow.update {
-                        it.copy(
-                            principalAmount = CurrencyFormatter.format(
-                                value,
-                                currency.code,
-                                currency.decimalPlaces,
-                            ).replace(Regex("[^\\d.]"), ""),
-                        )
+                        it.copy(principalAmount = cleanAmount)
                     }
                     ValidationResult.Success
                 }
