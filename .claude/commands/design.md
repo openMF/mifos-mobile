@@ -1,4 +1,4 @@
-# /design - Feature Specification
+# /design - Feature Specification (O(1) Enhanced)
 
 ## Purpose
 Create or update feature specifications (SPEC.md + API.md) that define what to build and how to build it.
@@ -8,52 +8,196 @@ Create or update feature specifications (SPEC.md + API.md) that define what to b
 ## Command Variants
 
 ```
-/design                     → Show feature list
-/design [Feature]           → Full spec review/create
-/design [Feature] add [section] → Add specific section
-/design [Feature] improve   → Suggest improvements
-/design [Feature] mockup    → Generate Figma mockups for feature (NEW)
-/design mockup              → Generate Figma mockups for all features (NEW)
+/design                         # Show feature list with status (O(1)
+/design [Feature]               # Full spec review/create
+/design [Feature] add [section] # Add specific section
+/design [Feature] improve       # Suggest improvements
+/design [Feature] mockup        # Generate Figma mockups for feature
+/design mockup                  # Generate Figma mockups for all features
 ```
 
 ---
 
-## Mockup Sub-Command
+## O(1) Workflow
+
+```
++-------------------------------------------------------------------------+
+|                    /design WORKFLOW (O(1) ENHANCED)                      |
++-------------------------------------------------------------------------+
+|                                                                          |
+|  PHASE 0: O(1) CONTEXT LOADING (~300 lines total)                       |
+|  +--> Read FEATURES_INDEX.md       --> Feature exists? SPEC/API status? |
+|  +--> Read MOCKUPS_INDEX.md        --> Mockup status (4 file types)     |
+|  +--> Read API_INDEX.md            --> All endpoints for reference      |
+|  +--> O(1) path: features/[name]/  --> Direct file access               |
+|                                                                          |
+|  PHASE 1: FEATURE STATUS (From Index)                                   |
+|  +--> Check if feature exists in FEATURES_INDEX                         |
+|  +--> Get SPEC/API/STATUS/Mockups status from index                     |
+|  +--> Determine: Create new vs Update existing                          |
+|                                                                          |
+|  PHASE 2: GATHER CONTEXT (O(1) Paths)                                   |
+|  +--> Read features/[feature]/SPEC.md (if exists)                       |
+|  +--> Read features/[feature]/API.md (if exists)                        |
+|  +--> Read features/[feature]/STATUS.md (if exists)                     |
+|  +--> Lookup API endpoints from API_INDEX.md                            |
+|                                                                          |
+|  PHASE 3: ANALYZE & UPDATE                                              |
+|  +--> Compare current spec vs requirements                              |
+|  +--> Identify gaps, outdated sections                                  |
+|  +--> Update/create spec files                                          |
+|                                                                          |
+|  PHASE 4: INDEX UPDATE (Mandatory)                                      |
+|  +--> Update FEATURES_INDEX.md (if new feature)                         |
+|  +--> Update STATUS.md (layer status)                                   |
+|  +--> Update feature STATUS.md                                          |
+|                                                                          |
++-------------------------------------------------------------------------+
+```
+
+---
+
+## Phase 0: O(1) Context Loading
+
+### Index Files to Read
+
+| File | Purpose | Lines |
+|------|---------|:-----:|
+| `design-spec-layer/FEATURES_INDEX.md` | All features + SPEC/API status | ~120 |
+| `design-spec-layer/MOCKUPS_INDEX.md` | Mockup completion matrix | ~150 |
+| `server-layer/API_INDEX.md` | All API endpoints | ~400 |
+
+### O(1) Path Pattern
+
+```
+features/[name]/SPEC.md       # Specification
+features/[name]/API.md        # API requirements
+features/[name]/STATUS.md     # Feature status
+features/[name]/MOCKUP.md     # v2.0 ASCII mockup
+features/[name]/mockups/      # Generated mockup files
+```
+
+---
+
+## If No Feature Name Provided
+
+Read from FEATURES_INDEX.md and show:
+
+```
++========================================================================+
+|  DESIGN LAYER - FEATURE STATUS (O(1) Lookup)                           |
++========================================================================+
+
+| # | Feature | SPEC | API | STATUS | Mockups | Command |
+|:-:|---------|:----:|:---:|:------:|:-------:|---------|
+| 1 | accounts | [s] | [a] | [st] | [m] | /design accounts |
+| 2 | auth | [s] | [a] | [st] | [m] | /design auth |
+| ... (all from FEATURES_INDEX.md)
+
+Legend: [s]=SPEC [a]=API [st]=STATUS [m]=Mockups
+
+**Design Progress**: {complete}/{total} features ({percentage}%)
+
++------------------------------------------------------------------------+
+|  QUICK ACTIONS                                                          |
++------------------------------------------------------------------------+
+| Create/Update Spec | /design [feature]                                  |
+| Generate Mockups   | /design [feature] mockup                           |
+| All Mockups        | /design mockup                                     |
+| Improve Feature    | /design [feature] improve                          |
++------------------------------------------------------------------------+
+```
+
+---
+
+## Mockup Sub-Command (O(1) Enhanced)
 
 ### `/design [Feature] mockup`
 
-Generates Figma-ready mockups from the feature's MOCKUP.md specification.
+```
++-------------------------------------------------------------------------+
+|                /design [Feature] mockup WORKFLOW                         |
++-------------------------------------------------------------------------+
+|                                                                          |
+|  PHASE 0: O(1) STATUS CHECK                                             |
+|  +--> Read MOCKUPS_INDEX.md                                             |
+|  +--> Check feature row: FIGMA | PROMPTS_FIGMA | PROMPTS_STITCH | tokens|
+|  +--> Identify: What exists? What's missing?                            |
+|                                                                          |
+|  PHASE 1: MCP & TOOL CHECK                                              |
+|  +--> Check MCP: claude mcp list                                        |
+|  +--> If stitch-ai configured: Use Google Stitch                        |
+|  +--> If figma configured: Use Figma MCP                                |
+|  +--> Otherwise: Ask user to select tool                                |
+|                                                                          |
+|  PHASE 2: READ MOCKUP.md                                                |
+|  +--> Read features/[feature]/MOCKUP.md (v2.0 ASCII design)             |
+|  +--> Parse screen layouts, components, colors                          |
+|  +--> Identify all screens and UI elements                              |
+|                                                                          |
+|  PHASE 3: GENERATE OUTPUTS                                              |
+|  +--> If missing: Generate PROMPTS_FIGMA.md                             |
+|  +--> If missing: Generate PROMPTS_STITCH.md                            |
+|  +--> If missing: Generate design-tokens.json                           |
+|  +--> Skip files that already exist (from MOCKUPS_INDEX)                |
+|                                                                          |
+|  PHASE 4: INDEX UPDATE                                                  |
+|  +--> Update MOCKUPS_INDEX.md with new status                           |
+|  +--> Update FEATURES_INDEX.md Mockups column                           |
+|                                                                          |
++-------------------------------------------------------------------------+
+```
 
-**Before Running**: Check MCP connections and select AI tool:
+### `/design mockup` (All Features)
 
-#### Step 0: Check MCP & Select Tool
+Uses O(1) lookup from MOCKUPS_INDEX.md to identify all gaps:
 
-**Check MCP Status**:
+```
++-------------------------------------------------------------------------+
+|  MOCKUP GENERATION STATUS (from MOCKUPS_INDEX.md)                        |
++-------------------------------------------------------------------------+
+
+| Feature | FIGMA | PROMPTS_F | PROMPTS_S | Tokens | Status |
+|---------|:-----:|:---------:|:---------:|:------:|--------|
+| auth | [x] | [x] | [x] | [x] | Complete |
+| dashboard | [ ] | [x] | [x] | [x] | Need FIGMA |
+| accounts | [ ] | [x] | [x] | [ ] | Need FIGMA, tokens |
+| ... (from MOCKUPS_INDEX)
+
+**Summary**:
+- Complete: {n} features
+- Need FIGMA_LINKS: {n} features
+- Need Prompts: {n} features
+- Need Tokens: {n} features
+
+**Next Step**: Generate missing files for [first-incomplete-feature]
+```
+
+---
+
+## Tool Selection
+
+### Check MCP First
+
 ```bash
 claude mcp list
 ```
 
-**AI Design Tools Available**:
+### AI Design Tools
 
-| Tool | MCP | Best For | Setup Command |
-|------|:---:|----------|---------------|
-| **Google Stitch** | ✅ | Material Design 3, Android/KMP | `claude mcp add stitch-ai -- npx -y stitch-ai-mcp` |
-| **Figma** | ✅ | Team collaboration, custom designs | `claude mcp add figma -- npx -y figma-mcp --token TOKEN` |
-| Uizard | ❌ | Quick prototypes | Manual (web only) |
-| Visily | ❌ | Component-focused | Manual (web only) |
+| Tool | MCP | Best For | Setup |
+|------|:---:|----------|-------|
+| **Google Stitch** | YES | Material Design 3, Android/KMP | `claude mcp add stitch-ai -- npx -y stitch-ai-mcp` |
+| **Figma** | YES | Team collaboration | `claude mcp add figma -- npx -y figma-mcp --token TOKEN` |
+| Uizard | NO | Quick prototypes | Manual (web) |
+| Visily | NO | Component-focused | Manual (web) |
 
 **Recommended**: Google Stitch (MD3 native, has MCP)
 
-**MCP Resources**:
-- Google Stitch MCP: [github.com/StitchAI/stitch-ai-mcp](https://github.com/StitchAI/stitch-ai-mcp)
-- Stitch Web: [stitch.withgoogle.com](https://stitch.withgoogle.com/)
-
-#### Tool Selection (Ask User)
-
-When running `/design [feature] mockup`, prompt user to select tool:
+### Tool Selection Prompt (If Not Configured)
 
 ```
-🎨 Select AI Design Tool:
+Select AI Design Tool:
 
 1. Google Stitch (Recommended) - Material Design 3 native
    MCP: claude mcp add stitch-ai -- npx -y stitch-ai-mcp
@@ -71,72 +215,28 @@ When running `/design [feature] mockup`, prompt user to select tool:
 Which tool? (1-4, default: 1)
 ```
 
-#### Workflow
+---
 
-1. Check MCP connection status
-2. Ask user to select AI design tool (or use configured default)
-3. Read `features/[Feature]/MOCKUP.md` (v2.0 ASCII design)
-4. Generate `features/[Feature]/mockups/PROMPTS.md` (tool-specific prompts)
-5. Generate `features/[Feature]/mockups/design-tokens.json` (structured tokens)
-6. If MCP connected: Offer to send directly to tool
-7. Output next steps for user
+## Output Files Structure
 
-**Output Files**:
 ```
 features/[Feature]/mockups/
-├── PROMPTS.md           # AI tool prompts (format based on selection)
-├── design-tokens.json   # Structured design tokens
-└── FIGMA_LINKS.md       # Figma URLs (user fills after export)
++-- PROMPTS_FIGMA.md           # Figma-specific prompts
++-- PROMPTS_STITCH.md          # Google Stitch prompts
++-- design-tokens.json         # Structured design tokens
++-- FIGMA_LINKS.md             # Figma URLs (user fills after export)
 ```
 
-### `/design mockup`
+---
 
-Generates mockups for ALL features that don't have mockups/ directory yet.
-Shows progress and allows resuming where left off.
-
-**First Run**: Will ask to select AI tool and configure MCP if not already done.
-
-### Mockup Generation Workflow
-
-```
-┌───────────────────────────────────────────────────────────────────┐
-│                /design [Feature] mockup WORKFLOW                   │
-├───────────────────────────────────────────────────────────────────┤
-│                                                                    │
-│  STEP 1: READ MOCKUP.md                                           │
-│  ├─→ Read features/[feature]/MOCKUP.md (v2.0 ASCII design)       │
-│  ├─→ Parse screen layouts, components, colors                     │
-│  └─→ Identify all screens and UI elements                         │
-│                                                                    │
-│  STEP 2: GENERATE PROMPTS.md                                      │
-│  ├─→ Create Google Stitch prompts for each screen                │
-│  ├─→ Include: colors, typography, spacing, components             │
-│  ├─→ Follow Material Design 3 guidelines                          │
-│  └─→ Write to features/[feature]/mockups/PROMPTS.md              │
-│                                                                    │
-│  STEP 3: GENERATE design-tokens.json                              │
-│  ├─→ Extract color tokens (primary, surface, error, success)     │
-│  ├─→ Extract typography tokens                                    │
-│  ├─→ Extract spacing and radius tokens                            │
-│  ├─→ List components and screens                                  │
-│  └─→ Write to features/[feature]/mockups/design-tokens.json      │
-│                                                                    │
-│  STEP 4: OUTPUT NEXT STEPS                                        │
-│  ├─→ Instructions to use Google Stitch                           │
-│  ├─→ How to export to Figma                                       │
-│  └─→ Remind to update FIGMA_LINKS.md                             │
-│                                                                    │
-└───────────────────────────────────────────────────────────────────┘
-```
-
-### PROMPTS.md Format (Google Stitch)
+## PROMPTS_STITCH.md Format
 
 ```markdown
-# [Feature] - AI Mockup Prompts
+# [Feature] - Google Stitch Prompts
 
 > **Generated from**: features/[feature]/MOCKUP.md
 > **Generated on**: [DATE]
-> **AI Tool**: Google Stitch (recommended)
+> **AI Tool**: Google Stitch
 
 ## Screen 1: [Screen Name]
 
@@ -156,7 +256,7 @@ Mifos Mobile - Self-service banking app for viewing accounts and transactions.
 - [Section details from MOCKUP.md]
 
 **Style Guidelines:**
-- Primary Gradient: #667EEA → #764BA2
+- Primary Gradient: #667EEA -> #764BA2
 - Surface: #FFFBFE
 - Typography: Inter font family
 - Spacing: 16px standard padding
@@ -164,67 +264,51 @@ Mifos Mobile - Self-service banking app for viewing accounts and transactions.
 
 ---
 
-## Model Recommendation
-
-**This command is optimized for Opus** for complex architectural decisions and comprehensive specification writing.
-
----
-
-## Key Files
+## Main Workflow: `/design [Feature]`
 
 ```
-claude-product-cycle/design-spec-layer/
-├── STATUS.md                         # All features status
-├── _shared/
-│   ├── PATTERNS.md                   # Implementation patterns
-│   └── API_REFERENCE.md              # Fineract API reference
-└── features/[feature]/
-    ├── SPEC.md                       # What to build (UI, flows)
-    ├── API.md                        # APIs needed
-    └── STATUS.md                     # Feature implementation status
-```
-
----
-
-## Workflow
-
-```
-┌───────────────────────────────────────────────────────────────────┐
-│                    /design [Feature] WORKFLOW                      │
-├───────────────────────────────────────────────────────────────────┤
-│                                                                    │
-│  STEP 1: GATHER CONTEXT                                           │
-│  ├─→ Read claude-product-cycle/design-spec-layer/STATUS.md        │
-│  ├─→ Read features/[feature]/SPEC.md (if exists)                  │
-│  ├─→ Read features/[feature]/API.md (if exists)                   │
-│  ├─→ Read actual code in feature/[feature]/                       │
-│  └─→ Read server-layer/FINERACT_API.md                            │
-│                                                                    │
-│  STEP 2: ANALYZE                                                  │
-│  ├─→ Compare current spec vs implementation                       │
-│  ├─→ Identify gaps, outdated sections, missing features           │
-│  ├─→ Research best practices for similar apps                     │
-│  └─→ Report findings to user                                      │
-│                                                                    │
-│  STEP 3: UPDATE SPEC.md                                           │
-│  ├─→ Update/add sections with ASCII mockups                       │
-│  ├─→ Define state model                                           │
-│  ├─→ Define user actions                                          │
-│  └─→ Add changelog entry                                          │
-│                                                                    │
-│  STEP 4: UPDATE API.md                                            │
-│  ├─→ List all required endpoints                                  │
-│  ├─→ Define request/response structures                           │
-│  └─→ Note any missing endpoints                                   │
-│                                                                    │
-│  STEP 5: CROSS-UPDATE (MANDATORY)                                 │
-│  ├─→ features/[feature]/STATUS.md                                 │
-│  └─→ claude-product-cycle/design-spec-layer/STATUS.md             │
-│                                                                    │
-│  STEP 6: GENERATE IMPLEMENTATION SUMMARY                          │
-│  └─→ Output clear requirements for /implement                     │
-│                                                                    │
-└───────────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------------------+
+|                    /design [Feature] WORKFLOW                            |
++-------------------------------------------------------------------------+
+|                                                                          |
+|  PHASE 0: O(1) CONTEXT LOADING                                          |
+|  +--> Read FEATURES_INDEX.md --> Feature exists? Status?                |
+|  +--> Read MOCKUPS_INDEX.md --> Mockup status                           |
+|  +--> Read API_INDEX.md --> Related endpoints                           |
+|                                                                          |
+|  PHASE 1: DETERMINE ACTION                                              |
+|  +--> If feature NOT in index: Create new feature                       |
+|  +--> If SPEC missing: Create SPEC.md                                   |
+|  +--> If API missing: Create API.md                                     |
+|  +--> If exists: Update/improve existing                                |
+|                                                                          |
+|  PHASE 2: GATHER CONTEXT (O(1) Paths)                                   |
+|  +--> Read features/[feature]/SPEC.md                                   |
+|  +--> Read features/[feature]/API.md                                    |
+|  +--> Read features/[feature]/STATUS.md                                 |
+|  +--> Lookup endpoints from API_INDEX.md                                |
+|  +--> Read actual code: feature/[feature]/ (if exists)                  |
+|                                                                          |
+|  PHASE 3: ANALYZE                                                       |
+|  +--> Compare current spec vs implementation                            |
+|  +--> Identify gaps, outdated sections                                  |
+|  +--> Check API availability in API_INDEX                               |
+|  +--> Report findings to user                                           |
+|                                                                          |
+|  PHASE 4: UPDATE FILES                                                  |
+|  +--> Update/create SPEC.md with ASCII mockups                          |
+|  +--> Update/create API.md with endpoints                               |
+|  +--> Update feature STATUS.md                                          |
+|                                                                          |
+|  PHASE 5: INDEX UPDATE (Mandatory)                                      |
+|  +--> Update FEATURES_INDEX.md (status columns)                         |
+|  +--> Update design-spec-layer/STATUS.md                                |
+|                                                                          |
+|  PHASE 6: OUTPUT SUMMARY                                                |
+|  +--> Implementation requirements                                       |
+|  +--> Next command suggestion                                           |
+|                                                                          |
++-------------------------------------------------------------------------+
 ```
 
 ---
@@ -254,17 +338,15 @@ claude-product-cycle/design-spec-layer/
 
 ### 2.1 ASCII Mockup
 
-```
-┌─────────────────────────────────────────┐
-│  ← Back          [Title]            ⋮   │  ← TopBar
-├─────────────────────────────────────────┤
-│                                         │
-│  ┌─────────────────────────────────┐   │
-│  │     Section 1                    │   │
-│  └─────────────────────────────────┘   │
-│                                         │
-└─────────────────────────────────────────┘
-```
++-------------------------------------------+
+|  <- Back          [Title]            :    |  <- TopBar
++-------------------------------------------+
+|                                           |
+|  +-----------------------------------+    |
+|  |     Section 1                     |    |
+|  +-----------------------------------+    |
+|                                           |
++-------------------------------------------+
 
 ### 2.2 Sections Table
 
@@ -285,7 +367,6 @@ claude-product-cycle/design-spec-layer/
 
 ## 4. State Model
 
-```kotlin
 @Immutable
 data class [Feature]State(
     val isLoading: Boolean = false,
@@ -298,7 +379,6 @@ sealed interface [Feature]ScreenState {
     data object Success : [Feature]ScreenState
     data class Error(val message: StringResource) : [Feature]ScreenState
 }
-```
 
 ---
 
@@ -306,7 +386,7 @@ sealed interface [Feature]ScreenState {
 
 | Endpoint | Method | Purpose | Status |
 |----------|--------|---------|--------|
-| /self/[path] | GET | [Description] | ✅ Exists |
+| /self/[path] | GET | [Description] | Exists |
 
 ---
 
@@ -343,28 +423,22 @@ sealed interface [Feature]ScreenState {
 **Description**: [What this endpoint does]
 
 **Request**:
-```
 Headers:
   Authorization: Basic {token}
   Fineract-Platform-TenantId: {tenant}
-```
 
 **Response**:
-```json
 {
     "field": "value"
 }
-```
 
 **Kotlin DTO**:
-```kotlin
 @Serializable
 data class [Name]Dto(
     @SerialName("field") val field: String,
 )
-```
 
-**Status**: ✅ Implemented / ❌ Missing
+**Status**: Implemented / Missing
 
 ---
 
@@ -372,7 +446,7 @@ data class [Name]Dto(
 
 | Endpoint | Service | Repository | Status |
 |----------|---------|------------|--------|
-| /self/[path] | [Name]Service | [Name]Repository | ✅ |
+| /self/[path] | [Name]Service | [Name]Repository | Done |
 ```
 
 ---
@@ -382,60 +456,130 @@ data class [Name]Dto(
 After completing design, output:
 
 ```
-┌───────────────────────────────────────────────────────────────────┐
-│            IMPLEMENTATION REQUIREMENTS                             │
-│            Ready for /implement in Sonnet session                  │
-├───────────────────────────────────────────────────────────────────┤
-│                                                                    │
-│  FEATURE: [Feature Name]                                          │
-│  SPEC UPDATED: features/[feature]/SPEC.md                         │
-│                                                                    │
-│  ════════════════════════════════════════════════════════════════ │
-│                                                                    │
-│  CLIENT WORK NEEDED:                                              │
-│  [ ] Network: [DTO/Service changes]                               │
-│  [ ] Data: [Repository changes]                                   │
-│                                                                    │
-│  FEATURE WORK NEEDED:                                             │
-│  [ ] ViewModel: [changes]                                         │
-│  [ ] Screen: [changes]                                            │
-│  [ ] Components: [new components]                                 │
-│                                                                    │
-│  ════════════════════════════════════════════════════════════════ │
-│                                                                    │
-│  NEXT STEP:                                                       │
-│  Run:  /implement [Feature]                                       │
-│                                                                    │
-└───────────────────────────────────────────────────────────────────┘
++=========================================================================+
+|            IMPLEMENTATION REQUIREMENTS                                   |
+|            Ready for /implement in Sonnet session                        |
++=========================================================================+
+|                                                                          |
+|  FEATURE: [Feature Name]                                                |
+|  SPEC UPDATED: features/[feature]/SPEC.md                               |
+|                                                                          |
+|  ================================================================       |
+|                                                                          |
+|  CLIENT WORK NEEDED:                                                    |
+|  [ ] Network: [DTO/Service changes]                                     |
+|  [ ] Data: [Repository changes]                                         |
+|                                                                          |
+|  FEATURE WORK NEEDED:                                                   |
+|  [ ] ViewModel: [changes]                                               |
+|  [ ] Screen: [changes]                                                  |
+|  [ ] Components: [new components]                                       |
+|                                                                          |
+|  ================================================================       |
+|                                                                          |
+|  INDEXES UPDATED:                                                       |
+|  [x] FEATURES_INDEX.md - Status updated                                 |
+|  [x] design-spec-layer/STATUS.md - Layer status                         |
+|  [x] features/[feature]/STATUS.md - Feature status                      |
+|                                                                          |
+|  ================================================================       |
+|                                                                          |
+|  NEXT STEP:                                                             |
+|  Run:  /implement [Feature]                                             |
+|                                                                          |
++=========================================================================+
 ```
 
 ---
 
-## If No Feature Name Provided
+## Feature Reference (From FEATURES_INDEX.md)
 
-Show feature list:
+| # | Feature | Design Dir | Feature Dir |
+|:-:|---------|------------|-------------|
+| 1 | accounts | features/accounts/ | feature/account/ |
+| 2 | auth | features/auth/ | feature/auth/ |
+| 3 | beneficiary | features/beneficiary/ | feature/beneficiary/ |
+| 4 | client-charge | features/client-charge/ | feature/user-profile/ |
+| 5 | dashboard | features/dashboard/ | feature/dashboard/ |
+| 6 | guarantor | features/guarantor/ | feature/guarantor/ |
+| 7 | home | features/home/ | feature/home/ |
+| 8 | loan-account | features/loan-account/ | feature/loan-account/ |
+| 9 | location | features/location/ | feature/location/ |
+| 10 | notification | features/notification/ | feature/notification/ |
+| 11 | passcode | features/passcode/ | libs/mifos-passcode/ |
+| 12 | qr | features/qr/ | feature/qr-code/ |
+| 13 | recent-transaction | features/recent-transaction/ | feature/recent-transaction/ |
+| 14 | savings-account | features/savings-account/ | feature/savings-account/ |
+| 15 | settings | features/settings/ | feature/settings/ |
+| 16 | share-account | features/share-account/ | feature/share-account/ |
+| 17 | transfer | features/transfer/ | feature/transfer-process/ |
+
+---
+
+## Error Handling
+
+### Feature Not Found
 
 ```
-📋 FEATURES AVAILABLE FOR DESIGN:
++-------------------------------------------------------------------------+
+|  ERROR: Feature '[name]' not found                                       |
++-------------------------------------------------------------------------+
+|                                                                          |
+|  The feature '[name]' does not exist in FEATURES_INDEX.md               |
+|                                                                          |
+|  OPTIONS:                                                               |
+|  1. Create new feature: /design [name]                                  |
+|  2. Check available features: /design                                   |
+|  3. Similar features: [suggestions based on name]                       |
+|                                                                          |
++-------------------------------------------------------------------------+
+```
 
-| Feature | Status | Last Updated | Command |
-|---------|--------|--------------|---------|
-| auth | ✅ Done | - | /design auth |
-| home | ✅ Done | - | /design home |
-| accounts | ✅ Done | - | /design accounts |
-| loan-account | ✅ Done | - | /design loan-account |
-| savings-account | ✅ Done | - | /design savings-account |
-| share-account | ✅ Done | - | /design share-account |
-| beneficiary | ✅ Done | - | /design beneficiary |
-| transfer | ✅ Done | - | /design transfer |
-| recent-transaction | ✅ Done | - | /design recent-transaction |
-| notification | ✅ Done | - | /design notification |
-| settings | ✅ Done | - | /design settings |
-| passcode | ✅ Done | - | /design passcode |
-| guarantor | ✅ Done | - | /design guarantor |
-| qr | ✅ Done | - | /design qr |
-| location | ✅ Done | - | /design location |
-| client-charge | ✅ Done | - | /design client-charge |
+### Invalid Sub-command
 
-Which feature do you want to design?
+```
++-------------------------------------------------------------------------+
+|  ERROR: Invalid sub-command '[sub]'                                      |
++-------------------------------------------------------------------------+
+|                                                                          |
+|  Valid sub-commands:                                                    |
+|  - mockup    : Generate mockup prompts                                  |
+|  - improve   : Suggest improvements                                     |
+|  - add [x]   : Add specific section                                     |
+|                                                                          |
++-------------------------------------------------------------------------+
+```
+
+---
+
+## Model Recommendation
+
+**This command is optimized for Opus** for complex architectural decisions and comprehensive specification writing.
+
+---
+
+## Related Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/gap-analysis design` | See design layer gaps |
+| `/gap-analysis design mockup` | See mockup gaps specifically |
+| `/implement [feature]` | Implement the designed feature |
+| `/verify [feature]` | Verify implementation vs spec |
+
+---
+
+## Key Files
+
+```
+claude-product-cycle/design-spec-layer/
++-- FEATURES_INDEX.md             # O(1) feature lookup
++-- MOCKUPS_INDEX.md              # O(1) mockup status
++-- STATUS.md                     # Layer status
++-- features/[feature]/
+    +-- SPEC.md                   # What to build (UI, flows)
+    +-- API.md                    # APIs needed
+    +-- STATUS.md                 # Feature implementation status
+    +-- MOCKUP.md                 # v2.0 ASCII mockup
+    +-- mockups/                  # Generated mockup files
 ```
