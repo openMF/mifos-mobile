@@ -344,3 +344,105 @@ For each gap found:
 5. **Prioritize** - P0 → P1 → P2
 6. **Provide verification** - Checklist for each plan
 7. **NO interactive questions** - Show everything, user decides
+8. **Save plan to file** - Persist for tracking (see below)
+
+---
+
+## Plan Persistence
+
+When creating a detailed plan (with parameters), **save it to a file** for tracking:
+
+### Save Location
+
+```
+claude-product-cycle/plans/active/[target]-[type].md
+```
+
+Examples:
+- `/gap-planning design mockup` → `plans/active/design-mockup.md`
+- `/gap-planning testing auth` → `plans/active/testing-auth.md`
+- `/gap-planning feature beneficiary` → `plans/active/feature-beneficiary.md`
+- `/gap-planning platform web` → `plans/active/platform-web.md`
+
+### Plan File Format
+
+```markdown
+# Plan: [Target Description]
+
+**Created**: YYYY-MM-DD
+**Status**: 🔄 Active
+**Command**: /gap-planning [args]
+**Progress**: 0/N steps (0%)
+
+---
+
+## Overview
+
+[Brief description of what this plan accomplishes]
+
+---
+
+## Steps
+
+- [ ] **Step 1**: [Description]
+  - Sub-task 1
+  - Sub-task 2
+  - Command: `[execution command]`
+  - Files: `path/to/expected/files`
+
+- [ ] **Step 2**: [Description]
+  - Sub-task 1
+  - Command: `[execution command]`
+
+[... more steps ...]
+
+---
+
+## Verification
+
+- [ ] All expected files exist
+- [ ] Tests pass (if applicable)
+- [ ] Index files updated
+
+---
+
+## Progress Log
+
+| Date | Step | Action | Notes |
+|------|:----:|--------|-------|
+| YYYY-MM-DD | 0 | Created | Plan initialized |
+```
+
+### Update PLANS_INDEX.md
+
+After creating a plan file, also update `plans/PLANS_INDEX.md`:
+
+```markdown
+## Active Plans
+
+| # | Plan | Target | Progress | Current Step | Created |
+|:-:|------|--------|:--------:|--------------|---------|
+| 1 | design-mockup | Design mockups | [░░░░░░░░░░] 0% (0/10) | Step 1 | 2026-01-05 |
+```
+
+### Check Progress
+
+After plan is saved, show:
+
+```
+✅ Plan saved to: plans/active/[name].md
+
+Track progress with: /gap-status [name]
+```
+
+---
+
+## Related Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/gap-analysis` | Identify gaps (run first) |
+| `/gap-planning` | Create implementation plans (this command) |
+| `/gap-status` | Track plan progress |
+| `/implement` | Execute implementation |
+| `/verify` | Confirm completion |
