@@ -237,8 +237,7 @@ internal fun ServiceBox(
     ) {
         val spacing = DesignToken.spacing.medium
         val columnCount = 4
-
-        val itemWidth = (maxWidth - (spacing * (columnCount))) / columnCount
+        val itemWidth = (maxWidth - (spacing * (columnCount - 1)) - KptTheme.spacing.sm) / columnCount
 
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
@@ -250,7 +249,7 @@ internal fun ServiceBox(
                 Box(
                     modifier = Modifier
                         .width(itemWidth),
-                    contentAlignment = Alignment.Center,
+                    contentAlignment = Alignment.TopCenter,
                 ) {
                     ServiceItemCard(
                         title = item.title,
