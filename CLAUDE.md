@@ -23,13 +23,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 /session-end                  # Save context for next session
 ```
 
-### Key Context Files
+### Claude Product Cycle Framework
 
-| File | Purpose |
-|------|---------|
-| `claude-product-cycle/CURRENT_WORK.md` | Active work, next actions |
-| `claude-product-cycle/PRODUCT_MAP.md` | Master status tracker |
-| `design-spec-layer/features/*/STATUS.md` | Per-feature status |
+This project uses the [claude-product-cycle](https://github.com/mobilebytesensei/claude-product-cycle) framework for AI-assisted development.
+
+**Workspace**: [mifos-x-claude-cycle-workspaces](https://github.com/therajanmaurya/mifos-x-claude-cycle-workspaces)
 
 ### 5-Layer Lifecycle
 
