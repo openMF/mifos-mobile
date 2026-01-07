@@ -14,13 +14,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
@@ -222,30 +225,39 @@ internal fun HomeContent(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(
-        modifier = modifier
-            .fillMaxWidth(),
-        maxItemsInEachRow = 4,
-        horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+    BoxWithConstraints(
+        modifier = modifier.fillMaxWidth(),
     ) {
-        items.forEach { item ->
-            Box(
-                modifier = Modifier
-                    .weight(1f),
-                contentAlignment = Alignment.Center,
-            ) {
-                ServiceItemCard(
-                    title = item.title,
-                    icon = item.icon,
-                    onClick = { onAction(HomeAction.OnNavigate(item.route)) },
-                )
+        val spacing = DesignToken.spacing.medium
+        val columnCount = 4
+
+        val itemWidth = (maxWidth - (spacing * (columnCount))) / columnCount
+
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            maxItemsInEachRow = columnCount,
+            horizontalArrangement = Arrangement.spacedBy(spacing),
+            verticalArrangement = Arrangement.spacedBy(spacing),
+        ) {
+            items.forEach { item ->
+                Box(
+                    modifier = Modifier
+                        .width(itemWidth),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    ServiceItemCard(
+                        title = item.title,
+                        icon = item.icon,
+                        onClick = { onAction(HomeAction.OnNavigate(item.route)) },
+                    )
+                }
             }
         }
     }
