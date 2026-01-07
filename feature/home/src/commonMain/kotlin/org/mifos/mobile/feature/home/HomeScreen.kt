@@ -74,6 +74,10 @@ internal fun HomeScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.handleAuthCheckOnResume()
+    }
+
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
             is HomeEvent.Navigate -> {

@@ -55,6 +55,8 @@ internal class HomeViewModel(
     ),
 ) {
 
+    private var isHandlingNetworkChange = false
+
     init {
         observeNetworkStatus()
     }
@@ -69,7 +71,9 @@ internal class HomeViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
+                    isHandlingNetworkChange = true
                     sendAction(HomeAction.ObserveNetworkStatus(isOnline))
+                    isHandlingNetworkChange = false
                 }
         }
     }
@@ -157,6 +161,30 @@ internal class HomeViewModel(
                 loadClientAccountDetails()
             }
         }
+    }
+
+    /**
+     * Handles authorization check when the Home screen re-enters composition.
+     *
+     * This function validates the user's session by checking if:
+     * - The device is currently online ([state.networkStatus]).
+     * - The network status is not currently being handled ([isHandlingNetworkChange]).
+     *
+     * If both conditions are met, it triggers [checkAuthorization] to verify the session.
+     * This prevents redundant auth checks when [handleNetworkStatus] is already fetching data.
+     */
+    suspend fun handleAuthCheckOnResume() {
+        if (!state.networkStatus) return
+        if (isHandlingNetworkChange) return
+        checkAuthorization()
+    }
+
+    private suspend fun checkAuthorization() {
+        homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
+            .catch {
+                updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+            }
+            .collect {}
     }
 
     /**
