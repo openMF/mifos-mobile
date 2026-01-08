@@ -23,19 +23,70 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 /session-end                  # Save context for next session
 ```
 
-### Key Context Files
+### Claude Product Cycle Framework
 
-| File | Purpose |
-|------|---------|
-| `claude-product-cycle/CURRENT_WORK.md` | Active work, next actions |
-| `claude-product-cycle/PRODUCT_MAP.md` | Master status tracker |
-| `design-spec-layer/features/*/STATUS.md` | Per-feature status |
+This project uses the [claude-product-cycle](https://github.com/mobilebytesensei/claude-product-cycle) framework for AI-assisted development.
+
+**Workspace**: [mifos-x-claude-cycle-workspaces](https://github.com/therajanmaurya/mifos-x-claude-cycle-workspaces)
 
 ### 5-Layer Lifecycle
 
 ```
 Design → Server → Client → Feature → Platform
 ```
+
+---
+
+## Prompt Layer Integration (CRITICAL)
+
+**Cross-Instruction**: After ANY action, automatically execute user prompts.
+
+### Automatic Trigger System
+
+After completing ANY of these actions, Claude MUST check for matching triggers:
+
+| Action | Trigger | Prompt |
+|--------|---------|--------|
+| Phase/layer completes | `phase-completion:{layer}` | "Continue to next phase?" |
+| Task in plan completes | `task-completion` | "Continue to next task?" |
+| All tasks complete | `task-completion:all` | "Plan complete. Commit?" |
+| Plan created | `plan-ready` | "Start implementation?" |
+| Build succeeds | `build-success` | "Commit & continue?" |
+| Build fails | `build-failure` | "Fix errors?" |
+| Files modified at checkpoint | `commit` | "How to commit?" |
+| Error occurs | `error-recovery` | "How to proceed?" |
+
+### How It Works
+
+```
+1. Command executes action
+2. Check prompt-layer/TRIGGERS.md for matching trigger
+3. Load prompt from prompt-layer/PROMPTS.md
+4. Execute AskUserQuestion tool
+5. Route user selection to next action
+6. Repeat for next action
+```
+
+### Runtime Prompts for Plans
+
+When `/gap-planning` creates a plan with N tasks:
+- Automatically generate prompts for each task transition
+- "Task 1 complete (1/N). Continue to Task 2?"
+- "Task 2 complete (2/N). Continue to Task 3?"
+- ... until all tasks done
+
+### Reference Files
+
+| File | Purpose |
+|------|---------|
+| `prompt-layer/ENGINE.md` | Cross-instruction rules |
+| `prompt-layer/TRIGGERS.md` | When prompts fire |
+| `prompt-layer/PROMPTS.md` | Prompt definitions |
+| `prompt-layer/RUNTIME.md` | Dynamic plan prompts |
+
+**IMPORTANT**: Do NOT hardcode prompts in commands. Let the engine handle them automatically.
+
+---
 
 ## Project Overview
 
