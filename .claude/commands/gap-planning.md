@@ -437,6 +437,60 @@ Track progress with: /gap-status [name]
 
 ---
 
+## Plan Completion Triggers
+
+After creating a plan, **TRIGGER user prompts** using the Prompt Layer.
+
+### After Plan Created
+
+**TRIGGER**: `plan-ready`
+**Reference**: `prompt-layer/PROMPTS.md` → `plan-ready`
+**Context Variables**: `{FEATURE}`, `{TOTAL_TASKS}`
+
+**Route User Selection**:
+| Selection | Action |
+|-----------|--------|
+| Start implementation | Execute first step of plan |
+| Review plan | Show detailed task breakdown |
+| Modify plan | Allow user to adjust tasks |
+| Save for later | End without executing |
+
+### After Layer Plan Created
+
+**TRIGGER**: `plan-layer`
+**Reference**: `prompt-layer/PROMPTS.md` → `plan-layer`
+**Context Variables**: `{LAYER}`, `{TOTAL_TASKS}`
+
+**Route User Selection**:
+| Selection | Action |
+|-----------|--------|
+| Execute plan | Start implementing the layer |
+| View tasks | Show detailed task list |
+| Plan next layer | Continue planning |
+| Stop here | Save plan, implement later |
+
+### During Plan Execution
+
+When executing a plan step-by-step:
+
+**After Each Step:**
+**TRIGGER**: `task-completion`
+**Reference**: `prompt-layer/PROMPTS.md` → `task-completion`
+
+**After All Steps Complete:**
+**TRIGGER**: `task-completion:all`
+**Reference**: `prompt-layer/PROMPTS.md` → `task-completion:all`
+
+**On Build Success:**
+**TRIGGER**: `build-success`
+**Reference**: `prompt-layer/PROMPTS.md` → `build-success`
+
+**On Build Failure:**
+**TRIGGER**: `build-failure`
+**Reference**: `prompt-layer/PROMPTS.md` → `build-failure`
+
+---
+
 ## Related Commands
 
 | Command | Purpose |

@@ -337,3 +337,97 @@ Generate mockups for all features missing UI designs.
 /gap-status complete design-mockup
 # → Moves to plans/completed/
 ```
+
+---
+
+## Plan Progress Triggers
+
+After showing plan status, **TRIGGER user prompts** using the Prompt Layer.
+
+### After Showing Active Plan
+
+When showing a specific plan with pending steps, prompt user:
+
+**TRIGGER**: `plan-continue`
+**Reference**: `prompt-layer/PROMPTS.md` → `plan-continue`
+**Context Variables**: `{PLAN_NAME}`, `{CURRENT_STEP}`, `{PROGRESS}`
+
+```json
+{
+  "questions": [
+    {
+      "question": "Plan {PLAN_NAME} is {PROGRESS}% complete. Current step: {CURRENT_STEP}. What would you like to do?",
+      "header": "Plan",
+      "options": [
+        {
+          "label": "Execute current step (Recommended)",
+          "description": "Run the command for current step"
+        },
+        {
+          "label": "Skip to specific step",
+          "description": "Choose a different step to work on"
+        },
+        {
+          "label": "Mark step complete",
+          "description": "I've completed this step manually"
+        },
+        {
+          "label": "Pause plan",
+          "description": "Stop working on this plan for now"
+        }
+      ],
+      "multiSelect": false
+    }
+  ]
+}
+```
+
+**Route User Selection**:
+| Selection | Action |
+|-----------|--------|
+| Execute current step | Run the step's command (e.g., `/design transfer mockup`) |
+| Skip to specific step | Show step list, let user choose |
+| Mark step complete | Update plan file, show next step |
+| Pause plan | Set plan status to paused |
+
+### After Step Execution
+
+When a step is completed (via any command that updates the plan):
+
+**TRIGGER**: `task-completion`
+**Reference**: `prompt-layer/PROMPTS.md` → `task-completion`
+**Context Variables**: `{TASK_NUMBER}`, `{TASK_NAME}`, `{NEXT_TASK_NUMBER}`, `{NEXT_TASK_DESCRIPTION}`
+
+**Route User Selection**:
+| Selection | Action |
+|-----------|--------|
+| Continue to next step | Execute next step's command |
+| Review this step | Show files created/modified |
+| Commit progress | **TRIGGER**: `commit` |
+| Stop here | Update plan, end session |
+
+### After All Steps Complete
+
+When the last step is completed:
+
+**TRIGGER**: `task-completion:all`
+**Reference**: `prompt-layer/PROMPTS.md` → `task-completion:all`
+**Context Variables**: `{PLAN_NAME}`, `{TOTAL_TASKS}`
+
+**Route User Selection**:
+| Selection | Action |
+|-----------|--------|
+| Mark plan complete | Move to completed, update index |
+| Run verification | `/verify` relevant targets |
+| Commit all changes | **TRIGGER**: `commit` |
+| Review changes | Show all files created during plan |
+
+### After Marking Plan Complete
+
+**TRIGGER**: `commit`
+**Reference**: `prompt-layer/PROMPTS.md` → `commit`
+
+Then:
+
+**TRIGGER**: `commit-post`
+**Reference**: `prompt-layer/PROMPTS.md` → `commit-post`
