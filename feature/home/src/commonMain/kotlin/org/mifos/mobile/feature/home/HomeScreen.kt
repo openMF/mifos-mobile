@@ -225,42 +225,45 @@ internal fun HomeContent(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    BoxWithConstraints(
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        val spacing = DesignToken.spacing.medium
-        val columnCount = 4
-        val itemWidth = (maxWidth - (spacing * (columnCount - 1)) - KptTheme.spacing.sm) / columnCount
+    val columnCount = 4
+    val spacing = DesignToken.spacing.small
+    val rows = items.chunked(columnCount)
 
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            maxItemsInEachRow = columnCount,
-            horizontalArrangement = Arrangement.spacedBy(spacing),
-            verticalArrangement = Arrangement.spacedBy(spacing),
-        ) {
-            items.forEach { item ->
-                Box(
-                    modifier = Modifier
-                        .width(itemWidth),
-                    contentAlignment = Alignment.TopCenter,
-                ) {
-                    ServiceItemCard(
-                        title = item.title,
-                        icon = item.icon,
-                        onClick = { onAction(HomeAction.OnNavigate(item.route)) },
-                    )
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(spacing)
+    ) {
+        rows.forEach { rowItems ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing)
+            ) {
+                rowItems.forEach { item ->
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        ServiceItemCard(
+                            title = item.title,
+                            icon = item.icon,
+                            onClick = { onAction(HomeAction.OnNavigate(item.route)) }
+                        )
+                    }
+                }
+                repeat(columnCount - rowItems.size) {
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
     }
 }
+
 
 @Composable
 internal fun ServiceItemCard(
