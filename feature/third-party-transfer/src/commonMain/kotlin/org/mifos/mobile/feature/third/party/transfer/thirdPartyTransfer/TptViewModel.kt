@@ -33,6 +33,13 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
+ * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
+ */
+private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
+    filter { it.accountType?.value == AccountType.SAVINGS.value }
+
+
+/**
  * ViewModel for the Make Transfer screen.
  *
  * This ViewModel handles the business logic for making a transfer, including fetching
@@ -161,7 +168,7 @@ internal class TptViewModel(
      */
     private fun handleFromAccountChange(fromAccount: String) {
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
-            .filter { it.accountType?.value == AccountType.SAVINGS.value }
+            .filterSavingsAccounts()
             .find { it.accountNo == fromAccount }
 
         val toAccounts = state.accountOptionsTemplate.toAccountOptions
@@ -190,10 +197,8 @@ internal class TptViewModel(
             .find { it.accountNo == toAccount }
 
         val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
-            .filter {
-                it.accountType?.value == AccountType.SAVINGS.value &&
-                    it.accountNo != toAccount
-            }
+            .filterSavingsAccounts()
+            .filter { it.accountNo != toAccount }
 
         updateState {
             it.copy(
@@ -423,9 +428,7 @@ internal class TptViewModel(
             is DataState.Success -> {
                 val template = dataState.data
 
-                val savingsFromAccounts = template.fromAccountOptions.filter {
-                    it.accountType?.value == AccountType.SAVINGS.value
-                }
+                val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
 
                 updateState {
                     it.copy(
