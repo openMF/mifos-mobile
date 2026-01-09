@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.designsystem.utils
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -19,11 +18,12 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun nonLetterColorVisualTransformation(): VisualTransformation {
-    val digitColor = MaterialTheme.colorScheme.primary
-    val specialCharacterColor = MaterialTheme.colorScheme.error
+    val digitColor = KptTheme.colorScheme.primary
+    val specialCharacterColor = KptTheme.colorScheme.error
     return remember(digitColor, specialCharacterColor) {
         NonLetterColorVisualTransformation(
             digitColor = digitColor,

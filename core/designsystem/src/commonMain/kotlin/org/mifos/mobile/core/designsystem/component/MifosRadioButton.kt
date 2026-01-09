@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Text
@@ -46,12 +45,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Enhanced radio button component for Mifos Mobile with improved accessibility,
@@ -83,10 +82,10 @@ fun MifosRadioButton(
     contentDescription: String? = null,
     selectedColor: Color = AppColors.primaryBlue,
     unselectedColor: Color = AppColors.borderColor,
-    errorColor: Color = MaterialTheme.colorScheme.error,
+    errorColor: Color = KptTheme.colorScheme.error,
     selectedTextStyle: TextStyle = MifosTypography.titleSmallEmphasized,
     unselectedTextStyle: TextStyle = MifosTypography.titleSmall,
-    borderWidth: Dp = 1.dp,
+    borderWidth: Dp = DesignToken.strokes.thin,
     animationDurationMs: Int = 200,
 ) {
     // Animated colors for smooth transitions
@@ -137,13 +136,13 @@ fun MifosRadioButton(
     ) {
         Row(
             modifier = modifier
-                .padding(vertical = DesignToken.padding.extraSmall)
+                .padding(vertical = KptTheme.spacing.xs)
                 .border(
                     width = borderWidth,
                     color = animatedBorderColor.copy(
                         alpha = if (enabled) 1.0f else 0.6f,
                     ),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                 )
                 .clickable(
                     enabled = enabled,
@@ -152,11 +151,11 @@ fun MifosRadioButton(
                     interactionSource = interactionSource,
                     indication = ripple(
                         bounded = true,
-                        radius = 24.dp,
+                        radius = DesignToken.sizes.rippleRadiusDp24,
                     ),
                 )
-                .padding(DesignToken.padding.large),
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
+                .padding(KptTheme.spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             RadioButton(
@@ -237,13 +236,13 @@ private fun Enhanced_Radio_Button_Preview() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(DesignToken.padding.medium),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             // Individual radio buttons
             Text(
                 text = "Individual Radio Buttons",
                 style = MifosTypography.headlineMedium,
-                modifier = Modifier.padding(bottom = DesignToken.spacing.small),
+                modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
             )
 
             MifosRadioButton(
@@ -282,7 +281,7 @@ private fun Enhanced_Radio_Button_Preview() {
             Text(
                 text = "Radio Button Group",
                 style = MifosTypography.headlineMedium,
-                modifier = Modifier.padding(bottom = DesignToken.spacing.small),
+                modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
             )
 
             MifosRadioButtonGroup(
@@ -298,7 +297,7 @@ private fun Enhanced_Radio_Button_Preview() {
             Text(
                 text = "Payment Methods (with Error)",
                 style = MifosTypography.headlineMedium,
-                modifier = Modifier.padding(bottom = DesignToken.spacing.small),
+                modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
             )
 
             MifosRadioButtonGroup(

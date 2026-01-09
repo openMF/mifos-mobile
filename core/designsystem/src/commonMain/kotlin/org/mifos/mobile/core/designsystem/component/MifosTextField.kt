@@ -19,7 +19,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults.colors
@@ -40,6 +39,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosOutlinedTextField(
@@ -49,9 +49,9 @@ fun MifosOutlinedTextField(
     modifier: Modifier = Modifier,
     shape: Shape = OutlinedTextFieldDefaults.shape,
     colors: TextFieldColors = colors(
-        focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-        unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-        errorBorderColor = MaterialTheme.colorScheme.error,
+        focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+        unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+        errorBorderColor = KptTheme.colorScheme.error,
     ),
     textStyle: TextStyle = LocalTextStyle.current,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -101,7 +101,7 @@ fun MifosOutlinedTextField(
                     modifier = Modifier.testTag("errorTag"),
                     text = it,
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
+                    color = KptTheme.colorScheme.error,
                 )
             }
         },
@@ -160,7 +160,7 @@ fun MifosTextField(
                     modifier = Modifier.testTag("errorTag"),
                     text = it ?: "",
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
+                    color = KptTheme.colorScheme.error,
                 )
             }
         },
@@ -187,7 +187,7 @@ private fun ClearIconButton(
             Icon(
                 imageVector = clearIcon,
                 contentDescription = "trailingIcon",
-                tint = MaterialTheme.colorScheme.onSurface,
+                tint = KptTheme.colorScheme.onSurface,
             )
         }
     }

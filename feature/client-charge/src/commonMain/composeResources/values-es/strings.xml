@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="internet_not_connected">Asegúrese de estar conectado a Internet.</string>
+    <string name="client_charges">Cargos del cliente</string>
+    <string name="loan_charges">Cargos de cuentas de crédito</string>
+    <string name="savings_charges">Cargos de cuentas de ahorros</string>
+    <string name="charges">Cargos</string>
+    <string name="error_no_charge">No se encontraron cargos</string>
+    <string name="amount_due">Vencido:</string>
+    <string name="string_and_string">%1$s %2$s</string>
+    <string name="amount_outstanding">Pendiente:</string>
+    <string name="amount_waived">Condonado:</string>
+    <string name="amount_paid">Pagado:</string>
+
+    <string name="charge_details">Detalles del cargo</string>
+    <string name="paid_success_message">Usted ha pagado exitosamente este cargo en su totalidad</string>
+    <string name="status_icon_description">Icono de Estado</string>
+    <string name="ref_no">Número de referencia %1$s</string>
+    <string name="paid_on">Pagado el: %1$s</string>
+    <string name="partial_amount_paid_on">Monto pagado parcialmente el: %1$s</string>
+    <string name="pay_outstanding">Pago pendiente</string>
+
+    <!-- Charge Details Map Labels -->
+    <string name="fee_title">Concepto de la Comisión</string>
+    <string name="date">Fecha</string>
+    <string name="due">Pendiente</string>
+    <string name="paid">Pagado</string>
+    <string name="waived">Condonado</string>
+    <string name="outstanding">Pendiente</string>
+
+</resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_account_active">Activa</string>
+    <string name="feature_account_approved">Aprobada</string>
+    <string name="feature_account_approval_pending">Pendiente de Aprobación</string>
+    <string name="feature_account_matured">Vencida</string>
+    <string name="feature_account_closed">Cerrada</string>
+    <string name="feature_account_empty_savings_accounts">No tiene cuentas de Ahorros</string>
+    <string name="feature_account_submitted">Enviada</string>
+    <string name="feature_account_string_and_string">%1$s %2$s</string>
+
+    <string name="feature_savings_account_topbar_title">Cuentas</string>
+    <string name="feature_savings_account_dashboard">Saldo Disponible de Ahorros</string>
+    <string name="feature_savings_account">Cuenta de Ahorros</string>
+    <string name="feature_savings_account_items">%1$d Elementos</string>
+
+    <string name="feature_common_error">Ocurrió un error</string>
+
+    <string name="content_description_search">Buscar</string>
+    <string name="content_description_filter">Filtrar</string>
+
+    <string name="feature_savings_filter_wallet_account">Cuenta de Monedero</string>
+    <string name="feature_savings_filter_bank_account">Cuenta de Banco</string>
+    <string name="feature_savings_filter_group_account">Cuenta Grupal</string>
+    <string name="feature_savings_filter_nb_account">Cuenta NB</string>
+
+    <string name="feature_savings_filter_active_account">Activa</string>
+    <string name="feature_savings_filter_pending_account">Pendiente de Aprobación</string>
+    <string name="feature_savings_filter_closed_account">Cerrada</string>
+    <string name="feature_savings_filter_matured_account">Vencida</string>
+    <string name="feature_savings_filter_approved_account">Aprobada</string>
+
+<!--    Savings Account Details Values-->
+
+    <string name="feature_account_details_top_bar_title">Detalles de Cuenta de Ahorros</string>
+    <string name="feature_account_action_update">Actualizar</string>
+    <string name="feature_account_action_withdraw">Retirar</string>
+    <string name="feature_account_action_deposit">Depositar</string>
+    <string name="feature_account_action_deposit_tip">Comienza una cultura del ahorro</string>
+    <string name="feature_account_action_transfer">Transferir</string>
+    <string name="feature_account_action_transfer_tip">Transferir fondos a otra cuenta</string>
+    <string name="feature_account_action_transactions">Transacciones</string>
+    <string name="feature_account_action_transactions_tip">Transacciones recientes de la cuenta</string>
+    <string name="feature_account_action_charges">Cargos</string>
+    <string name="feature_account_action_charges_tip">Comisiones o Cargos en esta Cuenta</string>
+    <string name="feature_account_action_qr">Código QR</string>
+    <string name="feature_account_action_qr_tip">Generar Código QR</string>
+
+    <string name="feature_savings_account_number_label">Número de Cuenta</string>
+    <string name="feature_savings_available_balance_label">Saldo Disponible</string>
+    <string name="feature_savings_status_label">Estado de la Cuenta</string>
+    <string name="feature_savings_nominal_interest_rate_label">Tasa de Interés Nominal</string>
+    <string name="feature_savings_total_deposits_label">Total de Depósitos</string>
+    <string name="feature_savings_total_withdrawals_label">Total de Retiros</string>
+    <string name="feature_savings_transaction_amount_label">Monto</string>
+    <string name="feature_savings_transaction_date_label">Fecha</string>
+
+
+<!--    Update savings Account-->
+
+    <string name="feature_savings_update_topbar_title">Actualizar Detalles</string>
+    <string name="feature_savings_update_client_name_label">Nombre del Cliente</string>
+    <string name="feature_savings_update_submission_date_label">Fecha de envío</string>
+    <string name="feature_savings_update_account_number_label">Número de Cuenta</string>
+    <string name="feature_savings_update_product_label">Producto</string>
+    <string name="feature_savings_update_request_update">Actualizar Solicitud</string>
+    <string name="feature_savings_new_product_label">Nuevo Producto</string>
+
+    <string name="feature_savings_savings_product_empty">Actualmente los productos de préstamo no están disponibles</string>
+
+    <string name="feature_savings_update_request_successful">Solicitud enviada exitosamente</string>
+    <string name="feature_savings_update_request_successful_message">La solicitud para actualizar los detalles de la cuenta se envió correctamente</string>
+    <string name="feature_savings_update_request_back_to_home">Regresar al Inicio</string>
+
+    <string name="feature_savings_update_request_failed">Solicitud no enviada</string>
+    <string name="feature_savings_update_request_failed_message">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtalo de nuevo.</string>
+    <string name="feature_savings_update_request_try_again">Intentar otra vez</string>
+
+<!--    Withdraw savings account-->
+    <string name="feature_savings_withdraw_account_topbar_title">Cancelar cuenta</string>
+    <string name="feature_savings_withdraw_remarks_label">Observaciones</string>
+    <string name="feature_savings_withdraw_request_withdraw">Solicitar actualización</string>
+    <string name="feature_savings_withdraw_request_successful">Solicitud enviada exitosamente</string>
+    <string name="feature_savings_withdraw_request_successful_message">La solicitud para retirar la cuenta se envió correctamente</string>
+    <string name="feature_savings_withdraw_request_failed">Solicitud no enviada</string>
+    <string name="feature_savings_withdraw_request_failed_message">La solicitud de retiro de la cuenta ha fallado. Inténtalo de nuevo.</string>
+
+    <string name="feature_savings_no_accounts_found">No se encontraron Cuentas de Ahorros</string>
+        <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    
+    
+        
+    </resources>

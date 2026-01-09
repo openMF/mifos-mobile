@@ -74,7 +74,7 @@ object DateHelper {
         val inputDate = LocalDate(dateList[0], dateList[1], dateList[2])
         val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 
-        val formatted = "${inputDate.month.number} ${getMonthName(inputDate.month.number)} ${inputDate.year}"
+        val formatted = "${inputDate.day} ${getMonthName(inputDate.month.number)} ${inputDate.year}"
 
         val today = now
         val yesterday = today.minus(1, DateTimeUnit.DAY)
@@ -112,6 +112,48 @@ object DateHelper {
             requiredFormat = pattern,
             dateString = getDateAsString(integersOfDate.map { it.toInt() }),
         )
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun isDarkModeBasedOnTime(
+        startHour: Int,
+        startMinute: Int,
+        endHour: Int,
+        endMinute: Int,
+    ): Boolean {
+        val now = Clock.System.now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .time
+
+        val currentMinutes = now.hour * 60 + now.minute
+        val startMinutes = startHour * 60 + startMinute
+        val endMinutes = endHour * 60 + endMinute
+
+        return if (startMinutes < endMinutes) {
+            // Same-day range (e.g., 06:00 → 18:00)
+            currentMinutes in startMinutes until endMinutes
+        } else {
+            // Cross-midnight range (e.g., 18:00 → 06:00)
+            currentMinutes !in endMinutes..<startMinutes
+        }
+    }
+
+    fun formatTimeRange(
+        startHour: Int,
+        startMinute: Int,
+        endHour: Int,
+        endMinute: Int,
+    ): String {
+        fun format(hour: Int, minute: Int): String {
+            val period = if (hour < 12) "AM" else "PM"
+            val hour12 = when (hour % 12) {
+                0 -> 12
+                else -> hour % 12
+            }
+            return "$hour12:${minute.toString().padStart(2, '0')} $period"
+        }
+
+        return "${format(startHour, startMinute)} - ${format(endHour, endMinute)}"
     }
 
     private val monthMap = mapOf(

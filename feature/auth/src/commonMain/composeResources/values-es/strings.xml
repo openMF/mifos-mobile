@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet_connection">Sin conexión a internet</string>
+    <string name="register">Registrar</string>
+    <string name="login_failed">Inicio de sesión fallido. Intenta nuevamente.</string>
+    <string name="toast_welcome">Hola %1$s</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Ingresar</string>
+    <string name="create_an_account">Crear una cuenta</string>
+    <string name="rb_mobile">Teléfono móvil</string>
+    <string name="rb_email">Correo Electrónico</string>
+    <string name="account_number">Número de Cuenta</string>
+    <string name="username">Usuario</string>
+    <string name="first_name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="phone_number">Teléfono móvil</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="verification_mode">Modo de Verificación</string>
+    <string name="dialog_cancel_registration_message">¿Confirmas la cancelación?</string>
+    <string name="dialog_cancel_registration_title">Cancelar Registro</string>
+    <string name="request_id">ID de Petición</string>
+    <string name="empty_requestid">ID de Petición no puede estar vacía</string>
+    <string name="authentication_token">Código de Autenticación</string>
+    <string name="empty_authentication_token">El Código de Autenticación no puede estar vacío</string>
+    <string name="verify">Verificar</string>
+    <string name="verified">El usuario ha sido verificado correctamente</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="could_not_register_user_error">No es posible registrar el usuario.</string>
+    <string name="password_strength_weak">Débil</string>
+    <string name="password_strength_medium">Regular</string>
+    <string name="password_strength_strong">Fuerte</string>
+    <string name="password_strength_very_strong">Muy fuerte</string>
+    <string name="error_message_server">Error al cargar la respuesta del servidor</string>
+    <string name="error_validation_blank">%1$s no puede estar vacío</string>
+    <string name="error_validation_minimum_chars">%1$s no puede ser menor a %2$d caracteres</string>
+    <string name="error_validation_cannot_contain_spaces">%1$s no puede contener %2$s</string>
+    <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s no puede iniciar o terminar con espacios vacios</string>
+    <string name="error_username_greater_than_six">El usuario debe ser mayor a 6 caracteres</string>
+    <string name="not_contain_username">Espacios</string>
+    <string name="invalid_phn_number">Número de Teléfono invalido</string>
+    <string name="error_invalid_password">Contraseña debe tener al menos 8 caracteres de longitud</string>
+    <string name="error_invalid_email">ID invalido de correo</string>
+    <string name="error_password_not_match">La contraseña no coincide</string>
+    <string name="error_enter_email">Ingresa un correo electrónico valido</string>
+    <string name="error_mobile_length">El teléfono móvil debe tener 10 digitos</string>
+    <string name="error_enter_account_number">Ingresa tu número de cuenta</string>
+    <string name="error_enter_mobile_number">Ingresa tu número de teléfono móvil</string>
+    <string name="error_enter_first_name">Ingresa tu nombre</string>
+    <string name="error_enter_last_name">Ingresa tu apellido</string>
+    <string name="error_enter_user_name">Ingresa tu nombre de usuario</string>
+    <string name="error_enter_country">Ingresa tu país</string>
+
+
+    <string name="feature_sign_in_title">Ingresar</string>
+    <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para iniciar sesión</string>
+    <string name="feature_sign_in_username_label">Usuario o correo electrónico</string>
+    <string name="feature_sign_in_password_label">Contraseña</string>
+    <string name="feature_sign_in_forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="feature_sign_in_Sign_in">Ingresar</string>
+    <string name="feature_sign_in_dont_have_an_account">¿No tienes una cuenta?</string>
+    <string name="feature_sign_in_sign_up">Crear Cuenta</string>
+    <string name="feature_sign_in_username_error">Correo Electrónico no encontrado</string>
+    <string name="feature_sign_in_password_error">Contraseña incorrecta</string>
+
+    <string name="feature_signup_title">Crear cuenta</string>
+    <string name="feature_signup_sub_title">Crea una cuenta para continuar!</string>
+    <string name="feature_signup_first_name_label">Nombre</string>
+    <string name="feature_signup_middle_name_label">Primer Apellido</string>
+    <string name="feature_signup_last_name_label">Segundo Apellido</string>
+    <string name="feature_signup_email_label">Correo Electronico</string>
+    <string name="feature_signup_cell_phone_label">Teléfono móvil</string>
+    <string name="feature_signup_customer_account_label">Cuenta de Cliente</string>
+    <string name="feature_signup_password_label">Contraseña</string>
+    <string name="feature_signup_confirm_password_label">Confirmar Contraseña</string>
+    <string name="feature_signup_submit">Enviar</string>
+    <string name="feature_signup_already_have_an_account">¿Ya tienes una cuenta?</string>
+    <string name="feature_signup_log_in">Ingresar</string>
+    <string name="feature_signup_character_rules">Reglas de contraseña</string>
+
+    <!-- Error messages -->
+    <string name="feature_signup_error_invalid_name">Nombre contiene caracteres invalidos</string>
+    <string name="feature_signup_error_first_name_empty">El nombre no puede estar vacío</string>
+    <string name="feature_signup_error_middle_name_empty">El Segundo Apellido no puede estar vacío</string>
+    <string name="feature_signup_error_last_name_empty">El Primer Apellido no puede estar vacío</string>
+    <string name="feature_signup_error_invalid_email">Direccion de correo electrónico invalida</string>
+    <string name="feature_signup_error_invalid_mobile_number">Número de teléfono móvil invalido</string>
+    <string name="feature_signup_error_customer_account_empty">La cuenta del Cliente es requerida</string>
+    <string name="feature_signup_error_customer_account_not_valid">Proporciona una cuenta de Cliente valida</string>
+    <string name="feature_signup_error_password_required_error">Contraseña es requerida</string>
+    <string name="feature_signup_error_password_short">Contraseña debe contar con al menos 6 caracteres</string>
+    <string name="feature_signup_error_password_mismatch">La contraseña no coincide</string>
+    <string name="feature_signup_error_name_contains_digits">El nombre no debe contener digitos</string>
+    <string name="feature_signup_error_name_contains_symbols">El nombre no debe contener símbolos</string>
+    <string name="feature_signup_error_name_contains_emoji">El texto no debe contener emojis ni caracteres especiales</string>
+    <string name="feature_signup_user_registered_successfully">El usuario se registró correctamente</string>
+    <string name="feature_signup_user_registered_successfully_tip">Ahora puedes iniciar sesión con tu usuario y contraseña.</string>
+    <string name="feature_signup_user_registered_failed">Fallo en el registro del usuario</string>
+    <string name="feature_signup_user_registered_failed_tip">Error al registrar el usuario. Intenta nuevamente.</string>
+
+
+    <string name="feature_upload_id_title">Cargar Identificación</string>
+    <string name="feature_upload_id_subtitle">Carga tu Identificación y fotografia para verificación.</string>
+    <string name="feature_upload_id_upload_your_id">Carga tu Identificación</string>
+    <string name="feature_upload_id_upload_your_photo">Carga tu foto</string>
+    <string name="feature_upload_id_remove_file">Eliminar archivo</string>
+    <string name="feature_upload_id_view_file">Ver archivo</string>
+    <string name="feature_upload_id_select_new_file">Seleccionar nuevo archivo</string>
+    <string name="feature_upload_id_identification_doc_label">Documento de Identificación</string>
+    <string name="feature_upload_id_profile_photo_label">Foto de Perfil</string>
+    <string name="feature_upload_id_mobile_label">Teléfono móvil</string>
+    <string name="feature_upload_id_national_id_label">Clave de Identificación Nacional</string>
+    <string name="feature_upload_id_dob_label">Fecha de nacimiento</string>
+    <string name="feature_upload_id_edit_prompt">¿Quieres editar los detalles personales?</string>
+    <string name="feature_upload_id_take_me_back">Regresar</string>
+    <string name="feature_upload_id_ok">Aceptar</string>
+    <string name="feature_upload_id_cancel">Cancelar</string>
+    <string name="feature_common_submit">Enviar</string>
+
+    <string name="feature_upload_id_error_field_empty">Este campo no puede estar vacío</string>
+    <string name="feature_upload_id_error_mobile_not_valid">Ingresa un número de teléfono móvil con 10 digitos</string>
+    <string name="feature_upload_id_error_id_required">Carga tu Identificación</string>
+    <string name="feature_upload_id_error_photo_required">Carga tu fotografía</string>
+    <string name="feature_upload_id_error_dob_required">Fecha de nacimiento es requerida</string>
+    <string name="feature_upload_id_upload_success">Archivo cargado correctamente</string>
+    <string name="feature_upload_id_upload_failed">Error al cargar el archivo. Intenta nuevamente.</string>
+    <string name="feature_upload_id_error_invalid_dob">La fecha de nacimiento no puede ser hoy ni una fecha futura</string>
+    <string name="feature_upload_id_generic_error">Ocurrió un error. Intenta nuevamente.</string>
+
+    <string name="feature_otp_title">Código OTP de autenticación</string>
+    <string name="feature_otp_subtitle">Revisa tu correo electrónico</string>
+    <string name="feature_otp_message">Para completar el registro, revisa tu correo electrónico. Deberías haber recibido un código de autenticación (si no recibes el correo electrónico, selecciona la opción de reenviarlo). Debes proporcionarlo a continuación.</string>
+    <string name="feature_otp_tip">¿No has recibido el código?</string>
+    <string name="feature_otp_action_tip">Reenviar ahora</string>
+    <string name="feature_otp_authentication_code_label">Código de autenticación</string>
+    <string name="feature_otp_request_id_label">Id de petición</string>
+
+    <string name="feature_common_next">Siguiente</string>
+    <string name="feature_common_cancel">Cancelar</string>
+
+    <string name="feature_otp_required_error">OTP es requerido</string>
+    <string name="feature_otp_invalid_error">Ingresa un OTP valido</string>
+    <string name="feature_otp_request_id_error">ID de petición es requerido</string>
+
+    <!--Set New Password-->
+
+    <string name="feature_set_new_password_title">Establecer contraseña</string>
+    <string name="feature_set_new_password_message">¡Establezca su nueva contraseña de alta seguridad ahora!</string>
+    <string name="feature_set_new_password_new_password_label">Nueva contraseña</string>
+    <string name="feature_set_new_password_confirm_password_label">Confirmar nueva contraseña</string>
+    <string name="feature_set_new_password_submit">Enviar</string>
+    <string name="feature_set_new_password_tip">Recordar contraseña</string>
+    <string name="feature_set_new_password_action_tip">Ingresar</string>
+
+    <string name="feature_common_error_password_required_error">Contraseña es requerida</string>
+    <string name="feature_common_error_password_short">Contraseña debe ser de al menos 6 caracteres</string>
+    <string name="feature_common_error_password_mismatch">Las contraseñas no coinciden</string>
+
+
+    <!--Recover Password-->
+    <string name="feature_recover_now_title">Recuperar ahora</string>
+    <string name="feature_recover_now_message">¿Olvidaste tu contraseña? ¡No te preocupes! Te ayudamos. ¡Restablece tu contraseña ahora!</string>
+    <string name="feature_recover_now_phone_number_label">Teléfono móvil</string>
+    <string name="feature_recover_now_email_label">Correo electrónico</string>
+    <string name="feature_recover_now_verifying">Verificando</string>
+    <string name="feature_recover_now_email_required">Correo electrónico es requerido</string>
+    <string name="feature_recover_now_phone_number_required">Teléfono móvil es requerido</string>
+    <string name="feature_recover_now_email_format_error">Correo electrónico invalido</string>
+    <string name="feature_recover_now_phone_number_error">Teléfono móvil invalido</string>
+    <string name="feature_recover_now_invalid_phone_number_error">El número telefónico no puede contener letras ni símbolos</string>
+    <string name="feature_recover_now_remember_your_password">¿Recordar contraseña?</string>
+    <string name="feature_recover_now_log_in">Ingresar</string>
+
+
+    <string name="feature_recover_now_recovered_successfully">Recuperación de contraseña exitosa</string>
+    <string name="feature_recover_now_recovered_successfully_tip">Ahora puedes iniciar sesión con tu nombre de usuario (número de teléfono) y contraseña.</string>
+    <string name="feature_recover_now_recovered_failed">Recuperación de contraseña fallida</string>
+    <string name="feature_recover_now_registered_failed_tip">Se ha producido un error al recuperar la contraseña del usuario. Inténtelo de nuevo.</string>
+
+</resources>

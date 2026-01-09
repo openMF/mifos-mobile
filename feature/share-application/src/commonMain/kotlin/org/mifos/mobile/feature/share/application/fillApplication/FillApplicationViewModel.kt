@@ -652,10 +652,10 @@ internal class ShareFillApplicationViewModel(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_share_status_failure),
-                        subtitle = getString(
+                        subtitle = "${response.message}, ${getString(
                             Res.string.feature_apply_share_status_failure_tip,
                             state.shareProductName,
-                        ),
+                        )}",
                         buttonText = getString(Res.string.feature_apply_share_status_failure_action),
                     ),
                 )

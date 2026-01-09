@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.core_common_working
 import org.jetbrains.compose.resources.StringResource
@@ -29,6 +28,7 @@ import org.mifos.mobile.core.designsystem.component.MifosTextButton
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosTextButtonWithTopDrawable(
@@ -50,7 +50,7 @@ fun MifosTextButtonWithTopDrawable(
                     imageVector = icon,
                     contentDescription = contentDescription,
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
                 Text(
                     text = stringResource(textResourceId),
                     textAlign = TextAlign.Center,

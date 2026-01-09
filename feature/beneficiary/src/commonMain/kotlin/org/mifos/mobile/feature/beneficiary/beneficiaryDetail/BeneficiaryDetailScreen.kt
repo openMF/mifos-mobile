@@ -93,7 +93,7 @@ private fun BeneficiaryDialogs(
         is BeneficiaryDetailState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(state.beneficiaryDialog.message),
+                    message = state.beneficiaryDialog.message,
                 ),
                 onDismissRequest = { onAction(BeneficiaryDetailAction.ErrorDialogDismiss) },
             )

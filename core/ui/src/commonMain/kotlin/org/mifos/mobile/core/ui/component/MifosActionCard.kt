@@ -23,13 +23,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.savings_account
 import org.jetbrains.compose.resources.StringResource
@@ -39,6 +37,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosActionCard(
@@ -63,13 +62,13 @@ fun MifosActionCard(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
+                tint = KptTheme.colorScheme.onBackground.copy(alpha = 0.5f),
                 modifier = Modifier
                     .background(
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
+                        color = KptTheme.colorScheme.onBackground.copy(alpha = 0.1f),
                         shape = CircleShape,
                     )
-                    .padding(DesignToken.padding.small),
+                    .padding(KptTheme.spacing.sm),
 
             )
 
@@ -81,12 +80,12 @@ fun MifosActionCard(
                 Text(
                     text = stringResource(title),
                     style = MifosTypography.titleSmallEmphasized,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = KptTheme.colorScheme.onBackground,
                 )
                 Text(
                     text = stringResource(subTitle),
                     style = MifosTypography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = KptTheme.colorScheme.secondary,
                 )
             }
 
@@ -95,7 +94,7 @@ fun MifosActionCard(
             Icon(
                 imageVector = MifosIcons.ChevronRight,
                 contentDescription = null,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(DesignToken.sizes.iconDp20),
             )
         }
     }
@@ -108,7 +107,7 @@ private fun Savings_Action_Preview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
         ) {
             MifosActionCard(
                 title = Res.string.savings_account,

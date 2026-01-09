@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.core_common_working
@@ -33,6 +32,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun UserProfileField(
@@ -45,7 +45,7 @@ fun UserProfileField(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(16.dp),
+            .padding(KptTheme.spacing.md),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -70,7 +70,7 @@ fun UserProfileField(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(KptTheme.spacing.md),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(

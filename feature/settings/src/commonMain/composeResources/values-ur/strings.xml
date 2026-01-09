@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="change_app_theme">تھیم تبدیل کریں</string>
+    <string name="settings">ترتیبات</string>
+    <string name="password_key" translatable="false">Password</string>
+    <string name="change_passcode">پاس کوڈ تبدیل کریں</string>
+    <string name="change_app_passcode">ایپ پاس کوڈ تبدیل کریں</string>
+    <string name="change_password">پاس ورڈ تبدیل کریں</string>
+    <string name="change_account_password">اپنا اکاؤنٹ پاس ورڈ تبدیل کریں</string>
+    <string name="language">زبان</string>
+    <string name="choose_language">اپنی زبان منتخب کریں</string>
+    <string name="other">دیگر</string>
+    <string name="accounts">اکاؤنٹس</string>
+    <string name="theme">تھیم</string>
+    <string name="pref_base_url_title">اینڈ پوائنٹ اپ ڈیٹ کریں</string>
+    <string name="pref_base_url_desc">اپنی اینڈ پوائنٹ کنفیگریشنز کو تبدیل کرنے کے لیے یہاں کلک کریں</string>
+    <string name="enter_base_url">بیس URL درج کریں</string>
+    <string name="enter_tenant">ٹیننٹ (Tenant) درج کریں</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="dialog_action_ok">ٹھیک ہے</string>
+    <string name="base_url_tenant_id_required">بیس URL اور ٹیننٹ آئی ڈی درکار ہے</string>
+
+    <string name="feature_settings_action_profile">پروفائل</string>
+    <string name="feature_settings_action_profile_tip">اپنا ای میل، نام، فون نمبر وغیرہ تبدیل کریں</string>
+
+    <string name="feature_settings_action_password">پاس ورڈ</string>
+    <string name="feature_settings_action_password_tip">اپنا پرانا پاس ورڈ تبدیل کریں</string>
+
+    <string name="feature_settings_action_auth_passcode">اتھارٹی پاس کوڈ</string>
+    <string name="feature_settings_action_auth_passcode_tip">اپنا لاگ ان اتھارٹی پاس کوڈ تبدیل کریں</string>
+
+    <string name="feature_settings_action_language">زبان</string>
+    <string name="feature_settings_action_language_tip">اپنی ایپ کی زبان منتخب کریں</string>
+
+    <string name="feature_settings_action_theme">تھیم</string>
+    <string name="feature_settings_action_theme_tip">اپنی ایپ کی تھیم منتخب کریں</string>
+
+    <string name="feature_settings_action_endpoint">اینڈ پوائنٹ</string>
+    <string name="feature_settings_action_endpoint_tip">اپنی اینڈ پوائنٹ کنفیگریشن تبدیل کریں</string>
+
+    <string name="feature_settings_action_about_us">ہمارے بارے میں</string>
+    <string name="feature_settings_action_about_us_tip">ہمارے اقدام کے بارے میں مزید جانیں</string>
+
+    <string name="feature_settings_action_faq">اکثر پوچھے گئے سوالات</string>
+    <string name="feature_settings_action_faq_tip">صارفین کی طرف سے اکثر پوچھے جانے والے سوالات</string>
+
+    <string name="feature_settings_action_help">مدد</string>
+    <string name="feature_settings_action_help_tip">ہمارے کسٹمر کیئر سے بات کریں</string>
+
+    <string name="feature_settings_action_app_info">ایپ کی معلومات</string>
+    <string name="feature_settings_action_app_info_tip">ایپ کے ورژن کی تفصیلات معلوم کریں</string>
+
+    <string name="feature_settings_action_logout">ابھی لاگ آؤٹ کریں</string>
+    <string name="feature_settings_action_logout_tip">کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟</string>
+    <string name="feature_settings_logout_description">سیکیورٹی وجوہات کی بناء پر لاگ آؤٹ کرنے سے آپ کا موجودہ اور تمام فعال سیشن ختم ہو جائیں گے۔ اپنے اکاؤنٹ تک رسائی کے لیے آپ کو دوبارہ لاگ ان کرنا ہوگا۔</string>
+    <string name="feature_settings_logout_message">میں لاگ آؤٹ نہیں کرنا چاہتا؟</string>
+    <string name="feature_settings_logout_action">ہوم پر واپس جائیں</string>
+
+    <string name="feature_settings_top_bar_title">ترتیبات</string>
+
+    <string name="feature_settings_error_fetching_client">کلائنٹ کی معلومات حاصل کرنے میں ناکامی۔</string>
+    <string name="feature_settings_error_fetching_profile_image">پروفائل تصویر حاصل کرنے میں ناکامی۔</string>
+    <string name="feature_settings_internet_not_connected">انٹرنیٹ کنکشن نہیں ہے۔</string>
+    <string name="feature_settings_error_invalid_profile_image">پروفائل تصویر کا فارمیٹ غلط ہے۔</string>
+    <string name="feature_settings_customer_account_no">کسٹمر اکاؤنٹ: %1$s</string>
+
+    <string name="feature_settings_about_topbar_title">ہمارے بارے میں</string>
+    <string name="feature_settings_about_mifos">Mifos</string>
+    <string name="feature_settings_about_logo_content_description">Mifos کی تصویر</string>
+    <string name="feature_settings_about_who_are_we">ہم کون ہیں؟</string>
+    <string name="feature_settings_about_what_does_mifos_do">Mifos کیا کرتا ہے؟</string>
+    <string name="feature_settings_about_who_are_we_desc">Mifos ایک غیر منافع بخش تنظیم ہے جو لوگوں کو بنیادی مالیاتی خدمات تک رسائی فراہم کرنے کی کوشش کرتی ہے۔ یہ ایک اوپن سورس پلیٹ فارم کے ذریعے ایسا کرتی ہے۔</string>
+    <string name="feature_settings_about_point_1">یہ مالیاتی اداروں کو جدید مالیاتی خدمات پیش کرنے میں مدد کرتا ہے</string>
+    <string name="feature_settings_about_point_2">یہ لوگوں کو قرض حاصل کرنے، رقم بچانے اور مزید بہت کچھ کرنے کے قابل بناتا ہے</string>
+    <string name="feature_settings_about_point_3">یہ دنیا بھر میں لاکھوں لوگوں کی خدمت کرنے والے مالیاتی اداروں کی مدد کرتا ہے</string>
+
+    <string name="feature_settings_doubt">بہت سے شکوک و شبہات FAQ میں حل ہو جاتے ہیں!</string>
+    <string name="feature_settings_doubt_message">نہیں، میں نے انہیں چیک نہیں کیا، مجھے وہاں لے جائیں!</string>
+
+    <string name="feature_settings_still_have_doubt">اب بھی شک ہے؟</string>
+    <string name="feature_settings_still_have_doubt_message">کسی مسئلے کا سامنا ہے؟ بالکل پریشان نہ ہوں!\nبس ہمارے کسٹمر کیئر کو کال کریں۔\nہم دن رات آپ کی مدد کے لیے حاضر ہیں،\nتاکہ اس بات کو یقینی بنایا جا سکے کہ سب کچھ ٹھیک کام کر رہا ہے!</string>
+    <string name="feature_settings_still_have_doubt_action">ہمیں کال کریں</string>
+
+    <string name="feature_settings_still_have_issue">مسائل ای میل کریں؟</string>
+    <string name="feature_settings_still_have_issue_message">سپورٹ کی ضرورت ہے لیکن لکھنا پسند کرتے ہیں؟\nہمیں دن یا رات کسی بھی وقت ای میل بھیجیں۔\nہماری ٹیم تندہی اور تیزی سے جواب دے گی،\nاس بات کو یقینی بناتے ہوئے کہ آپ کو مطلوبہ مدد مل جائے!</string>
+    <string name="feature_settings_still_have_issue_action">ہمیں میل کریں</string>
+
+    <string name="feature_settings_appinfo_topbar_title">ایپ کی معلومات</string>
+    <string name="feature_settings_appinfo_mobile">موبائل</string>
+    <string name="feature_settings_appinfo_logo_content_description">Mifos کی تصویر</string>
+    <string name="feature_settings_appinfo_app_name">Mifos Mobile</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">Mifos Electronic Banking</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">جملہ حقوق محفوظ ہیں</string>
+    <string name="feature_settings_appinfo_version">ورژن</string>
+    <string name="feature_settings_appinfo_privacy_policy">پرائیویسی پالیسی</string>
+    <string name="feature_settings_appinfo_terms_conditions">شرائط و ضوابط</string>
+
+    <string name="feature_settings_update_passcode">پاس کوڈ اپ ڈیٹ کریں</string>
+    <string name="feature_settings_old_passcode">پرانا پاس کوڈ</string>
+    <string name="feature_settings_new_passcode">نیا پاس کوڈ</string>
+    <string name="feature_settings_confirm_new_passcode">نئے پاس کوڈ کی تصدیق کریں</string>
+    <string name="feature_settings_authorization_passcode">اتھارٹی پاس کوڈ</string>
+    <string name="feature_settings_passcode_length_error">پاس کوڈ 4 ہندسوں کا ہونا ضروری ہے۔</string>
+    <string name="feature_settings_passcode_empty_error">پاس کوڈ خالی نہیں ہو سکتا۔</string>
+    <string name="feature_settings_passcode_invalid_error">پاس کوڈ میں کوئی حروف نہیں ہونے چاہئیں۔</string>
+    <string name="feature_settings_passcode_confirm_error">نیا اور تصدیقی پاس کوڈ ایک جیسا ہونا چاہیے۔</string>
+    <string name="feature_settings_passcode_old_passcode_error">پرانا پاس کوڈ درست ہونا چاہیے۔</string>
+    <string name="feature_settings_passcode_updated_successfully">پاس کوڈ کامیابی کے ساتھ اپ ڈیٹ ہو گیا۔</string>
+    <string name="feature_settings_passcode_updated_message">ایپ کی خدمات استعمال کرنے کے لیے آپ کو نیا پاس کوڈ درج کرنا ہوگا۔</string>
+    <string name="feature_settings_next">اگلا</string>
+
+    <string name="feature_settings_update_password">پاس ورڈ اپ ڈیٹ کریں</string>
+    <string name="feature_settings_old_password">پرانا پاس ورڈ</string>
+    <string name="feature_settings_new_password">نیا پاس ورڈ</string>
+    <string name="feature_settings_confirm_new_password">نئے پاس ورڈ کی تصدیق کریں</string>
+
+    <string name="password_empty_error">پاس ورڈ خالی نہیں ہو سکتا</string>
+    <string name="password_empty_error_repeat">مسلسل ایک جیسے حروف کی اجازت نہیں ہے</string>
+    <string name="password_length_error">پاس ورڈ کم از کم 12 حروف پر مشتمل ہونا چاہیے</string>
+    <string name="password_current_incorrect_error">موجودہ پاس ورڈ غلط ہے</string>
+    <string name="password_validation_error">پاس ورڈ سیکیورٹی کے تقاضوں پر پورا نہیں اترتا</string>
+    <string name="password_same_as_current_error">نیا پاس ورڈ موجودہ پاس ورڈ سے مختلف ہونا چاہیے</string>
+    <string name="password_personal_info_error">پاس ورڈ میں ذاتی معلومات نہیں ہونی چاہئیں</string>
+    <string name="password_confirm_mismatch_error">پاس ورڈ مطابقت نہیں رکھتے</string>
+    <string name="feature_settings_password">پاس ورڈ</string>
+    <string name="password_too_many_attempts">بہت سی ناکام کوششیں ہو چکی ہیں۔ براہ کرم دوبارہ کوشش کرنے سے پہلے انتظار کریں۔</string>
+
+    <string name="password_update_success">پاس ورڈ کامیابی کے ساتھ اپ ڈیٹ ہو گیا</string>
+    <string name="password_update_success_message">ایپ کی خدمات استعمال کرنے کے لیے آپ کو دوبارہ لاگ ان کرنا ہوگا۔</string>
+    <string name="password_update_failed">پاس ورڈ اپ ڈیٹ کرنے میں ناکامی۔ دوبارہ کوشش کریں</string>
+    <string name="password_update_dialog_button">ابھی لاگ ان کریں</string>
+
+    <string name="no_questions_found">کوئی سوال نہیں ملا</string>
+    <string-array name="faq_qs">
+        <item>میں نئے لون (قرض) اکاؤنٹ کے لیے کیسے درخواست دوں؟</item>
+        <item>میں اپنی پروفائل کی معلومات کہاں دیکھ سکتا ہوں؟</item>
+        <item>میں اپنے سیونگز اکاؤنٹ کی ٹرانزیکشنز کہاں دیکھ سکتا ہوں؟</item>
+        <item>QR کوڈ کا کیا فائدہ ہے؟</item>
+        <item>QR کوڈ کے ذریعے بینیفشری (Beneficiary) کیسے بنایا جائے؟</item>
+        <item>لون اکاؤنٹ کے لیے ادائیگی کیسے کی جائے؟</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>لون اکاؤنٹ کے لیے درخواست دینے کے لیے، ہوم اسکرین پر دیے گئے \"Apply for Loan\" پر کلک کریں۔</item>
+        <item>آپ ہوم اسکرین پر موجود صارف کی تصویر پر کلک کر کے اپنی پروفائل کی معلومات دیکھ سکتے ہیں۔</item>
+        <item>اپنے سیونگز اکاؤنٹ کی ٹرانزیکشنز دیکھنے کے لیے، اکاؤنٹس کے سیکشن پر جائیں، مطلوبہ سیونگز اکاؤنٹ پر کلک کریں، اوپر دائیں جانب موجود تین نقطوں پر کلک کریں اور ٹرانزیکشنز کا آپشن منتخب کریں۔</item>
+        <item>کسی بھی لون یا سیونگز اکاؤنٹ کے QR کوڈ کو دوسرے صارفین کے ساتھ شیئر کیا جا سکتا ہے جس سے وہ ایک بینیفشری بنا سکیں گے۔</item>
+        <item>بینیفشری بنانے کے لیے، ہوم اسکرین سے بینیفشری آپشن پر جائیں پھر نیچے دائیں جانب موجود گول بٹن پر کلک کریں، اسکین کا آپشن منتخب کریں جس سے آپ کے آلے کا کیمرہ کھل جائے گا، دوسرے شخص کا QR کوڈ اسکین کریں جس کے لیے آپ بینیفشری بنانا چاہتے ہیں، مطلوبہ تفصیلات بھرنے کے بعد آپ QR کوڈ کے ذریعے بینیفشری بنا سکیں گے۔</item>
+        <item>لون اکاؤنٹ کی ادائیگی کے لیے، اکاؤنٹس کے سیکشن پر جائیں، LOAN منتخب کریں پھر اپنا مطلوبہ لون اکاؤنٹ کھولیں اور Make Payment آپشن پر کلک کریں۔</item>
+    </string-array>
+
+    <string name="feature_settings_faq_doubt">اب بھی کوئی شک ہے؟</string>
+    <string name="feature_settings_faq_contact_us"> ہم سے رابطہ کریں</string>
+
+    <string name="feature_settings_language">زبان</string>
+    <string name="feature_settings_change_language">زبان تبدیل کریں</string>
+
+    <string name="feature_settings_theme_light">لائٹ تھیم</string>
+    <string name="feature_settings_theme_dark">ڈارک تھیم</string>
+    <string name="feature_settings_theme_system">سسٹم ڈیفالٹ تھیم</string>
+    <string name="feature_settings_apply_theme">تھیم نافذ کریں</string>
+</resources>

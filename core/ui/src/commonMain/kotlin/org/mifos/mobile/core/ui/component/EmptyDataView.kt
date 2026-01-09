@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.no_internet
 import org.jetbrains.compose.resources.DrawableResource
@@ -37,6 +35,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun EmptyDataView(
@@ -52,12 +51,12 @@ fun EmptyDataView(
     ) {
         Icon(
             modifier = Modifier
-                .size(50.dp),
+                .size(DesignToken.sizes.imageDp50),
             imageVector = icon,
             contentDescription = null,
             tint = Color.Unspecified,
         )
-        Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
         Text(
             text = errorString ?: stringResource(error),
             style = MifosTypography.titleSmallEmphasized,
@@ -81,17 +80,17 @@ fun EmptyDataView(
         image?.let {
             Icon(
                 modifier = Modifier
-                    .size(100.dp)
-                    .padding(bottom = 12.dp),
+                    .size(DesignToken.sizes.iconDp100)
+                    .padding(bottom = DesignToken.padding.medium),
                 painter = painterResource(it),
                 contentDescription = null,
             )
         }
 
         Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            modifier = Modifier.padding(horizontal = DesignToken.padding.largeIncreased),
             text = errorString ?: stringResource(error),
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             textAlign = TextAlign.Center,
         )
     }

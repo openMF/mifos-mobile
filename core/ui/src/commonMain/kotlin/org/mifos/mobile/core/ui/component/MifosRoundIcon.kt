@@ -16,11 +16,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
 
@@ -34,7 +34,7 @@ fun MifosRoundIcon(
             .clip(CircleShape),
     ) {
         Image(
-            modifier = Modifier.padding(all = 6.dp),
+            modifier = Modifier.padding(all = DesignToken.padding.dp6),
             painter = painterResource(iconId),
             contentDescription = "Icon",
         )

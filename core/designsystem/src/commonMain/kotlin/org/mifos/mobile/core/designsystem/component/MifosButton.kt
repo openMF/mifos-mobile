@@ -21,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Mifos button with generic content slot. Wraps Material 3 [Button].
@@ -54,7 +54,7 @@ fun MifosButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(48.dp),
+        modifier = modifier.height(DesignToken.sizes.buttonHeightDp48),
         enabled = enabled,
         colors = colors,
         shape = shape,
@@ -81,16 +81,16 @@ fun MifosButton(
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = DesignToken.shapes.medium,
+    shape: Shape = KptTheme.shapes.medium,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
+        containerColor = KptTheme.colorScheme.primary,
     ),
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(48.dp),
+        modifier = modifier.height(DesignToken.sizes.buttonHeightDp48),
         enabled = enabled,
         colors = colors,
         shape = shape,
@@ -118,7 +118,7 @@ fun MifosOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = DesignToken.shapes.medium,
+    shape: Shape = KptTheme.shapes.medium,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled),
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -127,7 +127,7 @@ fun MifosOutlinedButton(
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
-            .height(48.dp),
+            .height(DesignToken.sizes.buttonHeightDp48),
         enabled = enabled,
         shape = shape,
         colors = colors,
@@ -158,7 +158,7 @@ fun MifosTextButton(
         modifier = modifier,
         enabled = enabled,
         colors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.onBackground,
+            contentColor = KptTheme.colorScheme.onBackground,
         ),
         content = content,
     )
@@ -218,7 +218,7 @@ private fun MifosButtonContent(
                     start = if (leadingIcon != null) {
                         ButtonDefaults.IconSpacing
                     } else {
-                        0.dp
+                        DesignToken.padding.none
                     },
                 ),
         ) {
@@ -238,5 +238,6 @@ object MifosButtonDefaults {
 
     // TODO: File bug
     // OutlinedButton default border width isn't exposed via ButtonDefaults
+    // TODO use DesignToken, currently it throws error
     val OutlinedButtonBorderWidth = 1.dp
 }

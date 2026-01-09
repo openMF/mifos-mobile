@@ -19,15 +19,14 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRailDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosNavigationRail(
@@ -38,21 +37,21 @@ fun MifosNavigationRail(
     windowInsets: WindowInsets = NavigationRailDefaults.windowInsets,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface,
+        color = KptTheme.colorScheme.surface,
+        contentColor = KptTheme.colorScheme.onSurface,
         modifier = modifier,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .windowInsetsPadding(insets = windowInsets)
-                .widthIn(min = 80.dp)
-                .padding(vertical = DesignToken.padding.extraSmall)
+                .widthIn(min = DesignToken.sizes.surfaceColWidthInDp80)
+                .padding(vertical = KptTheme.spacing.xs)
                 .selectableGroup()
                 .verticalScroll(state = rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
-                space = DesignToken.spacing.large,
+                space = KptTheme.spacing.md,
                 alignment = Alignment.CenterVertically,
             ),
         ) {

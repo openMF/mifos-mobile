@@ -23,8 +23,8 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosSuccessDialog(
@@ -75,7 +75,7 @@ fun MifosSuccessDialog(
                     )
                 }
             },
-            shape = DesignToken.shapes.large,
+            shape = KptTheme.shapes.large,
         )
     }
 }

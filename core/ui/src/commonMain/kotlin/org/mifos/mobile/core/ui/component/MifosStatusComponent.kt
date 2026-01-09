@@ -18,13 +18,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.ic_icon_error
 import mifos_mobile.core.ui.generated.resources.ic_icon_success
@@ -35,6 +33,7 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosStatusComponent(
@@ -53,8 +52,8 @@ fun MifosStatusComponent(
     ) {
         Image(
             modifier = Modifier
-                .height(96.dp)
-                .width(96.dp),
+                .height(DesignToken.sizes.imageDp96)
+                .width(DesignToken.sizes.imageDp96),
             painter = painterResource(icon),
             contentDescription = "Status icon",
         )
@@ -64,7 +63,7 @@ fun MifosStatusComponent(
         Text(
             text = title,
             style = MifosTypography.headlineSmallEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         )
 
@@ -73,7 +72,7 @@ fun MifosStatusComponent(
         Text(
             text = subTitle,
             style = MifosTypography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = KptTheme.colorScheme.secondary,
             textAlign = TextAlign.Center,
         )
 
@@ -83,7 +82,7 @@ fun MifosStatusComponent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(DesignToken.sizes.buttonHeight),
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
             text = {
                 Text(
                     text = buttonText,
@@ -102,7 +101,7 @@ private fun Mifos_Status_Component() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
+                .padding(KptTheme.spacing.md),
             verticalArrangement = Arrangement.Center,
         ) {
             MifosStatusComponent(

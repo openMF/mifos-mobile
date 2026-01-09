@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,13 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosTextTitleDescSingleLine(
@@ -46,14 +46,14 @@ fun MifosTextTitleDescSingleLine(
         modifier = modifier.fillMaxWidth(),
     ) {
         Text(
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             text = title,
             modifier = Modifier
                 .alpha(0.7f),
         )
 
         Text(
-            style = MaterialTheme.typography.bodyMedium,
+            style = KptTheme.typography.bodyMedium,
             text = description,
         )
     }
@@ -69,7 +69,7 @@ fun MifosTextTitleDescDoubleLine(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             modifier = Modifier
                 .alpha(0.7f)
                 .fillMaxWidth(),
@@ -88,7 +88,7 @@ fun MifosTextTitleDescDrawableSingleLine(
     description: String,
     imageResId: DrawableResource,
     modifier: Modifier = Modifier,
-    imageSize: Dp = 14.dp,
+    imageSize: Dp = DesignToken.sizes.imageDp14,
     onDrawableClick: () -> Unit = {},
 ) {
     Row(
@@ -97,17 +97,17 @@ fun MifosTextTitleDescDrawableSingleLine(
         modifier = modifier.fillMaxWidth(),
     ) {
         Text(
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             text = title,
             modifier = Modifier
                 .weight(1f)
                 .alpha(0.7f),
         )
         Text(
-            style = MaterialTheme.typography.bodyMedium,
+            style = KptTheme.typography.bodyMedium,
             text = description,
         )
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(DesignToken.spacing.dp5))
         Image(
             painter = painterResource(imageResId),
             contentDescription = "Image",
@@ -130,7 +130,7 @@ fun MifosTitleDescSingleLineEqual(
         modifier = modifier.fillMaxWidth(),
     ) {
         Text(
-            style = MaterialTheme.typography.labelMedium,
+            style = KptTheme.typography.labelMedium,
             text = title,
             modifier = Modifier
                 .alpha(0.7f)
@@ -138,7 +138,7 @@ fun MifosTitleDescSingleLineEqual(
         )
 
         Text(
-            style = MaterialTheme.typography.bodyMedium,
+            style = KptTheme.typography.bodyMedium,
             text = description,
             modifier = Modifier.weight(1f),
         )
@@ -168,7 +168,7 @@ fun MifosTextTitleDescDoubleLinePreview(
         MifosTextTitleDescDoubleLine(
             title = "MifosTextTitleDescDoubleLine Title",
             description = "MifosTextTitleDescDoubleLine Description",
-            descriptionStyle = MaterialTheme.typography.bodyMedium,
+            descriptionStyle = KptTheme.typography.bodyMedium,
             modifier = modifier,
         )
     }

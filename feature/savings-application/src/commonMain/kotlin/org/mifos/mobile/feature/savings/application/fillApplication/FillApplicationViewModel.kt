@@ -580,10 +580,22 @@ internal class SavingsFillApplicationViewModel(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_savings_status_failure),
-                        subtitle = getString(
-                            Res.string.feature_apply_savings_status_failure_tip,
-                            state.fieldOfficerName,
-                        ),
+                        subtitle = buildString {
+                            val serverMessage = response.message.takeIf { it.isNotBlank() }
+                            if (serverMessage != null) {
+                                append(serverMessage)
+                                if (!serverMessage.endsWith(".") && !serverMessage.endsWith("!")) {
+                                    append(".")
+                                }
+                                append(" ")
+                            }
+                            append(
+                                getString(
+                                    Res.string.feature_apply_savings_status_failure_tip,
+                                    state.fieldOfficerName,
+                                ),
+                            )
+                        },
                         buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
                     ),
                 )
