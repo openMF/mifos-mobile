@@ -38,7 +38,6 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
     filter { it.accountType?.value == AccountType.SAVINGS.value }
 
-
 /**
  * ViewModel for the Make Transfer screen.
  *
