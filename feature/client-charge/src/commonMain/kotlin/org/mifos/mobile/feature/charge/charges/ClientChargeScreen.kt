@@ -50,13 +50,25 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
+import mifos_mobile.feature.client_charge.generated.resources.account_label
+import mifos_mobile.feature.client_charge.generated.resources.account_type
+import mifos_mobile.feature.client_charge.generated.resources.account_type_loan
+import mifos_mobile.feature.client_charge.generated.resources.account_type_savings
+import mifos_mobile.feature.client_charge.generated.resources.account_type_shares
+import mifos_mobile.feature.client_charge.generated.resources.all_accounts
+import mifos_mobile.feature.client_charge.generated.resources.apply_filters
+import mifos_mobile.feature.client_charge.generated.resources.charge_status
+import mifos_mobile.feature.client_charge.generated.resources.clear_all
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
+import mifos_mobile.feature.client_charge.generated.resources.filter_charges
+import mifos_mobile.feature.client_charge.generated.resources.select_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -133,7 +145,7 @@ private fun ClientChargeScreen(
 
     Scaffold(
         modifier = modifier,
-        containerColor = KptTheme.colorScheme.onPrimary,
+        containerColor = Color.White,
         topBar = {
             TopAppBar(
                 title = {
@@ -215,7 +227,7 @@ private fun ClientChargeScreen(
 
                 ScreenUiState.Success -> {
                     ClientChargeContent(
-                        modifier = Modifier.padding(KptTheme.spacing.md),
+                        modifier = Modifier.padding(DesignToken.padding.large),
                         chargesList = state.charges,
                         onChargeClick = {
                             onAction(ClientChargeAction.OnChargeClick(it))
@@ -292,18 +304,22 @@ fun ChargeFilterSheetContent(
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val savingsLabel = stringResource(Res.string.account_type_savings)
+    val loanLabel = stringResource(Res.string.account_type_loan)
+    val sharesLabel = stringResource(Res.string.account_type_shares)
+
     var selectedTabLabel by remember {
         mutableStateOf(
             when {
-                state.selectedLoanAccount != null || state.chargeType == ChargeType.LOAN -> "Loan"
-                state.selectedShareAccount != null || state.chargeType == ChargeType.SHARE -> "Shares"
-                else -> "Savings"
+                state.selectedLoanAccount != null || state.chargeType == ChargeType.LOAN -> loanLabel
+                state.selectedShareAccount != null || state.chargeType == ChargeType.SHARE -> sharesLabel
+                else -> savingsLabel
             },
         )
     }
 
     var selectedAccountObject by remember {
-        mutableStateOf<Any?>(
+        mutableStateOf(
             state.selectedSavingsAccount ?: state.selectedLoanAccount ?: state.selectedShareAccount,
         )
     }
@@ -311,20 +327,20 @@ fun ChargeFilterSheetContent(
     var selectedFilter by remember { mutableStateOf(state.activeFilter) }
 
     val currentAccountList: List<Any> = when (selectedTabLabel) {
-        "Savings" -> state.savingsAccounts
-        "Loan" -> state.loanAccounts
-        "Shares" -> state.shareAccounts
+        savingsLabel -> state.savingsAccounts
+        loanLabel -> state.loanAccounts
+        sharesLabel -> state.shareAccounts
         else -> emptyList()
     }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = KptTheme.spacing.xl, vertical = KptTheme.spacing.lg),
+            .padding(horizontal = DesignToken.padding.largeIncreased, vertical = DesignToken.padding.large),
     ) {
         FilterHeader(onClear = onClear)
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = KptTheme.spacing.sm))
+        HorizontalDivider(modifier = Modifier.padding(vertical = DesignToken.padding.small))
 
         if (state.canSwitchAccounts) {
             AccountTypeSection(
@@ -337,7 +353,6 @@ fun ChargeFilterSheetContent(
 
             if (currentAccountList.isNotEmpty()) {
                 AccountDropdownSection(
-                    label = selectedTabLabel,
                     accounts = currentAccountList,
                     selectedAccount = selectedAccountObject,
                     onAccountSelected = { selectedAccountObject = it },
@@ -355,9 +370,9 @@ fun ChargeFilterSheetContent(
         FilterApplyButton(
             onClick = {
                 val targetType = when (selectedTabLabel) {
-                    "Savings" -> ChargeType.SAVINGS
-                    "Loan" -> ChargeType.LOAN
-                    "Shares" -> ChargeType.SHARE
+                    savingsLabel -> ChargeType.SAVINGS
+                    loanLabel -> ChargeType.LOAN
+                    sharesLabel -> ChargeType.SHARE
                     else -> ChargeType.CLIENT
                 }
                 onApply(selectedAccountObject, targetType, selectedFilter)
@@ -375,7 +390,7 @@ private fun FilterHeader(onClear: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Filter Charges",
+            text = stringResource(Res.string.filter_charges),
             style = KptTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -383,7 +398,7 @@ private fun FilterHeader(onClear: () -> Unit) {
         )
         TextButton(onClick = onClear) {
             Text(
-                text = "Clear All",
+                text = stringResource(Res.string.clear_all),
                 style = KptTheme.typography.bodyMedium.copy(
                     color = KptTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold,
@@ -400,12 +415,16 @@ private fun AccountTypeSection(
 ) {
     Column {
         Text(
-            text = "Account Type:",
+            text = stringResource(Res.string.account_type),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(vertical = KptTheme.spacing.sm),
+            modifier = Modifier.padding(vertical = DesignToken.padding.small),
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
-            val types = listOf("Savings", "Loan", "Shares")
+        Row(horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
+            val types = listOf(
+                stringResource(Res.string.account_type_savings),
+                stringResource(Res.string.account_type_loan),
+                stringResource(Res.string.account_type_shares),
+            )
             types.forEach { type ->
                 FilterOptionChip(
                     label = type,
@@ -415,13 +434,12 @@ private fun AccountTypeSection(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(KptTheme.spacing.lg))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
     }
 }
 
 @Composable
 private fun AccountDropdownSection(
-    label: String,
     accounts: List<Any>,
     selectedAccount: Any?,
     onAccountSelected: (Any?) -> Unit,
@@ -430,9 +448,9 @@ private fun AccountDropdownSection(
 
     Column {
         Text(
-            text = "Select $label Account:",
+            text = stringResource(Res.string.select_account),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
+            modifier = Modifier.padding(bottom = DesignToken.padding.small),
         )
 
         Box {
@@ -441,17 +459,14 @@ private fun AccountDropdownSection(
                     .fillMaxWidth()
                     .clickable { isExpanded = true },
                 shape = DesignToken.shapes.medium,
-                border = BorderStroke(
-                    DesignToken.strokes.thin,
-                    KptTheme.colorScheme.secondary.copy(alpha = 0.5f),
-                ),
-                colors = CardDefaults.cardColors(containerColor = KptTheme.colorScheme.onPrimary),
-                elevation = CardDefaults.cardElevation(KptTheme.elevation.level0),
+                border = BorderStroke(DesignToken.strokes.thin, Color.Gray.copy(alpha = 0.5f)),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(DesignToken.elevation.none),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(KptTheme.spacing.lg),
+                        .padding(DesignToken.padding.large),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -463,7 +478,7 @@ private fun AccountDropdownSection(
                     Icon(
                         imageVector = MifosIcons.ArrowDropDown,
                         contentDescription = null,
-                        tint = KptTheme.colorScheme.onPrimaryContainer,
+                        tint = Color.Black,
                     )
                 }
             }
@@ -471,10 +486,15 @@ private fun AccountDropdownSection(
             DropdownMenu(
                 expanded = isExpanded,
                 onDismissRequest = { isExpanded = false },
-                modifier = Modifier.fillMaxWidth(0.9f).background(KptTheme.colorScheme.onPrimary),
+                modifier = Modifier.fillMaxWidth(0.9f).background(Color.White),
             ) {
                 DropdownMenuItem(
-                    text = { Text("All Accounts", fontWeight = FontWeight.Bold) },
+                    text = {
+                        Text(
+                            text = stringResource(Res.string.all_accounts),
+                            fontWeight = FontWeight.Bold,
+                        )
+                    },
                     onClick = {
                         onAccountSelected(null)
                         isExpanded = false
@@ -487,7 +507,7 @@ private fun AccountDropdownSection(
                         text = {
                             Column {
                                 Text(
-                                    text = productName ?: "Account",
+                                    text = productName ?: stringResource(Res.string.account_label),
                                     fontWeight = FontWeight.Bold,
                                 )
                                 Text(
@@ -504,7 +524,7 @@ private fun AccountDropdownSection(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
     }
 }
 
@@ -515,18 +535,18 @@ private fun ChargeStatusSection(
 ) {
     Column {
         Text(
-            text = "Charge Status:",
+            text = stringResource(Res.string.charge_status),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
+            modifier = Modifier.padding(bottom = DesignToken.padding.medium),
         )
 
         val filtersFirstRow = listOf(ChargeFilterUtil.ALL, ChargeFilterUtil.PAID)
         val filtersSecondRow = listOf(ChargeFilterUtil.PENDING, ChargeFilterUtil.WAIVED)
 
-        Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm)) {
+        Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
             ) {
                 filtersFirstRow.forEach { filter ->
                     FilterOptionChip(
@@ -539,7 +559,7 @@ private fun ChargeStatusSection(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
             ) {
                 filtersSecondRow.forEach { filter ->
                     FilterOptionChip(
@@ -562,7 +582,11 @@ private fun FilterApplyButton(onClick: () -> Unit) {
         shape = DesignToken.shapes.dp25,
         colors = ButtonDefaults.buttonColors(containerColor = KptTheme.colorScheme.primary),
     ) {
-        Text(text = "Apply Filters", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = stringResource(Res.string.apply_filters),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+        )
     }
 }
 

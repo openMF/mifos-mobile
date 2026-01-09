@@ -28,7 +28,9 @@ import androidx.compose.ui.Modifier
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
+import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -99,7 +101,7 @@ fun ClientChargeItem(
                 text = if (!charge.dueDate.isEmpty() && charge.dueDate.size >= 3) {
                     DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
                 } else {
-                    "N/A"
+                    stringResource(Res.string.error_no_charge)
                 },
                 style = MifosTypography.bodySmall,
             )

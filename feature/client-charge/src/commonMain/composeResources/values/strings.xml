@@ -22,6 +22,18 @@
     <string name="amount_paid">Paid:</string>
     <string name="feature_client_charge_share_charges">Share Charges</string>
 
+    <string name="filter_charges">Filter Charges</string>
+    <string name="clear_all">Clear All</string>
+    <string name="account_type">Account Type:</string>
+    <string name="select_account">Select Account:</string>
+    <string name="all_accounts">All Accounts</string>
+    <string name="account_label">Account</string>
+    <string name="charge_status">Charge Status:</string>
+    <string name="apply_filters">Apply Filters</string>
+    <string name="account_type_savings">Savings</string>
+    <string name="account_type_loan">Loan</string>
+    <string name="account_type_shares">Shares</string>
+
 
     <string name="charge_details">Charge Details</string>
     <string name="paid_success_message">You have successfully paid this charge completely</string>

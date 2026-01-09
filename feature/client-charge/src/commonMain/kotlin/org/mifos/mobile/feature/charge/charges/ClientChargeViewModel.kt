@@ -70,8 +70,6 @@ internal class ClientChargeViewModel(
     },
 ) {
 
-    private var originalChargeList: List<Charge> = emptyList()
-
     init {
         observeNetworkStatus()
     }
@@ -370,7 +368,7 @@ internal class ClientChargeViewModel(
                 )
             }
             is DataState.Success -> {
-                originalChargeList = result.data
+                updateState { it.copy(originalCharges = result.data) }
                 applyLocalFilter()
             }
         }
@@ -389,7 +387,7 @@ internal class ClientChargeViewModel(
                 )
             }
             is DataState.Success -> {
-                originalChargeList = result.data.pageItems
+                updateState { it.copy(originalCharges = result.data.pageItems) }
                 applyLocalFilter()
             }
         }
@@ -397,10 +395,11 @@ internal class ClientChargeViewModel(
 
     private fun applyLocalFilter() {
         val filter = state.activeFilter
+        val originalList = state.originalCharges // Read from state
         val filteredList = if (filter == ChargeFilterUtil.ALL) {
-            originalChargeList
+            originalList
         } else {
-            originalChargeList.filter { filter.matchCondition(it) }
+            originalList.filter { filter.matchCondition(it) }
         }
 
         updateState {
@@ -433,7 +432,11 @@ internal class ClientChargeViewModel(
 
     private fun processLoanOrSavingsCharges() {
         viewModelScope.launch {
-            val idToFetch = state.chargeTypeId ?: -1L
+            val idToFetch = state.chargeTypeId
+            if (idToFetch == null) {
+                updateState { it.copy(uiState = ScreenUiState.Empty) }
+                return@launch
+            }
 
             val flow = if (state.chargeType == ChargeType.SHARE) {
                 clientChargeRepositoryImp.getShareAccountCharges(idToFetch)
@@ -457,6 +460,7 @@ data class ClientChargeState(
     val isEmpty: Boolean = false,
     val topBarTitleResId: StringResource = Res.string.charges,
     val charges: List<Charge> = emptyList(),
+    val originalCharges: List<Charge> = emptyList(),
 
     val savingsAccounts: List<SavingAccount> = emptyList(),
     val loanAccounts: List<LoanAccount> = emptyList(),
