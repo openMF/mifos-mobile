@@ -33,12 +33,6 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
 /**
- * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
- */
-private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
-    filter { it.accountType?.value == AccountType.SAVINGS.value }
-
-/**
  * ViewModel for the Make Transfer screen.
  *
  * This ViewModel handles the business logic for making a transfer, including fetching
@@ -608,3 +602,9 @@ internal sealed class ValidationResult {
      */
     data class Error(val message: StringResource) : ValidationResult()
 }
+
+/**
+ * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
+ */
+private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
+    filter { it.accountType?.value == AccountType.SAVINGS.value }
