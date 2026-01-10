@@ -33,7 +33,7 @@ data class SavingsWithAssociationsResponseDto(
 
     val currency: CurrencyResponseDto? = null,
 
-    internal val nominalAnnualInterestRate: Double? = null,
+    val nominalAnnualInterestRate: Double? = null,
 
     val minRequiredOpeningBalance: Double? = null,
 
@@ -55,4 +55,4 @@ data class SavingsWithAssociationsResponseDto(
 
     val transactions: List<SavingsTransactionResponseDto> = emptyList(),
 
-)
+    )

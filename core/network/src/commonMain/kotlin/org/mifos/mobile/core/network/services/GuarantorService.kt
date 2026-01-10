@@ -17,7 +17,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.network.dto.guarantor.GuarantorApplicationPayloadDto
+import org.mifos.mobile.core.network.dto.payloads.GuarantorApplicationPayloadDto
 import org.mifos.mobile.core.network.dto.guarantor.GuarantorListResponseDto
 import org.mifos.mobile.core.network.dto.guarantor.GuarantorTemplateResponseDto
 

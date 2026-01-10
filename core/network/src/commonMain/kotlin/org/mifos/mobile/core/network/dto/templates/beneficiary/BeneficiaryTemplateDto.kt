@@ -1,8 +1,6 @@
-package org.mifos.mobile.core.network.dto.beneficiary
+package org.mifos.mobile.core.network.dto.templates.beneficiary
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 import org.mifos.mobile.core.network.dto.common.TypeResponseDto
 
 @Serializable

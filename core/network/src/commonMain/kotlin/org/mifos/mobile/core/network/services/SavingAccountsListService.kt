@@ -24,7 +24,7 @@ import org.mifos.mobile.core.network.dto.savingsAccount.SavingsAccountApplicatio
 import org.mifos.mobile.core.network.dto.savingsAccount.SavingsWithAssociationsResponseDto
 import org.mifos.mobile.core.network.dto.templates.accounts.AccountOptionsTemplateResponseDto
 import org.mifos.mobile.core.network.dto.templates.savings.SavingsAccountTemplateResponseDto
-import org.mifos.mobile.core.network.dto.transaction.TransactionResponseDto
+import org.mifos.mobile.core.network.dto.transaction.SavingsTransactionDetailsResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface SavingAccountsListService {
@@ -75,5 +75,5 @@ interface SavingAccountsListService {
     fun getSavingsAccountTransactionDetails(
         @Path("accountId") savingsId: Long,
         @Path("transactionId") transactionId: Long,
-    ): Flow<TransactionResponseDto>
+    ): Flow<SavingsTransactionDetailsResponseDto>
 }

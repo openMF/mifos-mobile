@@ -22,6 +22,7 @@ import org.mifos.mobile.core.network.dto.loanAccount.LoanWithAssociationsRespons
 import org.mifos.mobile.core.network.dto.payloads.LoanAccountApplicationPayloadDto
 import org.mifos.mobile.core.network.dto.payloads.LoanWithdrawPayloadDto
 import org.mifos.mobile.core.network.dto.templates.loan.LoanTemplateResponseDto
+import org.mifos.mobile.core.network.dto.transaction.LoanTransactionDetailsResponseDto
 import org.mifos.mobile.core.network.dto.transaction.TransactionDetailsResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
@@ -63,5 +64,5 @@ interface LoanAccountsListService {
     fun getLoanTransactionDetails(
         @Path("loanId") loanId: Long,
         @Path("transactionId") transactionId: Long,
-    ): Flow<TransactionDetailsResponseDto>
+    ): Flow<LoanTransactionDetailsResponseDto>
 }

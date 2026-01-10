@@ -17,11 +17,14 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.mapper.charge.toModel
+import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.network.DataManager
+import kotlin.collections.map
 
 class ClientChargeRepositoryImp(
     private val dataManager: DataManager,
@@ -31,14 +34,24 @@ class ClientChargeRepositoryImp(
 
     override fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
         return dataManager.clientChargeApi.getClientChargeList(clientId)
-            .map { response -> DataState.Success(response) }
+            .map { response ->
+                DataState.Success(
+                    response.toPageModel { dto ->
+                        dto.toModel()
+                    }
+                )
+            }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
     }
 
     override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
-            .map { response -> DataState.Success(response) }
+            .map { response ->
+                DataState.Success(
+                    response.map { it.toModel() }
+                )
+            }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
     }
@@ -66,7 +79,9 @@ class ClientChargeRepositoryImp(
     override fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
-                DataState.Success(response.charges)
+                DataState.Success(
+                    response.map { it.toModel() }
+                )
             }
             .catch { exception ->
                 DataState.Error(exception, exception.message)

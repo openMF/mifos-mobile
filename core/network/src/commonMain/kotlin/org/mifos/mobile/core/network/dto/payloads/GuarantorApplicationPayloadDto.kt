@@ -1,4 +1,4 @@
-package org.mifos.mobile.core.network.dto.guarantor
+package org.mifos.mobile.core.network.dto.payloads
 
 import kotlinx.serialization.Serializable
 

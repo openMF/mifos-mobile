@@ -1,15 +1,14 @@
 package org.mifos.mobile.core.network.dto.transaction
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.entity.accounts.savings.PaymentDetailData
-import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.network.dto.currency.CurrencyResponseDto
+import org.mifos.mobile.core.network.dto.savingsAccount.SavingsTransactionTypeResponseDto
 
 @Serializable
 data class SavingsTransactionResponseDto(
     val id: Int? = null,
 
-    val transactionType: TransactionType? = null,
+    val transactionType: SavingsTransactionTypeResponseDto? = null,
 
     val accountId: Int? = null,
 
@@ -19,7 +18,7 @@ data class SavingsTransactionResponseDto(
 
     val currency: CurrencyResponseDto? = null,
 
-    val paymentDetailData: PaymentDetailData? = null,
+    val paymentDetailData: PaymentDetailsResponseDto? = null,
 
     val amount: Double? = null,
 

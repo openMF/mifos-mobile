@@ -5,7 +5,6 @@ import org.mifos.mobile.core.network.dto.loanAccount.LoanAccountResponseDto
 import org.mifos.mobile.core.network.dto.savingsAccount.SavingsAccountResponseDto
 import org.mifos.mobile.core.network.dto.shareAccount.ShareAccountResponseDto
 
-
 @Serializable
 data class AccountsResponseDto(
     val loanAccounts: List<LoanAccountResponseDto> = emptyList(),

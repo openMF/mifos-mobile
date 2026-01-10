@@ -14,15 +14,15 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.network.dto.accounts.AccountsResponseDto
 import org.mifos.mobile.core.network.dto.client.ClientResponseDto
+import org.mifos.mobile.core.network.dto.common.PageResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface ClientService {
 
     @GET(ApiEndPoints.CLIENTS)
-    fun clients(): Flow<Page<ClientResponseDto>>
+    fun clients(): Flow<PageResponseDto<ClientResponseDto>>
 
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
     fun getClientForId(@Path(CLIENT_ID) clientId: Long): Flow<ClientResponseDto>

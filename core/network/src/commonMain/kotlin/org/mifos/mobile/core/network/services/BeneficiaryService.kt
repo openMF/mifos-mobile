@@ -19,7 +19,7 @@ import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.network.dto.payloads.BeneficiaryCreatePayloadDto
 import org.mifos.mobile.core.network.dto.beneficiary.BeneficiaryListResponseDto
-import org.mifos.mobile.core.network.dto.beneficiary.BeneficiaryTemplateDto
+import org.mifos.mobile.core.network.dto.templates.beneficiary.BeneficiaryTemplateDto
 import org.mifos.mobile.core.network.dto.payloads.BeneficiaryUpdatePayloadDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 

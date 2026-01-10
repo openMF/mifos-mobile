@@ -2,6 +2,7 @@ package org.mifos.mobile.core.network.dto.guarantor
 
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.RawValue
+import org.mifos.mobile.core.network.dto.common.TypeResponseDto
 
 @Serializable
 data class GuarantorListResponseDto(
@@ -12,7 +13,7 @@ data class GuarantorListResponseDto(
 
     val lastname: String? = null,
 
-    val guarantorType: @RawValue GuarantorTypeResponseDto? = null,
+    val guarantorType: @RawValue TypeResponseDto? = null,
 
     val firstname: String? = null,
 

@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 data class StatusResponseDto(
     val id: Int? = null,
     val code: String? = null,
-
     val value: String? = null,
 )

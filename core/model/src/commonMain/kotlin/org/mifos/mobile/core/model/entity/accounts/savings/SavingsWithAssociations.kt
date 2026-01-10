@@ -42,7 +42,7 @@ data class SavingsWithAssociations(
 
     val currency: Currency? = null,
 
-    internal val nominalAnnualInterestRate: Double? = null,
+    val nominalAnnualInterestRate: Double? = null,
 
     val minRequiredOpeningBalance: Double? = null,
 
