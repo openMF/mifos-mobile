@@ -17,26 +17,26 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
-import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
-import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
+import org.mifos.mobile.core.network.dto.guarantor.GuarantorApplicationPayloadDto
+import org.mifos.mobile.core.network.dto.guarantor.GuarantorListResponseDto
+import org.mifos.mobile.core.network.dto.guarantor.GuarantorTemplateResponseDto
 
 interface GuarantorService {
     @GET("loans/{loanId}/guarantors/template")
-    fun getGuarantorTemplate(@Path("loanId") loanId: Long): Flow<GuarantorTemplatePayload>
+    fun getGuarantorTemplate(@Path("loanId") loanId: Long): Flow<GuarantorTemplateResponseDto>
 
     @GET("loans/{loanId}/guarantors")
-    fun getGuarantorList(@Path("loanId") loanId: Long): Flow<List<GuarantorPayload>>
+    fun getGuarantorList(@Path("loanId") loanId: Long): Flow<List<GuarantorListResponseDto>>
 
     @POST("loans/{loanId}/guarantors")
     suspend fun createGuarantor(
         @Path("loanId") loanId: Long,
-        @Body payload: GuarantorApplicationPayload?,
+        @Body payload: GuarantorApplicationPayloadDto?,
     ): HttpResponse
 
     @PUT("loans/{loanId}/guarantors/{guarantorId}")
     suspend fun updateGuarantor(
-        @Body payload: GuarantorApplicationPayload?,
+        @Body payload: GuarantorApplicationPayloadDto?,
         @Path("loanId") loanId: Long,
         @Path("guarantorId") guarantorId: Long,
     ): HttpResponse
