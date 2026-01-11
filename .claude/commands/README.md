@@ -47,6 +47,13 @@ GAP PLANNING (What needs work?)
 │   └── /gap-planning platform web
 └── /gap-planning [feature]     # Plan specific feature (all layers)
 
+GAP STATUS (Track plan progress)
+├── /gap-status                 # Show all active plans
+├── /gap-status [plan-name]     # Show specific plan progress
+├── /gap-status complete [plan] # Mark plan as complete
+├── /gap-status pause [plan]    # Pause a plan
+└── /gap-status resume [plan]   # Resume a paused plan
+
 DESIGN LAYER (Specifications & Mockups)
 ├── /design                     # Show feature list
 ├── /design [feature]           # Full spec review/create
@@ -93,6 +100,16 @@ VERIFICATION
 | `/gap-planning design mockup` | Mockup generation plan | Step-by-step with commands |
 | `/gap-planning client network` | Network services plan | Service implementation tasks |
 | `/gap-planning feature [name]` | Feature implementation plan | v2.0 UI update tasks |
+
+### Gap Status
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/gap-status` | Show all active plans | Summary table with progress bars |
+| `/gap-status [plan]` | Show specific plan | Detailed steps, current step, progress log |
+| `/gap-status complete [plan]` | Mark plan done | Move to completed, update index |
+| `/gap-status pause [plan]` | Pause a plan | Mark as paused with reason |
+| `/gap-status resume [plan]` | Resume plan | Mark as active again |
 
 ### Design Layer
 
