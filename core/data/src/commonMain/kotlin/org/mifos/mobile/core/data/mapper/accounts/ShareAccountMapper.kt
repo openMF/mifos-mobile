@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.accounts
 
 import org.mifos.mobile.core.model.entity.accounts.share.Currency
@@ -20,7 +29,7 @@ fun ShareAccountResponseDto.toModel(): ShareAccount =
         shortProductName = shortProductName,
         status = status?.toModel(),
         currency = currency?.toShareCurrencyModel(),
-        timeline = timeline?.toModel()
+        timeline = timeline?.toModel(),
     )
 
 fun ShareStatusResponseDto.toModel(): Status =
@@ -32,7 +41,7 @@ fun ShareStatusResponseDto.toModel(): Status =
         approved = approved,
         rejected = rejected,
         active = active,
-        closed = closed
+        closed = closed,
     )
 
 fun ShareTimelineResponseDto.toModel(): Timeline =
@@ -48,7 +57,7 @@ fun ShareTimelineResponseDto.toModel(): Timeline =
         activatedDate = activatedDate,
         activatedByUsername = activatedByUsername,
         activatedByFirstname = activatedByFirstname,
-        activatedByLastname = activatedByLastname
+        activatedByLastname = activatedByLastname,
     )
 
 fun CurrencyResponseDto.toShareCurrencyModel(): Currency =
@@ -59,5 +68,5 @@ fun CurrencyResponseDto.toShareCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )

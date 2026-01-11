@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,7 +23,6 @@ import org.mifos.mobile.core.network.dto.payloads.LoanAccountApplicationPayloadD
 import org.mifos.mobile.core.network.dto.payloads.LoanWithdrawPayloadDto
 import org.mifos.mobile.core.network.dto.templates.loan.LoanTemplateResponseDto
 import org.mifos.mobile.core.network.dto.transaction.LoanTransactionDetailsResponseDto
-import org.mifos.mobile.core.network.dto.transaction.TransactionDetailsResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface LoanAccountsListService {

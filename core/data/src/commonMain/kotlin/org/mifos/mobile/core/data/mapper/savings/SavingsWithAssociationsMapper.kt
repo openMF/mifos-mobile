@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.savings
 
 import org.mifos.mobile.core.model.entity.accounts.savings.Currency
@@ -45,14 +54,14 @@ fun SavingsWithAssociationsResponseDto.toModel(): SavingsWithAssociations =
         lastActiveTransactionDate = lastActiveTransactionDate,
         dormancyTrackingActive = dormancyTrackingActive,
         summary = summary?.toSavingsSummary(),
-        transactions = transactions.map { it.toSavingsTransaction() }
+        transactions = transactions.map { it.toSavingsTransaction() },
     )
 
 fun TypeResponseDto.toDepositType(): DepositType =
     DepositType(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun SavingsStatusResponseDto.toSavingsStatus(): Status =
@@ -67,7 +76,7 @@ fun SavingsStatusResponseDto.toSavingsStatus(): Status =
         active = active,
         closed = closed,
         prematureClosed = prematureClosed,
-        matured = matured
+        matured = matured,
     )
 
 fun SavingsTimeLineResponseDto.toSavingsTimeline(): TimeLine =
@@ -84,9 +93,8 @@ fun SavingsTimeLineResponseDto.toSavingsTimeline(): TimeLine =
         activatedByUsername = activatedByUsername,
         activatedByFirstname = activatedByFirstname,
         activatedByLastname = activatedByLastname,
-        closedOnDate = closedOnDate
+        closedOnDate = closedOnDate,
     )
-
 
 fun SavingsSummaryResponseDto.toSavingsSummary(): Summary =
     Summary(
@@ -98,7 +106,7 @@ fun SavingsSummaryResponseDto.toSavingsSummary(): Summary =
         accountBalance = accountBalance,
         totalOverdraftInterestDerived = totalOverdraftInterestDerived,
         interestNotPosted = interestNotPosted,
-        lastInterestCalculationDate = lastInterestCalculationDate
+        lastInterestCalculationDate = lastInterestCalculationDate,
     )
 
 fun SavingsTransactionResponseDto.toSavingsTransaction(): Transactions =
@@ -114,7 +122,7 @@ fun SavingsTransactionResponseDto.toSavingsTransaction(): Transactions =
         runningBalance = runningBalance,
         reversed = reversed,
         submittedOnDate = submittedOnDate,
-        interestedPostedAsOn = interestedPostedAsOn
+        interestedPostedAsOn = interestedPostedAsOn,
     )
 
 fun PaymentDetailsResponseDto.toPaymentDetails(): PaymentDetailData =
@@ -125,7 +133,7 @@ fun PaymentDetailsResponseDto.toPaymentDetails(): PaymentDetailData =
         checkNumber = checkNumber,
         routingCode = routingCode,
         receiptNumber = receiptNumber,
-        bankNumber = bankNumber
+        bankNumber = bankNumber,
     )
 
 fun CurrencyResponseDto.toSavingsCurrencyModel(): Currency =
@@ -136,13 +144,13 @@ fun CurrencyResponseDto.toSavingsCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun PaymentTypeResponseDto.toModel(): PaymentType =
     PaymentType(
         id = id,
-        name = name
+        name = name,
     )
 
 fun SavingsTransactionTypeResponseDto.toSavingsTransactionType(): TransactionType =
@@ -163,5 +171,5 @@ fun SavingsTransactionTypeResponseDto.toSavingsTransactionType(): TransactionTyp
         writtenoff = writtenoff,
         overdraftFee = overdraftFee,
         withholdTax = withholdTax,
-        escheat = escheat
+        escheat = escheat,
     )

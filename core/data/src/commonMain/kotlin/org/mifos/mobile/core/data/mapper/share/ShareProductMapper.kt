@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.share
 
 import org.mifos.mobile.core.model.entity.templates.shares.AccountingRule
@@ -13,7 +22,7 @@ fun ShareProductResponseDto.toModel(): ShareProduct =
     ShareProduct(
         accountingRule = accountingRule?.toAccountingRule(),
         allowDividendCalculationForInactiveClients =
-            allowDividendCalculationForInactiveClients,
+        allowDividendCalculationForInactiveClients,
         currency = currency?.toShareCurrency(),
         description = description,
         id = id,
@@ -22,7 +31,7 @@ fun ShareProductResponseDto.toModel(): ShareProduct =
         maximumShares = maximumShares,
         minimumActivePeriod = minimumActivePeriod,
         minimumActivePeriodForDividendsTypeEnum =
-            minimumActivePeriodForDividendsTypeEnum?.toMinimumActivePeriodForDividendsTypeEnum(),
+        minimumActivePeriodForDividendsTypeEnum?.toMinimumActivePeriodForDividendsTypeEnum(),
         minimumShares = minimumShares,
         name = name,
         nominalShares = nominalShares,
@@ -30,29 +39,28 @@ fun ShareProductResponseDto.toModel(): ShareProduct =
         shortName = shortName,
         totalShares = totalShares,
         totalSharesIssued = totalSharesIssued,
-        unitPrice = unitPrice
+        unitPrice = unitPrice,
     )
-
 
 fun TypeResponseDto.toAccountingRule(): AccountingRule =
     AccountingRule(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toLockPeriodTypeEnum(): LockPeriodTypeEnum =
     LockPeriodTypeEnum(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toMinimumActivePeriodForDividendsTypeEnum(): MinimumActivePeriodForDividendsTypeEnum =
     MinimumActivePeriodForDividendsTypeEnum(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun CurrencyResponseDto.toShareCurrency(): Currency =
@@ -63,5 +71,5 @@ fun CurrencyResponseDto.toShareCurrency(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )

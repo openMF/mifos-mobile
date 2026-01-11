@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.charge
 
 import org.mifos.mobile.core.model.entity.Charge
@@ -27,22 +36,21 @@ fun ChargeResponseDto.toModel(): Charge =
         isChargePaid = isChargePaid,
         isChargeWaived = isChargeWaived,
         paid = paid,
-        waived = waived
+        waived = waived,
     )
-
 
 fun TypeResponseDto.toChargeTimeType(): ChargeTimeType =
     ChargeTimeType(
         id = id ?: 0,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toChargeCalculationType(): ChargeCalculationType =
     ChargeCalculationType(
         id = id ?: 0,
         code = code,
-        value = value
+        value = value,
     )
 
 fun CurrencyResponseDto.toChargeCurrencyModel(): Currency =
@@ -53,5 +61,5 @@ fun CurrencyResponseDto.toChargeCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )

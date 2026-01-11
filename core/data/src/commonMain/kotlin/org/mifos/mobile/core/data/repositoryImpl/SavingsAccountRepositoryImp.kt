@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -48,8 +48,8 @@ class SavingsAccountRepositoryImp(
             accountId!!,
             associationType,
         )
-        .map { it.toModel() }
-        .asDataStateFlow().flowOn(ioDispatcher)
+            .map { it.toModel() }
+            .asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override fun getSavingsAccountTransactionDetails(
@@ -79,8 +79,8 @@ class SavingsAccountRepositoryImp(
             clientId,
             productId,
         )
-        .map { it.toModel() }
-        .asDataStateFlow().flowOn(ioDispatcher)
+            .map { it.toModel() }
+            .asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override suspend fun submitSavingAccountApplication(

@@ -1,3 +1,14 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+@file:Suppress("TooManyFunctions")
+
 package org.mifos.mobile.core.data.mapper.templates
 
 import org.mifos.mobile.core.data.mapper.charge.toChargeCalculationType
@@ -76,7 +87,7 @@ fun LoanTemplateResponseDto.toModel(): LoanTemplate =
         amortizationType = amortizationType?.toAmortizationType(),
         interestType = interestType?.toInterestType(),
         interestCalculationPeriodType =
-            interestCalculationPeriodType?.toInterestCalculationPeriodType(),
+        interestCalculationPeriodType?.toInterestCalculationPeriodType(),
         allowPartialPeriodInterestCalculation = allowPartialPeriodInterestCalculation,
         transactionProcessingStrategyId = transactionProcessingStrategyId,
         transactionProcessingStrategyCode = transactionProcessingStrategyCode,
@@ -89,41 +100,41 @@ fun LoanTemplateResponseDto.toModel(): LoanTemplate =
         fundOptions = fundOptions.map { it.toModel() },
 
         termFrequencyTypeOptions =
-            termFrequencyTypeOptions.map { it.toTermFrequencyTypeOptions() },
+        termFrequencyTypeOptions.map { it.toTermFrequencyTypeOptions() },
 
         repaymentFrequencyTypeOptions =
-            repaymentFrequencyTypeOptions.map { it.toRepaymentFrequencyTypeOptions() },
+        repaymentFrequencyTypeOptions.map { it.toRepaymentFrequencyTypeOptions() },
 
         repaymentFrequencyNthDayTypeOptions =
-            repaymentFrequencyNthDayTypeOptions.map {
-                it.toRepaymentFrequencyNthDayTypeOptions()
-            },
+        repaymentFrequencyNthDayTypeOptions.map {
+            it.toRepaymentFrequencyNthDayTypeOptions()
+        },
 
         repaymentFrequencyDaysOfWeekTypeOptions =
-            repaymentFrequencyDaysOfWeekTypeOptions.map {
-                it.toRepaymentFrequencyDaysOfWeekTypeOptions()
-            },
+        repaymentFrequencyDaysOfWeekTypeOptions.map {
+            it.toRepaymentFrequencyDaysOfWeekTypeOptions()
+        },
 
         interestRateFrequencyTypeOptions =
-            interestRateFrequencyTypeOptions.map {
-                it.toInterestRateFrequencyTypeOptions()
-            },
+        interestRateFrequencyTypeOptions.map {
+            it.toInterestRateFrequencyTypeOptions()
+        },
 
         amortizationTypeOptions =
-            amortizationTypeOptions.map { it.toAmortizationTypeOptions() },
+        amortizationTypeOptions.map { it.toAmortizationTypeOptions() },
 
         interestTypeOptions =
-            interestTypeOptions.map { it.toInterestTypeOptions() },
+        interestTypeOptions.map { it.toInterestTypeOptions() },
 
         interestCalculationPeriodTypeOptions =
-            interestCalculationPeriodTypeOptions.map {
-                it.toInterestCalculationPeriodType()
-            },
+        interestCalculationPeriodTypeOptions.map {
+            it.toInterestCalculationPeriodType()
+        },
 
         transactionProcessingStrategyOptions =
-            transactionProcessingStrategyOptions.map {
-                it.toTransactionProcessingStrategyOptions()
-            },
+        transactionProcessingStrategyOptions.map {
+            it.toTransactionProcessingStrategyOptions()
+        },
 
         chargeOptions = chargeOptions.map { it.toModel() },
         loanCollateralOptions = loanCollateralOptions.map { it.toModel() },
@@ -142,12 +153,12 @@ fun LoanTemplateResponseDto.toModel(): LoanTemplate =
         maximumGap = maximumGap,
 
         accountLinkingOptions =
-            accountLinkingOptions.map { it.toModel() }
+        accountLinkingOptions.map { it.toModel() },
     )
 
 fun LoanTimelineResponseDto.toLoanTemplateTimelineModel(): Timeline =
     Timeline(
-        expectedDisbursementDate = expectedDisbursementDate
+        expectedDisbursementDate = expectedDisbursementDate,
     )
 
 fun CurrencyResponseDto.toLoanTemplateCurrency(): Currency =
@@ -158,7 +169,7 @@ fun CurrencyResponseDto.toLoanTemplateCurrency(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun LoanProductOptionsResponseDto.toModel(): ProductOptions =
@@ -174,9 +185,8 @@ fun LoanProductOptionsResponseDto.toModel(): ProductOptions =
         canDefineInstallmentAmount = canDefineInstallmentAmount,
         holdGuaranteeFunds = holdGuaranteeFunds,
         accountMovesOutOfNPAOnlyOnArrearsCompletion =
-            accountMovesOutOfNPAOnlyOnArrearsCompletion
+        accountMovesOutOfNPAOnlyOnArrearsCompletion,
     )
-
 
 fun LoanOfficerOptionsResponseDto.toModel(): LoanOfficerOptions =
     LoanOfficerOptions(
@@ -189,7 +199,7 @@ fun LoanOfficerOptionsResponseDto.toModel(): LoanOfficerOptions =
         officeName = officeName,
         loanOfficer = loanOfficer,
         active = active,
-        joiningDate = joiningDate
+        joiningDate = joiningDate,
     )
 
 fun LoanPurposeOptionsResponseDto.toModel(): LoanPurposeOptions =
@@ -198,13 +208,13 @@ fun LoanPurposeOptionsResponseDto.toModel(): LoanPurposeOptions =
         name = name,
         position = position,
         description = description,
-        active = active
+        active = active,
     )
 
 fun FundOptionsResponseDto.toModel(): FundOptions =
     FundOptions(
         id = id,
-        name = name
+        name = name,
     )
 
 fun LoanCollateralOptionsResponseDto.toModel(): LoanCollateralOptions =
@@ -213,7 +223,7 @@ fun LoanCollateralOptionsResponseDto.toModel(): LoanCollateralOptions =
         name = name,
         position = position,
         description = description,
-        active = active
+        active = active,
     )
 
 fun LoanProductResponseDto.toModel(): Product =
@@ -236,49 +246,48 @@ fun LoanProductResponseDto.toModel(): Product =
         maxNumberOfRepayments = maxNumberOfRepayments,
         repaymentEvery = repaymentEvery,
         repaymentFrequencyType =
-            repaymentFrequencyType?.toRepaymentFrequencyType(),
+        repaymentFrequencyType?.toRepaymentFrequencyType(),
         interestRatePerPeriod = interestRatePerPeriod,
         minInterestRatePerPeriod = minInterestRatePerPeriod,
         maxInterestRatePerPeriod = maxInterestRatePerPeriod,
         interestRateFrequencyType =
-            interestRateFrequencyType?.toInterestRateFrequencyType(),
+        interestRateFrequencyType?.toInterestRateFrequencyType(),
         annualInterestRate = annualInterestRate,
         linkedToFloatingInterestRates = linkedToFloatingInterestRates,
         floatingInterestRateCalculationAllowed =
-            floatingInterestRateCalculationAllowed,
+        floatingInterestRateCalculationAllowed,
         allowvaliableInstallments = allowvaliableInstallments,
         minimumGap = minimumGap,
         maximumGap = maximumGap,
         amortizationType = amortizationType.toAmortizationType(),
         interestType = interestType.toInterestType(),
         interestCalculationPeriodType =
-            interestCalculationPeriodType?.toInterestCalculationPeriodType(),
+        interestCalculationPeriodType?.toInterestCalculationPeriodType(),
         allowPartialPeriodInterestCalcualtion =
-            allowPartialPeriodInterestCalcualtion,
+        allowPartialPeriodInterestCalcualtion,
         transactionProcessingStrategyId =
-            transactionProcessingStrategyId,
+        transactionProcessingStrategyId,
         transactionProcessingStrategyName =
-            transactionProcessingStrategyName,
+        transactionProcessingStrategyName,
         graceOnArrearsAgeing = graceOnArrearsAgeing,
         overdueDaysForNPA = overdueDaysForNPA,
         daysInMonthType = daysInMonthType?.toDaysInMonthType(),
         daysInYearType = daysInYearType.toDaysInYearType(),
         interestRecalculationEnabled = interestRecalculationEnabled,
         interestRecalculationData =
-            interestRecalculationData?.toInterestReCalculationModel(),
+        interestRecalculationData?.toInterestReCalculationModel(),
         canDefineInstallmentAmount = canDefineInstallmentAmount,
         accountingRule = accountingRule?.toAccountingRule(),
         multiDisburseLoan = multiDisburseLoan,
         maxTrancheCount = maxTrancheCount,
         principalThresholdForLastInstallment =
-            principalThresholdForLastInstallment,
+        principalThresholdForLastInstallment,
         holdGuaranteeFunds = holdGuaranteeFunds,
         accountMovesOutOfNPAOnlyOnArrearsCompletion =
-            accountMovesOutOfNPAOnlyOnArrearsCompletion,
+        accountMovesOutOfNPAOnlyOnArrearsCompletion,
         allowAttributeOverrides =
-            allowAttributeOverrides?.toModel()
+        allowAttributeOverrides?.toModel(),
     )
-
 
 fun AccountLinkingOptionsResponseDto.toModel(): AccountLinkingOptions =
     AccountLinkingOptions(
@@ -289,7 +298,7 @@ fun AccountLinkingOptionsResponseDto.toModel(): AccountLinkingOptions =
         fieldOfficerId = fieldOfficerId,
         id = id,
         productId = productId,
-        productName = productName
+        productName = productName,
     )
 
 fun AllowAttributesOverridesResponseDto.toModel(): AllowAttributeOverrides =
@@ -301,7 +310,7 @@ fun AllowAttributesOverridesResponseDto.toModel(): AllowAttributeOverrides =
         inArrearsTolerance = inArrearsTolerance,
         repaymentEvery = repaymentEvery,
         graceOnPrincipalAndInterestPayment = graceOnPrincipalAndInterestPayment,
-        graceOnArrearsAgeing = graceOnArrearsAgeing
+        graceOnArrearsAgeing = graceOnArrearsAgeing,
     )
 
 fun ChargeOptionsResponseDto.toModel(): ChargeOptions =
@@ -316,13 +325,13 @@ fun ChargeOptionsResponseDto.toModel(): ChargeOptions =
         chargeAppliesTo = chargeAppliesTo?.toChargeAppliesTo(),
         chargeCalculationType = chargeCalculationType?.toChargeCalculationType(),
         chargePaymentMode = chargePaymentMode?.toChargePaymentMode(),
-        taxGroup = taxGroup?.toModel()
+        taxGroup = taxGroup?.toModel(),
     )
 
 fun TaxGroupResponseDto.toModel(): TaxGroup =
     TaxGroup(
         id = id,
-        name = name
+        name = name,
     )
 
 fun TypeResponseDto.toTermFrequencyTypeOptions() =
@@ -354,6 +363,3 @@ fun TypeResponseDto.toChargeAppliesTo() = ChargeAppliesTo(id, code, value)
 fun TypeResponseDto.toChargePaymentMode() = ChargePaymentMode(id, code, value)
 
 fun TypeResponseDto.toAccountingRule() = AccountingRule(id, code, value)
-
-
-

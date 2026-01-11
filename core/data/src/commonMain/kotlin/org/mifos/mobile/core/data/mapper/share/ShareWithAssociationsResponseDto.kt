@@ -1,7 +1,15 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.share
 
 import org.mifos.mobile.core.model.entity.Charge
-import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 import org.mifos.mobile.core.model.entity.ChargeCalculationType
 import org.mifos.mobile.core.model.entity.ChargeTimeType
 import org.mifos.mobile.core.model.entity.accounts.share.Currency
@@ -19,6 +27,7 @@ import org.mifos.mobile.core.network.dto.shareAccount.ShareSummaryResponseDto
 import org.mifos.mobile.core.network.dto.shareAccount.ShareTimelineResponseDto
 import org.mifos.mobile.core.network.dto.shareAccount.ShareWithAssociationsResponseDto
 import org.mifos.mobile.core.network.dto.transaction.ShareTransactionResponseDto
+import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 fun ShareWithAssociationsResponseDto.toModel(): ShareAccountWithAssociations =
     ShareAccountWithAssociations(
@@ -36,17 +45,16 @@ fun ShareWithAssociationsResponseDto.toModel(): ShareAccountWithAssociations =
         savingsAccountId = savingsAccountId,
         savingsAccountNumber = savingsAccountNumber,
         allowDividendCalculationForInactiveClients =
-            allowDividendCalculationForInactiveClients,
+        allowDividendCalculationForInactiveClients,
         lockinPeriod = lockinPeriod,
         lockPeriodTypeEnum = lockPeriodTypeEnum?.toEnumOptionData(),
         minimumActivePeriod = minimumActivePeriod,
         minimumActivePeriodTypeEnum =
-            minimumActivePeriodTypeEnum?.toEnumOptionData(),
-        charges = charges.map { it.toModel() },
+        minimumActivePeriodTypeEnum?.toEnumOptionData(),
+        charges = charges.map { it.toShareChargeModel() },
         purchasedShares = purchasedShares.map { it.toModel() },
-        dividends = dividends
+        dividends = dividends,
     )
-
 
 fun ShareStatusResponseDto.toModel(): Status =
     Status(
@@ -57,7 +65,7 @@ fun ShareStatusResponseDto.toModel(): Status =
         approved = approved,
         rejected = rejected,
         active = active,
-        closed = closed
+        closed = closed,
     )
 
 fun CurrencyResponseDto.toModel(): Currency =
@@ -68,9 +76,8 @@ fun CurrencyResponseDto.toModel(): Currency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
-
 
 fun ShareTimelineResponseDto.toModel(): Timeline =
     Timeline(
@@ -85,9 +92,8 @@ fun ShareTimelineResponseDto.toModel(): Timeline =
         activatedDate = activatedDate,
         activatedByUsername = activatedByUsername,
         activatedByFirstname = activatedByFirstname,
-        activatedByLastname = activatedByLastname
+        activatedByLastname = activatedByLastname,
     )
-
 
 fun ShareSummaryResponseDto.toModel(): Summary =
     Summary(
@@ -99,33 +105,31 @@ fun ShareSummaryResponseDto.toModel(): Summary =
         currency = currency?.toModel(),
         timeline = timeline?.toModel(),
         totalApprovedShares = totalApprovedShares,
-        totalPendingForApprovalShares = totalPendingForApprovalShares
+        totalPendingForApprovalShares = totalPendingForApprovalShares,
     )
-
 
 fun TypeResponseDto.toEnumOptionData(): EnumOptionData =
     EnumOptionData(
         id = id?.toLong(),
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toChargeTimeType(): ChargeTimeType =
     ChargeTimeType(
         id = id ?: 0,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toChargeCalculationType(): ChargeCalculationType =
     ChargeCalculationType(
         id = id ?: 0,
         code = code,
-        value = value
+        value = value,
     )
 
-
-fun ChargeResponseDto.toModel(): Charge =
+fun ChargeResponseDto.toShareChargeModel(): Charge =
     Charge(
         clientId = clientId,
         chargeId = chargeId,
@@ -144,9 +148,8 @@ fun ChargeResponseDto.toModel(): Charge =
         isChargePaid = isChargePaid,
         isChargeWaived = isChargeWaived,
         paid = paid,
-        waived = waived
+        waived = waived,
     )
-
 
 fun CurrencyResponseDto.toModelCurrency(): ModelCurrency =
     ModelCurrency(
@@ -156,9 +159,8 @@ fun CurrencyResponseDto.toModelCurrency(): ModelCurrency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
-
 
 fun ShareTransactionResponseDto.toModel(): Transactions =
     Transactions(
@@ -171,6 +173,5 @@ fun ShareTransactionResponseDto.toModel(): Transactions =
         purchasedDate = purchasedDate,
         purchasedPrice = purchasedPrice,
         status = status?.toEnumOptionData(),
-        type = type?.toEnumOptionData()
+        type = type?.toEnumOptionData(),
     )
-

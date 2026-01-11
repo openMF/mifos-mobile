@@ -1,11 +1,20 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+@file:Suppress("TooManyFunctions")
+
 package org.mifos.mobile.core.data.mapper.loan
 
 import org.mifos.mobile.core.data.mapper.accounts.toModel
+import org.mifos.mobile.core.model.entity.Currency
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.model.entity.accounts.loan.AmortizationType
-import org.mifos.mobile.core.model.entity.Currency
-import org.mifos.mobile.core.model.entity.client.Type as CoreType
-import org.mifos.mobile.core.model.entity.accounts.loan.Currency as LoanCurrency
 import org.mifos.mobile.core.model.entity.accounts.loan.DaysInMonthType
 import org.mifos.mobile.core.model.entity.accounts.loan.DaysInYearType
 import org.mifos.mobile.core.model.entity.accounts.loan.InterestCalculationPeriodType
@@ -39,6 +48,8 @@ import org.mifos.mobile.core.network.dto.loanAccount.LoanWithAssociationsRespons
 import org.mifos.mobile.core.network.dto.loanAccount.PeriodsResponseDto
 import org.mifos.mobile.core.network.dto.loanAccount.RepaymentScheduleResponseDto
 import org.mifos.mobile.core.network.dto.transaction.TransactionResponseDto
+import org.mifos.mobile.core.model.entity.accounts.loan.Currency as LoanCurrency
+import org.mifos.mobile.core.model.entity.client.Type as CoreType
 
 fun LoanWithAssociationsResponseDto.toModel(): LoanWithAssociations =
     LoanWithAssociations(
@@ -97,9 +108,8 @@ fun LoanWithAssociationsResponseDto.toModel(): LoanWithAssociations =
         transactions = transactions
             ?.filterNotNull()
             ?.map { it.toModel() },
-        loanPurposeName = loanPurposeName
+        loanPurposeName = loanPurposeName,
     )
-
 
 fun LoanTimelineResponseDto.toLoanTimelineModel(): Timeline =
     Timeline(
@@ -118,9 +128,8 @@ fun LoanTimelineResponseDto.toLoanTimelineModel(): Timeline =
         disbursedByLastname = disbursedByLastname,
         closedOnDate = closedOnDate,
         expectedMaturityDate = expectedMaturityDate,
-        withdrawnOnDate = withdrawnOnDate
+        withdrawnOnDate = withdrawnOnDate,
     )
-
 
 fun LoanSummaryResponseDto.toLoanSummaryModel(): Summary =
     Summary(
@@ -136,7 +145,7 @@ fun LoanSummaryResponseDto.toLoanSummaryModel(): Summary =
         totalRepayment = totalRepayment,
         feeChargesWaived = feeChargesWaived,
         totalOutstanding = totalOutstanding,
-        currency = currency?.toLoanCurrencyModel()
+        currency = currency?.toLoanCurrencyModel(),
     )
 
 fun RepaymentScheduleResponseDto.toRepaymentScheduleResponseModel(): RepaymentSchedule =
@@ -156,7 +165,7 @@ fun RepaymentScheduleResponseDto.toRepaymentScheduleResponseModel(): RepaymentSc
         totalPaidInAdvance = totalPaidInAdvance,
         totalPaidLate = totalPaidLate,
         totalOutstanding = totalOutstanding,
-        periods = periods.map { it.toModel() }
+        periods = periods.map { it.toModel() },
     )
 
 fun PeriodsResponseDto.toModel(): Periods =
@@ -200,7 +209,7 @@ fun PeriodsResponseDto.toModel(): Periods =
         totalOutstandingForPeriod = totalOutstandingForPeriod,
         totalOverdue = totalOverdue,
         totalActualCostOfLoanForPeriod = totalActualCostOfLoanForPeriod,
-        totalInstallmentAmountForPeriod = totalInstallmentAmountForPeriod
+        totalInstallmentAmountForPeriod = totalInstallmentAmountForPeriod,
     )
 
 fun InterestRecalculationDataResponseDto.toInterestReCalculationModel(): InterestRecalculationData =
@@ -208,19 +217,18 @@ fun InterestRecalculationDataResponseDto.toInterestReCalculationModel(): Interes
         id = id,
         loanId = loanId,
         interestRecalculationCompoundingType =
-            interestRecalculationCompoundingType?.toInterestRecalculationCompoundingType(),
+        interestRecalculationCompoundingType?.toInterestRecalculationCompoundingType(),
         rescheduleStrategyType =
-            rescheduleStrategyType?.toRescheduleStrategyType(),
+        rescheduleStrategyType?.toRescheduleStrategyType(),
         calendarData = calendarData.toCalendarModel(),
         recalculationRestFrequencyType =
-            recalculationRestFrequencyType?.toRecalculationRestFrequencyType(),
+        recalculationRestFrequencyType?.toRecalculationRestFrequencyType(),
         recalculationRestFrequencyInterval = recalculationRestFrequencyInterval,
         recalculationCompoundingFrequencyType =
-            recalculationCompoundingFrequencyType?.toRecalculationCompoundingFrequencyType(),
+        recalculationCompoundingFrequencyType?.toRecalculationCompoundingFrequencyType(),
         compoundingToBePostedAsTransaction = compoundingToBePostedAsTransaction,
-        allowCompoundingOnEod = allowCompoundingOnEod
+        allowCompoundingOnEod = allowCompoundingOnEod,
     )
-
 
 fun CalendarDataResponseDto.toCalendarModel(): CalendarData =
     CalendarData(
@@ -238,7 +246,7 @@ fun CalendarDataResponseDto.toCalendarModel(): CalendarData =
         frequency = frequency.toFrequency(),
         interval = interval,
         repeatsOnNthDayOfMonth =
-            repeatsOnNthDayOfMonth.toRepeatsOnNthDayOfMonth(),
+        repeatsOnNthDayOfMonth.toRepeatsOnNthDayOfMonth(),
         firstReminder = firstReminder,
         secondReminder = secondReminder,
         humanReadable = humanReadable,
@@ -247,9 +255,8 @@ fun CalendarDataResponseDto.toCalendarModel(): CalendarData =
         createdByUserId = createdByUserId,
         createdByUsername = createdByUsername,
         lastUpdatedByUserId = lastUpdatedByUserId,
-        lastUpdatedByUsername = lastUpdatedByUsername
+        lastUpdatedByUsername = lastUpdatedByUsername,
     )
-
 
 fun TransactionResponseDto.toModel(): Transaction =
     Transaction(
@@ -261,7 +268,7 @@ fun TransactionResponseDto.toModel(): Transaction =
         currency = currency?.toLoanWithAssociationsModel(),
         amount = amount,
         submittedOnDate = submittedOnDate,
-        reversed = reversed
+        reversed = reversed,
     )
 
 fun CurrencyResponseDto.toLoanWithAssociationsModel(): Currency =
@@ -272,7 +279,7 @@ fun CurrencyResponseDto.toLoanWithAssociationsModel(): Currency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun CurrencyResponseDto.toLoanCurrencyModel(): LoanCurrency =
@@ -283,7 +290,7 @@ fun CurrencyResponseDto.toLoanCurrencyModel(): LoanCurrency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun TypeResponseDto.toType() = CoreType(id, code, value)

@@ -1,6 +1,14 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.client
 
-import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.entity.Timeline
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientClassification
@@ -41,18 +49,15 @@ fun ClientResponseDto.toModel(): Client =
         clientClassification = clientClassification?.toModel(),
         clientType = clientType?.toModel(),
         gender = gender?.toModel(),
-        groups = groups.map { it.toModel() }
+        groups = groups.map { it.toModel() },
     )
-
 
 fun StatusResponseDto.toModel(): Status =
     Status(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
-
-
 
 fun TimelineResponseDto.toModel(): Timeline =
     Timeline(
@@ -67,16 +72,15 @@ fun TimelineResponseDto.toModel(): Timeline =
         closedOnDate = closedOnDate,
         closedByUsername = closedByUsername,
         closedByFirstname = closedByFirstname,
-        closedByLastname = closedByLastname
+        closedByLastname = closedByLastname,
     )
-
 
 fun ClientClassificationResponseDto.toModel(): ClientClassification =
     ClientClassification(
         id = id,
         name = name,
         active = active,
-        mandatory = mandatory
+        mandatory = mandatory,
     )
 
 fun ClientTypeResponseDto.toModel(): ClientType =
@@ -84,21 +88,20 @@ fun ClientTypeResponseDto.toModel(): ClientType =
         id = id,
         name = name,
         active = active,
-        mandatory = mandatory
+        mandatory = mandatory,
     )
-
 
 fun GenderResponseDto.toModel(): Gender =
     Gender(
         id = id,
         name = name,
         active = active,
-        mandatory = mandatory
+        mandatory = mandatory,
     )
 
 fun GroupResponseDto.toModel(): Group =
     Group(
         id = id,
         accountNo = accountNo,
-        name = name
+        name = name,
     )

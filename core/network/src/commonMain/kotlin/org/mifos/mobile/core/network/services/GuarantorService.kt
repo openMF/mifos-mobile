@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,9 +17,9 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.network.dto.payloads.GuarantorApplicationPayloadDto
 import org.mifos.mobile.core.network.dto.guarantor.GuarantorListResponseDto
 import org.mifos.mobile.core.network.dto.guarantor.GuarantorTemplateResponseDto
+import org.mifos.mobile.core.network.dto.payloads.GuarantorApplicationPayloadDto
 
 interface GuarantorService {
     @GET("loans/{loanId}/guarantors/template")

@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.accounts
 
 import org.mifos.mobile.core.model.entity.accounts.savings.Currency
@@ -29,9 +38,8 @@ fun SavingsAccountResponseDto.toModel(): SavingAccount =
         currency = currency?.toSavingsCurrencyModel(),
         depositType = depositType?.toModel(),
         lastActiveTransactionDate = lastActiveTransactionDate,
-        timeLine = timeLine?.toModel()
+        timeLine = timeLine?.toModel(),
     )
-
 
 fun SavingsStatusResponseDto.toModel(): Status =
     Status(
@@ -45,16 +53,15 @@ fun SavingsStatusResponseDto.toModel(): Status =
         active = active,
         closed = closed,
         prematureClosed = prematureClosed,
-        matured = matured
+        matured = matured,
     )
 
 fun SavingsDepositTypeResponseDto.toModel(): DepositType =
     DepositType(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
-
 
 fun SavingsTimeLineResponseDto.toModel(): TimeLine =
     TimeLine(
@@ -70,7 +77,7 @@ fun SavingsTimeLineResponseDto.toModel(): TimeLine =
         activatedByUsername = activatedByUsername,
         activatedByFirstname = activatedByFirstname,
         activatedByLastname = activatedByLastname,
-        closedOnDate = closedOnDate
+        closedOnDate = closedOnDate,
     )
 
 fun CurrencyResponseDto.toSavingsCurrencyModel(): Currency =
@@ -81,5 +88,5 @@ fun CurrencyResponseDto.toSavingsCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )

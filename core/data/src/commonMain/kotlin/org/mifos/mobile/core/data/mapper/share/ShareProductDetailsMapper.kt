@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.share
 
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.AccountingItem
@@ -32,16 +41,16 @@ fun ShareProductDetailsResponseDto.toModel(): ShareProductDetails =
         marketPrice = marketPrice?.map { it.toModel() } ?: emptyList(),
         charges = charges?.map { it.toModel() } ?: emptyList(),
         allowDividendCalculationForInactiveClients =
-            allowDividendCalculationForInactiveClients,
+        allowDividendCalculationForInactiveClients,
         lockinPeriod = lockinPeriod,
         lockPeriodTypeEnum = lockPeriodTypeEnum?.toEnumOption(),
         minimumActivePeriod = minimumActivePeriod,
         minimumActivePeriodForDividendsTypeEnum =
-            minimumActivePeriodForDividendsTypeEnum?.toEnumOption(),
+        minimumActivePeriodForDividendsTypeEnum?.toEnumOption(),
         accountingRule = accountingRule?.toEnumOption(),
         accountingMappings = accountingMappings?.toModel(),
         clientSavingsAccounts =
-            clientSavingsAccounts?.map { it.toModel() } ?: emptyList()
+        clientSavingsAccounts?.map { it.toModel() } ?: emptyList(),
     )
 
 fun CurrencyResponseDto.toShareProductCurrencyModel(): Currency =
@@ -52,28 +61,27 @@ fun CurrencyResponseDto.toShareProductCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun TypeResponseDto.toEnumOption(): EnumOption =
     EnumOption(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun SavingsAccountSummaryResponseDto.toModel(): SavingsAccountSummary =
     SavingsAccountSummary(
         id = id,
-        savingsProductName = savingsProductName
+        savingsProductName = savingsProductName,
     )
-
 
 fun MarketPriceResponseDto.toModel(): MarketPrice =
     MarketPrice(
         id = id,
         fromDate = fromDate,
-        shareValue = shareValue
+        shareValue = shareValue,
     )
 
 fun AccountingMappingsResponseDto.toModel(): AccountingMappings =
@@ -81,14 +89,14 @@ fun AccountingMappingsResponseDto.toModel(): AccountingMappings =
         shareReferenceId = shareReferenceId?.toModel(),
         incomeFromFeeAccountId = incomeFromFeeAccountId?.toModel(),
         shareEquityId = shareEquityId?.toModel(),
-        shareSuspenseId = shareSuspenseId?.toModel()
+        shareSuspenseId = shareSuspenseId?.toModel(),
     )
 
 fun AccountingItemResponseDto.toModel(): AccountingItem =
     AccountingItem(
         id = id,
         name = name,
-        glCode = glCode
+        glCode = glCode,
     )
 
 fun ShareProductChargeResponseDto.toModel(): Charge =
@@ -98,5 +106,5 @@ fun ShareProductChargeResponseDto.toModel(): Charge =
         amount = amount,
         active = active,
         penalty = penalty,
-        currency = currency?.toShareProductCurrencyModel()
+        currency = currency?.toShareProductCurrencyModel(),
     )

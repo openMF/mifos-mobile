@@ -1,12 +1,21 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.templates
 
 import org.mifos.mobile.core.data.mapper.charge.toChargeCurrencyModel
-import org.mifos.mobile.core.model.entity.templates.savings.ChargeCalculationType
-import org.mifos.mobile.core.model.entity.templates.savings.ChargeTimeType
 import org.mifos.mobile.core.model.entity.accounts.savings.Currency
 import org.mifos.mobile.core.model.entity.templates.savings.ChargeAppliesTo
-import org.mifos.mobile.core.model.entity.templates.savings.ChargePaymentMode
+import org.mifos.mobile.core.model.entity.templates.savings.ChargeCalculationType
 import org.mifos.mobile.core.model.entity.templates.savings.ChargeOptions
+import org.mifos.mobile.core.model.entity.templates.savings.ChargePaymentMode
+import org.mifos.mobile.core.model.entity.templates.savings.ChargeTimeType
 import org.mifos.mobile.core.model.entity.templates.savings.FieldOfficerOptions
 import org.mifos.mobile.core.model.entity.templates.savings.ProductOptions
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
@@ -46,24 +55,23 @@ fun SavingsAccountTemplateResponseDto.toModel(): SavingsAccountTemplate =
         productOptions = ArrayList(productOptions.map { it.toModel() }),
         fieldOfficerOptions = fieldOfficerOptions.map { it.toModel() },
         interestCompoundingPeriodTypeOptions =
-            interestCompoundingPeriodTypeOptions.map { it.toModel() },
+        interestCompoundingPeriodTypeOptions.map { it.toModel() },
         interestPostingPeriodTypeOptions =
-            interestPostingPeriodTypeOptions.map { it.toModel() },
+        interestPostingPeriodTypeOptions.map { it.toModel() },
         interestCalculationTypeOptions =
-            interestCalculationTypeOptions.map { it.toModel() },
+        interestCalculationTypeOptions.map { it.toModel() },
         interestCalculationDaysInYearTypeOptions =
-            interestCalculationDaysInYearTypeOptions.map { it.toModel() },
+        interestCalculationDaysInYearTypeOptions.map { it.toModel() },
         lockinPeriodFrequencyTypeOptions =
-            lockinPeriodFrequencyTypeOptions.map { it.toModel() },
+        lockinPeriodFrequencyTypeOptions.map { it.toModel() },
         withdrawalFeeTypeOptions =
-            withdrawalFeeTypeOptions.map { it.toModel() },
-        chargeOptions = ArrayList(chargeOptions.map { it.toModel() })
+        withdrawalFeeTypeOptions.map { it.toModel() },
+        chargeOptions = ArrayList(chargeOptions.map { it.toModel() }),
     )
-
 
 fun SavingsTimelineResponseDto.toModel(): Timeline =
     Timeline(
-        expectedDisbursementDate = expectedDisbursementDate
+        expectedDisbursementDate = expectedDisbursementDate,
     )
 
 fun CurrencyResponseDto.toSavingsTemplate(): Currency =
@@ -74,7 +82,7 @@ fun CurrencyResponseDto.toSavingsTemplate(): Currency =
         inMultiplesOf = inMultiplesOf.toInt(),
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
 
 fun SavingsProductResponseDto.toModel(): SavingsProduct =
@@ -85,13 +93,13 @@ fun SavingsProductResponseDto.toModel(): SavingsProduct =
         allowOverdraft = allowOverdraft,
         enforceMinRequiredBalance = enforceMinRequiredBalance,
         lienAllowed = lienAllowed,
-        withHoldTax = withHoldTax
+        withHoldTax = withHoldTax,
     )
 
 fun SavingsProductOptionsResponseDto.toModel(): ProductOptions =
     ProductOptions(
         id = id,
-        name = name
+        name = name,
     )
 
 fun FieldOfficerOptionsResponseDto.toModel(): FieldOfficerOptions =
@@ -103,14 +111,14 @@ fun FieldOfficerOptionsResponseDto.toModel(): FieldOfficerOptions =
         officeId = officeId,
         officeName = officeName,
         isLoanOfficer = isLoanOfficer,
-        isActive = isActive
+        isActive = isActive,
     )
 
 fun SavingsOptionsResponseDto.toModel(): SavingsOptions =
     SavingsOptions(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun SavingsChargeOptionsResponseDto.toModel(): ChargeOptions =
@@ -124,24 +132,23 @@ fun SavingsChargeOptionsResponseDto.toModel(): ChargeOptions =
         chargeTimeType = chargeTimeType.toChargeTimeType(),
         chargeAppliesTo = chargeAppliesTo.toSavingsChargeAppliesTo(),
         chargeCalculationType = chargeCalculationType.toSavingsChargeCalculationType(),
-        chargePaymentMode = chargePaymentMode.toSavingsChargePaymentMode()
+        chargePaymentMode = chargePaymentMode.toSavingsChargePaymentMode(),
     )
 
 fun TypeResponseDto.toChargeTimeType(): ChargeTimeType =
     ChargeTimeType(
         id = id?.toFloat() ?: 0f,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toSavingsChargeCalculationType(): ChargeCalculationType =
     ChargeCalculationType(
         id = id?.toFloat() ?: 0f,
         code = code,
-        value = value
+        value = value,
     )
 
 fun TypeResponseDto.toSavingsChargeAppliesTo() = ChargeAppliesTo(id?.toFloat() ?: 0f, code, value)
 
 fun TypeResponseDto.toSavingsChargePaymentMode() = ChargePaymentMode(id?.toFloat() ?: 0f, code, value)
-

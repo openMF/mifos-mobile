@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.charge.toModel
+import org.mifos.mobile.core.data.mapper.share.toShareChargeModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.model.entity.Charge
@@ -38,7 +39,7 @@ class ClientChargeRepositoryImp(
                 DataState.Success(
                     response.toPageModel { dto ->
                         dto.toModel()
-                    }
+                    },
                 )
             }
             .catch { exception -> DataState.Error(exception, exception.message) }
@@ -49,7 +50,7 @@ class ClientChargeRepositoryImp(
         return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
             .map { response ->
                 DataState.Success(
-                    response.map { it.toModel() }
+                    response.map { it.toModel() },
                 )
             }
             .catch { exception -> DataState.Error(exception, exception.message) }
@@ -80,7 +81,7 @@ class ClientChargeRepositoryImp(
         return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
                 DataState.Success(
-                    response.map { it.toModel() }
+                    response.charges.map { it.toShareChargeModel() },
                 )
             }
             .catch { exception ->

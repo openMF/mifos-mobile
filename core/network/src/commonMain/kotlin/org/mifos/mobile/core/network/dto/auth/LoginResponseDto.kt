@@ -1,10 +1,19 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.network.dto.auth
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserDto (
+data class UserDto(
     val userId: Long = 0,
     @SerialName("authenticated")
     val isAuthenticated: Boolean = false,
@@ -18,7 +27,6 @@ data class UserDto (
     val isTwoFactorAuthenticationRequired: Boolean = false,
     val clients: ArrayList<Long> = arrayListOf(),
 )
-
 
 @Serializable
 data class RoleDto(

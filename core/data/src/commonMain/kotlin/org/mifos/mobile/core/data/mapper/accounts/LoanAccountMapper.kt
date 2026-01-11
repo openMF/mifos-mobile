@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
 package org.mifos.mobile.core.data.mapper.accounts
 
 import org.mifos.mobile.core.model.entity.accounts.loan.Currency
@@ -36,7 +45,7 @@ fun LoanAccountResponseDto.toModel(): LoanAccount =
         inArrears = inArrears,
         summary = summary?.toModel(),
         loanPurposeName = loanPurposeName,
-        timeline = timeline?.toModel()
+        timeline = timeline?.toModel(),
     )
 
 fun LoanStatusResponseDto.toModel(): Status =
@@ -51,14 +60,14 @@ fun LoanStatusResponseDto.toModel(): Status =
         closedWrittenOff = closedWrittenOff,
         closedRescheduled = closedRescheduled,
         closed = closed,
-        overpaid = overpaid
+        overpaid = overpaid,
     )
 
 fun TypeResponseDto.toModel(): LoanType =
     LoanType(
         id = id,
         code = code,
-        value = value
+        value = value,
     )
 
 fun LoanSummaryResponseDto.toModel(): Summary =
@@ -75,7 +84,7 @@ fun LoanSummaryResponseDto.toModel(): Summary =
         totalRepayment = totalRepayment,
         feeChargesWaived = feeChargesWaived,
         totalOutstanding = totalOutstanding,
-        currency = currency?.toLoanCurrencyModel()
+        currency = currency?.toLoanCurrencyModel(),
     )
 
 fun LoanTimelineResponseDto.toModel(): Timeline =
@@ -95,7 +104,7 @@ fun LoanTimelineResponseDto.toModel(): Timeline =
         disbursedByLastname = disbursedByLastname,
         closedOnDate = closedOnDate,
         expectedMaturityDate = expectedMaturityDate,
-        withdrawnOnDate = withdrawnOnDate
+        withdrawnOnDate = withdrawnOnDate,
     )
 
 fun CurrencyResponseDto.toLoanCurrencyModel(): Currency =
@@ -106,5 +115,5 @@ fun CurrencyResponseDto.toLoanCurrencyModel(): Currency =
         inMultiplesOf = inMultiplesOf,
         displaySymbol = displaySymbol,
         nameCode = nameCode,
-        displayLabel = displayLabel
+        displayLabel = displayLabel,
     )
