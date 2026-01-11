@@ -19,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +31,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_continue
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_applicant_name
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_disbursement_date
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_loan_product
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_principal_amount
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
@@ -44,7 +47,9 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
+import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosOutlineDropdown
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -193,6 +198,35 @@ internal fun LoanAccountContent(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
+                    MifosOutlinedTextField(
+                        value = state.applicantName,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
+                        shape = KptTheme.shapes.medium,
+                        textStyle = MifosTypography.bodyLarge,
+                        config = MifosTextFieldConfig(
+                            enabled = false,
+                        ),
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.disbursementDate,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
+                        config = MifosTextFieldConfig(
+                            showClearIcon = false,
+                            enabled = false,
+                            readOnly = true,
+                            trailingIcon = {
+                                Icon(
+                                    imageVector = MifosIcons.Calendar,
+                                    contentDescription = "Open Date Picker",
+                                )
+                            },
+                        ),
+                        shape = KptTheme.shapes.medium,
+                    )
+
                     MifosOutlineDropdown(
                         selectedText = state.loanProductName,
                         items = emptyMap(),
