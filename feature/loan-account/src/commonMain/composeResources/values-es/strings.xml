@@ -111,6 +111,6 @@
     <string name="feature_loan_due">Pendiente</string>
     <string name="feature_loan_pay">Pagar</string>
 
-    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
 
 </resources>

@@ -16,7 +16,7 @@
     <string name="feature_passcode_setup_successful">Exitoso</string>
     <string name="feature_passcode_setup_successful_msg">El PIN de autenticación se configuró correctamente. Se usará con frecuencia en la aplicación.</string>
     <string name="feature_passcode_setup_failure">Fallo</string>
-    <string name="feature_passcode_setup_failure_msg">No se pudo configurar el PIN de autenticación. Se usará con frecuencia en la aplicación, así que inténtalo de nuevo.</string>
+    <string name="feature_passcode_setup_failure_msg">No se pudo configurar el PIN de autenticación. Se usará con frecuencia en la aplicación, así que inténtelo de nuevo.</string>
 
     <string name="feature_passcode_common_continue">Continuar</string>
     <string name="feature_passcode_common_try_again">Intentar nuevamente</string>

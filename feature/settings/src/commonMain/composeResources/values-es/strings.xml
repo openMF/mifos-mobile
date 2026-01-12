@@ -73,6 +73,9 @@
     <string name="feature_settings_action_about_us">Información</string>
     <string name="feature_settings_action_about_us_tip">Descubra más sobre nuestra iniciativa</string>
 
+    <string name="feature_settings_action_rate_us">Califícanos</string>
+    <string name="feature_settings_action_rate_us_tip">Califica nuestra aplicación en PlayStore</string>
+
     <string name="feature_settings_action_faq">Preguntas Frecuentes</string>
     <string name="feature_settings_action_faq_tip">Preguntas frecuentes</string>
 
@@ -102,7 +105,7 @@
     <string name="feature_settings_about_what_does_mifos_do">¿Qué hace Mifos?</string>
     <string name="feature_settings_about_who_are_we_desc">Mifos es una organización sin fines de lucro que busca brindar acceso a servicios financieros básicos a las personas mediante una plataforma de código abierto.</string>
     <string name="feature_settings_about_point_1">Ayuda a las instituciones financieras a ofrecer servicios financieros modernos.</string>
-    <string name="feature_settings_about_point_2">Permite a las personas obtener préstamos, ahorrar dinero y más.</string>
+    <string name="feature_settings_about_point_2">Permite a las personas obtener créditos, ahorrar dinero y más.</string>
     <string name="feature_settings_about_point_3">Apoya a instituciones financieras que prestan servicios a millones de personas en todo el mundo.</string>
 
     <string name="feature_settings_doubt">¡Muchas dudas se resuelven en las preguntas frecuentes!</string>
@@ -161,27 +164,27 @@
 
     <string name="password_update_success">Contraseña actualizada exitosamente</string>
     <string name="password_update_success_message">Necesita iniciar sesión nuevamente para utilizar los servicios de la aplicación.</string>
-    <string name="password_update_failed">Error al actualizar la contraseña. Inténtalo de nuevo.</string>
+    <string name="password_update_failed">Error al actualizar la contraseña. Inténtelo de nuevo.</string>
     <string name="password_update_dialog_button">Iniciar sesión ahora</string>
 
     <!-- Faq  -->
     <string name="no_questions_found">No se encontraron preguntas</string>
     <string-array name="faq_qs">
-        <item>¿Cómo solicito una nueva cuenta de préstamo?</item>
+        <item>¿Cómo solicito una nueva cuenta de crédito?</item>
         <item>¿Dónde puedo ver la información de mi perfil?</item>
         <item>¿Dónde puedo ver las transacciones de mis cuentas de ahorro?</item>
         <item>¿Para qué sirve el código QR?</item>
         <item>¿Cómo crear un beneficiario mediante código QR?</item>
-        <item>¿Cómo realizar un pago de una Cuenta de Préstamo?</item>
+        <item>¿Cómo realizar un pago de una Cuenta de Crédito?</item>
     </string-array>
 
     <string-array name="faq_ans">
-        <item>Para solicitar una cuenta de préstamo, haga clic en "Solicitar préstamo" que se encuentra en la pantalla de inicio.</item>
+        <item>Para solicitar una cuenta de crédito, haga clic en "Solicitar crédito" que se encuentra en la pantalla de inicio.</item>
         <item>Puedes ver la información de tu perfil haciendo clic en la imagen de usuario presente en la pantalla de inicio.</item>
         <item>Para ver las transacciones de su cuenta de ahorros, vaya a la sección de Cuentas, haga clic en la cuenta de ahorros deseada, haga clic en los tres puntos en la esquina superior derecha y seleccione la opción Transacciones.</item>
-        <item>El código QR de cualquier préstamo o cuenta de ahorros se puede compartir con otros usuarios, lo que les permitirá crear un beneficiario.</item>
+        <item>El código QR de cualquier crédito o cuenta de ahorros se puede compartir con otros usuarios, lo que les permitirá crear un beneficiario.</item>
         <item>Para crear un beneficiario, vaya a la opción "Beneficiario" en la pantalla de inicio y haga clic en el botón circular de la esquina inferior derecha. Seleccione la opción "Escanear" para abrir la cámara de su dispositivo. Escanee el código QR de la persona para la que desea crear un beneficiario. Tras completar los demás datos necesarios, podrá crear un beneficiario mediante el código QR.</item>
-        <item>Para realizar un pago a una cuenta de préstamo, diríjase a la sección de Cuentas, seleccione PRÉSTAMO. Luego, abra la cuenta de préstamo que desee y haga clic en la opción Realizar pago.</item>
+        <item>Para realizar un pago a una cuenta de crédito, diríjase a la sección de Cuentas, seleccione Crédito. Luego, abra la cuenta de crédito que desee y haga clic en la opción Realizar pago.</item>
     </string-array>
 
     <string name="feature_settings_faq_doubt">¿Aún tienes dudas?</string>

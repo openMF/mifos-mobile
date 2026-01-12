@@ -32,5 +32,11 @@
     <string name="feature_make_transfer_error_amount_invalid">Ingresa un monto válido</string>
     <string name="feature_make_transfer_error_remarks_empty">Descripción no puede estar vacía</string>
     <string name="feature_make_transfer_error_remarks_invalid">Descripción inválida</string>
-    <string name="feature_make_transfer_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    <string name="feature_make_transfer_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
+
+    <string name="feature_make_transfer_account_number">Número de Cuenta</string>
+    <string name="feature_make_transfer_customer_name">Nombre del Emisor</string>
+    <string name="feature_make_transfer_beneficiary_name">Nombre del Receptor</string>
+    <string name="feature_make_transfer_details">Detalles de la Transferencia</string>
+
 </resources>

@@ -71,7 +71,7 @@
     <string name="feature_no_transactions_found">Sin transacciones</string>
     <string name="feature_no__filtered_transactions_found">No se encontraron transacciones para los filtros seleccionados</string>
 
-    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
 
     <!--    Transaction Details -->
     <string name="feature_transaction_details">Detalles de la transacción</string>

@@ -14,7 +14,7 @@
     <string name="feature_tpt_error_amount_invalid">Ingresar un monto válido</string>
     <string name="feature_tpt_error_remarks_empty">Descripción no puede estar vacía</string>
     <string name="feature_tpt_error_remarks_invalid">Comentarios no válidos ingresados</string>
-    <string name="feature_tpt_error_server">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtalo de nuevo.</string>
+    <string name="feature_tpt_error_server">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtelo de nuevo.</string>
 
     <!-- Labels -->
     <string name="feature_tpt_label_origin_account">Cuenta Origen</string>
@@ -26,6 +26,6 @@
     <string name="feature_tpt_tip_action">Agregar beneficiario</string>
 
     <!-- Button texts -->
-    <string name="feature_tpt_transfer_button">Monto a Transferir</string>
+    <string name="feature_tpt_transfer_button">Transferir</string>
 
 </resources>

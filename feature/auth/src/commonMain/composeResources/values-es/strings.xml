@@ -63,8 +63,8 @@
 
 
     <string name="feature_sign_in_title">Ingresar</string>
-    <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para iniciar sesión</string>
-    <string name="feature_sign_in_username_label">Usuario o correo electrónico</string>
+    <string name="feature_sign_in_sub_title">Escriba su usuario y contraseña para iniciar sesión</string>
+    <string name="feature_sign_in_username_label">Usuario</string>
     <string name="feature_sign_in_password_label">Contraseña</string>
     <string name="feature_sign_in_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="feature_sign_in_Sign_in">Ingresar</string>
