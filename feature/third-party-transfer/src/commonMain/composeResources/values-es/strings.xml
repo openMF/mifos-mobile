@@ -26,6 +26,6 @@
     <string name="feature_tpt_tip_action">Agregar beneficiario</string>
 
     <!-- Button texts -->
-    <string name="feature_tpt_transfer_button">Monto a Transferir</string>
+    <string name="feature_tpt_transfer_button">Transferir</string>
 
 </resources>

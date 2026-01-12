@@ -30,8 +30,8 @@
     <string name="dialog_cancel_registration_title">Cancelar Registro</string>
     <string name="request_id">ID de Petición</string>
     <string name="empty_requestid">ID de Petición no puede estar vacía</string>
-    <string name="authentication_token">Código de Autenticación</string>
-    <string name="empty_authentication_token">El Código de Autenticación no puede estar vacío</string>
+    <string name="authentication_token">Código de Autorización</string>
+    <string name="empty_authentication_token">El Código de Autorización no puede estar vacío</string>
     <string name="verify">Verificar</string>
     <string name="verified">El usuario ha sido verificado correctamente</string>
     <string name="yes">Sí</string>
@@ -63,8 +63,8 @@
 
 
     <string name="feature_sign_in_title">Ingresar</string>
-    <string name="feature_sign_in_sub_title">Ingresa tu email y contraseña para iniciar sesión</string>
-    <string name="feature_sign_in_username_label">Usuario o correo electrónico</string>
+    <string name="feature_sign_in_sub_title">Escribe tu usuario y contraseña para iniciar sesión</string>
+    <string name="feature_sign_in_username_label">Usuario</string>
     <string name="feature_sign_in_password_label">Contraseña</string>
     <string name="feature_sign_in_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="feature_sign_in_Sign_in">Ingresar</string>

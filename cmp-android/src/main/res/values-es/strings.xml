@@ -177,7 +177,7 @@
     <string name="empty_requestid">ID de petición no debe estar vacía</string>
     <string name="empty_authentication_token">Código de autenticación no debe estar vacío</string>
     <string name="feature_account_empty_savings_accounts">No hay Cuenta de Ahorros asociada contigo</string>
-    <string name="feature_account_empty_loan_accounts">No hay ninguna cuenta de préstamo asociada contigo</string>
+    <string name="feature_account_empty_loan_accounts">No hay ninguna cuenta de crédito asociada contigo</string>
     <string name="feature_account_empty_share_accounts">No hay una cuenta de acciones asociada contigo</string>
     <string name="empty_transactions">No hay transacciones asociadas contigo</string>
     <string name="empty_repayment_schedule">No hay un calendario de pagos asociado contigo</string>
@@ -194,7 +194,7 @@
     <string name="error_validation_cannot_contain_leading_or_trailing_spaces">%1$s no puede comenzar ni terminar con un espacio en blanco</string>
     <string name="error_internal_server">Error interno del servidor. Inténtelo de nuevo</string>
     <string name="error_client_loading">Se produjo un error al cargar la lista de clientes</string>
-    <string name="error_loan_accounts_list_loading">Error al cargar cuentas de préstamo</string>
+    <string name="error_loan_accounts_list_loading">Error al cargar cuentas de crédito</string>
     <string name="error_saving_accounts_list_loading">Error al cargar cuentas de ahorro</string>
     <string name="error_saving_account_details_loading">Error al cargar el detalle de la cuenta de ahorro</string>
     <string name="error_recent_transactions_loading">Error al cargar transacciones recientes</string>
@@ -213,7 +213,7 @@
     <string name="error_creating_beneficiary">No se pudo crear el beneficiario</string>
     <string name="error_updating_beneficiary">No se pudo actualizar el Beneficiario</string>
     <string name="error_deleting_beneficiary">No se pudo eliminar el beneficiario</string>
-    <string name="error_loan_account_withdraw">Error al retirar cuenta de préstamo</string>
+    <string name="error_loan_account_withdraw">Error al retirar cuenta de crédito</string>
     <string name="error_fetching_third_party_transfer_template">Error al obtener la plantilla de transferencia a terceros</string>
     <string name="no_beneficiary_found_please_add">Actualmente no tiene ningún beneficiario. Por favor, agréguelo.</string> 
     <string name="unauthorized_client">No estas autorizado</string>
@@ -338,7 +338,7 @@
     <string name="total_saving">Ahorros totales</string>
     <string name="accounts_overview">Descripción general de Cuenta</string>
     <string name="show_hide_total_saving_amount">Mostrar u ocultar el importe total de ahorro</string>
-    <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del préstamo</string>
+    <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del crédito</string>
     <string name="hidden_amount">*****</string>
     <string name="survey">Encuestas</string>
     <string name="activation_date">Fecha de Activación</string>
@@ -351,7 +351,7 @@
     <string name="income_generating_loan">Crédito Generador de Ingresos</string>
     <string name="not_applicable">No aplicable</string>
     <string name="dummy_principal_amount">143.00</string>
-    <string name="invalid_qr">No puedes realizar ninguna acción en tu cuenta, por favor escanea el Código QR de la Cuenta de Ahorros y Préstamos de otro usuario</string>
+    <string name="invalid_qr">No puedes realizar ninguna acción en tu cuenta, por favor escanea el Código QR de la Cuenta de Ahorros y Créditos de otro usuario</string>
     <string name="add">Agregar</string>
     <string name="scan">Escanear</string>
     <string name="enter_passcode">Introduzca el código de acceso de 4 dígitos</string>
@@ -469,7 +469,7 @@
     <string name="theme_type" translatable="false">tipo_tema</string>
     <string name="total_saving_balance">Saldo total de ahorro</string>
     <string name="total_loan_balance">Saldo Total de Crédito</string>
-    <string name="total_loan_savings_description">Los saldos de Crédito y Cuenta de Ahorros mostrados arriba se calculan en base a la totalidad de sus cuentas de ahorro y préstamos.</string>
+    <string name="total_loan_savings_description">Los saldos de Crédito y Cuenta de Ahorros mostrados arriba se calculan en base a la totalidad de sus cuentas de ahorro y créditos.</string>
     <string name="cancel_transfer">¿Estás seguro de que deseas cancelar la transferencia?</string>
     <string name="yes">Sí</string>
     <string name="confirm_password">Confirmar Contraseña</string>
@@ -524,7 +524,7 @@
     <string name="feature_about_official_website">Sitio web oficial</string>
     <string name="feature_about_app_version">Versión de la aplicación 1.0</string>
     <string name="feature_about_license">Licencia: MPL-2.0</string>
-    <string name="feature_about_description">Una aplicación de Android creada sobre la plataforma de autoservicio MifosX para que los clientes finales puedan ver y realizar transacciones en las cuentas y préstamos que poseen.</string>
+    <string name="feature_about_description">Una aplicación de Android creada sobre la plataforma de autoservicio MifosX para que los clientes finales puedan ver y realizar transacciones en las cuentas y créditos que poseen.</string>
     <string name="or">o</string>
     <string name="no_app_to_support_action">No existe ninguna aplicación que admita esta acción</string>
     <string name="theme">Tema</string>

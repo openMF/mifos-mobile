@@ -16,7 +16,7 @@
     <string name="something_went_wrong">Ocurrio un error</string>
     <string name="core_common_working">Core Common Funcionando</string>
 
-    <string name="powered_by">Desarrollado por</string>
+    <string name="powered_by">Financiera para el Bienestar® v1.0.4</string>
 
     <string name="password_checker_empty_error">La contraseña no puede estar vacía.</string>
     <string name="password_checker_too_long_error">La contraseña es demasiado larga. La longitud máxima es de 128 caracteres.</string>

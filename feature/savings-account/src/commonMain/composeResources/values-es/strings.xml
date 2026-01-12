@@ -75,7 +75,7 @@
     <string name="feature_savings_update_request_update">Actualizar Solicitud</string>
     <string name="feature_savings_new_product_label">Nuevo Producto</string>
 
-    <string name="feature_savings_savings_product_empty">Actualmente los productos de préstamo no están disponibles</string>
+    <string name="feature_savings_savings_product_empty">Actualmente los productos de crédito no están disponibles</string>
 
     <string name="feature_savings_update_request_successful">Solicitud enviada exitosamente</string>
     <string name="feature_savings_update_request_successful_message">La solicitud para actualizar los detalles de la cuenta se envió correctamente</string>
