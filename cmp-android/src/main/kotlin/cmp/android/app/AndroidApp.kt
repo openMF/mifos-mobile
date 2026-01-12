@@ -5,15 +5,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.android.app
 
 import android.app.Application
 import cmp.shared.utils.initKoin
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.disk.DiskCache
+import coil3.disk.directory
+import coil3.request.CachePolicy
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.logger.Level
+import template.core.base.ui.getDefaultImageLoader
 
 /**
  * Android application class.
@@ -23,12 +29,24 @@ import org.koin.core.logger.Level
  * @constructor Create empty Android app
  * @see Application
  */
-class AndroidApp : Application() {
+class AndroidApp : Application(), SingletonImageLoader.Factory {
     override fun onCreate() {
         super.onCreate()
         initKoin {
-            androidContext(this@AndroidApp) // Provides the Android app context
-            androidLogger(Level.DEBUG) // Enables Koin's logging for debugging
+            androidContext(this@AndroidApp)
+            androidLogger()
         }
     }
+
+    override fun newImageLoader(context: PlatformContext): ImageLoader =
+        getDefaultImageLoader(context)
+            .newBuilder()
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .diskCache {
+                DiskCache.Builder()
+                    .directory(context.cacheDir.resolve("image_cache"))
+                    .maxSizePercent(0.25)
+                    .build()
+            }
+            .build()
 }

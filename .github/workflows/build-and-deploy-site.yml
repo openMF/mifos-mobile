@@ -1,0 +1,65 @@
+# This workflow is designed to automate the process of building and deploying a Kotlin/JS web application to GitHub Pages.
+# It ensures that whenever changes are merged into the dev branch or when manually triggered, the web application is built,
+# packaged, and deployed to the GitHub Pages environment, making it accessible online.
+
+# Key Features:
+# - Automated web application build using Kotlin/JS
+# - Deployment to GitHub Pages
+# - Supports configurable web project module name
+# - Manages deployment concurrency and environment settings
+# - Provides secure deployment with proper permissions
+
+# Prerequisites:
+# - Kotlin Multiplatform/JS project configured with Gradle
+# - Web module set up for browser distribution
+# - Java 17 or compatible version
+# - GitHub Pages enabled in repository settings
+
+# Workflow Configuration:
+# - Requires input of `web_package_name` to specify the web project module
+# - Uses Windows runner for build process
+# - Leverages GitHub Actions for build, pages configuration, and deployment
+
+# Workflow Triggers:
+# - Can be manually called from other workflows
+# - Supports workflow_call for reusability across projects
+
+# Deployment Process:
+# 1. Checkout repository code
+# 2. Set up Java development environment
+# 3. Build Kotlin/JS web application
+# 4. Configure GitHub Pages
+# 5. Upload built artifacts
+# 6. Deploy to GitHub Pages
+
+# https://github.com/openMF/mifos-x-actionhub/blob/main/.github/workflows/build-and-deploy-site.yaml
+
+# ##############################################################################
+#                 DON'T EDIT THIS FILE UNLESS NECESSARY                        #
+# ##############################################################################
+
+name: Build And Deploy Web App
+
+# Trigger conditions for the workflow
+on:
+  workflow_dispatch:
+
+# Concurrency settings to manage multiple workflow runs
+# This ensures orderly deployment to production environment
+concurrency:
+  group: "web-pages"
+  cancel-in-progress: false
+
+permissions:
+  contents: read  # Read repository contents
+  pages: write    # Write to GitHub Pages
+  id-token: write # Write authentication tokens
+  pull-requests: write # Write to pull requests
+
+jobs:
+  build_and_deploy_web:
+    name: Build And Deploy Web App
+    uses: openMF/mifos-x-actionhub/.github/workflows/build-and-deploy-site.yaml@v1.0.2
+    secrets: inherit
+    with:
+      web_package_name: 'cmp-web' # <-- Change with your web package name

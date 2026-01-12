@@ -114,7 +114,15 @@ Generate full release notes from specified tag or latest release tag
 [bundle exec] fastlane ios build_ios
 ```
 
-Build iOS application
+Build Ios application
+
+### ios build_signed_ios
+
+```sh
+[bundle exec] fastlane ios build_signed_ios
+```
+
+Build Signed Ios application
 
 ### ios increment_version
 
@@ -122,7 +130,15 @@ Build iOS application
 [bundle exec] fastlane ios increment_version
 ```
 
+Increment build number from latest Firebase release
 
+### ios generateReleaseNote
+
+```sh
+[bundle exec] fastlane ios generateReleaseNote
+```
+
+Generate release notes
 
 ### ios deploy_on_firebase
 
@@ -132,13 +148,21 @@ Build iOS application
 
 Upload iOS application to Firebase App Distribution
 
-### ios generateReleaseNote
+### ios beta
 
 ```sh
-[bundle exec] fastlane ios generateReleaseNote
+[bundle exec] fastlane ios beta
 ```
 
-Generate release notes
+Upload beta build to TestFlight
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+Upload iOS Application to AppStore
 
 ----
 

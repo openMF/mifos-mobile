@@ -6,7 +6,7 @@
     If a copy of the MPL was not distributed with this file,
     You can obtain one at https://mozilla.org/MPL/2.0/.
 
-    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -16,13 +16,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage" />
+
     <!--
     Firebase automatically adds the AD_ID permission, even though we don't use it. If you use this
     permission you must declare how you're using it to Google Play, otherwise the app will be
@@ -39,12 +33,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MifosSplash">
+        android:theme="@style/Theme.AppSplash">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.MifosSplash"
+            android:theme="@style/Theme.AppSplash"
             android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,21 +47,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.DayNight"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.DayNight"
-            android:windowSoftInputMode="adjustResize" />
-
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="barcode" />
+            android:value="barcode_ui" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -76,30 +58,22 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileproviderpath" />
+                android:resource="@xml/provider_paths" />
         </provider>
 
-        <!-- Prompt Google Play services to install the backported photo picker module -->
-        <service android:name="com.google.android.gms.metadata.ModuleDependencies" android:enabled="false" android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
-            </intent-filter>
-
-            <meta-data android:name="photopicker_activity:0:required" android:value="" />
-        </service>
-
-        <!-- Disable Firebase analytics by default. This setting is overwritten for the `prod` flavor -->
-        <meta-data
-            android:name="firebase_analytics_collection_deactivated"
-            android:value="true" />
         <!-- Disable collection of AD_ID for all build variants -->
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
-        <!-- Firebase automatically adds the following property which we don't use so remove it -->
-        <property
-            android:name="android.adservices.AD_SERVICES_CONFIG"
-            tools:node="remove" />
+
+        <!-- Enable Firebase analytics for `prod` builds -->
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
     </application>
 
 </manifest>

@@ -21,9 +21,11 @@ fun main() {
     onWasmReady {
         ComposeViewport(document.body!!) {
             SharedApp(
+                updateScreenCapture = {},
+                handleRecreate = {},
                 handleThemeMode = {},
                 handleAppLocale = {},
-                onSplashScreenRemoved = {},
+                onSplashScreenRemoved = {}
             )
         }
     }
