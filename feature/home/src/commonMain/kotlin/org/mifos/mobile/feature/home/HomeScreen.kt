@@ -15,14 +15,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
@@ -228,24 +226,34 @@ internal fun ServiceBox(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(
-        modifier = modifier
-            .fillMaxWidth(),
-        maxItemsInEachRow = 4,
-        horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+    val columnCount = 4
+    val spacing = DesignToken.spacing.medium
+    val rows = items.chunked(columnCount)
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
-        items.forEach { item ->
-            Box(
-                modifier = Modifier
-                    .weight(1f),
-                contentAlignment = Alignment.Center,
+        rows.forEach { rowItems ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing),
             ) {
-                ServiceItemCard(
-                    title = item.title,
-                    icon = item.icon,
-                    onClick = { onAction(HomeAction.OnNavigate(item.route)) },
-                )
+                rowItems.forEach { item ->
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.TopCenter,
+                    ) {
+                        ServiceItemCard(
+                            title = item.title,
+                            icon = item.icon,
+                            onClick = { onAction(HomeAction.OnNavigate(item.route)) },
+                        )
+                    }
+                }
+                repeat(columnCount - rowItems.size) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
         }
     }
