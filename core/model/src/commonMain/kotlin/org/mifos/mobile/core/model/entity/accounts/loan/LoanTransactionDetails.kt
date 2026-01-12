@@ -11,6 +11,7 @@ package org.mifos.mobile.core.model.entity.accounts.loan
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.core.model.entity.accounts.share.TransferDetail
 
 @Serializable
 data class LoanTransactionDetails(
@@ -24,6 +25,7 @@ data class LoanTransactionDetails(
     val feeChargesPortion: Double? = null,
     val penaltyChargesPortion: Double? = null,
     val currency: Currency? = null,
+    val transfer: TransferDetail? = null,
     @SerialName("type")
     val loanType: LoanTransactionType? = null,
 )

@@ -52,6 +52,7 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_det
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status_reversed
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_status_success
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_transfer_description
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_type
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_details
 import org.jetbrains.compose.resources.stringResource
@@ -141,6 +142,14 @@ fun TransactionDetailContent(
                 stringResource(Res.string.feature_transaction_detail_id),
                 transaction.id.toString(),
             )
+
+            if (!transaction.transferDescription.isNullOrEmpty()) {
+                DetailItem(
+                    label = stringResource(Res.string.feature_transaction_detail_transfer_description),
+                    value = transaction.transferDescription,
+                )
+            }
+
             DetailItem(
                 stringResource(Res.string.feature_transaction_detail_date),
                 DateHelper.getDateAsString(transaction.date),

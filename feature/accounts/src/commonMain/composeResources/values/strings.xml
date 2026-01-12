@@ -76,6 +76,7 @@
     <!--    Transaction Details -->
     <string name="feature_transaction_details">Transaction Details</string>
     <string name="feature_transaction_detail_id">Transaction ID</string>
+    <string name="feature_transaction_detail_transfer_description">Transfer Description</string>
     <string name="feature_transaction_detail_date">Date</string>
     <string name="feature_transaction_detail_status">Status</string>
     <string name="feature_transaction_detail_status_success">Success</string>
