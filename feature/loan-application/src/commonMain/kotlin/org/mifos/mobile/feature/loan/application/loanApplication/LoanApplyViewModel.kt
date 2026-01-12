@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.loan_application.generated.resources.Res
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_multiple
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_large
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_amount_too_small
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_date_empty
@@ -126,20 +127,12 @@ internal class LoanApplyViewModel(
      */
     override fun handleAction(action: LoanApplicationAction) {
         when (action) {
-            is LoanApplicationAction.ApplicantNameChange -> {
-                onApplicantNameChange(action.name)
-            }
-
             is LoanApplicationAction.PurposeOfLoanChange -> {
                 onPurposeOfLoanChange(action.purposeOfLoan)
             }
 
             is LoanApplicationAction.PrincipalAmountChange -> {
                 onPrincipalAmountChange(action.principalAmount)
-            }
-
-            is LoanApplicationAction.DisbursementDateChange -> {
-                onDisbursementDateChange(action.disbursementDate)
             }
 
             is LoanApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
@@ -149,8 +142,6 @@ internal class LoanApplyViewModel(
             is LoanApplicationAction.OnNavigateBack -> navigateBack()
 
             is LoanApplicationAction.ConfirmNavigation -> sendEvent(LoanApplicationEvent.NavigateBack)
-
-            is LoanApplicationAction.ToggleDatePicker -> toggleDatePicker()
 
             is LoanApplicationAction.RetrySubmit -> resetSubmitAttempts()
 
@@ -245,6 +236,7 @@ internal class LoanApplyViewModel(
      * @param template The [DataState] of the generic loan template.
      * @param purpose The [DataState] of the product-specific loan purpose template.
      */
+    @OptIn(ExperimentalTime::class)
     private fun handleClientAndTemplateResult(
         client: DataState<Client?>,
         template: DataState<LoanTemplate?>,
@@ -274,8 +266,33 @@ internal class LoanApplyViewModel(
                     }
                 }
 
+                val productTemplate = purpose.data
+                val defaultPrincipal = productTemplate?.product?.principal
+                    ?: productTemplate?.principal
+                    ?: 0.0
+
+                val minPrincipal = productTemplate?.product?.minPrincipal
+                    ?: defaultPrincipal
+
+                val maxPrincipal = productTemplate?.product?.maxPrincipal
+                    ?: defaultPrincipal
+
+                val initialAmount = if (minPrincipal % 1 == 0.0) {
+                    minPrincipal.toLong().toString()
+                } else {
+                    minPrincipal.toString()
+                }
+
+                val todayMillis = Clock.System.now().toEpochMilliseconds()
+                val activationMillis = client.data?.activationDate?.let {
+                    DateHelper.getDateAsLongFromList(it)
+                } ?: 0L
+                val effectiveMillis = maxOf(todayMillis, activationMillis)
+                val defaultDate = DateHelper.getDateMonthYearString(effectiveMillis)
+
                 updateState {
                     it.copy(
+                        applicantName = client.data?.displayName ?: "",
                         currency = template.data?.currency ?: Currency(
                             code = "USD",
                             name = "US Dollar",
@@ -286,6 +303,10 @@ internal class LoanApplyViewModel(
                             displayLabel = "US Dollar ($)",
                         ),
                         loanPurposeOptions = mappedLoanPurposeOptions,
+                        minPrincipal = minPrincipal,
+                        maxPrincipal = maxPrincipal,
+                        principalAmount = initialAmount,
+                        disbursementDate = defaultDate,
                         uiState = ScreenUiState.Success,
                     )
                 }
@@ -366,23 +387,40 @@ internal class LoanApplyViewModel(
     private fun validatePrincipalAmount(
         amount: String,
         currency: ModelCurrency,
+        min: Double,
+        max: Double,
     ): ValidationResult {
         return when (val result = ValidationHelper.validateAmountWithDetails(amount, currency)) {
             is AmountValidationResult.Valid -> {
                 val value = result.normalizedAmount
-                return if (value in 1000.0..10000.0) {
+
+                val isMultiple = if (currency.inMultiplesOf > 0) {
+                    val remainder = value % currency.inMultiplesOf
+                    remainder < 0.0001 || (currency.inMultiplesOf - remainder) < 0.0001
+                } else {
+                    true
+                }
+
+                val error = when {
+                    min > 0 && value < min -> Res.string.feature_apply_loan_error_amount_too_small
+                    max != Double.MAX_VALUE && value > max -> Res.string.feature_apply_loan_error_amount_too_large
+                    !isMultiple -> Res.string.feature_apply_loan_error_amount_multiple
+                    else -> null
+                }
+
+                if (error != null) {
+                    ValidationResult.Error(error)
+                } else {
+                    val cleanAmount = if (value % 1 == 0.0) {
+                        value.toLong().toString()
+                    } else {
+                        value.toString()
+                    }
+
                     mutableStateFlow.update {
-                        it.copy(principalAmount = value.toString())
+                        it.copy(principalAmount = cleanAmount)
                     }
                     ValidationResult.Success
-                } else {
-                    ValidationResult.Error(
-                        if (value < 1000.0) {
-                            Res.string.feature_apply_loan_error_amount_too_small
-                        } else {
-                            Res.string.feature_apply_loan_error_amount_too_large
-                        },
-                    )
                 }
             }
 
@@ -402,30 +440,6 @@ internal class LoanApplyViewModel(
     }
 
     /**
-     * Handles changes to the applicant's name field.
-     * It updates the state and debounces validation to prevent excessive checks.
-     *
-     * @param newValue The new value of the applicant name field.
-     */
-    private fun onApplicantNameChange(newValue: String) {
-        mutableStateFlow.update {
-            it.copy(
-                applicantName = newValue,
-                applicantNameError = null,
-                hasChanges = true,
-            )
-        }
-        debounceValidation {
-            val result = validateApplicantName(newValue)
-            mutableStateFlow.update {
-                it.copy(
-                    applicantNameError = if (result is ValidationResult.Error) result.message else null,
-                )
-            }
-        }
-    }
-
-    /**
      * Handles changes to the principal amount field.
      * It updates the state and debounces validation.
      *
@@ -441,34 +455,15 @@ internal class LoanApplyViewModel(
         }
         debounceValidation {
             val result =
-                validatePrincipalAmount(state.principalAmount, state.currency.toModelCurrency())
+                validatePrincipalAmount(
+                    state.principalAmount,
+                    state.currency.toModelCurrency(),
+                    state.minPrincipal,
+                    state.maxPrincipal,
+                )
             mutableStateFlow.update {
                 it.copy(
                     principalAmountError = if (result is ValidationResult.Error) result.message else null,
-                )
-            }
-        }
-    }
-
-    /**
-     * Handles changes to the disbursement date field.
-     * It updates the state and debounces validation.
-     *
-     * @param newValue The new value of the disbursement date field.
-     */
-    private fun onDisbursementDateChange(newValue: String) {
-        mutableStateFlow.update {
-            it.copy(
-                disbursementDate = newValue,
-                disbursementDateError = null,
-                hasChanges = true,
-            )
-        }
-        debounceValidation {
-            val result = validateDisbursementDate(newValue)
-            mutableStateFlow.update {
-                it.copy(
-                    disbursementDateError = if (result is ValidationResult.Error) result.message else null,
                 )
             }
         }
@@ -508,7 +503,12 @@ internal class LoanApplyViewModel(
         }
         val nameResult = validateApplicantName(state.applicantName)
         val amountResult = state.currency.toModelCurrency().let { currency ->
-            validatePrincipalAmount(state.principalAmount, currency)
+            validatePrincipalAmount(
+                state.principalAmount,
+                currency,
+                state.minPrincipal,
+                state.maxPrincipal,
+            )
         }
         val dateResult = validateDisbursementDate(state.disbursementDate)
 
@@ -595,17 +595,6 @@ internal class LoanApplyViewModel(
     }
 
     /**
-     * Toggles the visibility of the date picker dialog.
-     */
-    private fun toggleDatePicker() {
-        mutableStateFlow.update {
-            it.copy(
-                showDatePicker = !state.showDatePicker,
-            )
-        }
-    }
-
-    /**
      * Resets the submit attempts counter.
      */
     private fun resetSubmitAttempts() {
@@ -666,6 +655,8 @@ internal data class LoanApplicationState(
     val disbursementDateError: StringResource? = null,
     val hasChanges: Boolean = false,
     val networkStatus: Boolean = false,
+    val minPrincipal: Double = 0.0,
+    val maxPrincipal: Double = Double.MAX_VALUE,
 
     val uiState: ScreenUiState? = ScreenUiState.Loading,
     val showDatePicker: Boolean = false,
@@ -796,31 +787,16 @@ internal sealed interface LoanApplicationAction {
     data object ConfirmNavigation : LoanApplicationAction
 
     /**
-     * User action when the applicant's name field changes.
-     * @property name The new value of the name field.
-     */
-    data class ApplicantNameChange(val name: String) : LoanApplicationAction
-
-    /**
      * User action when the purpose of loan field changes.
      * @property purposeOfLoan The new value of the purpose field.
      */
     data class PurposeOfLoanChange(val purposeOfLoan: String) : LoanApplicationAction
 
     /**
-     * User action when the disbursement date changes.
-     * @property disbursementDate The new value of the disbursement date field.
-     */
-    data class DisbursementDateChange(val disbursementDate: String) : LoanApplicationAction
-
-    /**
      * User action when the principal amount changes.
      * @property principalAmount The new value of the principal amount field.
      */
     data class PrincipalAmountChange(val principalAmount: String) : LoanApplicationAction
-
-    /** User action to toggle the visibility of the date picker. */
-    data object ToggleDatePicker : LoanApplicationAction
 
     /** User action to navigate to the confirm details screen, triggering form validation. */
     data object NavigateToConfirmDetails : LoanApplicationAction
