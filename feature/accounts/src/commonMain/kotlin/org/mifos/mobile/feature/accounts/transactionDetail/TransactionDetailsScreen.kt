@@ -26,7 +26,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,15 +62,14 @@ import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
-import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun TransactionDetailsScreen(
@@ -126,18 +124,18 @@ fun TransactionDetailContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(DesignToken.padding.large),
+            .padding(KptTheme.spacing.md),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TransactionHeader(transaction)
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
-                .padding(DesignToken.padding.medium),
+                .background(KptTheme.colorScheme.surfaceContainerLow)
+                .padding(KptTheme.spacing.md),
         ) {
             DetailItem(
                 stringResource(Res.string.feature_transaction_detail_id),
@@ -163,7 +161,7 @@ fun TransactionDetailContent(
             }
 
             val statusColor = if (transaction.status == "reversed") {
-                MaterialTheme.colorScheme.error
+                KptTheme.colorScheme.error
             } else {
                 AppColors.customEnable
             }
@@ -214,7 +212,7 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
             modifier = Modifier
                 .size(72.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer),
+                .background(KptTheme.colorScheme.secondaryContainer),
             contentAlignment = Alignment.Center,
         ) {
             val isCredit = transaction.isCredit == true
@@ -222,11 +220,11 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
                 imageVector = if (isCredit) MifosIcons.ArrowDropDown else MifosIcons.ArrowDropUp,
                 contentDescription = null,
                 tint = if (isCredit) AppColors.customEnable else AppColors.lightRed,
-                modifier = Modifier.size(46.dp),
+                modifier = Modifier.size(KptTheme.spacing.xxl),
             )
         }
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
         Text(
             text = CurrencyFormatter.format(
@@ -234,14 +232,14 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
                 transaction.currency,
                 maximumFractionDigits = 2,
             ),
-            style = MifosTypography.headlineMedium,
-            color = MaterialTheme.colorScheme.onSurface,
+            style = KptTheme.typography.headlineMedium,
+            color = KptTheme.colorScheme.onSurface,
         )
 
         Text(
             text = transaction.typeValue ?: stringResource(Res.string.feature_transaction_detail_default_type),
-            style = MifosTypography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = KptTheme.typography.bodyMedium,
+            color = KptTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -254,12 +252,12 @@ private fun TransactionBreakdown(transaction: UiTransactionDetails) {
         transaction.penalties != null
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+            Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
             Text(
                 text = stringResource(Res.string.feature_transaction_detail_breakdown),
-                style = MifosTypography.labelLargeEmphasized,
-                modifier = Modifier.padding(bottom = 8.dp),
+                style = KptTheme.typography.labelLarge,
+                modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
             )
 
             if (transaction.principal != null && transaction.principal > 0) {
@@ -311,30 +309,30 @@ fun DetailItem(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
-    valueColor: Color = MaterialTheme.colorScheme.onSurface,
+    valueColor: Color = KptTheme.colorScheme.onSurface,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = DesignToken.padding.small),
+            .padding(vertical = KptTheme.spacing.sm),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top,
     ) {
         Text(
             text = label,
-            style = MifosTypography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(end = DesignToken.padding.small),
+            style = KptTheme.typography.bodyMedium,
+            color = KptTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(end = KptTheme.spacing.sm),
         )
         Text(
             text = value,
-            style = MifosTypography.bodyMediumEmphasized,
+            style = KptTheme.typography.bodyMedium,
             color = valueColor,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.End,
         )
     }
-    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+    HorizontalDivider(color = KptTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
 }
 
 @DevicePreview
