@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
@@ -317,16 +318,20 @@ fun DetailItem(
             .fillMaxWidth()
             .padding(vertical = DesignToken.padding.small),
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Top,
     ) {
         Text(
             text = label,
             style = MifosTypography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(end = DesignToken.padding.small),
         )
         Text(
             text = value,
             style = MifosTypography.bodyMediumEmphasized,
             color = valueColor,
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.End,
         )
     }
     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
@@ -338,6 +343,7 @@ fun DetailItem(
 fun TransactionDetailContentPreview() {
     val sampleTransaction = UiTransactionDetails(
         id = 12345L,
+        transferDescription = "Transfer to Account",
         date = listOf(2025, 12, 13),
         amount = 559.88,
         status = "success",
