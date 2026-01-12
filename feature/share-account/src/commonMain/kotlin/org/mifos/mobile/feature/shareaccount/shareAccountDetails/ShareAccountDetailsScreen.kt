@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -170,7 +171,7 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .heightIn(min = DesignToken.sizes.cardDp64)
+                            .height(DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
