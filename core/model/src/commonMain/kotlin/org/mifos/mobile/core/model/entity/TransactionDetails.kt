@@ -22,7 +22,7 @@ data class TransactionDetails(
     val date: List<Int>,
     val accountNo: String,
     val isReversed: Boolean,
-    val transferDescription: String?,
+    val transferDescription: String? = null,
     val balances: TransactionBalances,
 )
 
