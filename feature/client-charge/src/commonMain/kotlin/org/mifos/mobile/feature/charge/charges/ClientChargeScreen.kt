@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.charge.charges
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,12 +34,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -56,24 +53,25 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
-import mifos_mobile.feature.client_charge.generated.resources.account_label
-import mifos_mobile.feature.client_charge.generated.resources.account_type
-import mifos_mobile.feature.client_charge.generated.resources.account_type_loan
-import mifos_mobile.feature.client_charge.generated.resources.account_type_savings
-import mifos_mobile.feature.client_charge.generated.resources.account_type_shares
-import mifos_mobile.feature.client_charge.generated.resources.all_accounts
-import mifos_mobile.feature.client_charge.generated.resources.apply_filters
-import mifos_mobile.feature.client_charge.generated.resources.charge_status
-import mifos_mobile.feature.client_charge.generated.resources.clear_all
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
-import mifos_mobile.feature.client_charge.generated.resources.filter_charges
-import mifos_mobile.feature.client_charge.generated.resources.select_account
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_account_label
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_account_type
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_account_type_loan
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_account_type_savings
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_account_type_shares
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_all_accounts
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_apply_filters
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_charge_status
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_clear_all
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_filter_charges
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_select_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
@@ -143,49 +141,21 @@ private fun ClientChargeScreen(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    Scaffold(
+    val title = stringResource(state.topBarTitleResId) +
+        (state.selectedAccountNo?.let { " - $it" } ?: "")
+
+    MifosElevatedScaffold(
         modifier = modifier,
-        containerColor = Color.White,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text(
-                            text = stringResource(state.topBarTitleResId),
-                            style = KptTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                            ),
-                        )
-                        state.selectedAccountNo?.let { accountNo ->
-                            Text(
-                                text = accountNo,
-                                style = KptTheme.typography.bodySmall,
-                                color = KptTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onAction(ClientChargeAction.OnNavigate) }) {
-                        Icon(imageVector = MifosIcons.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { onAction(ClientChargeAction.ToggleFilter) }) {
-                        Icon(
-                            imageVector = MifosIcons.Filter,
-                            contentDescription = "Filter",
-                            tint = if (
-                                state.activeFilter != ChargeFilterUtil.ALL || state.selectedAccountNo != null
-                            ) {
-                                KptTheme.colorScheme.primary
-                            } else {
-                                KptTheme.colorScheme.onSurface
-                            },
-                        )
-                    }
-                },
-            )
+        topBarTitle = title,
+        onNavigateBack = { onAction(ClientChargeAction.OnNavigate) },
+        actions = {
+            IconButton(onClick = { onAction(ClientChargeAction.ToggleFilter) }) {
+                Icon(
+                    imageVector = MifosIcons.Filter,
+                    contentDescription = "Filter",
+
+                )
+            }
         },
         bottomBar = {
             Surface {
@@ -196,72 +166,74 @@ private fun ClientChargeScreen(
                 )
             }
         },
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
-            when (state.uiState) {
-                ScreenUiState.Empty -> {
-                    EmptyDataView(
-                        modifier = Modifier.fillMaxSize(),
-                        image = Res.drawable.database_warning,
-                        error = Res.string.error_no_charge,
-                    )
+        content = {
+            // Note: Padding is handled internally by MifosElevatedScaffold's content Box
+            Box(modifier = Modifier.fillMaxSize()) {
+                when (state.uiState) {
+                    ScreenUiState.Empty -> {
+                        EmptyDataView(
+                            modifier = Modifier.fillMaxSize(),
+                            image = Res.drawable.database_warning,
+                            error = Res.string.error_no_charge,
+                        )
+                    }
+
+                    is ScreenUiState.Error -> {
+                        MifosErrorComponent(
+                            isRetryEnabled = true,
+                            message = stringResource(state.uiState.message),
+                            onRetry = { onAction(ClientChargeAction.Retry) },
+                        )
+                    }
+
+                    ScreenUiState.Loading -> MifosProgressIndicator()
+
+                    ScreenUiState.Network -> {
+                        MifosErrorComponent(
+                            isNetworkConnected = state.networkStatus,
+                            isRetryEnabled = true,
+                            onRetry = { onAction(ClientChargeAction.Retry) },
+                        )
+                    }
+
+                    ScreenUiState.Success -> {
+                        ClientChargeContent(
+                            modifier = Modifier.padding(DesignToken.padding.large),
+                            chargesList = state.charges,
+                            onChargeClick = {
+                                onAction(ClientChargeAction.OnChargeClick(it))
+                            },
+                        )
+                    }
+
+                    else -> {}
                 }
+            }
 
-                is ScreenUiState.Error -> {
-                    MifosErrorComponent(
-                        isRetryEnabled = true,
-                        message = stringResource(state.uiState.message),
-                        onRetry = { onAction(ClientChargeAction.Retry) },
-                    )
-                }
-
-                ScreenUiState.Loading -> MifosProgressIndicator()
-
-                ScreenUiState.Network -> {
-                    MifosErrorComponent(
-                        isNetworkConnected = state.networkStatus,
-                        isRetryEnabled = true,
-                        onRetry = { onAction(ClientChargeAction.Retry) },
-                    )
-                }
-
-                ScreenUiState.Success -> {
-                    ClientChargeContent(
-                        modifier = Modifier.padding(DesignToken.padding.large),
-                        chargesList = state.charges,
-                        onChargeClick = {
-                            onAction(ClientChargeAction.OnChargeClick(it))
+            if (state.showFilter) {
+                ModalBottomSheet(
+                    onDismissRequest = { onAction(ClientChargeAction.ToggleFilter) },
+                    sheetState = sheetState,
+                ) {
+                    ChargeFilterSheetContent(
+                        state = state,
+                        onApply = { accountObj, type, filter ->
+                            onAction(
+                                ClientChargeAction.ApplyFilter(
+                                    accountObj,
+                                    type,
+                                    filter,
+                                ),
+                            )
+                        },
+                        onClear = {
+                            onAction(ClientChargeAction.ClearFilter)
                         },
                     )
                 }
-                else -> { }
             }
-        }
-
-        if (state.showFilter) {
-            ModalBottomSheet(
-                onDismissRequest = { onAction(ClientChargeAction.ToggleFilter) },
-                sheetState = sheetState,
-                containerColor = KptTheme.colorScheme.surface,
-            ) {
-                ChargeFilterSheetContent(
-                    state = state,
-                    onApply = { accountObj, type, filter ->
-                        onAction(
-                            ClientChargeAction.ApplyFilter(
-                                accountObj,
-                                type,
-                                filter,
-                            ),
-                        )
-                    },
-                    onClear = {
-                        onAction(ClientChargeAction.ClearFilter)
-                    },
-                )
-            }
-        }
-    }
+        },
+    )
 }
 
 @Composable
@@ -304,9 +276,9 @@ fun ChargeFilterSheetContent(
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val savingsLabel = stringResource(Res.string.account_type_savings)
-    val loanLabel = stringResource(Res.string.account_type_loan)
-    val sharesLabel = stringResource(Res.string.account_type_shares)
+    val savingsLabel = stringResource(Res.string.feature_client_charges_account_type_savings)
+    val loanLabel = stringResource(Res.string.feature_client_charges_account_type_loan)
+    val sharesLabel = stringResource(Res.string.feature_client_charges_account_type_shares)
 
     var selectedTabLabel by remember {
         mutableStateOf(
@@ -320,7 +292,8 @@ fun ChargeFilterSheetContent(
 
     var selectedAccountObject by remember {
         mutableStateOf(
-            state.selectedSavingsAccount ?: state.selectedLoanAccount ?: state.selectedShareAccount,
+            state.selectedSavingsAccount
+                ?: state.selectedLoanAccount ?: state.selectedShareAccount,
         )
     }
 
@@ -336,7 +309,10 @@ fun ChargeFilterSheetContent(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = DesignToken.padding.largeIncreased, vertical = DesignToken.padding.large),
+            .padding(
+                horizontal = DesignToken.padding.largeIncreased,
+                vertical = DesignToken.padding.large,
+            ),
     ) {
         FilterHeader(onClear = onClear)
 
@@ -390,7 +366,7 @@ private fun FilterHeader(onClear: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(Res.string.filter_charges),
+            text = stringResource(Res.string.feature_client_charges_filter_charges),
             style = KptTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -398,7 +374,7 @@ private fun FilterHeader(onClear: () -> Unit) {
         )
         TextButton(onClick = onClear) {
             Text(
-                text = stringResource(Res.string.clear_all),
+                text = stringResource(Res.string.feature_client_charges_clear_all),
                 style = KptTheme.typography.bodyMedium.copy(
                     color = KptTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold,
@@ -415,15 +391,15 @@ private fun AccountTypeSection(
 ) {
     Column {
         Text(
-            text = stringResource(Res.string.account_type),
+            text = stringResource(Res.string.feature_client_charges_account_type),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(vertical = DesignToken.padding.small),
         )
         Row(horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
             val types = listOf(
-                stringResource(Res.string.account_type_savings),
-                stringResource(Res.string.account_type_loan),
-                stringResource(Res.string.account_type_shares),
+                stringResource(Res.string.feature_client_charges_account_type_savings),
+                stringResource(Res.string.feature_client_charges_account_type_loan),
+                stringResource(Res.string.feature_client_charges_account_type_shares),
             )
             types.forEach { type ->
                 FilterOptionChip(
@@ -448,7 +424,7 @@ private fun AccountDropdownSection(
 
     Column {
         Text(
-            text = stringResource(Res.string.select_account),
+            text = stringResource(Res.string.feature_client_charges_select_account),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(bottom = DesignToken.padding.small),
         )
@@ -460,7 +436,6 @@ private fun AccountDropdownSection(
                     .clickable { isExpanded = true },
                 shape = DesignToken.shapes.medium,
                 border = BorderStroke(DesignToken.strokes.thin, Color.Gray.copy(alpha = 0.5f)),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(DesignToken.elevation.none),
             ) {
                 Row(
@@ -486,12 +461,12 @@ private fun AccountDropdownSection(
             DropdownMenu(
                 expanded = isExpanded,
                 onDismissRequest = { isExpanded = false },
-                modifier = Modifier.fillMaxWidth(0.9f).background(Color.White),
+                modifier = Modifier.fillMaxWidth(0.9f),
             ) {
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(Res.string.all_accounts),
+                            text = stringResource(Res.string.feature_client_charges_all_accounts),
                             fontWeight = FontWeight.Bold,
                         )
                     },
@@ -507,7 +482,8 @@ private fun AccountDropdownSection(
                         text = {
                             Column {
                                 Text(
-                                    text = productName ?: stringResource(Res.string.account_label),
+                                    text = productName
+                                        ?: stringResource(Res.string.feature_client_charges_account_label),
                                     fontWeight = FontWeight.Bold,
                                 )
                                 Text(
@@ -535,7 +511,7 @@ private fun ChargeStatusSection(
 ) {
     Column {
         Text(
-            text = stringResource(Res.string.charge_status),
+            text = stringResource(Res.string.feature_client_charges_charge_status),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(bottom = DesignToken.padding.medium),
         )
@@ -583,7 +559,7 @@ private fun FilterApplyButton(onClick: () -> Unit) {
         colors = ButtonDefaults.buttonColors(containerColor = KptTheme.colorScheme.primary),
     ) {
         Text(
-            text = stringResource(Res.string.apply_filters),
+            text = stringResource(Res.string.feature_client_charges_apply_filters),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
