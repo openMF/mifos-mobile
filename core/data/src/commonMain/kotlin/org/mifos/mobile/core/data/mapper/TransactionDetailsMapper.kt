@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,6 +33,7 @@ fun LoanTransactionDetails.toDomain(): TransactionDetails {
         date = this.date ?: emptyList(),
         accountNo = "N/A",
         isReversed = this.manuallyReversed == true,
+        transferDescription = this.transfer?.transferDescription,
         balances = TransactionBalances(
             running = this.outstandingLoanBalance,
             principal = this.principalPortion,
@@ -75,6 +76,7 @@ fun SavingsTransactionDetails.toDomain(): TransactionDetails {
         date = this.date ?: emptyList(),
         accountNo = this.accountNo ?: "N/A",
         isReversed = this.reversed == true,
+        transferDescription = this.transfer?.transferDescription,
         balances = TransactionBalances(
             running = this.runningBalance,
         ),

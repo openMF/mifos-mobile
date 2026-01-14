@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">Ocurrió un error al cargar los Beneficiarios</string>
+    <string name="error_fetching_beneficiary_template">Ocurrió un error al cargar la plantilla de Beneficiario</string>
+    <string name="error_fetching_template">Ocurrió un error al cargar la plantilla</string>
+    <string name="error_creating_beneficiary">Ocurrió un error al crear el Beneficiario</string>
+    <string name="error_updating_beneficiary">Ocurrió un error al actualizar el Beneficiario</string>
+    <string name="error_deleting_beneficiary">Ocurrió un error al eliminar el Beneficiario</string>
+    <string name="error_loan_account_withdraw">Ocurrió un error al cancelar la cuenta de crédito</string>
+    <string name="error_fetching_third_party_transfer_template">Ocurrió un error al cargar la plantilla de Transferencias a Terceros</string>
+    <string name="no_beneficiary_found_please_add">Actualmente no tienes ningún beneficiario. Por favor, añade uno.</string>
+    <string name="no_filtered_beneficiary_found">No se encontró ningún beneficiario para el filtro indicado</string>
+    <string name="beneficiary">Beneficiario</string>
+    <string name="manage_beneficiaries">Administrar beneficiarios</string>
+    <string name="beneficiaries">Beneficiarios</string>
+    <string name="beneficiary_detail">Detalle del beneficiario</string>
+    <string name="beneficiary_name">Nombre del beneficiario</string>
+    <string name="account_type">Tipo de cuenta</string>
+    <string name="transfer_limit">Límite de transferencia</string>
+    <string name="add_beneficiary">Agregar beneficiario</string>
+    <string name="office_name">Nombre de la oficina</string>
+    <string name="select_account_type">Seleccione el tipo de cuenta*</string>
+    <string name="submit_beneficiary">Enviar beneficiario</string>
+    <string name="enter_office_name">Ingrese el nombre de la oficina del beneficiario</string>
+    <string name="enter_beneficiary_name">Ingrese el nombre del beneficiario</string>
+    <string name="enter_transfer_limit">Ingresar límite de transferencia</string>    
+    <string name="enter_account_number">Ingrese el número de cuenta del beneficiario</string>
+    <string name="choose_account_type">Seleccione el tipo de cuenta en el menú desplegable</string>
+    <string name="beneficiary_created_successfully">Beneficiario creado con éxito</string>
+    <string name="beneficiary_updated_successfully">Beneficiario actualizado exitosamente</string>
+    <string name="update_beneficiary">Actualizar beneficiario</string>
+    <string name="delete_beneficiary">Eliminar beneficiario</string>
+    <string name="delete_beneficiary_confirmation">¿Estás seguro de que quieres eliminar a este Beneficiario?</string>
+    <string name="login_using_password_confirmation">¿Estás seguro de que quieres iniciar sesión usando contraseña?</string>
+    <string name="delete">Eliminar</string>
+    <string name="beneficiary_deleted_successfully">Beneficiario eliminado exitosamente</string>
+    <string name="third_party_transfer">Transferencia de terceros</string>
+    <string name="total_loan">Crédito total</string>
+    <string name="total_saving">Ahorros totales</string>
+    <string name="accounts_overview">Descripción general de la cuenta</string>
+    <string name="show_hide_total_saving_amount">Mostrar u ocultar el importe total de ahorro</string>
+    <string name="show_hide_total_loan_amount">Mostrar u ocultar el monto total del crédito</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Encuestas</string>
+    <string name="activation_date">Fecha de activación</string>
+    <string name="groups">Grupos</string>
+    <string name="user_details">Detalles del usuario</string>
+    <string name="client_type">Tipo de cliente</string>
+    <string name="client_classification">Clasificación de clientes</string>
+    <string name="select_mode">Seleccionar modo</string>
+    <string name="add_beneficiary_option">Agregue beneficiarios externos a su cuenta. Ingréselos manualmente o escanee el código QR de la cuenta.
+    </string>
+    <string name="invalid_amount">Cantidad inválida</string>
+    <string name="account_number">Número de Cuenta</string>
+    <string name="client_name">Nombre del cliente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="internet_not_connected">Asegúrese de estar conectado a Internet.</string>
+    <string name="add">Agregar</string>
+    <string name="scan">Escanear</string>
+    <string name="upload_qr_code">Subir QR</string>
+
+    <string name="beneficiary_name_label">Nombre del Beneficiario</string>
+    <string name="office_label">Oficina</string>
+    <string name="account_type_label">Tipo de cuenta</string>
+    <string name="account_number_label">Número de cuenta</string>
+    <string name="transfer_limit_label">Límite de transferencia</string>
+
+    <!-- Account Type Values -->
+    <string name="account_type_savings">Ahorros</string>
+    <string name="account_type_loan">Crédito</string>
+    <string name="account_type_share">Acciones</string>
+
+    <!-- Labels -->
+    <string name="validate_details">Validar detalles</string>
+    <string name="confirm_details">Confirmar detalles</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="beneficiary_creation_failed">Falló la creación del beneficiario</string>
+    <string name="beneficiary_updation_failed">Falló la actualización del beneficiario</string>
+    <string name="try_again">Intentar otra vez</string>
+    <string name="back_to_home">Volver al Inicio</string>
+
+
+
+    <!-- Filter   -->
+    <string name="feature_savings_filter">Filtros</string>
+    <string name="feature_savings_reset">Reiniciar</string>
+    <string name="feature_savings_apply">Aplicar</string>
+    <string name="feature_filters_count">%1$s Seleccionado</string>
+
+    <!-- Beneficiary Filter Types -->
+    <string name="filter_account_type">Tipo de cuenta</string>
+    <string name="filter_loan_account">Cuenta de crédito</string>
+    <string name="filter_savings_account">Cuenta de ahorros</string>
+    <string name="filter_linked_with">Vinculada con</string>
+    <string name="filter_self">Propias</string>
+    <string name="filter_other_clients">Otros Clientes</string>
+
+    <string name="beneficiary_created_successfully_account">
+        Beneficiario creado exitosamente para la cuenta %1$s para el beneficiario nombrado %2$s.
+    </string>
+    <string name="beneficiary_updated_successfully_account">
+    Beneficiario actualizado exitosamente para el beneficiario llamado %1$s con un límite de transferencia de %2$d.
+</string>
+
+    <string name="skip_the_form">Saltar el formulario</string>
+    <string name="upload_or_scan_qr_code">Subir o escanear código QR</string>
+
+    <string name="filter">Filtrar</string>
+    <string name="linked_with">Vinculada con</string>
+    <string name="type_of_account">Tipo de cuenta</string>
+    <string name="selected_count">%1$d seleccionado</string>
+    <string name="filter_icon_description">Icono de filtro</string>
+
+    <string name="feature_generic_error_server">El problema del servidor de nuestra parte no puede continuar. Inténtelo de nuevo.</string>
+</resources>

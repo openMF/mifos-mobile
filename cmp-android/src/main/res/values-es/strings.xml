@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -481,7 +481,7 @@
     <string name="feature_about_privacy_policy">política de privacidad</string>
     <string name="feature_about_policy_host" translatable="false">openmf.github.io/privacy_policy_mifos_mobile.html</string>
     <string name="feature_about_policy_url" translatable="false">https://openmf.github.io/privacy_policy_mifos_mobile.html</string>
-    <string name="transfer_error">No se puede completar la transferencia, inténtelo de nuevo más tarde</string>
+    <string name="transfer_error">No se puede completar la transferencia, inténtelo de nuevo</string>
     <string name="please_wait">Espere por favor...</string>
     <string name="message">mensaje</string>
     <string name="no_image_selected_or_something_went_wrong">No se ha seleccionado ninguna imagen o algo ha salido mal</string>

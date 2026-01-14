@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,8 +12,10 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.network.DataManager
@@ -24,6 +26,7 @@ class ThirdPartyTransferRepositoryImp(
 ) : ThirdPartyTransferRepository {
     override fun thirdPartyTransferTemplate(): Flow<DataState<AccountOptionsTemplate>> {
         return dataManager.thirdPartyTransferApi.accountTransferTemplate()
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }
