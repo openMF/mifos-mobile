@@ -47,9 +47,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.client_charge.generated.resources.Res
@@ -153,7 +151,6 @@ private fun ClientChargeScreen(
                 Icon(
                     imageVector = MifosIcons.Filter,
                     contentDescription = "Filter",
-
                 )
             }
         },
@@ -167,7 +164,6 @@ private fun ClientChargeScreen(
             }
         },
         content = {
-            // Note: Padding is handled internally by MifosElevatedScaffold's content Box
             Box(modifier = Modifier.fillMaxSize()) {
                 when (state.uiState) {
                     ScreenUiState.Empty -> {
@@ -198,7 +194,7 @@ private fun ClientChargeScreen(
 
                     ScreenUiState.Success -> {
                         ClientChargeContent(
-                            modifier = Modifier.padding(DesignToken.padding.large),
+                            modifier = Modifier.padding(KptTheme.spacing.lg),
                             chargesList = state.charges,
                             onChargeClick = {
                                 onAction(ClientChargeAction.OnChargeClick(it))
@@ -310,13 +306,13 @@ fun ChargeFilterSheetContent(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = DesignToken.padding.largeIncreased,
-                vertical = DesignToken.padding.large,
+                horizontal = KptTheme.spacing.xl,
+                vertical = KptTheme.spacing.lg,
             ),
     ) {
         FilterHeader(onClear = onClear)
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = DesignToken.padding.small))
+        HorizontalDivider(modifier = Modifier.padding(vertical = KptTheme.spacing.sm))
 
         if (state.canSwitchAccounts) {
             AccountTypeSection(
@@ -341,7 +337,7 @@ fun ChargeFilterSheetContent(
             onFilterSelected = { selectedFilter = it },
         )
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.dp40))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
         FilterApplyButton(
             onClick = {
@@ -354,7 +350,7 @@ fun ChargeFilterSheetContent(
                 onApply(selectedAccountObject, targetType, selectedFilter)
             },
         )
-        Spacer(modifier = Modifier.height(DesignToken.spacing.dp24))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.lg))
     }
 }
 
@@ -367,10 +363,7 @@ private fun FilterHeader(onClear: () -> Unit) {
     ) {
         Text(
             text = stringResource(Res.string.feature_client_charges_filter_charges),
-            style = KptTheme.typography.titleLarge.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-            ),
+            style = KptTheme.typography.titleLarge,
         )
         TextButton(onClick = onClear) {
             Text(
@@ -393,9 +386,9 @@ private fun AccountTypeSection(
         Text(
             text = stringResource(Res.string.feature_client_charges_account_type),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(vertical = DesignToken.padding.small),
+            modifier = Modifier.padding(vertical = KptTheme.spacing.sm),
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm)) {
             val types = listOf(
                 stringResource(Res.string.feature_client_charges_account_type_savings),
                 stringResource(Res.string.feature_client_charges_account_type_loan),
@@ -410,7 +403,7 @@ private fun AccountTypeSection(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(DesignToken.spacing.large))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.lg))
     }
 }
 
@@ -426,7 +419,7 @@ private fun AccountDropdownSection(
         Text(
             text = stringResource(Res.string.feature_client_charges_select_account),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(bottom = DesignToken.padding.small),
+            modifier = Modifier.padding(bottom = KptTheme.spacing.sm),
         )
 
         Box {
@@ -434,26 +427,27 @@ private fun AccountDropdownSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { isExpanded = true },
-                shape = DesignToken.shapes.medium,
-                border = BorderStroke(DesignToken.strokes.thin, Color.Gray.copy(alpha = 0.5f)),
-                elevation = CardDefaults.cardElevation(DesignToken.elevation.none),
+                shape = KptTheme.shapes.medium,
+                border = BorderStroke(DesignToken.strokes.thin, color = KptTheme.colorScheme.onSecondaryContainer),
+                elevation = CardDefaults.cardElevation(KptTheme.elevation.level0),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     val (_, accNo) = getAccountDetails(selectedAccount)
                     Text(
-                        text = accNo ?: "All Accounts",
+                        text = accNo ?: stringResource(
+                            Res.string.feature_client_charges_all_accounts
+                        ),
                         style = KptTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                     )
                     Icon(
                         imageVector = MifosIcons.ArrowDropDown,
                         contentDescription = null,
-                        tint = Color.Black,
                     )
                 }
             }
@@ -483,7 +477,9 @@ private fun AccountDropdownSection(
                             Column {
                                 Text(
                                     text = productName
-                                        ?: stringResource(Res.string.feature_client_charges_account_label),
+                                        ?: stringResource(
+                                            Res.string.feature_client_charges_account_label
+                                        ),
                                     fontWeight = FontWeight.Bold,
                                 )
                                 Text(
@@ -500,7 +496,7 @@ private fun AccountDropdownSection(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
     }
 }
 
@@ -513,16 +509,16 @@ private fun ChargeStatusSection(
         Text(
             text = stringResource(Res.string.feature_client_charges_charge_status),
             style = KptTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-            modifier = Modifier.padding(bottom = DesignToken.padding.medium),
+            modifier = Modifier.padding(bottom = KptTheme.spacing.md),
         )
 
         val filtersFirstRow = listOf(ChargeFilterUtil.ALL, ChargeFilterUtil.PAID)
         val filtersSecondRow = listOf(ChargeFilterUtil.PENDING, ChargeFilterUtil.WAIVED)
 
-        Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.small)) {
+        Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 filtersFirstRow.forEach { filter ->
                     FilterOptionChip(
@@ -535,7 +531,7 @@ private fun ChargeStatusSection(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 filtersSecondRow.forEach { filter ->
                     FilterOptionChip(
@@ -554,14 +550,13 @@ private fun ChargeStatusSection(
 private fun FilterApplyButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.buttonDp50),
-        shape = DesignToken.shapes.dp25,
+        modifier = Modifier.fillMaxWidth(),
+        shape = KptTheme.shapes.extraLarge,
         colors = ButtonDefaults.buttonColors(containerColor = KptTheme.colorScheme.primary),
     ) {
         Text(
             text = stringResource(Res.string.feature_client_charges_apply_filters),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
+            fontStyle = KptTheme.typography.bodyLarge.fontStyle,
         )
     }
 }
@@ -583,8 +578,8 @@ fun FilterOptionChip(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier.height(DesignToken.sizes.surfaceDp40),
-        shape = DesignToken.shapes.largeIncreased,
+        modifier = modifier.height(KptTheme.spacing.xl),
+        shape = KptTheme.shapes.extraLarge,
         color = if (isSelected) KptTheme.colorScheme.primary else KptTheme.colorScheme.surface,
         border = if (!isSelected) {
             BorderStroke(

@@ -395,7 +395,7 @@ internal class ClientChargeViewModel(
 
     private fun applyLocalFilter() {
         val filter = state.activeFilter
-        val originalList = state.originalCharges // Read from state
+        val originalList = state.originalCharges
         val filteredList = if (filter == ChargeFilterUtil.ALL) {
             originalList
         } else {

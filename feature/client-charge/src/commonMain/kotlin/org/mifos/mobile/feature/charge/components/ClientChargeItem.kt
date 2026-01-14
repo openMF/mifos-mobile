@@ -26,6 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import mifos_mobile.feature.client_charge.generated.resources.Res
+import mifos_mobile.feature.client_charge.generated.resources.amount_due
+import mifos_mobile.feature.client_charge.generated.resources.amount_paid
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
@@ -116,9 +118,9 @@ fun ClientChargeItem(
             ) {
                 Text(
                     text = if (charge.isChargePaid) {
-                        "Paid"
+                        stringResource(Res.string.amount_paid)
                     } else {
-                        "Due"
+                        stringResource(Res.string.amount_due)
                     },
                     style = MifosTypography.labelSmall,
                     color = if (charge.isChargePaid) {
@@ -155,7 +157,7 @@ fun ClientChargeItem(
             }
             Icon(
                 imageVector = MifosIcons.ChevronRight,
-                contentDescription = "",
+                contentDescription = "Navigation Icon",
                 modifier = Modifier.size(DesignToken.sizes.iconDp20),
             )
         }
