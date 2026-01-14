@@ -14,7 +14,7 @@
     <string name="feature_apply_loan_title">Apply New Loan</string>
 
     <!-- Sections -->
-    <string name="feature_apply_loan_section_fill_details">Fill Application Details</string>
+    <string name="feature_apply_loan_section_fill_details">Loan Application</string>
 
     <!-- Labels -->
     <string name="feature_apply_loan_label_applicant_name">Applicant Name</string>
@@ -46,6 +46,7 @@
     <string name="feature_apply_loan_error_amount_too_small">Principal amount is too small</string>
     <string name="feature_apply_loan_error_amount_too_large">Principal amount exceeds maximum limit</string>
     <string name="feature_apply_loan_error_amount_invalid_decimal">Amount has too many decimal places for selected currency</string>
+    <string name="feature_apply_loan_error_amount_multiple">Amount is not in valid multiples</string>
 
     <!-- Disbursement Date Validation -->
     <string name="feature_apply_loan_error_date_empty">Disbursement date is required</string>

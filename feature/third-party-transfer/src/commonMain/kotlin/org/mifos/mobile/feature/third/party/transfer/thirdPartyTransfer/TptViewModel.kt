@@ -28,6 +28,7 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
@@ -160,11 +161,12 @@ internal class TptViewModel(
      */
     private fun handleFromAccountChange(fromAccount: String) {
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
+            .filterSavingsAccounts()
             .find { it.accountNo == fromAccount }
 
-        val toAccounts = state.accountOptionsTemplate.toAccountOptions.filter {
-            it.accountNo != fromAccount
-        }
+        val toAccounts = state.accountOptionsTemplate.toAccountOptions
+            .filter { it.accountNo != fromAccount }
+
         updateState {
             it.copy(
                 fromAccount = fromAccountSelected,
@@ -187,9 +189,9 @@ internal class TptViewModel(
         val toAccountSelected = state.accountOptionsTemplate.toAccountOptions
             .find { it.accountNo == toAccount }
 
-        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions.filter {
-            it.accountNo != toAccount
-        }
+        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
+            .filterSavingsAccounts()
+            .filter { it.accountNo != toAccount }
 
         updateState {
             it.copy(
@@ -417,10 +419,14 @@ internal class TptViewModel(
             DataState.Loading -> showLoading()
 
             is DataState.Success -> {
+                val template = dataState.data
+
+                val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
+
                 updateState {
                     it.copy(
                         accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = dataState.data.fromAccountOptions,
+                        fromAccountOptions = savingsFromAccounts,
                         toAccountOptions = dataState.data.toAccountOptions,
                         uiState = ScreenUiState.Success,
                     )
@@ -596,3 +602,9 @@ internal sealed class ValidationResult {
      */
     data class Error(val message: StringResource) : ValidationResult()
 }
+
+/**
+ * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
+ */
+private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
+    filter { it.accountType?.value == AccountType.SAVINGS.value }

@@ -75,14 +75,14 @@
     <string name="feature_savings_update_request_update">Actualizar Solicitud</string>
     <string name="feature_savings_new_product_label">Nuevo Producto</string>
 
-    <string name="feature_savings_savings_product_empty">Actualmente los productos de préstamo no están disponibles</string>
+    <string name="feature_savings_savings_product_empty">Actualmente los productos de crédito no están disponibles</string>
 
     <string name="feature_savings_update_request_successful">Solicitud enviada exitosamente</string>
     <string name="feature_savings_update_request_successful_message">La solicitud para actualizar los detalles de la cuenta se envió correctamente</string>
     <string name="feature_savings_update_request_back_to_home">Regresar al Inicio</string>
 
     <string name="feature_savings_update_request_failed">Solicitud no enviada</string>
-    <string name="feature_savings_update_request_failed_message">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtalo de nuevo.</string>
+    <string name="feature_savings_update_request_failed_message">La solicitud para actualizar los datos de la cuenta ha fallado. Inténtelo de nuevo.</string>
     <string name="feature_savings_update_request_try_again">Intentar otra vez</string>
 
 <!--    Withdraw savings account-->
@@ -92,10 +92,10 @@
     <string name="feature_savings_withdraw_request_successful">Solicitud enviada exitosamente</string>
     <string name="feature_savings_withdraw_request_successful_message">La solicitud para retirar la cuenta se envió correctamente</string>
     <string name="feature_savings_withdraw_request_failed">Solicitud no enviada</string>
-    <string name="feature_savings_withdraw_request_failed_message">La solicitud de retiro de la cuenta ha fallado. Inténtalo de nuevo.</string>
+    <string name="feature_savings_withdraw_request_failed_message">La solicitud de retiro de la cuenta ha fallado. Inténtelo de nuevo.</string>
 
     <string name="feature_savings_no_accounts_found">No se encontraron Cuentas de Ahorros</string>
-        <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+        <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, Inténtelo de nuevo.</string>
     
     
         

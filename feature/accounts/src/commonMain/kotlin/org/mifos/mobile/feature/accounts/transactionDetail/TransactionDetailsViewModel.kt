@@ -139,6 +139,7 @@ class TransactionDetailsViewModel(
             id = this.id,
             date = this.date,
             amount = this.amount,
+            transferDescription = this.transferDescription,
             typeValue = this.transactionName,
             isCredit = this.isCredit,
             currency = this.currencyCode,
@@ -166,6 +167,8 @@ data class UiTransactionDetails(
     val isCredit: Boolean?,
     val currency: String,
     val accountNo: String? = null,
+
+    val transferDescription: String? = null,
     val principal: Double? = null,
     val interest: Double? = null,
     val fees: Double? = null,
