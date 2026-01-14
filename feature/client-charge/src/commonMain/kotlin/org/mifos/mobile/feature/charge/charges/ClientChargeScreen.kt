@@ -441,7 +441,7 @@ private fun AccountDropdownSection(
                     val (_, accNo) = getAccountDetails(selectedAccount)
                     Text(
                         text = accNo ?: stringResource(
-                            Res.string.feature_client_charges_all_accounts
+                            Res.string.feature_client_charges_all_accounts,
                         ),
                         style = KptTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                     )
@@ -478,7 +478,7 @@ private fun AccountDropdownSection(
                                 Text(
                                     text = productName
                                         ?: stringResource(
-                                            Res.string.feature_client_charges_account_label
+                                            Res.string.feature_client_charges_account_label,
                                         ),
                                     fontWeight = FontWeight.Bold,
                                 )
