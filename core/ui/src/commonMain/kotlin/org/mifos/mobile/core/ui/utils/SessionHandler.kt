@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.changedToDown
 import androidx.compose.ui.input.pointer.pointerInput
@@ -43,6 +46,11 @@ fun SessionHandler(
                     }
                 }
             }
+        }.onKeyEvent { event ->
+            if (event.type == KeyEventType.KeyUp) {
+                sessionManager.userInteracted()
+            }
+            false
         },
     ) {
         content()

@@ -17,42 +17,51 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.concurrent.atomics.AtomicBoolean
+import kotlin.concurrent.atomics.AtomicLong
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 class SessionManager {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private var lastInteractionTime = 0L
-    private var isMonitoring = false
+
+    @OptIn(ExperimentalAtomicApi::class)
+    private val lastInteractionTime = AtomicLong(0L)
+
+    @OptIn(ExperimentalAtomicApi::class)
+    private val isMonitoring = AtomicBoolean(false)
     private val timeoutMs = Constants.TIMEOUT_SESSION_MS
 
     private val _logoutEvent = MutableSharedFlow<Unit>()
     val logoutEvent = _logoutEvent.asSharedFlow()
 
-    @OptIn(ExperimentalTime::class)
+    @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     fun startSession() {
-        if (isMonitoring) return
-        isMonitoring = true
-        lastInteractionTime = Clock.System.now().toEpochMilliseconds()
-        startHeartbeat()
+        if (isMonitoring.compareAndSet(expectedValue = false, newValue = true)) {
+            lastInteractionTime.store(Clock.System.now().toEpochMilliseconds())
+            startHeartbeat()
+        }
     }
 
-    @OptIn(ExperimentalTime::class)
+    @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     fun userInteracted() {
-        if (!isMonitoring) return
-        lastInteractionTime = Clock.System.now().toEpochMilliseconds()
+        if (isMonitoring.load()) {
+            lastInteractionTime.store(Clock.System.now().toEpochMilliseconds())
+        }
     }
 
+    @OptIn(ExperimentalAtomicApi::class)
     fun stopSession() {
-        isMonitoring = false
+        isMonitoring.store(false)
     }
 
-    @OptIn(ExperimentalTime::class)
+    @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     private fun startHeartbeat() {
         scope.launch {
-            while (isMonitoring) {
+            while (isMonitoring.load()) {
                 val currentTime = Clock.System.now().toEpochMilliseconds()
-                if (currentTime - lastInteractionTime >= timeoutMs) {
+                if (currentTime - lastInteractionTime.load() >= timeoutMs) {
                     withContext(Dispatchers.Main) {
                         _logoutEvent.emit(Unit)
                     }
