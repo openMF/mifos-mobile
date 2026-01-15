@@ -57,6 +57,7 @@ class RegistrationViewModel(
     init {
         sessionManager.stopSession()
     }
+
     private var validationJob: Job? = null
     private var passwordStrengthJob: Job = Job()
 

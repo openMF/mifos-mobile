@@ -11,6 +11,7 @@ package org.mifos.mobile.core.common
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,6 +27,7 @@ import kotlin.time.ExperimentalTime
 class SessionManager {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
+    private var heartbeatJob: Job? = null
     @OptIn(ExperimentalAtomicApi::class)
     private val lastInteractionTime = AtomicLong(0L)
 
@@ -40,7 +42,7 @@ class SessionManager {
     fun startSession() {
         if (isMonitoring.compareAndSet(expectedValue = false, newValue = true)) {
             lastInteractionTime.store(Clock.System.now().toEpochMilliseconds())
-            startHeartbeat()
+            heartbeatJob = startHeartbeat()
         }
     }
 
@@ -54,11 +56,13 @@ class SessionManager {
     @OptIn(ExperimentalAtomicApi::class)
     fun stopSession() {
         isMonitoring.store(false)
+        heartbeatJob?.cancel()
+        heartbeatJob = null
     }
 
     @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
-    private fun startHeartbeat() {
-        scope.launch {
+    private fun startHeartbeat(): Job {
+        return scope.launch {
             while (isMonitoring.load()) {
                 val currentTime = Clock.System.now().toEpochMilliseconds()
                 if (currentTime - lastInteractionTime.load() >= timeoutMs) {
