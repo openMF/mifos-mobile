@@ -26,11 +26,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
+import cmp.navigation.authenticated.navigateToHomeAfterStatus
+import cmp.navigation.authenticated.navigateToStatusScreenWithoutPopUpTo
+import cmp.navigation.authenticated.popScreens
 import cmp.navigation.ui.MifosScaffold
 import cmp.navigation.ui.ScaffoldNavigationData
 import cmp.navigation.ui.rememberMifosNavController
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.core.ui.navigation.NavigationItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -38,6 +42,8 @@ import org.mifos.mobile.feature.home.navigation.HomeNavigator
 import org.mifos.mobile.feature.home.navigation.HomeRoute
 import org.mifos.mobile.feature.home.navigation.homeDestination
 import org.mifos.mobile.feature.home.navigation.navigateToHomeScreen
+import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
+import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
 import org.mifos.mobile.feature.settings.navigation.settingsGraph
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
@@ -89,7 +95,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
             { viewModel.trySendAction(it) }
         },
         homeNavigator = homeNavigator,
-        tptNavigator = tptNavigator,
     )
 }
 
@@ -161,6 +166,38 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
 
             settingsGraph(
                 navController = navController,
+            )
+
+            makeTransferDestination(
+                navigateBack = navController::popBackStack,
+                navigateToTransferScreen = { payload, type, destination ->
+                    navController.navigateToTransferProcessScreen(
+                        transferPayload = payload,
+                        transferType = type,
+                        transferSuccessDestination = destination,
+                    )
+                },
+            )
+            transferProcessDestination(
+                navigateBack = navController::popBackStack,
+                navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
+                navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
+            )
+            passcodeDestination(
+                onPasscodeConfirm = navController::popBackStack,
+            )
+            statusDestination(
+                navigateToDestination = {
+                    when (it) {
+                        StatusNavigationDestination.HOME.name -> {
+                            repeat(2) { navController.popScreens() }
+                        }
+
+                        else -> {
+                            navController.navigateToHomeAfterStatus()
+                        }
+                    }
+                },
             )
         }
     }

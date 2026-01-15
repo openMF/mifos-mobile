@@ -38,7 +38,6 @@ import org.mifos.mobile.feature.settings.di.SettingsModule
 import org.mifos.mobile.feature.share.application.di.shareApplicationModule
 import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.status.di.StatusModule
-import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
 
 object KoinModules {

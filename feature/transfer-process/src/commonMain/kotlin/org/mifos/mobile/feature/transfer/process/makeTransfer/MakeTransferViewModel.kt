@@ -382,6 +382,29 @@ internal class MakeTransferViewModel(
             }
         }
     }
+//    private fun fetchAccountOptions() {
+//        //chatgpt
+//        if (state.accountId <= 0L) {
+//            fetchActiveAccount()
+//            return
+//        }
+//        updateState {
+//            it.copy(uiState = MakeTransferState.MakeTransferScreenState.Loading)
+//        }
+//
+//        viewModelScope.launch {
+//            savingsAccountRepositoryImpl
+//                .accountTransferTemplate(
+//                    accountId = state.accountId.takeIf { it != -1L } ?: 0L,
+//                    accountType = 2L
+//                )
+//                .collect { result ->
+//                    sendAction(
+//                        MakeTransferAction.Internal.ReceiveAccountOptionsTemplateResult(result)
+//                    )
+//                }
+//        }
+//    }
 
     /**
      * Handles the result of fetching the account transfer template.
@@ -652,6 +675,7 @@ internal data class MakeTransferState(
      * True if a 'from' account, 'to' account are selected, and an amount is entered.
      */
     val isEnabled = networkStatus &&
+        uiState is MakeTransferScreenState.Success && // add
         fromAccount != null &&
         toAccount != null &&
         amount.isNotBlank() &&

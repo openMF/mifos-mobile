@@ -23,7 +23,6 @@ import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.model.StatusNavigationDestination
-import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.feature.accounts.accountTransactions.accountTransactionsDestination
 import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTransactionsScreen
 import org.mifos.mobile.feature.accounts.accounts.AccountNavRoute

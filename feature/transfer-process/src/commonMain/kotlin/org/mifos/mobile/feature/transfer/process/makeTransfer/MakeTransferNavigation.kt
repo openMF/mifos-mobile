@@ -43,6 +43,16 @@ fun NavController.navigateToMakeTransferScreen(transferPayload: AccountDetails, 
         ),
         navOptions,
     )
+fun NavController.navigateToMakeTransferScreen(
+    navOptions: NavOptions? = null,
+) {
+    navigate(
+        MakeTransferRoute(
+            accountId = -1L,
+        ),
+        navOptions,
+    )
+}
 
 fun NavGraphBuilder.makeTransferDestination(
     navigateBack: () -> Unit,
