@@ -191,6 +191,7 @@ internal class TptViewModel(
             it.copy(
                 fromAccount = fromAccountSelected,
                 fromAccountBalance = null,
+                fromAccountDetails = null,
                 isBalanceLoading = true,
                 balanceError = false,
                 toAccountOptions = toAccounts,

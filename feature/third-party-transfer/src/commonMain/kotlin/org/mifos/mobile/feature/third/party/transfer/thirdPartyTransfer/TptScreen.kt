@@ -233,14 +233,22 @@ internal fun TptForm(
                 val selectedAccount = state.fromAccountOptions
                     .firstOrNull { it.accountNo == accountNo }
 
-                selectedAccount?.accountId?.let { accountId ->
-                    onAction(
-                        TptAction.OnFromAccountSelected(
-                            accountId = accountId.toLong(),
-                            accountNo = accountNo,
-                        ),
-                    )
+                if (selectedAccount == null) {
+                    return@MifosPayFromDropdownUI
                 }
+
+                val accountId = selectedAccount.accountId
+
+                if (accountId == null) {
+                    return@MifosPayFromDropdownUI
+                }
+
+                onAction(
+                    TptAction.OnFromAccountSelected(
+                        accountId = accountId.toLong(),
+                        accountNo = accountNo,
+                    ),
+                )
             },
             label = stringResource(Res.string.feature_tpt_label_origin_account),
             selectedAccountNo = state.fromAccount?.accountNo ?: "",

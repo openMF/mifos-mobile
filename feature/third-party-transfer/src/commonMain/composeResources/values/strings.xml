@@ -15,7 +15,7 @@
     <string name="feature_tpt_error_remarks_empty">Remarks cannot be empty</string>
     <string name="feature_tpt_error_remarks_invalid">Invalid remarks entered</string>
     <string name="feature_tpt_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
-    <string name="feature_tpt_error_amount_exceeds_balance"> Amount exceeds available balance </string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Amount exceeds available balance </string>
 
     <!-- Labels -->
     <string name="feature_tpt_label_origin_account">Origin Account</string>
