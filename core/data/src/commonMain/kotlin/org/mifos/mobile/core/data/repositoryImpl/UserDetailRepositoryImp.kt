@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,9 +12,12 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.client.toModel
+import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.UserDetailRepository
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
@@ -28,7 +31,7 @@ class UserDetailRepositoryImp(
     override suspend fun registerNotification(payload: NotificationRegisterPayload?): DataState<String> {
         return try {
             withContext(ioDispatcher) {
-                dataManager.notificationApi.registerNotification(payload)
+                dataManager.notificationApi.registerNotification(payload?.toDto())
             }
             DataState.Success("Notification Registered Successfully")
         } catch (e: Exception) {
@@ -38,6 +41,7 @@ class UserDetailRepositoryImp(
 
     override fun getUserNotificationId(id: Long): Flow<DataState<NotificationUserDetail>> {
         return dataManager.notificationApi.getUserNotificationId(id)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -47,7 +51,7 @@ class UserDetailRepositoryImp(
     ): DataState<String> {
         return try {
             withContext(ioDispatcher) {
-                dataManager.notificationApi.updateRegisterNotification(id, payload)
+                dataManager.notificationApi.updateRegisterNotification(id, payload?.toDto())
             }
             DataState.Success("Notification Updated Successfully")
         } catch (e: Exception) {
