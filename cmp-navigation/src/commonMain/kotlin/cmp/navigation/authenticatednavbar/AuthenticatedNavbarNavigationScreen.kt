@@ -46,14 +46,15 @@ import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscode
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.settings.navigation.navigateToSettingsGraph
 import org.mifos.mobile.feature.settings.navigation.settingsGraph
-import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
-import org.mifos.mobile.feature.third.party.transfer.navigation.navigateToTptGraph
-import org.mifos.mobile.feature.third.party.transfer.navigation.tptGraphDestination
+import org.mifos.mobile.feature.status.navigation.statusDestination
+import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
+import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
+import org.mifos.mobile.feature.transfer.process.transferProcess.transferProcessDestination
 
 @Composable
 internal fun AuthenticatedNavbarNavigationScreen(
     homeNavigator: HomeNavigator,
-    tptNavigator: TptNavigator,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberMifosNavController(
         name = "AuthenticatedNavbarScreen",
@@ -74,7 +75,7 @@ internal fun AuthenticatedNavbarNavigationScreen(
 
                 AuthenticatedNavBarEvent.NavigateToThirdPartyTransferScreen -> {
                     navigateToTabOrRoot(tabToNavigateTo = event.tab) {
-                        navigateToTptGraph(navOptions = it)
+                        navigateToMakeTransferScreen(it)
                     }
                 }
 
@@ -102,7 +103,6 @@ internal fun AuthenticatedNavbarNavigationScreen(
 internal fun AuthenticatedNavbarNavigationScreenContent(
     navController: NavHostController,
     homeNavigator: HomeNavigator,
-    tptNavigator: TptNavigator,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (AuthenticatedNavBarAction) -> Unit,
@@ -159,10 +159,6 @@ internal fun AuthenticatedNavbarNavigationScreenContent(
         ) {
             // TODO Add top level destination screens
             homeDestination(onNavigate = homeNavigator)
-
-            tptGraphDestination(
-                onNavigate = tptNavigator,
-            )
 
             settingsGraph(
                 navController = navController,

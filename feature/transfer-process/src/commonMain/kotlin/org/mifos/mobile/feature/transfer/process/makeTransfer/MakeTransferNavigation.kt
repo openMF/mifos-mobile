@@ -36,7 +36,7 @@ fun NavController.navigateToMakeTransferScreen(transferPayload: AccountDetails, 
         MakeTransferRoute(
             accountId = transferPayload.accountId,
             accountNo = transferPayload.accountNo,
-            outstandingBalance = transferPayload.outstandingBalance.toString(),
+            outstandingBalance = transferPayload.outstandingBalance?.toString(),
             transferType = transferPayload.transferType,
             transferTarget = transferPayload.transferTarget.name,
             transferSuccessDestination = transferPayload.transferSuccessDestination,

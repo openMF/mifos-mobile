@@ -28,7 +28,7 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
 
 internal fun NavGraphBuilder.authenticatedNavbarGraph(
     homeNavigator: HomeNavigator,
-    tptNavigator: TptNavigator,
+//    tptNavigator: TptNavigator,
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
         AuthenticatedNavbarNavigationScreen(

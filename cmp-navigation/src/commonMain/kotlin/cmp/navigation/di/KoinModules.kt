@@ -71,7 +71,7 @@ object KoinModules {
             ChargeModule,
             TransferProcessModule,
             SettingsModule,
-            ThirdPartyTransferModule,
+//            ThirdPartyTransferModule,
             BeneficiaryModule,
             QrModule,
             GuarantorModule,

@@ -67,7 +67,6 @@ import org.mifos.mobile.feature.shareaccount.navigation.shareNavGraph
 import org.mifos.mobile.feature.shareaccount.shareAccountDetails.navigateToShareAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
-import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.makeTransferDestination
 import org.mifos.mobile.feature.transfer.process.makeTransfer.navigateToMakeTransferScreen
 import org.mifos.mobile.feature.transfer.process.transferProcess.navigateToTransferProcessScreen
@@ -127,23 +126,6 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                     is HomeNavigationDestination.ApplyShare ->
                         navController.navigateToShareApplicationGraph()
-                }
-            },
-
-            tptNavigator = { destination ->
-                when (destination) {
-                    TptNavigationDestination.Notification -> navController.navigateToNotificationScreen()
-
-                    is TptNavigationDestination.TransferProcess -> {
-                        navController.navigateToTransferProcessScreen(
-                            destination.payload,
-                            TransferType.TPT,
-                            StatusNavigationDestination.THIRD_PARTY_TRANSFER.name,
-                        )
-                    }
-                    else -> {
-                        navController.navigateToManualBeneficiaryAddScreen()
-                    }
                 }
             },
         )

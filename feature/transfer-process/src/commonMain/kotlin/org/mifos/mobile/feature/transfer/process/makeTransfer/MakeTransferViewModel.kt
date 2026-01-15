@@ -63,6 +63,7 @@ internal class MakeTransferViewModel(
         val route = savedStateHandle.toRoute<MakeTransferRoute>()
         MakeTransferState(
             clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
+//            accountId = route.accountId ?: -1L,
             accountId = route.accountId,
             outstandingBalance = route.outstandingBalance?.toDouble(),
             transferTarget = if (route.transferTarget != null) {
@@ -79,6 +80,10 @@ internal class MakeTransferViewModel(
 
     init {
         observeNetworkStatus()
+        // 🔥 FORCE initial load
+//        viewModelScope.launch {
+//            fetchAccountOptions()
+//        }
     }
 
     private var validationJob: Job? = null
