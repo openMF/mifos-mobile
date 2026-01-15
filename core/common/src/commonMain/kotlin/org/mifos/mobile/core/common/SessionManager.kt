@@ -28,6 +28,7 @@ class SessionManager {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     private var heartbeatJob: Job? = null
+
     @OptIn(ExperimentalAtomicApi::class)
     private val lastInteractionTime = AtomicLong(0L)
 
