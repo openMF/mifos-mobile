@@ -146,6 +146,14 @@ class ComposeAppViewModel(
             is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
 
             is AppAction.Internal.TimeBasedThemeUpdate -> handleTimeBasedThemeUpdate(action)
+
+            is AppAction.Logout -> handleUserInactivityLogout()
+        }
+    }
+
+    private fun handleUserInactivityLogout() {
+        viewModelScope.launch {
+            userPreferencesRepository.logOut()
         }
     }
 
@@ -261,4 +269,6 @@ sealed interface AppAction {
             val timeBasedTheme: TimeBasedTheme,
         ) : Internal()
     }
+
+    data object Logout : AppAction
 }

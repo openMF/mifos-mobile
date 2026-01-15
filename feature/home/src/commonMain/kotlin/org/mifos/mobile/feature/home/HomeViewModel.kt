@@ -21,6 +21,7 @@ import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -45,6 +46,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 internal class HomeViewModel(
     private val homeRepositoryImpl: HomeRepository,
     private val networkMonitor: NetworkMonitor,
+    private val sessionManager: SessionManager,
     userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : BaseViewModel<HomeState, HomeEvent, HomeAction>(
     initialState = HomeState(
@@ -58,6 +60,7 @@ internal class HomeViewModel(
     private var isHandlingNetworkChange = false
 
     init {
+        sessionManager.startSession()
         observeNetworkStatus()
     }
 

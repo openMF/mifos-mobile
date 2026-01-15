@@ -95,6 +95,8 @@ object Constants {
     const val MAKE_PAYMENT = "make_payments"
     const val LOAN_SUMMARY = "loan_summary"
 
+    const val TIMEOUT_SESSION_MS = 5 * 60 * 1000L
+
 //    Settings constants
     const val PROFILE = "profile"
     const val PASSWORD = "password"

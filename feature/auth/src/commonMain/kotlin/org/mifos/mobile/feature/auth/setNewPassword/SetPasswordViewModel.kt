@@ -25,6 +25,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.PasswordStrengthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -34,9 +35,15 @@ import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.auth.login.LoginRoute
 
-internal class SetPasswordViewModel : BaseViewModel<SetPasswordState, SetPasswordEvent, SetPasswordAction>(
+internal class SetPasswordViewModel(
+    sessionManager: SessionManager,
+) : BaseViewModel<SetPasswordState, SetPasswordEvent, SetPasswordAction>(
     initialState = SetPasswordState(dialogState = null),
 ) {
+
+    init {
+        sessionManager.stopSession()
+    }
 
     private var validationJob: Job? = null
     private var passwordStrengthJob: Job = Job()

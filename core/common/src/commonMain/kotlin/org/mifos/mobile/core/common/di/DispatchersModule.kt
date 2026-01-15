@@ -17,6 +17,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.MifosDispatchers
+import org.mifos.mobile.core.common.SessionManager
 
 val DispatchersModule = module {
     includes(ioDispatcherModule)
@@ -25,6 +26,7 @@ val DispatchersModule = module {
     single<CoroutineScope>(named("ApplicationScope")) {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
+    single { SessionManager() }
 }
 
 expect val ioDispatcherModule: Module

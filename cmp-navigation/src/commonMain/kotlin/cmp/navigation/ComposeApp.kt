@@ -23,11 +23,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp.navigation.rootnav.RootNavScreen
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.NetworkBanner
+import org.mifos.mobile.core.ui.utils.SessionHandler
 
 @Composable
 fun ComposeApp(
@@ -35,6 +38,7 @@ fun ComposeApp(
     handleAppLocale: (locale: String?) -> Unit,
     onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
+    sessionManager: SessionManager = koinInject(),
     viewModel: ComposeAppViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -59,25 +63,32 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+        SessionHandler(
+            onLogout = {
+                viewModel.trySendAction(AppAction.Logout)
+            },
+            sessionManager = sessionManager,
         ) {
-            Column(
-                modifier = modifier
+            Box(
+                modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding(),
+                    .background(MaterialTheme.colorScheme.surface),
             ) {
-                NetworkBanner(
-                    bannerState = uiState.networkBanner,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
+                ) {
+                    NetworkBanner(
+                        bannerState = uiState.networkBanner,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
 
-                RootNavScreen(
-                    modifier = Modifier,
-                    onSplashScreenRemoved = onSplashScreenRemoved,
-                )
+                    RootNavScreen(
+                        modifier = Modifier,
+                        onSplashScreenRemoved = onSplashScreenRemoved,
+                    )
+                }
             }
         }
     }
