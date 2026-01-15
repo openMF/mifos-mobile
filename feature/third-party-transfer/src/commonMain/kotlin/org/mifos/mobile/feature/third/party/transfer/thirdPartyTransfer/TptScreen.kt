@@ -33,20 +33,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.third_party_transfer.generated.resources.Res
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_fetching_account_balance
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_account_number
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_amount
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_available_balance
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_customer_name
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_destination
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_external_id
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_origin_account
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_product_name
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_remarks
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_tip
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_tip_action
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_transfer_button
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_unable_fetch_account_balance
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.formatAmount
@@ -58,8 +51,6 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
-import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPayFromDropdownUI
@@ -253,34 +244,12 @@ internal fun TptForm(
             label = stringResource(Res.string.feature_tpt_label_origin_account),
             selectedAccountNo = state.fromAccount?.accountNo ?: "",
             selectedAccountName = state.fromAccount?.clientName ?: "",
+            showExtendedDetails = true,
+            productName = state.fromAccountDetails?.savingsProductName,
+            availableBalance = state.fromAccountBalance?.let { formatAmount(it) },
+            isBalanceLoading = state.isBalanceLoading,
+            balanceError = state.balanceError,
         )
-
-        when {
-            state.isBalanceLoading -> {
-                Text(
-                    text = stringResource(Res.string.feature_tpt_fetching_account_balance),
-                    style = KptTheme.typography.labelSmall,
-                    color = KptTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(start = KptTheme.spacing.sm),
-                )
-            }
-
-            state.balanceError -> {
-                Text(
-                    text = stringResource(Res.string.feature_tpt_unable_fetch_account_balance),
-                    style = KptTheme.typography.labelSmall,
-                    color = KptTheme.colorScheme.error,
-                    modifier = Modifier.padding(start = KptTheme.spacing.sm),
-                )
-            }
-
-            state.fromAccountDetails != null -> {
-                OriginAccountDetails(
-                    account = state.fromAccount,
-                    details = state.fromAccountDetails,
-                )
-            }
-        }
 
         MifosDropDownDoubleTextField(
             optionsList = state.toAccountOptions.map
@@ -385,70 +354,6 @@ internal fun TptForm(
             Text(
                 text = stringResource(Res.string.feature_tpt_transfer_button),
                 style = KptTheme.typography.titleMedium,
-            )
-        }
-    }
-}
-
-@Composable
-private fun OriginAccountDetails(
-    account: AccountOption?,
-    details: SavingsWithAssociations,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(KptTheme.spacing.sm),
-        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
-    ) {
-        details.savingsProductName?.let {
-            Text(
-                text = stringResource(
-                    Res.string.feature_tpt_label_product_name,
-                    it,
-                ),
-                style = KptTheme.typography.titleSmall,
-            )
-        }
-
-        details.summary?.accountBalance?.let { balance ->
-            Text(
-                text = stringResource(
-                    Res.string.feature_tpt_label_available_balance,
-                    formatAmount(balance),
-                ),
-                style = KptTheme.typography.bodyMedium,
-                color = KptTheme.colorScheme.secondary,
-            )
-        }
-
-        account?.accountNo?.let {
-            Text(
-                text = stringResource(
-                    Res.string.feature_tpt_label_account_number,
-                    it,
-                ),
-                style = KptTheme.typography.bodySmall,
-            )
-        }
-
-        details.externalId?.let {
-            Text(
-                text = stringResource(
-                    Res.string.feature_tpt_label_external_id,
-                    it,
-                ),
-                style = KptTheme.typography.bodySmall,
-            )
-        }
-
-        account?.clientName?.let {
-            Text(
-                text = stringResource(
-                    Res.string.feature_tpt_label_customer_name,
-                    it,
-                ),
-                style = KptTheme.typography.bodySmall,
             )
         }
     }

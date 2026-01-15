@@ -25,15 +25,6 @@
     <string name="feature_tpt_label_remarks">Remarks</string>
     <string name="feature_tpt_tip">Not finding destination account?</string>
     <string name="feature_tpt_tip_action">Add Beneficiary!</string>
-
-    <string name="feature_tpt_fetching_account_balance">Fetching account balance…</string>
-    <string name="feature_tpt_unable_fetch_account_balance">Unable to fetch account balance</string>
-    <string name="feature_tpt_label_product_name">Product name: %1$s</string>
-    <string name="feature_tpt_label_available_balance">Available balance: %1$s</string>
-    <string name="feature_tpt_label_account_number">Account number: %1$s</string>
-    <string name="feature_tpt_label_external_id">External ID: %1$s</string>
-    <string name="feature_tpt_label_customer_name">Customer: %1$s</string>
-
     <!-- Button texts -->
     <string name="feature_tpt_transfer_button">Transfer Amount</string>
 
