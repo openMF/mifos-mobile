@@ -14,6 +14,9 @@
     <string name="no_data">ഡാറ്റ ഇല്ല</string>
     <string name="something_went_wrong">എന്തോ കുറ്റം സംഭവിച്ചിരിക്കുന്നു</string>
     <string name="core_common_working">കോർ പൊതുവായ പ്രവർത്തനം</string>
+    <string name="customer_name">ഉപഭോക്താവിന്റെ പേര്</string>
+    <string name="product">ഉൽപ്പന്നം</string>
+    <string name="error_loading_balance">බാലൻസ് ലോഡ് ചെയ്യുന്നതിൽ പിශക്</string>
 
     <string name="powered_by">പവേർഡ് ബൈ</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">ഈ കറൻസിക്കായി തുക സാധുവായ വർദ്ധനവിൽ ഉണ്ടായിരിക്കണം</string>
 
     <string name="savings_account">സേവിംഗ്സ് അക്കൗണ്ട്</string>
-    <string name="available_balance">കസ്റ്റമർ പേര്</string>
+    <string name="available_balance">ലഭ്യമായ ബാലൻസ്</string>
     <string name="select_other_payment_account">മറ്റൊരു പേയ്‌മെന്റ് അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
     <string name="available_balance_formatted">ലഭ്യമായ ബാലൻസ് - %1$s</string>
 

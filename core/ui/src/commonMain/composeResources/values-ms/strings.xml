@@ -14,6 +14,9 @@
     <string name="no_data">Tiada data</string>
     <string name="something_went_wrong">Ada sesuatu yang tidak kena</string>
     <string name="core_common_working">Kerja Biasa Teras</string>
+    <string name="customer_name">Nama Pelanggan</string>
+    <string name="product">Produk</string>
+    <string name="error_loading_balance">Ralat memuatkan baki</string>
 
     <string name="powered_by">Dikuasakan oleh</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Jumlah mestilah dalam kenaikan yang sah untuk mata wang ini</string>
 
     <string name="savings_account">Akaun Simpanan</string>
-    <string name="available_balance">Nama Pelanggan</string>
+    <string name="available_balance">Baki tersedia</string>
     <string name="select_other_payment_account">Pilih akaun pembayaran lain</string>
     <string name="available_balance_formatted">Baki yang ada - %1$s</string>
 

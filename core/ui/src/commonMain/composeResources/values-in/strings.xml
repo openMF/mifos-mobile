@@ -14,6 +14,9 @@
     <string name="no_data">Tidak Ada Data</string>
     <string name="something_went_wrong">Ada yang Salah</string>
     <string name="core_common_working">Kerja Inti Umum</string>
+    <string name="customer_name">Nama Pelanggan</string>
+    <string name="product">Produk</string>
+    <string name="error_loading_balance">Gagal memuat saldo</string>
 
     <string name="powered_by">Dipersembahkan oleh</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Jumlah harus dalam peningkatan yang valid untuk mata uang ini</string>
 
     <string name="savings_account">Rekening Tabungan</string>
-    <string name="available_balance">Nama Pelanggan</string>
+    <string name="available_balance">Saldo tersedia</string>
     <string name="select_other_payment_account">Pilih Rekening Pembayaran Lain</string>
     <string name="available_balance_formatted">Saldo Tersedia - %1$s</string>
 
