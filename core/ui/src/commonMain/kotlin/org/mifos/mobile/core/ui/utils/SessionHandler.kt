@@ -11,29 +11,24 @@ package org.mifos.mobile.core.ui.utils
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.changedToDown
 import androidx.compose.ui.input.pointer.pointerInput
-import kotlinx.coroutines.flow.collectLatest
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.SessionManager
 
 @Composable
 fun SessionHandler(
     sessionManager: SessionManager,
-    onLogout: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        sessionManager.logoutEvent.collectLatest {
-            onLogout()
-        }
-    }
+    val isExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
 
     Box(
         modifier = modifier.pointerInput(Unit) {
@@ -42,13 +37,21 @@ fun SessionHandler(
                     val event = awaitPointerEvent(pass = PointerEventPass.Initial)
 
                     if (event.changes.any { it.changedToDown() }) {
-                        sessionManager.userInteracted()
+                        if (isExpired) {
+                            event.changes.forEach { it.consume() }
+                        } else {
+                            sessionManager.userInteracted()
+                        }
                     }
                 }
             }
-        }.onKeyEvent { event ->
+        }.onPreviewKeyEvent { event ->
             if (event.type == KeyEventType.KeyUp) {
-                sessionManager.userInteracted()
+                if (isExpired) {
+                    return@onPreviewKeyEvent true
+                } else {
+                    sessionManager.userInteracted()
+                }
             }
             false
         },

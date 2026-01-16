@@ -14,4 +14,6 @@
     <string name="transfer">Transfer</string>
     <string name="profile">Profile</string>
     <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="session_expired_title">Session Expired</string>
+    <string name="session_expired_message">For your security, you have been logged out due to inactivity.</string>
 </resources>

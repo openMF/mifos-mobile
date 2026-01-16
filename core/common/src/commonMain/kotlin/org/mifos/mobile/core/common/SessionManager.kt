@@ -14,10 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.AtomicLong
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
@@ -36,12 +35,13 @@ class SessionManager {
     private val isMonitoring = AtomicBoolean(false)
     private val timeoutMs = Constants.TIMEOUT_SESSION_MS
 
-    private val _logoutEvent = MutableSharedFlow<Unit>()
-    val logoutEvent = _logoutEvent.asSharedFlow()
+    private val _isExpired = MutableStateFlow(false)
+    val isExpired = _isExpired.asStateFlow()
 
     @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     fun startSession() {
         if (isMonitoring.compareAndSet(expectedValue = false, newValue = true)) {
+            _isExpired.value = false
             lastInteractionTime.store(Clock.System.now().toEpochMilliseconds())
             heartbeatJob = startHeartbeat()
         }
@@ -49,6 +49,7 @@ class SessionManager {
 
     @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     fun userInteracted() {
+        if (_isExpired.value) return
         if (isMonitoring.load()) {
             lastInteractionTime.store(Clock.System.now().toEpochMilliseconds())
         }
@@ -57,6 +58,7 @@ class SessionManager {
     @OptIn(ExperimentalAtomicApi::class)
     fun stopSession() {
         isMonitoring.store(false)
+        _isExpired.value = false
         heartbeatJob?.cancel()
         heartbeatJob = null
     }
@@ -67,10 +69,7 @@ class SessionManager {
             while (isMonitoring.load()) {
                 val currentTime = Clock.System.now().toEpochMilliseconds()
                 if (currentTime - lastInteractionTime.load() >= timeoutMs) {
-                    withContext(Dispatchers.Main) {
-                        _logoutEvent.emit(Unit)
-                    }
-                    stopSession()
+                    _isExpired.value = true
                     break
                 }
                 delay(30_000)

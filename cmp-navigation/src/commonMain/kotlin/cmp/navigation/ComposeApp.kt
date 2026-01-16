@@ -23,14 +23,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp.navigation.rootnav.RootNavScreen
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.SessionManager
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.NetworkBanner
 import org.mifos.mobile.core.ui.utils.SessionHandler
+import org.mifos.mobile.navigation.generated.resources.Res
+import org.mifos.mobile.navigation.generated.resources.session_expired_message
+import org.mifos.mobile.navigation.generated.resources.session_expired_title
 
 @Composable
 fun ComposeApp(
@@ -43,6 +49,7 @@ fun ComposeApp(
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    val isSessionExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is AppEvent.ShowToast -> {}
@@ -63,10 +70,25 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
+        val dialogState = if (isSessionExpired) {
+            BasicDialogState.Shown(
+                title = stringResource(Res.string.session_expired_title),
+                message = stringResource(Res.string.session_expired_message),
+            )
+        } else {
+            BasicDialogState.Hidden
+        }
+
+        if (isSessionExpired) {
+            MifosBasicDialog(
+                visibilityState = dialogState,
+                onDismissRequest = {
+                    viewModel.trySendAction(AppAction.Logout)
+                },
+            )
+        }
+
         SessionHandler(
-            onLogout = {
-                viewModel.trySendAction(AppAction.Logout)
-            },
             sessionManager = sessionManager,
         ) {
             Box(
