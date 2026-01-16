@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,8 +10,8 @@
 package cmp.android.app
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -33,9 +33,9 @@ import kotlin.getValue
  * This class is used to set the content view of the activity.
  *
  * @constructor Create empty Main activity
- * @see ComponentActivity
+ * @see AppCompatActivity
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     /**
      * Called when the activity is starting.
      * This is where most initialization should go: calling [setContentView(int)] to inflate the activity's UI,
@@ -70,9 +70,15 @@ class MainActivity : ComponentActivity() {
                         AppCompatDelegate.setDefaultNightMode(it)
                     },
                     handleAppLocale = {
-                        it?.let {
+                        if (it.isNullOrBlank()) {
                             AppCompatDelegate.setApplicationLocales(
-                                LocaleListCompat.forLanguageTags(it),
+                                LocaleListCompat.getEmptyLocaleList(),
+                            )
+                        } else {
+                            AppCompatDelegate.setApplicationLocales(
+                                LocaleListCompat.forLanguageTags(
+                                    it,
+                                ),
                             )
                             Locale.setDefault(Locale(it))
                         }

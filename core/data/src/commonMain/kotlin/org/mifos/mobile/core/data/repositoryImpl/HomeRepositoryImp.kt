@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.accounts.toModel
+import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.NotificationRepository
 import org.mifos.mobile.core.model.entity.client.Client
@@ -30,10 +32,12 @@ class HomeRepositoryImp(
 
     override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> =
         dataManager.clientsApi.getClientAccounts(clientId)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
         return dataManager.clientsApi.getClientForId(clientId)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 

@@ -54,7 +54,7 @@ include(":core:network")
 include(":core:database")
 include(":core:datastore")
 include(":core:qrcode")
-//include(":core:testing")
+include(":core:testing")
 
 include(":core-base:datastore")
 include(":core-base:common")

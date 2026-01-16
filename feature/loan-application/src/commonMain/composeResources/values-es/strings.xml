@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Solicitar nuevo crédito</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Complete los detalles de la solicitud</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Nombre del solicitante</string>
+    <string name="feature_apply_loan_label_loan_product">Producto de crédito</string>
+    <string name="feature_apply_loan_label_purpose">Propósito del crédito</string>
+    <string name="feature_apply_loan_label_disbursement_date">Fecha de desembolso</string>
+    <string name="feature_apply_loan_label_principal_amount">Monto principal</string>
+    <string name="feature_apply_loan_label_currency">Moneda</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Continuar</string>
+    <string name="feature_apply_loan_button_ok">Aceptar</string>
+    <string name="feature_apply_loan_button_cancel">Cancelar</string>
+    <string name="feature_apply_loan_button_apply">Solicitar Crédito</string>
+    <string name="feature_button_next">Siguiente</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Se requiere el nombre del solicitante</string>
+    <string name="feature_apply_loan_error_name_too_short">El nombre del solicitante debe tener al menos 4 caracteres.</string>
+    <string name="feature_apply_loan_error_name_too_long">El nombre del solicitante no puede exceder los 100 caracteres</string>
+    <string name="feature_apply_loan_error_name_invalid_format">El nombre del solicitante contiene caracteres no válidos</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Se requiere producto de crédito</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Se requiere monto del capital</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Por favor, introduzca un formato de importe válido</string>
+    <string name="feature_apply_loan_error_amount_too_small">El monto del capital es demasiado pequeño</string>
+    <string name="feature_apply_loan_error_amount_too_large">El monto del capital excede el límite máximo</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">El monto tiene demasiados decimales para la moneda seleccionada</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Se requiere fecha de desembolso</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Por favor, introduzca un formato de fecha válido (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">La fecha de desembolso debe ser futura</string>
+    <string name="feature_apply_loan_error_date_out_of_range">La fecha de desembolso está demasiado lejana en el futuro (máximo 10 años)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Error interno del servidor. Inténtelo de nuevo</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Demasiados intentos fallidos. Inténtelo de nuevo.</string>
+    <string name="feature_apply_loan_error_submit_failed">No se pudo enviar la solicitud de crédito. Inténtelo de nuevo.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">¡Solicitud de crédito enviada!</string>
+    <string name="feature_apply_loan_success_draft_saved">Preregistro de solicitud guardada exitosamente</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">¡Cambios no guardados!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Tiene cambios sin guardar. ¿Está seguro de que quiere volver atrás?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Descartar</string>
+    <string name="feature_apply_loan_action_save_draft">Guardar preregistro</string>
+    <string name="feature_apply_loan_action_retry">Reintentar</string>
+    <string name="feature_apply_loan_action_cancel">Cancelar</string>
+    <string name="feature_apply_loan_action_continue">Continuar</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Introduzca su nombre completo</string>
+    <string name="feature_apply_loan_hint_loan_product">Seleccionar producto de crédito</string>
+    <string name="feature_apply_loan_hint_principal_amount">Ingrese el monto del crédito</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Seleccione la fecha de desembolso</string>
+    <string name="feature_apply_loan_hint_purpose">Describa brevemente el propósito</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Moneda cambiada. El importe será revalidado.</string>
+    <string name="feature_apply_loan_info_min_amount">Monto mínimo del crédito: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Monto máximo del crédito: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Confirmar detalles</string>
+
+    <string name="feature_apply_loan_status_success">Solicitud enviada</string>
+    <string name="feature_apply_loan_status_success_tip">Su solicitud de crédito ha sido enviada. Se le notificará una vez revisada.</string>
+    <string name="feature_apply_loan_status_success_action">Volver al Inicio</string>
+
+    <string name="feature_apply_loan_status_failure">Solicitud no enviada</string>
+    <string name="feature_apply_loan_status_failure_tip">Se produjo un error al enviar su solicitud de crédito. Inténtelo de nuevo.</string>
+    <string name="feature_apply_loan_status_failure_action">Intentar nuevamente</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Aplicar nuevo crédito</string>
+    <string name="feature_select_loan_type_choose_loan">Elija el tipo de crédito</string>
+    <string name="feature_select_loan_type_empty">Actualmente los productos de crédito no están disponibles</string>
+    <string name="feature_select_loan_type_network_issue">Asegúrese de conectarse a Internet.</string>
+    <string name="feature_loan_product_details_terms">Aceptar Términos &amp; Condiciones</string>
+
+
+    <string name="feature_loan_apply_loan">Aplicar %1$s Crédito</string>
+    <string name="feature_loan_get_loan">Obtener %1$s Crédito</string>
+    <string name="feature_loan_up_to">Hasta %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s a %2$s Interés</string>
+    <string name="feature_loan_terms_and_conditions">Términos &amp; Condiciones</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Sanción y desembolso de créditos</string>
+    <string name="feature_loan_interest_rate">Tasa de interés</string>
+    <string name="feature_loan_continue">Continuar</string>
+    <string name="feature_loan_repayment">Reembolso</string>
+    <string name="feature_loan_security_and_collateral">Seguridad y garantía</string>
+    <string name="feature_loan_insurance">Seguro</string>
+    <string name="feature_loan_default">Por defecto</string>
+    <string name="feature_loan_documentation">Documentación</string>
+    <string name="feature_loan_continue_legal_compliance">Cumplimiento legal</string>
+    <string name="feature_loan_amendments_and_termination">Modificaciones y terminación</string>
+    <string name="feature_loan_jurisdiction">Jurisdicción</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">El crédito personal se aprobará en función de la elegibilidad del solicitante, su estabilidad económica, su solvencia y las políticas crediticias internas del prestamista. El prestamista se reserva el derecho de aprobar o rechazar cualquier solicitud de crédito personal a su entera discreción, sin dar explicaciones. El monto del crédito aprobado podrá desembolsarse total o parcialmente, según el contrato de crédito y los requisitos de documentación. El desembolso está sujeto a la finalización satisfactoria de los procedimientos KYC, la verificación de la documentación presentada y el cumplimiento de todas las condiciones especificadas en la carta de aprobación.</string>
+    <string name="feature_personal_loan_interest_rate_description">El crédito personal puede tener un tipo de interés fijo o variable, según lo elija el prestatario al formalizar el crédito. En el caso de los créditos con tipo de interés variable, el tipo aplicable está sujeto a revisiones periódicas en función de los cambios en el tipo de referencia del prestamista. Dichos cambios serán vinculantes para el prestatario y podrán dar lugar a una variación en el importe de la cuota mensual o en el plazo del crédito, según lo considere necesario el prestamista.</string>
+    <string name="feature_personal_loan_repayment_details">El reembolso del crédito personal se realizará mediante cuotas mensuales equivalentes (EMI), que incluyen capital e intereses. Las cuotas comenzarán en la fecha especificada en el contrato de crédito y se mantendrán mensualmente hasta que se pague el importe total del crédito, junto con los intereses aplicables. Se podrán permitir pagos anticipados o parciales, de acuerdo con las políticas vigentes del prestamista, y estos pagos podrían conllevar ciertas comisiones, especialmente en el caso de los créditos a tipo fijo.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Los créditos personales suelen ser sin garantía y no requieren aval. Sin embargo, el prestamista se reserva el derecho de solicitar garantías o avales adicionales en casos excepcionales, dependiendo del perfil crediticio del prestatario y del monto del crédito. Dichos requisitos se especificarán claramente en la carta de autorización. El prestatario asumirá todos los costos asociados con la documentación o los trámites legales, si corresponde.</string>
+    <string name="feature_personal_loan_insurance_details">Si bien los créditos personales generalmente no requieren un seguro de activos, el prestamista puede recomendar al prestatario que opte por un seguro de vida para proteger el saldo pendiente del crédito en caso de fallecimiento. Esto no es obligatorio, pero es recomendable como medida de protección financiera para la familia o las personas a cargo del prestatario.</string>
+    <string name="feature_personal_loan_default_details">La falta de pago o el retraso en el pago de las cuotas mensuales constituirá un incumplimiento. En tales casos, el prestamista podrá iniciar procedimientos de recuperación para cobrar las cuotas pendientes, lo que puede incluir acciones legales. Se podrán aplicar intereses de mora y otros cargos sobre los importes vencidos. El incumplimiento continuo o reiterado puede afectar negativamente la calificación crediticia del prestatario y su futura capacidad de endeudamiento.</string>
+    <string name="feature_personal_loan_documentation_details">El prestatario debe presentar documentación precisa y completa, incluyendo, entre otros, comprobante de identidad, comprobante de domicilio, información de ingresos, extractos bancarios y cualquier otro documento solicitado por el prestamista. Cualquier discrepancia, tergiversación o falsificación en los documentos presentados puede resultar en el rechazo de la solicitud de crédito o la rescisión del contrato, con posibles consecuencias legales.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">El prestatario debe garantizar el pleno cumplimiento de todas las leyes locales, estatales y nacionales aplicables en relación con sus obligaciones financieras. Esto incluye el pago puntual de impuestos, el cumplimiento de los requisitos regulatorios y la presentación de documentos válidos. El prestamista no será responsable de ningún incumplimiento legal cometido por el prestatario.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">El prestamista podrá, ocasionalmente, revisar o actualizar estos términos y condiciones, previo aviso al prestatario. El contrato de crédito se considerará rescindido tras el reembolso total del crédito o mediante un procedimiento de ejecución hipotecaria iniciado por incumplimiento.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Todas las disputas que surjan de o en relación con el contrato de crédito personal serán competencia exclusiva de los tribunales del lugar del domicilio social del prestamista, a menos que se especifique lo contrario en el contrato.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Subir estados de cuenta bancarios</string>
+    <string name="feature_upload_docs_collateral">Cargar documentos de garantía</string>
+    <string name="feature_upload_docs_signature">Subir firma</string>
+
+    <string name="feature_upload_file_error">¡Algo salió mal! No se pudo cargar el archivo.</string>
+    <string name="feature_upload_statement_error">Por favor, cargue un extracto bancario</string>
+    <string name="feature_upload_property_document_error">Por favor, cargue un documento de propiedad</string>
+    <string name="feature_upload_signature_error">Por favor, cargue una firma</string>
+    <string name="feature_upload_documents_success_title">¡Documentos cargados!</string>
+
+    <string name="sign_here">Firmar aquí</string>
+    <string name="reset">Reiniciar</string>
+    <string name="sign">Firmar</string>
+    <string name="capture">Capturar</string>
+    <string name="attach">Adjuntar</string>
+    <string name="upload_signature">Subir firma</string>
+    <string name="save_and_submit">Guardar &amp; Enviar</string>
+</resources>

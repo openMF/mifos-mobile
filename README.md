@@ -26,10 +26,8 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 > **And Join our [slack](https://join.slack.com/t/mifos/shared_invite/zt-2wvi9t82t-DuSBdqdQVOY9fsqsLjkKPA) community channel `mifos-mobile` to discuss all things about Mifos Mobile development, and keep discussions focused and avoid cross-posting across channels.**
 > **Please join our daily Mobile Stand-Up on [Zoom](https://us02web.zoom.us/meeting/register/xV5scn0XQpGXM5aUDFmUIA).**
 
-### Demo credentials
-- **Fineract Instance**: `gsoc.mifos.community`
-- **Username**: `maria`
-- **Password**: `password`
+### Demo Credentials
+Access the Mifos Mobile demo credentials on our [Jira Wiki page](https://mifosforge.jira.com/wiki/spaces/MP/pages/4537024513/Welcome+to+the+Mifos+Mobile+Apps+Community#%F0%9F%93%B2-Mifos-Mobile-App).
 
 ### How to Contribute
 Thank you for your interest in contributing to the Mifos Mobile project by Mifos! We welcome all contributions and encourage you to follow these guidelines to ensure a smooth and efficient collaboration process.
