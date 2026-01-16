@@ -31,7 +31,7 @@ fun SessionHandler(
     val isExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
 
     Box(
-        modifier = modifier.pointerInput(Unit) {
+        modifier = modifier.pointerInput(isExpired) {
             awaitPointerEventScope {
                 while (true) {
                     val event = awaitPointerEvent(pass = PointerEventPass.Initial)
