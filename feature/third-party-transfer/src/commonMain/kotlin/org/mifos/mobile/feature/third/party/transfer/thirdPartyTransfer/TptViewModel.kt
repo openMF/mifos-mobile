@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,7 +19,6 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.Res
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_invalid
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_required
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_empty
-import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_invalid
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
@@ -29,9 +28,9 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.core.ui.utils.ValidationHelper
 
 /**
  * ViewModel for the Make Transfer screen.
@@ -162,11 +161,12 @@ internal class TptViewModel(
      */
     private fun handleFromAccountChange(fromAccount: String) {
         val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
+            .filterSavingsAccounts()
             .find { it.accountNo == fromAccount }
 
-        val toAccounts = state.accountOptionsTemplate.toAccountOptions.filter {
-            it.accountNo != fromAccount
-        }
+        val toAccounts = state.accountOptionsTemplate.toAccountOptions
+            .filter { it.accountNo != fromAccount }
+
         updateState {
             it.copy(
                 fromAccount = fromAccountSelected,
@@ -189,9 +189,9 @@ internal class TptViewModel(
         val toAccountSelected = state.accountOptionsTemplate.toAccountOptions
             .find { it.accountNo == toAccount }
 
-        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions.filter {
-            it.accountNo != toAccount
-        }
+        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
+            .filterSavingsAccounts()
+            .filter { it.accountNo != toAccount }
 
         updateState {
             it.copy(
@@ -314,7 +314,7 @@ internal class TptViewModel(
      */
     private fun validateAmount(amount: String) = when {
         amount.isBlank() -> ValidationResult.Error(Res.string.feature_tpt_error_amount_required)
-        amount.toIntOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
+        amount.toDoubleOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
         else -> ValidationResult.Success
     }
 
@@ -328,9 +328,6 @@ internal class TptViewModel(
         when {
             remark.isEmpty() ->
                 ValidationResult.Error(Res.string.feature_tpt_error_remarks_empty)
-
-            !ValidationHelper.isValidName(remark) ->
-                ValidationResult.Error(Res.string.feature_tpt_error_remarks_invalid)
 
             else -> ValidationResult.Success
         }
@@ -422,10 +419,14 @@ internal class TptViewModel(
             DataState.Loading -> showLoading()
 
             is DataState.Success -> {
+                val template = dataState.data
+
+                val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
+
                 updateState {
                     it.copy(
                         accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = dataState.data.fromAccountOptions,
+                        fromAccountOptions = savingsFromAccounts,
                         toAccountOptions = dataState.data.toAccountOptions,
                         uiState = ScreenUiState.Success,
                     )
@@ -553,7 +554,8 @@ internal sealed interface TptAction {
          * Internal action representing the result of fetching account options.
          * @property dataState The result of the fetch operation.
          */
-        data class ReceiveTransferTemplateResult(val dataState: DataState<AccountOptionsTemplate>) : Internal
+        data class ReceiveTransferTemplateResult(val dataState: DataState<AccountOptionsTemplate>) :
+            Internal
     }
 }
 
@@ -600,3 +602,9 @@ internal sealed class ValidationResult {
      */
     data class Error(val message: StringResource) : ValidationResult()
 }
+
+/**
+ * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
+ */
+private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
+    filter { it.accountType?.value == AccountType.SAVINGS.value }
