@@ -29,7 +29,6 @@ import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
-import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -61,14 +60,14 @@ fun MifosLabelValueCard(
         ) {
             Text(
                 text = label,
-                style = MifosTypography.bodySmall,
+                style = KptTheme.typography.bodySmall,
                 color = KptTheme.colorScheme.secondary,
 
             )
 
             BasicText(
                 text = value,
-                style = MifosTypography.bodyMediumEmphasized.copy(color = color),
+                style = KptTheme.typography.bodyMedium.copy(color = color),
                 autoSize = TextAutoSize.StepBased(
                     minFontSize = 10.sp,
                     maxFontSize = 60.sp,
