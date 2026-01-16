@@ -169,6 +169,7 @@
     <string name="password_update_success">Password updated successfully</string>
     <string name="password_update_success_message">You need to login again to use the services of the app.</string>
     <string name="password_update_failed">Failed to update password.Try Again</string>
+    <string name="feature_sign_in_no_linked_client_error">This account is not linked to any client. Please contact your administrator.</string>
     <string name="password_update_dialog_button">Login Now</string>
 
     <!-- Faq  -->

@@ -155,6 +155,13 @@ private fun LoginDialogs(
     when (dialogState) {
         is LoginState.DialogState.Error -> MifosBasicDialog(
             visibilityState = BasicDialogState.Shown(
+                message = stringResource(dialogState.message),
+            ),
+            onDismissRequest = onDismissRequest,
+        )
+
+        is LoginState.DialogState.ErrorString -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,

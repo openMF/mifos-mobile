@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_error
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
+import mifos_mobile.feature.auth.generated.resources.feature_sign_in_dont_have_an_account
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
@@ -95,7 +96,7 @@ class LoginViewModel(
                         isError = true,
                         uiState = ScreenUiState.Success,
                         showOverlay = false,
-                        dialogState = LoginState.DialogState.Error(action.loginResult.message),
+                        dialogState = LoginState.DialogState.ErrorString(action.loginResult.message),
                         userNameError = Res.string.feature_sign_in_username_error,
                         passwordError = Res.string.feature_sign_in_password_error,
                     )
@@ -109,6 +110,17 @@ class LoginViewModel(
             is DataState.Success -> {
                 updateState { it.copy(showOverlay = false) }
                 val user = action.loginResult.data
+                if (user.clients.isEmpty()) {
+                    updateState {
+                        it.copy(
+                            isError = true,
+                            dialogState = LoginState.DialogState.Error(
+                                Res.string.feature_sign_in_dont_have_an_account,
+                            ),
+                        )
+                    }
+                    return
+                }
                 val userData = UserData(
                     userId = user.userId,
                     userName = user.username.orEmpty(),
@@ -161,7 +173,8 @@ data class LoginState(
     val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
-        data class Error(val message: String) : DialogState
+        data class Error(val message: StringResource) : DialogState
+        data class ErrorString(val message: String) : DialogState
     }
 
     val isLoginButtonEnabled: Boolean

@@ -160,6 +160,7 @@ class UserPreferencesDataSource(
     suspend fun clearInfo() {
         withContext(dispatcher) {
             settings.putUserPreference(UserData.DEFAULT)
+            _userInfo.value = UserData.DEFAULT
             val cleared = settings.getSettingsPreference().copy(
                 isAuthenticated = false,
             )
