@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">अलीकडील व्यवहार</string>
+    <string name="no_transaction">कोणतेही व्यवहार नाहीत</string>
+    <string name="atm_icon">एटीएम चिन्ह</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">काहीतरी चूक झाली</string>
+    <string name="filter">फिल्टर</string>
+    <string name="filter_transactions">व्यवहार फिल्टर करा</string>
+    <string name="clear_all">फिल्टर साफ करा</string>
+    <string name="filter_by_account">खात्यानुसार फिल्टर करा:</string>
+    <string name="account_number_label">खाते क्रमांक: %1$s</string>
+    <string name="select_account">खाते निवडा</string>
+    <string name="balance">शिल्लक: %1$s %2$s</string>
+    <string name="account">खाते</string>
+    <string name="transaction_type">व्यवहाराचा प्रकार:</string>
+    <string name="all">सर्व</string>
+    <string name="debits">डेबिट</string>
+    <string name="credits">क्रेडिट</string>
+    <string name="apply_filters">फिल्टर लागू करा</string>
+
+    <string name="withdrawal">रक्कम काढणे</string>
+    <string name="deposit">जमा</string>
+</resources>
