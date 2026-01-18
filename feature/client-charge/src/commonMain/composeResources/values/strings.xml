@@ -33,6 +33,8 @@
     <string name="feature_client_charges_account_type_savings">Savings</string>
     <string name="feature_client_charges_account_type_loan">Loan</string>
     <string name="feature_client_charges_account_type_shares">Shares</string>
+    <string name="feature_client_charges_charge_id">ChargeId : %1$s</string>
+
 
 
     <string name="charge_details">Charge Details</string>

@@ -139,13 +139,11 @@ internal class ClientChargeViewModel(
                 handleLoanOrSavingsChargesResult(action.result)
 
             is ClientChargeAction.Internal.SavingsAccountsLoaded ->
-                updateAccounts(action.accounts)
-
+                updateSavingsAccounts(action.accounts)
             is ClientChargeAction.Internal.LoanAccountsLoaded ->
-                updateAccounts(action.accounts)
-
+                updateLoanAccounts(action.accounts)
             is ClientChargeAction.Internal.ShareAccountsLoaded ->
-                updateAccounts(action.accounts)
+                updateShareAccounts(action.accounts)
         }
     }
 
@@ -179,15 +177,20 @@ internal class ClientChargeViewModel(
         val previousId = state.chargeTypeId
         val previousType = state.chargeType
 
-        val newAccountObject = action.accountObject
-        val newChargeType = action.targetType
         val newFilter = action.filter
 
-        val newId = when (newChargeType) {
-            ChargeType.SAVINGS -> (newAccountObject as? SavingAccount)?.id
-            ChargeType.LOAN -> (newAccountObject as? LoanAccount)?.id
-            ChargeType.SHARE -> (newAccountObject as? ShareAccount)?.id
-            ChargeType.CLIENT -> null
+        val newChargeType = when (action.target) {
+            is ChargeAccountTarget.Savings -> ChargeType.SAVINGS
+            is ChargeAccountTarget.Loan -> ChargeType.LOAN
+            is ChargeAccountTarget.Share -> ChargeType.SHARE
+            ChargeAccountTarget.AllAccounts -> ChargeType.CLIENT
+        }
+
+        val newId = when (val target = action.target) {
+            is ChargeAccountTarget.Savings -> target.account.id
+            is ChargeAccountTarget.Loan -> target.account.id
+            is ChargeAccountTarget.Share -> target.account.id
+            ChargeAccountTarget.AllAccounts -> null
         }
 
         val newTitle = when (newChargeType) {
@@ -199,21 +202,9 @@ internal class ClientChargeViewModel(
 
         updateState {
             it.copy(
-                selectedSavingsAccount = if (newChargeType == ChargeType.SAVINGS) {
-                    newAccountObject as? SavingAccount
-                } else {
-                    null
-                },
-                selectedLoanAccount = if (newChargeType == ChargeType.LOAN) {
-                    newAccountObject as? LoanAccount
-                } else {
-                    null
-                },
-                selectedShareAccount = if (newChargeType == ChargeType.SHARE) {
-                    newAccountObject as? ShareAccount
-                } else {
-                    null
-                },
+                selectedSavingsAccount = (action.target as? ChargeAccountTarget.Savings)?.account,
+                selectedLoanAccount = (action.target as? ChargeAccountTarget.Loan)?.account,
+                selectedShareAccount = (action.target as? ChargeAccountTarget.Share)?.account,
                 activeFilter = newFilter,
                 showFilter = false,
                 chargeType = newChargeType,
@@ -229,59 +220,42 @@ internal class ClientChargeViewModel(
         }
     }
 
-    private fun updateAccounts(accounts: List<Any>) {
+    private fun updateSavingsAccounts(accounts: List<SavingAccount>) {
         if (accounts.isEmpty()) return
-        val first = accounts.first()
-
         updateState { state ->
-            when (first) {
-                is SavingAccount -> {
-                    val typedList = accounts.filterIsInstance<SavingAccount>()
-                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
-                    val isSavings = state.chargeType == ChargeType.SAVINGS
-                    val shouldSelectDefault = !state.canSwitchAccounts && isSavings
+            val default = accounts.firstOrNull { it.id == state.chargeTypeId }
+            val shouldSelectDefault = !state.canSwitchAccounts && state.chargeType == ChargeType.SAVINGS
 
-                    state.copy(
-                        savingsAccounts = typedList,
-                        selectedSavingsAccount = if (shouldSelectDefault) {
-                            default
-                        } else {
-                            state.selectedSavingsAccount
-                        },
-                    )
-                }
-                is LoanAccount -> {
-                    val typedList = accounts.filterIsInstance<LoanAccount>()
-                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
-                    val isLoan = state.chargeType == ChargeType.LOAN
-                    val shouldSelectDefault = !state.canSwitchAccounts && isLoan
+            state.copy(
+                savingsAccounts = accounts,
+                selectedSavingsAccount = if (shouldSelectDefault) default else state.selectedSavingsAccount,
+            )
+        }
+    }
 
-                    state.copy(
-                        loanAccounts = typedList,
-                        selectedLoanAccount = if (shouldSelectDefault) {
-                            default
-                        } else {
-                            state.selectedLoanAccount
-                        },
-                    )
-                }
-                is ShareAccount -> {
-                    val typedList = accounts.filterIsInstance<ShareAccount>()
-                    val default = typedList.firstOrNull { it.id == state.chargeTypeId }
-                    val isShare = state.chargeType == ChargeType.SHARE
-                    val shouldSelectDefault = !state.canSwitchAccounts && isShare
+    private fun updateLoanAccounts(accounts: List<LoanAccount>) {
+        if (accounts.isEmpty()) return
+        updateState { state ->
+            val default = accounts.firstOrNull { it.id == state.chargeTypeId }
+            val shouldSelectDefault = !state.canSwitchAccounts && state.chargeType == ChargeType.LOAN
 
-                    state.copy(
-                        shareAccounts = typedList,
-                        selectedShareAccount = if (shouldSelectDefault) {
-                            default
-                        } else {
-                            state.selectedShareAccount
-                        },
-                    )
-                }
-                else -> state
-            }
+            state.copy(
+                loanAccounts = accounts,
+                selectedLoanAccount = if (shouldSelectDefault) default else state.selectedLoanAccount,
+            )
+        }
+    }
+
+    private fun updateShareAccounts(accounts: List<ShareAccount>) {
+        if (accounts.isEmpty()) return
+        updateState { state ->
+            val default = accounts.firstOrNull { it.id == state.chargeTypeId }
+            val shouldSelectDefault = !state.canSwitchAccounts && state.chargeType == ChargeType.SHARE
+
+            state.copy(
+                shareAccounts = accounts,
+                selectedShareAccount = if (shouldSelectDefault) default else state.selectedShareAccount,
+            )
         }
     }
 
@@ -294,10 +268,18 @@ internal class ClientChargeViewModel(
                 if (dataState is DataState.Success) {
                     val accounts = when (accountType) {
                         Constants.SAVINGS_ACCOUNTS -> dataState.data.savingsAccounts.orEmpty()
-                        Constants.LOAN_ACCOUNTS -> dataState.data.loanAccounts
-                        Constants.SHARE_ACCOUNTS -> dataState.data.shareAccounts
+                            .filter { it.status?.active == true }
+
+                        Constants.LOAN_ACCOUNTS ->
+                            dataState.data.loanAccounts
+                                .filter { it.status?.active == true }
+
+                        Constants.SHARE_ACCOUNTS ->
+                            dataState.data.shareAccounts
+                                .filter { it.status?.active == true }
+
                         else -> emptyList()
-                    }.filter { isAccountActive(it) }
+                    }
 
                     when (accountType) {
                         Constants.SAVINGS_ACCOUNTS -> sendAction(
@@ -319,12 +301,6 @@ internal class ClientChargeViewModel(
                 }
             }
         }
-    }
-
-    private fun isAccountActive(account: Any): Boolean {
-        return (account as? SavingAccount)?.status?.active == true ||
-            (account as? LoanAccount)?.status?.active == true ||
-            (account as? ShareAccount)?.status?.active == true
     }
 
     private fun handleNetworkResult(isOnline: Boolean) {
@@ -501,8 +477,7 @@ sealed interface ClientChargeAction {
     data object ClearFilter : ClientChargeAction
 
     data class ApplyFilter(
-        val accountObject: Any?,
-        val targetType: ChargeType,
+        val target: ChargeAccountTarget,
         val filter: ChargeFilterUtil,
     ) : ClientChargeAction
 
@@ -525,4 +500,13 @@ sealed interface ClientChargeEvent {
     data class ShowToast(val message: String) : ClientChargeEvent
     data object Navigate : ClientChargeEvent
     data class OnChargeClick(val charge: Charge) : ClientChargeEvent
+}
+
+sealed class ChargeAccountTarget {
+
+    data object AllAccounts : ChargeAccountTarget()
+
+    data class Savings(val account: SavingAccount) : ChargeAccountTarget()
+    data class Loan(val account: LoanAccount) : ChargeAccountTarget()
+    data class Share(val account: ShareAccount) : ChargeAccountTarget()
 }

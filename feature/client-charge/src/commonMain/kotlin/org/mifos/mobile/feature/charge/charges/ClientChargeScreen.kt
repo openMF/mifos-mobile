@@ -44,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,9 +75,6 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
-import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -213,12 +211,11 @@ private fun ClientChargeScreen(
                 ) {
                     ChargeFilterSheetContent(
                         state = state,
-                        onApply = { accountObj, type, filter ->
+                        onApply = { target, filter ->
                             onAction(
                                 ClientChargeAction.ApplyFilter(
-                                    accountObj,
-                                    type,
-                                    filter,
+                                    target = target,
+                                    filter = filter,
                                 ),
                             )
                         },
@@ -268,7 +265,7 @@ private fun ClientChargeDialogs(
 @Composable
 fun ChargeFilterSheetContent(
     state: ClientChargeState,
-    onApply: (Any?, ChargeType, ChargeFilterUtil) -> Unit,
+    onApply: (ChargeAccountTarget, ChargeFilterUtil) -> Unit,
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -276,7 +273,7 @@ fun ChargeFilterSheetContent(
     val loanLabel = stringResource(Res.string.feature_client_charges_account_type_loan)
     val sharesLabel = stringResource(Res.string.feature_client_charges_account_type_shares)
 
-    var selectedTabLabel by remember {
+    var selectedTabLabel by rememberSaveable {
         mutableStateOf(
             when {
                 state.selectedLoanAccount != null || state.chargeType == ChargeType.LOAN -> loanLabel
@@ -286,19 +283,29 @@ fun ChargeFilterSheetContent(
         )
     }
 
-    var selectedAccountObject by remember {
+    var selectedTarget by remember {
         mutableStateOf(
-            state.selectedSavingsAccount
-                ?: state.selectedLoanAccount ?: state.selectedShareAccount,
+            when {
+                state.selectedSavingsAccount != null ->
+                    ChargeAccountTarget.Savings(state.selectedSavingsAccount)
+
+                state.selectedLoanAccount != null ->
+                    ChargeAccountTarget.Loan(state.selectedLoanAccount)
+
+                state.selectedShareAccount != null ->
+                    ChargeAccountTarget.Share(state.selectedShareAccount)
+
+                else -> ChargeAccountTarget.AllAccounts
+            },
         )
     }
 
     var selectedFilter by remember { mutableStateOf(state.activeFilter) }
 
-    val currentAccountList: List<Any> = when (selectedTabLabel) {
-        savingsLabel -> state.savingsAccounts
-        loanLabel -> state.loanAccounts
-        sharesLabel -> state.shareAccounts
+    val currentAccountList: List<ChargeAccountTarget> = when (selectedTabLabel) {
+        savingsLabel -> state.savingsAccounts.map { ChargeAccountTarget.Savings(it) }
+        loanLabel -> state.loanAccounts.map { ChargeAccountTarget.Loan(it) }
+        sharesLabel -> state.shareAccounts.map { ChargeAccountTarget.Share(it) }
         else -> emptyList()
     }
 
@@ -319,15 +326,15 @@ fun ChargeFilterSheetContent(
                 selectedTabLabel = selectedTabLabel,
                 onTabSelected = { newTab ->
                     selectedTabLabel = newTab
-                    selectedAccountObject = null
+                    selectedTarget = ChargeAccountTarget.AllAccounts
                 },
             )
 
             if (currentAccountList.isNotEmpty()) {
                 AccountDropdownSection(
                     accounts = currentAccountList,
-                    selectedAccount = selectedAccountObject,
-                    onAccountSelected = { selectedAccountObject = it },
+                    selectedTarget = selectedTarget,
+                    onTargetSelected = { selectedTarget = it },
                 )
             }
         }
@@ -341,13 +348,7 @@ fun ChargeFilterSheetContent(
 
         FilterApplyButton(
             onClick = {
-                val targetType = when (selectedTabLabel) {
-                    savingsLabel -> ChargeType.SAVINGS
-                    loanLabel -> ChargeType.LOAN
-                    sharesLabel -> ChargeType.SHARE
-                    else -> ChargeType.CLIENT
-                }
-                onApply(selectedAccountObject, targetType, selectedFilter)
+                onApply(selectedTarget, selectedFilter)
             },
         )
         Spacer(modifier = Modifier.height(KptTheme.spacing.lg))
@@ -409,9 +410,9 @@ private fun AccountTypeSection(
 
 @Composable
 private fun AccountDropdownSection(
-    accounts: List<Any>,
-    selectedAccount: Any?,
-    onAccountSelected: (Any?) -> Unit,
+    accounts: List<ChargeAccountTarget>,
+    selectedTarget: ChargeAccountTarget,
+    onTargetSelected: (ChargeAccountTarget) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -438,7 +439,7 @@ private fun AccountDropdownSection(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    val (_, accNo) = getAccountDetails(selectedAccount)
+                    val (_, accNo) = getAccountDetails(selectedTarget)
                     Text(
                         text = accNo ?: stringResource(
                             Res.string.feature_client_charges_all_accounts,
@@ -465,7 +466,7 @@ private fun AccountDropdownSection(
                         )
                     },
                     onClick = {
-                        onAccountSelected(null)
+                        onTargetSelected(ChargeAccountTarget.AllAccounts)
                         isExpanded = false
                     },
                 )
@@ -489,7 +490,7 @@ private fun AccountDropdownSection(
                             }
                         },
                         onClick = {
-                            onAccountSelected(account)
+                            onTargetSelected(account)
                             isExpanded = false
                         },
                     )
@@ -561,12 +562,12 @@ private fun FilterApplyButton(onClick: () -> Unit) {
     }
 }
 
-private fun getAccountDetails(account: Any?): Pair<String?, String?> {
-    return when (account) {
-        is SavingAccount -> account.productName to account.accountNo
-        is LoanAccount -> account.productName to account.accountNo
-        is ShareAccount -> account.productName to account.accountNo
-        else -> null to null
+private fun getAccountDetails(target: ChargeAccountTarget): Pair<String?, String?> {
+    return when (target) {
+        is ChargeAccountTarget.Savings -> target.account.productName to target.account.accountNo
+        is ChargeAccountTarget.Loan -> target.account.productName to target.account.accountNo
+        is ChargeAccountTarget.Share -> target.account.productName to target.account.accountNo
+        ChargeAccountTarget.AllAccounts -> null to null
     }
 }
 

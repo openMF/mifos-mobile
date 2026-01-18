@@ -31,6 +31,7 @@ import mifos_mobile.feature.client_charge.generated.resources.amount_paid
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
 import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_charge_id
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -95,7 +96,10 @@ fun ClientChargeItem(
             )
             // TODO: in Figma account Number is there instead of charge id. Refactor it
             Text(
-                text = "ChargeId : ${charge.chargeId}",
+                text = stringResource(
+                    Res.string.feature_client_charges_charge_id,
+                    charge.chargeId.toString(),
+                ),
                 style = MifosTypography.bodySmall,
             )
 
