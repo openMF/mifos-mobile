@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<resources>
+
+    <string name="recent_transactions">ఇటీవలి ఖాతా లావాదేవీలు</string>
+    <string name="no_transaction">లావాదేవీలు లేవు</string>
+    <string name="atm_icon">ఏటీఎం సూచిక</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">లోపం సంభవించింది</string>
+    <string name="filter">వడపోత</string>
+    <string name="filter_transactions">లావాదేవీల వడపోత</string>
+    <string name="clear_all">అన్నింటిని తొలగించండి</string>
+    <string name="filter_by_account">ఖాతా ఆధారంగా వడపోసండి:</string>
+    <string name="account_number_label">ఖాతా సంఖ్య: %1$s</string>
+    <string name="select_account">ఖాతాను ఎంపిక చేయండి</string>
+    <string name="balance">శేష మొత్తం: %1$s %2$s</string>
+    <string name="account">ఖాతా</string>
+    <string name="transaction_type">లావాదేవీ రకం:</string>
+    <string name="all">అన్నీ</string>
+    <string name="debits">నామాలు (డెబిట్)</string>
+    <string name="credits">జమాలు (క్రెడిట్)</string>
+    <string name="apply_filters">వడపోతలను అమలు చేయండి</string>
+
+</resources>

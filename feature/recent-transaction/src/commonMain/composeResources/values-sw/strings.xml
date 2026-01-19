@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="recent_transactions">Miamala ya Hivi Karibuni</string>
+    <string name="no_transaction">Hakuna miamala</string>
+    <string name="atm_icon">Ikoni ya ATM</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Kuna hitilafu imetokea</string>
+    <string name="filter">Kichujio</string>
+    <string name="filter_transactions">Chuja miamala</string>
+    <string name="clear_all">Futa yote</string>
+    <string name="filter_by_account">Chuja kwa akaunti:</string>
+    <string name="account_number_label">Namba ya akaunti: %1$s</string>
+    <string name="select_account">Chagua akaunti</string>
+    <string name="balance">Salio: %1$s %2$s</string>
+    <string name="account">Akaunti</string>
+    <string name="transaction_type">Aina ya muamala:</string>
+    <string name="all">Zote</string>
+    <string name="debits">Madeni</string>
+    <string name="credits">Malipo</string>
+    <string name="apply_filters">Tekeleza vichujio</string>
+
+</resources>

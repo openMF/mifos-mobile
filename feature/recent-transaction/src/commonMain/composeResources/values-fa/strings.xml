@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="recent_transactions">تراکنش‌های اخیر</string>
+    <string name="no_transaction">هیچ تراکنشی وجود ندارد</string>
+    <string name="atm_icon">آیکون خودپرداز</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">خطایی رخ داده است</string>
+    <string name="filter">فیلتر</string>
+    <string name="filter_transactions">فیلتر تراکنش‌ها</string>
+    <string name="clear_all">پاک کردن همه</string>
+    <string name="filter_by_account">فیلتر بر اساس حساب:</string>
+    <string name="account_number_label">شماره حساب: %1$s</string>
+    <string name="select_account">انتخاب حساب</string>
+    <string name="balance">موجودی: %1$s %2$s</string>
+    <string name="account">حساب</string>
+    <string name="transaction_type">نوع تراکنش:</string>
+    <string name="all">همه</string>
+    <string name="debits">برداشت‌ها</string>
+    <string name="credits">واریزها</string>
+    <string name="apply_filters">اعمال فیلترها</string>
+
+</resources>

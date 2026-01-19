@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<resources>
+
+    <string name="recent_transactions">Transaksi Terbaru</string>
+    <string name="no_transaction">Tidak Ada Transaksi</string>
+    <string name="atm_icon">Ikon ATM</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Terjadi Kesalahan</string>
+    <string name="filter">Filter</string>
+    <string name="filter_transactions">Filter Transaksi</string>
+    <string name="clear_all">Hapus Semua</string>
+    <string name="filter_by_account">Filter Berdasarkan Rekening:</string>
+    <string name="account_number_label">No. Rekening: %1$s</string>
+    <string name="select_account">Pilih Rekening</string>
+    <string name="balance">Saldo: %1$s %2$s</string>
+    <string name="account">Rekening</string>
+    <string name="transaction_type">Jenis Transaksi:</string>
+    <string name="all">Semua</string>
+    <string name="debits">Debit</string>
+    <string name="credits">Kredit</string>
+    <string name="apply_filters">Terapkan Filter</string>
+
+</resources>

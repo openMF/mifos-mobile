@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="recent_transactions">ប្រតិបត្តិការថ្មីៗ</string>
+    <string name="no_transaction">មិនមានប្រតិបត្តិការ</string>
+    <string name="atm_icon">រូបតំណាង អេធីអឹម</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">មានកំហុសមួយបានកើតឡើង</string>
+    <string name="filter">តម្រង</string>
+    <string name="filter_transactions">តម្រងប្រតិបត្តិការ</string>
+    <string name="clear_all">លុបទាំងអស់</string>
+    <string name="filter_by_account">តម្រងតាមគណនី៖</string>
+    <string name="account_number_label">លេខគណនី៖ %1$s</string>
+    <string name="select_account">ជ្រើសរើសគណនី</string>
+    <string name="balance">សមតុល្យ៖ %1$s %2$s</string>
+    <string name="account">គណនី</string>
+    <string name="transaction_type">ប្រភេទប្រតិបត្តិការ៖</string>
+    <string name="all">ទាំងអស់</string>
+    <string name="debits">ឥណពន្ធ</string>
+    <string name="credits">ឥណទាន</string>
+    <string name="apply_filters">អនុវត្តតម្រង</string>
+
+</resources>

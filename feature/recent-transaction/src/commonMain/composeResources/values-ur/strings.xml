@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <string name="recent_transactions">حالیہ لین دین</string>
+    <string name="no_transaction">کوئی لین دین نہیں</string>
+    <string name="atm_icon">اے ٹی ایم آئیکن</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">کچھ غلط ہو گیا</string>
+    <string name="filter">فلٹر</string>
+    <string name="filter_transactions">لین دین کو فلٹر کریں</string>
+    <string name="clear_all">سب صاف کریں</string>
+    <string name="filter_by_account">اکاؤنٹ کے مطابق فلٹر کریں:</string>
+    <string name="account_number_label">اکاؤنٹ نمبر: %1$s</string>
+    <string name="select_account">اکاؤنٹ منتخب کریں</string>
+    <string name="balance">بیلنس: %1$s %2$s</string>
+    <string name="account">اکاؤنٹ</string>
+    <string name="transaction_type">لین دین کی قسم:</string>
+    <string name="all">تمام</string>
+    <string name="debits">ڈیبٹ</string>
+    <string name="credits">کریڈٹ</string>
+    <string name="apply_filters">فلٹر لاگو کریں</string>
+
+</resources>

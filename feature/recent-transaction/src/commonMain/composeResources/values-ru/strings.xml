@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="recent_transactions">Последние операции</string>
+    <string name="no_transaction">Нет операций</string>
+    <string name="atm_icon">Иконка банкомата</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Произошла ошибка</string>
+    <string name="filter">Фильтр</string>
+    <string name="filter_transactions">Фильтрация операций</string>
+    <string name="clear_all">Очистить всё</string>
+    <string name="filter_by_account">Фильтр по счёту:</string>
+    <string name="account_number_label">№ счёта: %1$s</string>
+    <string name="select_account">Выбрать счёт</string>
+    <string name="balance">Баланс: %1$s %2$s</string>
+    <string name="account">Счёт</string>
+    <string name="transaction_type">Тип операции:</string>
+    <string name="all">Все</string>
+    <string name="debits">Списания</string>
+    <string name="credits">Зачисления</string>
+    <string name="apply_filters">Применить фильтры</string>
+
+</resources>
