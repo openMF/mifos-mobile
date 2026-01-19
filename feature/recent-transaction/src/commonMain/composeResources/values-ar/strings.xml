@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
 
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
 <resources>
 
     <string name="recent_transactions">المعاملات الأخيرة</string>
@@ -11,7 +19,7 @@
     <string name="filter">تصفية</string>
     <string name="filter_transactions">تصفية المعاملات</string>
     <string name="clear_all">مسح الكل</string>
-    <string name="filter_by_account">التصفية حسب الحساب :</string>
+    <string name="filter_by_account">   التصفية حسب الحساب:</string>
     <string name="account_number_label">رقم الحساب: %1$s</string>
     <string name="select_account">اختر الحساب</string>
     <string name="balance">الرصيد: %1$s %2$s</string>
