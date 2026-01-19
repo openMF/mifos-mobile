@@ -1,2 +1,12 @@
-json_key_file("cmp-android/playStorePublishServiceCredentialsFile.json")
-package_name("org.mifos.mobile") # e.g. org.mifos.mobile
+# Load project configuration using absolute path
+# require_relative doesn't work in AppFile due to eval context
+project_dir = File.expand_path('..', __dir__)
+require File.join(project_dir, 'fastlane-config', 'project_config')
+
+# Android configuration
+json_key_file(FastlaneConfig::ProjectConfig::ANDROID[:play_store_json_key])
+package_name(FastlaneConfig::ProjectConfig.android_package_name)
+
+# iOS configuration  
+apple_id(FastlaneConfig::ProjectConfig::IOS[:app_identifier])
+team_id(FastlaneConfig::ProjectConfig::IOS[:team_id])

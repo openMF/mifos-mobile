@@ -1,11 +1,11 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.ui
 
@@ -40,6 +40,36 @@ actual object ShareUtils {
         FileKit.download(
             bytes = byte,
             fileName = "$title.png",
+        )
+    }
+
+    actual fun openUrl(url: String) {
+    }
+
+    actual fun openAppInfo() {
+    }
+
+    actual fun callPhone(number: String) {
+    }
+
+    actual fun sendEmail(to: String, subject: String?, body: String?) {
+    }
+
+    actual fun sendViaSMS(number: String, message: String) {
+    }
+
+    actual fun copyText(text: String) {
+    }
+
+    actual suspend fun shareApp(storeLink: String, message: String) {
+        val shareContent = if (message.isNotEmpty()) {
+            "$message\n$storeLink"
+        } else {
+            storeLink
+        }
+        FileKit.download(
+            bytes = shareContent.encodeToByteArray(),
+            fileName = "share_app.txt",
         )
     }
 }

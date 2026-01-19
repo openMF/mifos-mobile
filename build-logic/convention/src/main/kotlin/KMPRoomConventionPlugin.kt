@@ -1,10 +1,10 @@
 import androidx.room.gradle.RoomExtension
 import com.google.devtools.ksp.gradle.KspExtension
+import org.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.mifos.mobile.libs
 
 class KMPRoomConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -24,9 +24,8 @@ class KMPRoomConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                "implementation"(libs.findLibrary("androidx.room.runtime").get())
-                "implementation"(libs.findLibrary("androidx.room.ktx").get())
                 // Adding ksp dependencies for multiple platforms
+                "implementation"(libs.findLibrary("androidx.room.ktx").get())
                 listOf(
                     "kspDesktop",
                     "kspAndroid",
@@ -36,6 +35,8 @@ class KMPRoomConventionPlugin : Plugin<Project> {
                     // Add any other platform you may support
                 ).forEach { platform ->
                     add(platform, libs.findLibrary("androidx.room.compiler").get())
+//                    Kotlin Extensions and Coroutines support for Room
+//                    add(platform, libs.findLibrary("androidx.room.ktx").get())
                 }
             }
         }
