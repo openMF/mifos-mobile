@@ -42,7 +42,7 @@ expect fun LocalManagerProvider(
  * Provides access to the app review manager throughout the app.
  */
 val LocalAppReviewManager: ProvidableCompositionLocal<AppReviewManager> = compositionLocalOf {
-    NoOpAppReviewManager
+    error("CompositionLocal AppReviewManager not present")
 }
 
 /**
@@ -57,9 +57,4 @@ val LocalIntentManager: ProvidableCompositionLocal<IntentManager> = compositionL
  */
 val LocalAppUpdateManager: ProvidableCompositionLocal<AppUpdateManager> = compositionLocalOf {
     error("CompositionLocal LocalAppUpdateManager not present")
-}
-
-object NoOpAppReviewManager : AppReviewManager {
-    override fun promptForReview() = Unit
-    override fun promptForCustomReview() = Unit
 }
