@@ -10,9 +10,11 @@
 package org.mifos.mobile.core.ui.utils
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
@@ -21,6 +23,7 @@ import androidx.compose.ui.input.pointer.changedToDown
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.mifos.mobile.core.common.SessionManager
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun SessionHandler(
@@ -31,30 +34,33 @@ fun SessionHandler(
     val isExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
 
     Box(
-        modifier = modifier.pointerInput(isExpired) {
-            awaitPointerEventScope {
-                while (true) {
-                    val event = awaitPointerEvent(pass = PointerEventPass.Initial)
+        modifier = modifier
+            .fillMaxSize()
+            .then(if (isExpired) Modifier.blur(KptTheme.spacing.md) else Modifier)
+            .pointerInput(isExpired) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent(pass = PointerEventPass.Initial)
 
-                    if (event.changes.any { it.changedToDown() }) {
-                        if (isExpired) {
-                            event.changes.forEach { it.consume() }
-                        } else {
-                            sessionManager.userInteracted()
+                        if (event.changes.any { it.changedToDown() }) {
+                            if (isExpired) {
+                                event.changes.forEach { it.consume() }
+                            } else {
+                                sessionManager.userInteracted()
+                            }
                         }
                     }
                 }
-            }
-        }.onPreviewKeyEvent { event ->
-            if (event.type == KeyEventType.KeyUp) {
-                if (isExpired) {
-                    return@onPreviewKeyEvent true
-                } else {
-                    sessionManager.userInteracted()
+            }.onPreviewKeyEvent { event ->
+                if (event.type == KeyEventType.KeyUp) {
+                    if (isExpired) {
+                        return@onPreviewKeyEvent true
+                    } else {
+                        sessionManager.userInteracted()
+                    }
                 }
-            }
-            false
-        },
+                false
+            },
     ) {
         content()
     }

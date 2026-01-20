@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,6 +36,7 @@ import org.mifos.mobile.core.ui.utils.SessionHandler
 import org.mifos.mobile.navigation.generated.resources.Res
 import org.mifos.mobile.navigation.generated.resources.session_expired_message
 import org.mifos.mobile.navigation.generated.resources.session_expired_title
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun ComposeApp(
@@ -94,7 +94,7 @@ fun ComposeApp(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(KptTheme.colorScheme.surface),
             ) {
                 Column(
                     modifier = modifier
