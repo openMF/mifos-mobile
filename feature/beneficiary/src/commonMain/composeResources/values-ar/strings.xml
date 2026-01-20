@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">هل أنت متأكد أنك تريد حذف هذا المستفيد؟</string>
     <string name="login_using_password_confirmation">هل أنت متأكد أنك تريد تسجيل الدخول باستخدام كلمة المرور؟</string>
     <string name="delete">حذف</string>
+    <string name="update">تحديث</string>
     <string name="beneficiary_deleted_successfully">تم حذف المستفيد بنجاح</string>
     <string name="third_party_transfer">تحويل من طرف ثالث</string>
     <string name="total_loan">إجمالي القرض</string>

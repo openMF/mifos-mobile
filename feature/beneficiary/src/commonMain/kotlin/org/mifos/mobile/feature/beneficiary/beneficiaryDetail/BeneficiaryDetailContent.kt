@@ -29,9 +29,11 @@ import androidx.compose.ui.Modifier
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary_name
+import mifos_mobile.feature.beneficiary.generated.resources.delete
 import mifos_mobile.feature.beneficiary.generated.resources.office_name
 import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.transfer_limit
+import mifos_mobile.feature.beneficiary.generated.resources.update
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
@@ -148,7 +150,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
-                text = "Delete",
+                text = stringResource(Res.string.delete),
                 color = KptTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -171,7 +173,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
-                text = "Update",
+                text = stringResource(Res.string.update),
                 color = KptTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )

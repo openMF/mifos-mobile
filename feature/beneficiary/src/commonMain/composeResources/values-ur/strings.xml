@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">بنیفیشریز حاصل کرنے میں ناکام</string>
+    <string name="error_fetching_beneficiary_template">بنیفیشری ٹیمپلیٹ حاصل کرنے میں ناکام</string>
+    <string name="error_fetching_template">ٹیمپلیٹ حاصل کرنے میں ناکام</string>
+    <string name="error_creating_beneficiary">بنیفیشری بنانے میں ناکام</string>
+    <string name="error_updating_beneficiary">بنیفیشری اپ ڈیٹ کرنے میں ناکام</string>
+    <string name="error_deleting_beneficiary">بنیفیشری حذف کرنے میں ناکام</string>
+    <string name="error_loan_account_withdraw">لون اکاؤنٹ وڈرال کرنے میں خرابی</string>
+    <string name="error_fetching_third_party_transfer_template">تیسری پارٹی ٹرانسفر ٹیمپلیٹ حاصل کرنے میں خرابی</string>
+    <string name="no_beneficiary_found_please_add">فی الحال، آپ کے پاس کوئی بنیفیشری نہیں ہے۔ براہ کرم بنیفیشری شامل کریں</string>
+    <string name="no_filtered_beneficiary_found">دیے گئے فلٹر کے لیے کوئی بنیفیشری نہیں ملا</string>
+    <string name="beneficiary">بنیفیشری</string>
+    <string name="manage_beneficiaries">بنیفیشریز کا انتظام کریں</string>
+    <string name="beneficiaries">بنیفیشریز</string>
+    <string name="beneficiary_detail">بنیفیشری تفصیل</string>
+    <string name="beneficiary_name">بنیفیشری کا نام</string>
+    <string name="account_type">اکاؤنٹ کی قسم</string>
+    <string name="transfer_limit">ٹرانسفر کی حد</string>
+    <string name="add_beneficiary">بنیفیشری شامل کریں</string>
+    <string name="office_name">آفس کا نام</string>
+    <string name="select_account_type">اکاؤنٹ کی قسم منتخب کریں*</string>
+    <string name="submit_beneficiary">بنیفیشری جمع کروائیں</string>
+    <string name="enter_office_name">بنیفیشری آفس کا نام درج کریں</string>
+    <string name="enter_beneficiary_name">بنیفیشری کا نام درج کریں</string>
+    <string name="enter_transfer_limit">ٹرانسفر کی حد درج کریں</string>
+    <string name="enter_account_number">بنیفیشری اکاؤنٹ نمبر درج کریں</string>
+    <string name="choose_account_type">ڈراپ ڈاؤن سے اکاؤنٹ کی قسم منتخب کریں</string>
+    <string name="beneficiary_created_successfully">بنیفیشری کامیابی سے بنایا گیا</string>
+    <string name="beneficiary_updated_successfully">بنیفیشری کامیابی سے اپ ڈیٹ کیا گیا</string>
+    <string name="update_beneficiary">بنیفیشری اپ ڈیٹ کریں</string>
+    <string name="delete_beneficiary">بنیفیشری حذف کریں</string>
+    <string name="delete_beneficiary_confirmation">کیا آپ واقعی اس بنیفیشری کو حذف کرنا چاہتے ہیں</string>
+    <string name="login_using_password_confirmation">کیا آپ واقعی پاس ورڈ استعمال کر کے لاگ ان کرنا چاہتے ہیں؟</string>
+    <string name="delete">حذف کریں</string>
+    <string name="update">اپ ڈیٹ</string>
+    <string name="beneficiary_deleted_successfully">بنیفیشری کامیابی سے حذف کیا گیا</string>
+    <string name="third_party_transfer">تیسری پارٹی ٹرانسفر</string>
+    <string name="total_loan">کل لون</string>
+    <string name="total_saving">کل بچت</string>
+    <string name="accounts_overview">اکاؤنٹس کا جائزہ</string>
+    <string name="show_hide_total_saving_amount">کل بچت کی رقم دکھائیں یا چھپائیں</string>
+    <string name="show_hide_total_loan_amount">کل لون کی رقم دکھائیں یا چھپائیں</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">سروے</string>
+    <string name="activation_date">ایکٹیویشن کی تاریخ</string>
+    <string name="groups">گروپس</string>
+    <string name="user_details">صارف کی تفصیلات</string>
+    <string name="client_type">کلائنٹ کی قسم</string>
+    <string name="client_classification">کلائنٹ کی درجہ بندی</string>
+    <string name="select_mode">موڈ منتخب کریں</string>
+    <string name="add_beneficiary_option">اپنے اکاؤنٹ میں تیسری پارٹی بنیفیشریز شامل کریں۔\nیا تو دستی طور پر درج کریں یا اکاؤنٹ QR کوڈ اسکین کریں</string>
+    <string name="invalid_amount">غلط رقم</string>
+    <string name="account_number">اکاؤنٹ نمبر</string>
+    <string name="client_name">کلائنٹ کا نام</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="internet_not_connected">براہ کرم یقینی بنائیں کہ آپ انٹرنیٹ سے منسلک ہیں</string>
+    <string name="add">شامل کریں</string>
+    <string name="scan">اسکین کریں</string>
+    <string name="upload_qr_code">QR اپ لوڈ کریں</string>
+    <string name="beneficiary_name_label">بنیفیشری کا نام</string>
+    <string name="office_label">آفس</string>
+    <string name="account_type_label">اکاؤنٹ کی قسم</string>
+    <string name="account_number_label">اکاؤنٹ نمبر</string>
+    <string name="transfer_limit_label">ٹرانسفر کی حد</string>
+    <string name="account_type_savings">بچت</string>
+    <string name="account_type_loan">لون</string>
+    <string name="account_type_share">شیئر</string>
+    <string name="validate_details">تفصیلات کی توثیق کریں</string>
+    <string name="confirm_details">تفصیلات کی تصدیق کریں</string>
+    <string name="beneficiary_creation_failed">بنیفیشری کی تخلیق ناکام</string>
+    <string name="beneficiary_updation_failed">بنیفیشری کی اپ ڈیٹیشن ناکام</string>
+    <string name="try_again">دوبارہ کوشش کریں</string>
+    <string name="back_to_home">گھر پر واپس جائیں</string>
+    <string name="feature_savings_filter">فلٹرز</string>
+    <string name="feature_savings_reset">ری سیٹ کریں</string>
+    <string name="feature_savings_apply">لاگو کریں</string>
+    <string name="feature_filters_count">%1$s منتخب</string>
+    <string name="filter_account_type">اکاؤنٹ کی قسم</string>
+    <string name="filter_loan_account">لون اکاؤنٹ</string>
+    <string name="filter_savings_account">بچت اکاؤنٹ</string>
+    <string name="filter_linked_with">لنکڈ ود</string>
+    <string name="filter_self">خود</string>
+    <string name="filter_other_clients">دیگر کلائنٹس</string>
+    <string name="beneficiary_created_successfully_account">اکاؤنٹ %1$s کے لیے بنیفیشری کامیابی سے بنایا گیا، بنیفیشری کا نام %2$s۔</string>
+    <string name="beneficiary_updated_successfully_account">بنیفیشری کا نام %1$s کے لیے بنیفیشری کامیابی سے اپ ڈیٹ کیا گیا، ٹرانسفر کی حد %2$d۔</string>
+    <string name="skip_the_form">فارم کو چھوڑ دیں</string>
+    <string name="upload_or_scan_qr_code">QR کوڈ اپ لوڈ یا اسکین کریں</string>
+    <string name="filter">فلٹر</string>
+    <string name="linked_with">لنکڈ ود</string>
+    <string name="type_of_account">اکاؤنٹ کی قسم</string>
+    <string name="selected_count">%1$d منتخب</string>
+    <string name="filter_icon_description">فلٹر آئیکن</string>
+    <string name="feature_generic_error_server">ہماری طرف سے سرور کی پریشانی، مزید آگے نہیں بڑھ سکتے، تھوڑی دیر بعد دوبارہ کوشش کریں</string>
+</resources>
