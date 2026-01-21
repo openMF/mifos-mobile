@@ -14,6 +14,9 @@
     <string name="no_data">දත්ත නැත</string>
     <string name="something_went_wrong">යමක් වැරදී ඇත</string>
     <string name="core_common_working">හරියටම නිවැරදි කොර් දේවල්</string>
+    <string name="customer_name">පාරිභෝගිකයාගේ නම</string>
+    <string name="product">නිෂ්පාදනය</string>
+    <string name="error_loading_balance">ශේෂය ලබා ගැනීමේ දෝෂයකි</string>
 
     <string name="powered_by">බලගෙන ඇති</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">මුදල් ප්‍රමාණය මෙම කාසි වර්ගය සඳහා වලංගු වර්ධනයක් තුළ තියෙන්න යුතුය</string>
 
     <string name="savings_account">ඉඩුම් ගිණුම</string>
-    <string name="available_balance">ප්‍රයෝජනය කළ හැකි ශේෂය</string>
+    <string name="available_balance">පවතින ශේෂය</string>
     <string name="select_other_payment_account">වෙනත් ගිණුමක් තෝරන්න</string>
     <string name="available_balance_formatted">ප්‍රයෝජනය කළ හැකි ශේෂය - %1$s</string>
 

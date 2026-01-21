@@ -18,4 +18,6 @@ fun BeneficiaryPayload.toDto(): BeneficiaryCreatePayloadDto =
         name = name,
         accountNumber = accountNumber,
         accountType = accountType,
+        transferLimit = transferLimit,
+        officeName = officeName,
     )

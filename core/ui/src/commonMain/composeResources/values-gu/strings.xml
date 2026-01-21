@@ -14,6 +14,9 @@
     <string name="no_data">કોઈ ડેટા નથી</string>
     <string name="something_went_wrong">કંઈક ખોટું થયું</string>
     <string name="core_common_working">કોર કૉમન વર્કિંગ</string>
+    <string name="customer_name">ગ્રાહકનું નામ</string>
+    <string name="product">ઉત્પાદન</string>
+    <string name="error_loading_balance">બેલેન્સ લોડ કરવામાં ભૂલ</string>
 
     <string name="powered_by">દ્વારા સમર્થિત</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">આ ચલણ માટે રકમ માન્ય વધારામાં હોવી જરૂરી છે</string>
 
     <string name="savings_account">બચત ખાતું</string>
-    <string name="available_balance">ગ્રાહકનું નામ</string>
+    <string name="available_balance">ઉપલબ્ધ બેલેન્સ</string>
     <string name="select_other_payment_account">બીજું ચૂકવણી ખાતું પસંદ કરો</string>
     <string name="available_balance_formatted">ઉપલબ્ધ શેષ - %1$s</string>
 

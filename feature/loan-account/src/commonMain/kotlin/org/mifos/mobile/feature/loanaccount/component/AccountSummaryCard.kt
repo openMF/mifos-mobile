@@ -47,6 +47,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.LoanStatus
 import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.component1
 import kotlin.collections.component2
@@ -127,7 +128,13 @@ fun AccountSummaryCard(
                                 style = MifosTypography.labelMedium,
                                 textAlign = TextAlign.Right,
                                 color = if (key == Res.string.feature_loan_account_status_label) {
-                                    AppColors.customEnable
+                                    when (value) {
+                                        LoanStatus.ACTIVE.status -> AppColors.customEnable
+                                        LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                        LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
+                                            KptTheme.colorScheme.error
+                                        else -> KptTheme.colorScheme.secondary
+                                    }
                                 } else {
                                     KptTheme.colorScheme.secondary
                                 },

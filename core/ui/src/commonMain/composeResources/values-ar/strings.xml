@@ -14,6 +14,9 @@
     <string name="no_data">لا توجد بيانات</string>
     <string name="something_went_wrong">حدث خطأ ما</string>
     <string name="core_common_working">العمل المشترك الأساسي</string>
+    <string name="customer_name">اسم العميل</string>
+    <string name="product">المنتج</string>
+    <string name="error_loading_balance">خطأ في تحميل الرصيد</string>
 
     <string name="powered_by">مدعوم من</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">يجب أن يكون المبلغ في زيادات صحيحة لهذه العملة</string>
 
     <string name="savings_account">حساب التوفير</string>
-    <string name="available_balance">اسم العميل</string>
+    <string name="available_balance">الرصيد المتاح</string>
     <string name="select_other_payment_account">اختر حساب دفع آخر</string>
     <string name="available_balance_formatted">الرصيد المتاح - %1$s</string>
 
