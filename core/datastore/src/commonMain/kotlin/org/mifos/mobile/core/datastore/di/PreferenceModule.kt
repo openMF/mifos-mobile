@@ -13,6 +13,8 @@ import com.russhwolf.settings.Settings
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.MifosDispatchers
+import org.mifos.mobile.core.common.SessionStorage
+import org.mifos.mobile.core.datastore.DatastoreSessionStorage
 import org.mifos.mobile.core.datastore.UserPreferencesDataSource
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepositoryImpl
@@ -34,4 +36,6 @@ val PreferencesModule = module {
             unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
         )
     }
+
+    single<SessionStorage> { DatastoreSessionStorage(get()) }
 }

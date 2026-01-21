@@ -26,7 +26,7 @@ val DispatchersModule = module {
     single<CoroutineScope>(named("ApplicationScope")) {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
-    single { SessionManager() }
+    single { SessionManager(get()) }
 }
 
 expect val ioDispatcherModule: Module

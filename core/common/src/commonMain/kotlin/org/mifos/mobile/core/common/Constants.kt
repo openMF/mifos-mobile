@@ -96,6 +96,7 @@ object Constants {
     const val LOAN_SUMMARY = "loan_summary"
 
     const val TIMEOUT_SESSION_MS = 5 * 60 * 1000L
+    const val THROTTLE_DISK_SAVE_MS = 2000L
 
 //    Settings constants
     const val PROFILE = "profile"

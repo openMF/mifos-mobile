@@ -17,9 +17,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp.navigation.rootnav.RootNavScreen
 import org.jetbrains.compose.resources.stringResource
@@ -49,7 +53,22 @@ fun ComposeApp(
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                sessionManager.checkExpirationNow()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     val isSessionExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
+    val showDialog by sessionManager.shouldShowDialog.collectAsStateWithLifecycle()
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is AppEvent.ShowToast -> {}
@@ -70,7 +89,7 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        val dialogState = if (isSessionExpired) {
+        val dialogState = if (isSessionExpired && showDialog) {
             BasicDialogState.Shown(
                 title = stringResource(Res.string.session_expired_title),
                 message = stringResource(Res.string.session_expired_message),
@@ -79,7 +98,7 @@ fun ComposeApp(
             BasicDialogState.Hidden
         }
 
-        if (isSessionExpired) {
+        if (dialogState is BasicDialogState.Shown) {
             MifosBasicDialog(
                 visibilityState = dialogState,
                 onDismissRequest = {
@@ -88,6 +107,11 @@ fun ComposeApp(
             )
         }
 
+        LaunchedEffect(isSessionExpired, showDialog) {
+            if (isSessionExpired && !showDialog) {
+                viewModel.trySendAction(AppAction.Logout)
+            }
+        }
         SessionHandler(
             sessionManager = sessionManager,
         ) {

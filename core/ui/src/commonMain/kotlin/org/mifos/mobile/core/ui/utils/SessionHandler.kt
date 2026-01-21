@@ -42,12 +42,10 @@ fun SessionHandler(
                     while (true) {
                         val event = awaitPointerEvent(pass = PointerEventPass.Initial)
 
-                        if (event.changes.any { it.changedToDown() }) {
-                            if (isExpired) {
-                                event.changes.forEach { it.consume() }
-                            } else {
-                                sessionManager.userInteracted()
-                            }
+                        if (isExpired) {
+                            event.changes.forEach { it.consume() }
+                        } else if (event.changes.any { it.changedToDown() }) {
+                            sessionManager.userInteracted()
                         }
                     }
                 }
