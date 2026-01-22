@@ -28,6 +28,17 @@ import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * ViewModel for managing the state and business logic of the Recent Transactions feature.
+ *
+ * Handles account fetching, transaction synchronization, and complex filtering logic
+ * based on transaction type (Credit/Debit) and specific savings accounts.
+ *
+ * @property accountsRepositoryImpl Accesses general account listing data.
+ * @property savingsAccountRepositoryImpl Fetches detailed savings associations and transactions.
+ * @property networkMonitor Observes real-time connectivity status.
+ * @property userPreferencesRepository Retrieves stored user-specific identifiers like Client ID.
+ */
 internal class RecentTransactionViewModel(
     private val accountsRepositoryImpl: AccountsRepository,
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
@@ -115,6 +126,10 @@ internal class RecentTransactionViewModel(
         }
     }
 
+    /**
+     * Handles incoming [RecentTransactionAction] from the UI.
+     * Includes navigation requests, filter applications, and data refresh triggers.
+     */
     override fun handleAction(action: RecentTransactionAction) {
         when (action) {
             is RecentTransactionAction.OnNavigateBackClick ->
@@ -442,7 +457,6 @@ internal data class RecentTransactionUiState(
  * Defines all possible user interactions and internal events for the RecentTransactionScreen.
  */
 sealed interface RecentTransactionAction {
-    // User-initiated actions
     data object OnNavigateBackClick : RecentTransactionAction
     data object Refresh : RecentTransactionAction
     data object ToggleFilter : RecentTransactionAction
