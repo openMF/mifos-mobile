@@ -13,7 +13,6 @@ package org.mifos.mobile.feature.recent.transaction.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.navigation
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.ui.composableWithSlideTransitions
 import org.mifos.mobile.feature.recent.transaction.screen.RecentTransactionScreen
