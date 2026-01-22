@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -13,8 +13,11 @@
     <string name="back_online">De nuevo en línea</string>
     <string name="retry">Reintentar</string>
     <string name="no_data">Sin información</string>
-    <string name="something_went_wrong">Ocurrio un error</string>
+    <string name="something_went_wrong">Ocurrió un error</string>
     <string name="core_common_working">Core Common Funcionando</string>
+    <string name="customer_name">Nombre del cliente</string>
+    <string name="product">Producto</string>
+    <string name="error_loading_balance">Error al cargar el saldo</string>
 
     <string name="powered_by">Desarrollado por</string>
 

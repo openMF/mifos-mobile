@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,7 +21,10 @@ import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
-import org.mifos.mobile.core.data.mapper.toDomain
+import org.mifos.mobile.core.data.mapper.loan.toModel
+import org.mifos.mobile.core.data.mapper.payloads.toDto
+import org.mifos.mobile.core.data.mapper.templates.toModel
+import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransactionDetails
@@ -42,7 +45,7 @@ class LoanRepositoryImp(
         try {
             dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
                 .collect { response ->
-                    emit(DataState.Success(response))
+                    emit(DataState.Success(response.toModel()))
                 }
         } catch (exception: Exception) {
             emit(DataState.Error(exception))
@@ -55,7 +58,7 @@ class LoanRepositoryImp(
     ): Flow<DataState<TransactionDetails>> {
         return dataManager.loanAccountsListApi
             .getLoanTransactionDetails(loanId, transactionId)
-            .map { it.toDomain() }
+            .map { it.toModel() }
             .asDataStateFlow()
             .flowOn(ioDispatcher)
     }
@@ -67,7 +70,7 @@ class LoanRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw)
+                    dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw?.toDto())
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -82,11 +85,13 @@ class LoanRepositoryImp(
 
     override fun template(clientId: Long?): Flow<DataState<LoanTemplate?>> {
         return dataManager.loanAccountsListApi.getLoanTemplate(clientId = clientId)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
     override fun getLoanTemplateByProduct(clientId: Long?, productId: Int?): Flow<DataState<LoanTemplate?>> {
         return dataManager.loanAccountsListApi.getLoanTemplateByProduct(clientId, productId)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }

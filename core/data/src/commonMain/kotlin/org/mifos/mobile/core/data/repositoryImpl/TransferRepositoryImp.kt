@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransferResponse
@@ -35,8 +36,10 @@ class TransferRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = when (transferType) {
-                    TransferType.SELF -> dataManager.savingAccountsListApi.makeTransfer(payload)
-                    else -> dataManager.thirdPartyTransferApi.makeTransfer(payload)
+                    TransferType.SELF ->
+                        dataManager.savingAccountsListApi.makeTransfer(payload.toDto())
+                    else ->
+                        dataManager.thirdPartyTransferApi.makeTransfer(payload.toDto())
                 }
 
                 val transferResponse = Json.decodeFromString<TransferResponse>(response.bodyAsText())

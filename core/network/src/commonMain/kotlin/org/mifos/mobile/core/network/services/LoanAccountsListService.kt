@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,51 +17,51 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanTransactionDetails
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
-import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
-import org.mifos.mobile.core.model.entity.payload.LoansPayload
-import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
+import org.mifos.mobile.core.network.dto.loanAccount.LoanAccountResponseDto
+import org.mifos.mobile.core.network.dto.loanAccount.LoanWithAssociationsResponseDto
+import org.mifos.mobile.core.network.dto.payloads.LoanAccountApplicationPayloadDto
+import org.mifos.mobile.core.network.dto.payloads.LoanWithdrawPayloadDto
+import org.mifos.mobile.core.network.dto.templates.loan.LoanTemplateResponseDto
+import org.mifos.mobile.core.network.dto.transaction.LoanTransactionDetailsResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface LoanAccountsListService {
     @GET(ApiEndPoints.LOANS + "/{loanId}/")
-    fun getLoanAccountsDetail(@Path("loanId") loanId: Long): Flow<LoanAccount>?
+    fun getLoanAccountsDetail(@Path("loanId") loanId: Long): Flow<LoanAccountResponseDto>?
 
     @GET(ApiEndPoints.LOANS + "/{loanId}")
     fun getLoanWithAssociations(
         @Path("loanId") loanId: Long,
         @Query("associations") associationType: String?,
-    ): Flow<LoanWithAssociations>
+    ): Flow<LoanWithAssociationsResponseDto>
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
-    fun getLoanTemplate(@Query("clientId") clientId: Long?): Flow<LoanTemplate>
+    fun getLoanTemplate(@Query("clientId") clientId: Long?): Flow<LoanTemplateResponseDto>
 
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
     fun getLoanTemplateByProduct(
         @Query("clientId") clientId: Long?,
         @Query("productId") productId: Int?,
-    ): Flow<LoanTemplate>
+    ): Flow<LoanTemplateResponseDto>
 
     @POST(ApiEndPoints.LOANS)
-    suspend fun createLoansAccount(@Body loansPayload: LoansPayload?): HttpResponse
+    suspend fun createLoansAccount(@Body loansPayload: LoanAccountApplicationPayloadDto?): HttpResponse
 
     @PUT(ApiEndPoints.LOANS + "/{loanId}/")
     suspend fun updateLoanAccount(
         @Path("loanId") loanId: Long,
-        @Body loansPayload: LoansPayload?,
+        @Body loansPayload: LoanAccountApplicationPayloadDto?,
     ): HttpResponse
 
     @POST(ApiEndPoints.LOANS + "/{loanId}?command=withdrawnByApplicant")
     suspend fun withdrawLoanAccount(
         @Path("loanId") loanId: Long,
-        @Body loanWithdraw: LoanWithdraw?,
+        @Body loanWithdraw: LoanWithdrawPayloadDto?,
     ): HttpResponse
 
     @GET(ApiEndPoints.LOANS + "/{loanId}/transactions/{transactionId}")
     fun getLoanTransactionDetails(
         @Path("loanId") loanId: Long,
         @Path("transactionId") transactionId: Long,
-    ): Flow<LoanTransactionDetails>
+    ): Flow<LoanTransactionDetailsResponseDto>
 }
