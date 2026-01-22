@@ -20,23 +20,28 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
@@ -124,6 +129,28 @@ internal fun HomeContent(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Repository for persistence
+    val preferencesRepository: org.mifos.mobile.core.datastore.UserPreferencesRepository =
+        org.koin.compose.koinInject()
+
+    // All available service routes
+    val allRoutes = remember { serviceCards.map { it.route }.toSet() }
+
+    // Load saved services
+    val savedServices = remember { preferencesRepository.selectedServices }
+    var selectedServices by remember {
+        mutableStateOf(if (savedServices.isEmpty()) allRoutes else savedServices)
+    }
+    var isEditMode by remember { mutableStateOf(false) }
+
+    fun toggleEditMode() {
+        if (isEditMode) {
+            // Save
+            preferencesRepository.saveSelectedServices(selectedServices)
+        }
+        isEditMode = !isEditMode
+    }
+
     MifosElevatedScaffold(
         modifier = modifier,
         brandIcon = mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
@@ -204,17 +231,43 @@ internal fun HomeContent(
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
 
-                    Text(
-                        text = stringResource(Res.string.feature_home_services),
-                        style = MifosTypography.titleMediumEmphasized,
-                        color = KptTheme.colorScheme.onSurface,
-                    )
+                    // Services header with edit icon
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_home_services),
+                            style = MifosTypography.titleMediumEmphasized,
+                            color = KptTheme.colorScheme.onSurface,
+                        )
+                        Icon(
+                            imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
+                            contentDescription = "Edit services",
+                            tint = KptTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .size(16.dp)
+                                .clickable { toggleEditMode() },
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                     ServiceBox(
                         items = state.items,
-                        onAction = onAction,
+                        isEditMode = isEditMode,
+                        selectedServices = selectedServices,
+                        onServiceClick = { route ->
+                            if (isEditMode) {
+                                selectedServices = if (selectedServices.contains(route)) {
+                                    selectedServices - route
+                                } else {
+                                    selectedServices + route
+                                }
+                            } else {
+                                onAction(HomeAction.OnNavigate(route))
+                            }
+                        },
                     )
                 }
             }
@@ -227,12 +280,15 @@ internal fun HomeContent(
 @Composable
 internal fun ServiceBox(
     items: ImmutableList<ServiceItem>,
-    onAction: (HomeAction) -> Unit,
+    isEditMode: Boolean,
+    selectedServices: Set<String>,
+    onServiceClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val columnCount = 4
     val spacing = DesignToken.spacing.medium
-    val rows = items.chunked(columnCount)
+    val displayItems = if (isEditMode) items else items.filter { selectedServices.contains(it.route) }
+    val rows = displayItems.chunked(columnCount)
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -244,6 +300,7 @@ internal fun ServiceBox(
                 horizontalArrangement = Arrangement.spacedBy(spacing),
             ) {
                 rowItems.forEach { item ->
+                    val isSelected = selectedServices.contains(item.route)
                     Box(
                         modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.TopCenter,
@@ -251,7 +308,9 @@ internal fun ServiceBox(
                         ServiceItemCard(
                             title = item.title,
                             icon = item.icon,
-                            onClick = { onAction(HomeAction.OnNavigate(item.route)) },
+                            isSelected = isSelected,
+                            isEditMode = isEditMode,
+                            onClick = { onServiceClick(item.route) },
                         )
                     }
                 }
@@ -269,31 +328,51 @@ internal fun ServiceItemCard(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = true,
+    isEditMode: Boolean = false,
 ) {
     Column(
-        modifier = modifier
-            .padding(vertical = KptTheme.spacing.sm),
+        modifier = modifier.padding(vertical = KptTheme.spacing.sm),
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            modifier = Modifier
-                .clickable {
-                    onClick()
-                },
+            modifier = Modifier.clickable { onClick() },
         ) {
             Image(
                 modifier = Modifier
                     .border(
                         DesignToken.strokes.thin,
-                        KptTheme.colorScheme.secondaryContainer,
+                        if (isEditMode && isSelected) {
+                            KptTheme.colorScheme.primary
+                        } else {
+                            KptTheme.colorScheme.outlineVariant
+                        },
                         KptTheme.shapes.medium,
                     )
                     .padding(DesignToken.padding.dp14),
                 imageVector = icon,
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(KptTheme.colorScheme.tertiary),
+                colorFilter = ColorFilter.tint(
+                    if (isEditMode && isSelected) {
+                        KptTheme.colorScheme.primary
+                    } else {
+                        KptTheme.colorScheme.tertiary
+                    },
+                ),
             )
+            // Checkmark icon for selected items in edit mode
+            if (isEditMode && isSelected) {
+                Icon(
+                    imageVector = MifosIcons.CheckCircle1,
+                    contentDescription = "Selected",
+                    tint = KptTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
+                        .size(KptTheme.spacing.md),
+                )
+            }
         }
 
         Text(

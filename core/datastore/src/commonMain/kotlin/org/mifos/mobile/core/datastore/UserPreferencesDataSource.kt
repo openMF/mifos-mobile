@@ -32,6 +32,7 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 private const val USER_DATA = "userData"
 private const val APP_SETTINGS = "appSettings"
 
+@Suppress("TooManyFunctions")
 class UserPreferencesDataSource(
     private val settings: Settings,
     private val dispatcher: CoroutineDispatcher,
@@ -235,8 +236,25 @@ class UserPreferencesDataSource(
             _settingsInfo.value = newPreference
         }
 
+    suspend fun setSelectedServices(selectedServices: Set<String>) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(selectedServices = selectedServices)
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    fun saveSelectedServicesDirectly(services: Set<String>) {
+        settings.putString(SELECTED_SERVICES_KEY, services.joinToString(","))
+    }
+
+    fun getSelectedServicesDirectly(): Set<String> {
+        val stored = settings.getString(SELECTED_SERVICES_KEY, "")
+        return if (stored.isEmpty()) emptySet() else stored.split(",").toSet()
+    }
+
     companion object {
         private const val PROFILE_IMAGE = "preferences_profile_image"
+        private const val SELECTED_SERVICES_KEY = "selected_services"
     }
 }
 
