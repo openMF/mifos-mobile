@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,9 +16,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.mapper.beneficiary.toModel
+import org.mifos.mobile.core.data.mapper.payloads.toDto
+import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -34,6 +38,7 @@ class BeneficiaryRepositoryImp(
     override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> = flow {
         try {
             dataManager.beneficiaryApi.beneficiaryTemplate()
+                .map { it.toModel() }
                 .collect { response ->
                     emit(DataState.Success(response))
                 }
@@ -45,8 +50,8 @@ class BeneficiaryRepositoryImp(
     override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload?): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
-
+                val response =
+                    dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload?.toDto())
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -65,7 +70,8 @@ class BeneficiaryRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload)
+                val response =
+                    dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload?.toDto())
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -99,7 +105,7 @@ class BeneficiaryRepositoryImp(
         try {
             dataManager.beneficiaryApi.beneficiaryList()
                 .collect { response ->
-                    emit(DataState.Success(response))
+                    emit(DataState.Success(response.map { it.toModel() }))
                 }
         } catch (e: Exception) {
             emit(DataState.Error(e, null))

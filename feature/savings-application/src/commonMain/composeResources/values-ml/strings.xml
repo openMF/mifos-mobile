@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_savings_title">സേവിംഗ്സ് അപേക്ഷ വിവരങ്ങൾ</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_savings_section_fill_details">അപേക്ഷ വിവരങ്ങൾ പൂരിപ്പിക്കുക</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_savings_label_applicant_name">അപേക്ഷകന്റെ പേര്</string>
+    <string name="feature_apply_savings_label_savings_product">ഉൽപ്പന്നത്തിന്റെ പേര്</string>
+    <string name="feature_apply_savings_label_field_officer">ഫീൽഡ് ഓഫീസർ</string>
+    <string name="feature_apply_savings_label_submission_date">സമർപ്പിച്ച തീയതി</string>
+    <string name="feature_apply_savings_label_fill_application_details">അപേക്ഷ വിവരങ്ങൾ പൂരിപ്പിക്കുക</string>
+    <string name="feature_apply_savings_label_details">വിശദാംശങ്ങൾ</string>
+    <string name="feature_apply_savings_label_currency">കറൻസി</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">മിനിമം ഓപ്പണിംഗ് ബാലൻസ്</string>
+    <string name="feature_apply_savings_label_lock_in_period">ലോക്ക്-ഇൻ കാലയളവ്</string>
+    <string name="feature_apply_savings_label_frequency">ആവൃത്തി</string>
+    <string name="feature_apply_savings_label_frequency_type">ആവൃത്തി തരം</string>
+    <string name="feature_apply_savings_label_overdraft">ഓവർഡ്രാഫ്റ്റ്</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">ഓവർഡ്രാഫ്റ്റ് അനുവദിക്കാൻ അഭ്യർത്ഥിക്കുക</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_savings_button_continue">തുടരുക</string>
+    <string name="feature_apply_savings_button_ok">ശരി</string>
+    <string name="feature_apply_savings_button_cancel">റദ്ദാക്കുക</string>
+    <string name="feature_apply_savings_button_apply">സേവിംഗ്സിന് അപേക്ഷിക്കുക</string>
+    <string name="feature_button_next">അടുത്തത്</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_savings_error_amount_empty">പ്രിൻസിപ്പൽ തുക ആവശ്യമാണ്</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">ദയവായി ശരിയായ തുക ഫോർമാറ്റ് നൽകുക</string>
+    <string name="feature_apply_savings_error_amount_too_small">പ്രിൻസിപ്പൽ തുക വളരെ കുറവാണ്</string>
+    <string name="feature_apply_savings_error_amount_too_large">പ്രിൻസിപ്പൽ തുക പരമാവധി പരിധിയേക്കാൾ കൂടുതലാണ്</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">തിരഞ്ഞെടുത്ത കറൻസിക്ക് തുകയിൽ ധാരാളം ദശാംശസ്ഥാനങ്ങളുണ്ട്</string>
+
+
+    <!-- Savings Product Validation -->
+    <string name="feature_apply_savings_error_product_empty">സേവിംഗ്സ് ഉൽപ്പന്നം ആവശ്യമാണ്</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_savings_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_apply_savings_error_too_many_attempts">ഒരുപാട് പരാജയപ്പെട്ട ശ്രമങ്ങൾ. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="feature_apply_savings_error_submit_failed">സേവിംഗ്സ് അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_savings_success_submit">സേവിംഗ്സ് അപേക്ഷ വിജയകരമായി സമർപ്പിച്ചു!</string>
+    <string name="feature_apply_savings_success_draft_saved">അപേക്ഷയുടെ ഡ്രാഫ്റ്റ് വിജയകരമായി സേവ് ചെയ്തു</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_savings_unsaved_changes_title">സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്. നിങ്ങൾക്ക് തിരികെ പോകണമെന്ന് ഉറപ്പാണോ?</string>
+
+
+    <string name="feature_apply_savings_label_next">അടുത്തത്</string>
+
+    <string name="feature_apply_savings_error_currency_required">കറൻസി ആവശ്യമാണ്</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">മിനിമം ഓപ്പണിംഗ് ബാലൻസ് ആവശ്യമാണ്</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">ലോക്ക്-ഇൻ കാലയളവ് ആവശ്യമാണ്</string>
+    <string name="feature_apply_savings_error_frequency_required">ആവൃത്തി ആവശ്യമാണ്</string>
+    <string name="feature_apply_savings_error_frequency_invalid">ദയവായി സാധുവായ ആവൃത്തി നൽകുക</string>
+
+    <string name="feature_apply_savings_status_success">വിജയകരമായി അപേക്ഷിച്ചു!</string>
+    <string name="feature_apply_savings_status_success_tip">നിങ്ങൾ %1$s-ൽ ഒരു സേവിംഗ്സ് അക്കൗണ്ടിനായി വിജയകരമായി അപേക്ഷിച്ചു.</string>
+    <string name="feature_apply_savings_status_success_action">തിരികെ ഹോമിലേക്ക്</string>
+
+    <string name="feature_apply_savings_status_failure">അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_apply_savings_status_failure_tip">%1$s-ൽ സേവിംഗ്സ് അക്കൗണ്ടിനായി അപേക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു.</string>
+    <string name="feature_apply_savings_status_failure_action">വീണ്ടും ശ്രമിക്കുക</string>
+
+</resources>

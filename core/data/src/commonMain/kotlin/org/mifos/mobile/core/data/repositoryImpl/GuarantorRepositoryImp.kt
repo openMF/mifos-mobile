@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,9 +15,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.guarantor.toModel
+import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
@@ -32,6 +35,7 @@ class GuarantorRepositoryImp(
 
     override fun getGuarantorTemplate(loanId: Long?): Flow<DataState<GuarantorTemplatePayload?>> {
         return dataManager.guarantorApi.getGuarantorTemplate(loanId!!)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -41,7 +45,7 @@ class GuarantorRepositoryImp(
     ): DataState<String> {
         return withContext(ioDispatcher) {
             try {
-                val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload)
+                val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload?.toDto())
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -58,7 +62,7 @@ class GuarantorRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.guarantorApi.updateGuarantor(
-                    payload,
+                    payload?.toDto(),
                     loanId!!,
                     guarantorId!!,
                 )

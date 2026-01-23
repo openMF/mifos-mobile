@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,6 +21,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.payloads.toDto
+import org.mifos.mobile.core.data.mapper.share.toModel
+import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.Page
@@ -37,7 +40,13 @@ class ShareAccountRepositoryImp(
 
     override fun getShareProducts(clientId: Long?): Flow<DataState<Page<ShareProduct>>> {
         return dataManager.shareAccountApi.getShareProducts(clientId)
-            .map { response -> DataState.Success(response) }
+            .map { response ->
+                DataState.Success(
+                    response.toPageModel { dto ->
+                        dto.toModel()
+                    },
+                )
+            }
             .catch { exception -> DataState.Error(exception, exception.message) }
             .flowOn(ioDispatcher)
     }
@@ -47,6 +56,7 @@ class ShareAccountRepositoryImp(
         clientId: Long?,
     ): Flow<DataState<ShareProductDetails>> {
         return dataManager.shareAccountApi.getShareProductById(productId, clientId)
+            .map { it.toModel() }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 
@@ -54,7 +64,7 @@ class ShareAccountRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response =
-                    dataManager.shareAccountApi.submitShareApplication(payload)
+                    dataManager.shareAccountApi.submitShareApplication(payload?.toDto())
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -69,6 +79,7 @@ class ShareAccountRepositoryImp(
 
     override fun getShareAccountDetails(accountId: Long): Flow<DataState<ShareAccountWithAssociations>> {
         return dataManager.shareAccountApi.getShareAccountDetails(accountId)
+            .map { it.toModel() }
             .asDataStateFlow()
             .flowOn(ioDispatcher)
     }

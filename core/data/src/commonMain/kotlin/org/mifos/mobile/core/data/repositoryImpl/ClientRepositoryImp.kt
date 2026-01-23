@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,8 +12,11 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
+import org.mifos.mobile.core.data.mapper.client.toModel
+import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientRepository
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.client.Client
@@ -26,6 +29,11 @@ class ClientRepositoryImp(
 
     override fun loadClient(): Flow<DataState<Page<Client>>> {
         return dataManager.clientsApi.clients()
+            .map { response ->
+                response.toPageModel { dto ->
+                    dto.toModel()
+                }
+            }
             .asDataStateFlow().flowOn(ioDispatcher)
     }
 }
