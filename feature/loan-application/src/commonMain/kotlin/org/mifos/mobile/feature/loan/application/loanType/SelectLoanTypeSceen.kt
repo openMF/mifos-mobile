@@ -192,7 +192,7 @@ internal fun SelectLoanTypeScreenContent(
                             contentPadding = PaddingValues(KptTheme.spacing.md),
                             verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                         ) {
-                            items(productOptions) { loanType ->
+                            items(productOptions, key = { it.id ?: -1 }) { loanType ->
                                 val loanName = loanType.name.orEmpty()
 
                                 LoanTypeListCard(
