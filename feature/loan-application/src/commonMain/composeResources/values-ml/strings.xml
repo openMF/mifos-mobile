@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">പുതിയ വായ്പയ്ക്ക് അപേക്ഷിക്കുക</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">വായ്പ അപേക്ഷ</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">അപേക്ഷകന്റെ പേര്</string>
+    <string name="feature_apply_loan_label_loan_product">വായ്പ ഉൽപ്പന്നം</string>
+    <string name="feature_apply_loan_label_purpose">വായ്പയുടെ ഉദ്ദേശ്യം</string>
+    <string name="feature_apply_loan_label_disbursement_date">വിതരണ തീയതി</string>
+    <string name="feature_apply_loan_label_principal_amount">മുതൽ തുക</string>
+    <string name="feature_apply_loan_label_currency">കറൻസി</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">തുടരുക</string>
+    <string name="feature_apply_loan_button_ok">ശരി</string>
+    <string name="feature_apply_loan_button_cancel">റദ്ദാക്കുക</string>
+    <string name="feature_apply_loan_button_apply">വായ്പയ്ക്ക് അപേക്ഷിക്കുക</string>
+    <string name="feature_button_next">അടുത്തത്</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">അപേക്ഷകന്റെ പേര് ആവശ്യമാണ്</string>
+    <string name="feature_apply_loan_error_name_too_short">അപേക്ഷകന്റെ പേരിൽ കുറഞ്ഞത് 4 അക്ഷരങ്ങളെങ്കിലും ഉണ്ടായിരിക്കണം</string>
+    <string name="feature_apply_loan_error_name_too_long">അപേക്ഷകന്റെ പേര് 100 അക്ഷരങ്ങളിൽ കൂടാൻ പാടില്ല</string>
+    <string name="feature_apply_loan_error_name_invalid_format">അപേക്ഷകന്റെ പേരിൽ അസാധുവായ അക്ഷരങ്ങൾ അടങ്ങിയിരിക്കുന്നു</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">വായ്പ ഉൽപ്പന്നം ആവശ്യമാണ്</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">മുതൽ തുക ആവശ്യമാണ്</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">ദയവായി ശരിയായ തുക ഫോർമാറ്റ് നൽകുക</string>
+    <string name="feature_apply_loan_error_amount_too_small">മുതൽ തുക വളരെ ചെറുതാണ്</string>
+    <string name="feature_apply_loan_error_amount_too_large">മുതൽ തുക പരമാവധി പരിധി കവിയുന്നു</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">തിരഞ്ഞെടുത്ത കറൻസിക്ക് തുകയിൽ ധാരാളം ദശാംശ സ്ഥാനങ്ങളുണ്ട്</string>
+    <string name="feature_apply_loan_error_amount_multiple">തുക സാധുവായ ഗുണിതങ്ങളിലല്ല</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">വിതരണ തീയതി ആവശ്യമാണ്</string>
+    <string name="feature_apply_loan_error_date_invalid_format">ദയവായി സാധുവായ ഒരു തീയതി ഫോർമാറ്റ് നൽകുക (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">വിതരണ തീയതി ഭാവിയിലായിരിക്കണം</string>
+    <string name="feature_apply_loan_error_date_out_of_range">വിതരണ തീയതി വളരെ ദൂരെയുള്ള ഭാവിയിലാണ് (പരമാവധി 10 വർഷം)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_apply_loan_error_too_many_attempts">ഒരുപാട് പരാജയപ്പെട്ട ശ്രമങ്ങൾ. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="feature_apply_loan_error_submit_failed">വായ്പ അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">വായ്പ അപേക്ഷ വിജയകരമായി സമർപ്പിച്ചു!</string>
+    <string name="feature_apply_loan_success_draft_saved">അപേക്ഷയുടെ ഡ്രാഫ്റ്റ് വിജയകരമായി സേവ് ചെയ്തു</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്. നിങ്ങൾക്ക് തിരികെ പോകണമെന്ന് ഉറപ്പാണോ?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">നിരസിക്കുക</string>
+    <string name="feature_apply_loan_action_save_draft">ഡ്രാഫ്റ്റ് സേവ് ചെയ്യുക</string>
+    <string name="feature_apply_loan_action_retry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_apply_loan_action_cancel">റദ്ദാക്കുക</string>
+    <string name="feature_apply_loan_action_continue">തുടരുക</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">നിങ്ങളുടെ മുഴുവൻ പേര് നൽകുക</string>
+    <string name="feature_apply_loan_hint_loan_product">വായ്പ ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_apply_loan_hint_principal_amount">വായ്പ തുക നൽകുക</string>
+    <string name="feature_apply_loan_hint_disbursement_date">വിതരണ തീയതി തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_apply_loan_hint_purpose">ഉദ്ദേശ്യം ചുരുക്കത്തിൽ വിവരിക്കുക</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">കറൻസി മാറി. തുക വീണ്ടും സാധൂകരിക്കും.</string>
+    <string name="feature_apply_loan_info_min_amount">കുറഞ്ഞ വായ്പ തുക: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">കൂടിയ വായ്പ തുക: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">വിശദാംശങ്ങൾ സ്ഥിരീകരിക്കുക</string>
+
+    <string name="feature_apply_loan_status_success">അപേക്ഷ വിജയകരമായി സമർപ്പിച്ചു</string>
+    <string name="feature_apply_loan_status_success_tip">നിങ്ങളുടെ വായ്പ അപേക്ഷ സമർപ്പിച്ചു. ഇത് പരിശോധിച്ചുകഴിഞ്ഞാൽ നിങ്ങളെ അറിയിക്കും.</string>
+    <string name="feature_apply_loan_status_success_action">തിരികെ ഹോമിലേക്ക്</string>
+
+    <string name="feature_apply_loan_status_failure">അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_apply_loan_status_failure_tip">നിങ്ങളുടെ വായ്പ അപേക്ഷ സമർപ്പിക്കുന്നതിനിടെ എന്തോ തകരാറുണ്ടായി. ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="feature_apply_loan_status_failure_action">വീണ്ടും ശ്രമിക്കുക</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">പുതിയ വായ്പയ്ക്ക് അപേക്ഷിക്കുക</string>
+    <string name="feature_select_loan_type_choose_loan">വായ്പ തരം തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_select_loan_type_empty">നിലവിൽ വായ്പ ഉൽപ്പന്നങ്ങൾ ലഭ്യമല്ല</string>
+    <string name="feature_select_loan_type_network_issue">നിങ്ങൾ ഇന്റർനെറ്റുമായി ബന്ധിപ്പിച്ചിട്ടുണ്ടെന്ന് ഉറപ്പുവരുത്തുക</string>
+    <string name="feature_loan_product_details_terms">നിബന്ധനകളും വ്യവസ്ഥകളും അംഗീകരിക്കുക</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s വായ്പയ്ക്ക് അപേക്ഷിക്കുക</string>
+    <string name="feature_loan_get_loan">%1$s വായ്പ നേടുക</string>
+    <string name="feature_loan_up_to">%1$s വരെ</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s മുതൽ %2$s വരെ പലിശ</string>
+    <string name="feature_loan_terms_and_conditions">നിബന്ധനകളും വ്യവസ്ഥകളും</string>
+
+    <string name="feature_loan_sanction_and_disbursement">വായ്പ അനുവദിക്കലും വിതരണവും</string>
+    <string name="feature_loan_interest_rate">പലിശ നിരക്ക്</string>
+    <string name="feature_loan_continue">തുടരുക</string>
+    <string name="feature_loan_repayment">തിരിച്ചടവ്</string>
+    <string name="feature_loan_security_and_collateral">സെക്യൂരിറ്റിയും കൊളാറ്ററലും</string>
+    <string name="feature_loan_insurance">ഇൻഷുറൻസ്</string>
+    <string name="feature_loan_default">വീഴ്ച വരുത്തൽ</string>
+    <string name="feature_loan_documentation">ഡോക്യുമെന്റേഷൻ</string>
+    <string name="feature_loan_continue_legal_compliance">നിയമപരമായ അനുസരണം</string>
+    <string name="feature_loan_amendments_and_termination">ഭേദഗതികളും അവസാനിപ്പിക്കലും</string>
+    <string name="feature_loan_jurisdiction">നിയമപരിധി</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">അപേക്ഷകന്റെ യോഗ്യത, വരുമാന സ്ഥിരത, ക്രെഡിറ്റ് യോഗ്യത, വായ്പ നൽകുന്നയാളുടെ ആന്തരിക ക്രെഡിറ്റ് നയങ്ങൾ എന്നിവ അടിസ്ഥാനമാക്കിയാണ് വ്യക്തിഗത വായ്പ അനുവദിക്കുന്നത്. യാതൊരു കാരണവും കൂടാതെ ഏത് വ്യക്തിഗത വായ്പ അപേക്ഷയും അംഗീകരിക്കാനോ നിരസിക്കാനോ ഉള്ള അധികാരം വായ്പ നൽകുന്നയാളിനുണ്ട്. അനുവദിച്ച വായ്പ തുക വായ്പ കരാറും ഡോക്യുമെന്റേഷൻ ആവശ്യകതകളും അനുസരിച്ച് പൂർണ്ണമായോ ഭാഗികമായോ വിതരണം ചെയ്യാം. കെവൈസി നടപടിക്രമങ്ങൾ വിജയകരമായി പൂർത്തിയാക്കൽ, സമർപ്പിച്ച രേഖകളുടെ പരിശോധന, അനുമതി കത്തിൽ വ്യക്തമാക്കിയിട്ടുള്ള എല്ലാ നിബന്ധനകളും പാലിക്കൽ എന്നിവയ്ക്ക് വിധേയമാണ് വിതരണം.</string>
+    <string name="feature_personal_loan_interest_rate_description">വായ്പ കരാർ സമയത്ത് വായ്പയെടുക്കുന്നയാൾ തിരഞ്ഞെടുക്കുന്നതനുസരിച്ച് വ്യക്തിഗത വായ്പയ്ക്ക് സ്ഥിരമായതോ മാറ്റം വരാവുന്നതോ ആയ പലിശ നിരക്ക് ഉണ്ടായിരിക്കാം. ഫ്ലോട്ടിംഗ് പലിശ നിരക്ക് വായ്പകളുടെ കാര്യത്തിൽ, വായ്പ നൽകുന്നയാളുടെ ബെഞ്ച്മാർക്ക് അല്ലെങ്കിൽ റഫറൻസ് നിരക്കിലെ മാറ്റങ്ങൾക്കനുസരിച്ച് ബാധകമായ നിരക്ക് കാലാകാലങ്ങളിൽ പരിഷ്കരിക്കുന്നതാണ്. അത്തരം മാറ്റങ്ങൾ വായ്പയെടുക്കുന്നയാളിന് ബാധകമായിരിക്കും, കൂടാതെ വായ്പ നൽകുന്നയാൾക്ക് ആവശ്യമെന്ന് തോന്നുന്ന പക്ഷം ഇഎംഐ തുകയിലും/അല്ലെങ്കിൽ വായ്പ കാലാവധിയിലും മാറ്റം വരുത്താവുന്നതാണ്.</string>
+    <string name="feature_personal_loan_repayment_details">വ്യക്തിഗത വായ്പയുടെ തിരിച്ചടവ് മുതലും പലിശയും അടങ്ങുന്ന ഇക്വേറ്റഡ് മന്ത്ലി ഇൻസ്റ്റാൾമെന്റുകൾ (ഇഎംഐ) വഴിയായിരിക്കും. വായ്പ കരാറിൽ വ്യക്തമാക്കിയിട്ടുള്ള തീയതി മുതൽ ഇഎംഐകൾ ആരംഭിക്കുകയും ബാധകമായ പലിശയോടൊപ്പം മുഴുവൻ വായ്പ തുകയും തിരിച്ചടയ്ക്കുന്നതുവരെ പ്രതിമാസ അടിസ്ഥാനത്തിൽ തുടരുകയും ചെയ്യും. വായ്പ നൽകുന്നയാളുടെ നിലവിലുള്ള നയങ്ങൾക്കനുസൃതമായി മുൻകൂട്ടി അടയ്ക്കലോ ഭാഗികമായി അടയ്ക്കലോ അനുവദിക്കാവുന്നതാണ്, പ്രത്യേകിച്ച് സ്ഥിര നിരക്ക് വായ്പകൾക്ക് ചില ചാർജുകൾ ഈടാക്കാം.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">വ്യക്തിഗത വായ്പകൾക്ക് സാധാരണയായി ഈട് (collateral) ആവശ്യമില്ല. എന്നിരുന്നാലും, അപേക്ഷകന്റെ ക്രെഡിറ്റ് പ്രൊഫൈലും വായ്പ തുകയും അനുസരിച്ച്, അപൂർവ്വ സാഹചര്യങ്ങളിൽ അധിക ഗ്യാരണ്ടികളോ സെക്യൂരിറ്റിയോ ആവശ്യപ്പെടാനുള്ള അധികാരം വായ്പ നൽകുന്നയാളിനുണ്ട്. അത്തരം ആവശ്യകതകൾ എന്തെങ്കിലും ഉണ്ടെങ്കിൽ അത് അനുമതി കത്തിൽ വ്യക്തമായി രേഖപ്പെടുത്തിയിരിക്കും. ബാധകമാണെങ്കിൽ ഡോക്യുമെന്റേഷൻ അല്ലെങ്കിൽ നിയമപരമായ നടപടിക്രമങ്ങൾ എന്നിവയുമായി ബന്ധപ്പെട്ട എല്ലാ ചിലവുകളും വായ്പയെടുക്കുന്നയാൾ വഹിക്കേണ്ടതാണ്.</string>
+    <string name="feature_personal_loan_insurance_details">വ്യക്തിഗത വായ്പകൾക്ക് സാധാരണയായി അസറ്റ് ഇൻഷുറൻസ് ആവശ്യമില്ലെങ്കിലും, വായ്പയെടുക്കുന്നയാളുടെ മരണമുണ്ടായാൽ കുടിശ്ശികയുള്ള വായ്പ തുക സംരക്ഷിക്കുന്നതിനായി ഒരു ലൈഫ് ഇൻഷുറൻസ് പോളിസി തിരഞ്ഞെടുക്കാൻ വായ്പ നൽകുന്നയാൾ ശുപാർശ ചെയ്തേക്കാം. ഇത് നിർബന്ധമല്ലെങ്കിലും വായ്പയെടുക്കുന്നയാളുടെ കുടുംബത്തിനോ ആശ്രിതർക്കോ ഒരു സാമ്പത്തിക സംരക്ഷണ നടപടിയായി ഇത് അഭികാമ്യമാണ്.</string>
+    <string name="feature_personal_loan_default_details">ഇഎംഐകൾ അടയ്ക്കാതിരിക്കുകയോ വൈകിപ്പിക്കുകയോ ചെയ്യുന്നത് വീഴ്ചയായി കണക്കാക്കും. അത്തരം സന്ദർഭങ്ങളിൽ, കുടിശ്ശിക പിരിച്ചെടുക്കുന്നതിന് നിയമനടപടികൾ ഉൾപ്പെടെയുള്ള വീണ്ടെടുക്കൽ നടപടികൾ വായ്പ നൽകുന്നയാൾ ആരംഭിച്ചേക്കാം. കുടിശ്ശികയുള്ള തുകയ്ക്ക് പിഴ പലിശയും മറ്റ് ചാർജുകളും ഈടാക്കിയേക്കാം. തുടർച്ചയായ അല്ലെങ്കിൽ ആവർത്തിച്ചുള്ള വീഴ്ച വായ്പയെടുക്കുന്നയാളുടെ ക്രെഡിറ്റ് സ്കോറിനെയും ഭാവിയിൽ വായ്പ എടുക്കാനുള്ള കഴിവിനെയും ദോഷകരമായി ബാധിക്കും.</string>
+    <string name="feature_personal_loan_documentation_details">തിരിച്ചറിയൽ രേഖ, വിലാസ രേഖ, വരുമാന വിവരങ്ങൾ, ബാങ്ക് സ്റ്റേറ്റ്‌മെന്റുകൾ, വായ്പ നൽകുന്നയാൾ ആവശ്യപ്പെടുന്ന മറ്റ് രേഖകൾ എന്നിവയുൾപ്പെടെ കൃത്യവും പൂർണ്ണവുമായ രേഖകൾ വായ്പയെടുക്കുന്നയാൾ സമർപ്പിക്കേണ്ടതാണ്. സമർപ്പിച്ച രേഖകളിലെ എന്തെങ്കിലും പൊരുത്തക്കേടുകൾ, തെറ്റായ വിവരങ്ങൾ അല്ലെങ്കിൽ തിരിമറികൾ എന്നിവ വായ്പ അപേക്ഷ നിരസിക്കുന്നതിനോ വായ്പ കരാർ അവസാനിപ്പിക്കുന്നതിനോ കാരണമായേക്കാം, ഒപ്പം നിയമനടപടികൾക്കും സാധ്യതയുണ്ട്.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">വായ്പയെടുക്കുന്നയാൾ അവരുടെ സാമ്പത്തിക ബാധ്യതകളുമായി ബന്ധപ്പെട്ട ബാധകമായ എല്ലാ പ്രാദേശിക, സംസ്ഥാന, ദേശീയ നിയമങ്ങളും പൂർണ്ണമായി പാലിക്കുന്നുണ്ടെന്ന് ഉറപ്പാക്കണം. നികുതികൾ കൃത്യസമയത്ത് അടയ്ക്കൽ, റെഗുലേറ്ററി ആവശ്യകതകൾ പാലിക്കൽ, സാധുവായ രേഖകൾ സമർപ്പിക്കൽ എന്നിവ ഇതിൽ ഉൾപ്പെടുന്നു. വായ്പയെടുക്കുന്നയാൾ നടത്തുന്ന നിയമലംഘനങ്ങൾക്ക് വായ്പ നൽകുന്നയാൾ ഉത്തരവാദിയായിരിക്കില്ല.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">വായ്പയെടുക്കുന്നയാളിന് മതിയായ മുൻകൂൂർ അറിയിപ്പ് നൽകിക്കൊണ്ട്, ഈ നിബന്ധനകളും വ്യവസ്ഥകളും വായ്പ നൽകുന്നയാൾക്ക് കാലാകാലങ്ങളിൽ പരിഷ്കരിക്കാവുന്നതാണ്. വായ്പ തുക പൂർണ്ണമായി തിരിച്ചടയ്ക്കുമ്പോഴോ വീഴ്ച കാരണം ആരംഭിച്ച ജപ്തി നടപടികളിലൂടെയോ വായ്പ കരാർ അവസാനിച്ചതായി കണക്കാക്കും.</string>
+    <string name="feature_personal_loan_jurisdiction_details">വ്യക്തിഗത വായ്പ കരാറുമായി ബന്ധപ്പെട്ട് ഉണ്ടാകുന്ന എല്ലാ തർക്കങ്ങളും, കരാറിൽ മറ്റെന്തെങ്കിലും വ്യക്തമാക്കിയിട്ടില്ലെങ്കിൽ, വായ്പ നൽകുന്നയാളുടെ രജിസ്റ്റർ ചെയ്ത ഓഫീസ് സ്ഥിതിചെയ്യുന്ന സ്ഥലത്തെ കോടതികളുടെ പ്രത്യേക അധികാരപരിധിയിൽ വരുന്നതാണ്.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">ബാങ്ക് അക്കൗണ്ട് സ്റ്റേറ്റ്‌മെന്റുകൾ അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="feature_upload_docs_collateral">ഈട് രേഖകൾ അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="feature_upload_docs_signature">ഒപ്പ് അപ്‌ലോഡ് ചെയ്യുക</string>
+
+    <string name="feature_upload_file_error">എന്തോ കുഴപ്പം സംഭവിച്ചു! ഫയൽ അപ്‌ലോഡ് ചെയ്യാൻ കഴിയുന്നില്ല</string>
+    <string name="feature_upload_statement_error">ദയവായി ഒരു ബാങ്ക് സ്റ്റേറ്റ്‌മെന്റ് അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="feature_upload_property_document_error">ദയവായി ഒരു പ്രോപ്പർട്ടി ഡോക്യുമെന്റ് അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="feature_upload_signature_error">ദയവായി ഒരു ഒപ്പ് അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="feature_upload_documents_success_title">രേഖകൾ വിജയകരമായി അപ്‌ലോഡ് ചെയ്തു!</string>
+
+    <string name="sign_here">ഇവിടെ ഒപ്പിടുക</string>
+    <string name="reset">റീസെറ്റ്</string>
+    <string name="sign">ഒപ്പിടുക</string>
+    <string name="capture">ക്യാപ്‌ചർ</string>
+    <string name="attach">അറ്റാച്ചുചെയ്യുക</string>
+    <string name="upload_signature">ഒപ്പ് അപ്‌ലോഡ് ചെയ്യുക</string>
+    <string name="save_and_submit">സേവ് &amp; സബ്മിറ്റ്</string>
+</resources>
