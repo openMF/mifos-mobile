@@ -17,7 +17,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -32,9 +31,7 @@ interface SessionStorage {
     fun getSessionTime(): Flow<Long>
 }
 
-class SessionManager(
-    private val sessionStorage: SessionStorage,
-) {
+class SessionManager {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val checkLock = Mutex()
 
@@ -44,34 +41,19 @@ class SessionManager(
     private val lastInteractionTime = AtomicLong(0L)
 
     @OptIn(ExperimentalAtomicApi::class)
-    private val lastDiskSaveTime = AtomicLong(0L)
-
-    @OptIn(ExperimentalAtomicApi::class)
     private val isMonitoring = AtomicBoolean(false)
     private val timeoutMs = Constants.TIMEOUT_SESSION_MS
 
     private val _isExpired = MutableStateFlow(false)
     val isExpired = _isExpired.asStateFlow()
 
-    @OptIn(ExperimentalAtomicApi::class)
-    private val isColdStart = AtomicBoolean(true)
-
-    private val _shouldShowDialog = MutableStateFlow(false)
-    val shouldShowDialog = _shouldShowDialog.asStateFlow()
-
     @OptIn(ExperimentalTime::class, ExperimentalAtomicApi::class)
     fun startSession() {
         if (isMonitoring.compareAndSet(expectedValue = false, newValue = true)) {
             _isExpired.value = false
             scope.launch {
-                val savedTime = sessionStorage.getSessionTime().first()
                 val now = Clock.System.now().toEpochMilliseconds()
-
-                val effectiveTime = if (savedTime == 0L) now else savedTime
-
-                lastInteractionTime.store(effectiveTime)
-                checkExpirationInternal()
-
+                lastInteractionTime.store(now)
                 if (!_isExpired.value) {
                     heartbeatJob = startHeartbeat()
                 }
@@ -83,18 +65,8 @@ class SessionManager(
     fun userInteracted() {
         if (_isExpired.value) return
         if (isMonitoring.load()) {
-            isColdStart.store(false)
-
             val now = Clock.System.now().toEpochMilliseconds()
             lastInteractionTime.store(now)
-
-            val lastSave = lastDiskSaveTime.load()
-            if (now - lastSave > Constants.THROTTLE_DISK_SAVE_MS) {
-                lastDiskSaveTime.store(now)
-                scope.launch {
-                    sessionStorage.saveSessionTime(now)
-                }
-            }
         }
     }
 
@@ -102,21 +74,9 @@ class SessionManager(
     fun stopSession() {
         isMonitoring.store(false)
         _isExpired.value = false
-        _shouldShowDialog.value = false
         heartbeatJob?.cancel()
         heartbeatJob = null
-        isColdStart.store(true)
         lastInteractionTime.store(0L)
-
-        scope.launch {
-            sessionStorage.saveSessionTime(0L)
-        }
-    }
-
-    fun checkExpirationNow() {
-        scope.launch {
-            checkExpirationInternal()
-        }
     }
 
     @OptIn(ExperimentalAtomicApi::class, ExperimentalTime::class)
@@ -126,26 +86,13 @@ class SessionManager(
 
             val ramTime = lastInteractionTime.load()
 
-            val effectiveTime = if (ramTime == 0L) {
-                sessionStorage.getSessionTime().first()
-            } else {
-                ramTime
-            }
-
-            if (effectiveTime == 0L) return
+            if (ramTime == 0L) return
 
             val currentTime = Clock.System.now().toEpochMilliseconds()
 
-            if (currentTime - effectiveTime >= timeoutMs) {
-                if (isColdStart.compareAndSet(expectedValue = true, newValue = false)) {
-                    _shouldShowDialog.value = false
-                } else {
-                    _shouldShowDialog.value = true
-                }
+            if (currentTime - ramTime >= timeoutMs) {
                 _isExpired.value = true
                 isMonitoring.store(true)
-            } else {
-                isColdStart.store(false)
             }
         }
     }

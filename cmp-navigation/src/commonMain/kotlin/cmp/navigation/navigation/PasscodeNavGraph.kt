@@ -10,33 +10,21 @@
 package cmp.navigation.navigation
 
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import cmp.navigation.authenticated.AuthenticatedGraphRoute
-import org.mifos.library.passcode.PASSCODE_SCREEN
-import org.mifos.library.passcode.passcodeRoute
+import cmp.navigation.utils.toObjectNavigationRoute
+import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
+import org.mifos.mobile.feature.passcode.navigation.passcodeDestination
 
-internal fun NavGraphBuilder.passcodeNavGraph(navController: NavHostController) {
+internal fun NavGraphBuilder.passcodeNavGraph(
+    onPasscodeVerified: () -> Unit,
+) {
     navigation(
         route = NavGraphRoute.PASSCODE_GRAPH,
-        startDestination = PASSCODE_SCREEN,
+        startDestination = PasscodeRoute.Standard.toObjectNavigationRoute(),
     ) {
-        passcodeRoute(
-            onForgotButton = {
-                navController.popBackStack()
-                navController.navigate(AuthenticatedGraphRoute)
-            },
-            onSkipButton = {
-                navController.popBackStack()
-                navController.navigate(AuthenticatedGraphRoute)
-            },
-            onPasscodeConfirm = {
-                navController.popBackStack()
-                navController.navigate(AuthenticatedGraphRoute)
-            },
-            onPasscodeRejected = {
-                navController.popBackStack()
-                navController.navigate(AuthenticatedGraphRoute)
+        passcodeDestination(
+            onPasscodeConfirm = { _, _, _, _, _ ->
+                onPasscodeVerified()
             },
         )
     }

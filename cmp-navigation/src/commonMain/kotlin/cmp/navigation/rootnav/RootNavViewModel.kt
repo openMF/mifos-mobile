@@ -17,17 +17,24 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.UserDataRepository
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.model.AuthState
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 class RootNavViewModel(
     userDataRepository: UserDataRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : BaseViewModel<RootNavState, Unit, RootNavAction>(
     initialState = RootNavState.Splash,
 ) {
 
     init {
+
+        viewModelScope.launch {
+            userPreferencesRepository.setIsUnlocked(false)
+        }
+
         viewModelScope.launch {
             userDataRepository.authState
                 .collect { authState ->

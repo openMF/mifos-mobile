@@ -20,11 +20,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import cmp.navigation.rootnav.RootNavScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
@@ -51,24 +55,33 @@ fun ComposeApp(
     sessionManager: SessionManager = koinInject(),
     viewModel: ComposeAppViewModel = koinViewModel(),
 ) {
+    val navController = rememberNavController()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    var wasBackgrounded by remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                sessionManager.checkExpirationNow()
+            if (event == Lifecycle.Event.ON_STOP) {
+                wasBackgrounded = true
+                viewModel.trySendAction(AppAction.LockApp)
+            } else if (event == Lifecycle.Event.ON_START) {
+                if (wasBackgrounded) {
+                    viewModel.trySendAction(AppAction.LockApp)
+                    wasBackgrounded = false
+                }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
 
         onDispose {
+            sessionManager.stopSession()
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
     val isSessionExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
-    val showDialog by sessionManager.shouldShowDialog.collectAsStateWithLifecycle()
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is AppEvent.ShowToast -> {}
@@ -89,7 +102,7 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        val dialogState = if (isSessionExpired && showDialog) {
+        val dialogState = if (isSessionExpired) {
             BasicDialogState.Shown(
                 title = stringResource(Res.string.session_expired_title),
                 message = stringResource(Res.string.session_expired_message),
@@ -102,16 +115,11 @@ fun ComposeApp(
             MifosBasicDialog(
                 visibilityState = dialogState,
                 onDismissRequest = {
-                    viewModel.trySendAction(AppAction.Logout)
+                    viewModel.trySendAction(AppAction.SessionExpired)
                 },
             )
         }
 
-        LaunchedEffect(isSessionExpired, showDialog) {
-            if (isSessionExpired && !showDialog) {
-                viewModel.trySendAction(AppAction.Logout)
-            }
-        }
         SessionHandler(
             sessionManager = sessionManager,
         ) {
@@ -131,6 +139,7 @@ fun ComposeApp(
                     )
 
                     RootNavScreen(
+                        navController = navController,
                         modifier = Modifier,
                         onSplashScreenRemoved = onSplashScreenRemoved,
                     )

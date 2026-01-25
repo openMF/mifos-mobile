@@ -23,4 +23,6 @@
 
     <string name="feature_passcode_authenticate">Ingresa el PIN de autenticación</string>
     <string name="feature_passcode_authenticate_tip">Confirma que eres tú ingresando tu PIN de autenticación de 4 dígitos para completar tu acción</string>
+    <string name="feature_passcode_unlock_success">¡Desbloqueado!</string>
+    <string name="feature_passcode_unlock_success_msg">Has verificado tu identidad correctamente.</string>
 </resources>
