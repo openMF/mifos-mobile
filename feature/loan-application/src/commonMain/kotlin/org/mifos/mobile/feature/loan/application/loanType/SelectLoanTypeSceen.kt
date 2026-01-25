@@ -225,6 +225,7 @@ internal fun SelectLoanTypeScreenContent(
         }
     }
 }
+
 @Composable
 internal fun LoanTypeListCard(
     icon: ImageVector,
