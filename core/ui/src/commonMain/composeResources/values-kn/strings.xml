@@ -14,6 +14,9 @@
     <string name="no_data">ಡೇಟಾ ಇಲ್ಲ</string>
     <string name="something_went_wrong">ಏನೋ ತಪ್ಪಾಗಿದೆ</string>
     <string name="core_common_working">ಕೋರ್ ಸಾಮಾನ್ಯ ಕೆಲಸ</string>
+    <string name="customer_name">ಗ್ರಾಹಕರ ಹೆಸರು</string>
+    <string name="product">ಉತ್ಪನ್ನ</string>
+    <string name="error_loading_balance">ಬ್ಯಾಲೆನ್ಸ್ ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
 
     <string name="powered_by">ಇವರು ಒದಗಿಸಿದ್ದಾರೆ</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">ಮೊತ್ತವು ಈ ಕರೆನ್ಸಿಗಾಗಿ ಮಾನ್ಯವಾದ ಹೆಚ್ಚಳದಲ್ಲಿರಬೇಕು</string>
 
     <string name="savings_account">ಉಳಿತಾಯ ಖಾತೆ</string>
-    <string name="available_balance">ಗ್ರಾಹಕರ ಹೆಸರು</string>
+    <string name="available_balance">ಲಭ್ಯವಿರುವ ಬ್ಯಾಲೆನ್ಸ್</string>
     <string name="select_other_payment_account">ಇತರ ಪಾವತಿ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="available_balance_formatted">ಲಭ್ಯವಿರುವ ಶಿಲ್ಕು - %1$s</string>
 

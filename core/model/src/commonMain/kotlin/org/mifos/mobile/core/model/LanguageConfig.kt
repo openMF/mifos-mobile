@@ -85,6 +85,10 @@ enum class LanguageConfig(
         localName = "fa",
         languageName = "Farsi (فارسی)",
     ),
+    MALAYALAM(
+        localName = "ml",
+        languageName = "Malayalam (മലയാളം)",
+    ),
     ;
 
     companion object {

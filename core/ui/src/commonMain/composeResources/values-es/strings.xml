@@ -15,6 +15,9 @@
     <string name="no_data">Sin información</string>
     <string name="something_went_wrong">Ocurrió un error</string>
     <string name="core_common_working">Core Common Funcionando</string>
+    <string name="customer_name">Nombre del cliente</string>
+    <string name="product">Producto</string>
+    <string name="error_loading_balance">Error al cargar el saldo</string>
 
     <string name="powered_by">Desarrollado por</string>
 

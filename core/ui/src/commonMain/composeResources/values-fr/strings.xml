@@ -14,6 +14,9 @@
     <string name="no_data">Aucune donnée</string>
     <string name="something_went_wrong">Quelque chose s'est mal passé</string>
     <string name="core_common_working">Travail commun au cœur</string>
+    <string name="customer_name">Nom du client</string>
+    <string name="product">Produit</string>
+    <string name="error_loading_balance">Erreur lors du chargement du solde</string>
 
     <string name="powered_by">Propulsé par</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Le montant doit être dans des pas valides pour cette devise</string>
 
     <string name="savings_account">Compte d'épargne</string>
-    <string name="available_balance">Nom du client</string>
+    <string name="available_balance">Solde disponible</string>
     <string name="select_other_payment_account">Sélectionner un autre compte de paiement</string>
     <string name="available_balance_formatted">Solde disponible - %1$s</string>
 

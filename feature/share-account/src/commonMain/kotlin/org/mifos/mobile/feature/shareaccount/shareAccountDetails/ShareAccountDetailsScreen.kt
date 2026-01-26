@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.share_account.generated.resources.Res
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_details_action
@@ -40,6 +39,7 @@ import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.LoanStatus
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -49,6 +49,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.shareaccount.component.ShareActionItems
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun ShareAccountDetailsScreen(
@@ -130,7 +131,6 @@ internal fun ShareAccountDetailsContent(
                 ) {
                     AccountDetailsGrid(
                         details = state.displayItems,
-                        isActive = state.isActive,
                     )
 
                     ShareAccountActions(
@@ -148,7 +148,6 @@ internal fun ShareAccountDetailsContent(
 internal fun AccountDetailsGrid(
     label: StringResource? = null,
     details: List<LabelValueItem>? = emptyList(),
-    isActive: Boolean = false,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -170,13 +169,21 @@ internal fun AccountDetailsGrid(
             ) {
                 details.forEach { item ->
                     MifosLabelValueCard(
-                        modifier = Modifier.height(64.dp).weight(1f),
+                        modifier = Modifier
+                            .height(DesignToken.sizes.cardDp64)
+                            .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_share_account_status) {
-                            AppColors.customEnable
+                        color = if (item.label == Res.string.feature_share_account_status) {
+                            when (item.value) {
+                                LoanStatus.ACTIVE.status -> AppColors.customEnable
+                                LoanStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                LoanStatus.WITHDRAWN.status, LoanStatus.MATURED.status ->
+                                    KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.secondary
+                            }
                         } else {
-                            MaterialTheme.colorScheme.onBackground
+                            KptTheme.colorScheme.secondary
                         },
                     )
                 }
