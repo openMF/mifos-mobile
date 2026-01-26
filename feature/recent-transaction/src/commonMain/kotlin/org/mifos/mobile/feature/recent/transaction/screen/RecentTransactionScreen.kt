@@ -91,6 +91,14 @@ import template.core.base.designsystem.theme.KptTheme
 import kotlin.collections.component1
 import kotlin.collections.component2
 
+/**
+ * Main entry point for the Recent Transaction screen.
+ * * Orchestrates state observation from [RecentTransactionViewModel], navigation
+ * event handling, and the visibility of modal components.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToDetails Callback to navigate to a specific transaction detail.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RecentTransactionScreen(
@@ -127,6 +135,15 @@ internal fun RecentTransactionScreen(
     )
 }
 
+/**
+ * Core UI layout for the Recent Transaction screen.
+ *
+ * Displays a grouped list of transactions with support for pull-to-refresh,
+ * empty/error states, and filter triggering.
+ *
+ * @param state The current [RecentTransactionUiState] to be rendered.
+ * @param onAction Callback to propagate UI interactions to the ViewModel.
+ */
 @Composable
 internal fun RecentTransactionScreenContent(
     state: RecentTransactionUiState,
@@ -486,6 +503,13 @@ internal fun TransactionFilterSheetContent(
     }
 }
 
+/**
+ * A specialized selection chip used for toggling filter categories.
+ *
+ * @param label The text displayed on the chip.
+ * @param isSelected Whether the chip is currently in the active state.
+ * @param onClick Triggered when the user interacts with the chip.
+ */
 @Composable
 fun FilterOptionChip(
     label: String,

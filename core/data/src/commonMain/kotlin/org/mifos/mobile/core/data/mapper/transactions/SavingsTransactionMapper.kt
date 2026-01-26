@@ -45,6 +45,7 @@ fun SavingsTransactionDetailsResponseDto.toModel(): TransactionDetails {
         date = this.date ?: emptyList(),
         accountNo = this.accountNo ?: "N/A",
         isReversed = this.reversed == true,
+        transferDescription = this.transfer?.transferDescription,
         balances = TransactionBalances(
             running = this.runningBalance,
         ),

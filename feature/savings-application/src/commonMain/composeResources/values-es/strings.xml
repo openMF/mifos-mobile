@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_savings_title">Detalles de Solicitud de Cuenta de Ahorros</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_savings_section_fill_details">Complete los detalles de la solicitud</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_savings_label_applicant_name">Nombre del solicitante</string>
+    <string name="feature_apply_savings_label_savings_product">Nombre del producto</string>
+    <string name="feature_apply_savings_label_field_officer">Oficial de campo</string>
+    <string name="feature_apply_savings_label_submission_date">Fecha de envío</string>
+    <string name="feature_apply_savings_label_fill_application_details">Complete los detalles de la solicitud</string>
+    <string name="feature_apply_savings_label_details">Detalles</string>
+    <string name="feature_apply_savings_label_currency">Divisa</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Saldo mínimo de apertura</string>
+    <string name="feature_apply_savings_label_lock_in_period">Período de bloqueo</string>
+    <string name="feature_apply_savings_label_frequency">Frecuencia</string>
+    <string name="feature_apply_savings_label_frequency_type">Tipo de frecuencia</string>
+    <string name="feature_apply_savings_label_overdraft">Sobregiro</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Solicitud para permitir sobregiro</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_savings_button_continue">Continuar</string>
+    <string name="feature_apply_savings_button_ok">De acuerdo</string>
+    <string name="feature_apply_savings_button_cancel">Cancelar</string>
+    <string name="feature_apply_savings_button_apply">Solicitar Cuenta de Ahorros</string>
+    <string name="feature_button_next">Siguiente</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_savings_error_amount_empty">Se requiere monto de capital</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Por favor, introduzca un formato de importe válido</string>
+    <string name="feature_apply_savings_error_amount_too_small">El monto de capital es demasiado pequeño</string>
+    <string name="feature_apply_savings_error_amount_too_large">El monto de capital excede el límite máximo</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">El monto tiene demasiados decimales para la moneda seleccionada</string>
+
+
+    <!-- Savings Product Validation -->
+    <string name="feature_apply_savings_error_product_empty">Se requiere producto de Cuenta de Ahorros</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_savings_error_server">Error interno del servidor. Inténtelo de nuevo</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Demasiados intentos fallidos. Inténtelo de nuevo más tarde.</string>
+    <string name="feature_apply_savings_error_submit_failed">No se pudo enviar la solicitud de Cuenta de Ahorros. Inténtelo de nuevo.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_savings_success_submit">¡Solicitud de Cuenta de Ahorros enviada!</string>
+    <string name="feature_apply_savings_success_draft_saved">Borrador de solicitud guardado</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_savings_unsaved_changes_title">¡Cambios no guardados!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Tienes cambios sin guardar. ¿Está seguro de que quiere volver atrás?</string>
+
+
+    <string name="feature_apply_savings_label_next">Siguiente</string>
+
+    <string name="feature_apply_savings_error_currency_required">Se requiere moneda</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Se requiere un saldo mínimo de apertura</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Se requiere un período de bloqueo</string>
+    <string name="feature_apply_savings_error_frequency_required">Se requiere frecuencia</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Introduzca una frecuencia válida</string>
+
+    <string name="feature_apply_savings_status_success">Solicitud enviada</string>
+    <string name="feature_apply_savings_status_success_tip">Ha solicitado con éxito una Cuenta de Ahorros de %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Regresar al Inicio</string>
+
+    <string name="feature_apply_savings_status_failure">La solicitud no se pudo enviar</string>
+    <string name="feature_apply_savings_status_failure_tip">No se pudo solicitar una Cuenta de Ahorros de %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Intentar otra vez</string>
+
+</resources>
