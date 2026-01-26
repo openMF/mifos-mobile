@@ -291,7 +291,7 @@ private fun SignatureContent(
                                     backgroundColor = Color.White,
                                 )
                                 if (data != null) {
-                                    val data = data.encodeToByteArray().toBase64DataUri()
+                                    val data = data.encodeToByteArray()
                                     onAction(UploadDocsAction.UploadSign(data))
                                 }
                             }
