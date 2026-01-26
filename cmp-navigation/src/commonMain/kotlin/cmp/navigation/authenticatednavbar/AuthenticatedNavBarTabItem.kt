@@ -22,7 +22,7 @@ import org.mifos.mobile.navigation.generated.resources.profile
 import org.mifos.mobile.navigation.generated.resources.transfer
 
 sealed class AuthenticatedNavBarTabItem : NavigationItem {
-    val noNaviggationRoute = "__no_navigation__"
+    val noNavigationRoute = "__no_navigation__"
     data object HomeTab : AuthenticatedNavBarTabItem() {
         override val iconResSelected: ImageVector
             get() = MifosIcons.HomeTabFilled
@@ -52,9 +52,9 @@ sealed class AuthenticatedNavBarTabItem : NavigationItem {
         override val contentDescriptionRes: StringResource
             get() = Res.string.transfer
         override val graphRoute: String
-            get() = noNaviggationRoute
+            get() = noNavigationRoute
         override val startDestinationRoute: String
-            get() = noNaviggationRoute
+            get() = noNavigationRoute
         override val testTag: String
             get() = "TransferTab"
     }
