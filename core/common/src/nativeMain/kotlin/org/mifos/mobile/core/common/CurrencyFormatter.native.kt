@@ -9,9 +9,11 @@
  */
 package org.mifos.mobile.core.common
 
+import platform.Foundation.NSLocale
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSNumberFormatterCurrencyStyle
+import platform.Foundation.currentLocale
 
 actual object CurrencyFormatter {
     actual fun format(
@@ -19,10 +21,22 @@ actual object CurrencyFormatter {
         currencyCode: String?,
         maximumFractionDigits: Int?,
     ): String {
-        val numberFormatter = NSNumberFormatter()
-        numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle
-        numberFormatter.currencyCode = currencyCode ?: "$"
-        numberFormatter.maximumFractionDigits = (maximumFractionDigits ?: 0).toULong()
-        return numberFormatter.stringFromNumber(NSNumber(balance ?: 0.0)) ?: ""
+        if (balance == null || currencyCode.isNullOrBlank()) return ""
+
+        val digits = maximumFractionDigits ?: 2
+
+        val locale = NSLocale.currentLocale
+
+        val formatter = NSNumberFormatter().apply {
+            numberStyle = NSNumberFormatterCurrencyStyle
+            setLocale(locale)
+
+            setMinimumFractionDigits(digits.toULong())
+            setMaximumFractionDigits(digits.toULong())
+
+            setInternationalCurrencySymbol(currencyCode)
+        }
+
+        return formatter.stringFromNumber(NSNumber(balance)) ?: ""
     }
 }

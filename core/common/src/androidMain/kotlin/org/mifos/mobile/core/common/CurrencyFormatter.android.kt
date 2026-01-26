@@ -11,16 +11,27 @@ package org.mifos.mobile.core.common
 
 import java.text.NumberFormat
 import java.util.Currency
+import java.util.Locale
 
 actual object CurrencyFormatter {
+
     actual fun format(
         balance: Double?,
         currencyCode: String?,
         maximumFractionDigits: Int?,
     ): String {
-        val balanceFormatter = NumberFormat.getCurrencyInstance()
-        balanceFormatter.maximumFractionDigits = maximumFractionDigits ?: 0
-        balanceFormatter.currency = Currency.getInstance(currencyCode)
-        return balanceFormatter.format(balance)
+        if (balance == null || currencyCode.isNullOrBlank()) return ""
+
+        val locale = Locale.getDefault()
+        val formatter = NumberFormat.getCurrencyInstance(locale)
+
+        formatter.currency = Currency.getInstance(currencyCode)
+
+        val digits = maximumFractionDigits ?: 2
+
+        formatter.minimumFractionDigits = digits
+        formatter.maximumFractionDigits = digits
+
+        return formatter.format(balance)
     }
 }
