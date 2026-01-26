@@ -345,6 +345,10 @@ val SavingStatus.allowedActions: Set<SavingsActionItems>
             SavingsActionItems.Transfer,
             SavingsActionItems.Transactions,
         )
+        SavingStatus.APPROVED -> setOf(
+            SavingsActionItems.QrCode,
+            SavingsActionItems.Transfer,
+        )
         SavingStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
             SavingsActionItems.QrCode,
         )
