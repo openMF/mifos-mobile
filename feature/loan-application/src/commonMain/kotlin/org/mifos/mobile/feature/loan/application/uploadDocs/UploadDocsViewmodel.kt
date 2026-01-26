@@ -446,7 +446,7 @@ internal sealed interface UploadDocsAction {
 
     /**
      * User action to upload a signed image.
-     * @property image The base64-encoded string of the signature image.
+     * @property imageArray The base64-encoded string of the signature image.
      */
     data class UploadSign(val imageArray: ByteArray) : UploadDocsAction
 
