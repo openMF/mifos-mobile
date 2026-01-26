@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,8 +13,8 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.Page
-import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.network.dto.common.PageResponseDto
+import org.mifos.mobile.core.network.dto.transaction.TransactionResponseDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface RecentTransactionsService {
@@ -23,5 +23,5 @@ interface RecentTransactionsService {
         @Path("clientId") clientId: Long,
         @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
-    ): Flow<Page<Transaction>>
+    ): Flow<PageResponseDto<TransactionResponseDto>>
 }

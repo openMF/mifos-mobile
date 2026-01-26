@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -652,10 +652,10 @@ internal class ShareFillApplicationViewModel(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_share_status_failure),
-                        subtitle = getString(
+                        subtitle = "${response.message}, ${getString(
                             Res.string.feature_apply_share_status_failure_tip,
                             state.shareProductName,
-                        ),
+                        )}",
                         buttonText = getString(Res.string.feature_apply_share_status_failure_action),
                     ),
                 )

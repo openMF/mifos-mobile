@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,10 +24,12 @@ data class TransferProcessRoute(
     val fromClientId: Long? = null,
     val fromAccountType: Int? = null,
     val fromAccountId: String? = null,
+    val fromClientName: String? = null,
     val toOfficeId: Int? = null,
     val toClientId: Long? = null,
     val toAccountType: Int? = null,
     val toAccountId: String? = null,
+    val toClientName: String? = null,
     val transferAmount: String? = null,
     val transferDescription: String? = null,
     val transferType: String = TransferType.SELF.name,
@@ -59,10 +61,12 @@ fun NavController.navigateToTransferProcessScreen(
             fromClientId = transferPayload.payFromAccount?.clientId,
             fromAccountType = transferPayload.payFromAccount?.accountType?.id,
             fromOfficeId = transferPayload.payFromAccount?.officeId,
+            fromClientName = transferPayload.payFromAccount?.clientName,
             toOfficeId = transferPayload.payToAccount?.officeId,
             toAccountId = transferPayload.payToAccount?.accountNo,
             toClientId = transferPayload.payToAccount?.clientId,
             toAccountType = transferPayload.payToAccount?.accountType?.id,
+            toClientName = transferPayload.payToAccount?.clientName,
             transferAmount = transferPayload.amount,
             transferDescription = transferPayload.review,
             transferType = transferType.name,

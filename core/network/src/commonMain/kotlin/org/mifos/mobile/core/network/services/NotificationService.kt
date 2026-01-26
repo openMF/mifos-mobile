@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,20 +16,20 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
-import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
+import org.mifos.mobile.core.network.dto.notification.NotificationUserDetailResponseDto
+import org.mifos.mobile.core.network.dto.payloads.NotificationRegisterPayloadDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface NotificationService {
     @GET(ApiEndPoints.DEVICE + "/registration/client/{clientId}")
-    fun getUserNotificationId(@Path("clientId") clientId: Long): Flow<NotificationUserDetail>
+    fun getUserNotificationId(@Path("clientId") clientId: Long): Flow<NotificationUserDetailResponseDto>
 
     @POST(ApiEndPoints.DEVICE + "/registration")
-    suspend fun registerNotification(@Body payload: NotificationRegisterPayload?): HttpResponse
+    suspend fun registerNotification(@Body payload: NotificationRegisterPayloadDto?): HttpResponse
 
     @PUT(ApiEndPoints.DEVICE + "/registration/{id}")
     suspend fun updateRegisterNotification(
         @Path("id") id: Long,
-        @Body payload: NotificationRegisterPayload?,
+        @Body payload: NotificationRegisterPayloadDto?,
     ): HttpResponse
 }

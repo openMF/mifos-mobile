@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,6 +13,12 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionViewModel
 
+/**
+ * Koin module providing dependency injection definitions for the recent transactions feature.
+ *
+ * Registers the following ViewModel for lifecycle-aware injection:
+ * - [RecentTransactionViewModel]: Manages state and logic for displaying recent transaction history.
+ */
 val recentTransactionModule = module {
     viewModelOf(::RecentTransactionViewModel)
 }

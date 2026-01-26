@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -344,6 +344,10 @@ val SavingStatus.allowedActions: Set<SavingsActionItems>
             SavingsActionItems.QrCode,
             SavingsActionItems.Transfer,
             SavingsActionItems.Transactions,
+        )
+        SavingStatus.APPROVED -> setOf(
+            SavingsActionItems.QrCode,
+            SavingsActionItems.Transfer,
         )
         SavingStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
             SavingsActionItems.QrCode,

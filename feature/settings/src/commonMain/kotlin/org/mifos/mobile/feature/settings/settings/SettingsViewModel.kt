@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
-import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -169,7 +169,7 @@ internal class SettingsViewModel(
         mutableStateFlow.update {
             it.copy(
                 dialogState = SettingsState.DialogState.Logout(
-                    title = Res.string.feature_settings_logout_title,
+                    title = Res.string.feature_settings_action_logout_tip,
                     message = Res.string.feature_settings_logout_description,
                 ),
             )

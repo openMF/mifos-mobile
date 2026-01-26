@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -130,26 +130,26 @@ class TransactionDetailsViewModel(
     }
 
     private fun TransactionDetails.toUiTransaction(): UiTransactionDetails {
-        val accountNumber = this.accountNo ?: "N/A"
-        val isReversed = (this.reversed == true) || (this.manuallyReversed == true)
-        val statusKey = if (isReversed) "reversed" else "success"
-        val balance = this.outstandingLoanBalance ?: this.runningBalance
+        val statusKey = if (this.isReversed) "reversed" else "success"
+
+        // Flatten balances for the UI
+        val balance = this.balances.running
 
         return UiTransactionDetails(
             id = this.id,
             date = this.date,
             amount = this.amount,
-            typeValue = this.type?.value,
+            transferDescription = this.transferDescription,
+            typeValue = this.transactionName,
             isCredit = this.isCredit,
-            currency = this.currency?.code ?: "USD",
-            accountNo = accountNumber,
+            currency = this.currencyCode,
+            accountNo = this.accountNo,
             status = statusKey,
-            externalId = this.externalId,
             outstandingBalance = balance,
-            principal = this.principalPortion,
-            interest = this.interestPortion,
-            fees = this.feeChargesPortion,
-            penalties = this.penaltyChargesPortion,
+            principal = this.balances.principal,
+            interest = this.balances.interest,
+            fees = this.balances.fee,
+            penalties = this.balances.penalty,
         )
     }
 
@@ -167,10 +167,11 @@ data class UiTransactionDetails(
     val isCredit: Boolean?,
     val currency: String,
     val accountNo: String? = null,
+
+    val transferDescription: String? = null,
     val principal: Double? = null,
     val interest: Double? = null,
     val fees: Double? = null,
     val penalties: Double? = null,
-    val externalId: String? = null,
     val outstandingBalance: Double? = null,
 )

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -50,6 +50,7 @@
         <item>русский</item>
         <item>Kiswahili</item>
         <item>فارسی</item>
+        <item>മലയാളം</item>
     </string-array>
 
 
@@ -86,8 +87,8 @@
     <string name="feature_settings_action_app_info">App Info</string>
     <string name="feature_settings_action_app_info_tip">Find the app version details</string>
 
-    <string name="feature_settings_logout_now">Logout Now</string>
-    <string name="feature_settings_logout_title">Are You Sure You Want To Logout? </string>
+    <string name="feature_settings_action_logout">Logout Now</string>
+    <string name="feature_settings_action_logout_tip">Are You Sure You Want To Logout? </string>
     <string name="feature_settings_logout_description">Logging out will end your current and all active sessions for security purposes. You’ll need to log in again to access your account.</string>
     <string name="feature_settings_logout_message">I don’t want to logout?</string>
     <string name="feature_settings_logout_action">Back to home</string>

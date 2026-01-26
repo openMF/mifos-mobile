@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -27,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosSearchTextField(
@@ -47,7 +47,7 @@ fun MifosSearchTextField(
             )
         },
         onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.bodyLarge,
+        textStyle = KptTheme.typography.bodyLarge,
         trailingIcon = {
             AnimatedVisibility(visible = value.text.isNotEmpty()) {
                 IconButton(onClick = onSearchDismiss) {
