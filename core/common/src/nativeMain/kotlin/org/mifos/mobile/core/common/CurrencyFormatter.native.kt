@@ -23,20 +23,22 @@ actual object CurrencyFormatter {
     ): String {
         if (balance == null || currencyCode.isNullOrBlank()) return ""
 
-        val digits = maximumFractionDigits ?: 2
+        return try {
+            val digits = maximumFractionDigits ?: 2
 
-        val locale = NSLocale.currentLocale
+            val formatter = NSNumberFormatter().apply {
+                numberStyle = NSNumberFormatterCurrencyStyle
+                locale = NSLocale.currentLocale
 
-        val formatter = NSNumberFormatter().apply {
-            numberStyle = NSNumberFormatterCurrencyStyle
-            setLocale(locale)
+                setMinimumFractionDigits(digits.toULong())
+                setMaximumFractionDigits(digits.toULong())
 
-            setMinimumFractionDigits(digits.toULong())
-            setMaximumFractionDigits(digits.toULong())
+                setInternationalCurrencySymbol(currencyCode)
+            }
 
-            setInternationalCurrencySymbol(currencyCode)
+            formatter.stringFromNumber(NSNumber(balance)) ?: balance.toString()
+        } catch (_: Throwable) {
+            balance.toString()
         }
-
-        return formatter.stringFromNumber(NSNumber(balance)) ?: ""
     }
 }

@@ -22,12 +22,17 @@ actual object CurrencyFormatter {
         if (balance == null || currencyCode.isNullOrBlank()) return ""
 
         val formatter = NumberFormat.getCurrencyInstance(Locale.getDefault())
-        formatter.currency = Currency.getInstance(currencyCode)
 
-        val digits = maximumFractionDigits ?: 2
-        formatter.minimumFractionDigits = digits
-        formatter.maximumFractionDigits = digits
+        return try {
+            formatter.currency = Currency.getInstance(currencyCode)
 
-        return formatter.format(balance)
+            val digits = maximumFractionDigits ?: 2
+            formatter.minimumFractionDigits = digits
+            formatter.maximumFractionDigits = digits
+
+            formatter.format(balance)
+        } catch (_: IllegalArgumentException) {
+            balance.toString()
+        }
     }
 }
