@@ -1,0 +1,170 @@
+name: Mobile i18n Autofill (bot PR)
+
+on:
+  pull_request:
+    branches: [development]
+    paths:
+      - 'cmp-android/**'
+      - 'feature/**'
+  workflow_dispatch:
+    inputs:
+      repo_root:
+        description: 'Module path (e.g., feature/share-account, cmp-android)'
+        required: true
+        type: string
+        default: 'feature/share-account'
+      locales:
+        description: 'Comma-separated locales (e.g., ar,en,es,de,fr)'
+        required: true
+        type: string
+        default: 'ar,bn,de,en,es,fa,fr,gu,hi,hu,id,km,kn,ml,mr,ms,my,pl,pt,ru,si,sw,te,ur'
+      model:
+        description: 'Translation model'
+        required: false
+        type: string
+        default: 'gemma-3-27b-it'
+      batch_size:
+        description: 'Batch size for translation'
+        required: false
+        type: number
+        default: 15
+      request_delay:
+        description: 'Delay between requests (seconds)'
+        required: false
+        type: number
+        default: 2
+
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  i18n-autofill:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-genai lxml
+
+      - name: Set translation parameters
+        id: params
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "repo_root=${{ inputs.repo_root }}" >> $GITHUB_OUTPUT
+            echo "locales=${{ inputs.locales }}" >> $GITHUB_OUTPUT
+            echo "model=${{ inputs.model }}" >> $GITHUB_OUTPUT
+            echo "batch_size=${{ inputs.batch_size }}" >> $GITHUB_OUTPUT
+            echo "request_delay=${{ inputs.request_delay }}" >> $GITHUB_OUTPUT
+          else
+            # Default values for PR trigger
+            echo "repo_root=feature/share-account" >> $GITHUB_OUTPUT
+            echo "locales=ar,bn,de,en,es,fa,fr,gu,hi,hu,id,km,kn,ml,mr,ms,my,pl,pt,ru,si,sw,te,ur" >> $GITHUB_OUTPUT
+            echo "model=gemma-3-27b-it" >> $GITHUB_OUTPUT
+            echo "batch_size=15" >> $GITHUB_OUTPUT
+            echo "request_delay=2" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run translation autofill
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python translate.py \
+            --repo-root ${{ steps.params.outputs.repo_root }} \
+            --mode apply \
+            --locales ${{ steps.params.outputs.locales }} \
+            --model ${{ steps.params.outputs.model }} \
+            --batch-size ${{ steps.params.outputs.batch_size }} \
+            --request-delay ${{ steps.params.outputs.request_delay }}
+
+
+      - name: Validate Android resources compile
+        run: |
+          ./gradlew \
+            :cmp-android:processDemoDebugResources
+
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          # Check if there are any changes in cmp-android or feature
+          if git status --porcelain cmp-android/ feature/ | grep -q .; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected:"
+            git status --short cmp-android/ feature/
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          fi
+
+
+      - name: Squash and commit all changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          LOCALES: ${{ steps.params.outputs.locales }}
+          REPO_ROOT: ${{ steps.params.outputs.repo_root }}
+          MODEL: ${{ steps.params.outputs.model }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref || github.ref_name }}
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git rm .github/workflows/mobile-i18n-autofill-pr.yml translate.py
+          
+          git add cmp-android/ feature/
+          
+          # Check if there are any staged changes
+          if git diff --cached --quiet; then
+            echo "No translation changes to commit"
+            exit 0
+          fi
+          
+          # Count commits in this PR branch
+          COMMIT_COUNT=$(git rev-list --count HEAD ^origin/development)
+          
+          # Reset to before all PR commits (keeps changes staged)
+          git reset --soft HEAD~$COMMIT_COUNT
+          
+          # Stage only the strings.xml translation files
+          git add cmp-android/ feature/
+          
+          # Create a single squashed commit
+          git commit -m "add mobile i18n translations
+          
+          - Auto-generated translations for: $LOCALES
+          - Module: $REPO_ROOT
+          - Model: $MODEL"
+          
+         # Force push the squashed commit
+         git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }} --force
+    
+         echo "✅ All changes squashed into single commit"
