@@ -164,7 +164,7 @@ jobs:
           - Module: $REPO_ROOT
           - Model: $MODEL"
           
-         # Force push the squashed commit
-         git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }} --force
+          # Force push the squashed commit
+          git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }} --force
     
-         echo "✅ All changes squashed into single commit"
+          echo "✅ All changes squashed into single commit"
