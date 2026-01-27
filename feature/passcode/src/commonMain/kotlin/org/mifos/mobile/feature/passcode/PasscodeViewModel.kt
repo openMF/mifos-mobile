@@ -98,6 +98,7 @@ internal class PasscodeViewModel(
                     if (confirm == state.firstPasscode) {
                         viewModelScope.launch {
                             userPreferencesRepository.setPasscode(confirm)
+                            userPreferencesRepository.setIsUnlocked(true)
                             sendEvent(
                                 PasscodeEvent.OnPasscodeConfirm(
                                     eventType = EventType.SUCCESS.name,
