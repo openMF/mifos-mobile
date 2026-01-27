@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">బెనిఫిషియరీలను పొందడం విఫలమైంది</string>
+    <string name="error_fetching_beneficiary_template">బెనిఫిషియరీ టెంప్లేట్ పొందడం విఫలమైంది</string>
+    <string name="error_fetching_template">టెంప్లేట్ పొందడం విఫలమైంది</string>
+    <string name="error_creating_beneficiary">బెనిఫిషియరీ సృష్టించడం విఫలమైంది</string>
+    <string name="error_updating_beneficiary">బెనిఫిషియరీ అప్డేట్ చేయడం విఫలమైంది</string>
+    <string name="error_deleting_beneficiary">బెనిఫిషియరీ తొలగించడం విఫలమైంది</string>
+    <string name="error_loan_account_withdraw">లోన్ అకౌంట్ విత్‌డ్రా చేయడంలో లోపం</string>
+    <string name="error_fetching_third_party_transfer_template">తృతీయ పార్టీ ట్రాన్స్‌ఫర్ టెంప్లేట్ పొందడంలో లోపం</string>
+    <string name="no_beneficiary_found_please_add">ప్రస్తుతం, మీకు ఎటువంటి బెనిఫిషియరీ లేదు. దయచేసి బెనిఫిషియరీ జోడించండి</string>
+    <string name="no_filtered_beneficiary_found">ఇచ్చిన ఫిల్టర్ కోసం బెనిఫిషియరీ కనుగొనబడలేదు</string>
+    <string name="beneficiary">బెనిఫిషియరీ</string>
+    <string name="manage_beneficiaries">బెనిఫిషియరీలను నిర్వహించు</string>
+    <string name="beneficiaries">బెనిఫిషియరీలు</string>
+    <string name="beneficiary_detail">బెనిఫిషియరీ వివరాలు</string>
+    <string name="beneficiary_name">బెనిఫిషియరీ పేరు</string>
+    <string name="account_type">అకౌంట్ రకం</string>
+    <string name="transfer_limit">ట్రాన్స్‌ఫర్ పరిమితి</string>
+    <string name="add_beneficiary">బెనిఫిషియరీ జోడించు</string>
+    <string name="office_name">ఆఫీస్ పేరు</string>
+    <string name="select_account_type">అకౌంట్ రకం ఎంచుకోండి*</string>
+    <string name="submit_beneficiary">బెనిఫిషియరీ సమర్పించు</string>
+    <string name="enter_office_name">బెనిఫిషియరీ ఆఫీస్ పేరు నమోదు చేయండి</string>
+    <string name="enter_beneficiary_name">బెనిఫిషియరీ పేరు నమోదు చేయండి</string>
+    <string name="enter_transfer_limit">ట్రాన్స్‌ఫర్ పరిమితి నమోదు చేయండి</string>
+    <string name="enter_account_number">బెనిఫిషియరీ అకౌంట్ నంబర్ నమోదు చేయండి</string>
+    <string name="choose_account_type">డ్రాప్‌డౌన్ నుండి అకౌంట్ రకం ఎంచుకోండి</string>
+    <string name="beneficiary_created_successfully">బెనిఫిషియరీ విజయవంతంగా సృష్టించబడింది</string>
+    <string name="beneficiary_updated_successfully">బెనిఫిషియరీ విజయవంతంగా అప్డేట్ చేయబడింది</string>
+    <string name="update_beneficiary">బెనిఫిషియరీ అప్డేట్ చేయు</string>
+    <string name="delete_beneficiary">బెనిఫిషియరీ తొలగించు</string>
+    <string name="delete_beneficiary_confirmation">మీరు ఈ బెనిఫిషియరీని తొలగించాలనుకుంటున్నారా</string>
+    <string name="login_using_password_confirmation">మీరు పాస్‌వర్డ్ ఉపయోగించి లాగిన్ చేయాలనుకుంటున్నారా?</string>
+    <string name="delete">తొలగించు</string>
+    <string name="update">అప్డేట్</string>
+    <string name="beneficiary_deleted_successfully">బెనిఫిషియరీ విజయవంతంగా తొలగించబడింది</string>
+    <string name="third_party_transfer">తృతీయ పార్టీ ట్రాన్స్‌ఫర్</string>
+    <string name="total_loan">మొత్తం లోన్</string>
+    <string name="total_saving">మొత్తం సేవింగ్స్</string>
+    <string name="accounts_overview">అకౌంట్స్ అవలోకనం</string>
+    <string name="show_hide_total_saving_amount">మొత్తం సేవింగ్స్ మొత్తాన్ని చూపించు లేదా దాచు</string>
+    <string name="show_hide_total_loan_amount">మొత్తం లోన్ మొత్తాన్ని చూపించు లేదా దాచు</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">సర్వేలు</string>
+    <string name="activation_date">అక్టివేషన్ తేదీ</string>
+    <string name="groups">గ్రూపులు</string>
+    <string name="user_details">వినియోగదారు వివరాలు</string>
+    <string name="client_type">క్లయింట్ రకం</string>
+    <string name="client_classification">క్లయింట్ వర్గీకరణ</string>
+    <string name="select_mode">మోడ్ ఎంచుకోండి</string>
+    <string name="add_beneficiary_option">మీ అకౌంట్‌కు తృతీయ పార్టీ బెనిఫిషియరీలను జోడించండి.\nమాన్యువల్‌గా నమోదు చేయండి లేదా అకౌంట్ QR కోడ్ స్కాన్ చేయండి</string>
+    <string name="invalid_amount">చెల్లని మొత్తం</string>
+    <string name="account_number">అకౌంట్ నంబర్</string>
+    <string name="client_name">క్లయింట్ పేరు</string>
+    <string name="cancel">రద్దు చేయు</string>
+    <string name="internet_not_connected">దయచేసి మీరు ఇంటర్నెట్‌కు కనెక్ట్ అయినట్లు నిర్ధారించుకోండి</string>
+    <string name="add">జోడించు</string>
+    <string name="scan">స్కాన్</string>
+    <string name="upload_qr_code">QR అప్‌లోడ్ చేయు</string>
+    <string name="beneficiary_name_label">బెనిఫిషియరీ పేరు</string>
+    <string name="office_label">ఆఫీస్</string>
+    <string name="account_type_label">అకౌంట్ రకం</string>
+    <string name="account_number_label">అకౌంట్ నంబర్</string>
+    <string name="transfer_limit_label">ట్రాన్స్‌ఫర్ పరిమితి</string>
+    <string name="account_type_savings">సేవింగ్స్</string>
+    <string name="account_type_loan">లోన్</string>
+    <string name="account_type_share">షేర్</string>
+    <string name="validate_details">వివరాలను ధృవీకరించు</string>
+    <string name="confirm_details">వివరాలను నిర్ధారించు</string>
+    <string name="beneficiary_creation_failed">బెనిఫిషియరీ సృష్టి విఫలమైంది</string>
+    <string name="beneficiary_updation_failed">బెనిఫిషియరీ అప్డేషన్ విఫలమైంది</string>
+    <string name="try_again">మళ్లీ ప్రయత్నించు</string>
+    <string name="back_to_home">హోమ్‌కు తిరిగి వెళ్ళు</string>
+    <string name="feature_savings_filter">ఫిల్టర్లు</string>
+    <string name="feature_savings_reset">రీసెట్</string>
+    <string name="feature_savings_apply">వర్తించు</string>
+    <string name="feature_filters_count">%1$s ఎంచుకోబడింది</string>
+    <string name="filter_account_type">అకౌంట్ రకం</string>
+    <string name="filter_loan_account">లోన్ అకౌంట్</string>
+    <string name="filter_savings_account">సేవింగ్స్ అకౌంట్</string>
+    <string name="filter_linked_with">లింక్ చేయబడింది</string>
+    <string name="filter_self">స్వయం</string>
+    <string name="filter_other_clients">ఇతర క్లయింట్లు</string>
+    <string name="beneficiary_created_successfully_account">అకౌంట్ %1$s కోసం బెనిఫిషియరీ విజయవంతంగా సృష్టించబడింది, బెనిఫిషియరీ పేరు %2$s.</string>
+    <string name="beneficiary_updated_successfully_account">బెనిఫిషియరీ పేరు %1$s కోసం బెనిఫిషియరీ విజయవంతంగా అప్డేట్ చేయబడింది, ట్రాన్స్‌ఫర్ పరిమితి %2$d.</string>
+    <string name="skip_the_form">ఫారమ్‌ను స్కిప్ చేయు</string>
+    <string name="upload_or_scan_qr_code">QR అప్‌లోడ్ లేదా స్కాన్ చేయు</string>
+    <string name="filter">ఫిల్టర్</string>
+    <string name="linked_with">లింక్ చేయబడింది</string>
+    <string name="type_of_account">అకౌంట్ రకం</string>
+    <string name="selected_count">%1$d ఎంచుకోబడింది</string>
+    <string name="filter_icon_description">ఫిల్టర్ ఐకాన్</string>
+    <string name="feature_generic_error_server">మా వైపు నుండి సర్వర్ సమస్య, మరింతకు ప్రోసీడ్ చేయలేము, కొంత సమయం తర్వాత మళ్లీ ప్రయత్నించు</string>
+</resources>

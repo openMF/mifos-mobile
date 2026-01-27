@@ -41,8 +41,9 @@
     <string name="delete_beneficiary">ഗുണഭോക്താവിനെ നീക്കം ചെയ്യുക</string>
     <string name="delete_beneficiary_confirmation">ഈ ഗുണഭോക്താവിനെ നീക്കം ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ</string>
     <string name="login_using_password_confirmation">പാസ്‌വേഡ് ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
-    <string name="delete">നീക്കം ചെയ്യുക</string>
-    <string name="beneficiary_deleted_successfully">ഗുണഭോക്താവിനെ വിജയകരമായി നീക്കം ചെയ്തു</string>
+    <string name="delete">ഇല്ലാതാക്കുക</string>
+    <string name="update">അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="beneficiary_deleted_successfully">ആനുകൂല്യം വിജയകരമായി ഇല്ലാതാക്കി</string>
     <string name="third_party_transfer">തേർഡ് പാർട്ടി ട്രാൻസ്ഫർ</string>
     <string name="total_loan">ആകെ വായ്പ</string>
     <string name="total_saving">ആകെ സമ്പാദ്യം</string>

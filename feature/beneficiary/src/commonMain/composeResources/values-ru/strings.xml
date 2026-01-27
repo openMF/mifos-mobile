@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">Не удалось получить Получателей</string>
+    <string name="error_fetching_beneficiary_template">Не удалось получить Шаблон Получателя</string>
+    <string name="error_fetching_template">Не удалось получить шаблон</string>
+    <string name="error_creating_beneficiary">Не удалось создать Получателя</string>
+    <string name="error_updating_beneficiary">Не удалось обновить Получателя</string>
+    <string name="error_deleting_beneficiary">Не удалось удалить Получателя</string>
+    <string name="error_loan_account_withdraw">Ошибка при снятии средств с кредитного счета</string>
+    <string name="error_fetching_third_party_transfer_template">Ошибка при получении шаблона Перевода Третьей Стороны</string>
+    <string name="no_beneficiary_found_please_add">В настоящее время у вас нет Получателей. Пожалуйста, добавьте Получателя</string>
+    <string name="no_filtered_beneficiary_found">Получатель не найден для данного фильтра</string>
+    <string name="beneficiary">Получатель</string>
+    <string name="manage_beneficiaries">Управлять Получателями</string>
+    <string name="beneficiaries">Получатели</string>
+    <string name="beneficiary_detail">Детали Получателя</string>
+    <string name="beneficiary_name">Имя Получателя</string>
+    <string name="account_type">Тип Счета</string>
+    <string name="transfer_limit">Лимит Перевода</string>
+    <string name="add_beneficiary">Добавить Получателя</string>
+    <string name="office_name">Название Офиса</string>
+    <string name="select_account_type">Выбрать Тип Счета*</string>
+    <string name="submit_beneficiary">Отправить Получателя</string>
+    <string name="enter_office_name">Введите Название Офиса Получателя</string>
+    <string name="enter_beneficiary_name">Введите Имя Получателя</string>
+    <string name="enter_transfer_limit">Введите Лимит Перевода</string>
+    <string name="enter_account_number">Введите Номер Счета Получателя</string>
+    <string name="choose_account_type">Выбрать Тип Счета из выпадающего списка</string>
+    <string name="beneficiary_created_successfully">Получатель успешно создан</string>
+    <string name="beneficiary_updated_successfully">Получатель успешно обновлен</string>
+    <string name="update_beneficiary">Обновить Получателя</string>
+    <string name="delete_beneficiary">Удалить Получателя</string>
+    <string name="delete_beneficiary_confirmation">Вы уверены, что хотите удалить этого Получателя</string>
+    <string name="login_using_password_confirmation">Вы уверены, что хотите войти с помощью Пароля?</string>
+    <string name="delete">Удалить</string>
+    <string name="update">Обновить</string>
+    <string name="beneficiary_deleted_successfully">Получатель успешно удален</string>
+    <string name="third_party_transfer">Перевод Третьей Стороны</string>
+    <string name="total_loan">Общий Кредит</string>
+    <string name="total_saving">Общие Сбережения</string>
+    <string name="accounts_overview">Обзор Счетов</string>
+    <string name="show_hide_total_saving_amount">Показать или скрыть общую сумму сбережений</string>
+    <string name="show_hide_total_loan_amount">Показать или скрыть общую сумму кредита</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Опросы</string>
+    <string name="activation_date">Дата Активации</string>
+    <string name="groups">Группы</string>
+    <string name="user_details">Детали Пользователя</string>
+    <string name="client_type">Тип Клиента</string>
+    <string name="client_classification">Классификация Клиента</string>
+    <string name="select_mode">Выбрать Режим</string>
+    <string name="add_beneficiary_option">Добавить Получателей Третьей Стороны на ваш счет.\nВведите вручную или отсканируйте QR-код счета</string>
+    <string name="invalid_amount">Недействительная Сумма</string>
+    <string name="account_number">Номер Счета</string>
+    <string name="client_name">Имя Клиента</string>
+    <string name="cancel">Отмена</string>
+    <string name="internet_not_connected">Пожалуйста, убедитесь, что вы подключены к интернету</string>
+    <string name="add">Добавить</string>
+    <string name="scan">Сканировать</string>
+    <string name="upload_qr_code">Загрузить QR</string>
+    <string name="beneficiary_name_label">Имя Получателя</string>
+    <string name="office_label">Офис</string>
+    <string name="account_type_label">Тип Счета</string>
+    <string name="account_number_label">Номер Счета</string>
+    <string name="transfer_limit_label">Лимит Перевода</string>
+    <string name="account_type_savings">Сбережения</string>
+    <string name="account_type_loan">Кредит</string>
+    <string name="account_type_share">Акция</string>
+    <string name="validate_details">Подтвердить Детали</string>
+    <string name="confirm_details">Подтвердить Детали</string>
+    <string name="beneficiary_creation_failed">Создание Получателя Не Удалось</string>
+    <string name="beneficiary_updation_failed">Обновление Получателя Не Удалось</string>
+    <string name="try_again">Попробовать Снова</string>
+    <string name="back_to_home">Вернуться Домой</string>
+    <string name="feature_savings_filter">Фильтры</string>
+    <string name="feature_savings_reset">Сбросить</string>
+    <string name="feature_savings_apply">Применить</string>
+    <string name="feature_filters_count">%1$s Выбрано</string>
+    <string name="filter_account_type">Тип Счета</string>
+    <string name="filter_loan_account">Кредитный Счет</string>
+    <string name="filter_savings_account">Сберегательный Счет</string>
+    <string name="filter_linked_with">Связан С</string>
+    <string name="filter_self">Свой</string>
+    <string name="filter_other_clients">Другие Клиенты</string>
+    <string name="beneficiary_created_successfully_account">Получатель Успешно Создан для счета %1$s получателю по имени %2$s.</string>
+    <string name="beneficiary_updated_successfully_account">Получатель Успешно Обновлен для получателя по имени %1$s с лимитом перевода %2$d.</string>
+    <string name="skip_the_form">Пропустить форму</string>
+    <string name="upload_or_scan_qr_code">Загрузить или Сканировать QR-Код</string>
+    <string name="filter">Фильтр</string>
+    <string name="linked_with">Связан С</string>
+    <string name="type_of_account">Тип Счета</string>
+    <string name="selected_count">%1$d выбрано</string>
+    <string name="filter_icon_description">Иконка фильтра</string>
+    <string name="feature_generic_error_server">Проблема с сервером с нашей стороны, невозможно продолжить дальше, попробуйте снова через минуту</string>
+</resources>
