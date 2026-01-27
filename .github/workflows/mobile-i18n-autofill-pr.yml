@@ -6,6 +6,8 @@ on:
     paths:
       - 'cmp-android/**'
       - 'feature/**'
+      - '.github/workflows/mobile-i18n-autofill-pr.yml'
+      - 'translate.py'
   workflow_dispatch:
     inputs:
       repo_root:
