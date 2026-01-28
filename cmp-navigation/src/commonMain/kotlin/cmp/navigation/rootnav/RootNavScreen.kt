@@ -83,13 +83,8 @@ fun RootNavScreen(
         passcodeNavGraph(
             onPasscodeVerified = {
                 sessionManager.startSession()
-                val previousEntry = navController.previousBackStackEntry
-                if (previousEntry != null) {
-                    navController.popBackStack()
-                } else {
-                    navController.navigate(AuthenticatedGraphRoute) {
-                        popUpTo(0) { inclusive = true }
-                    }
+                navController.navigate(AuthenticatedGraphRoute) {
+                    popUpTo(0) { inclusive = true }
                 }
             },
         )

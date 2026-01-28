@@ -45,8 +45,6 @@ interface UserPreferencesRepository {
 
     val passcode: Flow<String>
 
-    val observeLastSessionTime: Flow<Long>
-
     suspend fun updateToken(password: String): DataState<Unit>
 
     suspend fun updateTheme(theme: MifosThemeConfig): DataState<Unit>
@@ -77,6 +75,5 @@ interface UserPreferencesRepository {
 
     suspend fun setLanguage(language: LanguageConfig)
 
-    suspend fun setLastSessionTime(time: Long)
     suspend fun logOut(): Unit
 }

@@ -32,9 +32,6 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 private const val USER_DATA = "userData"
 private const val APP_SETTINGS = "appSettings"
 
-private const val LAST_SESSION_TIME = "last_session_time"
-
-@Suppress("TooManyFunctions")
 class UserPreferencesDataSource(
     private val settings: Settings,
     private val dispatcher: CoroutineDispatcher,
@@ -60,10 +57,6 @@ class UserPreferencesDataSource(
                 serializer = AppSettings.serializer(),
             ) ?: AppSettings.DEFAULT,
         ),
-    )
-
-    private val lastSessionTime = MutableStateFlow(
-        settings.getLong(LAST_SESSION_TIME, 0L),
     )
 
     val token = _userInfo.map {
@@ -93,16 +86,6 @@ class UserPreferencesDataSource(
 
     val observeTimeBasedThemeConfig: Flow<TimeBasedTheme>
         get() = _settingsInfo.map { it.timeBasedTheme }
-
-    val observeLastSessionTime: Flow<Long>
-        get() = lastSessionTime
-
-    suspend fun setLastSessionTime(time: Long) {
-        withContext(dispatcher) {
-            settings.putLong(LAST_SESSION_TIME, time)
-            lastSessionTime.value = time
-        }
-    }
 
     suspend fun updateSettingsInfo(appSettings: AppSettings) {
         withContext(dispatcher) {
@@ -182,9 +165,6 @@ class UserPreferencesDataSource(
             )
             settings.putSettingsPreference(cleared)
             _settingsInfo.value = cleared
-
-            settings.putLong(LAST_SESSION_TIME, 0L)
-            lastSessionTime.value = 0L
         }
     }
 

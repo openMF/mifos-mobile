@@ -76,7 +76,6 @@ fun ComposeApp(
         lifecycleOwner.lifecycle.addObserver(observer)
 
         onDispose {
-            sessionManager.stopSession()
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
