@@ -14,6 +14,4 @@
     <string name="transfer">Transferir</string>
     <string name="profile">Perfil</string>
     <string name="not_connected">⚠️ No estás conectado a Internet</string>
-    <string name="session_expired_title">Sesión Expirada</string>
-    <string name="session_expired_message">Por su seguridad, la sesión se ha bloqueado debido a inactividad. Por favor, verifique su código de acceso para continuar.</string>
 </resources>

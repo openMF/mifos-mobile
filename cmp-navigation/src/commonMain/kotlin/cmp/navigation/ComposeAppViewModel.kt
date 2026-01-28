@@ -147,19 +147,13 @@ class ComposeAppViewModel(
 
             is AppAction.Internal.TimeBasedThemeUpdate -> handleTimeBasedThemeUpdate(action)
 
-            is AppAction.SessionExpired -> handleUserInactivityLogout()
+            is AppAction.SessionExpired -> handleLockApp()
 
             is AppAction.LockApp -> handleLockApp()
         }
     }
 
     private fun handleLockApp() {
-        viewModelScope.launch {
-            userPreferencesRepository.setIsUnlocked(false)
-        }
-    }
-
-    private fun handleUserInactivityLogout() {
         viewModelScope.launch {
             userPreferencesRepository.setIsUnlocked(false)
         }

@@ -30,20 +30,14 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import cmp.navigation.rootnav.RootNavScreen
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.SessionManager
-import org.mifos.mobile.core.designsystem.component.BasicDialogState
-import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.NetworkBanner
 import org.mifos.mobile.core.ui.utils.SessionHandler
-import org.mifos.mobile.navigation.generated.resources.Res
-import org.mifos.mobile.navigation.generated.resources.session_expired_message
-import org.mifos.mobile.navigation.generated.resources.session_expired_title
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -101,22 +95,10 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        val dialogState = if (isSessionExpired) {
-            BasicDialogState.Shown(
-                title = stringResource(Res.string.session_expired_title),
-                message = stringResource(Res.string.session_expired_message),
-            )
-        } else {
-            BasicDialogState.Hidden
-        }
-
-        if (dialogState is BasicDialogState.Shown) {
-            MifosBasicDialog(
-                visibilityState = dialogState,
-                onDismissRequest = {
-                    viewModel.trySendAction(AppAction.SessionExpired)
-                },
-            )
+        LaunchedEffect(isSessionExpired) {
+            if (isSessionExpired) {
+                viewModel.trySendAction(AppAction.SessionExpired)
+            }
         }
 
         SessionHandler(
