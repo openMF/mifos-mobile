@@ -79,7 +79,7 @@ fun ClientClassificationResponseDto.toModel(): ClientClassification =
     ClientClassification(
         id = id,
         name = name,
-        active = active ?: false ,
+        active = active ?: false,
         mandatory = mandatory ?: false,
     )
 
