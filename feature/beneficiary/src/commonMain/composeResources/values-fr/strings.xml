@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Êtes-vous sûr de vouloir supprimer ce bénéficiaire ?</string>
     <string name="login_using_password_confirmation">Êtes-vous sûr de vouloir vous connecter en utilisant le mot de passe ?</string>
     <string name="delete">Supprimer</string>
+    <string name="update">Mettre à jour</string>
     <string name="beneficiary_deleted_successfully">Bénéficiaire supprimé avec succès</string>
     <string name="third_party_transfer">Transfert tiers</string>
     <string name="total_loan">Prêt total</string>

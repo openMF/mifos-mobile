@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="beneficiaries">ഗുണഭോക്താക്കൾ</string>
+    <string name="survey">സർവേകൾ</string>
+    <string name="apply_for_loan">ലോൺ A/c അപേക്ഷിക്കുക</string>
+    <string name="apply_for_savings">സേവിംഗ്സ് A/c അപേക്ഷിക്കുക</string>
+    <string name="apply_for_share">ഷെയർ A/c അപേക്ഷിക്കുക</string>
+    <string name="charges">ചാർജുകൾ</string>
+    <string name="transfer">ട്രാൻസ്ഫർ</string>
+    <string name="accounts">അക്കൗണ്ടുകൾ</string>
+    <string name="recent_transactions">സമീപകാല ഇടപാടുകൾ</string>
+    <string name="error_fetching_client">ക്ലയന്റിനെ ലഭ്യമാക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="no_internet_connection">ഇന്റർനെറ്റ് കണക്ഷൻ ഇല്ല</string>
+    <string name="hello_client">ഹലോ, %1$s</string>
+    <string name="accounts_overview">അക്കൗണ്ട് അവലോകനം</string>
+    <string name="total_saving">ആകെ സമ്പാദ്യം</string>
+    <string name="hidden_amount">*****</string>
+    <string name="total_loan">ആകെ വായ്പ</string>
+    <string name="need_help">ഞങ്ങളെ ബന്ധപ്പെടുക</string>
+    <string name="home">ഹോം</string>
+    <string name="help_line_number" translatable="false">8000000000</string>
+    <string name="contact_email" translatable="false">support@mifos.org</string>
+    <string name="app_name">മിഫോസ് മൊബൈൽ</string>
+    <string name="third_party_transfer">തേർഡ് പാർട്ടി ട്രാൻസ്ഫർ</string>
+    <string name="manage_beneficiaries">ഗുണഭോക്താക്കളെ നിയന്ത്രിക്കുക</string>
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="about_us">ഞങ്ങളെക്കുറിച്ച്</string>
+    <string name="help">സഹായം</string>
+    <string name="share">പങ്കിടുക</string>
+    <string name="app_info">ആപ്പ് വിവരങ്ങൾ</string>
+    <string name="logout">ലോഗൗട്ട്</string>
+    <string name="user_query">ഉപയോക്തൃ അന്വേഷണം</string>
+    <string name="no_app_to_support_action">ഈ പ്രവർത്തനം പിന്തുണയ്ക്കാൻ ആപ്പുകളൊന്നുമില്ല</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="dialog_logout">നിങ്ങൾക്ക് ലോഗൗട്ട് ചെയ്യണമെന്ന് ഉറപ്പാണോ?</string>
+
+    <string name="feature_home_greet">ഹലോ %1$s,</string>
+    <string name="feature_home_services">സേവനങ്ങൾ</string>
+    <string name="feature_home_saving_accounts">സേവിംഗ്സ് അക്കൗണ്ടുകൾ</string>
+    <string name="feature_home_loan_accounts">ലോൺ അക്കൗണ്ടുകൾ</string>
+    <string name="feature_home_share_accounts">ഷെയർ അക്കൗണ്ടുകൾ</string>
+    <string name="feature_home_apply_for_loan">വായ്പയ്ക്ക് അപേക്ഷിക്കുക</string>
+    <string name="feature_home_transaction_history">ഇടപാട് ചരിത്രം</string>
+    <string name="feature_home_charges">ചാർജുകൾ</string>
+    <string name="feature_home_beneficiary">ഗുണഭോക്താവ്</string>
+    <string name="feature_home_faq">പതിവുചോദ്യങ്ങൾ</string>
+
+    <string name="feature_home_saving_account">സേവിംഗ്സ് അക്കൗണ്ട്</string>
+    <string name="feature_home_loan_account">ലോൺ അക്കൗണ്ട്</string>
+    <string name="feature_home_savings_tip">നിങ്ങളുടെ നിക്ഷേപങ്ങൾക്ക് പലിശ നേടുക, എപ്പോൾ വേണമെങ്കിലും പണം ലഭ്യമാക്കാനുള്ള സൗകര്യം.</string>
+    <string name="feature_home_loan_tip">വ്യക്തിഗത, ബിസിനസ്, അല്ലെങ്കിൽ വിദ്യാഭ്യാസ ആവശ്യങ്ങൾക്കായി നിങ്ങൾക്ക് ആവശ്യമായ ഫണ്ട് നേടുക.</string>
+
+    <string name="feature_home_total_available_savings">ആകെ ലഭ്യമായ സേവിംഗ്സ്</string>
+    <string name="feature_home_total_available_loan">ആകെ ലഭ്യമായ ലോൺ</string>
+
+    <string name="feature_home_common_error">എന്തോ കുഴപ്പം സംഭവിച്ചു</string>
+
+    <string name="feature_server_error">ഞങ്ങളുടെ സെർവറിൽ അപ്രതീക്ഷിത പിശക് സംഭവിച്ചു. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+
+</resources>

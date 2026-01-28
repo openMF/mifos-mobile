@@ -32,7 +32,7 @@
     <string name="submit_beneficiary">Enviar beneficiario</string>
     <string name="enter_office_name">Ingrese el nombre de la oficina del beneficiario</string>
     <string name="enter_beneficiary_name">Ingrese el nombre del beneficiario</string>
-    <string name="enter_transfer_limit">Ingresar límite de transferencia</string>    
+    <string name="enter_transfer_limit">Ingresar límite de transferencia</string>
     <string name="enter_account_number">Ingrese el número de cuenta del beneficiario</string>
     <string name="choose_account_type">Seleccione el tipo de cuenta en el menú desplegable</string>
     <string name="beneficiary_created_successfully">Beneficiario creado con éxito</string>
@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">¿Estás seguro de que quieres eliminar a este Beneficiario?</string>
     <string name="login_using_password_confirmation">¿Estás seguro de que quieres iniciar sesión usando contraseña?</string>
     <string name="delete">Eliminar</string>
+    <string name="update">Actualizar</string>
     <string name="beneficiary_deleted_successfully">Beneficiario eliminado exitosamente</string>
     <string name="third_party_transfer">Transferencia de terceros</string>
     <string name="total_loan">Crédito total</string>

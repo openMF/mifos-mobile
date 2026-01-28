@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_passcode_setup">ഓതന്റിക്കേഷൻ കോഡ് സജ്ജീകരിക്കുക</string>
+    <string name="feature_passcode_tip">ഓതന്റിക്കേഷൻ ലെയർ സജ്ജീകരിക്കുന്നതിനായി നിങ്ങളുടെ 4-അക്ക ഓതന്റിക്കേഷൻ കോഡ് നൽകുക</string>
+    <string name="feature_passcode_confirm">ഓതന്റിക്കേഷൻ കോഡ് സ്ഥിരീകരിക്കുക</string>
+    <string name="feature_passcode_setup_successful">വിജയകരം</string>
+    <string name="feature_passcode_setup_successful_msg">ഓതന്റിക്കേഷൻ കോഡ് വിജയകരമായി സജ്ജീകരിച്ചു. ആപ്പിൽ ഇത് ഇടയ്ക്കിടെ ഉപയോഗിക്കേണ്ടി വരും</string>
+    <string name="feature_passcode_setup_failure">പരാജയപ്പെട്ടു</string>
+    <string name="feature_passcode_setup_failure_msg">ഓതന്റിക്കേഷൻ കോഡ് സജ്ജീകരിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ആപ്പിൽ ഇത് ഇടയ്ക്കിടെ ഉപയോഗിക്കേണ്ടി വരുമെന്നതിനാൽ ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+
+    <string name="feature_passcode_common_continue">തുടരുക</string>
+    <string name="feature_passcode_common_try_again">വീണ്ടും ശ്രമിക്കുക</string>
+
+    <string name="feature_passcode_authenticate">ഓതന്റിക്കേഷൻ കോഡ് നൽകുക</string>
+    <string name="feature_passcode_authenticate_tip">നിങ്ങളുടെ പ്രവർത്തനം പൂർത്തിയാക്കാൻ 4-അക്ക ഓതന്റിക്കേഷൻ കോഡ് നൽകി ഇത് നിങ്ങളാണെന്ന് സ്ഥിരീകരിക്കുക</string>
+</resources>

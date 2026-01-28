@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_account_title">അക്കൗണ്ടുകൾ</string>
+    <string name="feature_loan_account_title">വായ്പ അക്കൗണ്ടുകൾ</string>
+    <string name="feature_saving_account_title">സേവിംഗ്സ് അക്കൗണ്ടുകൾ</string>
+    <string name="feature_share_account_title">ഓഹരി അക്കൗണ്ടുകൾ</string>
+
+    <string name="feature_accounts_filter_status">സ്റ്റാറ്റസ്</string>
+    <string name="feature_accounts_filter_type">തരം</string>
+
+    <!--    Loan Account Filters-->
+
+    <string name="feature_loan_account_filter_active">സജീവം</string>
+    <string name="feature_loan_account_filter_approval_pending">അംഗീകാരം കാത്തിരിക്കുന്നു</string>
+    <string name="feature_loan_account_filter_closed">അടച്ചവ</string>
+    <string name="feature_loan_account_filter_disburse">വിതരണത്തിനായി കാത്തിരിക്കുന്നു</string>
+    <string name="feature_loan_account_filter_overpaid">അധികം അടച്ചത്</string>
+    <string name="feature_loan_account_filter_in_arrears">കുടിശ്ശിക</string>
+    <string name="feature_loan_account_filter_withdrawn">പിൻവലിച്ചു</string>
+    <string name="feature_loan_account_filter_matured">കാലാവധി പൂർത്തിയായി</string>
+    <string name="feature_loan_account_filter_rejected">നിരസിച്ചു</string>
+
+    <string name="feature_loan_account_filter_personal">വ്യക്തിഗതം</string>
+    <string name="feature_loan_account_filter_bronze">വെങ്കലം</string>
+
+    <!--    Savings account filters-->
+    <string name="feature_savings_filter_wallet_account">വാലറ്റ് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_bank_account">ബാങ്ക് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_group_account">ഗ്രൂപ്പ് അക്കൗണ്ട്</string>
+    <string name="feature_savings_filter_nb_account">NB അക്കൗണ്ട്</string>
+
+    <string name="feature_savings_filter_active_account">സജീവം</string>
+    <string name="feature_savings_filter_pending_account">അംഗീകാരം കാത്തിരിക്കുന്നു</string>
+    <string name="feature_savings_filter_closed_account">അടച്ചവ</string>
+    <string name="feature_savings_filter_matured_account">കാലാവധി പൂർത്തിയായി</string>
+    <string name="feature_savings_filter_approved_account">അംഗീകരിച്ചു</string>
+
+    <string name="feature_savings_filter">ഫിൽട്ടറുകൾ</string>
+    <string name="feature_savings_reset">റീസെറ്റ്</string>
+    <string name="feature_savings_apply">പ്രയോഗിക്കുക</string>
+    <string name="feature_filters_count">%1$s തിരഞ്ഞെടുത്തു</string>
+
+    <string name="feature_transaction_transaction_history">ഇടപാട് ചരിത്രം</string>
+    <string name="feature_transaction_statement">സ്റ്റേറ്റ്‌മെന്റ്</string>
+    <string name="feature_transaction_download_icon_description">ഡൗൺലോഡ് ഐക്കൺ</string>
+    <string name="feature_transaction_filter">ഫിൽട്ടർ</string>
+    <string name="feature_transaction_filter_icon_description">ഫിൽട്ടർ ഐക്കൺ</string>
+
+    <!--    Transaction filters -->
+    <string name="feature_transaction_filter_credit">ക്രെഡിറ്റ്</string>
+    <string name="feature_transaction_filter_debit">ഡെബിറ്റ്</string>
+
+    <string name="feature_transaction_filter_past_month">കഴിഞ്ഞ മാസം</string>
+    <string name="feature_transaction_filter_past_3_months">കഴിഞ്ഞ 3 മാസങ്ങൾ</string>
+    <string name="feature_transaction_filter_past_6_months">കഴിഞ്ഞ 6 മാസങ്ങൾ</string>
+    <string name="feature_transaction_filter_past_1_year">കഴിഞ്ഞ 1 വർഷം</string>
+    <string name="feature_transaction_filter_past_2_years">കഴിഞ്ഞ 2 വർഷങ്ങൾ</string>
+
+    <string name="feature_transaction_type">ഇടപാട് തരം</string>
+    <string name="feature_duration">കാലയളവ്</string>
+    <string name="feature_no_transactions_found">ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_no__filtered_transactions_found">തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകൾക്കായി ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+
+    <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+
+    <!--    Transaction Details -->
+    <string name="feature_transaction_details">ഇടപാട് വിവരങ്ങൾ</string>
+    <string name="feature_transaction_detail_id">ഇടപാട് ഐഡി</string>
+    <string name="feature_transaction_detail_transfer_description">കൈമാറ്റ വിവരണം</string>
+    <string name="feature_transaction_detail_date">തീയതി</string>
+    <string name="feature_transaction_detail_status">സ്റ്റാറ്റസ്</string>
+    <string name="feature_transaction_detail_status_success">വിജയിച്ചു</string>
+    <string name="feature_transaction_detail_account_ref">അക്കൗണ്ട് റഫറൻസ്</string>
+    <string name="feature_transaction_detail_payment_method">പേയ്മെന്റ് രീതി</string>
+    <string name="feature_transaction_detail_type">തരം</string>
+    <string name="feature_transaction_detail_status_reversed">തിരിച്ചെടുത്തു</string>
+    <string name="feature_transaction_detail_receipt">രസീത് #</string>
+    <string name="feature_transaction_detail_external_id">എക്സ്റ്റേണൽ ഐഡി</string>
+    <string name="feature_transaction_detail_breakdown">വിശദാംശങ്ങൾ</string>
+    <string name="feature_transaction_detail_principal">മുതൽ</string>
+    <string name="feature_transaction_detail_interest">പലിശ</string>
+    <string name="feature_transaction_detail_fees">ഫീസുകൾ</string>
+    <string name="feature_transaction_detail_penalties">പിഴകൾ</string>
+    <string name="feature_transaction_detail_balance">ബാക്കി തുക</string>
+    <string name="feature_transaction_detail_default_type">ഇടപാട്</string>
+
+</resources>
