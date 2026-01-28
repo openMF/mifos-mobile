@@ -18,6 +18,7 @@ enum class SavingStatus(val status: String) {
     INACTIVE("Inactive"),
     CLOSED("Closed"),
     SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
+    APPROVED("Approved"),
     ;
 
     companion object {

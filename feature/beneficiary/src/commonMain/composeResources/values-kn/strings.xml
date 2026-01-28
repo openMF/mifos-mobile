@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">ನೀವು ಈ ಪ್ರಯೋಜನಗಳನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ?</string>
     <string name="login_using_password_confirmation">ನೀವು ಪಾಸ್‌ವರ್ಡ್‌ನೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಲು ಬಯಸುವಿರಾ?</string>
     <string name="delete">ಅಳಿಸಿ</string>
+    <string name="update">ನವೀಕರಿಸಿ</string>
     <string name="beneficiary_deleted_successfully">ಪ್ರಯೋಜನಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ</string>
     <string name="third_party_transfer">ಮೂರನೆಯ ವ್ಯಕ್ತಿ ವರ್ಗಾವಣೆ</string>
     <string name="total_loan">ಒಟ್ಟು ಋಣ</string>

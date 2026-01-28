@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">বেনিফিশিয়ারিদের আনতে ব্যর্থ</string>
+    <string name="error_fetching_beneficiary_template">বেনিফিশিয়ারি টেমপ্লেট আনতে ব্যর্থ</string>
+    <string name="error_fetching_template">টেমপ্লেট আনতে ব্যর্থ</string>
+    <string name="error_creating_beneficiary">বেনিফিশিয়ারি তৈরি করতে ব্যর্থ</string>
+    <string name="error_updating_beneficiary">বেনিফিশিয়ারি আপডেট করতে ব্যর্থ</string>
+    <string name="error_deleting_beneficiary">বেনিফিশিয়ারি মুছতে ব্যর্থ</string>
+    <string name="error_loan_account_withdraw">লোন অ্যাকাউন্ট উইথড্র করতে ত্রুটি</string>
+    <string name="error_fetching_third_party_transfer_template">তৃতীয় পক্ষের ট্রান্সফার টেমপ্লেট আনতে ত্রুটি</string>
+    <string name="no_beneficiary_found_please_add">বর্তমানে, আপনার কোনো বেনিফিশিয়ারি নেই। অনুগ্রহ করে বেনিফিশিয়ারি যোগ করুন</string>
+    <string name="no_filtered_beneficiary_found">প্রদত্ত ফিল্টারের জন্য কোনো বেনিফিশিয়ারি পাওয়া যায়নি</string>
+    <string name="beneficiary">বেনিফিশিয়ারি</string>
+    <string name="manage_beneficiaries">বেনিফিশিয়ারিদের পরিচালনা করুন</string>
+    <string name="beneficiaries">বেনিফিশিয়ারিরা</string>
+    <string name="beneficiary_detail">বেনিফিশিয়ারি বিস্তারিত</string>
+    <string name="beneficiary_name">বেনিফিশিয়ারির নাম</string>
+    <string name="account_type">অ্যাকাউন্টের ধরন</string>
+    <string name="transfer_limit">ট্রান্সফার সীমা</string>
+    <string name="add_beneficiary">বেনিফিশিয়ারি যোগ করুন</string>
+    <string name="office_name">অফিসের নাম</string>
+    <string name="select_account_type">অ্যাকাউন্টের ধরন নির্বাচন করুন*</string>
+    <string name="submit_beneficiary">বেনিফিশিয়ারি জমা দিন</string>
+    <string name="enter_office_name">বেনিফিশিয়ারি অফিসের নাম লিখুন</string>
+    <string name="enter_beneficiary_name">বেনিফিশিয়ারির নাম লিখুন</string>
+    <string name="enter_transfer_limit">ট্রান্সফার সীমা লিখুন</string>
+    <string name="enter_account_number">বেনিফিশিয়ারি অ্যাকাউন্ট নম্বর লিখুন</string>
+    <string name="choose_account_type">ড্রপডাউন থেকে অ্যাকাউন্টের ধরন নির্বাচন করুন</string>
+    <string name="beneficiary_created_successfully">বেনিফিশিয়ারি সফলভাবে তৈরি হয়েছে</string>
+    <string name="beneficiary_updated_successfully">বেনিফিশিয়ারি সফলভাবে আপডেট হয়েছে</string>
+    <string name="update_beneficiary">বেনিফিশিয়ারি আপডেট করুন</string>
+    <string name="delete_beneficiary">বেনিফিশিয়ারি মুছুন</string>
+    <string name="delete_beneficiary_confirmation">আপনি কি এই বেনিফিশিয়ারিটি মুছতে চান</string>
+    <string name="login_using_password_confirmation">আপনি কি পাসওয়ার্ড ব্যবহার করে লগইন করতে চান?</string>
+    <string name="delete">মুছুন</string>
+    <string name="update">আপডেট</string>
+    <string name="beneficiary_deleted_successfully">বেনিফিশিয়ারি সফলভাবে মুছে ফেলা হয়েছে</string>
+    <string name="third_party_transfer">তৃতীয় পক্ষের ট্রান্সফার</string>
+    <string name="total_loan">মোট লোন</string>
+    <string name="total_saving">মোট সঞ্চয়</string>
+    <string name="accounts_overview">অ্যাকাউন্টস ওভারভিউ</string>
+    <string name="show_hide_total_saving_amount">মোট সঞ্চয়ের পরিমাণ দেখান বা লুকান</string>
+    <string name="show_hide_total_loan_amount">মোট লোনের পরিমাণ দেখান বা লুকান</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">সার্ভে</string>
+    <string name="activation_date">অ্যাক্টিভেশন তারিখ</string>
+    <string name="groups">গ্রুপ</string>
+    <string name="user_details">ব্যবহারকারীর বিস্তারিত</string>
+    <string name="client_type">ক্লায়েন্টের ধরন</string>
+    <string name="client_classification">ক্লায়েন্টের শ্রেণীবিভাগ</string>
+    <string name="select_mode">মোড নির্বাচন করুন</string>
+    <string name="add_beneficiary_option">আপনার অ্যাকাউন্টে তৃতীয় পক্ষের বেনিফিশিয়ারি যোগ করুন।\nহয় ম্যানুয়ালি লিখুন বা অ্যাকাউন্ট QR কোড স্ক্যান করুন</string>
+    <string name="invalid_amount">অবৈধ পরিমাণ</string>
+    <string name="account_number">অ্যাকাউন্ট নম্বর</string>
+    <string name="client_name">ক্লায়েন্টের নাম</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="internet_not_connected">অনুগ্রহ করে নিশ্চিত করুন যে আপনি ইন্টারনেটের সাথে সংযুক্ত</string>
+    <string name="add">যোগ করুন</string>
+    <string name="scan">স্ক্যান করুন</string>
+    <string name="upload_qr_code">QR আপলোড করুন</string>
+    <string name="beneficiary_name_label">বেনিফিশিয়ারির নাম</string>
+    <string name="office_label">অফিস</string>
+    <string name="account_type_label">অ্যাকাউন্টের ধরন</string>
+    <string name="account_number_label">অ্যাকাউন্ট নম্বর</string>
+    <string name="transfer_limit_label">ট্রান্সফার সীমা</string>
+    <string name="account_type_savings">সঞ্চয়</string>
+    <string name="account_type_loan">লোন</string>
+    <string name="account_type_share">শেয়ার</string>
+    <string name="validate_details">বিস্তারিত যাচাই করুন</string>
+    <string name="confirm_details">বিস্তারিত নিশ্চিত করুন</string>
+    <string name="beneficiary_creation_failed">বেনিফিশিয়ারি তৈরি ব্যর্থ</string>
+    <string name="beneficiary_updation_failed">বেনিফিশিয়ারি আপডেট ব্যর্থ</string>
+    <string name="try_again">আবার চেষ্টা করুন</string>
+    <string name="back_to_home">হোমে ফিরে যান</string>
+    <string name="feature_savings_filter">ফিল্টার</string>
+    <string name="feature_savings_reset">রিসেট করুন</string>
+    <string name="feature_savings_apply">প্রয়োগ করুন</string>
+    <string name="feature_filters_count">%1$s নির্বাচিত</string>
+    <string name="filter_account_type">অ্যাকাউন্টের ধরন</string>
+    <string name="filter_loan_account">লোন অ্যাকাউন্ট</string>
+    <string name="filter_savings_account">সঞ্চয় অ্যাকাউন্ট</string>
+    <string name="filter_linked_with">লিঙ্কড উইথ</string>
+    <string name="filter_self">স্বয়ং</string>
+    <string name="filter_other_clients">অন্যান্য ক্লায়েন্ট</string>
+    <string name="beneficiary_created_successfully_account">অ্যাকাউন্ট %1$s এর জন্য বেনিফিশিয়ারি সফলভাবে তৈরি হয়েছে, বেনিফিশিয়ারির নাম %2$s।</string>
+    <string name="beneficiary_updated_successfully_account">বেনিফিশিয়ারির নাম %1$s এর জন্য বেনিফিশিয়ারি সফলভাবে আপডেট হয়েছে, ট্রান্সফার সীমা %2$d।</string>
+    <string name="skip_the_form">ফর্মটি স্কিপ করুন</string>
+    <string name="upload_or_scan_qr_code">QR কোড আপলোড বা স্ক্যান করুন</string>
+    <string name="filter">ফিল্টার</string>
+    <string name="linked_with">লিঙ্কড উইথ</string>
+    <string name="type_of_account">অ্যাকাউন্টের ধরন</string>
+    <string name="selected_count">%1$d নির্বাচিত</string>
+    <string name="filter_icon_description">ফিল্টার আইকন</string>
+    <string name="feature_generic_error_server">আমাদের পক্ষ থেকে সার্ভার সমস্যা, আরও এগোতে পারছি না, একটু পরে আবার চেষ্টা করুন</string>
+</resources>

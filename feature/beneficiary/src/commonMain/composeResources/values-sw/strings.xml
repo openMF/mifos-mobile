@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Je, una uhakika unataka kufuta mpokeji huyu?</string>
     <string name="login_using_password_confirmation">Je, una uhakika unataka kuingia kwa kutumia nenosiri?</string>
     <string name="delete">Futa</string>
+    <string name="update">Sasisha</string>
     <string name="beneficiary_deleted_successfully">Mpokeji amefutwa kwa mafanikio</string>
     <string name="third_party_transfer">Uhamisho wa Mtu wa Tatu</string>
     <string name="total_loan">Jumla ya Mkopo</string>
