@@ -86,7 +86,7 @@ class SessionManager {
 
             if (currentTime - ramTime >= timeoutMs) {
                 _isExpired.value = true
-                isMonitoring.store(true)
+                isMonitoring.store(false)
             }
         }
     }
