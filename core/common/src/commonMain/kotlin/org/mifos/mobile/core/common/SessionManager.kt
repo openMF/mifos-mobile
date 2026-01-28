@@ -76,7 +76,7 @@ class SessionManager {
     @OptIn(ExperimentalAtomicApi::class, ExperimentalTime::class)
     private suspend fun checkExpirationInternal() {
         checkLock.withLock {
-            if (_isExpired.value) return
+            if (!isMonitoring.load() || _isExpired.value) return
 
             val ramTime = lastInteractionTime.load()
 
