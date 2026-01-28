@@ -59,7 +59,6 @@ import mifos_mobile.feature.loan_application.generated.resources.sign
 import mifos_mobile.feature.loan_application.generated.resources.sign_here
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.mifos.mobile.core.common.toBase64DataUri
 import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
