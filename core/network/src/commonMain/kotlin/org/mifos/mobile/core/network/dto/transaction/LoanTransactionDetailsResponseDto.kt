@@ -25,6 +25,8 @@ data class LoanTransactionDetailsResponseDto(
     val feeChargesPortion: Double? = null,
     val penaltyChargesPortion: Double? = null,
     val currency: CurrencyResponseDto? = null,
+    @SerialName("transfer")
+    val transfer: TransferDetailDto? = null,
     @SerialName("type")
     val loanType: LoanTransactionTypeResponseDto? = null,
 )

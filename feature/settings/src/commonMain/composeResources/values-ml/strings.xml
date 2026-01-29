@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2026 Mifos Initiative
+    Copyright 2024 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -9,19 +9,202 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-    <!-- ... -->
+    <string name="change_app_theme">തീം മാറ്റുക</string>
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="change_passcode">പാസ്‌കോഡ് മാറ്റുക</string>
+    <string name="change_app_passcode">ആപ്പ് പാസ്‌കോഡ് മാറ്റുക</string>
+    <string name="change_password">പാസ്‌വേഡ് മാറ്റുക</string>
+    <string name="change_account_password">നിങ്ങളുടെ അക്കൗണ്ട് പാസ്‌വേഡ് മാറ്റുക</string>
+    <string name="language">ഭാഷ</string>
+    <string name="choose_language">നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+    <string name="other">മറ്റുള്ളവ</string>
+    <string name="accounts">അക്കൗണ്ടുകൾ</string>
+    <string name="theme">തീം</string>
+    <string name="pref_base_url_title">എൻഡ്‌പോയിന്റ് അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="pref_base_url_desc">നിങ്ങളുടെ എൻഡ്‌പോയിന്റ് ക്രമീകരണങ്ങൾ മാറ്റാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക</string>
+    <string name="enter_base_url">ബേസ് URL നൽകുക</string>
+    <string name="enter_tenant">ടെനന്റ് നൽകുക</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="dialog_action_ok">ശരി</string>
+    <string name="base_url_tenant_id_required">ബേസ് URL-ഉം ടെനന്റ് ID-യും ആവശ്യമാണ്</string>
 
-    <string-array name="feature_settings_faq_answers">
-        <!-- ... -->
-        <item>ഏതെങ്കിലും വായ്പാ അക്കൗണ്ടിന് വേണ്ടിയുള്ള QR കോഡ് മറ്റുള്ള ഉപയോക്താക്കളുമായി പങ്കിടാം, അത് അവർക്ക് ഒരു ബെനിഫിഷ്യറിയെ സൃഷ്ടിക്കാൻ അനുവദിക്കും.</item>
-        <item>ഒരു ബെനിഫിഷ്യറിയെ സൃഷ്ടിക്കാൻ, ഹോം സ്ക്രീനിൽ നിന്ന് ബെനിഫിഷ്യറി ഐച്ഛികം തിരഞ്ഞെടുക്കുക, പിന്നീറ് താഴെ വലതുവശത്തുള്ള വൃത്താകൃതിയിലുള്ള ബട്ടൺ ക്ലിക്ക് ചെയ്യുക, സ്കാൻ ഐച്ഛികം തിരഞ്ഞെടുക്കുക എന്നത് നിങ്ങളുടെ ഉപകരണ ക്യാമറ തുറക്കും, ബെനിഫിഷ്യറിയെ സൃഷ്ടിക്കാൻ ആഗ്രഹിക്കുന്ന മറ്റൊരാളുടെ QR കോഡ് സ്കാൻ ചെയ്യുക, മറ്റുള്ള ആവശ്യമുള്ള വിവരങ്ങൾ പൂരിപ്പിച്ച ശേഷം നിങ്ങൾക്ക് QR കോഡ് ഉപയോഗിച്ച് ഒരു ബെനിഫിഷ്യറിയെ സൃഷ്ടിക്കാൻ കഴിയും.</item>
-        <item>ഒരു വായ്പാ അക്കൗണ്ടിനായി പേയ്മെന്റ് നടത്താൻ, അക്കൗണ്ട് വിഭാഗങ്ങളിലേക്ക് പോകുക, LOAN തിരഞ്ഞെടുക്കുക, പിന്നീറ് നിങ്ങളുടെ ആവശ്യമുള്ള വായ്പാ അക്കൗണ്ട് തുറക്കുക, പേയ്മെന്റ് നടത്തുക ഐച്ഛികം ക്ലിക്ക് ചെയ്യുക.</item>
+    <string name="feature_settings_action_profile">പ്രൊഫൈൽ</string>
+    <string name="feature_settings_action_profile_tip">ഇമെയിൽ, പേര്, ഫോൺ നമ്പർ എന്നിവ മാറ്റുക</string>
+
+    <string name="feature_settings_action_password">പാസ്‌വേഡ്</string>
+    <string name="feature_settings_action_password_tip">നിങ്ങളുടെ പഴയ പാസ്‌വേഡ് മാറ്റുക</string>
+
+    <string name="feature_settings_action_auth_passcode">ഓത്ത് പാസ്‌കോഡ്</string>
+    <string name="feature_settings_action_auth_passcode_tip">നിങ്ങളുടെ ലോഗിൻ ഓതറൈസേഷൻ പാസ്‌കോഡ് മാറ്റുക</string>
+
+    <string name="feature_settings_action_language">ഭാഷ</string>
+    <string name="feature_settings_action_language_tip">നിങ്ങളുടെ ആപ്പ് ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="feature_settings_action_theme">തീം</string>
+    <string name="feature_settings_action_theme_tip">നിങ്ങളുടെ ആപ്പ് തീം തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="feature_settings_action_endpoint">എൻഡ്‌പോയിന്റ്</string>
+    <string name="feature_settings_action_endpoint_tip">നിങ്ങളുടെ എൻഡ്‌പോയിന്റ് ക്രമീകരണം മാറ്റുക</string>
+
+    <string name="feature_settings_action_about_us">ഞങ്ങളെക്കുറിച്ച്</string>
+    <string name="feature_settings_action_about_us_tip">ഞങ്ങളുടെ സംരംഭത്തെക്കുറിച്ച് കൂടുതൽ അറിയുക</string>
+
+    <string name="feature_settings_action_rate_us">ഞങ്ങളെ റേറ്റുചെയ്യുക</string>
+    <string name="feature_settings_action_rate_us_tip">പ്ലേസ്റ്റോറിൽ ഞങ്ങളുടെ ആപ്പ് റേറ്റുചെയ്യുക</string>
+
+    <string name="feature_settings_action_faq">പതിവുചോദ്യങ്ങൾ</string>
+    <string name="feature_settings_action_faq_tip">ഉപയോക്താക്കൾ ചോദിക്കുന്ന സാധാരണ ചോദ്യങ്ങൾ</string>
+
+    <string name="feature_settings_action_help">സഹായം</string>
+    <string name="feature_settings_action_help_tip">ഞങ്ങളുടെ കസ്റ്റമർ കെയറുമായി ചാറ്റ് ചെയ്യുക</string>
+
+    <string name="feature_settings_action_app_info">ആപ്പ് വിവരങ്ങൾ</string>
+    <string name="feature_settings_action_app_info_tip">ആപ്പ് പതിപ്പ് വിശദാംശങ്ങൾ കണ്ടെത്തുക</string>
+
+    <string name="feature_settings_action_logout">ലോഗൗട്ട് ചെയ്യുക</string>
+    <string name="feature_settings_action_logout_tip">ലോഗൗട്ട് ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
+    <string name="feature_settings_logout_description">ലോഗൗട്ട് ചെയ്യുന്നത് സുരക്ഷാ കാരണങ്ങളാൽ നിങ്ങളുടെ നിലവിലെയും എല്ലാ സജീവ സെഷനുകളെയും അവസാനിപ്പിക്കും. നിങ്ങളുടെ അക്കൗണ്ട് ആക്‌സസ് ചെയ്യാൻ വീണ്ടും ലോഗിൻ ചെയ്യേണ്ടി വരും.</string>
+    <string name="feature_settings_logout_message">എനിക്ക് ലോഗൗട്ട് ചെയ്യേണ്ട?</string>
+    <string name="feature_settings_logout_action">ഹോമിലേക്ക്</string>
+
+    <string name="feature_settings_top_bar_title">ക്രമീകരണങ്ങൾ</string>
+
+    <string name="feature_settings_error_fetching_client">ക്ലയന്റ് വിവരങ്ങൾ ലഭ്യമാക്കുന്നതിൽ പരാജയപ്പെട്ടു.</string>
+    <string name="feature_settings_error_fetching_profile_image">പ്രൊഫൈൽ ചിത്രം ലഭ്യമാക്കുന്നതിൽ പരാജയപ്പെട്ടു.</string>
+    <string name="feature_settings_internet_not_connected">ഇന്റർനെറ്റ് കണക്ഷൻ ഇല്ല.</string>
+    <string name="feature_settings_error_invalid_profile_image">അസാധുവായ പ്രൊഫൈൽ ചിത്ര ഫോർമാറ്റ്.</string>
+    <string name="feature_settings_customer_account_no">ഉപഭോക്തൃ അക്കൗണ്ട്: %1$s</string>
+
+    <!-- About Screen -->
+    <string name="feature_settings_about_topbar_title">ഞങ്ങളെക്കുറിച്ച്</string>
+    <string name="feature_settings_about_mifos">മിഫോസ്</string>
+    <string name="feature_settings_about_logo_content_description">മിഫോസ് ചിത്രം</string>
+    <string name="feature_settings_about_who_are_we">ആരാണ് ഞങ്ങൾ?</string>
+    <string name="feature_settings_about_what_does_mifos_do">മിഫോസ് എന്താണ് ചെയ്യുന്നത്?</string>
+    <string name="feature_settings_about_who_are_we_desc">അടിസ്ഥാന സാമ്പത്തിക സേവനങ്ങൾ ആളുകൾക്ക് ലഭ്യമാക്കാൻ ശ്രമിക്കുന്ന ഒരു ലാഭരഹിത സംഘടനയാണ് മിഫോസ്. ഒരു ഓപ്പൺ സോഴ്‌സ് പ്ലാറ്റ്‌ഫോം വഴിയാണ് ഇത് ചെയ്യുന്നത്.</string>
+    <string name="feature_settings_about_point_1">ആധുനിക സാമ്പത്തിക സേവനങ്ങൾ നൽകാൻ ധനകാര്യ സ്ഥാപനങ്ങളെ ഇത് സഹായിക്കുന്നു</string>
+    <string name="feature_settings_about_point_2">വായ്പകൾ ലഭിക്കാനും, പണം ലാഭിക്കാനും, മറ്റും ആളുകളെ ഇത് പ്രാപ്തരാക്കുന്നു</string>
+    <string name="feature_settings_about_point_3">ലോകമെമ്പാടുമുള്ള ദശലക്ഷക്കണക്കിന് ആളുകളെ സേവിക്കുന്ന ധനകാര്യ സ്ഥാപനങ്ങളെ ഇത് പിന്തുണയ്ക്കുന്നു</string>
+
+    <string name="feature_settings_doubt">പതിവുചോദ്യങ്ങളിൽ നിരവധി സംശയങ്ങൾ പരിഹരിക്കപ്പെടുന്നു!</string>
+    <string name="feature_settings_doubt_message">ഇല്ല, ഞാൻ അവ പരിശോധിച്ചിട്ടില്ല, എന്നെ അവിടെ കൊണ്ടുപോകൂ!</string>
+
+    <string name="feature_settings_still_have_doubt">ഇപ്പോഴും സംശയങ്ങളുണ്ടോ?</string>
+    <string name="feature_settings_still_have_doubt_message">പ്രശ്നം നേരിടുന്നുണ്ടോ? വിഷമിക്കേണ്ട!\nഞങ്ങളുടെ കസ്റ്റമർ കെയറിൽ വിളിക്കുക.\nനിങ്ങളെ സഹായിക്കാൻ രാപ്പകൽ ഞങ്ങൾ ഇവിടെയുണ്ട്,\nഎല്ലാം ശരിയായി പ്രവർത്തിക്കുന്നുണ്ടെന്ന് ഉറപ്പാക്കാൻ!</string>
+    <string name="feature_settings_still_have_doubt_action">ഞങ്ങളെ വിളിക്കുക</string>
+
+    <string name="feature_settings_still_have_issue">പ്രശ്നങ്ങൾ മെയിൽ ചെയ്യണോ?</string>
+    <string name="feature_settings_still_have_issue_message">പിന്തുണ വേണോ, പക്ഷെ എഴുതാനാണോ താൽപ്പര്യം?\nഞങ്ങൾക്ക് ഇമെയിൽ അയക്കൂ, രാവെന്നോ പകലെന്നോ ഇല്ലാതെ.\nകരുതലോടെയും വേഗത്തിലും ഞങ്ങളുടെ ടീം മറുപടി നൽകും,\nനിങ്ങൾക്ക് ആവശ്യമായ സഹായം ലഭിക്കുന്നുണ്ടെന്ന് ഉറപ്പാക്കും!</string>
+    <string name="feature_settings_still_have_issue_action">ഞങ്ങൾക്ക് മെയിൽ ചെയ്യുക</string>
+
+    <!--App Info -->
+    <string name="feature_settings_appinfo_topbar_title">ആപ്പ് വിവരങ്ങൾ</string>
+    <string name="feature_settings_appinfo_mobile">മൊബൈൽ</string>
+    <string name="feature_settings_appinfo_logo_content_description">മിഫോസ് ചിത്രം</string>
+    <string name="feature_settings_appinfo_app_name">മിഫോസ് മൊബൈൽ</string>
+    <string name="feature_settings_appinfo_mifos_electonic_banking">മിഫോസ് ഇലക്ട്രോണിക് ബാങ്കിംഗ്</string>
+    <string name="feature_settings_appinfo_all_rights_reserved">എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം</string>
+    <string name="feature_settings_appinfo_version">പതിപ്പ്</string>
+    <string name="feature_settings_appinfo_privacy_policy">സ്വകാര്യതാ നയം</string>
+    <string name="feature_settings_appinfo_terms_conditions">നിബന്ധനകളും വ്യവസ്ഥകളും</string>
+
+    <!--    //passcode screen-->
+    <string name="feature_settings_update_passcode">പാസ്‌കോഡ് അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="feature_settings_old_passcode">പഴയ പാസ്‌കോഡ്</string>
+    <string name="feature_settings_new_passcode">പുതിയ പാസ്‌കോഡ്</string>
+    <string name="feature_settings_confirm_new_passcode">പുതിയ പാസ്‌കോഡ് സ്ഥിരീകരിക്കുക</string>
+    <string name="feature_settings_authorization_passcode">ഓതറൈസേഷൻ പാസ്‌കോഡ്</string>
+    <string name="feature_settings_passcode_length_error">പാസ്‌കോഡിൽ 4 അക്കങ്ങൾ ഉണ്ടായിരിക്കണം.</string>
+    <string name="feature_settings_passcode_empty_error">പാസ്‌കോഡ് ശൂന്യമായിരിക്കരുത്.</string>
+    <string name="feature_settings_passcode_invalid_error">പാസ്‌കോഡിൽ അക്ഷരങ്ങൾ അടങ്ങിയിരിക്കരുത്.</string>
+    <string name="feature_settings_passcode_confirm_error">പുതിയതും സ്ഥിരീകരിച്ചതുമായ പാസ്‌കോഡ് ഒന്നായിരിക്കണം.</string>
+    <string name="feature_settings_passcode_old_passcode_error">പഴയ പാസ്‌കോഡ് സാധുവായതായിരിക്കണം.</string>
+    <string name="feature_settings_passcode_updated_successfully">പാസ്‌കോഡ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു.</string>
+    <string name="feature_settings_passcode_updated_message">ആപ്പ് സേവനങ്ങൾ ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ പുതിയ പാസ്‌കോഡ് നൽകേണ്ടതുണ്ട്.</string>
+    <string name="feature_settings_next">അടുത്തത്</string>
+
+    <string name="feature_settings_update_password">പാസ്‌വേഡ് അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="feature_settings_old_password">പഴയ പാസ്‌വേഡ്</string>
+    <string name="feature_settings_new_password">പുതിയ പാസ്‌വേഡ്</string>
+    <string name="feature_settings_confirm_new_password">പുതിയ പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക</string>
+
+    <!--    //password screen-->
+    <string name="password_empty_error">പാസ്‌വേഡ് ശൂന്യമായിരിക്കരുത്</string>
+    <string name="password_empty_error_repeat">തുടർച്ചയായി ആവർത്തിക്കുന്ന അക്ഷരങ്ങൾ അനുവദനീയമല്ല</string>
+    <string name="password_length_error">പാസ്‌വേഡിന് കുറഞ്ഞത് 12 അക്ഷരങ്ങളെങ്കിലും ഉണ്ടായിരിക്കണം</string>
+    <string name="password_current_incorrect_error">നിലവിലെ പാസ്‌വേഡ് തെറ്റാണ്</string>
+    <string name="password_validation_error">പാസ്‌വേഡ് സുരക്ഷാ ആവശ്യകതകൾ പാലിക്കുന്നില്ല</string>
+    <string name="password_same_as_current_error">പുതിയ പാസ്‌വേഡ് നിലവിലെ പാസ്‌വേഡിൽ നിന്ന് വ്യത്യസ്തമായിരിക്കണം</string>
+    <string name="password_personal_info_error">പാസ്‌വേഡിൽ വ്യക്തിഗത വിവരങ്ങൾ അടങ്ങിയിരിക്കരുത്</string>
+    <string name="password_confirm_mismatch_error">പാസ്‌വേഡുകൾ പൊരുത്തപ്പെടുന്നില്ല</string>
+    <string name="feature_settings_password">പാസ്‌വേഡ്</string>
+    <string name="password_too_many_attempts">വളരെയധികം പരാജയപ്പെട്ട ശ്രമങ്ങൾ. വീണ്ടും ശ്രമിക്കുന്നതിന് മുമ്പ് കാത്തിരിക്കുക.</string>
+
+    <string name="password_update_success">പാസ്‌വേഡ് വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു</string>
+    <string name="password_update_success_message">ആപ്പ് സേവനങ്ങൾ ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ വീണ്ടും ലോഗിൻ ചെയ്യേണ്ടതുണ്ട്.</string>
+    <string name="password_update_failed">പാസ്‌വേഡ് അപ്‌ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="password_update_dialog_button">ഇപ്പോൾ ലോഗിൻ ചെയ്യുക</string>
+
+    <!-- Faq  -->
+    <string name="no_questions_found">ചോദ്യങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string-array name="faq_qs">
+        <item>പുതിയ ലോൺ അക്കൗണ്ടിനായി എങ്ങനെ അപേക്ഷിക്കാം?</item>
+        <item>എന്റെ പ്രൊഫൈൽ വിവരങ്ങൾ എവിടെ കാണാൻ കഴിയും?</item>
+        <item>എന്റെ സേവിംഗ്സ് അക്കൗണ്ട് ഇടപാടുകൾ എവിടെ കാണാൻ കഴിയും?</item>
+        <item>QR കോഡ് കൊണ്ടുള്ള ഉപയോഗം എന്താണ്?</item>
+        <item>QR കോഡ് ഉപയോഗിച്ച് എങ്ങനെ ഒരു ഗുണഭോക്താവിനെ (beneficiary) സൃഷ്ടിക്കാം?</item>
+        <item>ഒരു ലോൺ അക്കൗണ്ടിലേക്ക് എങ്ങനെ പണമടയ്ക്കാം?</item>
+    </string-array>
+
+    <string-array name="faq_ans">
+        <item>വായ്പാ അക്കൗണ്ടിനായി അപേക്ഷിക്കാൻ, ഹോം സ്‌ക്രീനിൽ നൽകിയിരിക്കുന്ന "വായ്‌പയ്‌ക്ക് അപേക്ഷിക്കുക" ക്ലിക്ക് ചെയ്യുക.</item>
+        <item>ഹോം സ്‌ക്രീനിലുള്ള യൂസർ ഇമേജിൽ ക്ലിക്ക് ചെയ്‌ത് നിങ്ങൾക്ക് പ്രൊഫൈൽ വിവരങ്ങൾ കാണാനാകും.</item>
+        <item>സേവിംഗ്‌സ് അക്കൗണ്ട് ഇടപാടുകൾ കാണുന്നതിന്, അക്കൗണ്ട്‌സ് വിഭാഗത്തിലേക്ക് പോയി, ആവശ്യമുള്ള സേവിംഗ്‌സ് അക്കൗണ്ടിൽ ക്ലിക്ക് ചെയ്യുക, മുകളിൽ വലതുവശത്തുള്ള മൂന്ന് ഡോട്ടുകളിൽ ക്ലിക്ക് ചെയ്‌ത് ഇടപാടുകൾ (Transactions) ഓപ്‌ഷൻ തിരഞ്ഞെടുക്കുക.</item>
+        <item>ഏതൊരു വായ്പ അല്ലെങ്കിൽ സേവിംഗ്‌സ് അക്കൗണ്ടിനുമുള്ള QR കോഡ് മറ്റ് ഉപയോക്താക്കളുമായി പങ്കിടാം, ഇത് ഒരു ഗുണഭോക്താവിനെ (beneficiary) സൃഷ്ടിക്കാൻ അവരെ അനുവദിക്കും.</item>
+        <item>ഒരു ഗുണഭോക്താവിനെ സൃഷ്ടിക്കാൻ, ഹോം സ്‌ക്രീനിൽ നിന്ന് ബെനിഫിഷ്യറി ഓപ്ഷനിലേക്ക് പോകുക, താഴെ വലതുവശത്തുള്ള വട്ടത്തിലുള്ള ബട്ടൺ ക്ലിക്ക് ചെയ്യുക, സ്കാൻ ചെയ്യാനുള്ള ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക (ഇത് ക്യാമറ തുറക്കും), ഗുണഭോക്താവിനെ ചേർക്കേണ്ട വ്യക്തിയുടെ QR കോഡ് സ്കാൻ ചെയ്യുക. ആവശ്യമായ മറ്റ് വിവരങ്ങൾ നൽകിയ ശേഷം QR കോഡ് ഉപയോഗിച്ച് നിങ്ങൾക്ക് ഗുണഭോക്താവിനെ സൃഷ്ടിക്കാൻ കഴിയും.</item>
+        <item>വായ്പാ അക്കൗണ്ടിലേക്ക് പണമടയ്ക്കാൻ, അക്കൗണ്ട്‌സ് വിഭാഗത്തിലേക്ക് പോയി, LOAN തിരഞ്ഞെടുക്കുക, ആവശ്യമുള്ള വായ്പാ അക്കൗണ്ട് തുറന്ന് 'Make Payment' ഓപ്ഷൻ ക്ലിക്ക് ചെയ്യുക.</item>
     </string-array>
 
     <string name="feature_settings_faq_doubt">ഇപ്പോഴും സംശയമുണ്ടോ?</string>
     <string name="feature_settings_faq_contact_us"> ഞങ്ങളെ ബന്ധപ്പെടുക</string>
-    
-    <!-- Change Language   -->
+
+    <!-- Missing strings added from values-kn/values -->
+    <string name="password_key" translatable="false">Password</string>
+    <string name="core_common_default_system_language" translatable="false">default_system_language</string>
+    <string name="core_common_language_type" translatable="false">language_type</string>
+    <string-array name="languages" translatable="false">
+        <item>System Language</item>
+        <item>English</item>
+        <item>हिंदी</item>
+        <item>عربى</item>
+        <item>اُردُو</item>
+        <item>বাঙালি</item>
+        <item>Español</item>
+        <item>français</item>
+        <item>bahasa Indonesia</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ಕನ್ನಡ</item>
+        <item>తెలుగు</item>
+        <item>မြန်မာ</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>русский</item>
+        <item>Kiswahili</item>
+        <item>فارسی</item>
+        <item>മലയാളം</item>
+    </string-array>
     <string name="feature_settings_language">ഭാഷ</string>
     <string name="feature_settings_change_language">ഭാഷ മാറ്റുക</string>
+
+    <!-- Theme Strings -->
+    <string name="feature_settings_theme_light">ലൈറ്റ് തീം</string>
+    <string name="feature_settings_theme_dark">ഡാർക്ക് തീം</string>
+    <string name="feature_settings_theme_system">സിസ്റ്റം തീം</string>
+    <string name="feature_settings_apply_theme">തീം പ്രയോഗിക്കുക</string>
+    <string name="feature_settings_theme_based_on_time">സമയത്തെ അടിസ്ഥാനമാക്കി</string>
+    <string name="feature_settings_theme_choose_dark_mode_time">ഡാർക്ക് മോഡ് സമയം തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_settings_theme_choose_dark_mode_starts_at">ഡാർക്ക് മോഡ് തുടങ്ങുന്ന സമയം</string>
+    <string name="feature_settings_theme_choose_dark_mode_ends_at">ഡാർക്ക് മോഡ് അവസാനിക്കുന്ന സമയം</string>
+    <string name="feature_settings_theme_apply">പ്രയോഗിക്കുക</string>
+
 </resources>

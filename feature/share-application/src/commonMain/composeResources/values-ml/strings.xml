@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Top Bar -->
+    <string name="feature_share_title">ഓഹരി അപേക്ഷ വിവരങ്ങൾ</string>
+    <string name="feature_share_navigation_back">തിരികെ</string>
+
+    <!-- Form Labels -->
+    <string name="feature_share_label_applicant_name">അപേക്ഷകന്റെ പേര്</string>
+    <string name="feature_share_label_submission_date">സമർപ്പിച്ച തീയതി</string>
+    <string name="feature_share_label_product_name">ഉൽപ്പന്നത്തിന്റെ പേര്</string>
+
+    <!-- Buttons -->
+    <string name="feature_share_button_next">അടുത്തത്</string>
+
+    <string name="feature_apply_share_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_apply_share_error_too_many_attempts">ഒരുപാട് പരാജയപ്പെട്ട ശ്രമങ്ങൾ. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="feature_apply_share_error_submit_failed">ഓഹരി അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ!</string>
+    <string name="feature_apply_share_unsaved_changes_message">നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്. നിങ്ങൾക്ക് തിരികെ പോകണമെന്ന് ഉറപ്പാണോ?</string>
+    <string name="feature_share_no_products_available">ഓഹരി അക്കൗണ്ടിന് അപേക്ഷിക്കാൻ ഓഹരി ഉൽപ്പന്നങ്ങൾ ലഭ്യമല്ല</string>
+
+
+    <string name="feature_apply_share_label_terms">നിബന്ധനകൾ</string>
+    <string name="feature_apply_share_label_currency">കറൻസി</string>
+    <string name="feature_apply_share_label_current_price">നിലവിലെ വില</string>
+    <string name="feature_apply_share_label_total_number_of_shares">ആകെ ഓഹരികളുടെ എണ്ണം</string>
+    <string name="feature_apply_share_label_default_savings_account">ഡിഫോൾട്ട് സേവിംഗ്സ് അക്കൗണ്ട്</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">കുറഞ്ഞ സജീവ കാലയളവ്</string>
+    <string name="feature_apply_share_section_minimum_active_period">കുറഞ്ഞ സജീവ കാലയളവ്</string>
+    <string name="feature_apply_share_label_minimum_frequency">ആവൃത്തി</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">ആവൃത്തി തരം</string>
+
+    <string name="feature_apply_share_label_lockin_period">ലോക്ക്-ഇൻ കാലയളവ്</string>
+    <string name="feature_apply_share_section_lockin_period">ലോക്ക്-ഇൻ കാലയളവ്</string>
+    <string name="feature_apply_share_label_lockin_frequency">ആവൃത്തി</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">ആവൃത്തി തരം</string>
+
+    <string name="feature_apply_share_error_frequency_required">ആവൃത്തി ആവശ്യമാണ്</string>
+    <string name="feature_apply_share_frequency_invalid">ദയവായി സാധുവായ ആവൃത്തി നൽകുക</string>
+
+    <string name="feature_apply_share_error_shares_required">ഓഹരികൾ ആവശ്യമാണ്</string>
+    <string name="feature_apply_share_shares_invalid">ദയവായി സാധുവായ ഓഹരികൾ നൽകുക</string>
+
+    <string name="feature_apply_share_error_price_required">വില ആവശ്യമാണ്</string>
+    <string name="feature_apply_share_price_invalid">ദയവായി സാധുവായ വില നൽകുക</string>
+
+    <string name="feature_apply_share_status_failure">അപേക്ഷ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_apply_share_status_failure_tip">%1$s-ൽ ഓഹരി അക്കൗണ്ടിനായി അപേക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_apply_share_status_failure_action">വീണ്ടും ശ്രമിക്കുക</string>
+
+    <string name="feature_apply_share_status_success">വിജയകരമായി അപേക്ഷിച്ചു!</string>
+    <string name="feature_apply_share_status_success_tip">നിങ്ങൾ %1$s-ൽ ഒരു ഓഹരി അക്കൗണ്ടിനായി വിജയകരമായി അപേക്ഷിച്ചു</string>
+    <string name="feature_apply_share_status_success_action">തിരികെ ഹോമിലേക്ക്</string>
+</resources>

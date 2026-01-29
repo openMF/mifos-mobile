@@ -10,6 +10,7 @@
 -->
 <resources>
     <string name="no_internet">ഇന്റർനെറ്റ് ഇല്ല</string>
+    <string name="back_online">ഓൺലൈനിൽ തിരിച്ചെത്തി</string>
     <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
     <string name="no_data">ഡാറ്റ ഇല്ല</string>
     <string name="something_went_wrong">എന്തോ കുറ്റം സംഭവിച്ചിരിക്കുന്നു</string>
@@ -119,7 +120,13 @@
     <string name="savings_account">സേവിംഗ്സ് അക്കൗണ്ട്</string>
     <string name="available_balance">ലഭ്യമായ ബാലൻസ്</string>
     <string name="select_other_payment_account">മറ്റൊരു പേയ്‌മെന്റ് അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
+    <string name="pay_from">ഇതിൽ നിന്ന് പണമടയ്ക്കുക</string>
     <string name="available_balance_formatted">ലഭ്യമായ ബാലൻസ് - %1$s</string>
+
+    <string name="feature_dashboard_welcome_back">മിഫോസിലേക്ക് വീണ്ടും സ്വാഗതം</string>
+    <string name="feature_dashboard_no_accounts_title">അക്കൗണ്ടുകളൊന്നുമില്ല</string>
+    <string name="feature_dashboard_no_accounts_description">ഞങ്ങളോടൊപ്പം നിങ്ങളുടെ ആദ്യ അക്കൗണ്ട് തുറന്ന് നിങ്ങളുടെ സാമ്പത്തിക യാത്ര ആരംഭിക്കുക.</string>
+    <string name="feature_dashboard_open_account">അക്കൗണ്ട് തുറക്കുക</string>
 
     <string name="feature_savings_filter">ഫിൽട്ടർ</string>
     <string name="feature_savings_reset">പുനഃക്രമീകരിക്കുക</string>
