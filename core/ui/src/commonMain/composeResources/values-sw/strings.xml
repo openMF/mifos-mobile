@@ -14,6 +14,9 @@
     <string name="no_data">Hakuna Data</string>
     <string name="something_went_wrong">Kuna kitu kilichokwenda vibaya</string>
     <string name="core_common_working">Kazi ya Msingi ya Kawaida</string>
+    <string name="customer_name">Jina la Mteja</string>
+    <string name="product">Bidhaa</string>
+    <string name="error_loading_balance">Hitilafu wakati wa kupakia salio</string>
 
     <string name="powered_by">Imewezeshwa na</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Kiasi kinapaswa kuwa katika viwango sahihi vya sarafu hii</string>
 
     <string name="savings_account">Akaunti ya Akiba</string>
-    <string name="available_balance">Jina la Mteja</string>
+    <string name="available_balance">Salio lililopo</string>
     <string name="select_other_payment_account">Chagua akaunti nyingine ya malipo</string>
     <string name="available_balance_formatted">Salio linalopatikana - %1$s</string>
 

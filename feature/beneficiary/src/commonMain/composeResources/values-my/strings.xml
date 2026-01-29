@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">အကူအညီပေးသူများကို ရယူရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_fetching_beneficiary_template">အကူအညီပေးသူ ပုံစံကို ရယူရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_fetching_template">ပုံစံကို ရယူရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_creating_beneficiary">အကူအညီပေးသူကို ဖန်တီးရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_updating_beneficiary">အကူအညီပေးသူကို အပ်ဒိတ်လုပ်ရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_deleting_beneficiary">အကူအညီပေးသူကို ဖျက်ရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_loan_account_withdraw">ချေးငွေအကောင့်မှ ထုတ်ယူရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="error_fetching_third_party_transfer_template">တတိယပါတီ လွှဲပြောင်းမှု ပုံစံကို ရယူရာတွင် အမှားဖြစ်ပွားခဲ့သည်</string>
+    <string name="no_beneficiary_found_please_add">လက်ရှိတွင် သင့်တွင် အကူအညီပေးသူ မရှိပါ။ အကူအညီပေးသူကို ထည့်ပေးပါ</string>
+    <string name="no_filtered_beneficiary_found">ပေးထားသော စစ်ထုတ်မှုအတွက် အကူအညီပေးသူ မတွေ့ရှိပါ</string>
+    <string name="beneficiary">အကူအညီပေးသူ</string>
+    <string name="manage_beneficiaries">အကူအညီပေးသူများကို စီမံခန့်ခွဲရန်</string>
+    <string name="beneficiaries">အကူအညီပေးသူများ</string>
+    <string name="beneficiary_detail">အကူအညီပေးသူ အသေးစိတ်</string>
+    <string name="beneficiary_name">အကူအညီပေးသူ အမည်</string>
+    <string name="account_type">အကောင့်အမျိုးအစား</string>
+    <string name="transfer_limit">လွှဲပြောင်းမှု ကန့်သတ်ချက်</string>
+    <string name="add_beneficiary">အကူအညီပေးသူ ထည့်ရန်</string>
+    <string name="office_name">ရုံးအမည်</string>
+    <string name="select_account_type">အကောင့်အမျိုးအစား ရွေးချယ်ရန်*</string>
+    <string name="submit_beneficiary">အကူအညီပေးသူ တင်ပို့ရန်</string>
+    <string name="enter_office_name">အကူအညီပေးသူ ရုံးအမည် ထည့်ရန်</string>
+    <string name="enter_beneficiary_name">အကူအညီပေးသူ အမည် ထည့်ရန်</string>
+    <string name="enter_transfer_limit">လွှဲပြောင်းမှု ကန့်သတ်ချက် ထည့်ရန်</string>
+    <string name="enter_account_number">အကူအညီပေးသူ အကောင့်နံပါတ် ထည့်ရန်</string>
+    <string name="choose_account_type">အကောင့်အမျိုးအစားကို ဒရော့ဒေါင်းမှ ရွေးချယ်ရန်</string>
+    <string name="beneficiary_created_successfully">အကူအညီပေးသူ အောင်မြင်စွာ ဖန်တီးခဲ့သည်</string>
+    <string name="beneficiary_updated_successfully">အကူအညီပေးသူ အောင်မြင်စွာ အပ်ဒိတ်လုပ်ခဲ့သည်</string>
+    <string name="update_beneficiary">အကူအညီပေးသူ အပ်ဒိတ်လုပ်ရန်</string>
+    <string name="delete_beneficiary">အကူအညီပေးသူ ဖျက်ရန်</string>
+    <string name="delete_beneficiary_confirmation">ဤအကူအညီပေးသူကို ဖျက်လိုသည်မှာ သေချာပါသလား</string>
+    <string name="login_using_password_confirmation">စကားဝှက်ကို အသုံးပြု၍ ဝင်ရောက်လိုသည်မှာ သေချာပါသလား</string>
+    <string name="delete">ဖျက်ရန်</string>
+    <string name="update">အပ်ဒိတ်လုပ်ရန်</string>
+    <string name="beneficiary_deleted_successfully">အကူအညီပေးသူ အောင်မြင်စွာ ဖျက်ခဲ့သည်</string>
+    <string name="third_party_transfer">တတိယပါတီ လွှဲပြောင်းမှု</string>
+    <string name="total_loan">စုစုပေါင်း ချေးငွေ</string>
+    <string name="total_saving">စုစုပေါင်း ငွေစုဆောင်း</string>
+    <string name="accounts_overview">အကောင့်များ ခြုံငုံသုံးသပ်ချက်</string>
+    <string name="show_hide_total_saving_amount">စုစုပေါင်း ငွေစုဆောင်းငွေ ပြသ သို့မဟုတ် ဝှက်ရန်</string>
+    <string name="show_hide_total_loan_amount">စုစုပေါင်း ချေးငွေငွေ ပြသ သို့မဟုတ် ဝှက်ရန်</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">စစ်တမ်းများ</string>
+    <string name="activation_date">အသက်ဝင်ရက်စွဲ</string>
+    <string name="groups">အဖွဲ့များ</string>
+    <string name="user_details">အသုံးပြုသူ အသေးစိတ်</string>
+    <string name="client_type">လက်ခံသူ အမျိုးအစား</string>
+    <string name="client_classification">လက်ခံသူ အမျိုးအစားခွဲခြားခြင်း</string>
+    <string name="select_mode">မုဒ်ရွေးချယ်ရန်</string>
+    <string name="add_beneficiary_option">သင့်အကောင့်သို့ တတိယပါတီ အကူအညီပေးသူများကို ထည့်ရန်။\nလက်ဖြင့် ထည့်ရန် သို့မဟုတ် အကောင့် QR ကုဒ်ကို စကင်ဖတ်ရန်</string>
+    <string name="invalid_amount">မမှန်ကန်သော ပမာဏ</string>
+    <string name="account_number">အကောင့်နံပါတ်</string>
+    <string name="client_name">လက်ခံသူ အမည်</string>
+    <string name="cancel">ပယ်ဖျက်ရန်</string>
+    <string name="internet_not_connected">အင်တာနက်နှင့် ချိတ်ဆက်ထားကြောင်း သေချာစေရန် ပေးပို့ပါ</string>
+    <string name="add">ထည့်ရန်</string>
+    <string name="scan">စကင်ဖတ်ရန်</string>
+    <string name="upload_qr_code">QR အပ်လုဒ်လုပ်ရန်</string>
+    <string name="beneficiary_name_label">အကူအညီပေးသူ၏ အမည်</string>
+    <string name="office_label">ရုံး</string>
+    <string name="account_type_label">အကောင့်အမျိုးအစား</string>
+    <string name="account_number_label">အကောင့်နံပါတ်</string>
+    <string name="transfer_limit_label">လွှဲပြောင်းမှု ကန့်သတ်ချက်</string>
+    <string name="account_type_savings">ငွေစုဆောင်း</string>
+    <string name="account_type_loan">ချေးငွေ</string>
+    <string name="account_type_share">ဝေစု</string>
+    <string name="validate_details">အသေးစိတ်များကို အတည်ပြုရန်</string>
+    <string name="confirm_details">အသေးစိတ်များကို အတည်ပြုရန်</string>
+    <string name="beneficiary_creation_failed">အကူအညီပေးသူ ဖန်တီးခြင်း မအောင်မြင်ပါ</string>
+    <string name="beneficiary_updation_failed">အကူအညီပေးသူ အပ်ဒိတ်လုပ်ခြင်း မအောင်မြင်ပါ</string>
+    <string name="try_again">ထပ်စမ်းကြည့်ရန်</string>
+    <string name="back_to_home">အိမ်သို့ ပြန်သွားရန်</string>
+    <string name="feature_savings_filter">စစ်ထုတ်မှုများ</string>
+    <string name="feature_savings_reset">ပြန်လည်သတ်မှတ်ရန်</string>
+    <string name="feature_savings_apply">အသုံးပြုရန်</string>
+    <string name="feature_filters_count">%1$s ရွေးချယ်ထားသည်</string>
+    <string name="filter_account_type">အကောင့်အမျိုးအစား</string>
+    <string name="filter_loan_account">ချေးငွေ အကောင့်</string>
+    <string name="filter_savings_account">ငွေစုဆောင်း အကောင့်</string>
+    <string name="filter_linked_with">ချိတ်ဆက်ထားသော</string>
+    <string name="filter_self">ကိုယ်တိုင်</string>
+    <string name="filter_other_clients">အခြားလက်ခံသူများ</string>
+    <string name="beneficiary_created_successfully_account">အကောင့် %1$s အတွက် အကူအညီပေးသူ အောင်မြင်စွာ ဖန်တီးခဲ့သည်၊ အကူအညီပေးသူ အမည် %2$s။</string>
+    <string name="beneficiary_updated_successfully_account">အကူအညီပေးသူ အမည် %1$s အတွက် အကူအညီပေးသူ အောင်မြင်စွာ အပ်ဒိတ်လုပ်ခဲ့သည်၊ လွှဲပြောင်းမှု ကန့်သတ်ချက် %2$d။</string>
+    <string name="skip_the_form">ပုံစံကို ကျော်ရန်</string>
+    <string name="upload_or_scan_qr_code">QR ကုဒ်ကို အပ်လုဒ်လုပ်ရန် သို့မဟုတ် စကင်ဖတ်ရန်</string>
+    <string name="filter">စစ်ထုတ်ရန်</string>
+    <string name="linked_with">ချိတ်ဆက်ထားသော</string>
+    <string name="type_of_account">အကောင့်၏ အမျိုးအစား</string>
+    <string name="selected_count">%1$d ရွေးချယ်ထားသည်</string>
+    <string name="filter_icon_description">စစ်ထုတ်မှု အိုင်ကွန်</string>
+    <string name="feature_generic_error_server">ကျွန်ုပ်တို့၏ ဘက်မှ ဆာဗာပြဿနာ၊ ဆက်လက်လုပ်ဆောင်နိုင်ခြင်း မရှိပါ၊ ခဏအကြာတွင် ထပ်စမ်းကြည့်ပါ</string>
+</resources>

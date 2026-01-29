@@ -19,4 +19,8 @@ fun RegisterPayload.toDto(): RegisterPayloadDto =
         username = username,
         email = email,
         password = password,
+        authenticationMode = authenticationMode,
+        accountNumber = accountNumber,
+        middleName = middleName,
+        mobileNumber = mobileNumber,
     )

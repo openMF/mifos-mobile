@@ -14,6 +14,9 @@
     <string name="no_data">Keine Daten</string>
     <string name="something_went_wrong">Etwas ist schiefgelaufen</string>
     <string name="core_common_working">Kern gemeinsame Arbeit</string>
+    <string name="customer_name">Kundenname</string>
+    <string name="product">Produkt</string>
+    <string name="error_loading_balance">Fehler beim Laden des Kontostands</string>
 
     <string name="powered_by">Unterstützt von</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Betrag muss in gültigen Schritten für diese Währung sein</string>
 
     <string name="savings_account">Sparkonto</string>
-    <string name="available_balance">Kundenname</string>
+    <string name="available_balance">Verfügbares Guthaben</string>
     <string name="select_other_payment_account">Anderes Zahlungskonto auswählen</string>
     <string name="available_balance_formatted">Verfügbares Guthaben - %1$s</string>
 

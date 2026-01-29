@@ -14,6 +14,9 @@
     <string name="no_data">Nincs adat</string>
     <string name="something_went_wrong">Valami hiba történt</string>
     <string name="core_common_working">Alapvető közös munka</string>
+    <string name="customer_name">Ügyfél neve</string>
+    <string name="product">Termék</string>
+    <string name="error_loading_balance">Hiba az egyenleg betöltésekor</string>
 
     <string name="powered_by">Működteti</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">Az összegnek érvényes lépésekben kell lennie ehhez a pénznemhez</string>
 
     <string name="savings_account">Megtakarítási számla</string>
-    <string name="available_balance">Ügyfél neve</string>
+    <string name="available_balance">Elérhető egyenleg</string>
     <string name="select_other_payment_account">Másik fizetési számla kiválasztása</string>
     <string name="available_balance_formatted">Elérhető egyenleg - %1$s</string>
 

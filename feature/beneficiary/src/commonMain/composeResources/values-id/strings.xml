@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Apakah Anda yakin ingin menghapus penerima manfaat ini?</string>
     <string name="login_using_password_confirmation">Apakah Anda yakin ingin masuk menggunakan kata sandi?</string>
     <string name="delete">Hapus</string>
+    <string name="update">Perbarui</string>
     <string name="beneficiary_deleted_successfully">Penerima Manfaat berhasil dihapus</string>
     <string name="third_party_transfer">Transfer Pihak Ketiga</string>
     <string name="total_loan">Total Pinjaman</string>

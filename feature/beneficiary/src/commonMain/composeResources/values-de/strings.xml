@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Sind Sie sicher, dass Sie diesen Begünstigten löschen möchten?</string>
     <string name="login_using_password_confirmation">Sind Sie sicher, dass Sie sich mit einem Passwort anmelden möchten?</string>
     <string name="delete">Löschen</string>
+    <string name="update">Aktualisieren</string>
     <string name="beneficiary_deleted_successfully">Begünstigter erfolgreich gelöscht</string>
     <string name="third_party_transfer">Drittanbieter-Überweisung</string>
     <string name="total_loan">Gesamtkredit</string>

@@ -15,6 +15,9 @@
     <string name="no_data">No Data</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="core_common_working">Core Common Working</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="product">Product</string>
+    <string name="error_loading_balance">Error</string>
 
     <string name="powered_by">Powered By</string>
 
@@ -115,7 +118,7 @@
     <string name="validation_amount_invalid_increment">Amount must be in valid increments for this currency</string>
 
     <string name="savings_account">Savings Account</string>
-    <string name="available_balance">Client Name</string>
+    <string name="available_balance">Available balance</string>
     <string name="select_other_payment_account">Select other payment account</string>
     <string name="pay_from">Pay from</string>
     <string name="available_balance_formatted">Available Balance - %1$s</string>

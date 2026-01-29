@@ -14,6 +14,9 @@
     <string name="no_data">डेटा नाही</string>
     <string name="something_went_wrong">काहीतरी चुकले</string>
     <string name="core_common_working">कोर सामान्य कार्य</string>
+    <string name="customer_name">ग्राहकाचे नाव</string>
+    <string name="product">उत्पादन</string>
+    <string name="error_loading_balance">शिल्लक लोड करताना त्रुटी</string>
 
     <string name="powered_by">द्वारे संचालित</string>
 
@@ -114,7 +117,7 @@
     <string name="validation_amount_invalid_increment">या चलनासाठी रक्कम वैध वाढीत असणे आवश्यक आहे</string>
 
     <string name="savings_account">जतन खाते</string>
-    <string name="available_balance">ग्राहकाचे नाव</string>
+    <string name="available_balance">उपलब्ध शिल्लक</string>
     <string name="select_other_payment_account">इतर पेमेंट खाते निवडा</string>
     <string name="available_balance_formatted">उपलब्ध शिल्लक - %1$s</string>
 

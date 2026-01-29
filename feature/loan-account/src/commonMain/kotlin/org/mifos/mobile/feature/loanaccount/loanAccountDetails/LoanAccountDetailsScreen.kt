@@ -12,9 +12,9 @@ package org.mifos.mobile.feature.loanaccount.loanAccountDetails
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -247,7 +247,7 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .height(DesignToken.sizes.cardDp64)
+                            .defaultMinSize(minHeight = DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
