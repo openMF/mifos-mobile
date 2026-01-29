@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">क्या आप वाकई इस लाभार्थी को हटाना चाहते हैं?</string>
     <string name="login_using_password_confirmation">क्या आप वाकई पासवर्ड का उपयोग करके लॉगिन करना चाहते हैं?</string>
     <string name="delete">हटाएं</string>
+    <string name="update">अपडेट</string>
     <string name="beneficiary_deleted_successfully">लाभार्थी सफलतापूर्वक हटाया गया</string>
     <string name="third_party_transfer">थर्ड पार्टी ट्रांसफर</string>
     <string name="total_loan">कुल ऋण</string>

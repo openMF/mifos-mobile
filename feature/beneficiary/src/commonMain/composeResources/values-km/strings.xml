@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">បានបរាជ័យក្នុងការទាញយកអ្នកទទួលផល</string>
+    <string name="error_fetching_beneficiary_template">បានបរាជ័យក្នុងការទាញយកគំរូអ្នកទទួលផល</string>
+    <string name="error_fetching_template">បានបរាជ័យក្នុងការទាញយកគំរូ</string>
+    <string name="error_creating_beneficiary">បានបរាជ័យក្នុងការបង្កើតអ្នកទទួលផល</string>
+    <string name="error_updating_beneficiary">បានបរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពអ្នកទទួលផល</string>
+    <string name="error_deleting_beneficiary">បានបរាជ័យក្នុងការលុបអ្នកទទួលផល</string>
+    <string name="error_loan_account_withdraw">កំហុសក្នុងការដកប្រាក់គណនីឥណទាន</string>
+    <string name="error_fetching_third_party_transfer_template">កំហុសក្នុងការទាញយកគំរូផ្ទេរប្រាក់ភាគីទីបី</string>
+    <string name="no_beneficiary_found_please_add">បច្ចុប្បន្ន អ្នកមិនមានអ្នកទទួលផលណាមួយទេ។ សូមបន្ថែមអ្នកទទួលផល</string>
+    <string name="no_filtered_beneficiary_found">រកមិនឃើញអ្នកទទួលផលសម្រាប់តម្រងដែលបានផ្តល់</string>
+    <string name="beneficiary">អ្នកទទួលផល</string>
+    <string name="manage_beneficiaries">គ្រប់គ្រងអ្នកទទួលផល</string>
+    <string name="beneficiaries">អ្នកទទួលផល</string>
+    <string name="beneficiary_detail">ព័ត៌មានលម្អិតអ្នកទទួលផល</string>
+    <string name="beneficiary_name">ឈ្មោះអ្នកទទួលផល</string>
+    <string name="account_type">ប្រភេទគណនី</string>
+    <string name="transfer_limit">ដែនកំណត់ផ្ទេរ</string>
+    <string name="add_beneficiary">បន្ថែមអ្នកទទួលផល</string>
+    <string name="office_name">ឈ្មោះការិយាល័យ</string>
+    <string name="select_account_type">ជ្រើសរើសប្រភេទគណនី*</string>
+    <string name="submit_beneficiary">ដាក់ស្នើអ្នកទទួលផល</string>
+    <string name="enter_office_name">បញ្ចូលឈ្មោះការិយាល័យអ្នកទទួលផល</string>
+    <string name="enter_beneficiary_name">បញ្ចូលឈ្មោះអ្នកទទួលផល</string>
+    <string name="enter_transfer_limit">បញ្ចូលដែនកំណត់ផ្ទេរ</string>
+    <string name="enter_account_number">បញ្ចូលលេខគណនីអ្នកទទួលផល</string>
+    <string name="choose_account_type">ជ្រើសរើសប្រភេទគណនីពីបញ្ជីទម្លាក់ចុះ</string>
+    <string name="beneficiary_created_successfully">អ្នកទទួលផលត្រូវបានបង្កើតដោយជោគជ័យ</string>
+    <string name="beneficiary_updated_successfully">អ្នកទទួលផលត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ</string>
+    <string name="update_beneficiary">ធ្វើបច្ចុប្បន្នភាពអ្នកទទួលផល</string>
+    <string name="delete_beneficiary">លុបអ្នកទទួលផល</string>
+    <string name="delete_beneficiary_confirmation">តើអ្នកប្រាកដជាចង់លុបអ្នកទទួលផលនេះទេ</string>
+    <string name="login_using_password_confirmation">តើអ្នកប្រាកដជាចង់ចូលដោយប្រើពាក្យសម្ងាត់ទេ</string>
+    <string name="delete">លុប</string>
+    <string name="update">ធ្វើបច្ចុប្បន្នភាព</string>
+    <string name="beneficiary_deleted_successfully">អ្នកទទួលផលត្រូវបានលុបដោយជោគជ័យ</string>
+    <string name="third_party_transfer">ការផ្ទេរប្រាក់ភាគីទីបី</string>
+    <string name="total_loan">ឥណទានសរុប</string>
+    <string name="total_saving">ការសន្សំសរុប</string>
+    <string name="accounts_overview">ទិដ្ឋភាពទូទៅគណនី</string>
+    <string name="show_hide_total_saving_amount">បង្ហាញឬលាក់ចំនួនសន្សំសរុប</string>
+    <string name="show_hide_total_loan_amount">បង្ហាញឬលាក់ចំនួនឥណទានសរុប</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">ការស្ទង់មតិ</string>
+    <string name="activation_date">កាលបរិច្ឆេទធ្វើឱ្យសកម្ម</string>
+    <string name="groups">ក្រុម</string>
+    <string name="user_details">ព័ត៌មានលម្អិតអ្នកប្រើប្រាស់</string>
+    <string name="client_type">ប្រភេទអតិថិជន</string>
+    <string name="client_classification">ការបែងចែកអតិថិជន</string>
+    <string name="select_mode">ជ្រើសរើសរបៀប</string>
+    <string name="add_beneficiary_option">បន្ថែមអ្នកទទួលផលភាគីទីបីទៅគណនីរបស់អ្នក។\nបញ្ចូលដោយដៃឬស្កេនកូដ QR គណនី</string>
+    <string name="invalid_amount">ចំនួនមិនត្រឹមត្រូវ</string>
+    <string name="account_number">លេខគណនី</string>
+    <string name="client_name">ឈ្មោះអតិថិជន</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="internet_not_connected">សូមប្រាកដថាអ្នកបានភ្ជាប់អ៊ីនធឺណិត</string>
+    <string name="add">បន្ថែម</string>
+    <string name="scan">ស្កេន</string>
+    <string name="upload_qr_code">ផ្ទុក QR</string>
+    <string name="beneficiary_name_label">ឈ្មោះអ្នកទទួលផល</string>
+    <string name="office_label">ការិយាល័យ</string>
+    <string name="account_type_label">ប្រភេទគណនី</string>
+    <string name="account_number_label">លេខគណនី</string>
+    <string name="transfer_limit_label">ដែនកំណត់ផ្ទេរ</string>
+    <string name="account_type_savings">ការសន្សំ</string>
+    <string name="account_type_loan">ឥណទាន</string>
+    <string name="account_type_share">ចែករំលែក</string>
+    <string name="validate_details">ផ្ទៀងផ្ទាត់ព័ត៌មានលម្អិត</string>
+    <string name="confirm_details">បញ្ជាក់ព័ត៌មានលម្អិត</string>
+    <string name="beneficiary_creation_failed">ការបង្កើតអ្នកទទួលផលបានបរាជ័យ</string>
+    <string name="beneficiary_updation_failed">ការធ្វើបច្ចុប្បន្នភាពអ្នកទទួលផលបានបរាជ័យ</string>
+    <string name="try_again">ព្យាយាមម្តងទៀត</string>
+    <string name="back_to_home">ត្រឡប់ទៅផ្ទះ</string>
+    <string name="feature_savings_filter">តម្រង</string>
+    <string name="feature_savings_reset">កំណត់ឡើងវិញ</string>
+    <string name="feature_savings_apply">អនុវត្ត</string>
+    <string name="feature_filters_count">%1$s បានជ្រើសរើស</string>
+    <string name="filter_account_type">ប្រភេទគណនី</string>
+    <string name="filter_loan_account">គណនីឥណទាន</string>
+    <string name="filter_savings_account">គណនីសន្សំ</string>
+    <string name="filter_linked_with">ភ្ជាប់ជាមួយ</string>
+    <string name="filter_self">ខ្លួនឯង</string>
+    <string name="filter_other_clients">អតិថិជនផ្សេងទៀត</string>
+    <string name="beneficiary_created_successfully_account">អ្នកទទួលផលត្រូវបានបង្កើតដោយជោគជ័យសម្រាប់គណនី %1$s ទៅអ្នកទទួលផលឈ្មោះ %2$s។</string>
+    <string name="beneficiary_updated_successfully_account">អ្នកទទួលផលត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យសម្រាប់អ្នកទទួលផលឈ្មោះ %1$s ជាមួយដែនកំណត់ផ្ទេរ %2$d។</string>
+    <string name="skip_the_form">រំលងទម្រង់</string>
+    <string name="upload_or_scan_qr_code">ផ្ទុកឬស្កេនកូដ QR</string>
+    <string name="filter">តម្រង</string>
+    <string name="linked_with">ភ្ជាប់ជាមួយ</string>
+    <string name="type_of_account">ប្រភេទគណនី</string>
+    <string name="selected_count">%1$d បានជ្រើសរើស</string>
+    <string name="filter_icon_description">រូបតំណាងតម្រង</string>
+    <string name="feature_generic_error_server">បញ្ហាម៉ាស៊ីនមេពីផ្នែករបស់យើង មិនអាចបន្តទៀតទេ សូមព្យាយាមម្តងទៀតក្នុងពេលក្រោយ</string>
+</resources>

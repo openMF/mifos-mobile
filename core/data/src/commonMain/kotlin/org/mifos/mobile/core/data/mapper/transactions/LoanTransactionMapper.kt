@@ -32,6 +32,7 @@ fun LoanTransactionDetailsResponseDto.toModel(): TransactionDetails {
         date = this.date ?: emptyList(),
         accountNo = "N/A",
         isReversed = this.manuallyReversed == true,
+        transferDescription = this.transfer?.transferDescription,
         balances = TransactionBalances(
             running = this.outstandingLoanBalance,
             principal = this.principalPortion,

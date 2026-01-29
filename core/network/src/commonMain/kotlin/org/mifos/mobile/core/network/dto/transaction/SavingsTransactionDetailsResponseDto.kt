@@ -22,6 +22,8 @@ data class SavingsTransactionDetailsResponseDto(
     val reversed: Boolean? = null,
     val runningBalance: Double? = null,
     val currency: CurrencyResponseDto? = null,
+    @SerialName("transfer")
+    val transfer: TransferDetailDto? = null,
     @SerialName("transactionType")
     val savingsType: SavingsTransactionTypeResponseDto? = null,
 )
