@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <!-- Error messages -->
+    <string name="feature_tpt_error_amount_required">തുക ആവശ്യമാണ്</string>
+    <string name="feature_tpt_error_amount_invalid">ദയവായി ശരിയായ തുക നൽകുക</string>
+    <string name="feature_tpt_error_remarks_empty">റിമാർക്സ് ശൂന്യമായി ഇടരുത്</string>
+    <string name="feature_tpt_error_remarks_invalid">നൽകിയ റിമാർക്സ് അസാധുവാണ്</string>
+    <string name="feature_tpt_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">തുക ലഭ്യമായ ബാലൻസിനേക്കാൾ കൂടുതലാണ്</string>
+
+    <!-- Labels -->
+    <string name="feature_tpt_label_origin_account">ഉറവിട അക്കൗണ്ട്</string>
+    <string name="feature_tpt_label_origin_account_hint">മറ്റൊരു പേയ്‌മെന്റ് അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
+    <string name="feature_tpt_label_destination">ലക്ഷ്യ അക്കൗണ്ട്</string>
+    <string name="feature_tpt_label_amount">തുക</string>
+    <string name="feature_tpt_label_remarks">റിമാർക്സ്</string>
+    <string name="feature_tpt_tip">ലക്ഷ്യ അക്കൗണ്ട് കണ്ടെത്തുന്നില്ലേ?</string>
+    <string name="feature_tpt_tip_action">ഗുണഭോക്താവിനെ ചേർക്കുക!</string>
+    <!-- Button texts -->
+    <string name="feature_tpt_transfer_button">തുക കൈമാറൂ</string>
+
+</resources>

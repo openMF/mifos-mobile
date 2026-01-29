@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Adakah anda pasti ingin memadam penerima faedah ini?</string>
     <string name="login_using_password_confirmation">Adakah anda pasti ingin log masuk menggunakan kata laluan?</string>
     <string name="delete">Padam</string>
+    <string name="update">Kemas kini</string>
     <string name="beneficiary_deleted_successfully">Penerima Faedah berjaya dipadamkan</string>
     <string name="third_party_transfer">Pemindahan Pihak Ketiga</string>
     <string name="total_loan">Jumlah Pinjaman</string>

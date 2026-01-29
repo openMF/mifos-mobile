@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">Nie udało się pobrać Beneficjentów</string>
+    <string name="error_fetching_beneficiary_template">Nie udało się pobrać Szablonu Beneficjenta</string>
+    <string name="error_fetching_template">Nie udało się pobrać szablonu</string>
+    <string name="error_creating_beneficiary">Nie udało się utworzyć Beneficjenta</string>
+    <string name="error_updating_beneficiary">Nie udało się zaktualizować Beneficjenta</string>
+    <string name="error_deleting_beneficiary">Nie udało się usunąć Beneficjenta</string>
+    <string name="error_loan_account_withdraw">Błąd podczas wypłacania konta kredytu</string>
+    <string name="error_fetching_third_party_transfer_template">Błąd podczas pobierania szablonu Transferu Strony Trzeciej</string>
+    <string name="no_beneficiary_found_please_add">Obecnie nie masz żadnego Beneficjenta. Proszę dodać Beneficjenta</string>
+    <string name="no_filtered_beneficiary_found">Nie znaleziono Beneficjenta dla danego filtru</string>
+    <string name="beneficiary">Beneficjent</string>
+    <string name="manage_beneficiaries">Zarządzaj Beneficjentami</string>
+    <string name="beneficiaries">Beneficjenci</string>
+    <string name="beneficiary_detail">Szczegóły Beneficjenta</string>
+    <string name="beneficiary_name">Nazwa Beneficjenta</string>
+    <string name="account_type">Typ Konta</string>
+    <string name="transfer_limit">Limit Transferu</string>
+    <string name="add_beneficiary">Dodaj Beneficjenta</string>
+    <string name="office_name">Nazwa Biura</string>
+    <string name="select_account_type">Wybierz Typ Konta*</string>
+    <string name="submit_beneficiary">Prześlij Beneficjenta</string>
+    <string name="enter_office_name">Wprowadź Nazwę Biura Beneficjenta</string>
+    <string name="enter_beneficiary_name">Wprowadź Nazwę Beneficjenta</string>
+    <string name="enter_transfer_limit">Wprowadź Limit Transferu</string>
+    <string name="enter_account_number">Wprowadź Numer Konta Beneficjenta</string>
+    <string name="choose_account_type">Wybierz Typ Konta z listy rozwijanej</string>
+    <string name="beneficiary_created_successfully">Beneficjent został pomyślnie utworzony</string>
+    <string name="beneficiary_updated_successfully">Beneficjent został pomyślnie zaktualizowany</string>
+    <string name="update_beneficiary">Zaktualizuj Beneficjenta</string>
+    <string name="delete_beneficiary">Usuń Beneficjenta</string>
+    <string name="delete_beneficiary_confirmation">Czy na pewno chcesz usunąć tego Beneficjenta</string>
+    <string name="login_using_password_confirmation">Czy na pewno chcesz zalogować się używając Hasła?</string>
+    <string name="delete">Usuń</string>
+    <string name="update">Aktualizuj</string>
+    <string name="beneficiary_deleted_successfully">Beneficjent został pomyślnie usunięty</string>
+    <string name="third_party_transfer">Transfer Strony Trzeciej</string>
+    <string name="total_loan">Całkowity Kredyt</string>
+    <string name="total_saving">Całkowite Oszczędności</string>
+    <string name="accounts_overview">Przegląd Kont</string>
+    <string name="show_hide_total_saving_amount">Pokaż lub ukryj całkowitą kwotę oszczędności</string>
+    <string name="show_hide_total_loan_amount">Pokaż lub ukryj całkowitą kwotę kredytu</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">Ankiety</string>
+    <string name="activation_date">Data Aktywacji</string>
+    <string name="groups">Grupy</string>
+    <string name="user_details">Szczegóły Użytkownika</string>
+    <string name="client_type">Typ Klienta</string>
+    <string name="client_classification">Klasyfikacja Klienta</string>
+    <string name="select_mode">Wybierz Tryb</string>
+    <string name="add_beneficiary_option">Dodaj Beneficjentów Strony Trzeciej do swojego konta.\nWprowadź ręcznie lub zeskanuj kod QR konta</string>
+    <string name="invalid_amount">Nieprawidłowa Kwota</string>
+    <string name="account_number">Numer Konta</string>
+    <string name="client_name">Nazwa Klienta</string>
+    <string name="cancel">Anuluj</string>
+    <string name="internet_not_connected">Proszę upewnić się, że jesteś połączony z internetem</string>
+    <string name="add">Dodaj</string>
+    <string name="scan">Skanuj</string>
+    <string name="upload_qr_code">Prześlij QR</string>
+    <string name="beneficiary_name_label">Nazwa Beneficjenta</string>
+    <string name="office_label">Biuro</string>
+    <string name="account_type_label">Typ Konta</string>
+    <string name="account_number_label">Numer Konta</string>
+    <string name="transfer_limit_label">Limit Transferu</string>
+    <string name="account_type_savings">Oszczędności</string>
+    <string name="account_type_loan">Kredyt</string>
+    <string name="account_type_share">Udział</string>
+    <string name="validate_details">Zatwierdź Szczegóły</string>
+    <string name="confirm_details">Potwierdź Szczegóły</string>
+    <string name="beneficiary_creation_failed">Utworzenie Beneficjenta Nie Powiodło Się</string>
+    <string name="beneficiary_updation_failed">Aktualizacja Beneficjenta Nie Powiodła Się</string>
+    <string name="try_again">Spróbuj Ponownie</string>
+    <string name="back_to_home">Powrót do Strony Głównej</string>
+    <string name="feature_savings_filter">Filtry</string>
+    <string name="feature_savings_reset">Resetuj</string>
+    <string name="feature_savings_apply">Zastosuj</string>
+    <string name="feature_filters_count">%1$s Wybrane</string>
+    <string name="filter_account_type">Typ Konta</string>
+    <string name="filter_loan_account">Konto Kredytowe</string>
+    <string name="filter_savings_account">Konto Oszczędnościowe</string>
+    <string name="filter_linked_with">Połączone Z</string>
+    <string name="filter_self">Własne</string>
+    <string name="filter_other_clients">Inni Klienci</string>
+    <string name="beneficiary_created_successfully_account">Beneficjent Został Pomyślnie Utworzony dla konta %1$s do beneficjenta o nazwie %2$s.</string>
+    <string name="beneficiary_updated_successfully_account">Beneficjent Został Pomyślnie Zaktualizowany dla beneficjenta o nazwie %1$s z limitem transferu %2$d.</string>
+    <string name="skip_the_form">Pomiń formularz</string>
+    <string name="upload_or_scan_qr_code">Prześlij lub Zeskanuj Kod QR</string>
+    <string name="filter">Filtr</string>
+    <string name="linked_with">Połączone Z</string>
+    <string name="type_of_account">Typ Konta</string>
+    <string name="selected_count">%1$d wybrane</string>
+    <string name="filter_icon_description">Ikona filtra</string>
+    <string name="feature_generic_error_server">Problem z serwerem z naszej strony, nie można kontynuować dalej, spróbuj ponownie za chwilę</string>
+</resources>

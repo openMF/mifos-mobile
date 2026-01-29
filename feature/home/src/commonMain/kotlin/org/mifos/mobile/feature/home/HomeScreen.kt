@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,6 +55,7 @@ import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.designsystem.utils.clippedClickable
 import org.mifos.mobile.core.ui.component.MifosAccountApplyDashboard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -142,9 +142,13 @@ internal fun HomeContent(
                     imageVector = MifosIcons.Alert,
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
-                    modifier = Modifier.clickable {
-                        onAction(HomeAction.OnNotificationClick)
-                    },
+                    modifier = Modifier
+                        .clippedClickable(
+                            shape = KptTheme.shapes.extraSmall,
+                            onClick = {
+                                onAction(HomeAction.OnNotificationClick)
+                            },
+                        ),
                 )
             }
         },
@@ -272,24 +276,23 @@ internal fun ServiceItemCard(
 ) {
     Column(
         modifier = modifier
-            .padding(vertical = KptTheme.spacing.sm),
+            .padding(vertical = KptTheme.spacing.sm)
+            .clippedClickable(
+                onClick = onClick,
+            ),
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
-                .clickable {
-                    onClick()
-                },
+                .border(
+                    DesignToken.strokes.thin,
+                    KptTheme.colorScheme.secondaryContainer,
+                    KptTheme.shapes.medium,
+                )
+                .padding(DesignToken.padding.dp14),
         ) {
             Image(
-                modifier = Modifier
-                    .border(
-                        DesignToken.strokes.thin,
-                        KptTheme.colorScheme.secondaryContainer,
-                        KptTheme.shapes.medium,
-                    )
-                    .padding(DesignToken.padding.dp14),
                 imageVector = icon,
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(KptTheme.colorScheme.tertiary),

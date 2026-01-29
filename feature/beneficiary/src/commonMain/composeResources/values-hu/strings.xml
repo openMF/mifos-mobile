@@ -41,6 +41,7 @@
     <string name="delete_beneficiary">Kedvezményezett törlése</string>
     <string name="delete_beneficiary_confirmation">Biztosan törölni szeretné ezt a kedvezményezettet?</string>
     <string name="login_using_password_confirmation">Biztosan be szeretne jelentkezni jelszó használatával?</string>
+    <string name="update">Frissítés</string>
     <string name="delete">Törlés</string>
     <string name="beneficiary_deleted_successfully">Kedvezményezett sikeresen törölve</string>
     <string name="third_party_transfer">Harmadik fél átvitele</string>

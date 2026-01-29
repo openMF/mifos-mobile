@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">ඔබ මෙම ලාභයෝගීන් මකා දැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?</string>
     <string name="login_using_password_confirmation">ඔබ මුරපදය භාවිතා කර පිවිසීමට අවශ්‍ය බව ඔබට විශ්වාසද?</string>
     <string name="delete">මකන්න</string>
+    <string name="update">අලුත් කරන්න</string>
     <string name="beneficiary_deleted_successfully">ලාභයෝගීන් සාර්ථකව මකා දමා ඇත</string>
     <string name="third_party_transfer">තෙවන පාර්ශව මාරුව</string>
     <string name="total_loan">මුළු ණයය</string>

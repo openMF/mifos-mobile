@@ -9,21 +9,27 @@
  */
 package org.mifos.mobile.feature.loan.application.loanType
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_select_loan_type_choose_loan
@@ -32,9 +38,10 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_select_
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosExploreCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -112,7 +119,7 @@ internal fun SelectLoanTypeDialog(
 }
 
 /**
- * Displays the visual layout including the header and a staggered grid of available loan products.
+ * Displays the visual layout including the header and a vertical list of available loan products.
  * Handles Loading, Error, Empty, and Success UI states.
  *
  * @param state The current UI state containing the list of loan options.
@@ -168,48 +175,100 @@ internal fun SelectLoanTypeScreenContent(
             }
 
             ScreenUiState.Success -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(KptTheme.spacing.md)
-                        .padding(top = KptTheme.spacing.md),
-                ) {
+                val productOptions = state.productOptions ?: emptyList()
+                if (productOptions.isNotEmpty()) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = KptTheme.spacing.md),
                     ) {
-                        val productOptions = state.productOptions ?: emptyList()
-                        if (productOptions.isNotEmpty()) {
-                            Text(
-                                text = stringResource(Res.string.feature_select_loan_type_choose_loan),
-                                style = MifosTypography.labelLargeEmphasized,
-                            )
-                            LazyVerticalStaggeredGrid(
-                                columns = StaggeredGridCells.Fixed(2),
-                                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                                verticalItemSpacing = DesignToken.spacing.medium,
-                                content = {
-                                    items(productOptions) { loanType ->
-                                        MifosExploreCard(
-                                            icon = MifosIcons.Money,
-                                            text = loanType.name ?: "",
-                                            onClick = {
-                                                onAction(
-                                                    SelectLoanTypeAction.NavigateTo(
-                                                        loanType.id ?: -1,
-                                                        loanType.name ?: "",
-                                                    ),
-                                                )
-                                            },
-                                        )
-                                    }
-                                },
-                            )
+                        Text(
+                            text = stringResource(Res.string.feature_select_loan_type_choose_loan),
+                            style = MifosTypography.labelLargeEmphasized,
+                            modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
+                        )
+
+                        LazyColumn(
+                            contentPadding = PaddingValues(KptTheme.spacing.md),
+                            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+                        ) {
+                            items(productOptions, key = { it.id ?: -1 }) { loanType ->
+                                val loanName = loanType.name.orEmpty()
+
+                                LoanTypeListCard(
+                                    icon = MifosIcons.Money,
+                                    title = loanName,
+                                    onClick = {
+                                        loanType.id?.let { id ->
+                                            onAction(
+                                                SelectLoanTypeAction.NavigateTo(
+                                                    id,
+                                                    loanName,
+                                                ),
+                                            )
+                                        }
+                                    },
+                                )
+                            }
                         }
                     }
+                } else {
+                    MifosErrorComponent(
+                        isRetryEnabled = true,
+                        message = stringResource(Res.string.feature_select_loan_type_empty),
+                        onRetry = { onAction(SelectLoanTypeAction.Retry) },
+                    )
                 }
             }
 
             else -> { }
+        }
+    }
+}
+
+@Composable
+internal fun LoanTypeListCard(
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    MifosCustomCard(
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
+        variant = CardVariant.ELEVATED,
+        shape = KptTheme.shapes.medium,
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = KptTheme.elevation.level1,
+        ),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = KptTheme.colorScheme.surface,
+            contentColor = KptTheme.colorScheme.onSurface,
+        ),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(KptTheme.spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                imageVector = icon,
+                contentDescription = title,
+                modifier = Modifier.size(DesignToken.sizes.iconLarge),
+                colorFilter = ColorFilter.tint(KptTheme.colorScheme.primary),
+            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+            ) {
+                Text(
+                    text = title,
+                    style = MifosTypography.titleMediumEmphasized,
+                    color = KptTheme.colorScheme.onSurface,
+                )
+            }
         }
     }
 }

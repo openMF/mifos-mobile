@@ -103,4 +103,46 @@
     <string name="feature_savings_update_select_product_id">പ്രോഡക്ട് ഐഡി തിരഞ്ഞെടുക്കുക</string>
     <string name="feature_savings_update_submit">സമർപ്പിക്കുക</string>
     <string name="feature_savings_update_cancel">റദ്ദാക്കുക</string>
+
+    <string name="feature_account_action_transactions">ഇടപാടുകൾ</string>
+    <string name="feature_account_action_transactions_tip">ഈ അക്കൗണ്ടിലെ സമീപകാല ഇടപാടുകൾ</string>
+    <string name="feature_account_action_charges">ചാർജുകൾ</string>
+    <string name="feature_account_action_charges_tip">ഈ അക്കൗണ്ടിലെ ഫീസ് അല്ലെങ്കിൽ ചാർജുകൾ</string>
+    <string name="feature_account_action_qr">QR കോഡ്</string>
+    <string name="feature_account_action_qr_tip">QR കോഡ് സൃഷ്ടിക്കുക</string>
+
+    <string name="feature_savings_account_number_label">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="feature_savings_available_balance_label">ലഭ്യമായ ബാലൻസ്</string>
+    <string name="feature_savings_status_label">അവസ്ഥ</string>
+    <string name="feature_savings_nominal_interest_rate_label">നാമമാത്ര പലിശ നിരക്ക്</string>
+    <string name="feature_savings_total_deposits_label">ആകെ നിക്ഷേപങ്ങൾ</string>
+    <string name="feature_savings_total_withdrawals_label">ആകെ പിൻവലിക്കലുകൾ</string>
+    <string name="feature_savings_transaction_amount_label">തുക</string>
+    <string name="feature_savings_transaction_date_label">തീയതി</string>
+
+    <string name="feature_savings_update_account_number_label">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="feature_savings_update_product_label">ഉൽപ്പന്നം</string>
+    <string name="feature_savings_update_request_update">അപ്ഡേറ്റ് അഭ്യർത്ഥിക്കുക</string>
+    <string name="feature_savings_new_product_label">പുതിയ ഉൽപ്പന്നം</string>
+
+    <string name="feature_savings_savings_product_empty">സേവിംഗ്സ് ഉൽപ്പന്നങ്ങൾ ഇപ്പോൾ ലഭ്യമല്ല</string>
+
+    <string name="feature_savings_update_request_successful">അഭ്യർത്ഥന വിജയകരമായി സമർപ്പിച്ചു</string>
+    <string name="feature_savings_update_request_successful_message">അക്കൗണ്ട് വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്യാനുള്ള അഭ്യർത്ഥന വിജയകരമായി സമർപ്പിച്ചു</string>
+    <string name="feature_savings_update_request_back_to_home">ഹോമിലേക്ക് മടങ്ങുക</string>
+
+    <string name="feature_savings_update_request_failed">അഭ്യർത്ഥന സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_savings_update_request_failed_message">അക്കൗണ്ട് വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്യാനുള്ള അഭ്യർത്ഥന പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_savings_update_request_try_again">വീണ്ടും ശ്രമിക്കുക</string>
+
+    <string name="feature_savings_withdraw_account_topbar_title">അക്കൗണ്ട് പിൻവലിക്കുക</string>
+    <string name="feature_savings_withdraw_remarks_label">അഭിപ്രായങ്ങൾ</string>
+    <string name="feature_savings_withdraw_request_withdraw">പിൻവലിക്കൽ അഭ്യർത്ഥിക്കുക</string>
+    <string name="feature_savings_withdraw_request_successful">അഭ്യർത്ഥന വിജയകരമായി സമർപ്പിച്ചു</string>
+    <string name="feature_savings_withdraw_request_successful_message">അക്കൗണ്ട് പിൻവലിക്കാനുള്ള അഭ്യർത്ഥന വിജയകരമായി സമർപ്പിച്ചു</string>
+    <string name="feature_savings_withdraw_request_failed">അഭ്യർത്ഥന സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="feature_savings_withdraw_request_failed_message">അക്കൗണ്ട് പിൻവലിക്കാനുള്ള അഭ്യർത്ഥന പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക</string>
+
+    <string name="feature_savings_no_accounts_found">സേവിംഗ്സ് അക്കൗണ്ടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_generic_error_server">സെർവർ പ്രശ്നം കാരണം മുന്നോട്ട് പോകാൻ കഴിയില്ല, അല്പസമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക</string>
 </resources>

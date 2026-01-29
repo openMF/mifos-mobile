@@ -26,9 +26,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import mifos_mobile.feature.client_charge.generated.resources.Res
+import mifos_mobile.feature.client_charge.generated.resources.amount_due
+import mifos_mobile.feature.client_charge.generated.resources.amount_paid
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
+import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_charge_id
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -81,7 +86,7 @@ fun ClientChargeItem(
                 .padding(KptTheme.spacing.sm),
 
         )
-        Spacer(Modifier.width(DesignToken.padding.medium))
+        Spacer(Modifier.width(KptTheme.spacing.md))
         Column(
             modifier = Modifier.weight(1f),
         ) {
@@ -91,19 +96,23 @@ fun ClientChargeItem(
             )
             // TODO: in Figma account Number is there instead of charge id. Refactor it
             Text(
-                text = "ChargeId : ${charge.chargeId}",
+                text = stringResource(
+                    Res.string.feature_client_charges_charge_id,
+                    charge.chargeId.toString(),
+                ),
                 style = MifosTypography.bodySmall,
             )
+
             Text(
-                text = if (charge.dueDate.isNotEmpty()) {
+                text = if (!charge.dueDate.isEmpty() && charge.dueDate.size >= 3) {
                     DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
                 } else {
-                    ""
+                    stringResource(Res.string.error_no_charge)
                 },
                 style = MifosTypography.bodySmall,
             )
         }
-        Spacer(Modifier.width(DesignToken.padding.medium))
+        Spacer(Modifier.width(KptTheme.spacing.md))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
@@ -113,9 +122,9 @@ fun ClientChargeItem(
             ) {
                 Text(
                     text = if (charge.isChargePaid) {
-                        "Paid"
+                        stringResource(Res.string.amount_paid)
                     } else {
-                        "Due"
+                        stringResource(Res.string.amount_due)
                     },
                     style = MifosTypography.labelSmall,
                     color = if (charge.isChargePaid) {
@@ -152,7 +161,7 @@ fun ClientChargeItem(
             }
             Icon(
                 imageVector = MifosIcons.ChevronRight,
-                contentDescription = "",
+                contentDescription = "Navigation Icon",
                 modifier = Modifier.size(DesignToken.sizes.iconDp20),
             )
         }
