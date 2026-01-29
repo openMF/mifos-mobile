@@ -60,6 +60,7 @@ class UserPreferencesDataSource(
         ),
     )
 
+
     val token = _userInfo.map {
         it.base64EncodedAuthenticationKey
     }
@@ -245,16 +246,22 @@ class UserPreferencesDataSource(
 
     fun saveSelectedServicesDirectly(services: Set<String>) {
         settings.putString(SELECTED_SERVICES_KEY, services.joinToString(","))
+        val newPreference = settings.getSettingsPreference().copy(selectedServices = services)
+        _settingsInfo.value = newPreference
     }
 
     fun getSelectedServicesDirectly(): Set<String> {
-        val stored = settings.getString(SELECTED_SERVICES_KEY, "")
-        return if (stored.isEmpty()) emptySet() else stored.split(",").toSet()
+        val directString = settings.getStringOrNull(SELECTED_SERVICES_KEY)
+        return if (!directString.isNullOrBlank()) {
+            directString.split(",").filter { it.isNotBlank() }.toSet()
+        } else {
+            _settingsInfo.value.selectedServices
+        }
     }
 
     companion object {
         private const val PROFILE_IMAGE = "preferences_profile_image"
-        private const val SELECTED_SERVICES_KEY = "selected_services"
+        private const val SELECTED_SERVICES_KEY = "selected_services_list"
     }
 }
 

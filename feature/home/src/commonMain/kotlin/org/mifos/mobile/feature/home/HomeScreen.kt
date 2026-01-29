@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,7 +46,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.home.generated.resources.Res
+import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
+import mifos_mobile.feature.home.generated.resources.feature_home_selected
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
@@ -136,9 +139,9 @@ internal fun HomeContent(
     // All available service routes
     val allRoutes = remember { serviceCards.map { it.route }.toSet() }
 
-    // Load saved services
-    val savedServices = remember { preferencesRepository.selectedServices }
-    var selectedServices by remember {
+    // Load saved services - read fresh on each composition with this repository
+    val savedServices = preferencesRepository.selectedServices
+    var selectedServices by remember(preferencesRepository) {
         mutableStateOf(if (savedServices.isEmpty()) allRoutes else savedServices)
     }
     var isEditMode by remember { mutableStateOf(false) }
@@ -247,7 +250,7 @@ internal fun HomeContent(
                         )
                         Icon(
                             imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
-                            contentDescription = "Edit services",
+                            contentDescription = stringResource(Res.string.feature_home_edit_services),
                             tint = KptTheme.colorScheme.primary,
                             modifier = Modifier
                                 .size(16.dp)
@@ -369,7 +372,7 @@ internal fun ServiceItemCard(
             if (isEditMode && isSelected) {
                 Icon(
                     imageVector = MifosIcons.CheckCircle1,
-                    contentDescription = "Selected",
+                    contentDescription = stringResource(Res.string.feature_home_selected),
                     tint = KptTheme.colorScheme.primary,
                     modifier = Modifier
                         .align(Alignment.TopEnd)

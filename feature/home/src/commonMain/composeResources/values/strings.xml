@@ -45,6 +45,8 @@
 
     <string name="feature_home_greet">Hello %1$s,</string>
     <string name="feature_home_services">Services</string>
+    <string name="feature_home_edit_services">Edit services</string>
+    <string name="feature_home_selected">Selected</string>
     <string name="feature_home_saving_accounts">Savings Accounts</string>
     <string name="feature_home_loan_accounts">Loan Accounts</string>
     <string name="feature_home_share_accounts">Share Accounts</string>

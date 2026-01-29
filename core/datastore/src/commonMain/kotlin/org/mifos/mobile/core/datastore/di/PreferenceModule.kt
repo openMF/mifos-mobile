@@ -18,9 +18,9 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepositoryImpl
 
 val PreferencesModule = module {
-    factory<Settings> { Settings() }
+    single<Settings> { Settings() }
 
-    factory {
+    single {
         UserPreferencesDataSource(
             settings = get(),
             dispatcher = get(named(MifosDispatchers.IO.name)),
