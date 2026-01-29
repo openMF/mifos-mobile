@@ -27,6 +27,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -248,14 +249,14 @@ internal fun HomeContent(
                             style = MifosTypography.titleMediumEmphasized,
                             color = KptTheme.colorScheme.onSurface,
                         )
-                        Icon(
-                            imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
-                            contentDescription = stringResource(Res.string.feature_home_edit_services),
-                            tint = KptTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .size(16.dp)
-                                .clickable { toggleEditMode() },
-                        )
+                        IconButton(onClick = { toggleEditMode() }) {
+                            Icon(
+                                imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
+                                contentDescription = stringResource(Res.string.feature_home_edit_services),
+                                tint = KptTheme.colorScheme.primary,
+                                modifier = Modifier.size(16.dp),
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.md))

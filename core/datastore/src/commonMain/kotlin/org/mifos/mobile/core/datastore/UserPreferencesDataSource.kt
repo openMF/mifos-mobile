@@ -60,7 +60,6 @@ class UserPreferencesDataSource(
         ),
     )
 
-
     val token = _userInfo.map {
         it.base64EncodedAuthenticationKey
     }
