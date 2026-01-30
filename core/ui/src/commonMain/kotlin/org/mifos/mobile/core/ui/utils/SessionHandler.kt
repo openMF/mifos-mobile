@@ -36,7 +36,6 @@ fun SessionHandler(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .then(if (isExpired) Modifier.blur(KptTheme.spacing.md) else Modifier)
             .pointerInput(isExpired) {
                 awaitPointerEventScope {
                     while (true) {
