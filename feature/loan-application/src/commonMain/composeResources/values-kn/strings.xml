@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">ಹೊಸ ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">ಸಾಲದ ಅರ್ಜಿ</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">ಅರ್ಜಿದಾರರ ಹೆಸರು</string>
+    <string name="feature_apply_loan_label_loan_product">ಸಾಲದ ಉತ್ಪನ್ನ</string>
+    <string name="feature_apply_loan_label_purpose">ಸಾಲದ ಉದ್ದೇಶ</string>
+    <string name="feature_apply_loan_label_disbursement_date">ವಿತರಣಾ ದಿನಾಂಕ</string>
+    <string name="feature_apply_loan_label_principal_amount">ಅಸಲು ಮೊತ್ತ</string>
+    <string name="feature_apply_loan_label_currency">ಕರೆನ್ಸಿ</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="feature_apply_loan_button_ok">ಸರಿ</string>
+    <string name="feature_apply_loan_button_cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="feature_apply_loan_button_apply">ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_button_next">ಮುಂದೆ</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">ಅರ್ಜಿದಾರರ ಹೆಸರು ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_loan_error_name_too_short">ಅರ್ಜಿದಾರರ ಹೆಸರು ಕನಿಷ್ಠ 4 ಅಕ್ಷರಗಳಿರಬೇಕು</string>
+    <string name="feature_apply_loan_error_name_too_long">ಅರ್ಜಿದಾರರ ಹೆಸರು 100 ಅಕ್ಷರಗಳನ್ನು ಮೀರಬಾರದು</string>
+    <string name="feature_apply_loan_error_name_invalid_format">ಅರ್ಜಿದಾರರ ಹೆಸರು ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ಒಳಗೊಂಡಿದೆ</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">ಸಾಲದ ಉತ್ಪನ್ನ ಅಗತ್ಯವಿದೆ</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">ಅಸಲು ಮೊತ್ತ ಅತ್ಯಗತ್ಯ</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">ದಯವಿಟ್ಟು ಮಾನ್ಯ ಮೊತ್ತದ ಸ್ವರೂಪವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_apply_loan_error_amount_too_small">ಅಸಲು ಮೊತ್ತ ತೀರಾ ಕಡಿಮೆಯಾಗಿದೆ</string>
+    <string name="feature_apply_loan_error_amount_too_large">ಅಸಲು ಮೊತ್ತ ಗರಿಷ್ಠ ಮಿತಿಯನ್ನು ಮೀರುತ್ತದೆ</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">ಆಯ್ಕೆ ಮಾಡಿದ ಕರೆನ್ಸಿಗೆ ಮೊತ್ತವು ತುಂಬಾ ದಶಮಾಂಶ ಸ್ಥಾನಗಳನ್ನು ಒಳಗೊಂಡಿದೆ</string>
+    <string name="feature_apply_loan_error_amount_multiple">ಮೊತ್ತವು ಮಾನ್ಯ ಗುಣಕಗಳಲ್ಲಿಲ್ಲ</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">ವಿತರಣಾ ದಿನಾಂಕ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_loan_error_date_invalid_format">ದಯವಿಟ್ಟು ಮಾನ್ಯ ದಿನಾಂಕ ಸ್ವರೂಪವನ್ನು ನಮೂದಿಸಿ (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">ವಿತರಣಾ ದಿನಾಂಕ ಭವಿಷ್ಯದಲ್ಲಿರಬೇಕು</string>
+    <string name="feature_apply_loan_error_date_out_of_range">ವಿತರಣಾ ದಿನಾಂಕ ಭವಿಷ್ಯದ ತುಂಬಾ ದೂರದಲ್ಲಿದೆ (ಗರಿಷ್ಠ 10 ವರ್ಷಗಳು)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ, ಮುಂದುವರಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ, ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_apply_loan_error_too_many_attempts">ತುಂಬಾ ವಿಫಲ ಪ್ರಯತ್ನಗಳು. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="feature_apply_loan_error_submit_failed">ಸಾಲದ ಅರ್ಜಿಯನ್ನು ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">ಸಾಲದ ಅರ್ಜಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!</string>
+    <string name="feature_apply_loan_success_draft_saved">ಅರ್ಜಿ ಕರಡು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">ಉಳಿಸದ ಬದಲಾವಣೆಗಳು!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">ನೀವು ಉಳಿಸದ ಬದಲಾವಣೆಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ. ನೀವು ಖಂಡಿತವಾಗಿಯೂ ಹಿಂತಿರುಗಲು ಬಯಸುತ್ತೀರಾ?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">ತ್ಯಜಿಸಿ</string>
+    <string name="feature_apply_loan_action_save_draft">ಕರಡು ಉಳಿಸಿ</string>
+    <string name="feature_apply_loan_action_retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_apply_loan_action_cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="feature_apply_loan_action_continue">ಮುಂದುವರಿಸಿ</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_apply_loan_hint_loan_product">ಸಾಲದ ಉತ್ಪನ್ನವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="feature_apply_loan_hint_principal_amount">ಸಾಲದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_apply_loan_hint_disbursement_date">ವಿತರಣಾ ದಿನಾಂಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="feature_apply_loan_hint_purpose">ಉದ್ದೇಶವನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ವಿವರಿಸಿ</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">ಕರೆನ್ಸಿ ಬದಲಾಗಿದೆ. ಮೊತ್ತವನ್ನು ಮರುಪರಿಶೀಲಿಸಲಾಗುತ್ತದೆ.</string>
+    <string name="feature_apply_loan_info_min_amount">ಕನಿಷ್ಠ ಸಾಲದ ಮೊತ್ತ: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">ಗರಿಷ್ಠ ಸಾಲದ ಮೊತ್ತ: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">ವಿವರಗಳನ್ನು ಖಚಿತಪಡಿಸಿ</string>
+
+    <string name="feature_apply_loan_status_success">ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ</string>
+    <string name="feature_apply_loan_status_success_tip">ನಿಮ್ಮ ಸಾಲದ ಅರ್ಜಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗಿದೆ. ಪರಿಶೀಲನೆಯ ನಂತರ ನಿಮಗೆ ತಿಳಿಸಲಾಗುವುದು.</string>
+    <string name="feature_apply_loan_status_success_action">ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</string>
+
+    <string name="feature_apply_loan_status_failure">ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="feature_apply_loan_status_failure_tip">ನಿಮ್ಮ ಸಾಲದ ಅರ್ಜಿಯನ್ನು ಸಲ್ಲಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="feature_apply_loan_status_failure_action">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">ಹೊಸ ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_select_loan_type_choose_loan">ಸಾಲದ ಪ್ರಕಾರವನ್ನು ಆರಿಸಿ</string>
+    <string name="feature_select_loan_type_empty">ಪ್ರಸ್ತುತ ಸಾಲದ ಉತ್ಪನ್ನಗಳು ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="feature_select_loan_type_network_issue">ನೀವು ಇಂಟರ್ನೆಟ್‌ಗೆ ಸಂಪರ್ಕಗೊಂಡಿದ್ದೀರಿ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ</string>
+    <string name="feature_loan_product_details_terms">ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಸ್ವೀಕರಿಸಿ</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="feature_loan_get_loan">%1$s ಸಾಲ ಪಡೆಯಿರಿ</string>
+    <string name="feature_loan_up_to">%1$s ವರೆಗೆ</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s ರಿಂದ %2$s ಬಡ್ಡಿ</string>
+    <string name="feature_loan_terms_and_conditions">ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು</string>
+
+    <string name="feature_loan_sanction_and_disbursement">ಸಾಲ ಮಂಜೂರಾತಿ ಮತ್ತು ವಿತರಣೆ</string>
+    <string name="feature_loan_interest_rate">ಬಡ್ಡಿ ದರ</string>
+    <string name="feature_loan_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="feature_loan_repayment">ಮರುಪಾವತಿ</string>
+    <string name="feature_loan_security_and_collateral">ಭದ್ರತೆ ಮತ್ತು ಮೇಲಾಧಾರ</string>
+    <string name="feature_loan_insurance">ವಿಮೆ</string>
+    <string name="feature_loan_default">ಡೀಫಾಲ್ಟ್</string>
+    <string name="feature_loan_documentation">ದಾಖಲಾತಿ</string>
+    <string name="feature_loan_continue_legal_compliance">ಕಾನೂನು ಅನುಸರಣೆ</string>
+    <string name="feature_loan_amendments_and_termination">ತಿದ್ದುಪಡಿಗಳು ಮತ್ತು ಹಕ್ಕುತ್ಯಾಗ</string>
+    <string name="feature_loan_jurisdiction">ನ್ಯಾಯವ್ಯಾಪ್ತಿ</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">ಅರ್ಜಿದಾರರ ಅರ್ಹತೆ, ಆದಾಯದ ಸ್ಥಿರತೆ, ಸಾಲದ ಅರ್ಹತೆ ಮತ್ತು ಸಾಲದಾತರ ಆಂತರಿಕ ಕ್ರೆಡಿಟ್ ನೀತಿಗಳ ಆಧಾರದ ಮೇಲೆ ವೈಯಕ್ತಿಕ ಸಾಲವನ್ನು ಮಂಜೂರು ಮಾಡಲಾಗುತ್ತದೆ. ಯಾವುದೇ ಕಾರಣವನ್ನು ನೀಡದೆ ತನ್ನ ಸ್ವಂತ ವಿವೇಚನೆಯಿಂದ ಯಾವುದೇ ವೈಯಕ್ತಿಕ ಸಾಲದ ಅರ್ಜಿಯನ್ನು ಅನುಮೋದಿಸಲು ಅಥವಾ ತಿರಸ್ಕರಿಸಲು ಸಾಲದಾತ ಹಕ್ಕನ್ನು ಕಾಯ್ದಿರಿಸಿಕೊಂಡಿದ್ದಾನೆ. ಮಂಜೂರಾದ ಸಾಲದ ಮೊತ್ತವನ್ನು ಸಾಲದ ಒಪ್ಪಂದ ಮತ್ತು ದಾಖಲಾತಿ ಅವಶ್ಯಕತೆಗಳ ಆಧಾರದ ಮೇಲೆ ಪೂರ್ಣವಾಗಿ ಅಥವಾ ಭಾಗಗಳಲ್ಲಿ ವಿತರಿಸಬಹುದು. ವಿತರಣೆಯು ಕೆವೈಸಿ ಪ್ರಕ್ರಿಯೆಗಳ ಯಶಸ್ವಿ ಪೂರ್ಣಗೊಳಿಸುವಿಕೆ, ಸಲ್ಲಿಸಿದ ದಾಖಲೆಗಳ ಪರಿಶೀಲನೆ ಮತ್ತು ಮಂಜೂರಾತಿ ಪತ್ರದಲ್ಲಿ ನಿರ್ದಿಷ್ಟಪಡಿಸಿದ ಎಲ್ಲಾ ಷರತ್ತುಗಳ ಪಾಲನೆಗೆ ಒಳಪಟ್ಟಿರುತ್ತದೆ.</string>
+    <string name="feature_personal_loan_interest_rate_description">ವೈಯಕ್ತಿಕ ಸಾಲವು ಸಾಲದ ಒಪ್ಪಂದದ ಸಮಯದಲ್ಲಿ ಸಾಲಗಾರನು ಆಯ್ಕೆ ಮಾಡಿದಂತೆ ಸ್ಥಿರ ಅಥವಾ ಫ್ಲೋಟಿಂಗ್ ಬಡ್ಡಿ ದರವನ್ನು ಹೊಂದಿರಬಹುದು. ಫ್ಲೋಟಿಂಗ್ ಬಡ್ಡಿ ದರದ ಸಾಲಗಳ ಸಂದರ್ಭದಲ್ಲಿ, ಅನ್ವಯವಾಗುವ ದರವು ಸಾಲದಾತರ ಬೆಂಚ್‌ಮಾರ್ಕ್ ಅಥವಾ ಉಲ್ಲೇಖ ದರದಲ್ಲಿನ ಬದಲಾವಣೆಗಳ ಆಧಾರದ ಮೇಲೆ ಆವರ್ತಕ ಪರಿಷ್ಕರಣೆಗಳಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತದೆ. ಇಂತಹ ಬದಲಾವಣೆಗಳು ಸಾಲಗಾರನ ಮೇಲೆ ಕಡ್ಡಾಯವಾಗಿರುತ್ತದೆ ಮತ್ತು ಸಾಲದಾತನು ಅಗತ್ಯವೆಂದು ಪರಿಗಣಿಸಿದಂತೆ ಇಎಂಐ ಮೊತ್ತ ಮತ್ತು/ಅಥವಾ ಸಾಲದ ಅವಧಿಯಲ್ಲಿ ವ್ಯತ್ಯಾಸಕ್ಕೆ ಕಾರಣವಾಗಬಹುದು.</string>
+    <string name="feature_personal_loan_repayment_details">ವೈಯಕ್ತಿಕ ಸಾಲದ ಮರುಪಾವತಿಯನ್ನು ಸಮಾನ ಮಾಸಿಕ ಕಂತುಗಳ (ಇಎಂಐ) ಮೂಲಕ ಮಾಡಲಾಗುತ್ತದೆ, ಇದರಲ್ಲಿ ಅಸಲು ಮತ್ತು ಬಡ್ಡಿ ಎರಡೂ ಘಟಕಗಳು ಸೇರಿರುತ್ತವೆ. ಇಎಂಐಗಳು ಸಾಲದ ಒಪ್ಪಂದದಲ್ಲಿ ನಿರ್ದಿಷ್ಟಪಡಿಸಿದ ದಿನಾಂಕದಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತವೆ ಮತ್ತು ಅನ್ವಯವಾಗುವ ಬಡ್ಡಿಯೊಂದಿಗೆ ಪೂರ್ಣ ಸಾಲದ ಮೊತ್ತವನ್ನು ಮರುಪಾವತಿಸುವವರೆಗೆ ಮಾಸಿಕ ಆಧಾರದ ಮೇಲೆ ಮುಂದುವರಿಯುತ್ತದೆ. ಸಾಲದಾತರ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ನೀತಿಗಳ ಪ್ರಕಾರ ಪೂರ್ವಪಾವತಿ ಅಥವಾ ಭಾಗಶಃ ಪಾವತಿಯನ್ನು ಅನುಮತಿಸಬಹುದು ಮತ್ತು ನಿರ್ದಿಷ್ಟ ಶುಲ್ಕಗಳು ಆಕರ್ಷಿಸಬಹುದು, ವಿಶೇಷವಾಗಿ ಸ್ಥಿರ ದರದ ಸಾಲಗಳಿಗೆ.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">ವೈಯಕ್ತಿಕ ಸಾಲಗಳು ಸಾಮಾನ್ಯವಾಗಿ ಅಸುರಕ್ಷಿತ ಸ್ವಭಾವದವು ಮತ್ತು ಮೇಲಾಧಾರದ ಅಗತ್ಯವಿರುವುದಿಲ್ಲ. ಆದಾಗ್ಯೂ, ಸಾಲಗಾರನ ಕ್ರೆಡಿಟ್ ಪ್ರೊಫೈಲ್ ಮತ್ತು ಸಾಲದ ಮೊತ್ತವನ್ನು ಅವಲಂಬಿಸಿ ಅಸಾಧಾರಣ ಸಂದರ್ಭಗಳಲ್ಲಿ ಹೆಚ್ಚುವರಿ ಗ್ಯಾರಂಟಿ ಅಥವಾ ಭದ್ರತೆಯನ್ನು ಕೋರುವ ಹಕ್ಕನ್ನು ಸಾಲದಾತ ಕಾಯ್ದಿರಿಸಿಕೊಂಡಿದ್ದಾನೆ. ಅಂತಹ ಯಾವುದೇ ಅವಶ್ಯಕತೆಯನ್ನು ಮಂಜೂರಾತಿ ಪತ್ರದಲ್ಲಿ ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಲಾಗುತ್ತದೆ. ಅನ್ವಯವಾಗುವುದಾದರೆ, ದಾಖಲಾತಿ ಅಥವಾ ಕಾನೂನು ಔಪಚಾರಿಕತೆಗಳಿಗೆ ಸಂಬಂಧಿಸಿದ ಎಲ್ಲಾ ವೆಚ್ಚಗಳನ್ನು ಸಾಲಗಾರನು ಭರಿಸಬೇಕಾಗುತ್ತದೆ.</string>
+    <string name="feature_personal_loan_insurance_details">ವೈಯಕ್ತಿಕ ಸಾಲಗಳಿಗೆ ಸಾಮಾನ್ಯವಾಗಿ ಆಸ್ತಿ ವಿಮೆಯ ಅಗತ್ಯವಿಲ್ಲದಿದ್ದರೂ, ಸಾಲಗಾರನ ಮರಣದ ಸಂದರ್ಭದಲ್ಲಿ ಬಾಕಿ ಇರುವ ಸಾಲದ ಮೊತ್ತವನ್ನು ರಕ್ಷಿಸಲು ಸಾಲಗಾರನು ಜೀವ ವಿಮಾ ಪಾಲಿಸಿಯನ್ನು ಆರಿಸಿಕೊಳ್ಳುವಂತೆ ಸಾಲದಾತ ಶಿಫಾರಸು ಮಾಡಬಹುದು. ಇದು ಕಡ್ಡಾಯವಲ್ಲ ಆದರೆ ಸಾಲಗಾರನ ಕುಟುಂಬ ಅಥವಾ ಅವಲಂಬಿತರಿಗೆ ಆರ್ಥಿಕ ರಕ್ಷಣಾ ಕ್ರಮವಾಗಿ ಸಲಹೆ ನೀಡಲಾಗುತ್ತದೆ.</string>
+    <string name="feature_personal_loan_default_details">ಇಎಂಐಗಳ ಪಾವತಿ ಮಾಡದಿರುವುದು ಅಥವಾ ವಿಳಂಬವಾಗಿ ಪಾವತಿಸುವುದು ಡೀಫಾಲ್ಟ್ ಅನ್ನು ರೂಪಿಸುತ್ತದೆ. ಅಂತಹ ಸಂದರ್ಭಗಳಲ್ಲಿ, ಬಾಕಿ ಇರುವ ಹಣವನ್ನು ವಸೂಲಿ ಮಾಡಲು ಸಾಲದಾತನು ಮರುಪಡೆಯುವಿಕೆ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಪ್ರಾರಂಭಿಸಬಹುದು, ಇದರಲ್ಲಿ ಕಾನೂನು ಕ್ರಮವೂ ಸೇರಿರಬಹುದು. ಮಿತಿಮೀರಿದ ಮೊತ್ತಗಳಿಗೆ ದಂಡದ ಬಡ್ಡಿ ಮತ್ತು ಇತರೆ ಶುಲ್ಕಗಳನ್ನು ಅನ್ವಯಿಸಬಹುದು. ನಿರಂತರ ಅಥವಾ ಪುನರಾವರ್ತಿತ ಡೀಫಾಲ್ಟ್ ಸಾಲಗಾರನ ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಮತ್ತು ಭವಿಷ್ಯದಲ್ಲಿ ಸಾಲ ಪಡೆಯುವ ಸಾಮರ್ಥ್ಯದ ಮೇಲೆ ಪ್ರತಿಕೂಲ ಪರಿಣಾಮ ಬೀರಬಹುದು.</string>
+    <string name="feature_personal_loan_documentation_details">ಗುರುತಿನ ಪುರಾವೆ, ವಿಳಾಸದ ಪುರಾವೆ, ಆದಾಯದ ವಿವರಗಳು, ಬ್ಯಾಂಕ್ ಹೇಳಿಕೆಗಳು ಮತ್ತು ಸಾಲದಾತ ವಿನಂತಿಸಿದ ಯಾವುದೇ ಇತರ ದಾಖಲೆಗಳು ಸೇರಿದಂತೆ ಆದರೆ ಸೀಮಿತವಾಗಿಲ್ಲದ ನಿಖರವಾದ ಮತ್ತು ಸಂಪೂರ್ಣ ದಾಖಲಾತಿಯನ್ನು ಸಾಲಗಾರನು ಸಲ್ಲಿಸಬೇಕು. ಸಲ್ಲಿಸಿದ ದಾಖಲೆಗಳಲ್ಲಿ ಯಾವುದೇ ವ್ಯತ್ಯಾಸ, ತಪ್ಪು ನಿರೂಪಣೆ ಅಥವಾ ಸುಳ್ಳುತನವು ಸಾಲದ ಅರ್ಜಿಯನ್ನು ತಿರಸ್ಕರಿಸಲು ಅಥವಾ ಸಾಲದ ಒಪ್ಪಂದವನ್ನು ರದ್ದುಗೊಳಿಸಲು ಕಾರಣವಾಗಬಹುದು, ಜೊತೆಗೆ ಸಂಭಾವ್ಯ ಕಾನೂನು ಪರಿಣಾಮಗಳನ್ನು ಎದುರಿಸಬೇಕಾಗುತ್ತದೆ.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">ತಮ್ಮ ಹಣಕಾಸಿನ ಕಟ್ಟುಪಾಡುಗಳಿಗೆ ಸಂಬಂಧಿಸಿದಂತೆ ಅನ್ವಯವಾಗುವ ಎಲ್ಲಾ ಸ್ಥಳೀಯ, ರಾಜ್ಯ ಮತ್ತು ರಾಷ್ಟ್ರೀಯ ಕಾನೂನುಗಳ ಸಂಪೂರ್ಣ ಅನುಸರಣೆಯನ್ನು ಸಾಲಗಾರನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಬೇಕು. ಇದರಲ್ಲಿ ಸಮಯೋಚಿತ ತೆರಿಗೆ ಪಾವತಿ, ನಿಯಂತ್ರಕ ಅವಶ್ಯಕತೆಗಳ ಪಾಲನೆ ಮತ್ತು ಮಾನ್ಯ ದಾಖಲೆಗಳ ಸಲ್ಲಿಕೆ ಸೇರಿವೆ. ಸಾಲಗಾರನು ಮಾಡಿದ ಯಾವುದೇ ಕಾನೂನು ಉಲ್ಲಂಘನೆಗಳಿಗೆ ಸಾಲದಾತ ಜವಾಬ್ದಾರನಾಗಿರುವುದಿಲ್ಲ.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">ಸಾಲದಾತನು ಕಾಲಕಾಲಕ್ಕೆ ಈ ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಪರಿಷ್ಕರಿಸಬಹುದು ಅಥವಾ ನವೀಕರಿಸಬಹುದು, ಸಾಲಗಾರನಿಗೆ ಸೂಕ್ತ ಪೂರ್ವ ಸೂಚನೆಗೆ ಒಳಪಟ್ಟಿರುತ್ತದೆ. ಸಾಲದ ಮೊತ್ತವನ್ನು ಪೂರ್ಣವಾಗಿ ಮರುಪಾವತಿಸಿದ ನಂತರ ಅಥವಾ ಡೀಫಾಲ್ಟ್ ಕಾರಣದಿಂದ ಪ್ರಾರಂಭಿಸಲಾದ ಫೋರ್‌ಕ್ಲೋಸರ್ ಪ್ರಕ್ರಿಯೆಗಳ ಮೂಲಕ ಸಾಲದ ಒಪ್ಪಂದವು ಮುಕ್ತಾಯಗೊಂಡಿದೆ ಎಂದು ಪರಿಗಣಿಸಲಾಗುತ್ತದೆ.</string>
+    <string name="feature_personal_loan_jurisdiction_details">ವೈಯಕ್ತಿಕ ಸಾಲ ಒಪ್ಪಂದದಿಂದ ಉಂಟಾಗುವ ಅಥವಾ ಸಂಬಂಧಿಸಿದ ಎಲ್ಲಾ ವಿವಾದಗಳು ಒಪ್ಪಂದದಲ್ಲಿ ಸ್ಪಷ್ಟವಾಗಿ ಸೂಚಿಸದಿದ್ದಲ್ಲಿ ಸಾಲದಾತರ ನೋಂದಾಯಿತ ಕಚೇರಿಯ ಸ್ಥಳದಲ್ಲಿರುವ ನ್ಯಾಯಾಲಯಗಳ ವಿಶೇಷ ನ್ಯಾಯವ್ಯಾಪ್ತಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತವೆ.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">ಬ್ಯಾಂಕ್ ಖಾತೆ ಸ್ಟೇಟ್‌ಮೆಂಟ್‌ಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_docs_collateral">ಮೇಲಾಧಾರ ದಾಖಲೆಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_docs_signature">ಹೊಸ ಸಹಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+
+    <string name="feature_upload_file_error">ಏನೋ ತಪ್ಪಾಗಿದೆ! ಫೈಲ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ</string>
+    <string name="feature_upload_statement_error">ದಯವಿಟ್ಟು ಬ್ಯಾಂಕ್ ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_property_document_error">ದಯವಿಟ್ಟು ಆಸ್ತಿ ದಾಖಲೆಯನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_signature_error">ದಯವಿಟ್ಟು ಸಹಿಯನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="feature_upload_documents_success_title">ದಾಖಲೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ!</string>
+
+    <string name="sign_here">ಇಲ್ಲಿ ಸಹಿ ಮಾಡಿ</string>
+    <string name="reset">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="sign">ಸಹಿ</string>
+    <string name="capture">ಸೆರೆಹಿಡಿಯಿರಿ</string>
+    <string name="attach">ಲಗತ್ತಿಸಿ</string>
+    <string name="upload_signature">ಸಹಿ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="save_and_submit">ಉಳಿಸಿ ಮತ್ತು ಸಲ್ಲಿಸಿ</string>
+</resources>
