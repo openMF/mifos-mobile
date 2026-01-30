@@ -36,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
@@ -144,10 +146,13 @@ internal fun HomeContent(
     }
     var isEditMode by remember { mutableStateOf(false) }
 
+    val scope = rememberCoroutineScope()
     fun toggleEditMode() {
         if (isEditMode) {
             // Save
-            preferencesRepository.saveSelectedServices(selectedServices)
+            scope.launch {
+                preferencesRepository.saveSelectedServices(selectedServices)
+            }
         }
         isEditMode = !isEditMode
     }
