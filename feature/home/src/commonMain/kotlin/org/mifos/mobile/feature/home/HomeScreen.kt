@@ -133,14 +133,11 @@ internal fun HomeContent(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // Repository for persistence
     val preferencesRepository: org.mifos.mobile.core.datastore.UserPreferencesRepository =
         org.koin.compose.koinInject()
 
-    // All available service routes
     val allRoutes = remember { serviceCards.map { it.route }.toSet() }
 
-    // Load saved services - read fresh on each composition with this repository
     val savedServices = preferencesRepository.selectedServices
     var selectedServices by remember(preferencesRepository) {
         mutableStateOf(if (savedServices.isEmpty()) allRoutes else savedServices)
@@ -239,7 +236,6 @@ internal fun HomeContent(
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
 
-                    // Services header with edit icon
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
