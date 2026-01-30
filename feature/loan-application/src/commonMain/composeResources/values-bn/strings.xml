@@ -145,7 +145,7 @@
     <string name="feature_upload_statement_error">অনুগ্রহ করে একটি ব্যাংক স্টেটমেন্ট আপলোড করুন</string>
     <string name="feature_upload_property_document_error">অনুগ্রহ করে একটি সম্পত্তির নথি আপলোড করুন</string>
     <string name="feature_upload_signature_error">অনুগ্রহ করে একটি স্বাক্ষর আপলোড করুন</string>
-    <string name="feature_upload_documents_success_title">দথিপত্র সফলভাবে আপলোড করা হয়েছে!</string>
+    <string name="feature_upload_documents_success_title">নথিপত্র সফলভাবে আপলোড করা হয়েছে!</string>
 
     <string name="sign_here">এখানে স্বাক্ষর করুন</string>
     <string name="reset">রিসেট</string>
