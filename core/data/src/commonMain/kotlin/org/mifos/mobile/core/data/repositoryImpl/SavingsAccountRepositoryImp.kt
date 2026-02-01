@@ -95,9 +95,9 @@ class SavingsAccountRepositoryImp(
                 val errorMessage = extractErrorMessage(e.response)
                 DataState.Error(Exception(errorMessage), null)
             } catch (e: IOException) {
-                DataState.Error(Exception("Network error: ${e.message ?: "Please check your connection"}"), null)
+                DataState.Error(Exception("Network error", e), null)
             } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error: ${e.message}"), null)
+                DataState.Error(Exception("Server error", e), null)
             }
         }
     }
@@ -118,9 +118,9 @@ class SavingsAccountRepositoryImp(
                 val errorMessage = extractErrorMessage(e.response)
                 DataState.Error(Exception(errorMessage), null)
             } catch (e: IOException) {
-                DataState.Error(Exception("Network error: ${e.message ?: "Please check your connection"}"), null)
+                DataState.Error(Exception("Network error", e), null)
             } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error: ${e.message}"), null)
+                DataState.Error(Exception("Server error", e), null)
             }
         }
     }
@@ -141,9 +141,9 @@ class SavingsAccountRepositoryImp(
                 val errorMessage = extractErrorMessage(e.response)
                 DataState.Error(Exception(errorMessage), null)
             } catch (e: IOException) {
-                DataState.Error(Exception("Network error: ${e.message ?: "Please check your connection"}"), null)
+                DataState.Error(Exception("Network error", e), null)
             } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error: ${e.message}"), null)
+                DataState.Error(Exception("Server error", e), null)
             }
         }
     }
