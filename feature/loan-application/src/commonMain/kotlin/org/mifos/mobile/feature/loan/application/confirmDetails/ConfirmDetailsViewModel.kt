@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.loan.application.confirmDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.internal_server_error
@@ -285,7 +286,7 @@ internal class ConfirmDetailsViewModel(
                 updateState {
                     it.copy(showOverlay = false)
                 }
-                val errorMsg = if (status.exception.cause is kotlinx.io.IOException) {
+                val errorMsg = if (status.exception.cause is ServerResponseException) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     status.message
