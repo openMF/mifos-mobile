@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Déconnexion</string>
     <string name="feature_settings_action_logout_tip">Déconnectez-vous de tous les appareils</string>
+    <string name="feature_settings_logout_description">La déconnexion mettra fin à votre session actuelle et à toutes les sessions actives pour des raisons de sécurité. Vous devrez vous reconnecter pour accéder à votre compte.</string>
+    <string name="feature_settings_logout_action">Retour à l\'accueil</string>
 
     <string name="feature_settings_top_bar_title">Paramètres</string>
 
