@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Brak połączenia z internetem</string>
+    <string name="back_online">Z powrotem online</string>
+    <string name="retry">Ponów</string>
+    <string name="no_data">Brak danych</string>
+    <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="core_common_working">Podstawowe funkcje działają</string>
+    <string name="customer_name">Nazwa klienta</string>
+    <string name="product">Produkt</string>
+    <string name="error_loading_balance">Błąd ładowania salda</string>
+    <string name="powered_by">Obsługiwane przez</string>
+    <string name="password_checker_empty_error">Hasło nie może być puste.</string>
+    <string name="password_checker_too_long_error">Hasło jest za długie. Maksymalna długość to 128 znaków.</string>
+    <string name="password_checker_min_length_feedback">Hasło powinno mieć co najmniej 12 znaków.</string>
+    <string name="password_checker_uppercase_feedback">Użyj co najmniej jednej wielkiej litery.</string>
+    <string name="password_checker_lowercase_feedback">Użyj co najmniej jednej małej litery.</string>
+    <string name="password_checker_digit_feedback">Użyj co najmniej jednej cyfry.</string>
+    <string name="password_checker_special_char_feedback">Użyj co najmniej jednego znaku specjalnego.</string>
+    <string name="password_checker_strong_length_feedback">Dla mocniejszego hasła użyj co najmniej 12 znaków.</string>
+    <string name="password_strength_level_0">Bardzo słabe</string>
+    <string name="password_strength_level_1">Słabe</string>
+    <string name="password_strength_level_2">Przeciętne</string>
+    <string name="password_strength_level_3">Dobre</string>
+    <string name="password_strength_level_4">Mocne</string>
+    <string name="password_strength_level_5">Bardzo mocne</string>
+    <string name="password_strength_none">Wprowadź hasło</string>
+    <string name="password_strength_indicator_description">Wskaźnik siły hasła</string>
+    <string name="password_strength_announcement">Siła hasła: %1$s</string>
+    <string name="minimum_characters_requirement">Minimum %1$d znaków</string>
+    <string name="minimum_characters_met">Spełniono wymóg minimalnej liczby znaków</string>
+    <string name="minimum_characters_not_met">Nie spełniono wymogu minimalnej liczby znaków</string>
+    <string name="password_requirements_title">Wymagania dotyczące hasła</string>
+    <string name="password_feedback_title">Sugestie dotyczące hasła</string>
+    <string name="password_feedback_all_good">Twoje hasło spełnia wszystkie wymagania!</string>
+    <string name="character_count">%1$d znaków</string>
+    <string name="character_count_with_limit">%1$d / %2$d znaków</string>
+    <string name="validation_email_empty">Adres e-mail nie może być pusty</string>
+    <string name="validation_email_max_length_exceeded">Adres e-mail przekracza limit 254 znaków</string>
+    <string name="validation_email_missing_at_symbol">Adres e-mail musi zawierać symbol @</string>
+    <string name="validation_email_starts_with_at">Adres e-mail nie może zaczynać się od @</string>
+    <string name="validation_email_ends_with_at">Adres e-mail nie może kończyć się na @</string>
+    <string name="validation_email_multiple_at_symbols">Adres e-mail nie może zawierać wielu symboli @</string>
+    <string name="validation_email_local_empty">Część przed @ nie może być pusta</string>
+    <string name="validation_email_local_max_length">Część przed @ przekracza limit 64 znaków</string>
+    <string name="validation_email_local_starts_with_dot">Część przed @ nie może zaczynać się od kropki</string>
+    <string name="validation_email_local_ends_with_dot">Część przed @ nie może kończyć się kropką</string>
+    <string name="validation_email_local_consecutive_dots">Część przed @ nie może zawierać następujących po sobie kropek</string>
+    <string name="validation_email_local_invalid_characters">Część przed @ zawiera nieprawidłowe znaki</string>
+    <string name="validation_email_domain_empty">Domena nie może być pusta</string>
+    <string name="validation_email_domain_max_length">Domena przekracza limit 253 znaków</string>
+    <string name="validation_email_domain_missing_dot">Domena musi zawierać co najmniej jedną kropkę</string>
+    <string name="validation_email_domain_starts_ends_with_dot">Domena nie może zaczynać się ani kończyć kropką</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">Domena nie może zaczynać się ani kończyć myślnikiem</string>
+    <string name="validation_email_domain_insufficient_parts">Domena musi składać się z co najmniej dwóch części rozdzielonych kropką</string>
+    <string name="validation_email_tld_invalid">Domena najwyższego poziomu musi mieć co najmniej 2 litery i zawierać tylko litery</string>
+    <string name="validation_email_label_empty">Etykieta domeny nie może być pusta</string>
+    <string name="validation_email_label_max_length">Etykieta domeny przekracza limit 63 znaków</string>
+    <string name="validation_email_label_starts_with_hyphen">Etykieta domeny nie może zaczynać się od myślnika</string>
+    <string name="validation_email_label_ends_with_hyphen">Etykieta domeny nie może kończyć się myślnikiem</string>
+    <string name="validation_email_label_invalid_characters">Etykieta domeny zawiera nieprawidłowe znaki</string>
+    <string name="validation_phone_empty">Numer telefonu nie może być pusty</string>
+    <string name="validation_phone_too_short">Numer telefonu jest za krótki</string>
+    <string name="validation_phone_too_long">Numer telefonu jest za długi</string>
+    <string name="validation_phone_invalid_characters">Numer telefonu zawiera nieprawidłowe znaki</string>
+    <string name="validation_phone_spanish_country_code_required">Proszę użyć hiszpańskiego numeru kierunkowego (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Nieprawidłowy format hiszpańskiego numeru telefonu</string>
+    <string name="validation_phone_invalid_for_country">Numer telefonu nie jest prawidłowy dla wybranego kraju</string>
+    <string name="validation_phone_no_valid_country_found">Format numeru telefonu nie został rozpoznany dla żadnego obsługiwanego kraju</string>
+    <string name="validation_name_empty">Nazwa nie może być pusta</string>
+    <string name="validation_name_invalid_characters">Nazwa zawiera nieprawidłowe znaki</string>
+    <string name="validation_field_required">To pole jest wymagane</string>
+    <string name="validation_format_invalid">Nieprawidłowy format</string>
+    <string name="validation_length_exceeded">Przekroczono maksymalną długość</string>
+    <string name="validation_length_insufficient">Minimalna długość nie została osiągnięta</string>
+    <string name="validation_amount_empty">Kwota nie może być pusta</string>
+    <string name="validation_amount_invalid_format">Proszę wpisać kwotę w prawidłowym formacie (np. 99,99)</string>
+    <string name="validation_amount_invalid_number">Proszę wpisać prawidłową liczbę</string>
+    <string name="validation_amount_negative">Kwota nie może być ujemna</string>
+    <string name="validation_amount_too_small">Kwota musi wynosić co najmniej 0,01</string>
+    <string name="validation_amount_too_large">Kwota nie może przekraczać 999 999 999,99</string>
+    <string name="validation_amount_invalid_decimal_places">Kwota ma zbyt wiele miejsc po przecinku dla tej waluty</string>
+    <string name="validation_amount_invalid_increment">Kwota musi być wielokrotnością jednostki waluty</string>
+    <string name="savings_account">Konto oszczędnościowe</string>
+    <string name="available_balance">Dostępne saldo</string>
+    <string name="select_other_payment_account">Wybierz inne konto płatnicze</string>
+    <string name="pay_from">Zapłać z</string>
+    <string name="available_balance_formatted">Dostępne saldo - %1$s</string>
+    <string name="feature_dashboard_welcome_back">Witaj ponownie w Mifos</string>
+    <string name="feature_dashboard_no_accounts_title">Brak kont</string>
+    <string name="feature_dashboard_no_accounts_description">Rozpocznij swoją podróż finansową, otwierając u nas swoje pierwsze konto.</string>
+    <string name="feature_dashboard_open_account">Otwórz konto</string>
+    <string name="feature_savings_filter">Filtry</string>
+    <string name="feature_savings_reset">Resetuj</string>
+    <string name="feature_savings_apply">Zastosuj</string>
+</resources>

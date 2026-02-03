@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">কোনো ইন্টারনেট সংযোগ নেই</string>
+    <string name="back_online">আবার অনলাইন</string>
+    <string name="retry">আবার চেষ্টা করুন</string>
+    <string name="no_data">কোনো তথ্য নেই</string>
+    <string name="something_went_wrong">কিছু ভুল হয়েছে</string>
+    <string name="core_common_working">কোর কমন ওয়ার্কিং</string>
+    <string name="customer_name">গ্রাহকের নাম</string>
+    <string name="product">পণ্য</string>
+    <string name="error_loading_balance">ব্যালেন্স লোড করতে ত্রুটি</string>
+    <string name="powered_by">পাওয়ার্ড বাই</string>
+    <string name="password_checker_empty_error">পাসওয়ার্ড খালি রাখা যাবে না।</string>
+    <string name="password_checker_too_long_error">পাসওয়ার্ডটি অনেক বড়। সর্বোচ্চ দৈর্ঘ্য ১২৮টি অক্ষর।</string>
+    <string name="password_checker_min_length_feedback">পাসওয়ার্ড অন্তত ১২ অক্ষরের হওয়া উচিত।</string>
+    <string name="password_checker_uppercase_feedback">অন্তত একটি বড় হাতের অক্ষর অন্তর্ভুক্ত করুন।</string>
+    <string name="password_checker_lowercase_feedback">অন্তত একটি ছোট হাতের অক্ষর অন্তর্ভুক্ত করুন।</string>
+    <string name="password_checker_digit_feedback">অন্তত একটি সংখ্যা অন্তর্ভুক্ত করুন।</string>
+    <string name="password_checker_special_char_feedback">অন্তত একটি বিশেষ অক্ষর অন্তর্ভুক্ত করুন।</string>
+    <string name="password_checker_strong_length_feedback">আরও শক্তিশালী পাসওয়ার্ডের জন্য অন্তত ১২টি অক্ষর ব্যবহার করুন।</string>
+    <string name="password_strength_level_0">খুব দুর্বল</string>
+    <string name="password_strength_level_1">দুর্বল</string>
+    <string name="password_strength_level_2">মোটামুটি</string>
+    <string name="password_strength_level_3">ভালো</string>
+    <string name="password_strength_level_4">শক্তিশালী</string>
+    <string name="password_strength_level_5">খুব শক্তিশালী</string>
+    <string name="password_strength_none">একটি পাসওয়ার্ড দিন</string>
+    <string name="password_strength_indicator_description">পাসওয়ার্ড শক্তির নির্দেশক</string>
+    <string name="password_strength_announcement">পাসওয়ার্ড শক্তি: %1$s</string>
+    <string name="minimum_characters_requirement">অন্তত %1$d অক্ষর প্রয়োজন</string>
+    <string name="minimum_characters_met">ন্যূনতম অক্ষরের প্রয়োজনীয়তা পূরণ হয়েছে</string>
+    <string name="minimum_characters_not_met">ন্যূনতম অক্ষরের প্রয়োজনীয়তা পূরণ হয়নি</string>
+    <string name="password_requirements_title">পাসওয়ার্ডের প্রয়োজনীয়তা</string>
+    <string name="password_feedback_title">পাসওয়ার্ড পরামর্শ</string>
+    <string name="password_feedback_all_good">আপনার পাসওয়ার্ড সব প্রয়োজনীয়তা পূরণ করে!</string>
+    <string name="character_count">%1$d অক্ষর</string>
+    <string name="character_count_with_limit">%1$d / %2$d অক্ষর</string>
+    <string name="validation_email_empty">ইমেল ঠিকানা খালি রাখা যাবে না</string>
+    <string name="validation_email_max_length_exceeded">ইমেল ঠিকানা ২৫৪ অক্ষরের সর্বোচ্চ দৈর্ঘ্য ছাড়িয়ে গেছে</string>
+    <string name="validation_email_missing_at_symbol">ইমেল ঠিকানায় @ চিহ্ন থাকতে হবে</string>
+    <string name="validation_email_starts_with_at">ইমেল ঠিকানা @ চিহ্ন দিয়ে শুরু হতে পারে না</string>
+    <string name="validation_email_ends_with_at">ইমেল ঠিকানা @ চিহ্ন দিয়ে শেষ হতে পারে না</string>
+    <string name="validation_email_multiple_at_symbols">ইমেল ঠিকানায় একাধিক @ চিহ্ন থাকতে পারে না</string>
+    <string name="validation_email_local_empty">লোকাল পার্ট খালি রাখা যাবে না</string>
+    <string name="validation_email_local_max_length">লোকাল পার্ট ৬৪ অক্ষরের সর্বোচ্চ দৈর্ঘ্য ছাড়িয়ে গেছে</string>
+    <string name="validation_email_local_starts_with_dot">লোকাল পার্ট ডট (.) দিয়ে শুরু হতে পারে না</string>
+    <string name="validation_email_local_ends_with_dot">লোকাল পার্ট ডট (.) দিয়ে শেষ হতে পারে না</string>
+    <string name="validation_email_local_consecutive_dots">লোকাল পার্টে পরপর ডট থাকতে পারে না</string>
+    <string name="validation_email_local_invalid_characters">লোকাল পার্টে অবৈধ অক্ষর রয়েছে</string>
+    <string name="validation_email_domain_empty">ডোমেইন পার্ট খালি রাখা যাবে না</string>
+    <string name="validation_email_domain_max_length">ডোমেইন পার্ট ২৫৩ অক্ষরের সর্বোচ্চ দৈর্ঘ্য ছাড়িয়ে গেছে</string>
+    <string name="validation_email_domain_missing_dot">ডোমেইনে অন্তত একটি ডট থাকতে হবে</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ডোমেইন ডট দিয়ে শুরু বা শেষ হতে পারে না</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ডোমেইন হাইফেন (-) দিয়ে শুরু বা শেষ হতে পারে না</string>
+    <string name="validation_email_domain_insufficient_parts">ডোমেইনে ডট দ্বারা বিভক্ত অন্তত দুটি অংশ থাকতে হবে</string>
+    <string name="validation_email_tld_invalid">টপ-লেভেল ডোমেইন অন্তত ২ অক্ষরের হতে হবে এবং শুধুমাত্র অক্ষর থাকতে হবে</string>
+    <string name="validation_email_label_empty">ডোমেইন লেবেল খালি রাখা যাবে না</string>
+    <string name="validation_email_label_max_length">ডোমেইন লেবেল ৬৩ অক্ষরের সর্বোচ্চ দৈর্ঘ্য ছাড়িয়ে গেছে</string>
+    <string name="validation_email_label_starts_with_hyphen">ডোমেইন লেবেল হাইফেন দিয়ে শুরু হতে পারে না</string>
+    <string name="validation_email_label_ends_with_hyphen">ডোমেইন লেবেল হাইফেন দিয়ে শেষ হতে পারে না</string>
+    <string name="validation_email_label_invalid_characters">ডোমেইন লেবেলে অবৈধ অক্ষর রয়েছে</string>
+    <string name="validation_phone_empty">ফোন নম্বর খালি রাখা যাবে না</string>
+    <string name="validation_phone_too_short">ফোন নম্বরটি খুব ছোট</string>
+    <string name="validation_phone_too_long">ফোন নম্বরটি খুব বড়</string>
+    <string name="validation_phone_invalid_characters">ফোন নম্বরে অবৈধ অক্ষর রয়েছে</string>
+    <string name="validation_phone_spanish_country_code_required">অনুগ্রহ করে স্প্যানিশ কান্ট্রি কোড (+34) ব্যবহার করুন</string>
+    <string name="validation_phone_spanish_format_invalid">অবৈধ স্প্যানিশ ফোন নম্বর বিন্যাস</string>
+    <string name="validation_phone_invalid_for_country">নির্বাচিত দেশের জন্য ফোন নম্বরটি সঠিক নয়</string>
+    <string name="validation_phone_no_valid_country_found">কোনো সমর্থিত দেশের জন্য ফোন নম্বর বিন্যাসটি স্বীকৃত নয়</string>
+    <string name="validation_name_empty">নাম খালি রাখা যাবে না</string>
+    <string name="validation_name_invalid_characters">নামে অবৈধ অক্ষর রয়েছে</string>
+    <string name="validation_field_required">এই ক্ষেত্রটি বাধ্যতামূলক</string>
+    <string name="validation_format_invalid">অবৈধ বিন্যাস</string>
+    <string name="validation_length_exceeded">সর্বোচ্চ দৈর্ঘ্য ছাড়িয়ে গেছে</string>
+    <string name="validation_length_insufficient">ন্যূনতম দৈর্ঘ্য পূরণ হয়নি</string>
+    <string name="validation_amount_empty">পরিমাণ খালি রাখা যাবে না</string>
+    <string name="validation_amount_invalid_format">অনুগ্রহ করে একটি সঠিক পরিমাণ বিন্যাস দিন (যেমন, ৯৯.৯৯)</string>
+    <string name="validation_amount_invalid_number">অনুগ্রহ করে একটি সঠিক সংখ্যা দিন</string>
+    <string name="validation_amount_negative">পরিমাণ ঋণাত্মক হতে পারে না</string>
+    <string name="validation_amount_too_small">পরিমাণ অন্তত ০.০১ হতে হবে</string>
+    <string name="validation_amount_too_large">পরিমাণ ৯৯৯,৯৯৯,৯৯৯.৯৯ এর বেশি হতে পারে না</string>
+    <string name="validation_amount_invalid_decimal_places">এই মুদ্রার জন্য পরিমাণে দশমিকের স্থান অনেক বেশি</string>
+    <string name="validation_amount_invalid_increment">এই মুদ্রার জন্য পরিমাণটি সঠিক ইনক্রিমেন্টে হতে হবে</string>
+    <string name="savings_account">সঞ্চয়ী হিসাব</string>
+    <string name="available_balance">উপলব্ধ ব্যালেন্স</string>
+    <string name="select_other_payment_account">অন্য পেমেন্ট অ্যাকাউন্ট নির্বাচন করুন</string>
+    <string name="pay_from">পেমেন্ট করুন এখান থেকে</string>
+    <string name="available_balance_formatted">উপলব্ধ ব্যালেন্স - %1$s</string>
+    <string name="feature_dashboard_welcome_back">Mifos-এ আপনাকে আবার স্বাগতম</string>
+    <string name="feature_dashboard_no_accounts_title">এখনো কোনো অ্যাকাউন্ট নেই</string>
+    <string name="feature_dashboard_no_accounts_description">আমাদের সাথে আপনার প্রথম অ্যাকাউন্ট খুলে আপনার আর্থিক যাত্রা শুরু করুন।</string>
+    <string name="feature_dashboard_open_account">অ্যাকাউন্ট খুলুন</string>
+    <string name="feature_savings_filter">ফিল্টার</string>
+    <string name="feature_savings_reset">রিসেট</string>
+    <string name="feature_savings_apply">প্রয়োগ করুন</string>
+</resources>

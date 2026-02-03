@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">Требуется указать сумму</string>
+    <string name="feature_tpt_error_amount_invalid">Введите корректную сумму</string>
+    <string name="feature_tpt_error_remarks_empty">Поле примечаний не может быть пустым</string>
+    <string name="feature_tpt_error_remarks_invalid">Введены недопустимые примечания</string>
+    <string name="feature_tpt_error_server">Проблема с сервером на нашей стороне, повторите попытку позже</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Сумма превышает доступный баланс</string>
+    <string name="feature_tpt_label_origin_account">Счет списания</string>
+    <string name="feature_tpt_label_origin_account_hint">Выберите другой счет для оплаты</string>
+    <string name="feature_tpt_label_destination">Счет получателя</string>
+    <string name="feature_tpt_label_amount">Сумма</string>
+    <string name="feature_tpt_label_remarks">Примечания</string>
+    <string name="feature_tpt_tip">Не нашли счет получателя?</string>
+    <string name="feature_tpt_tip_action">Добавить бенефициара!</string>
+    <string name="feature_tpt_transfer_button">Перевести сумму</string>
+</resources>

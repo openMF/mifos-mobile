@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">Le montant est requis</string>
+    <string name="feature_tpt_error_amount_invalid">Veuillez saisir un montant valide</string>
+    <string name="feature_tpt_error_remarks_empty">Les remarques ne peuvent pas être vides</string>
+    <string name="feature_tpt_error_remarks_invalid">Remarques invalides saisies</string>
+    <string name="feature_tpt_error_server">Problème de serveur de notre côté, réessayez dans un instant</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Le montant dépasse le solde disponible</string>
+    <string name="feature_tpt_label_origin_account">Compte d\'origine</string>
+    <string name="feature_tpt_label_origin_account_hint">Sélectionner un autre compte de paiement</string>
+    <string name="feature_tpt_label_destination">Compte de destination</string>
+    <string name="feature_tpt_label_amount">Montant</string>
+    <string name="feature_tpt_label_remarks">Remarques</string>
+    <string name="feature_tpt_tip">Vous ne trouvez pas le compte de destination ?</string>
+    <string name="feature_tpt_tip_action">Ajouter un bénéficiaire !</string>
+    <string name="feature_tpt_transfer_button">Transférer le montant</string>
+</resources>
