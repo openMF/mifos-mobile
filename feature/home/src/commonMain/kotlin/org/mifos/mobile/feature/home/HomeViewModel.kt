@@ -229,7 +229,9 @@ internal class HomeViewModel(
 
         viewModelScope.launch {
             homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
-                .catch { /* Error handling is managed by loadClientAccountDetails */ }
+                .catch {
+                    updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+                }
                 .collect { client ->
                     sendAction(HomeAction.Internal.ReceiveClientDetails(client))
                 }
@@ -248,10 +250,12 @@ internal class HomeViewModel(
      */
     private fun handleClientDetails(dataState: DataState<Client>) {
         when (dataState) {
-            is DataState.Error -> {
-                /*loadClientAccountDetails manages the UI state
-                prevents the error flash when this call fails before accounts load */
+            is DataState.Error -> updateState {
+                it.copy(
+                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
+                )
             }
+
             DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
 
             is DataState.Success -> {
