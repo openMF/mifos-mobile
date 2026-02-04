@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Log Keluar</string>
     <string name="feature_settings_action_logout_tip">Log keluar daripada semua peranti</string>
+    <string name="feature_settings_logout_description">Log keluar akan menamatkan sesi semasa dan semua sesi aktif anda untuk tujuan keselamatan. Anda perlu log masuk semula untuk mengakses akaun anda.</string>
+    <string name="feature_settings_logout_action">Kembali ke laman utama</string>
 
     <string name="feature_settings_top_bar_title">Tetapan</string>
 

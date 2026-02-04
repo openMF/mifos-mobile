@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Sair</string>
     <string name="feature_settings_action_logout_tip">Sair de todos os dispositivos</string>
+    <string name="feature_settings_logout_description">Sair encerrará a sua sessão atual e todas as sessões ativas por motivos de segurança. Você precisará fazer login novamente para acessar sua conta.</string>
+    <string name="feature_settings_logout_action">Voltar ao início</string>
 
     <string name="feature_settings_top_bar_title">Configurações</string>
 

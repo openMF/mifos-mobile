@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Solicitar Novo Empréstimo</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Pedido de Empréstimo</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Nome do Requerente</string>
+    <string name="feature_apply_loan_label_loan_product">Produto de Empréstimo</string>
+    <string name="feature_apply_loan_label_purpose">Objetivo do Empréstimo</string>
+    <string name="feature_apply_loan_label_disbursement_date">Data de Desembolso</string>
+    <string name="feature_apply_loan_label_principal_amount">Montante Principal</string>
+    <string name="feature_apply_loan_label_currency">Moeda</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Continuar</string>
+    <string name="feature_apply_loan_button_ok">OK</string>
+    <string name="feature_apply_loan_button_cancel">Cancelar</string>
+    <string name="feature_apply_loan_button_apply">Aplicar Empréstimo</string>
+    <string name="feature_button_next">Seguinte</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Nome do requerente é obrigatório</string>
+    <string name="feature_apply_loan_error_name_too_short">O nome do requerente deve ter pelo menos 4 caracteres</string>
+    <string name="feature_apply_loan_error_name_too_long">O nome do requerente não pode exceder 100 caracteres</string>
+    <string name="feature_apply_loan_error_name_invalid_format">O nome do requerente contém caracteres inválidos</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Produto de empréstimo é obrigatório</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Montante principal é obrigatório</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Introduza um formato de montante válido</string>
+    <string name="feature_apply_loan_error_amount_too_small">O montante principal é demasiado pequeno</string>
+    <string name="feature_apply_loan_error_amount_too_large">O montante principal excede o limite máximo</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">O montante tem demasiadas casas decimais para a moeda selecionada</string>
+    <string name="feature_apply_loan_error_amount_multiple">O montante não está em múltiplos válidos</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Data de desembolso é obrigatória</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Introduza um formato de data válido (DD/MM/AAAA)</string>
+    <string name="feature_apply_loan_error_date_future">A data de desembolso deve ser no futuro</string>
+    <string name="feature_apply_loan_error_date_out_of_range">A data de desembolso é demasiado distante no futuro (máximo 10 anos)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Problema no servidor do nosso lado, não é possível prosseguir, tente novamente mais tarde</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Demasiadas tentativas falhadas. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_apply_loan_error_submit_failed">Falha ao submeter o pedido de empréstimo. Por favor, tente novamente.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Pedido de empréstimo submetido com sucesso!</string>
+    <string name="feature_apply_loan_success_draft_saved">Rascunho do pedido guardado com sucesso</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Alterações Não Guardadas!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Tem alterações não guardadas. Tem a certeza de que pretende voltar?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Descartar</string>
+    <string name="feature_apply_loan_action_save_draft">Guardar Rascunho</string>
+    <string name="feature_apply_loan_action_retry">Tentar Novamente</string>
+    <string name="feature_apply_loan_action_cancel">Cancelar</string>
+    <string name="feature_apply_loan_action_continue">Continuar</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Introduza o seu nome completo</string>
+    <string name="feature_apply_loan_hint_loan_product">Selecione o produto de empréstimo</string>
+    <string name="feature_apply_loan_hint_principal_amount">Introduza o montante do empréstimo</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Selecione a data de desembolso</string>
+    <string name="feature_apply_loan_hint_purpose">Descreva brevemente o objetivo</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">A moeda mudou. O montante será revalidado.</string>
+    <string name="feature_apply_loan_info_min_amount">Montante mínimo de empréstimo: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Montante máximo de empréstimo: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Confirmar Detalhes</string>
+
+    <string name="feature_apply_loan_status_success">Pedido submetido com sucesso</string>
+    <string name="feature_apply_loan_status_success_tip">O seu pedido de empréstimo foi submetido. Será notificado assim que for analisado.</string>
+    <string name="feature_apply_loan_status_success_action">Voltar ao Início</string>
+
+    <string name="feature_apply_loan_status_failure">Falha ao submeter o pedido</string>
+    <string name="feature_apply_loan_status_failure_tip">Algo correu mal ao submeter o seu pedido de empréstimo. Por favor, tente novamente.</string>
+    <string name="feature_apply_loan_status_failure_action">Tentar novamente</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Solicitar Novo Empréstimo</string>
+    <string name="feature_select_loan_type_choose_loan">Escolha o Tipo de Empréstimo</string>
+    <string name="feature_select_loan_type_empty">Produtos de empréstimo indisponíveis no momento</string>
+    <string name="feature_select_loan_type_network_issue">Certifique-se de que está ligado à internet</string>
+    <string name="feature_loan_product_details_terms">Aceitar Termos e Condições</string>
+
+
+    <string name="feature_loan_apply_loan">Aplicar Empréstimo %1$s</string>
+    <string name="feature_loan_get_loan">Obter Empréstimo %1$s</string>
+    <string name="feature_loan_up_to">Até %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s a %2$s Juros</string>
+    <string name="feature_loan_terms_and_conditions">Termos e Condições</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Sanção e Desembolso de Empréstimo</string>
+    <string name="feature_loan_interest_rate">Taxa de Juro</string>
+    <string name="feature_loan_continue">Continuar</string>
+    <string name="feature_loan_repayment">Reembolso</string>
+    <string name="feature_loan_security_and_collateral">Segurança e Garantia</string>
+    <string name="feature_loan_insurance">Seguro</string>
+    <string name="feature_loan_default">Incumprimento</string>
+    <string name="feature_loan_documentation">Documentação</string>
+    <string name="feature_loan_continue_legal_compliance">Conformidade Legal</string>
+    <string name="feature_loan_amendments_and_termination">Alterações e Rescisão</string>
+    <string name="feature_loan_jurisdiction">Jurisdição</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">O Empréstimo Pessoal será aprovado com base na elegibilidade do requerente, estabilidade de rendimento, capacidade de crédito e políticas de crédito internas do Mutuante. O Mutuante reserva-se o direito de aprovar ou rejeitar qualquer pedido de Empréstimo Pessoal a seu exclusivo critério, sem apresentar qualquer motivo. O montante do empréstimo aprovado pode ser desembolsado na totalidade ou em partes, dependendo do Contrato de Empréstimo e dos requisitos de documentação. O desembolso está sujeito à conclusão bem-sucedida dos processos KYC, verificação dos documentos submetidos e cumprimento de todas as condições especificadas na Carta de Sanção.</string>
+    <string name="feature_personal_loan_interest_rate_description">O Empréstimo Pessoal pode ter uma taxa de juro fixa ou flutuante, conforme escolhido pelo Mutuário no momento do Contrato de Empréstimo. No caso de empréstimos com taxa de juro flutuante, a taxa aplicável está sujeita a revisões periódicas com base em alterações na taxa de referência ou de referência do Mutuante. Tais alterações serão vinculativas para o Mutuário e podem resultar na alteração do montante do EMI e/ou do prazo do empréstimo, conforme considerado necessário pelo Mutuante.</string>
+    <string name="feature_personal_loan_repayment_details">O reembolso do Empréstimo Pessoal será feito através de Prestações Mensais Equacionadas (EMIs) compreendendo componentes de capital e juros. Os EMIs começarão a partir da data especificada no Contrato de Empréstimo e continuarão mensalmente até que a totalidade do montante do empréstimo, juntamente com os juros aplicáveis, seja reembolsada. O pré-pagamento ou pagamento parcial pode ser permitido de acordo com as políticas vigentes do Mutuante e pode atrair certos encargos, especialmente para empréstimos de taxa fixa.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Os Empréstimos Pessoais são normalmente de natureza não garantida e não requerem garantia. No entanto, o Mutuante reserva-se o direito de solicitar garantias ou segurança adicionais em casos excecionais, dependendo do perfil de crédito do Mutuário e do montante do empréstimo. Qualquer requisito desse tipo será claramente indicado na Carta de Sanção. O Mutuário suportará todas as despesas relacionadas com a documentação ou formalidades legais, se aplicável.</string>
+    <string name="feature_personal_loan_insurance_details">Embora o seguro de ativos geralmente não seja necessário para Empréstimos Pessoais, o Mutuante pode recomendar que o Mutuário opte por uma apólice de seguro de vida para proteger o montante do empréstimo pendente em caso de falecimento do Mutuário. Isto não é obrigatório, mas é aconselhado como medida de proteção financeira para a família ou dependentes do Mutuário.</string>
+    <string name="feature_personal_loan_default_details">O não pagamento ou atraso no pagamento de EMIs constituirá incumprimento. Nesses casos, o Mutuante poderá iniciar processos de recuperação para cobrar as dívidas pendentes, o que pode incluir ações legais. Juros de mora e outros encargos podem ser aplicados a montantes em atraso. O incumprimento persistente ou repetido pode afetar negativamente a pontuação de crédito do Mutuário e a capacidade de empréstimo futura.</string>
+    <string name="feature_personal_loan_documentation_details">O Mutuário é obrigado a submeter documentação precisa e completa, incluindo, entre outros, prova de identidade, prova de morada, detalhes de rendimento, extratos bancários e quaisquer outros documentos solicitados pelo Mutuante. Qualquer discrepância, deturpação ou falsificação nos documentos submetidos pode resultar na rejeição do pedido de empréstimo ou na rescisão do Contrato de Empréstimo, juntamente com possíveis consequências legais.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">O Mutuário deve garantir o cumprimento integral de todas as leis locais, estaduais e nacionais aplicáveis no que diz respeito às suas obrigações financeiras. Isto inclui o pagamento atempado de impostos, a adesão a requisitos regulamentares e a submissão de documentos válidos. O Mutuante não será responsável por quaisquer violações legais cometidas pelo Mutuário.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">O Mutuante pode rever ou atualizar estes Termos e Condições de tempos a tempos, sujeito a um aviso prévio adequado ao Mutuário. O Contrato de Empréstimo será considerado rescindido após o reembolso total do montante do empréstimo ou através de processos de execução hipotecária iniciados devido a incumprimento.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Todos os litígios decorrentes ou relacionados com o Contrato de Empréstimo Pessoal estarão sujeitos à jurisdição exclusiva dos tribunais no local da sede social do Mutuante, salvo indicação em contrário no Contrato.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Carregar Extratos Bancários</string>
+    <string name="feature_upload_docs_collateral">Carregar Documentos de garantia</string>
+    <string name="feature_upload_docs_signature">Carregar Assinatura</string>
+
+    <string name="feature_upload_file_error">Algo correu mal! Não foi possível carregar o ficheiro</string>
+    <string name="feature_upload_statement_error">Por favor, carregue o extrato bancário</string>
+    <string name="feature_upload_property_document_error">Por favor, carregue o documento de propriedade</string>
+    <string name="feature_upload_signature_error">Por favor, carregue a assinatura</string>
+    <string name="feature_upload_documents_success_title">Documentos carregados com sucesso!</string>
+
+    <string name="sign_here">Assine Aqui</string>
+    <string name="reset">Redefinir</string>
+    <string name="sign">Assinar</string>
+    <string name="capture">Capturar</string>
+    <string name="attach">Anexar</string>
+    <string name="upload_signature">Carregar Assinatura</string>
+    <string name="save_and_submit">Guardar e Submeter</string>
+</resources>
