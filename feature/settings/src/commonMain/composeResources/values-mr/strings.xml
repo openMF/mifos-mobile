@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">लॉगआउट</string>
     <string name="feature_settings_action_logout_tip">सर्व डिव्हाइसेसवरून लॉगआउट करा</string>
+    <string name="feature_settings_logout_description">सुरक्षा कारणास्तव लॉग आउट केल्याने तुमचे सध्याचे आणि सर्व सक्रिय सत्रे समाप्त होतील. तुमच्या खात्यात प्रवेश करण्यासाठी तुम्हाला पुन्हा लॉग इन करावे लागेल.</string>
+    <string name="feature_settings_logout_action">मुख्यपृष्ठावर परत जा</string>
 
     <string name="feature_settings_top_bar_title">सेटिंग्ज</string>
 

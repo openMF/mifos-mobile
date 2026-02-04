@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">नया ऋण आवेदन करें</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">ऋण आवेदन</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">आवेदक का नाम</string>
+    <string name="feature_apply_loan_label_loan_product">ऋण उत्पाद</string>
+    <string name="feature_apply_loan_label_purpose">ऋण का उद्देश्य</string>
+    <string name="feature_apply_loan_label_disbursement_date">वितरण की तिथि</string>
+    <string name="feature_apply_loan_label_principal_amount">मूल राशि</string>
+    <string name="feature_apply_loan_label_currency">मुद्रा</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">जारी रखें</string>
+    <string name="feature_apply_loan_button_ok">ठीक है</string>
+    <string name="feature_apply_loan_button_cancel">रद्द करें</string>
+    <string name="feature_apply_loan_button_apply">ऋण लागू करें</string>
+    <string name="feature_button_next">अगला</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">आवेदक का नाम आवश्यक है</string>
+    <string name="feature_apply_loan_error_name_too_short">आवेदक का नाम कम से कम 4 अक्षरों का होना चाहिए</string>
+    <string name="feature_apply_loan_error_name_too_long">आवेदक का नाम 100 अक्षरों से अधिक नहीं हो सकता</string>
+    <string name="feature_apply_loan_error_name_invalid_format">आवेदक के नाम में अमान्य वर्ण हैं</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">ऋण उत्पाद आवश्यक है</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">मूल राशि आवश्यक है</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">कृपया एक मान्य राशि प्रारूप दर्ज करें</string>
+    <string name="feature_apply_loan_error_amount_too_small">मूल राशि बहुत कम है</string>
+    <string name="feature_apply_loan_error_amount_too_large">मूल राशि अधिकतम सीमा से अधिक है</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">चयनित मुद्रा के लिए राशि में बहुत अधिक दशमलव स्थान हैं</string>
+    <string name="feature_apply_loan_error_amount_multiple">राशि मान्य गुणकों में नहीं है</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">वितरण तिथि आवश्यक है</string>
+    <string name="feature_apply_loan_error_date_invalid_format">कृपया एक मान्य तिथि प्रारूप (DD/MM/YYYY) दर्ज करें</string>
+    <string name="feature_apply_loan_error_date_future">वितरण की तिथि भविष्य में होनी चाहिए</string>
+    <string name="feature_apply_loan_error_date_out_of_range">वितरण की तिथि भविष्य में बहुत दूर है (अधिकतम 10 वर्ष)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">हमारी तरफ से सर्वर की समस्या आगे नहीं बढ़ सकती, थोड़ी देर बाद फिर से प्रयास करें</string>
+    <string name="feature_apply_loan_error_too_many_attempts">बहुत अधिक असफल प्रयास। कृपया बाद में फिर से कोशिश करें।</string>
+    <string name="feature_apply_loan_error_submit_failed">ऋण आवेदन जमा करने में विफल। कृपया पुन: प्रयास करें।</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">ऋण आवेदन सफलतापूर्वक जमा किया गया!</string>
+    <string name="feature_apply_loan_success_draft_saved">आवेदन ड्राफ्ट सफलतापूर्वक सहेजा गया</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">बिना सहेजे गए परिवर्तन!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">आपके पास बिना सहेजे गए परिवर्तन हैं। क्या आप हकीकत में वापस जाना चाहते हैं?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">अस्वीकार करें</string>
+    <string name="feature_apply_loan_action_save_draft">ड्राफ्ट सहेजें</string>
+    <string name="feature_apply_loan_action_retry">पुन: प्रयास करें</string>
+    <string name="feature_apply_loan_action_cancel">रद्द करें</string>
+    <string name="feature_apply_loan_action_continue">जारी रखें</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">अपना पूरा नाम दर्ज करें</string>
+    <string name="feature_apply_loan_hint_loan_product">ऋण उत्पाद का चयन करें</string>
+    <string name="feature_apply_loan_hint_principal_amount">ऋण राशि दर्ज करें</string>
+    <string name="feature_apply_loan_hint_disbursement_date">वितरण तिथि का चयन करें</string>
+    <string name="feature_apply_loan_hint_purpose">संक्षेप में उद्देश्य का वर्णन करें</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">मुद्रा बदल दी गई है। राशि को फिर से मान्य किया जाएगा।</string>
+    <string name="feature_apply_loan_info_min_amount">न्यूनतम ऋण राशि: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">अधिकतम ऋण राशि: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">विवरण की पुष्टि करें</string>
+
+    <string name="feature_apply_loan_status_success">अनुरोध सफलतापूर्वक जमा किया गया</string>
+    <string name="feature_apply_loan_status_success_tip">आपका ऋण आवेदन जमा कर दिया गया है। इसकी समीक्षा होने के बाद आपको सूचित किया जाएगा।</string>
+    <string name="feature_apply_loan_status_success_action">होम पर वापस जाएं</string>
+
+    <string name="feature_apply_loan_status_failure">अनुरोध जमा करने में विफल</string>
+    <string name="feature_apply_loan_status_failure_tip">अपना ऋण आवेदन जमा करते समय कुछ गलत हुआ। कृपया पुन: प्रयास करें।</string>
+    <string name="feature_apply_loan_status_failure_action">पुन: प्रयास करें</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">नया ऋण आवेदन करें</string>
+    <string name="feature_select_loan_type_choose_loan">ऋण का प्रकार चुनें</string>
+    <string name="feature_select_loan_type_empty">वर्तमान में ऋण उत्पाद उपलब्ध नहीं हैं</string>
+    <string name="feature_select_loan_type_network_issue">सुनिश्चित करें कि आप इंटरनेट से जुड़े हैं</string>
+    <string name="feature_loan_product_details_terms">नियम और शर्तें स्वीकार करें</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s ऋण आवेदन करें</string>
+    <string name="feature_loan_get_loan">%1$s ऋण प्राप्त करें</string>
+    <string name="feature_loan_up_to">%1$s तक</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s से %2$s ब्याज</string>
+    <string name="feature_loan_terms_and_conditions">नियम और शर्तें</string>
+
+    <string name="feature_loan_sanction_and_disbursement">ऋण स्वीकृति और वितरण</string>
+    <string name="feature_loan_interest_rate">ब्याज दर</string>
+    <string name="feature_loan_continue">जारी रखें</string>
+    <string name="feature_loan_repayment">पुनर्भुगतान</string>
+    <string name="feature_loan_security_and_collateral">सुरक्षा और संपार्श्विक</string>
+    <string name="feature_loan_insurance">बीमा</string>
+    <string name="feature_loan_default">डिफ़ॉल्ट</string>
+    <string name="feature_loan_documentation">दस्तावेज़ीकरण</string>
+    <string name="feature_loan_continue_legal_compliance">कानूनी अनुपालन</string>
+    <string name="feature_loan_amendments_and_termination">संशोधन और समाप्ति</string>
+    <string name="feature_loan_jurisdiction">अधिकार क्षेत्र</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">व्यक्तिगत ऋण आवेदक की पात्रता, आय स्थिरता, साख और ऋणदाता की आंतरिक ऋण नीतियों के आधार पर स्वीकृत किया जाएगा। ऋणदाता बिना कोई कारण बताए अपने पूर्ण विवेक पर किसी भी व्यक्तिगत ऋण आवेदन को स्वीकृत या अस्वीकार करने का अधिकार सुरक्षित रखता है। स्वीकृत ऋण राशि को ऋण समझौते और दस्तावेज़ीकरण आवश्यकताओं के आधार पर पूर्ण या भागों में वितरित किया जा सकता है। वितरण केवाईसी प्रक्रियाओं के सफल समापन, प्रस्तुत दस्तावेजों के सत्यापन और स्वीकृति पत्र में निर्दिष्ट सभी शर्तों के पालन के अधीन है।</string>
+    <string name="feature_personal_loan_interest_rate_description">व्यक्तिगत ऋण में या तो निश्चित या फ्लोटिंग ब्याज दर हो सकती है, जैसा कि ऋण समझौते के समय उधारकर्ता द्वारा चुना गया हो। फ्लोटिंग ब्याज दर ऋणों के मामले में, लागू दर ऋणदाता के बेंचमार्क या संदर्भ दर में परिवर्तन के आधार पर समय-समय पर संशोधनों के अधीन है। इस तरह के परिवर्तन उधारकर्ता पर बाध्यकारी होंगे और ईएमआई राशि और/या ऋण अवधि में बदलाव का कारण बन सकते हैं, जैसा कि ऋणदाता द्वारा आवश्यक समझा जाए।</string>
+    <string name="feature_personal_loan_repayment_details">व्यक्तिगत ऋण का पुनर्भुगतान समान मासिक किस्तों (ईएमआई) के माध्यम से किया जाएगा जिसमें मूल और ब्याज दोनों घटक शामिल होंगे। ईएमआई ऋण समझौते में निर्दिष्ट तिथि से शुरू होगी और मासिक आधार पर जारी रहेगी जब तक कि लागू ब्याज के साथ पूरी ऋण राशि का भुगतान नहीं हो जाता। ऋणदाता की प्रचलित नीतियों के अनुसार पूर्व भुगतान या आंशिक भुगतान की अनुमति दी जा सकती है और इस पर कुछ शुल्क लग सकते हैं, विशेष रूप से निश्चित दर वाले ऋणों के लिए।</string>
+    <string name="feature_personal_loan_security_and_collateral_details">व्यक्तिगत ऋण आमतौर पर असुरक्षित प्रकृति के होते हैं और इसके लिए संपार्श्विक की आवश्यकता नहीं होती है। हालांकि, ऋणदाता उधारकर्ता के क्रेडिट प्रोफाइल और ऋण राशि के आधार पर असाधारण मामलों में अतिरिक्त गारंटी या सुरक्षा का अनुरोध करने का अधिकार सुरक्षित रखता है। ऐसी किसी भी आवश्यकता को स्वीकृति पत्र में स्पष्ट रूप से बताया जाएगा। यदि लागू हो, तो दस्तावेज़ीकरण या कानूनी औपचारिकताओं से जुड़े सभी लागत उधारकर्ता द्वारा वहन किए जाएंगे।</string>
+    <string name="feature_personal_loan_insurance_details">जबकि व्यक्तिगत ऋणों के लिए आमतौर पर संपत्ति बीमा की आवश्यकता नहीं होती है, ऋणदाता सिफारिश कर सकता है कि उधारकर्ता उधारकर्ता की मृत्यु की स्थिति में बकाया ऋण राशि को सुरक्षित करने के लिए जीवन बीमा पॉलिसी का विकल्प चुनें। यह अनिवार्य नहीं है लेकिन उधारकर्ता के परिवार या आश्रितों के लिए वित्तीय सुरक्षा उपाय के रूप में यह सलाह दी जाती है।</string>
+    <string name="feature_personal_loan_default_details">ईएमआई का भुगतान न करना या विलंबित भुगतान डिफ़ॉल्ट माना जाएगा। ऐसे मामलों में, ऋणदाता बकाया राशि एकत्र करने के लिए वसूली प्रक्रिया शुरू कर सकता है, जिसमें कानूनी कार्यवाही शामिल हो सकती है। अतिदेय राशियों पर दंडात्मक ब्याज और अन्य शुल्क लागू किए जा सकते हैं। निरंतर या बार-बार डिफ़ॉल्ट उधारकर्ता के क्रेडिट स्कोर और भविष्य में उधार लेने की क्षमता को नकारात्मक रूप से प्रभावित कर सकता है।</string>
+    <string name="feature_personal_loan_documentation_details">उधारकर्ता को सटीक और पूर्ण दस्तावेज़ जमा करने की आवश्यकता होती है, जिसमें पहचान प्रमाण, पते का प्रमाण, आय विवरण, बैंक विवरण और ऋणदाता द्वारा अनुरोधित कोई अन्य दस्तावेज़ शामिल हैं। प्रस्तुत दस्तावेजों में कोई भी विसंगति, गलत बयानी या मिथ्याकरण ऋण आवेदन की अस्वीकृति या ऋण समझौते की समाप्ति का परिणाम हो सकता है, साथ ही संभावित कानूनी निहितार्थ भी हो सकते हैं।</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">उधारकर्ता को अपने वित्तीय दायित्वों से संबंधित सभी लागू स्थानीय, राज्य और राष्ट्रीय कानूनों का पूर्ण अनुपालन सुनिश्चित करना होगा। इसमें करों का समय पर भुगतान, विनियामक आवश्यकताओं का पालन और वैध दस्तावेज़ जमा करना शामिल है। ऋणदाता उधारकर्ता द्वारा किए गए किसी भी कानूनी उल्लंघन के लिए उत्तरदायी नहीं होगा।</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">ऋणदाता समय-समय पर इन नियमों और शर्तों को संशोधित या अद्यतन कर सकता है, जो उधारकर्ता को उचित पूर्व सूचना के अधीन है। ऋण राशि के पूर्ण भुगतान या डिफ़ॉल्ट के कारण शुरू की गई फौजदारी प्रक्रियाओं के माध्यम से ऋण समझौता समाप्त माना जाएगा।</string>
+    <string name="feature_personal_loan_jurisdiction_details">व्यक्तिगत ऋण समझौते से उत्पन्न होने वाले या उससे संबंधित सभी विवाद ऋणदाता के पंजीकृत कार्यालय के स्थान पर अदालतों के अनन्य क्षेत्राधिकार के अंतर्गत आएंगे, जब तक कि समझौते में अन्यथा निर्दिष्ट न किया गया हो।</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">बैंक खाता विवरण अपलोड करें</string>
+    <string name="feature_upload_docs_collateral">संपार्श्विक दस्तावेज अपलोड करें</string>
+    <string name="feature_upload_docs_signature">हस्ताक्षर अपलोड करें</string>
+
+    <string name="feature_upload_file_error">कुछ गलत हो गया! फ़ाइल अपलोड करने में असमर्थ</string>
+    <string name="feature_upload_statement_error">कृपया बैंक विवरण अपलोड करें</string>
+    <string name="feature_upload_property_document_error">कृपया संपत्ति दस्तावेज़ अपलोड करें</string>
+    <string name="feature_upload_signature_error">कृपया हस्ताक्षर अपलोड करें</string>
+    <string name="feature_upload_documents_success_title">दस्तावेज़ सफलतापूर्वक अपलोड किए गए!</string>
+
+    <string name="sign_here">यहाँ हस्ताक्षर करें</string>
+    <string name="reset">रीसेट</string>
+    <string name="sign">हस्ताक्षर</string>
+    <string name="capture">कैप्चर</string>
+    <string name="attach">संलग्न करें</string>
+    <string name="upload_signature">हस्ताक्षर अपलोड करें</string>
+    <string name="save_and_submit">सहेजें और जमा करें</string>
+</resources>
