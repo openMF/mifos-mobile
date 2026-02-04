@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_account_active">Imefunguliwa</string>
+    <string name="feature_share_account_approved">Imepidhinishwa</string>
+    <string name="feature_share_account_approval_pending">Inasubiri Kupitishwa</string>
+    <string name="feature_share_account_closed">Imefungwa</string>
+    <string name="feature_share_account_rejected">Iliachwa</string>
+
+    <string name="feature_share_account_empty_share_accounts">Hakuna Akaunti ya Ushirika inayohusishwa na wewe</string>
+    <string name="feature_share_account_dashboard">Jumla ya Mikopo</string>
+    <string name="feature_share_account">Akaunti ya Ushirika</string>
+    <string name="feature_share_account_items">%1$d Vitabu</string>
+
+    <string name="feature_share_account_generic_error_server">Tatizo la seva kutoka upande wetu hawezi kuendelea zaidi, jaribu tena baada ya muda</string>
+
+
+    <string name="feature_share_account_number">Nambari ya Akaunti</string>
+    <string name="feature_share_account_product_name">Jina la Bidhaa</string>
+    <string name="feature_share_account_currency">Saratasi</string>
+    <string name="feature_share_account_status">Hali</string>
+    <string name="feature_share_account_approved_shares">Hisia Zilizoidhinishwa</string>
+    <string name="feature_share_account_pending_shares">Shiriki Zilizosubiri</string>
+    <string name="feature_share_account_market_price">Bei ya Soko</string>
+    <string name="feature_share_account_application_date">Tarehe ya Maombi</string>
+    <string name="feature_share_account_activation_date">Tarehe ya Uanzishaji</string>
+
+    <string name="feature_share_account_details_top_bar_title">Maelezo ya Akaunti ya Shiriki</string>
+    <string name="feature_share_account_details_action">Vitendo</string>
+
+    <string name="feature_share_account_action_charges">Malipo</string>
+    <string name="feature_share_account_action_charges_subtitle">Angalia malipo ya akaunti</string>
+
+    <string name="feature_share_account_action_transactions">Miamala</string>
+    <string name="feature_share_account_action_transactions_subtitle">Angalia historia ya ununuzi</string>
+
+    <string name="feature_share_account_action_qr_code">Kanuni ya QR</string>
+    <string name="feature_share_account_action_qr_code_subtitle">Shiriki maelezo ya akaunti</string>
+
+    <string name="feature_share_account_purchased_shares">Shiriki Zilinunuliwa</string>
+    <string name="feature_share_account_purchased_date">Tarehe ya Ununuzi</string>
+
+
+</resources>
