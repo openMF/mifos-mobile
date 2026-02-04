@@ -149,7 +149,6 @@ internal fun HomeContent(
     val scope = rememberCoroutineScope()
     fun toggleEditMode() {
         if (isEditMode) {
-            // Save
             scope.launch {
                 preferencesRepository.saveSelectedServices(selectedServices)
             }
@@ -370,7 +369,6 @@ internal fun ServiceItemCard(
                     },
                 ),
             )
-            // Checkmark icon for selected items in edit mode
             if (isEditMode && isSelected) {
                 Icon(
                     imageVector = MifosIcons.CheckCircle1,
