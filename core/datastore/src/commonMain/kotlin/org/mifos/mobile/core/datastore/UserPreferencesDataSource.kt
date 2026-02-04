@@ -236,25 +236,31 @@ class UserPreferencesDataSource(
             _settingsInfo.value = newPreference
         }
 
-    suspend fun setSelectedServices(selectedServices: Set<String>) =
+    suspend fun setSelectedServices(selectedServices: Set<String>?) =
         withContext(dispatcher) {
-            val newPreference = settings.getSettingsPreference().copy(selectedServices = selectedServices)
+            val newPreference = settings.getSettingsPreference().copy(selectedServices = selectedServices ?: emptySet())
             settings.putSettingsPreference(newPreference)
             _settingsInfo.value = newPreference
         }
 
-    fun saveSelectedServicesDirectly(services: Set<String>) {
-        settings.putString(SELECTED_SERVICES_KEY, services.joinToString(","))
-        val newPreference = settings.getSettingsPreference().copy(selectedServices = services)
+    fun saveSelectedServicesDirectly(services: Set<String>?) {
+        if (services == null) {
+            settings.remove(SELECTED_SERVICES_KEY)
+        } else {
+            settings.putString(SELECTED_SERVICES_KEY, services.joinToString(","))
+        }
+        val newPreference = settings.getSettingsPreference().copy(selectedServices = services ?: emptySet())
         _settingsInfo.value = newPreference
     }
 
-    fun getSelectedServicesDirectly(): Set<String> {
+    fun getSelectedServicesDirectly(): Set<String>? {
         val directString = settings.getStringOrNull(SELECTED_SERVICES_KEY)
-        return if (!directString.isNullOrBlank()) {
-            directString.split(",").filter { it.isNotBlank() }.toSet()
+        return if (directString == null) {
+            null // No preference saved
+        } else if (directString.isBlank()) {
+            emptySet() // Explicit empty selection
         } else {
-            _settingsInfo.value.selectedServices
+            directString.split(",").filter { it.isNotBlank() }.toSet()
         }
     }
 

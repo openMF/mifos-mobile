@@ -75,10 +75,10 @@ interface UserPreferencesRepository {
 
     suspend fun setLanguage(language: LanguageConfig)
 
-    suspend fun setSelectedServices(selectedServices: Set<String>)
+    suspend fun setSelectedServices(selectedServices: Set<String>?)
 
-    val selectedServices: Set<String>
-    fun saveSelectedServices(services: Set<String>)
+    val selectedServices: Set<String>?
+    fun saveSelectedServices(services: Set<String>?)
 
     suspend fun logOut(): Unit
 }

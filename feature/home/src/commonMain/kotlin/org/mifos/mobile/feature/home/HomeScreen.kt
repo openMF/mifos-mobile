@@ -142,7 +142,7 @@ internal fun HomeContent(
 
     val savedServices = preferencesRepository.selectedServices
     var selectedServices by remember(preferencesRepository) {
-        mutableStateOf(if (savedServices.isEmpty()) allRoutes else savedServices)
+        mutableStateOf(savedServices ?: allRoutes)
     }
     var isEditMode by remember { mutableStateOf(false) }
 
