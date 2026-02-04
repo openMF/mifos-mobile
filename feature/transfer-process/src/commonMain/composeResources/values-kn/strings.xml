@@ -24,7 +24,7 @@
     <string name="error_description">ಮೊತ್ತವು ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬಾರದು</string>
     <string name="transfer_failed">ವರ್ಗಾವಣೆ ವಿಫಲವಾಗಿದೆ</string>
     <string name="transfer_successful">ವರ್ಗಾವಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
-    <string name="back_to_accounts">ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ಗೆ ಹಿಂತಿರುಗಿ</string>
+    <string name="back_to_accounts">ಖಾತೆಗಳ ಪಟ್ಟಿಗೆ ಹಿಂತಿರುಗಿ</string>
     <string name="transfer_id_prefix">ವರ್ಗಾವಣೆ ಐಡಿ:</string>
     <string name="feature_make_transfer_error_amount_required">ಮೊತ್ತ ಅಗತ್ಯವಿದೆ</string>
     <string name="feature_make_transfer_error_amount_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
