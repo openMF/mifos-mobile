@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">લૉગઆઉટ</string>
     <string name="feature_settings_action_logout_tip">બધા ઉપકરણોમાંથી લૉગઆઉટ કરો</string>
+    <string name="feature_settings_logout_description">સુરક્ષા હેતુઓ માટે લોગ આઉટ કરવાથી તમારું વર્તમાન અને તમામ સક્રિય સત્રો સમાપ્ત થઈ જશે. તમારા એકાઉન્ટને ઍક્સેસ કરવા માટે તમારે ફરીથી લોગ ઇન કરવાની જરૂર પડશે.</string>
+    <string name="feature_settings_logout_action">હોમ પર પાછા જાઓ</string>
 
     <string name="feature_settings_top_bar_title">સેટિંગ્સ</string>
 

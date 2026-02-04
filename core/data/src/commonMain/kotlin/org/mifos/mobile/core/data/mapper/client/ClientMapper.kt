@@ -79,24 +79,24 @@ fun ClientClassificationResponseDto.toModel(): ClientClassification =
     ClientClassification(
         id = id,
         name = name,
-        active = active,
-        mandatory = mandatory,
+        active = active ?: false,
+        mandatory = mandatory ?: false,
     )
 
 fun ClientTypeResponseDto.toModel(): ClientType =
     ClientType(
         id = id,
         name = name,
-        active = active,
-        mandatory = mandatory,
+        active = active ?: false,
+        mandatory = mandatory ?: false,
     )
 
 fun GenderResponseDto.toModel(): Gender =
     Gender(
         id = id,
         name = name,
-        active = active,
-        mandatory = mandatory,
+        active = active ?: false,
+        mandatory = mandatory ?: false,
     )
 
 fun GroupResponseDto.toModel(): Group =
