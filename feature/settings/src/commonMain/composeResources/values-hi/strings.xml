@@ -60,6 +60,8 @@
 
     <string name="feature_settings_action_logout">लॉगआउट</string>
     <string name="feature_settings_action_logout_tip">सभी डिवाइस से लॉगआउट करें</string>
+    <string name="feature_settings_logout_description">सुरक्षा कारणों से लॉग आउट करने से आपका वर्तमान और सभी सक्रिय सत्र समाप्त हो जाएंगे। अपने खाते तक पहुँचने के लिए आपको फिर से लॉग इन करना होगा।</string>
+    <string name="feature_settings_logout_action">होम पर वापस जाएं</string>
 
     <string name="feature_settings_top_bar_title">सेटिंग्स</string>
 
