@@ -59,6 +59,7 @@ import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
@@ -75,6 +76,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.components.BottomSheetContent
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -135,8 +137,7 @@ internal fun HomeContent(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val preferencesRepository: org.mifos.mobile.core.datastore.UserPreferencesRepository =
-        org.koin.compose.koinInject()
+    val preferencesRepository: UserPreferencesRepository = koinInject()
 
     val allRoutes = remember { serviceCards.map { it.route }.toSet() }
 
@@ -254,12 +255,12 @@ internal fun HomeContent(
                                 imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
                                 contentDescription = stringResource(Res.string.feature_home_edit_services),
                                 tint = KptTheme.colorScheme.primary,
-                                modifier = Modifier.size(16.dp),
+                                modifier = Modifier.size(DesignToken.sizes.iconSmall),
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
 
                     ServiceBox(
                         items = state.items,
@@ -377,7 +378,7 @@ internal fun ServiceItemCard(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(4.dp)
-                        .size(KptTheme.spacing.md),
+                        .size(DesignToken.spacing.small),
                 )
             }
         }

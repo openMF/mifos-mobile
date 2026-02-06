@@ -256,9 +256,9 @@ class UserPreferencesDataSource(
     fun getSelectedServicesDirectly(): Set<String>? {
         val directString = settings.getStringOrNull(SELECTED_SERVICES_KEY)
         return if (directString == null) {
-            null // No preference saved
+            null
         } else if (directString.isBlank()) {
-            emptySet() // Explicit empty selection
+            emptySet()
         } else {
             directString.split(",").filter { it.isNotBlank() }.toSet()
         }
