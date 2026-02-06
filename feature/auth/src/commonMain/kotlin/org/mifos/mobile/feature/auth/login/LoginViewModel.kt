@@ -110,6 +110,9 @@ class LoginViewModel(
                 updateState { it.copy(showOverlay = false) }
                 val user = action.loginResult.data
                 if (user.clients.isEmpty()) {
+                    viewModelScope.launch {
+                        userPreferencesRepositoryImpl.setIsAuthenticated(false)
+                    }
                     updateState {
                         it.copy(
                             isError = true,
