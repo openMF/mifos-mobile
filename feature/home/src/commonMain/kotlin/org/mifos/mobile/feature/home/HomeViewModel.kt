@@ -45,7 +45,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 internal class HomeViewModel(
     private val homeRepositoryImpl: HomeRepository,
     private val networkMonitor: NetworkMonitor,
-    userPreferencesRepositoryImpl: UserPreferencesRepository,
+    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : BaseViewModel<HomeState, HomeEvent, HomeAction>(
     initialState = HomeState(
         clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
@@ -59,6 +59,7 @@ internal class HomeViewModel(
 
     init {
         observeNetworkStatus()
+        loadSavedServices()
     }
 
     /**
@@ -113,6 +114,10 @@ internal class HomeViewModel(
             }
 
             is HomeAction.Internal.ReceiveClientDetails -> handleClientDetails(action.dataState)
+
+            is HomeAction.ToggleEditMode -> handleToggleEditMode()
+
+            is HomeAction.ToggleServiceSelection -> handleToggleServiceSelection(action.route)
         }
     }
 
@@ -218,6 +223,57 @@ internal class HomeViewModel(
     private fun handleAmountVisible() {
         updateState {
             it.copy(isAmountVisible = !state.isAmountVisible)
+        }
+    }
+
+    /**
+     * Loads saved services from the preferences repository.
+     * If no saved preference exists (null), defaults to all services.
+     */
+    private fun loadSavedServices() {
+        val allRoutes = serviceCards.map { it.route }.toSet()
+        val savedServices = userPreferencesRepositoryImpl.selectedServices
+        updateState {
+            it.copy(
+                allServiceRoutes = allRoutes,
+                selectedServices = savedServices ?: allRoutes,
+            )
+        }
+    }
+
+    /**
+     * Handles toggling edit mode for service selection.
+     * When exiting edit mode, saves the selected services with error handling.
+     */
+    private fun handleToggleEditMode() {
+        if (state.isEditMode) {
+            // Exiting edit mode - save services first
+            viewModelScope.launch {
+                try {
+                    userPreferencesRepositoryImpl.saveSelectedServices(state.selectedServices)
+                    updateState { it.copy(isEditMode = false) }
+                } catch (e: Exception) {
+                    // TODO: Could show error dialog here if needed
+                    updateState { it.copy(isEditMode = false) }
+                }
+            }
+        } else {
+            // Entering edit mode
+            updateState { it.copy(isEditMode = true) }
+        }
+    }
+
+    /**
+     * Handles toggling a service's selection state.
+     */
+    private fun handleToggleServiceSelection(route: String) {
+        updateState { currentState ->
+            val newSelection = if (currentState.selectedServices.contains(route)) {
+                currentState.selectedServices - route
+            } else {
+                currentState.selectedServices + route
+            }
+            currentState.copy(selectedServices = newSelection)
         }
     }
 
@@ -440,6 +496,9 @@ internal data class HomeState(
     val items: ImmutableList<ServiceItem>,
     val networkStatus: Boolean = true,
     val uiState: HomeScreenState?,
+    val selectedServices: Set<String> = emptySet(),
+    val isEditMode: Boolean = false,
+    val allServiceRoutes: Set<String> = emptySet(),
 
 ) {
     /**
@@ -527,6 +586,12 @@ sealed interface HomeAction {
 
     /** Action to trigger that display Bottom bar for applying to an account */
     data object BottomBarPicker : HomeAction
+
+    /** Action to toggle edit mode for service selection */
+    data object ToggleEditMode : HomeAction
+
+    /** Action to toggle a service's selection state */
+    data class ToggleServiceSelection(val route: String) : HomeAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.

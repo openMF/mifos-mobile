@@ -34,10 +34,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -46,11 +43,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
+import mifos_mobile.feature.home.generated.resources.feature_home_no_services_hint
 import mifos_mobile.feature.home.generated.resources.feature_home_selected
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
@@ -59,10 +56,8 @@ import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
-import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -137,26 +132,6 @@ internal fun HomeContent(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val preferencesRepository: UserPreferencesRepository = koinInject()
-
-    val allRoutes = remember { serviceCards.map { it.route }.toSet() }
-
-    val savedServices = preferencesRepository.selectedServices
-    var selectedServices by remember(preferencesRepository) {
-        mutableStateOf(savedServices ?: allRoutes)
-    }
-    var isEditMode by remember { mutableStateOf(false) }
-
-    val scope = rememberCoroutineScope()
-    fun toggleEditMode() {
-        if (isEditMode) {
-            scope.launch {
-                preferencesRepository.saveSelectedServices(selectedServices)
-            }
-        }
-        isEditMode = !isEditMode
-    }
-
     MifosElevatedScaffold(
         modifier = modifier,
         brandIcon = mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
@@ -250,9 +225,9 @@ internal fun HomeContent(
                             style = MifosTypography.titleMediumEmphasized,
                             color = KptTheme.colorScheme.onSurface,
                         )
-                        IconButton(onClick = { toggleEditMode() }) {
+                        IconButton(onClick = { onAction(HomeAction.ToggleEditMode) }) {
                             Icon(
-                                imageVector = if (isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
+                                imageVector = if (state.isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
                                 contentDescription = stringResource(Res.string.feature_home_edit_services),
                                 tint = KptTheme.colorScheme.primary,
                                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
@@ -260,19 +235,15 @@ internal fun HomeContent(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+                    Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 
                     ServiceBox(
                         items = state.items,
-                        isEditMode = isEditMode,
-                        selectedServices = selectedServices,
+                        isEditMode = state.isEditMode,
+                        selectedServices = state.selectedServices,
                         onServiceClick = { route ->
-                            if (isEditMode) {
-                                selectedServices = if (selectedServices.contains(route)) {
-                                    selectedServices - route
-                                } else {
-                                    selectedServices + route
-                                }
+                            if (state.isEditMode) {
+                                onAction(HomeAction.ToggleServiceSelection(route))
                             } else {
                                 onAction(HomeAction.OnNavigate(route))
                             }
@@ -303,6 +274,17 @@ internal fun ServiceBox(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
+        if (displayItems.isEmpty() && !isEditMode) {
+            Text(
+                text = stringResource(Res.string.feature_home_no_services_hint),
+                style = MifosTypography.bodyMedium,
+                color = KptTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(DesignToken.padding.large),
+            )
+        }
         rows.forEach { rowItems ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -378,7 +360,7 @@ internal fun ServiceItemCard(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(4.dp)
-                        .size(DesignToken.spacing.small),
+                        .size(DesignToken.spacing.medium),
                 )
             }
         }
