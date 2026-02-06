@@ -18,16 +18,16 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepositoryImpl
 
 val PreferencesModule = module {
-    single<Settings> { Settings() }
+    factory<Settings> { Settings() }
 
-    single {
+    factory {
         UserPreferencesDataSource(
             settings = get(),
             dispatcher = get(named(MifosDispatchers.IO.name)),
         )
     }
 
-    single<UserPreferencesRepository> {
+    factory<UserPreferencesRepository> {
         UserPreferencesRepositoryImpl(
             preferenceManager = get(),
 //            ioDispatcher = get(named(MifosDispatchers.IO.name)),
