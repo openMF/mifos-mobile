@@ -12,6 +12,7 @@ package org.mifos.mobile.feature.home
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -235,7 +236,6 @@ internal class HomeViewModel(
         val savedServices = userPreferencesRepositoryImpl.selectedServices
         updateState {
             it.copy(
-                allServiceRoutes = allRoutes,
                 selectedServices = savedServices ?: allRoutes,
             )
         }
@@ -252,9 +252,16 @@ internal class HomeViewModel(
                 try {
                     userPreferencesRepositoryImpl.saveSelectedServices(state.selectedServices)
                     updateState { it.copy(isEditMode = false) }
+                } catch (e: CancellationException) {
+                    throw e
                 } catch (e: Exception) {
-                    // TODO: Could show error dialog here if needed
-                    updateState { it.copy(isEditMode = false) }
+                    val lastSaved = userPreferencesRepositoryImpl.selectedServices
+                    updateState {
+                        it.copy(
+                            isEditMode = false,
+                            selectedServices = lastSaved ?: serviceCards.map { it.route }.toSet(),
+                        )
+                    }
                 }
             }
         } else {
@@ -498,7 +505,6 @@ internal data class HomeState(
     val uiState: HomeScreenState?,
     val selectedServices: Set<String> = emptySet(),
     val isEditMode: Boolean = false,
-    val allServiceRoutes: Set<String> = emptySet(),
 
 ) {
     /**

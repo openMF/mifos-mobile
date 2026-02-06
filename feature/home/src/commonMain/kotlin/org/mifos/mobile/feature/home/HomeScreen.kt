@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -328,7 +329,7 @@ internal fun ServiceItemCard(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            modifier = Modifier.clickable { onClick() },
+            modifier = Modifier.clickable(role = Role.Button) { onClick() },
         ) {
             Image(
                 modifier = Modifier
@@ -359,7 +360,7 @@ internal fun ServiceItemCard(
                     tint = KptTheme.colorScheme.primary,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(4.dp)
+                        .padding(DesignToken.spacing.extraSmall)
                         .size(DesignToken.spacing.medium),
                 )
             }
