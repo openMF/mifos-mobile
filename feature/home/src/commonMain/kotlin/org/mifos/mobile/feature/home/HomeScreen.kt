@@ -62,6 +62,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -76,7 +77,6 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.home.components.BottomSheetContent
 import org.mifos.mobile.feature.home.navigation.HomeNavigationDestination
 import org.mifos.mobile.feature.home.navigation.HomeNavigator
-import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
