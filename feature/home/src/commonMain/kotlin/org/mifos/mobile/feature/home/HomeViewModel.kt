@@ -241,13 +241,8 @@ internal class HomeViewModel(
         }
     }
 
-    /**
-     * Handles toggling edit mode for service selection.
-     * When exiting edit mode, saves the selected services with error handling.
-     */
     private fun handleToggleEditMode() {
         if (state.isEditMode) {
-            // Exiting edit mode - save services first
             viewModelScope.launch {
                 try {
                     userPreferencesRepositoryImpl.saveSelectedServices(state.selectedServices)
@@ -265,14 +260,10 @@ internal class HomeViewModel(
                 }
             }
         } else {
-            // Entering edit mode
             updateState { it.copy(isEditMode = true) }
         }
     }
 
-    /**
-     * Handles toggling a service's selection state.
-     */
     private fun handleToggleServiceSelection(route: String) {
         updateState { currentState ->
             val newSelection = if (currentState.selectedServices.contains(route)) {

@@ -323,13 +323,13 @@ internal fun ServiceItemCard(
     isEditMode: Boolean = false,
 ) {
     Column(
-        modifier = modifier.padding(vertical = KptTheme.spacing.sm),
+        modifier = modifier
+            .padding(vertical = KptTheme.spacing.sm)
+            .clickable(role = Role.Button, onClickLabel = stringResource(title)) { onClick() },
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier.clickable(role = Role.Button) { onClick() },
-        ) {
+        Box {
             Image(
                 modifier = Modifier
                     .border(
