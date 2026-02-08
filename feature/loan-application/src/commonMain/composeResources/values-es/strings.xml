@@ -46,6 +46,7 @@
     <string name="feature_apply_loan_error_amount_too_small">El monto del capital es demasiado pequeño</string>
     <string name="feature_apply_loan_error_amount_too_large">El monto del capital excede el límite máximo</string>
     <string name="feature_apply_loan_error_amount_invalid_decimal">El monto tiene demasiados decimales para la moneda seleccionada</string>
+    <string name="feature_apply_loan_error_amount_multiple">El importe no está en múltiplos válidos</string>
 
     <!-- Disbursement Date Validation -->
     <string name="feature_apply_loan_error_date_empty">Se requiere fecha de desembolso</string>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_account_active">సక్రియమైన</string>
+    <string name="feature_share_account_approved">ఆమోదించబడింది</string>
+    <string name="feature_share_account_approval_pending">ఆమోదం పెండింగ్‌లో ఉంది</string>
+    <string name="feature_share_account_closed">మూసివేయబడింది</string>
+    <string name="feature_share_account_rejected">తిరస్కరించబడింది</string>
+
+    <string name="feature_share_account_empty_share_accounts">మీకు సంబంధించిన షేర్ ఖాతా ఏదీ లేదు</string>
+    <string name="feature_share_account_dashboard">మొత్తం అప్పులు</string>
+    <string name="feature_share_account">షేర్ ఖాతా</string>
+    <string name="feature_share_account_items">%1$d అంశాలు</string>
+
+    <string name="feature_share_account_generic_error_server">మా వైపు నుండి సర్వర్ సమస్య ముందుకు సాగలేదు, కాసేపటి తర్వాత మళ్లీ ప్రయత్నించండి</string>
+
+
+    <string name="feature_share_account_number">ఖాతా సంఖ్య</string>
+    <string name="feature_share_account_product_name">ఉత్పత్తి పేరు</string>
+    <string name="feature_share_account_currency">కరెన్సీ</string>
+    <string name="feature_share_account_status">స్థితి</string>
+    <string name="feature_share_account_approved_shares">ఆమోదించబడిన షేర్లు</string>
+    <string name="feature_share_account_pending_shares">పెండింగ్‌లో ఉన్న షేర్లు</string>
+    <string name="feature_share_account_market_price">మార్కెట్ ధర</string>
+    <string name="feature_share_account_application_date">దరఖాస్తు తేదీ</string>
+    <string name="feature_share_account_activation_date">సక్రియం చేసిన తేదీ</string>
+
+    <string name="feature_share_account_details_top_bar_title">షేర్ ఖాతా వివరాలు</string>
+    <string name="feature_share_account_details_action">చర్యలు</string>
+
+    <string name="feature_share_account_action_charges">ఛార్జీలు</string>
+    <string name="feature_share_account_action_charges_subtitle">ఖాతా ఛార్జీలను చూడండి</string>
+
+    <string name="feature_share_account_action_transactions">లావాదేవీలు</string>
+    <string name="feature_share_account_action_transactions_subtitle">కొనుగోలు చరిత్రను చూడండి</string>
+
+    <string name="feature_share_account_action_qr_code">QR కోడ్</string>
+    <string name="feature_share_account_action_qr_code_subtitle">ఖాతా వివరాలను పంచుకోండి</string>
+
+    <string name="feature_share_account_purchased_shares">కొనుగోలు చేసిన షేర్లు</string>
+    <string name="feature_share_account_purchased_date">కొనుగోలు తేదీ</string>
+
+
+</resources>
