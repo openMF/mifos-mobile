@@ -15,6 +15,6 @@ import kotlinx.serialization.Serializable
 data class GenderResponseDto(
     val id: Int,
     val name: String? = null,
-    val active: Boolean,
-    val mandatory: Boolean,
+    val active: Boolean? = null,
+    val mandatory: Boolean? = null,
 )

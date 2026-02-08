@@ -60,6 +60,8 @@
 
     <string name="feature_settings_action_logout">تسجيل الخروج</string>
     <string name="feature_settings_action_logout_tip">تسجيل الخروج من جميع الأجهزة</string>
+    <string name="feature_settings_logout_description">سيسجل الخروج من جلستك الحالية وجميع الجلسات النشطة لأغراض أمنية. ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك.</string>
+    <string name="feature_settings_logout_action">العودة إلى الرئيسية</string>
 
     <string name="feature_settings_top_bar_title">الإعدادات</string>
 

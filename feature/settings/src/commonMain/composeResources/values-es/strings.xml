@@ -87,6 +87,8 @@
 
     <string name="feature_settings_action_logout">Salir</string>
     <string name="feature_settings_action_logout_tip">Cerrar sesión en todos los dispositivos</string>
+    <string name="feature_settings_logout_description">Al cerrar sesión se finalizará la sesión actual y todas las sesiones activas por motivos de seguridad. Deberás iniciar sesión de nuevo para acceder a tu cuenta.</string>
+    <string name="feature_settings_logout_action">Volver al inicio</string>
 
     <string name="feature_settings_top_bar_title">Ajustes</string>
 

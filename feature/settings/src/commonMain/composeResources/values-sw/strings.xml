@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Toka</string>
     <string name="feature_settings_action_logout_tip">Toka kwenye vifaa vyote</string>
+    <string name="feature_settings_logout_description">Kuondoka kutasitisha kipindi chako cha sasa na vipindi vyote vinavyotumika kwa madhumuni ya usalama. Utahitaji kuingia tena ili kufikia akaunkti yako.</string>
+    <string name="feature_settings_logout_action">Rudi nyumbani</string>
 
     <string name="feature_settings_top_bar_title">Mipangilio</string>
 
