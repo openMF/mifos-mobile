@@ -13,7 +13,6 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.utils.EmptyContent.status
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -351,6 +350,9 @@ val SavingStatus.allowedActions: Set<SavingsActionItems>
         )
         SavingStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
             SavingsActionItems.QrCode,
+        )
+        SavingStatus.UNKNOWN -> setOf(
+            SavingsActionItems.Transactions,
         )
     }
 

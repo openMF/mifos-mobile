@@ -356,7 +356,7 @@ val LoanStatus.allowedActions: Set<LoanActionItems>
             LoanActionItems.Transactions,
         )
 
-        LoanStatus.CLOSED -> setOf(
+        LoanStatus.CLOSED, LoanStatus.UNKNOWN -> setOf(
             LoanActionItems.LoanSummary,
             LoanActionItems.Transactions,
         )

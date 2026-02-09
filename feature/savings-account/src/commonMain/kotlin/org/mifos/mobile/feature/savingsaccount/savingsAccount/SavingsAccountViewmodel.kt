@@ -287,7 +287,11 @@ class SavingsAccountViewmodel(
      * @param accounts List of [SavingAccount] to compute totals from.
      */
     private fun sortAccountsByStatus(accounts: List<SavingAccount>): List<SavingAccount> {
-        return accounts.sortedWith(compareBy { state.statusOrder.indexOf(it.status?.value) })
+        return accounts.sortedBy {
+            runCatching {
+                SavingStatus.fromStatus(it.status?.value.orEmpty()).sortOrder
+            }.getOrElse { Int.MAX_VALUE }
+        }
     }
 
     /** Calculates total savings balance and updates state. */
