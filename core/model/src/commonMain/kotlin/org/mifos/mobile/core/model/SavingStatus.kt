@@ -12,19 +12,22 @@ package org.mifos.mobile.core.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class SavingStatus(val status: String) {
-
-    ACTIVE("Active"),
-    INACTIVE("Inactive"),
-    CLOSED("Closed"),
-    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
-    APPROVED("Approved"),
+enum class SavingStatus(
+    val status: String,
+    val sortOrder: Int,
+) {
+    ACTIVE("Active", 0),
+    APPROVED("Approved", 1),
+    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval", 2),
+    INACTIVE("Inactive", 3),
+    CLOSED("Closed", 4),
+    UNKNOWN("Unknown", Int.MAX_VALUE),
     ;
 
     companion object {
         fun fromStatus(status: String): SavingStatus {
             return entries.find { it.status.equals(status, ignoreCase = true) }
-                ?: throw IllegalArgumentException("Invalid status: $status")
+                ?: UNKNOWN
         }
     }
 }

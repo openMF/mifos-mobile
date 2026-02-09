@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Kijelentkezés</string>
     <string name="feature_settings_action_logout_tip">Kijelentkezés minden eszközről</string>
+    <string name="feature_settings_logout_description">A kijelentkezés biztonsági okokból lezárja a jelenlegi és az összes aktív munkamenetet. A fiók eléréséhez újra be kell jelentkeznie.</string>
+    <string name="feature_settings_logout_action">Vissza a főoldalra</string>
 
     <string name="feature_settings_top_bar_title">Beállítások</string>
 

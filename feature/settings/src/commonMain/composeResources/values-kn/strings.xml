@@ -60,6 +60,8 @@
 
     <string name="feature_settings_action_logout">ಲಾಗ್‌ಅವುಟ್</string>
     <string name="feature_settings_action_logout_tip">ಎಲ್ಲಾ ಸಾಧನಗಳಿಂದ ಲಾಗ್‌ಅವುಟ್ ಮಾಡಿ</string>
+    <string name="feature_settings_logout_description">ಸುರಕ್ಷತಾ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಲಾಗ್ ಔಟ್ ಮಾಡುವುದರಿಂದ ನಿಮ್ಮ ಪ್ರಸ್ತುత ಮತ್ತು ಎಲ್ಲಾ ಸಕ್ರಿಯ ಸೆಷನ್‌ಗಳು ಕೊನೆಗೊಳ್ಳುತ್ತವೆ. ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಪ್ರವೇಶಿಸಲು ನೀವು ಮತ್ತೆ ಲಾಗ್ ಇನ್ ಆಗಬೇಕಾಗುತ್ತದೆ.</string>
+    <string name="feature_settings_logout_action">ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</string>
 
     <string name="feature_settings_top_bar_title">ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
 

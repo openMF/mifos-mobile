@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_account_active">កំពុងដំណើរការ</string>
+    <string name="feature_share_account_approved">បានអនុម័ត</string>
+    <string name="feature_share_account_approval_pending">កំពុងរង់ចាំការអនុម័ត</string>
+    <string name="feature_share_account_closed">បានបិទ</string>
+    <string name="feature_share_account_rejected">ត្រូវបានច្រានចោល</string>
+
+    <string name="feature_share_account_empty_share_accounts">មិនមាន ShareAccount ជាប់ពាក់ព័ន្ធជាមួយអ្នកទេ</string>
+    <string name="feature_share_account_dashboard">ចំនួនទឹកខ្ចីសរុប</string>
+    <string name="feature_share_account">គណនីចែករំលែក</string>
+    <string name="feature_share_account_items">%1$d ធាតុ</string>
+
+    <string name="feature_share_account_generic_error_server">បញ្ហា server របស់យើងមិនអាចដំណើរការបន្តបានទេ។ សូមព្យាយាមម្តងទៀតក្នុងពេលមួយភ្លែត</string>
+
+
+    <string name="feature_share_account_number">លេខគណនី</string>
+    <string name="feature_share_account_product_name">ឈ្មោះផលិតផល</string>
+    <string name="feature_share_account_currency">រូបិយប័ណ្ណ</string>
+    <string name="feature_share_account_status">ស្ថានភាព</string>
+    <string name="feature_share_account_approved_shares">ហ៊ុនដែលបានអនុម័ត</string>
+    <string name="feature_share_account_pending_shares">ហ៊ុនកំពុងរង់ចាំ</string>
+    <string name="feature_share_account_market_price">តម្លៃទីផ្សារ</string>
+    <string name="feature_share_account_application_date">ថ្ងៃដាក់ពាក្យ</string>
+    <string name="feature_share_account_activation_date">ថ្ងៃចាប់ផ្តើមប្រើ</string>
+
+    <string name="feature_share_account_details_top_bar_title">ព័ត៌មានលម្អិតអំពីហ៊ុន</string>
+    <string name="feature_share_account_details_action">សកម្មភាព</string>
+
+    <string name="feature_share_account_action_charges">ថ្លៃ</string>
+    <string name="feature_share_account_action_charges_subtitle">មើលថ្លៃគណនី</string>
+
+    <string name="feature_share_account_action_transactions">ប្រតិបត្តិការ</string>
+    <string name="feature_share_account_action_transactions_subtitle">មើលប្រវត្តិកម្មទិញ</string>
+
+    <string name="feature_share_account_action_qr_code">លេខ QR</string>
+    <string name="feature_share_account_action_qr_code_subtitle">ចែករំលែកព័ត៌មានគណនី</string>
+
+    <string name="feature_share_account_purchased_shares">ហ៊ុនដែលបានទិញ</string>
+    <string name="feature_share_account_purchased_date">ថ្ងៃទិញ</string>
+
+
+</resources>

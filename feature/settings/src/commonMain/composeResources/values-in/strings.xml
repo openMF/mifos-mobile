@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Keluar</string>
     <string name="feature_settings_action_logout_tip">Keluar dari semua perangkat</string>
+    <string name="feature_settings_logout_description">Keluar akan mengakhiri sesi saat ini dan semua sesi aktif untuk tujuan keamanan. Anda harus masuk lagi untuk mengakses akun Anda.</string>
+    <string name="feature_settings_logout_action">Kembali ke beranda</string>
 
     <string name="feature_settings_top_bar_title">Pengaturan</string>
 

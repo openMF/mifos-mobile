@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_account_active">Aktív</string>
+    <string name="feature_share_account_approved">Jóváhagyva</string>
+    <string name="feature_share_account_approval_pending">Jóváhagyás függőben</string>
+    <string name="feature_share_account_closed">Bezárva</string>
+    <string name="feature_share_account_rejected">Elutasítva</string>
+
+    <string name="feature_share_account_empty_share_accounts">Nincs Önnel társított ShareAccount</string>
+    <string name="feature_share_account_dashboard">Összes Kölcsön</string>
+    <string name="feature_share_account">Share Account</string>
+    <string name="feature_share_account_items">%1$d Elem</string>
+
+    <string name="feature_share_account_generic_error_server">Szerveroldali hiba, nem tudunk tovább haladni, próbálja meg később</string>
+
+
+    <string name="feature_share_account_number">Számlaszám</string>
+    <string name="feature_share_account_product_name">Terméknév</string>
+    <string name="feature_share_account_currency">Pénznem</string>
+    <string name="feature_share_account_status">Állapot</string>
+    <string name="feature_share_account_approved_shares">Jóváhagyott Részvények</string>
+    <string name="feature_share_account_pending_shares">Függőben lévő részesedések</string>
+    <string name="feature_share_account_market_price">Piactér ár</string>
+    <string name="feature_share_account_application_date">Befogadás dátuma</string>
+    <string name="feature_share_account_activation_date">Aktiválás dátuma</string>
+
+    <string name="feature_share_account_details_top_bar_title">Részesedési számla részletei</string>
+    <string name="feature_share_account_details_action">Műveletek</string>
+
+    <string name="feature_share_account_action_charges">Díjak</string>
+    <string name="feature_share_account_action_charges_subtitle">Számladíjak megtekintése</string>
+
+    <string name="feature_share_account_action_transactions">Tranzakciók</string>
+    <string name="feature_share_account_action_transactions_subtitle">Vásárlási előzmények megtekintése</string>
+
+    <string name="feature_share_account_action_qr_code">QR kód</string>
+    <string name="feature_share_account_action_qr_code_subtitle">Részesedési számla részleteinek megosztása</string>
+
+    <string name="feature_share_account_purchased_shares">Vásárolt részesedések</string>
+    <string name="feature_share_account_purchased_date">Vásárlás dátuma</string>
+
+
+</resources>
