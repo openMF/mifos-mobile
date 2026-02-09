@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_applicant_name
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_currency
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_field_officer
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_frequency
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_frequency_type
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_minimum_opening_balance
@@ -26,10 +25,8 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure_action
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure_tip
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success_action
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success_tip
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
@@ -54,13 +51,14 @@ import org.mifos.mobile.core.ui.utils.observe
  * - Handling success and failure states of the submission and navigating accordingly.
  *
  * @param userPreferencesRepositoryImpl Repository for accessing user preferences, such as client ID.
- * @param savingsAccountRepositoryImpl Repository for submitting the savings application.
+ * @param repo Repository for submitting the savings application.
  * @param resultNavigator A navigator to observe and receive results from other screens, like authentication.
  * @param savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
+@Suppress("MaxLineLength")
 internal class SavingsConfirmDetailsViewModel(
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
-    private val savingsAccountRepositoryImpl: SavingsAccountRepository,
+    private val repo: SavingsAccountRepository,
     private val resultNavigator: ResultNavigator,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SavingsConfirmDetailsState, SavingsConfirmDetailsEvent, SavingsConfirmDetailsAction>(
@@ -73,7 +71,7 @@ internal class SavingsConfirmDetailsViewModel(
             put(Res.string.feature_apply_savings_label_savings_product, route.savingsProductName)
             put(Res.string.feature_apply_savings_label_submission_date, route.submittedOnDate)
             put(Res.string.feature_apply_savings_label_currency, route.currency)
-            
+
             // Only show optional fields if they have values
             if (route.minOpeningBalance.trim().isNotEmpty()) {
                 put(Res.string.feature_apply_savings_label_minimum_opening_balance, route.minOpeningBalance)
@@ -130,13 +128,6 @@ internal class SavingsConfirmDetailsViewModel(
     }
 
     /**
-     * Displays an error dialog with a given message.
-     */
-    private fun showErrorDialog(error: StringResource) {
-        updateState { it.copy(dialogState = SavingsConfirmDetailsDialogState.Error(error)) }
-    }
-
-    /**
      * Handles incoming actions from the UI and dispatches them to the appropriate
      * business logic functions.
      */
@@ -153,12 +144,6 @@ internal class SavingsConfirmDetailsViewModel(
             }
 
             SavingsConfirmDetailsAction.Internal.ApplySavings -> applySavings()
-
-            is SavingsConfirmDetailsAction.Internal.ReceiveSavingsApplyStatus -> {
-                viewModelScope.launch {
-                    handleSavingsApplyStatus(action.status)
-                }
-            }
 
             is SavingsConfirmDetailsAction.DismissDialog -> dismissDialog()
         }
@@ -189,58 +174,53 @@ internal class SavingsConfirmDetailsViewModel(
     }
 
     /**
-     * Submits the savings application to the server using the data from the state.
-     * Shows a loading overlay while the submission is in progress.
-     */
-    private fun applySavings() {
-        updateState { it.copy(showOverlay = true) }
-        viewModelScope.launch {
-            val response = savingsAccountRepositoryImpl.submitSavingAccountApplication(
-                payload = getSavingsPayload(),
-            )
-            sendAction(SavingsConfirmDetailsAction.Internal.ReceiveSavingsApplyStatus(response))
-        }
-    }
-
-    /**
      * Handles the result of the `applySavings` network call.
      * On success, it navigates to a success status screen after dismissing the loading overlay.
      * On failure, it navigates to a failure status screen after dismissing the loading overlay.
-     * 
+     *
      * @param status The result state of the savings application submission
      */
-    private suspend fun handleSavingsApplyStatus(status: DataState<String>) {
-        when (status) {
-            is DataState.Error -> {
-                updateState {
-                    it.copy(showOverlay = false)
+
+    private fun applySavings() {
+        updateState { it.copy(showOverlay = true) }
+        viewModelScope.launch {
+            val status = repo.submitSavingAccountApplication(
+                payload = getSavingsPayload(),
+            )
+
+            when (status) {
+                is DataState.Error -> {
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
+                    sendEvent(
+                        SavingsConfirmDetailsEvent.NavigateToStatus(
+                            eventType = EventType.FAILURE.name,
+                            eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
+                            title = getString(Res.string.feature_apply_savings_status_failure),
+                            subtitle = status.message.takeIf { it.isNotBlank() } ?: getString(Res.string.feature_apply_savings_status_failure),
+                            buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
+                        ),
+                    )
                 }
-                sendEvent(
-                    SavingsConfirmDetailsEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
-                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
-                        title = getString(Res.string.feature_apply_savings_status_failure),
-                        subtitle = status.message.takeIf { it.isNotBlank() } ?: getString(Res.string.feature_apply_savings_status_failure),
-                        buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
-                    ),
-                )
-            }
-            DataState.Loading -> {
-                updateState { it.copy(showOverlay = true) }
-            }
-            is DataState.Success -> {
-                updateState {
-                    it.copy(showOverlay = false)
+                DataState.Loading -> {
+                    updateState { it.copy(showOverlay = true) }
                 }
-                sendEvent(
-                    SavingsConfirmDetailsEvent.NavigateToStatus(
-                        eventType = EventType.SUCCESS.name,
-                        eventDestination = StatusNavigationDestination.SAVINGS_APPLICATION.name,
-                        title = getString(Res.string.feature_apply_savings_status_success),
-                        subtitle = getString(Res.string.feature_apply_savings_status_success),
-                        buttonText = getString(Res.string.feature_apply_savings_status_success_action),
-                    ),
-                )
+
+                is DataState.Success -> {
+                    updateState {
+                        it.copy(showOverlay = false)
+                    }
+                    sendEvent(
+                        SavingsConfirmDetailsEvent.NavigateToStatus(
+                            eventType = EventType.SUCCESS.name,
+                            eventDestination = StatusNavigationDestination.SAVINGS_APPLICATION.name,
+                            title = getString(Res.string.feature_apply_savings_status_success),
+                            subtitle = getString(Res.string.feature_apply_savings_status_success),
+                            buttonText = getString(Res.string.feature_apply_savings_status_success_action),
+                        ),
+                    )
+                }
             }
         }
     }
@@ -248,7 +228,7 @@ internal class SavingsConfirmDetailsViewModel(
     /**
      * Creates the payload for the savings application submission using the data
      * stored in the ViewModel's state.
-     * 
+     *
      * Handles optional fields gracefully - fields can be empty/null except for:
      * - clientId, productId, submittedOnDate (required)
      * - lockinPeriodFrequencyType (required if frequency is provided)
@@ -286,7 +266,18 @@ internal data class SavingsConfirmDetailsState(
     val showOverlay: Boolean = false,
     val dialogState: SavingsConfirmDetailsDialogState? = null,
     val uiState: ScreenUiState? = ScreenUiState.Success,
-)
+) {
+    /**
+     * A sealed interface representing the different types of dialogs that can be
+     * shown on the confirm details screen.
+     */
+    sealed interface SavingsConfirmDetailsDialogState {
+        /**
+         * Represents a generic error dialog with a message.
+         */
+        data class Error(val message: StringResource) : SavingsConfirmDetailsDialogState
+    }
+}
 
 /**
  * A sealed interface representing one-time events that trigger UI side effects
@@ -342,21 +333,5 @@ sealed interface SavingsConfirmDetailsAction {
          * Triggers the actual savings application submission request.
          */
         data object ApplySavings : Internal
-
-        /**
-         * Receives the result of the savings application submission.
-         */
-        data class ReceiveSavingsApplyStatus(val status: DataState<String>) : Internal
     }
-}
-
-/**
- * A sealed interface representing the different types of dialogs that can be
- * shown on the confirm details screen.
- */
-internal sealed interface SavingsConfirmDetailsDialogState {
-    /**
-     * Represents a generic error dialog with a message.
-     */
-    data class Error(val message: StringResource) : SavingsConfirmDetailsDialogState
 }

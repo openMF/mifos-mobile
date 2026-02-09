@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.io.IOException
 import mifos_mobile.core.ui.generated.resources.validation_amount_empty
 import mifos_mobile.feature.savings_application.generated.resources.Res
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_invalid
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
@@ -193,8 +191,6 @@ internal class SavingsFillApplicationViewModel(
         }
     }
 
-
-
     /**
      * Retries the data fetching process. If the network is unavailable, it shows
      * a network error dialog. Otherwise, it triggers the `fetchSavingsTemplateByProduct` function.
@@ -288,7 +284,7 @@ internal class SavingsFillApplicationViewModel(
 
     /**
      * Validates the minimum opening balance amount.
-     * 
+     *
      * The field is optional - empty values are allowed.
      * If a value is provided, it must be a valid amount according to the currency rules.
      *
@@ -346,7 +342,7 @@ internal class SavingsFillApplicationViewModel(
 
     /**
      * Validates the frequency field.
-     * 
+     *
      * The frequency field is optional - empty values are allowed.
      * If a value is provided, it must be a valid integer.
      *
@@ -499,8 +495,6 @@ internal class SavingsFillApplicationViewModel(
         }
     }
 
-
-
     /**
      * Handles the result of the `fetchSavingsTemplateByProduct` network call.
      *
@@ -535,8 +529,6 @@ internal class SavingsFillApplicationViewModel(
             }
         }
     }
-
-
 
     /*
      * Functions related to Navigation and Lifecycle
@@ -575,7 +567,6 @@ internal class SavingsFillApplicationViewModel(
         super.onCleared()
         validationJob?.cancel()
     }
-
 }
 
 /**

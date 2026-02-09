@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_button_apply
+import mifos_mobile.feature.savings_application.generated.resources.feature_savings_application_savings_confirmation_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -103,11 +104,11 @@ internal fun SavingsConfirmDetailsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SavingsConfirmDetailsDialog(
-    dialogState: SavingsConfirmDetailsDialogState?,
+    dialogState: SavingsConfirmDetailsState.SavingsConfirmDetailsDialogState?,
     onAction: (SavingsConfirmDetailsAction) -> Unit,
 ) {
     when (dialogState) {
-        is SavingsConfirmDetailsDialogState.Error -> {
+        is SavingsConfirmDetailsState.SavingsConfirmDetailsDialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = stringResource(dialogState.message),
@@ -135,7 +136,7 @@ internal fun SavingsConfirmDetailsScreenContent(
 ) {
     MifosElevatedScaffold(
         onNavigateBack = { onAction(SavingsConfirmDetailsAction.OnNavigateBack) },
-        topBarTitle = "Savings Confirmation",
+        topBarTitle = stringResource(Res.string.feature_savings_application_savings_confirmation_title),
         bottomBar = {
             Surface {
                 MifosPoweredCard(

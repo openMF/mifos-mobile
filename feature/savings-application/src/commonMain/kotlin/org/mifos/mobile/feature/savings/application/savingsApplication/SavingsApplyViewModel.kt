@@ -218,13 +218,6 @@ internal class SavingsApplyViewModel(
     }
 
     /**
-     * Sets the dialog state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(showOverlay = !state.showOverlay) }
-    }
-
-    /**
      * Displays an error dialog with a given message.
      *
      * @param error The [StringResource] for the error message to display.
@@ -263,64 +256,6 @@ internal class SavingsApplyViewModel(
                 it.copy(
                     uiState = ScreenUiState.Error(Res.string.feature_apply_savings_error_server),
                 )
-            }
-        }
-    }
-
-    /**
-     * Handles the result of the `fetchFieldOfficer` network call.
-     * On success, it maps the field officer options and updates the state.
-     * On failure, it shows an error dialog and navigates back.
-     *
-     * @param template The [DataState] containing the savings template data,
-     * including field officer options.
-     */
-    private fun handleFieldOfficers(template: DataState<SavingsAccountTemplate?>) {
-        when (template) {
-            is DataState.Loading -> {
-                updateState {
-                    it.copy(
-                        showOverlay = true,
-                    )
-                }
-            }
-            is DataState.Success -> {
-                updateState {
-                    it.copy(
-                        showOverlay = false,
-                    )
-                }
-                val mappedSavingsFieldOfficer: Map<Long, String> = template.data?.fieldOfficerOptions
-                    ?.mapNotNull { option ->
-                        val id = option.id?.toLong()
-                        val name = option.displayName
-                        if (id != null && name != null) id to name else null
-                    }
-                    ?.takeIf { it.isNotEmpty() }
-                    ?.toMap() ?: emptyMap()
-
-                updateState {
-                    it.copy(
-                        savingsProductTemplate = template.data,
-                    )
-                }
-            }
-
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        showOverlay = false,
-                    )
-                }
-                updateState {
-                    it.copy(
-                        uiState = if (template.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
-                        },
-                    )
-                }
             }
         }
     }
