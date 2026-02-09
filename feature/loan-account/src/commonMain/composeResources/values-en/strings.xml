@@ -51,6 +51,19 @@
     <string name="feature_loan_next_installment_label">Next Installment</string>
     <string name="feature_loan_installment_amount_label">Installment Amount</string>
     <string name="feature_loan_due_date_label">Due Date</string>
+    <string name="feature_loan_client_name_label">Client Name</string>
+    <string name="feature_loan_current_balance_label">Current balance</string>
+    <string name="feature_loan_arrears_label">Arrears</string>
+
+    <string name="feature_loan_repayment_schedule_pdf_title">Loan Repayment Schedule</string>
+    <string name="feature_loan_paid_label">Paid</string>
+    <string name="feature_loan_total_label">Total</string>
+    <string name="feature_loan_period_details">Period Details</string>
+    <string name="feature_loan_amount_and_balance">Loan Amount and Balance</string>
+    <string name="feature_loan_total_cost_of_loan">Total Cost of Loan</string>
+    <string name="feature_loan_installment_totals">Installment Totals</string>
+    <string name="feature_loan_totals_uppercase">TOTALS</string>
+    <string name="feature_loan_generation_date">Generation Date</string>
 
     <!-- Account Summary -->
     <string name="feature_loan_account_details_title">Account Details</string>
@@ -102,8 +115,45 @@
     <string name="feature_loan_installments_paid_label">Installments Paid</string>
     <string name="feature_loan_installments_left_label">Installments Left</string>
     <string name="feature_loan_total_installments_label">Total Installments</string>
+    <string name="feature_loan_installment_number">%1$s Installment</string>
+    <string name="feature_loan_repayment_pay">Pay %1$s</string>
 
     <string name="feature_loan_paid">Paid</string>
     <string name="feature_loan_due">Due</string>
     <string name="feature_loan_pay">Pay</string>
+
+    <!-- Tab bar titles -->
+    <string name="feature_loan_tab_general">General</string>
+    <string name="feature_loan_tab_account_details">Account Details</string>
+    <string name="feature_loan_tab_repayment_schedule">Repayment Schedule</string>
+    <string name="feature_loan_tab_delinquency_tags">Delinquency Tags</string>
+    <string name="feature_loan_tab_loan_collateral_details">Loan Collateral Details</string>
+    <string name="feature_loan_tab_term_variations">Term Variations</string>
+    <string name="feature_loan_tab_loan_reschedules">Loan Reschedules</string>
+    <string name="feature_loan_tab_loan_documents">Loan Documents</string>
+    <string name="feature_loan_tab_notes">Notes</string>
+    <string name="feature_loan_tab_standing_instructions">Standing Instruction</string>
+    <string name="feature_loan_tab_external_asset_owner">External Asset Owner</string>
+
+    <!-- Repayment Schedule table headers -->
+    <string name="feature_loan_table_header_installment">#</string>
+    <string name="feature_loan_table_header_days">Days</string>
+    <string name="feature_loan_table_header_date">Date</string>
+    <string name="feature_loan_table_header_paid_date">Paid Date</string>
+    <string name="feature_loan_table_header_balance">Balance of loan</string>
+    <string name="feature_loan_table_header_principal">Principal Due</string>
+    <string name="feature_loan_table_header_interest">Interest</string>
+    <string name="feature_loan_table_header_fees">Fees</string>
+    <string name="feature_loan_table_header_penalties">Penalties</string>
+    <string name="feature_loan_table_header_due">Due</string>
+    <string name="feature_loan_table_header_paid">Paid</string>
+    <string name="feature_loan_table_header_in_advance">In advance</string>
+    <string name="feature_loan_table_header_late">Late</string>
+    <string name="feature_loan_table_header_outstanding">Outstanding</string>
+
+    <string name="feature_loan_table_total">Total</string>
+
+    <string name="feature_loan_export_to_pdf">Export to PDF</string>
+
+    <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
 </resources>

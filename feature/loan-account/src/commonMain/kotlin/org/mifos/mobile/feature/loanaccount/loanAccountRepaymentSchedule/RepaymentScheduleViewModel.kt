@@ -38,6 +38,7 @@ import org.mifos.mobile.core.model.entity.accounts.loan.Periods
 import org.mifos.mobile.core.model.enums.TransferType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.feature.loanaccount.loanAccountRepaymentSchedule.RepaymentScheduleState.RepaymentScheduleTableData
 
 /**
  * ViewModel for the repayment schedule screen.
@@ -83,6 +84,22 @@ internal class RepaymentScheduleViewModel(
             is RepaymentScheduleAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
 
             is RepaymentScheduleAction.Retry -> retry()
+
+            RepaymentScheduleAction.ExportToPdf -> {
+                sendEvent(RepaymentScheduleEvent.ExportPdf)
+            }
+
+            is RepaymentScheduleAction.PdfExportError -> {
+                updateState {
+                    it.copy(dialogState = RepaymentScheduleState.DialogState.Error(action.title, action.message))
+                }
+            }
+
+            RepaymentScheduleAction.DismissErrorDialog -> {
+                updateState {
+                    it.copy(dialogState = null)
+                }
+            }
 
             is RepaymentScheduleAction.Internal.ReceivedRepaymentSchedule ->
                 handleRepaymentScheduleResult(action.dataState)
@@ -167,6 +184,128 @@ internal class RepaymentScheduleViewModel(
         }
     }
 
+    private fun mapPeriodsData(
+        periods: List<Periods>,
+        currencyCode: String?,
+        maxDigits: Int?,
+    ): List<RepaymentScheduleTableData.PeriodData> {
+        return periods.map { period ->
+            RepaymentScheduleTableData.PeriodData(
+                number = period.period?.toString() ?: "",
+                days = period.daysInPeriod?.toString() ?: "-",
+                dueDate = DateHelper.getDateAsString(period.dueDate),
+                paidDate = if (period.obligationsMetOnDate.isNotEmpty()) {
+                    DateHelper.getDateAsString(period.obligationsMetOnDate)
+                } else {
+                    "-"
+                },
+                isPaid = period.complete == true,
+                balanceOfLoan = CurrencyFormatter.format(
+                    period.principalLoanBalanceOutstanding,
+                    currencyCode,
+                    maxDigits,
+                ),
+                principalDue = CurrencyFormatter.format(
+                    period.principalDue,
+                    currencyCode,
+                    maxDigits,
+                ),
+                interest = CurrencyFormatter.format(period.interestDue, currencyCode, maxDigits),
+                fees = CurrencyFormatter.format(
+                    period.feeChargesDue ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+                penalties = CurrencyFormatter.format(
+                    period.penaltyChargesDue ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+                due = CurrencyFormatter.format(period.totalDueForPeriod, currencyCode, maxDigits),
+                paid = CurrencyFormatter.format(
+                    period.totalPaidForPeriod ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+                inAdvance = CurrencyFormatter.format(
+                    period.totalPaidInAdvanceForPeriod ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+                late = CurrencyFormatter.format(
+                    period.totalPaidLateForPeriod ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+                outstanding = CurrencyFormatter.format(
+                    period.totalOutstandingForPeriod ?: 0.0,
+                    currencyCode,
+                    maxDigits,
+                ),
+            )
+        }
+    }
+
+    private fun calculateTotals(
+        periods: List<Periods>,
+        currencyCode: String?,
+        maxDigits: Int?,
+    ): RepaymentScheduleTableData.TotalsData {
+        return RepaymentScheduleTableData.TotalsData(
+            principalDue = CurrencyFormatter.format(
+                periods.sumOf {
+                    it.principalDue ?: 0.0
+                },
+                currencyCode,
+                maxDigits,
+            ),
+            interest = CurrencyFormatter.format(
+                periods.sumOf { it.interestDue ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            fees = CurrencyFormatter.format(
+                periods.sumOf { it.feeChargesDue ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            penalties = CurrencyFormatter.format(
+                periods.sumOf { it.penaltyChargesDue ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            due = CurrencyFormatter.format(
+                periods.sumOf { it.totalDueForPeriod ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            paid = CurrencyFormatter.format(
+                periods.sumOf { it.totalPaidForPeriod ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            inAdvance = CurrencyFormatter.format(
+                periods.sumOf {
+                    it.totalPaidInAdvanceForPeriod ?: 0.0
+                },
+                currencyCode,
+                maxDigits,
+            ),
+            late = CurrencyFormatter.format(
+                periods.sumOf { it.totalPaidLateForPeriod ?: 0.0 },
+                currencyCode,
+                maxDigits,
+            ),
+            outstanding = CurrencyFormatter.format(
+                periods.sumOf {
+                    it.totalOutstandingForPeriod ?: 0.0
+                },
+                currencyCode,
+                maxDigits,
+            ),
+        )
+    }
+
     private fun handleRepaymentScheduleResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
@@ -180,46 +319,56 @@ internal class RepaymentScheduleViewModel(
                     )
                 }
             }
-
-            DataState.Loading -> updateState {
-                it.copy(
-                    uiState = ScreenUiState.Loading,
-                )
-            }
-
+            DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Success -> {
                 val result = dataState.data
-                println("from success ${ result?.repaymentSchedule?.periods}")
                 val currencyCode = result?.currency?.code
                 val maxDigits = result?.currency?.decimalPlaces?.toInt()
-                val basicDetails = mapOf(
-                    Res.string.feature_loan_account_number_label to (result?.accountNo ?: "N/A"),
-                    Res.string.feature_loan_disbursement_date_label to (
-                        result?.timeline?.actualDisbursementDate?.let {
-                            DateHelper.getDateAsString(
-                                it,
-                            )
-                        } ?: "N/A"
+
+                val periods = result?.repaymentSchedule?.periods?.filter { it.period != null } ?: emptyList()
+
+                val totalsData = calculateTotals(periods, currencyCode, maxDigits)
+
+                val periodsData = mapPeriodsData(periods, currencyCode, maxDigits)
+
+                val tableData = result?.let { loan ->
+                    RepaymentScheduleTableData(
+                        accountNo = loan.accountNo ?: "N/A",
+                        clientName = loan.clientName ?: "N/A",
+                        productName = loan.loanProductName ?: "N/A",
+                        disbursementDate = loan.timeline?.actualDisbursementDate?.let { date ->
+                            DateHelper.getDateAsString(date)
+                        } ?: "N/A",
+                        loanAmount = CurrencyFormatter.format(
+                            loan.summary?.principalDisbursed,
+                            currencyCode,
+                            maxDigits,
                         ),
-                    Res.string.feature_loan_principal_paid_off_label to CurrencyFormatter.format(
-                        result?.summary?.principalPaid,
-                        currencyCode,
-                        maxDigits,
-                    ),
-                    Res.string.feature_loan_installments_paid_label to
-                        result?.repaymentSchedule?.periods?.count { it.complete == true }
-                            ?.toString(),
-                    Res.string.feature_loan_installments_left_label to
-                        result?.repaymentSchedule?.periods?.count { it.complete != true }
-                            ?.toString(),
-                    Res.string.feature_loan_total_installments_label to
-                        result?.termFrequency?.toString(),
-                )
+                        principalPaid = CurrencyFormatter.format(
+                            loan.summary?.principalPaid,
+                            currencyCode,
+                            maxDigits,
+                        ),
+                        installmentsPaid = periods.count { it.complete == true }.toString(),
+                        installmentsLeft = periods.count { it.complete != true }.toString(),
+                        totalInstallments = loan.termFrequency?.toString() ?: "0",
+                        currencyCode = currencyCode,
+                        periods = periodsData,
+                        totals = totalsData,
+                    )
+                }
 
                 updateState {
                     it.copy(
-                        basicDetails = basicDetails,
-                        loanWithAssociations = result,
+                        repaymentScheduleTableData = tableData,
+                        basicDetails = mapOf(
+                            Res.string.feature_loan_account_number_label to tableData?.accountNo,
+                            Res.string.feature_loan_disbursement_date_label to tableData?.disbursementDate,
+                            Res.string.feature_loan_principal_paid_off_label to tableData?.principalPaid,
+                            Res.string.feature_loan_installments_paid_label to tableData?.installmentsPaid,
+                            Res.string.feature_loan_installments_left_label to tableData?.installmentsLeft,
+                            Res.string.feature_loan_total_installments_label to tableData?.totalInstallments,
+                        ),
                         uiState = ScreenUiState.Success,
                     )
                 }
@@ -232,19 +381,16 @@ internal class RepaymentScheduleViewModel(
  * Represents the state of the repayment schedule screen.
  *
  * @property accountId The ID of the loan account.
- * @property loanWithAssociations The loan account with its associations.
- * @property periods The list of repayment periods.
  * @property basicDetails A map of basic details about the loan.
+ * @property repaymentScheduleTableData The repayment schedule data.
  * @property dialogState The state of the dialog to display.
  * @property networkStatus The network connectivity status.
  * @property uiState The overall state of the screen.
  */
 internal data class RepaymentScheduleState(
     val accountId: Long? = null,
-    val loanWithAssociations: LoanWithAssociations? = null,
-    val periods: List<Periods> = emptyList(),
     val basicDetails: Map<StringResource, String?> = emptyMap(),
-
+    val repaymentScheduleTableData: RepaymentScheduleTableData? = null,
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
@@ -257,17 +403,56 @@ internal data class RepaymentScheduleState(
         /**
          * An error dialog with a message.
          *
+         * @param title The error title to display.
          * @param message The error message to display.
          */
-        data class Error(val message: String) : DialogState
+        data class Error(val title: String, val message: String) : DialogState
     }
 
-    val getPeriods =
-        loanWithAssociations
-            ?.repaymentSchedule
-            ?.periods
-            .orEmpty()
-            .filter { it.period != null }
+    data class RepaymentScheduleTableData(
+        val accountNo: String,
+        val clientName: String,
+        val productName: String,
+        val disbursementDate: String,
+        val loanAmount: String,
+        val principalPaid: String,
+        val installmentsPaid: String,
+        val installmentsLeft: String,
+        val totalInstallments: String,
+        val currencyCode: String?,
+        val periods: List<PeriodData>,
+        val totals: TotalsData,
+    ) {
+        data class PeriodData(
+            val number: String,
+            val days: String,
+            val dueDate: String,
+            val paidDate: String,
+            val isPaid: Boolean,
+            val balanceOfLoan: String,
+            val principalDue: String,
+            val interest: String,
+            val fees: String,
+            val penalties: String,
+            val due: String,
+            val paid: String,
+            val inAdvance: String,
+            val late: String,
+            val outstanding: String,
+        )
+
+        data class TotalsData(
+            val principalDue: String,
+            val interest: String,
+            val fees: String,
+            val penalties: String,
+            val due: String,
+            val paid: String,
+            val inAdvance: String,
+            val late: String,
+            val outstanding: String,
+        )
+    }
 }
 
 /**
@@ -278,6 +463,11 @@ sealed interface RepaymentScheduleEvent {
      * Event to navigate back to the previous screen.
      */
     data object NavigateBack : RepaymentScheduleEvent
+
+    /**
+     * Event to export the repayment schedule to PDF.
+     */
+    data object ExportPdf : RepaymentScheduleEvent
 
     /**
      * Event to pay an installment.
@@ -310,6 +500,24 @@ sealed interface RepaymentScheduleAction {
      * Action to navigate back from the screen.
      */
     data object OnNavigateBack : RepaymentScheduleAction
+
+    /**
+     * Action to export the repayment schedule to PDF.
+     */
+    data object ExportToPdf : RepaymentScheduleAction
+
+    /**
+     * Action to handle PDF export error.
+     *
+     * @param title The error title to display.
+     * @param message The error message to display.
+     */
+    data class PdfExportError(val title: String, val message: String) : RepaymentScheduleAction
+
+    /**
+     * Action to dismiss the error dialog.
+     */
+    data object DismissErrorDialog : RepaymentScheduleAction
 
     /**
      * Action to receive the network status.
