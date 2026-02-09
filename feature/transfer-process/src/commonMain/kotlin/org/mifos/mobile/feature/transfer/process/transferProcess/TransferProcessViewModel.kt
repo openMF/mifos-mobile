@@ -189,14 +189,19 @@ internal class TransferProcessViewModel(
      */
     private fun makeTransfer() {
         val currentState = state
-        if (currentState.showOverlay || currentState.transferPayload == null) return
+        if (currentState.showOverlay ||
+            currentState.transferPayload == null ||
+            currentState.transferType == null
+        ) {
+            return
+        }
         updateState { it.copy(showOverlay = true) }
 
         viewModelScope.launch {
             try {
                 val result = transferRepository.makeTransfer(
                     currentState.transferPayload,
-                    currentState.transferType!!,
+                    currentState.transferType,
                 )
                 processTransferResult(result)
             } catch (e: CancellationException) {
