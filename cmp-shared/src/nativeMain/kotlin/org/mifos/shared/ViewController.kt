@@ -12,6 +12,7 @@ package org.mifos.shared
 import androidx.compose.ui.window.ComposeUIViewController
 import cmp.shared.SharedApp
 import cmp.shared.utils.initKoin
+import platform.Foundation.NSUserDefaults
 
 fun viewController() = ComposeUIViewController(
     configure = {
@@ -20,7 +21,23 @@ fun viewController() = ComposeUIViewController(
 ) {
     SharedApp(
         handleThemeMode = {},
-        handleAppLocale = {},
+        handleAppLocale = { languageTag ->
+            applyIosLocale(
+                languageTag = languageTag,
+            )
+        },
         onSplashScreenRemoved = {},
     )
+}
+private fun applyIosLocale(
+    languageTag: String?,
+) {
+    if (!languageTag.isNullOrBlank()) {
+        NSUserDefaults.standardUserDefaults.setObject(
+            listOf(languageTag),
+            forKey = "AppleLanguages",
+        )
+    } else {
+        NSUserDefaults.standardUserDefaults.removeObjectForKey("AppleLanguages")
+    }
 }
