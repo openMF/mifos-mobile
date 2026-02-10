@@ -18,6 +18,8 @@ import kotlinx.coroutines.launch
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_error
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
+import mifos_mobile.feature.auth.generated.resources.login_failed
+import mifos_mobile.feature.auth.generated.resources.no_clients_assigned
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
@@ -95,7 +97,7 @@ class LoginViewModel(
                         isError = true,
                         uiState = ScreenUiState.Success,
                         showOverlay = false,
-                        dialogState = LoginState.DialogState.Error(Res.string.feature_sign_in_username_error),
+                        dialogState = LoginState.DialogState.Error(Res.string.login_failed),
                         userNameError = Res.string.feature_sign_in_username_error,
                         passwordError = Res.string.feature_sign_in_password_error,
                     )
@@ -117,30 +119,30 @@ class LoginViewModel(
                         it.copy(
                             isError = true,
                             dialogState = LoginState.DialogState.Error(
-                                Res.string.feature_sign_in_username_error,
+                                Res.string.no_clients_assigned,
                             ),
                         )
                     }
-                    return
+                } else {
+                    val userData = UserData(
+                        userId = user.userId,
+                        userName = user.username.orEmpty(),
+                        clientId = if (user.clients.isNotEmpty()) {
+                            user.clients[0]
+                        } else {
+                            user.userId
+                        },
+                        isAuthenticated = user.isAuthenticated,
+                        base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
+                        officeName = user.officeName.orEmpty(),
+                        password = state.password,
+                    )
+                    viewModelScope.launch {
+                        userPreferencesRepositoryImpl.updateUser(userData)
+                        userPreferencesRepositoryImpl.setIsAuthenticated(true)
+                    }
+                    sendEvent(LoginEvent.NavigateToPasscode)
                 }
-                val userData = UserData(
-                    userId = user.userId,
-                    userName = user.username.orEmpty(),
-                    clientId = if (user.clients.isNotEmpty()) {
-                        user.clients[0]
-                    } else {
-                        user.userId
-                    },
-                    isAuthenticated = user.isAuthenticated,
-                    base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
-                    officeName = user.officeName.orEmpty(),
-                    password = state.password,
-                )
-                viewModelScope.launch {
-                    userPreferencesRepositoryImpl.updateUser(userData)
-                    userPreferencesRepositoryImpl.setIsAuthenticated(true)
-                }
-                sendEvent(LoginEvent.NavigateToPasscode)
             }
         }
     }
