@@ -24,8 +24,12 @@ kotlin {
             // Navigation Modules
             implementation(projects.cmpNavigation)
             implementation(compose.components.resources)
+            implementation(projects.coreBase.platform)
+            implementation(projects.coreBase.ui)
             api(projects.core.data)
             api(projects.core.network)
+            implementation(libs.coil.kt.compose)
+
             //put your multiplatform dependencies here
             implementation(compose.material)
             implementation(compose.material3)

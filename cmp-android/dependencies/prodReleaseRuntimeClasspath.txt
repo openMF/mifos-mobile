@@ -252,6 +252,14 @@ de.jensklingenberg.ktorfit:ktorfit-lib:2.5.2
 dev.chrisbanes.material3:material3-window-size-class-multiplatform-android:0.5.0
 dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0
 dev.chrisbanes.snapper:snapper:0.2.2
+dev.gitlive:firebase-analytics-android:2.1.0
+dev.gitlive:firebase-analytics:2.1.0
+dev.gitlive:firebase-app-android:2.1.0
+dev.gitlive:firebase-app:2.1.0
+dev.gitlive:firebase-common-android:2.1.0
+dev.gitlive:firebase-common:2.1.0
+dev.gitlive:firebase-crashlytics-android:2.1.0
+dev.gitlive:firebase-crashlytics:2.1.0
 io.coil-kt.coil3:coil-android:3.2.0
 io.coil-kt.coil3:coil-compose-android:3.2.0
 io.coil-kt.coil3:coil-compose-core-android:3.2.0
@@ -292,6 +300,8 @@ io.github.panpf.zoomimage:zoomimage-core-android:1.3.0
 io.github.panpf.zoomimage:zoomimage-core-coil3-android:1.3.0
 io.github.panpf.zoomimage:zoomimage-core-coil3:1.3.0
 io.github.panpf.zoomimage:zoomimage-core:1.3.0
+io.github.vinceglb:filekit-coil-android:0.10.0-beta04
+io.github.vinceglb:filekit-coil:0.10.0-beta04
 io.github.vinceglb:filekit-compose-android:0.8.8
 io.github.vinceglb:filekit-compose:0.8.8
 io.github.vinceglb:filekit-core-android:0.10.0-beta04

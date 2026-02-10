@@ -19,10 +19,9 @@ import org.gradle.kotlin.dsl.implementation
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 plugins {
-    alias(libs.plugins.kmp.library.convention)
+    alias(libs.plugins.kmp.core.base.library.convention)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
