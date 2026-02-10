@@ -27,7 +27,7 @@ val PreferencesModule = module {
         )
     }
 
-    factory<UserPreferencesRepository> {
+    single<UserPreferencesRepository> {
         UserPreferencesRepositoryImpl(
             preferenceManager = get(),
 //            ioDispatcher = get(named(MifosDispatchers.IO.name)),

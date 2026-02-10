@@ -17,7 +17,7 @@ import org.mifos.library.passcode.data.PasscodePreferencesDataSource
 import org.mifos.mobile.core.common.MifosDispatchers
 
 val PasscodePreferenceModule = module {
-    single<Settings> { Settings() }
+    factory<Settings> { Settings() }
     factory { PasscodePreferencesDataSource(get(), get(named(MifosDispatchers.IO.name))) }
     factory { PasscodeManager(get(), get(named(MifosDispatchers.Unconfined.name))) }
 }

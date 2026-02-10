@@ -11,7 +11,9 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -57,6 +59,10 @@ internal class HomeViewModel(
 ) {
 
     private var isHandlingNetworkChange = false
+
+    companion object {
+        private val logger = Logger.withTag("HomeViewModel")
+    }
 
     init {
         observeNetworkStatus()
@@ -219,6 +225,21 @@ internal class HomeViewModel(
     }
 
     /**
+     * Computes the visible items based on the current edit mode and selected services.
+     * In edit mode, all items are shown. Otherwise, only selected services are shown.
+     */
+    private fun computeVisibleItems(
+        isEditMode: Boolean = state.isEditMode,
+        selectedServices: Set<String> = state.selectedServices,
+    ): ImmutableList<ServiceItem> {
+        return if (isEditMode) {
+            state.items
+        } else {
+            state.items.filter { selectedServices.contains(it.route) }.toImmutableList()
+        }
+    }
+
+    /**
      * Toggles the visibility of the amount on the screen.
      */
     private fun handleAmountVisible() {
@@ -233,10 +254,11 @@ internal class HomeViewModel(
      */
     private fun loadSavedServices() {
         val allRoutes = serviceCards.map { it.route }.toSet()
-        val savedServices = userPreferencesRepositoryImpl.selectedServices
+        val savedServices = userPreferencesRepositoryImpl.selectedServices ?: allRoutes
         updateState {
             it.copy(
-                selectedServices = savedServices ?: allRoutes,
+                selectedServices = savedServices,
+                visibleItems = computeVisibleItems(selectedServices = savedServices),
             )
         }
     }
@@ -246,32 +268,51 @@ internal class HomeViewModel(
             viewModelScope.launch {
                 try {
                     userPreferencesRepositoryImpl.saveSelectedServices(state.selectedServices)
-                    updateState { it.copy(isEditMode = false) }
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (e: Exception) {
-                    val lastSaved = userPreferencesRepositoryImpl.selectedServices
                     updateState {
                         it.copy(
                             isEditMode = false,
-                            selectedServices = lastSaved ?: serviceCards.map { it.route }.toSet(),
+                            visibleItems = computeVisibleItems(isEditMode = false),
+                        )
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    logger.e { "Error saving selected services: ${e.message}" }
+                    val lastSaved = userPreferencesRepositoryImpl.selectedServices
+                    val rollbackServices = lastSaved ?: serviceCards.map { it.route }.toSet()
+                    updateState {
+                        it.copy(
+                            isEditMode = false,
+                            selectedServices = rollbackServices,
+                            visibleItems = computeVisibleItems(
+                                isEditMode = false,
+                                selectedServices = rollbackServices,
+                            ),
                         )
                     }
                 }
             }
         } else {
-            updateState { it.copy(isEditMode = true) }
+            updateState {
+                it.copy(
+                    isEditMode = true,
+                    visibleItems = computeVisibleItems(isEditMode = true),
+                )
+            }
         }
     }
 
     private fun handleToggleServiceSelection(route: String) {
-        updateState { currentState ->
-            val newSelection = if (currentState.selectedServices.contains(route)) {
-                currentState.selectedServices - route
-            } else {
-                currentState.selectedServices + route
-            }
-            currentState.copy(selectedServices = newSelection)
+        val newSelection = if (state.selectedServices.contains(route)) {
+            state.selectedServices - route
+        } else {
+            state.selectedServices + route
+        }
+        updateState {
+            it.copy(
+                selectedServices = newSelection,
+                visibleItems = computeVisibleItems(selectedServices = newSelection),
+            )
         }
     }
 
@@ -492,6 +533,7 @@ internal data class HomeState(
     val isAmountVisible: Boolean = false,
     val dialogState: DialogState? = null,
     val items: ImmutableList<ServiceItem>,
+    val visibleItems: ImmutableList<ServiceItem> = items,
     val networkStatus: Boolean = true,
     val uiState: HomeScreenState?,
     val selectedServices: Set<String> = emptySet(),
