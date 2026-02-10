@@ -1,0 +1,131 @@
+name: iOS Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      distribution_method:
+        description: 'Distribution Method'
+        required: true
+        type: choice
+        options:
+          - firebase
+          - testflight
+          - appstore
+        default: 'firebase'
+      release_notes:
+        description: 'Release Notes'
+        required: false
+        default: 'New iOS build'
+
+jobs:
+  build-and-distribute:
+    name: Build and Distribute iOS App
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.1'
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: |
+            cmp-ios/Pods
+            ~/Library/Caches/CocoaPods
+          key: ${{ runner.os }}-pods-${{ hashFiles('cmp-ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build KMP Shared Framework
+        run: |
+          echo "Building shared framework for iOS..."
+          ./gradlew :cmp-shared:assembleXCFramework
+
+      - name: Install CocoaPods dependencies
+        working-directory: cmp-ios
+        run: pod install --repo-update
+
+      - name: Import Code Signing Certificates
+        if: inputs.distribution_method != 'firebase'
+        env:
+          CERTIFICATES_P12: ${{ secrets.CERTIFICATES_PASSWORD }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATES_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # Create keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+
+          # Import certificate
+          echo "$CERTIFICATES_P12" | base64 --decode > certificate.p12
+          security import certificate.p12 -k build.keychain -P "$CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+          rm certificate.p12
+
+      - name: Install Fastlane
+        run: |
+          gem install fastlane -v 2.225.0
+
+      - name: Build and Sign iOS App
+        working-directory: cmp-ios
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_SSH_PRIVATE_KEY }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.NOTARIZATION_PASSWORD }}
+        run: |
+          if [ "${{ inputs.distribution_method }}" == "firebase" ]; then
+            fastlane ios build_adhoc
+          elif [ "${{ inputs.distribution_method }}" == "testflight" ]; then
+            fastlane ios build_release
+            fastlane ios upload_testflight
+          else
+            fastlane ios build_release
+            fastlane ios upload_appstore
+          fi
+
+      - name: Distribute to Firebase
+        if: inputs.distribution_method == 'firebase'
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          firebase appdistribution:distribute \
+            cmp-ios/build/iosApp.ipa \
+            --app "$FIREBASE_APP_ID" \
+            --release-notes "${{ inputs.release_notes }}" \
+            --groups "mifos-mobile-apps"
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Zero-Rate-iOS-Release-${{ github.run_number }}
+          path: cmp-ios/build/*.ipa
+          retention-days: 90
+
+      - name: Distribution Summary
+        if: success()
+        run: |
+          echo "### ✅ iOS Release Build Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Distribution Method:** ${{ inputs.distribution_method }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Configuration:** Release" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Number:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Release Notes:** ${{ inputs.release_notes }}" >> $GITHUB_STEP_SUMMARY
