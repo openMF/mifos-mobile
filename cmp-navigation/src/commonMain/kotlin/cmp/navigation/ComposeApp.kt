@@ -16,18 +16,29 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import cmp.navigation.rootnav.RootNavScreen
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.NetworkBanner
+import org.mifos.mobile.core.ui.utils.SessionHandler
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun ComposeApp(
@@ -35,10 +46,35 @@ fun ComposeApp(
     handleAppLocale: (locale: String?) -> Unit,
     onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
+    sessionManager: SessionManager = koinInject(),
     viewModel: ComposeAppViewModel = koinViewModel(),
 ) {
+    val navController = rememberNavController()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
+    var wasBackgrounded by remember { mutableStateOf(false) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                wasBackgrounded = true
+                viewModel.trySendAction(AppAction.LockApp)
+            } else if (event == Lifecycle.Event.ON_START) {
+                if (wasBackgrounded) {
+                    viewModel.trySendAction(AppAction.LockApp)
+                    wasBackgrounded = false
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    val isSessionExpired by sessionManager.isExpired.collectAsStateWithLifecycle()
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is AppEvent.ShowToast -> {}
@@ -59,25 +95,36 @@ fun ComposeApp(
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
-        ) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .statusBarsPadding(),
-            ) {
-                NetworkBanner(
-                    bannerState = uiState.networkBanner,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+        LaunchedEffect(isSessionExpired) {
+            if (isSessionExpired) {
+                viewModel.trySendAction(AppAction.SessionExpired)
+            }
+        }
 
-                RootNavScreen(
-                    modifier = Modifier,
-                    onSplashScreenRemoved = onSplashScreenRemoved,
-                )
+        SessionHandler(
+            sessionManager = sessionManager,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(KptTheme.colorScheme.surface),
+            ) {
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
+                ) {
+                    NetworkBanner(
+                        bannerState = uiState.networkBanner,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    RootNavScreen(
+                        navController = navController,
+                        modifier = Modifier,
+                        onSplashScreenRemoved = onSplashScreenRemoved,
+                    )
+                }
             }
         }
     }

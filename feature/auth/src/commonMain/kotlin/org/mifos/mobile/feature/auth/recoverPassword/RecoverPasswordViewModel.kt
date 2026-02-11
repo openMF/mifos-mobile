@@ -24,6 +24,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_recover_now_invalid
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_required
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
@@ -31,10 +32,16 @@ import org.mifos.mobile.feature.auth.setNewPassword.SetPasswordRoute
 
 const val PHONE_NUMBER_LENGTH = 10
 
-internal class RecoverPasswordViewModel :
+internal class RecoverPasswordViewModel(
+    sessionManager: SessionManager,
+) :
     BaseViewModel<RecoverPasswordState, RecoverPasswordEvent, RecoverPasswordAction>(
         initialState = RecoverPasswordState(),
     ) {
+
+    init {
+        sessionManager.stopSession()
+    }
 
     private var validationJob: Job? = null
 

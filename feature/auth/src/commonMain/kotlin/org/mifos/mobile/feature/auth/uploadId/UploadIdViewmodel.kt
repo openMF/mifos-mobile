@@ -31,15 +31,22 @@ import mifos_mobile.feature.auth.generated.resources.feature_upload_id_error_mob
 import mifos_mobile.feature.auth.generated.resources.feature_upload_id_error_photo_required
 import mifos_mobile.feature.auth.generated.resources.feature_upload_id_upload_failed
 import org.jetbrains.compose.resources.StringResource
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.common.toBase64DataUri
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ValidationHelper
 import org.mifos.mobile.feature.auth.recoverPassword.PHONE_NUMBER_LENGTH
 
-internal class UploadIdViewModel :
+internal class UploadIdViewModel(
+    sessionManager: SessionManager,
+) :
     BaseViewModel<UploadIdUiState, UploadIdEvent, UploadIdAction>(
         initialState = UploadIdUiState(dialogState = null),
     ) {
+
+    init {
+        sessionManager.stopSession()
+    }
     override fun handleAction(action: UploadIdAction) {
         when (action) {
             UploadIdAction.OnBackClick -> sendEvent(UploadIdEvent.BackClick)

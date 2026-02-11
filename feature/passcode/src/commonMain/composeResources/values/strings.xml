@@ -23,4 +23,7 @@
 
     <string name="feature_passcode_authenticate">Enter Authentication Code</string>
     <string name="feature_passcode_authenticate_tip">Confirm it’s you by entering your 4-digit  authentication code in order to complete your action</string>
+
+    <string name="feature_passcode_unlock_success">Unlocked!</string>
+    <string name="feature_passcode_unlock_success_msg">You have successfully verified your identity.</string>
 </resources>

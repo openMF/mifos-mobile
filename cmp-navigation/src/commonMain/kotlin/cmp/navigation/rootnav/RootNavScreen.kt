@@ -24,15 +24,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import cmp.navigation.authenticated.AuthenticatedGraphRoute
 import cmp.navigation.authenticated.authenticatedGraph
-import cmp.navigation.authenticated.navigateToAuthenticatedGraph
 import cmp.navigation.authenticated.navigateToStatusScreenLoginFlow
-import cmp.navigation.authenticated.navigateToStatusScreenPasscodeFlow
+import cmp.navigation.navigation.passcodeNavGraph
 import cmp.navigation.splash.SplashRoute
 import cmp.navigation.splash.navigateToSplash
 import cmp.navigation.splash.splashDestination
 import cmp.navigation.ui.rememberMifosNavController
 import cmp.navigation.utils.toObjectNavigationRoute
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.ui.NonNullEnterTransitionProvider
 import org.mifos.mobile.core.ui.NonNullExitTransitionProvider
 import org.mifos.mobile.core.ui.RootTransitionProviders
@@ -44,13 +45,13 @@ import org.mifos.mobile.feature.onboarding.language.navigation.navigateToOnboard
 import org.mifos.mobile.feature.onboarding.language.navigation.onBoardingLanguageDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.navigation.navigateToPasscodeScreen
-import org.mifos.mobile.feature.passcode.navigation.passcodeDestination
 
 @Suppress("LongMethod", "CyclomaticComplexMethod")
 @Composable
 fun RootNavScreen(
     modifier: Modifier = Modifier,
     viewModel: RootNavViewModel = koinViewModel(),
+    sessionManager: SessionManager = koinInject(),
     navController: NavHostController = rememberMifosNavController(name = "RootNavScreen"),
     onSplashScreenRemoved: () -> Unit = {},
 ) {
@@ -79,7 +80,14 @@ fun RootNavScreen(
             navController::navigateToStatusScreenLoginFlow,
         )
         authenticatedGraph(navController)
-        passcodeDestination(navController::navigateToStatusScreenPasscodeFlow)
+        passcodeNavGraph(
+            onPasscodeVerified = {
+                sessionManager.startSession()
+                navController.navigate(AuthenticatedGraphRoute) {
+                    popUpTo(0) { inclusive = true }
+                }
+            },
+        )
     }
 
     val targetRoute = when (state) {
@@ -122,10 +130,20 @@ fun RootNavScreen(
             RootNavState.Splash -> navController.navigateToSplash(rootNavOptions)
             RootNavState.Auth -> navController.navigateToAuthGraph(rootNavOptions)
             RootNavState.SetLanguage -> navController.navigateToOnboardingLanguage(rootNavOptions)
-            RootNavState.UserLocked -> navController.navigateToPasscodeScreen(rootNavOptions)
-            is RootNavState.UserUnlocked -> navController.navigateToAuthenticatedGraph(
-                navOptions = rootNavOptions,
+            RootNavState.UserLocked -> navController.navigateToPasscodeScreen(
+                navOptions {
+                    popUpTo(navController.graph.id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                },
             )
+            is RootNavState.UserUnlocked -> {
+                navController.navigate(AuthenticatedGraphRoute) {
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }
+            }
         }
     }
 }

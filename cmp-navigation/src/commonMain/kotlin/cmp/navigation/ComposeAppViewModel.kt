@@ -146,6 +146,16 @@ class ComposeAppViewModel(
             is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
 
             is AppAction.Internal.TimeBasedThemeUpdate -> handleTimeBasedThemeUpdate(action)
+
+            is AppAction.SessionExpired -> handleLockApp()
+
+            is AppAction.LockApp -> handleLockApp()
+        }
+    }
+
+    private fun handleLockApp() {
+        viewModelScope.launch {
+            userPreferencesRepository.setIsUnlocked(false)
         }
     }
 
@@ -261,4 +271,7 @@ sealed interface AppAction {
             val timeBasedTheme: TimeBasedTheme,
         ) : Internal()
     }
+
+    data object LockApp : AppAction
+    data object SessionExpired : AppAction
 }

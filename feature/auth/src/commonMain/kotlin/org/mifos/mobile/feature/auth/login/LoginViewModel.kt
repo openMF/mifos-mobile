@@ -20,6 +20,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_er
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.UserData
@@ -30,6 +31,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 class LoginViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    sessionManager: SessionManager,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
     initialState = LoginState(uiState = ScreenUiState.Success),
@@ -38,6 +40,7 @@ class LoginViewModel(
     private var loginJob: Job? = null
 
     init {
+        sessionManager.stopSession()
         savedStateHandle.get<String>("username")?.let {
             trySendAction(LoginAction.UsernameChanged(it))
         }

@@ -31,6 +31,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -39,11 +40,13 @@ import org.mifos.mobile.feature.auth.login.LoginRoute
 
 internal class OtpAuthenticationViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
+    sessionManager: SessionManager,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<OtpAuthState, OtpAuthEvent, OtpAuthAction>(
     initialState = OtpAuthState(dialogState = null),
 ) {
     init {
+        sessionManager.stopSession()
         val nextRoute = savedStateHandle.toRoute<OtpAuthenticationRoute>()
 
         mutableStateFlow.update {

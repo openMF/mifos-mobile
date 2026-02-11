@@ -27,6 +27,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.ui.PasswordStrengthState
@@ -48,9 +49,14 @@ import org.mifos.mobile.core.ui.utils.ValidationHelper
 @Suppress("TooManyFunctions")
 class RegistrationViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
+    sessionManager: SessionManager,
 ) : BaseViewModel<SignUpState, SignUpEvent, SignUpAction>(
     initialState = SignUpState(),
 ) {
+
+    init {
+        sessionManager.stopSession()
+    }
 
     private var validationJob: Job? = null
     private var passwordStrengthJob: Job = Job()

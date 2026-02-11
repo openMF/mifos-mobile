@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.passcode.generated.resources.Res
+import mifos_mobile.feature.passcode.generated.resources.feature_passcode_authenticate
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_confirm
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_setup
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_tip
@@ -121,6 +122,7 @@ private fun PasscodeScreenContent(
                     text = when (state.mode) {
                         PasscodeMode.Set -> stringResource(Res.string.feature_passcode_setup)
                         PasscodeMode.Confirm -> stringResource(Res.string.feature_passcode_confirm)
+                        PasscodeMode.Verify -> stringResource(Res.string.feature_passcode_authenticate)
                     },
                     style = MifosTypography.titleMedium,
                     color = KptTheme.colorScheme.onBackground,

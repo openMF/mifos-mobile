@@ -10,23 +10,44 @@
 package org.mifos.mobile.feature.passcode
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.passcode.generated.resources.Res
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_common_continue
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_setup_successful
 import mifos_mobile.feature.passcode.generated.resources.feature_passcode_setup_successful_msg
+import mifos_mobile.feature.passcode.generated.resources.feature_passcode_unlock_success
+import mifos_mobile.feature.passcode.generated.resources.feature_passcode_unlock_success_msg
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
+import org.mifos.mobile.core.common.SessionManager
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
 internal class PasscodeViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
+    sessionManager: SessionManager,
 ) : BaseViewModel<PasscodeState, PasscodeEvent, PasscodeAction>(
     initialState = PasscodeState(),
 ) {
+
+    init {
+        sessionManager.stopSession()
+
+        viewModelScope.launch {
+            val storedPasscode = userPreferencesRepository.passcode.firstOrNull()
+            if (!storedPasscode.isNullOrEmpty()) {
+                mutableStateFlow.update {
+                    it.copy(
+                        mode = PasscodeMode.Verify,
+                        storedPasscode = storedPasscode,
+                    )
+                }
+            }
+        }
+    }
 
     private var passcodeBuilder: StringBuilder = StringBuilder()
 
@@ -77,6 +98,7 @@ internal class PasscodeViewModel(
                     if (confirm == state.firstPasscode) {
                         viewModelScope.launch {
                             userPreferencesRepository.setPasscode(confirm)
+                            userPreferencesRepository.setIsUnlocked(true)
                             sendEvent(
                                 PasscodeEvent.OnPasscodeConfirm(
                                     eventType = EventType.SUCCESS.name,
@@ -100,7 +122,39 @@ internal class PasscodeViewModel(
                         }
                     }
                 }
+
+                PasscodeMode.Verify -> viewModelScope.launch {
+                    val storedPasscode = userPreferencesRepository.passcode.firstOrNull()
+                    val entered = passcodeBuilder.toString()
+                    if (entered == storedPasscode) {
+                        userPreferencesRepository.setIsUnlocked(true)
+                        sendEvent(
+                            PasscodeEvent.OnPasscodeConfirm(
+                                eventType = EventType.SUCCESS.name,
+                                eventDestination = "UNLOCK_ACTION",
+                                title = getString(Res.string.feature_passcode_unlock_success),
+                                subtitle = getString(Res.string.feature_passcode_unlock_success_msg),
+                                buttonText = getString(Res.string.feature_passcode_common_continue),
+                            ),
+                        )
+                    } else {
+                        handleWrongPasscode()
+                    }
+                }
             }
+        }
+    }
+
+    private fun handleWrongPasscode() {
+        passcodeBuilder.clear()
+        mutableStateFlow.update {
+            it.copy(
+                firstPasscode = if (it.mode == PasscodeMode.Confirm) "" else it.firstPasscode,
+                mode = if (it.mode == PasscodeMode.Confirm) PasscodeMode.Set else it.mode,
+                passcode = "",
+                filledDots = 0,
+                passcodeError = true,
+            )
         }
     }
 
@@ -144,4 +198,5 @@ internal sealed interface PasscodeAction {
 enum class PasscodeMode {
     Set,
     Confirm,
+    Verify,
 }
