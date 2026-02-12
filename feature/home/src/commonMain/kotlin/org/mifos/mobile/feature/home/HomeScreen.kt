@@ -218,7 +218,7 @@ internal fun HomeContent(
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+                        horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_home_services),
@@ -235,10 +235,10 @@ internal fun HomeContent(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
 
                     ServiceBox(
-                        items = state.items,
+                        visibleItems = state.visibleItems,
                         isEditMode = state.isEditMode,
                         selectedServices = state.selectedServices,
                         onServiceClick = { route ->
@@ -259,7 +259,7 @@ internal fun HomeContent(
 
 @Composable
 internal fun ServiceBox(
-    items: ImmutableList<ServiceItem>,
+    visibleItems: ImmutableList<ServiceItem>,
     isEditMode: Boolean,
     selectedServices: Set<String>,
     onServiceClick: (String) -> Unit,
@@ -267,14 +267,13 @@ internal fun ServiceBox(
 ) {
     val columnCount = 4
     val spacing = DesignToken.spacing.medium
-    val displayItems = if (isEditMode) items else items.filter { selectedServices.contains(it.route) }
-    val rows = displayItems.chunked(columnCount)
+    val rows = visibleItems.chunked(columnCount)
 
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
-        if (displayItems.isEmpty() && !isEditMode) {
+        if (visibleItems.isEmpty() && !isEditMode) {
             Text(
                 text = stringResource(Res.string.feature_home_no_services_hint),
                 style = MifosTypography.bodyMedium,
@@ -319,7 +318,7 @@ internal fun ServiceItemCard(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isSelected: Boolean = true,
+    isSelected: Boolean = false,
     isEditMode: Boolean = false,
 ) {
     Column(
