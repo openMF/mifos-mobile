@@ -26,7 +26,7 @@ actual object LocalizedDateFormatter {
             .toLocaleDateString(undefined, options) as String
     }
 
-    actual fun getRelativePrefix(day: Int, month: Int, year: Int): String? {
+    actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? {
         val date = Date(year, month - 1, day)
         val now = Date()
 
@@ -51,7 +51,7 @@ actual object LocalizedDateFormatter {
     }
 }
 
-fun dateLocaleOptions(init: dynamic.() -> Unit): dynamic {
+private fun dateLocaleOptions(init: dynamic.() -> Unit): dynamic {
     val options = js("{}")
     init(options)
     return options

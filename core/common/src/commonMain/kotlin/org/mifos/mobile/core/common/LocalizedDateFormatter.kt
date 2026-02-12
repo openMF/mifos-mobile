@@ -19,5 +19,5 @@ expect object LocalizedDateFormatter {
     /**
      * Returns "Today", "Yesterday", or the localized equivalent.
      */
-    fun getRelativePrefix(day: Int, month: Int, year: Int): String?
+    fun getRelativePrefix(year: Int, month: Int, day: Int): String?
 }

@@ -43,22 +43,22 @@ actual object LocalizedDateFormatter {
         }
     }
 
-    actual fun getRelativePrefix(day: Int, month: Int, year: Int): String? {
+    actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? {
         return try {
             val targetDate = LocalDate.of(year, month, day)
+            val today = LocalDate.now()
+            val yesterday = today.minusDays(1)
+            if (targetDate != today && targetDate != yesterday) return null
             val millis = targetDate
                 .atStartOfDay(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
-
             val locale = Locale.getDefault()
-
             val relative = DateUtils.getRelativeTimeSpanString(
                 millis,
                 System.currentTimeMillis(),
                 DateUtils.DAY_IN_MILLIS,
             ).toString()
-
             localizeDateDigits(relative, locale)
         } catch (_: java.time.DateTimeException) {
             null

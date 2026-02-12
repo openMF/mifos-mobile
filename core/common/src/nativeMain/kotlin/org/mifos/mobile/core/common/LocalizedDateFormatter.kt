@@ -66,7 +66,7 @@ actual object LocalizedDateFormatter {
         return localizeDateDigits(formatted)
     }
 
-    actual fun getRelativePrefix(day: Int, month: Int, year: Int): String? {
+    actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? {
         val date = createNSDate(day, month, year) ?: return null
         val calendar = NSCalendar.currentCalendar
 

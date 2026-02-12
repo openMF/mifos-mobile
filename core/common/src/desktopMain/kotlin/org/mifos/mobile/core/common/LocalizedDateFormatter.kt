@@ -26,7 +26,7 @@ actual object LocalizedDateFormatter {
         return localizeDateDigits(formatted, locale)
     }
 
-    actual fun getRelativePrefix(day: Int, month: Int, year: Int): String? {
+    actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? {
         return null
     }
 

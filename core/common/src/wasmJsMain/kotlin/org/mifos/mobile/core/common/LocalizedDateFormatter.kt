@@ -28,12 +28,24 @@ private external fun formatFullDateJs(
 ): String
 
 @JsFun(
-    """ (month, abbreviated) => {
-        if (month < 1 || month > 12) return "";
+    """ (year, month, day) => {
+        const date = new Date(year, month - 1, day);
+        const now = new Date();
 
-        const style = abbreviated ? 'short' : 'long';
-        return new Date(2000, month - 1, 1)
-            .toLocaleDateString(undefined, { month: style });
+        const toLocalDateOnly = (d) =>
+            new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+        const today = toLocalDateOnly(now);
+        const target = toLocalDateOnly(date);
+
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const diffDays = Math.floor((today - target) / msPerDay);
+
+        const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+
+        if (diffDays === 0) return rtf.format(0, 'day');
+        if (diffDays === 1) return rtf.format(-1, 'day');
+        return null;
     } """,
 )
 private external fun relativePrefixJs(
@@ -47,6 +59,6 @@ actual object LocalizedDateFormatter {
     actual fun formatFullDate(year: Int, month: Int, day: Int): String =
         formatFullDateJs(year, month, day)
 
-    actual fun getRelativePrefix(day: Int, month: Int, year: Int): String? =
+    actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? =
         relativePrefixJs(year, month, day)
 }

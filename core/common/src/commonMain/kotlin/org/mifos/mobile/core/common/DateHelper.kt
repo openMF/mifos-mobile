@@ -69,10 +69,13 @@ object DateHelper {
     }
 
     fun getDateAsString(integersOfDate: List<Long>, pattern: String): String {
-        return getFormatConverter(
-            requiredFormat = pattern,
-            dateString = getDateAsString(integersOfDate.map { it.toInt() }),
-        )
+        require(integersOfDate.size == 3)
+        val (year, month, day) = integersOfDate.map { it.toInt() }
+
+        val localDate = LocalDate(year, month, day)
+        val formatter = LocalDate.Format { byUnicodePattern(pattern) }
+
+        return localDate.format(formatter)
     }
 
     @OptIn(ExperimentalTime::class)
@@ -126,25 +129,17 @@ object DateHelper {
 
     @OptIn(ExperimentalTime::class)
     fun getDateAsLongFromList(integersOfDate: List<Int>?): Long? {
-        if (integersOfDate == null) return null
-        val dateStr = getDateAsString(integersOfDate)
+        integersOfDate ?: return null
+        require(integersOfDate.size == 3)
+
+        val (year, month, day) = integersOfDate
+
         return try {
-            val dateList = getDateAsList(dateStr)
-            val localDate = LocalDate(dateList[0], dateList[1], dateList[2])
+            val localDate = LocalDate(year, month, day)
             localDate.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
         } catch (_: Exception) {
             null
         }
-    }
-
-    private fun getFormatConverter(
-        requiredFormat: String,
-        dateString: String,
-    ): String {
-        val pickerFormat = LocalDateTime.Format { byUnicodePattern(FULL_MONTH) }
-        val finalFormat = LocalDateTime.Format { byUnicodePattern(requiredFormat) }
-
-        return pickerFormat.parse(dateString).format(finalFormat)
     }
 
     fun LocalDate.format(pattern: String): String {
