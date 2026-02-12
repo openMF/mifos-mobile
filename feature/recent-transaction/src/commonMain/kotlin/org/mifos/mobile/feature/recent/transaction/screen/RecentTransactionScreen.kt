@@ -52,6 +52,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import mifos_mobile.feature.recent_transaction.generated.resources.Res
+import mifos_mobile.feature.recent_transaction.generated.resources.deposit
+import mifos_mobile.feature.recent_transaction.generated.resources.withdrawal
 import mifos_mobile.feature.recent_transaction.generated.resources.account_number_label
 import mifos_mobile.feature.recent_transaction.generated.resources.all
 import mifos_mobile.feature.recent_transaction.generated.resources.apply_filters
@@ -252,8 +254,9 @@ internal fun RecentTransactionScreenContent(
                                         ?: "${date}_${transaction.amount}_${transaction.typeValue}"
                                 },
                             ) { transaction ->
+                                println("xoxo" + "Rendering transaction: ${transaction.typeValue}")
                                 TransactionScreenItem(
-                                    title = transaction.typeValue.orEmpty(),
+                                    title = transactionTitle(transaction.typeValue.orEmpty()),
                                     date = DateHelper.getDateAsString(transaction.date),
                                     time = "",
                                     transactionAmount = CurrencyFormatter.format(
@@ -541,5 +544,14 @@ fun FilterOptionChip(
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             )
         }
+    }
+}
+
+@Composable
+fun transactionTitle(type: String): String {
+    return when (type) {
+        "Withdrawal" -> stringResource(Res.string.withdrawal)
+        "Deposit" -> stringResource(Res.string.deposit)
+        else -> type
     }
 }

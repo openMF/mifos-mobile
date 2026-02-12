@@ -29,4 +29,7 @@
     <string name="debits">Cargos</string>
     <string name="credits">Abonos</string>
     <string name="apply_filters">Aplicar Filtros</string>
+
+    <string name="deposit">Depósito</string>
+    <string name="withdrawal">Retiro</string>
 </resources>

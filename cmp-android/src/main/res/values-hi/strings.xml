@@ -543,4 +543,7 @@
     <string name="dialog_cancel_registration_message">क्या आप नये खाते का पंजीकरण रद्द करना चाहते हैं?</string>
     <string name="dialog_cancel_registration_title">पंजीकरण रद्द करें</string>
 
+    <string name="Withdrawal">निकासी</string>
+    <string name="Deposit">जमा</string>
+
 </resources>
