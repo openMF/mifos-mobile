@@ -57,12 +57,11 @@ object DateHelper {
         return LocalizedDateFormatter.formatFullDate(year, month, day)
     }
 
-    @OptIn(ExperimentalTime::class)
     fun getFormattedDateWithPrefix(date: List<Int>): String {
         require(date.size == 3)
         val (year, month, day) = date
 
-        val prefix = LocalizedDateFormatter.getRelativePrefix(day, month, year)
+        val prefix = LocalizedDateFormatter.getRelativePrefix(year, month, day)
         val formattedDate = LocalizedDateFormatter.formatFullDate(year, month, day)
 
         return prefix?.let { "$it, $formattedDate" } ?: formattedDate
