@@ -133,4 +133,7 @@
     <string name="feature_savings_apply">Apply</string>
 
     <string name="internal_server_error">Something went wrong on our end. Please try again in a moment.</string>
+
+    <string name="feature_pdf_generation_date">Generation Date</string>
+
 </resources>
