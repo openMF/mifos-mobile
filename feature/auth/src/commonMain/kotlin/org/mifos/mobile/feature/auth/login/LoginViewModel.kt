@@ -113,6 +113,7 @@ class LoginViewModel(
                 val user = action.loginResult.data
                 if (user.clients.isEmpty()) {
                     viewModelScope.launch {
+                        userPreferencesRepositoryImpl.updateUser(UserData.DEFAULT)
                         userPreferencesRepositoryImpl.setIsAuthenticated(false)
                     }
                     updateState {
@@ -127,11 +128,7 @@ class LoginViewModel(
                     val userData = UserData(
                         userId = user.userId,
                         userName = user.username.orEmpty(),
-                        clientId = if (user.clients.isNotEmpty()) {
-                            user.clients[0]
-                        } else {
-                            user.userId
-                        },
+                        clientId = user.clients[0],
                         isAuthenticated = user.isAuthenticated,
                         base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
                         officeName = user.officeName.orEmpty(),
