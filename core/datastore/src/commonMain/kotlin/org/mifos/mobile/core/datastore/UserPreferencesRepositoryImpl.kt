@@ -187,6 +187,17 @@ class UserPreferencesRepositoryImpl(
         preferenceManager.setPasscode(passcode)
     }
 
+    override suspend fun setSelectedServices(selectedServices: Set<String>?) {
+        preferenceManager.setSelectedServices(selectedServices)
+    }
+
+    override val selectedServices: Set<String>?
+        get() = preferenceManager.getSelectedServicesDirectly()
+
+    override fun saveSelectedServices(services: Set<String>?) {
+        preferenceManager.saveSelectedServicesDirectly(services)
+    }
+
     override suspend fun logOut() {
         preferenceManager.clearInfo()
     }

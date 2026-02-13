@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">Нет подключения к интернету</string>
+    <string name="back_online">Снова в сети</string>
+    <string name="retry">Повторить</string>
+    <string name="no_data">Нет данных</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="core_common_working">Основные функции работают</string>
+    <string name="customer_name">Имя клиента</string>
+    <string name="product">Продукт</string>
+    <string name="error_loading_balance">Ошибка загрузки баланса</string>
+    <string name="powered_by">Работает на базе</string>
+    <string name="password_checker_empty_error">Пароль не может быть пустым.</string>
+    <string name="password_checker_too_long_error">Пароль слишком длинный. Максимальная длина — 128 символов.</string>
+    <string name="password_checker_min_length_feedback">Пароль должен содержать не менее 12 символов.</string>
+    <string name="password_checker_uppercase_feedback">Добавьте хотя бы одну заглавную букву.</string>
+    <string name="password_checker_lowercase_feedback">Добавьте хотя бы одну строчную букву.</string>
+    <string name="password_checker_digit_feedback">Добавьте хотя бы одну цифру.</string>
+    <string name="password_checker_special_char_feedback">Добавьте хотя бы один специальный символ.</string>
+    <string name="password_checker_strong_length_feedback">Для более надежного пароля используйте не менее 12 символов.</string>
+    <string name="password_strength_level_0">Очень слабый</string>
+    <string name="password_strength_level_1">Слабый</string>
+    <string name="password_strength_level_2">Средний</string>
+    <string name="password_strength_level_3">Хороший</string>
+    <string name="password_strength_level_4">Надежный</string>
+    <string name="password_strength_level_5">Очень надежный</string>
+    <string name="password_strength_none">Введите пароль</string>
+    <string name="password_strength_indicator_description">Индикатор надежности пароля</string>
+    <string name="password_strength_announcement">Надежность пароля: %1$s</string>
+    <string name="minimum_characters_requirement">Минимум %1$d символов</string>
+    <string name="minimum_characters_met">Требование к мин. количеству символов соблюдено</string>
+    <string name="minimum_characters_not_met">Требование к мин. количеству символов не соблюдено</string>
+    <string name="password_requirements_title">Требования к паролю</string>
+    <string name="password_feedback_title">Советы по паролю</string>
+    <string name="password_feedback_all_good">Ваш пароль соответствует всем требованиям!</string>
+    <string name="character_count">%1$d символов</string>
+    <string name="character_count_with_limit">%1$d / %2$d символов</string>
+    <string name="validation_email_empty">Адрес эл. почты не может быть пустым</string>
+    <string name="validation_email_max_length_exceeded">Адрес эл. почты превышает лимит в 254 символа</string>
+    <string name="validation_email_missing_at_symbol">Адрес эл. почты должен содержать символ @</string>
+    <string name="validation_email_starts_with_at">Адрес эл. почты не может начинаться с символа @</string>
+    <string name="validation_email_ends_with_at">Адрес эл. почты не может заканчиваться на символ @</string>
+    <string name="validation_email_multiple_at_symbols">Адрес эл. почты не может содержать несколько символов @</string>
+    <string name="validation_email_local_empty">Локальная часть адреса не может быть пустой</string>
+    <string name="validation_email_local_max_length">Локальная часть адреса превышает лимит в 64 символа</string>
+    <string name="validation_email_local_starts_with_dot">Локальная часть адреса не может начинаться с точки</string>
+    <string name="validation_email_local_ends_with_dot">Локальная часть адреса не может заканчиваться точкой</string>
+    <string name="validation_email_local_consecutive_dots">Локальная часть адреса не может содержать последовательные точки</string>
+    <string name="validation_email_local_invalid_characters">Локальная часть адреса содержит недопустимые символы</string>
+    <string name="validation_email_domain_empty">Доменная часть не может быть пустой</string>
+    <string name="validation_email_domain_max_length">Доменная часть превышает лимит в 253 символа</string>
+    <string name="validation_email_domain_missing_dot">Домен должен содержать хотя бы одну точку</string>
+    <string name="validation_email_domain_starts_ends_with_dot">Домен не может начинаться или заканчиваться на точку</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">Домен не может начинаться или заканчиваться на дефис</string>
+    <string name="validation_email_domain_insufficient_parts">Домен должен состоять минимум из двух частей, разделенных точками</string>
+    <string name="validation_email_tld_invalid">Домен верхнего уровня должен состоять минимум из 2 букв и содержать только буквы</string>
+    <string name="validation_email_label_empty">Метка домена не может быть пустой</string>
+    <string name="validation_email_label_max_length">Метка домена превышает лимит в 63 символа</string>
+    <string name="validation_email_label_starts_with_hyphen">Метка домена не может начинаться с дефиса</string>
+    <string name="validation_email_label_ends_with_hyphen">Метка домена не может заканчиваться на дефис</string>
+    <string name="validation_email_label_invalid_characters">Метка домена содержит недопустимые символы</string>
+    <string name="validation_phone_empty">Номер телефона не может быть пустым</string>
+    <string name="validation_phone_too_short">Номер телефона слишком короткий</string>
+    <string name="validation_phone_too_long">Номер телефона слишком длинный</string>
+    <string name="validation_phone_invalid_characters">Номер телефона содержит недопустимые символы</string>
+    <string name="validation_phone_spanish_country_code_required">Пожалуйста, используйте код страны Испании (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">Недопустимый формат номера телефона Испании</string>
+    <string name="validation_phone_invalid_for_country">Номер телефона недействителен для выбранной страны</string>
+    <string name="validation_phone_no_valid_country_found">Формат номера телефона не распознан ни для одной из поддерживаемых стран</string>
+    <string name="validation_name_empty">Имя не может быть пустым</string>
+    <string name="validation_name_invalid_characters">Имя содержит недопустимые символы</string>
+    <string name="validation_field_required">Это поле обязательно для заполнения</string>
+    <string name="validation_format_invalid">Неверный формат</string>
+    <string name="validation_length_exceeded">Максимальная длина превышена</string>
+    <string name="validation_length_insufficient">Минимальная длина не соблюдена</string>
+    <string name="validation_amount_empty">Сумма не может быть пустой</string>
+    <string name="validation_amount_invalid_format">Пожалуйста, введите сумму в верном формате (например, 99.99)</string>
+    <string name="validation_amount_invalid_number">Пожалуйста, введите корректное число</string>
+    <string name="validation_amount_negative">Сумма не может быть отрицательной</string>
+    <string name="validation_amount_too_small">Минимальная сумма — 0.01</string>
+    <string name="validation_amount_too_large">Сумма не может превышать 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">Слишком много десятичных знаков для этой валюты</string>
+    <string name="validation_amount_invalid_increment">Сумма должна быть кратной шагу для этой валюты</string>
+    <string name="savings_account">Сберегательный счет</string>
+    <string name="available_balance">Доступный баланс</string>
+    <string name="select_other_payment_account">Выбрать другой счет для оплаты</string>
+    <string name="pay_from">Оплатить с</string>
+    <string name="available_balance_formatted">Доступный баланс — %1$s</string>
+    <string name="feature_dashboard_welcome_back">Добро пожаловать в Mifos</string>
+    <string name="feature_dashboard_no_accounts_title">Счетов пока нет</string>
+    <string name="feature_dashboard_no_accounts_description">Начните свой финансовый путь, открыв первый счет у нас.</string>
+    <string name="feature_dashboard_open_account">Открыть счет</string>
+    <string name="feature_savings_filter">Фильтры</string>
+    <string name="feature_savings_reset">Сбросить</string>
+    <string name="feature_savings_apply">Применить</string>
+</resources>

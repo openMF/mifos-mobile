@@ -29,6 +29,7 @@ data class AppSettings(
     val showOnboarding: Boolean,
     val firstTimeState: Boolean,
     val timeBasedTheme: TimeBasedTheme,
+    val selectedServices: Set<String> = emptySet(),
 ) {
     companion object {
         val DEFAULT = AppSettings(

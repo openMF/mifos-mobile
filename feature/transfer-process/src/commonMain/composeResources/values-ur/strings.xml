@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">منتقلی</string>
+    <string name="transferred_successfully">کامیابی سے منتقل ہو گیا</string>
+    <string name="amount">رقم</string>
+    <string name="transfer_from_savings">بچت سے منتقلی</string>
+    <string name="pay_from">ادائیگی یہاں سے</string>
+    <string name="date">تاریخ</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="remark">تبصرہ</string>
+    <string name="make_transfer">منتقلی کریں</string>
+    <string name="pay_to">ادائیگی یہاں کو</string>
+    <string name="remarks">تبصرے</string>
+    <string name="error_icon_description">غلطی</string>
+    <string name="error_description">رقم میں غیر قانونی حروف نہیں ہونے چاہئیں</string>
+    <string name="transfer_failed">منتقلی ناکام ہو گئی</string>
+    <string name="transfer_successful">منتقلی کامیاب رہی</string>
+    <string name="back_to_accounts">ہوم اسکرین پر واپس جائیں</string>
+    <string name="transfer_id_prefix">ٹرانسفر آئی ڈی:</string>
+    <string name="feature_make_transfer_error_amount_required">رقم درکار ہے</string>
+    <string name="feature_make_transfer_error_amount_invalid">براہ کرم درست رقم درج کریں</string>
+    <string name="feature_make_transfer_error_remarks_empty">تبصرہ خالی نہیں ہو سکتا</string>
+    <string name="feature_make_transfer_error_remarks_invalid">غیر درست تبصرہ درج کیا گیا</string>
+    <string name="feature_make_transfer_error_server">ہماری طرف سے سرور کا مسئلہ ہے، جاری نہیں رکھا جا سکتا۔ تھوڑی دیر بعد دوبارہ کوشش کریں</string>
+    <string name="feature_make_transfer_account_number">اکاؤنٹ نمبر</string>
+    <string name="feature_make_transfer_customer_name">گاہک کا نام</string>
+    <string name="feature_make_transfer_beneficiary_name">وصول کنندہ کا نام</string>
+    <string name="feature_make_transfer_details">منتقلی کی تفصیلات</string>
+</resources>

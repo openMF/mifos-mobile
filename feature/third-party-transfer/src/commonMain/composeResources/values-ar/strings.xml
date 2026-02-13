@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">المبلغ مطلوب</string>
+    <string name="feature_tpt_error_amount_invalid">يرجى إدخال مبلغ صالح</string>
+    <string name="feature_tpt_error_remarks_empty">لا يمكن أن تكون الملاحظات فارغة</string>
+    <string name="feature_tpt_error_remarks_invalid">تم إدخال ملاحظات غير صالحة</string>
+    <string name="feature_tpt_error_server">مشكلة في الخادم من جانبنا لا يمكن المتابعة، حاول مرة أخرى بعد قليل</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">المبلغ يتجاوز الرصيد المتاح</string>
+    <string name="feature_tpt_label_origin_account">الحساب المصدر</string>
+    <string name="feature_tpt_label_origin_account_hint">اختر حساب دفع آخر</string>
+    <string name="feature_tpt_label_destination">الحساب الوجهة</string>
+    <string name="feature_tpt_label_amount">المبلغ</string>
+    <string name="feature_tpt_label_remarks">الملاحظات</string>
+    <string name="feature_tpt_tip">لم تجد الحساب الوجهة؟</string>
+    <string name="feature_tpt_tip_action">أضف مستفيد!</string>
+    <string name="feature_tpt_transfer_button">تحويل المبلغ</string>
+</resources>
