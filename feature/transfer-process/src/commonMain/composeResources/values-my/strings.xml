@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">လွှဲပြောင်းမည်</string>
+    <string name="transferred_successfully">အောင်မြင်စွာ လွှဲပြောင်းပြီးပါပြီ</string>
+    <string name="amount">ပမာဏ</string>
+    <string name="transfer_from_savings">စုငွေမှ လွှဲပြောင်းမည်</string>
+    <string name="pay_from">မှ ပေးချေမည်</string>
+    <string name="date">ရက်စွဲ</string>
+    <string name="cancel">ပယ်ဖျက်မည်</string>
+    <string name="remark">မှတ်ချက်</string>
+    <string name="make_transfer">လွှဲပြောင်းမှု ပြုလုပ်မည်</string>
+    <string name="pay_to">သို့ ပေးချေမည်</string>
+    <string name="remarks">မှတ်ချက်များ</string>
+    <string name="error_icon_description">အမှား</string>
+    <string name="error_description">ပမာဏတွင် မမှန်ကန်သော စာလုံးများ မပါဝင်သင့်ပါ</string>
+    <string name="transfer_failed">လွှဲပြောင်းမှု မအောင်မြင်ပါ</string>
+    <string name="transfer_successful">လွှဲပြောင်းမှု အောင်မြင်ပါသည်</string>
+    <string name="back_to_accounts">ပင်မစာမျက်နှာသို့ ပြန်သွားရန်</string>
+    <string name="transfer_id_prefix">လွှဲပြောင်းမှု နံပါတ်:</string>
+    <string name="feature_make_transfer_error_amount_required">ပမာဏ လိုအပ်ပါသည်</string>
+    <string name="feature_make_transfer_error_amount_invalid">မှန်ကန်သော ပမာဏကို ရိုက်ထည့်ပါ</string>
+    <string name="feature_make_transfer_error_remarks_empty">မှတ်ချက် အလွတ်မဖြစ်ရပါ</string>
+    <string name="feature_make_transfer_error_remarks_invalid">မမှန်ကန်သော မှတ်ချက်များ ဖြစ်နေပါသည်</string>
+    <string name="feature_make_transfer_error_server">ဆာဗာ ချို့ယွင်းနေပါသဖြင့် ဆက်လက်ဆောင်ရွက်၍ မရပါ၊ ခေတ္တစောင့်ပြီးမှ ပြန်လည် ကြိုးစားပါ</string>
+    <string name="feature_make_transfer_account_number">အကောင့်နံပါတ်</string>
+    <string name="feature_make_transfer_customer_name">ဖောက်သည်အမည်</string>
+    <string name="feature_make_transfer_beneficiary_name">လွှဲပြောင်းလက်ခံသူအမည်</string>
+    <string name="feature_make_transfer_details">လွှဲပြောင်းမှု အသေးစိတ်</string>
+</resources>

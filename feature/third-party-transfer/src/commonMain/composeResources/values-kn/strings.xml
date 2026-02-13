@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">ಮೊತ್ತ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_tpt_error_amount_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_tpt_error_remarks_empty">ಟಿಪ್ಪಣಿಗಳು ಖಾಲಿ ಇರಬಾರದು</string>
+    <string name="feature_tpt_error_remarks_invalid">ಅಮಾನ್ಯ ಟಿಪ್ಪಣಿಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ</string>
+    <string name="feature_tpt_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ ಇದೆ, ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">ಮೊತ್ತವು ಲಭ್ಯವಿರುವ ಬಾಕಿಗಿಂತ ಹೆಚ್ಚಿದೆ</string>
+    <string name="feature_tpt_label_origin_account">ಮೂಲ ಖಾತೆ</string>
+    <string name="feature_tpt_label_origin_account_hint">ಇತರ ಪಾವತಿ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="feature_tpt_label_destination">ಗಮ್ಯಸ್ಥಾನದ ಖಾತೆ</string>
+    <string name="feature_tpt_label_amount">ಮೊತ್ತ</string>
+    <string name="feature_tpt_label_remarks">ಟಿಪ್ಪಣಿಗಳು</string>
+    <string name="feature_tpt_tip">ಗಮ್ಯಸ್ಥಾನದ ಖಾತೆ ಕಂಡುಬರುತ್ತಿಲ್ಲವೇ?</string>
+    <string name="feature_tpt_tip_action">ಫಲಾನುಭವಿಯನ್ನು ಸೇರಿಸಿ!</string>
+    <string name="feature_tpt_transfer_button">ಮೊತ್ತವನ್ನು ವರ್ಗಾಯಿಸಿ</string>
+</resources>
