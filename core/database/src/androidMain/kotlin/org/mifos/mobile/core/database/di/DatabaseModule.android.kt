@@ -15,12 +15,13 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.MifosDispatchers
-import org.mifos.mobile.core.database.AppDatabaseFactory
+import org.mifos.mobile.core.database.AppDatabase
+import template.core.base.database.AppDatabaseFactory
 
 actual val platformModule: Module = module {
     single {
         AppDatabaseFactory(androidApplication())
-            .createDatabase()
+            .createDatabase(AppDatabase::class.java, AppDatabase.DATABASE_NAME)
             .fallbackToDestructiveMigrationOnDowngrade(false)
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(get(named(MifosDispatchers.IO.name)))

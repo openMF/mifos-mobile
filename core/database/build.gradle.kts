@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             api(projects.core.common)
+            api(projects.coreBase.database)
         }
     }
 }

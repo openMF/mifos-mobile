@@ -9,7 +9,7 @@
  */
 package template.core.base.analytics
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 
