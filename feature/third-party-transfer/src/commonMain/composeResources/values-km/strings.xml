@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">តម្រូវឱ្យបញ្ចូលចំនួនទឹកប្រាក់</string>
+    <string name="feature_tpt_error_amount_invalid">សូមបញ្ចូលចំនួនទឹកប្រាក់ឱ្យបានត្រឹមត្រូវ</string>
+    <string name="feature_tpt_error_remarks_empty">ចំណាំមិនអាចទទេបានទេ</string>
+    <string name="feature_tpt_error_remarks_invalid">ចំណាំដែលបានបញ្ចូលមិនត្រឹមត្រូវ</string>
+    <string name="feature_tpt_error_server">បញ្ហាម៉ាស៊ីនមេពីខាងយើង សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">ចំនួនទឹកប្រាក់លើសពីសមតុល្យដែលមាន</string>
+    <string name="feature_tpt_label_origin_account">គណនីប្រភព</string>
+    <string name="feature_tpt_label_origin_account_hint">ជ្រើសរើសគណនីទូទាត់ផ្សេងទៀត</string>
+    <string name="feature_tpt_label_destination">គណនីគោលដៅ</string>
+    <string name="feature_tpt_label_amount">ចំនួនទឹកប្រាក់</string>
+    <string name="feature_tpt_label_remarks">ការកត់សម្គាល់</string>
+    <string name="feature_tpt_tip">រកមិនឃើញគណនីគោលដៅមែនទេ?</string>
+    <string name="feature_tpt_tip_action">បន្ថែមអ្នកទទួលផល!</string>
+    <string name="feature_tpt_transfer_button">ផ្ទេរចំនួនទឹកប្រាក់</string>
+</resources>

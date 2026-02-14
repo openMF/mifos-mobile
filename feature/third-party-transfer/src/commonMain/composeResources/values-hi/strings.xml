@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">राशि आवश्यक है</string>
+    <string name="feature_tpt_error_amount_invalid">कृपया एक मान्य राशि दर्ज करें</string>
+    <string name="feature_tpt_error_remarks_empty">विवरण खाली नहीं हो सकता</string>
+    <string name="feature_tpt_error_remarks_invalid">अमान्य विवरण दर्ज किया गया</string>
+    <string name="feature_tpt_error_server">हमारी ओर से सर्वर की समस्या है, कृपया कुछ समय बाद पुनः प्रयास करें</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">राशि उपलब्ध शेष राशि से अधिक है</string>
+
+    <string name="feature_tpt_label_origin_account">स्रोत खाता</string>
+    <string name="feature_tpt_label_origin_account_hint">अन्य भुगतान खाता चुनें</string>
+    <string name="feature_tpt_label_destination">गंतव्य खाता</string>
+    <string name="feature_tpt_label_amount">राशि</string>
+    <string name="feature_tpt_label_remarks">विवरण</string>
+    <string name="feature_tpt_tip">गंतव्य खाता नहीं मिल रहा है?</string>
+    <string name="feature_tpt_tip_action">लाभार्थी जोड़ें!</string>
+
+    <string name="feature_tpt_transfer_button">राशि स्थानांतरित करें</string>
+</resources>

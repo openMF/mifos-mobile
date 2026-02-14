@@ -32,6 +32,7 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 private const val USER_DATA = "userData"
 private const val APP_SETTINGS = "appSettings"
 
+@Suppress("TooManyFunctions")
 class UserPreferencesDataSource(
     private val settings: Settings,
     private val dispatcher: CoroutineDispatcher,
@@ -160,6 +161,7 @@ class UserPreferencesDataSource(
     suspend fun clearInfo() {
         withContext(dispatcher) {
             settings.putUserPreference(UserData.DEFAULT)
+            _userInfo.value = UserData.DEFAULT
             val cleared = settings.getSettingsPreference().copy(
                 isAuthenticated = false,
             )
@@ -234,8 +236,37 @@ class UserPreferencesDataSource(
             _settingsInfo.value = newPreference
         }
 
+    suspend fun setSelectedServices(selectedServices: Set<String>?) =
+        withContext(dispatcher) {
+            val newPreference = settings.getSettingsPreference().copy(selectedServices = selectedServices ?: emptySet())
+            settings.putSettingsPreference(newPreference)
+            _settingsInfo.value = newPreference
+        }
+
+    fun saveSelectedServicesDirectly(services: Set<String>?) {
+        if (services == null) {
+            settings.remove(SELECTED_SERVICES_KEY)
+        } else {
+            settings.putString(SELECTED_SERVICES_KEY, services.joinToString(","))
+        }
+        val newPreference = settings.getSettingsPreference().copy(selectedServices = services ?: emptySet())
+        _settingsInfo.value = newPreference
+    }
+
+    fun getSelectedServicesDirectly(): Set<String>? {
+        val directString = settings.getStringOrNull(SELECTED_SERVICES_KEY)
+        return if (directString == null) {
+            null
+        } else if (directString.isBlank()) {
+            emptySet()
+        } else {
+            directString.split(",").filter { it.isNotBlank() }.toSet()
+        }
+    }
+
     companion object {
         private const val PROFILE_IMAGE = "preferences_profile_image"
+        private const val SELECTED_SERVICES_KEY = "selected_services_list"
     }
 }
 
