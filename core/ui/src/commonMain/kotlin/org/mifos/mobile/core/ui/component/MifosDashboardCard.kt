@@ -18,6 +18,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
@@ -74,6 +80,13 @@ fun MifosDashboardCard(
 ) {
     Box(
         modifier = modifier
+            .focusable()
+                .clearAndSetSemantics{
+                    role = Role.Button
+                contentDescription =
+                    "Total loan ${loanAmount ?: "zero"} ${currency ?: ""}." +
+                    "Total savings ${savingsAmount ?: "zero"} ${currency ?: ""}."
+            }
             .clip(KptTheme.shapes.large)
             .height(if (isSingleLine) DesignToken.sizes.boxDp76 else DesignToken.sizes.boxDp128)
             .fillMaxWidth(),
@@ -105,8 +118,7 @@ fun MifosDashboardCard(
                         Text(
                             text = stringResource(loanAccount),
                             style = MifosTypography.bodySmall,
-//                            color = KptTheme.colorScheme.secondary.copy(alpha = 0.7f),
-                            color = AppColors.customWhite.copy(alpha = 0.5f),
+                            color = AppColors.customWhite.copy(alpha = 0.85f),
                         )
                         AnimatedContent(
                             targetState = isVisible,
@@ -130,7 +142,7 @@ fun MifosDashboardCard(
                             text = stringResource(savingsAccount),
                             style = MifosTypography.bodySmall,
 //                            color = KptTheme.colorScheme.secondary,
-                            color = AppColors.customWhite.copy(alpha = 0.5f),
+                            color = AppColors.customWhite.copy(alpha = 0.85f),
                         )
                         AnimatedContent(
                             targetState = isVisible,
