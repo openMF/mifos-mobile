@@ -43,7 +43,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
@@ -81,8 +80,8 @@ fun MifosDashboardCard(
     Box(
         modifier = modifier
             .focusable()
-                .clearAndSetSemantics{
-                    role = Role.Button
+            .clearAndSetSemantics {
+                role = Role.Button
                 contentDescription =
                     "Total loan ${loanAmount ?: "zero"} ${currency ?: ""}." +
                     "Total savings ${savingsAmount ?: "zero"} ${currency ?: ""}."

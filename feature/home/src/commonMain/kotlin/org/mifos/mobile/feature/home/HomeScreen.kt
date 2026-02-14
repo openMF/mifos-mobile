@@ -186,7 +186,7 @@ internal fun HomeContent(
                         ),
                         style = MifosTypography.titleLarge,
                         color = KptTheme.colorScheme.onSurface,
-                        modifier = Modifier.semantics{ heading() }
+                        modifier = Modifier.semantics { heading() },
                     )
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.md))
@@ -203,7 +203,7 @@ internal fun HomeContent(
                         )
                     } else {
                         Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = stringResource(Res.string.feature_home_no_active_accounts),
@@ -291,7 +291,7 @@ internal fun ServiceItemCard(
             .padding(vertical = KptTheme.spacing.sm)
             .clippedClickable(
                 onClick = onClick,
-            ).semantics(mergeDescendants = true){
+            ).semantics(mergeDescendants = true) {
                 role = Role.Button
             },
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
