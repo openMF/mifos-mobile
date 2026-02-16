@@ -39,12 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.core.ui.generated.resources.Res
+import mifos_mobile.core.ui.generated.resources.dashboard_toggle_visibility
+import mifos_mobile.core.ui.generated.resources.dashboard_totals
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_title
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_open_account
@@ -77,14 +77,18 @@ fun MifosDashboardCard(
     currency: String? = null,
     onVisibilityToggle: () -> Unit = {},
 ) {
+    val totalDescription = stringResource(
+        Res.string.dashboard_totals,
+        loanAmount ?: "0",
+        currency ?: "",
+        savingsAmount ?: "0",
+        currency ?: "",
+    )
     Box(
         modifier = modifier
             .focusable()
-            .clearAndSetSemantics {
-                role = Role.Button
-                contentDescription =
-                    "Total loan ${loanAmount ?: "zero"} ${currency ?: ""}." +
-                    "Total savings ${savingsAmount ?: "zero"} ${currency ?: ""}."
+            .semantics(mergeDescendants = true) {
+                contentDescription = totalDescription
             }
             .clip(KptTheme.shapes.large)
             .height(if (isSingleLine) DesignToken.sizes.boxDp76 else DesignToken.sizes.boxDp128)
@@ -169,7 +173,7 @@ fun MifosDashboardCard(
         ) {
             Icon(
                 imageVector = if (isVisible) MifosIcons.Eye else MifosIcons.EyeOff,
-                contentDescription = "Toggle Visibility",
+                contentDescription = stringResource(Res.string.dashboard_toggle_visibility),
                 tint = Color.White,
             )
         }

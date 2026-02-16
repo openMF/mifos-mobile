@@ -131,4 +131,6 @@
     <string name="feature_savings_filter">Filters</string>
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Apply</string>
+    <string name="dashboard_totals">Total loan %1$s %2$s. Total savings %3$s %4$s.</string>
+    <string name="dashboard_toggle_visibility">Toggle Visibility</string>
 </resources>

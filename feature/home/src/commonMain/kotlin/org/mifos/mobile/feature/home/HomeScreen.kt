@@ -55,6 +55,7 @@ import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
 import mifos_mobile.feature.home.generated.resources.feature_server_error
+import mifos_mobile.feature.home.generated.resources.notifications
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -145,7 +146,7 @@ internal fun HomeContent(
                 // TODO : once ui/ux team gives this flow uncomment and implement
                 Image(
                     imageVector = MifosIcons.Alert,
-                    contentDescription = "Notifications",
+                    contentDescription = stringResource(Res.string.notifications),
                     colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                     modifier = Modifier
                         .clippedClickable(
