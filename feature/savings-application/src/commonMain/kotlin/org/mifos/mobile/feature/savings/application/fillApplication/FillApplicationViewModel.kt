@@ -76,7 +76,7 @@ private const val DEFAULT_IN_MULTIPLES_OF = 1.0
  * @property resultNavigator A navigator to observe and receive results from other screens, like authentication.
  * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
-@Suppress("CyclomaticComplexMethod", "TooManyFunctions")
+@Suppress("CyclomaticComplexMethod", "TooManyFunctions", "MaxLineLength")
 internal class SavingsFillApplicationViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val savingsAccountRepositorImpl: SavingsAccountRepository,
