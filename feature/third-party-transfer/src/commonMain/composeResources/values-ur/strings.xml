@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">رقم درکار ہے</string>
+    <string name="feature_tpt_error_amount_invalid">براہ کرم درست رقم درج کریں</string>
+    <string name="feature_tpt_error_remarks_empty">تبصرہ خالی نہیں ہو سکتا</string>
+    <string name="feature_tpt_error_remarks_invalid">غیر درست تبصرہ درج کیا گیا</string>
+    <string name="feature_tpt_error_server">ہماری طرف سے سرور کا مسئلہ ہے، تھوڑی دیر بعد دوبارہ کوشش کریں</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">رقم دستیاب بیلنس سے زیادہ ہے</string>
+    <string name="feature_tpt_label_origin_account">اصلی اکاؤنٹ</string>
+    <string name="feature_tpt_label_origin_account_hint">دوسرا ادائیگی کا اکاؤنٹ منتخب کریں</string>
+    <string name="feature_tpt_label_destination">منزل کا اکاؤنٹ</string>
+    <string name="feature_tpt_label_amount">رقم</string>
+    <string name="feature_tpt_label_remarks">تبصرے</string>
+    <string name="feature_tpt_tip">منزل کا اکاؤنٹ نہیں مل رہا؟</string>
+    <string name="feature_tpt_tip_action">فائدہ اٹھانے والا شامل کریں!</string>
+    <string name="feature_tpt_transfer_button">رقم منتقل کریں</string>
+</resources>

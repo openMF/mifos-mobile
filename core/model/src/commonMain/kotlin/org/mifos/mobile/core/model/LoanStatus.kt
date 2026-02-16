@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,30 +9,38 @@
  */
 package org.mifos.mobile.core.model
 
-enum class LoanStatus(val status: String) {
-    ACTIVE("Active"),
+enum class LoanStatus(
+    val status: String,
+    val sortOrder: Int,
+) {
+    ACTIVE("Active", 0),
 
-    CLOSED("Closed"),
+    DISBURSED("Disbursed", 1),
 
-    CLOSED_OBLIGATIONS_MET("Closed (obligations met)"),
+    APPROVED("Approved", 2),
 
-    MATURED("Matured"),
+    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval", 3),
 
-    APPROVED("Approved"),
+    OVERPAID("Overpaid", 4),
 
-    SUBMIT_AND_PENDING_APPROVAL("Submitted and pending approval"),
+    MATURED("Matured", 5),
 
-    DISBURSED("Disbursed"),
+    CLOSED("Closed", 6),
 
-    REJECTED("Rejected"),
+    CLOSED_OBLIGATIONS_MET("Closed (obligations met)", 7),
 
-    WITHDRAWN("Withdrawn by applicant"),
+    REJECTED("Rejected", 8),
 
-    OVERPAID("Overpaid"),
+    WITHDRAWN("Withdrawn by applicant", 9),
+
+    UNKNOWN("Unknown", Int.MAX_VALUE),
     ;
 
     companion object {
-        fun fromStatus(value: String?): LoanStatus? =
-            entries.firstOrNull { it.status.equals(value, ignoreCase = true) }
+        fun fromStatus(status: String?): LoanStatus {
+            return entries.firstOrNull {
+                it.status.equals(status, ignoreCase = true)
+            } ?: UNKNOWN
+        }
     }
 }

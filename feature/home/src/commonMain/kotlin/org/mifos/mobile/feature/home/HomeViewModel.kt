@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11,7 +11,10 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -45,7 +48,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 internal class HomeViewModel(
     private val homeRepositoryImpl: HomeRepository,
     private val networkMonitor: NetworkMonitor,
-    userPreferencesRepositoryImpl: UserPreferencesRepository,
+    private val userPreferencesRepositoryImpl: UserPreferencesRepository,
 ) : BaseViewModel<HomeState, HomeEvent, HomeAction>(
     initialState = HomeState(
         clientId = requireNotNull(userPreferencesRepositoryImpl.clientId.value),
@@ -55,8 +58,15 @@ internal class HomeViewModel(
     ),
 ) {
 
+    private var isHandlingNetworkChange = false
+
+    companion object {
+        private val logger = Logger.withTag("HomeViewModel")
+    }
+
     init {
         observeNetworkStatus()
+        loadSavedServices()
     }
 
     /**
@@ -69,7 +79,9 @@ internal class HomeViewModel(
             networkMonitor.isOnline
                 .distinctUntilChanged()
                 .collect { isOnline ->
+                    isHandlingNetworkChange = true
                     sendAction(HomeAction.ObserveNetworkStatus(isOnline))
+                    isHandlingNetworkChange = false
                 }
         }
     }
@@ -109,6 +121,10 @@ internal class HomeViewModel(
             }
 
             is HomeAction.Internal.ReceiveClientDetails -> handleClientDetails(action.dataState)
+
+            is HomeAction.ToggleEditMode -> handleToggleEditMode()
+
+            is HomeAction.ToggleServiceSelection -> handleToggleServiceSelection(action.route)
         }
     }
 
@@ -160,6 +176,30 @@ internal class HomeViewModel(
     }
 
     /**
+     * Handles authorization check when the Home screen re-enters composition.
+     *
+     * This function validates the user's session by checking if:
+     * - The device is currently online ([state.networkStatus]).
+     * - The network status is not currently being handled ([isHandlingNetworkChange]).
+     *
+     * If both conditions are met, it triggers [checkAuthorization] to verify the session.
+     * This prevents redundant auth checks when [handleNetworkStatus] is already fetching data.
+     */
+    suspend fun handleAuthCheckOnResume() {
+        if (!state.networkStatus) return
+        if (isHandlingNetworkChange) return
+        checkAuthorization()
+    }
+
+    private suspend fun checkAuthorization() {
+        homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
+            .catch {
+                updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+            }
+            .collect {}
+    }
+
+    /**
      * Retries the data fetching process. If the network is unavailable, it shows
      * a network error dialog. Otherwise, it triggers the fetching of notifications
      * and client account details.
@@ -185,11 +225,110 @@ internal class HomeViewModel(
     }
 
     /**
+     * Computes the visible items based on the current edit mode and selected services.
+     * In edit mode, all items are shown. Otherwise, only selected services are shown.
+     */
+    private fun computeVisibleItems(
+        items: ImmutableList<ServiceItem>,
+        isEditMode: Boolean,
+        selectedServices: Set<String>,
+    ): ImmutableList<ServiceItem> {
+        return if (isEditMode) {
+            items
+        } else {
+            items.filter { selectedServices.contains(it.route) }.toImmutableList()
+        }
+    }
+
+    /**
      * Toggles the visibility of the amount on the screen.
      */
     private fun handleAmountVisible() {
         updateState {
-            it.copy(isAmountVisible = !state.isAmountVisible)
+            it.copy(isAmountVisible = !it.isAmountVisible)
+        }
+    }
+
+    /**
+     * Loads saved services from the preferences repository.
+     * If no saved preference exists (null), defaults to all services.
+     */
+    private fun loadSavedServices() {
+        viewModelScope.launch {
+            val allRoutes = serviceCards.map { it.route }.toSet()
+            val savedServices = userPreferencesRepositoryImpl.selectedServices ?: allRoutes
+            updateState {
+                it.copy(
+                    selectedServices = savedServices,
+                    visibleItems = computeVisibleItems(it.items, false, savedServices),
+                )
+            }
+        }
+    }
+
+    private fun handleToggleEditMode() {
+        if (state.isEditMode) {
+            viewModelScope.launch {
+                try {
+                    userPreferencesRepositoryImpl.saveSelectedServices(state.selectedServices)
+                    updateState {
+                        it.copy(
+                            isEditMode = false,
+                            visibleItems = computeVisibleItems(
+                                it.items,
+                                false,
+                                it.selectedServices,
+                            ),
+                        )
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    logger.e { "Error saving selected services: ${e.message}" }
+                    val lastSaved = userPreferencesRepositoryImpl.selectedServices
+                    val rollbackServices = lastSaved ?: serviceCards.map { it.route }.toSet()
+                    updateState {
+                        it.copy(
+                            isEditMode = false,
+                            selectedServices = rollbackServices,
+                            visibleItems = computeVisibleItems(
+                                it.items,
+                                false,
+                                rollbackServices,
+                            ),
+                        )
+                    }
+                }
+            }
+        } else {
+            updateState {
+                it.copy(
+                    isEditMode = true,
+                    visibleItems = computeVisibleItems(
+                        it.items,
+                        true,
+                        it.selectedServices,
+                    ),
+                )
+            }
+        }
+    }
+
+    private fun handleToggleServiceSelection(route: String) {
+        updateState { current ->
+            val newSelection = if (current.selectedServices.contains(route)) {
+                current.selectedServices - route
+            } else {
+                current.selectedServices + route
+            }
+            current.copy(
+                selectedServices = newSelection,
+                visibleItems = computeVisibleItems(
+                    current.items,
+                    current.isEditMode,
+                    newSelection,
+                ),
+            )
         }
     }
 
@@ -410,8 +549,11 @@ internal data class HomeState(
     val isAmountVisible: Boolean = false,
     val dialogState: DialogState? = null,
     val items: ImmutableList<ServiceItem>,
+    val visibleItems: ImmutableList<ServiceItem> = items,
     val networkStatus: Boolean = true,
     val uiState: HomeScreenState?,
+    val selectedServices: Set<String> = emptySet(),
+    val isEditMode: Boolean = false,
 
 ) {
     /**
@@ -499,6 +641,12 @@ sealed interface HomeAction {
 
     /** Action to trigger that display Bottom bar for applying to an account */
     data object BottomBarPicker : HomeAction
+
+    /** Action to toggle edit mode for service selection */
+    data object ToggleEditMode : HomeAction
+
+    /** Action to toggle a service's selection state */
+    data class ToggleServiceSelection(val route: String) : HomeAction
 
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.

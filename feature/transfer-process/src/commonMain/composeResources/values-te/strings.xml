@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">బదిలీ</string>
+    <string name="transferred_successfully">విజయవంతంగా బదిలీ చేయబడింది</string>
+    <string name="amount">మొత్తం</string>
+    <string name="transfer_from_savings">పొదుపు ఖాతా నుండి బదిలీ</string>
+    <string name="pay_from">దీని నుండి చెల్లించండి</string>
+    <string name="date">తేదీ</string>
+    <string name="cancel">రద్దు చేయి</string>
+    <string name="remark">వ్యాఖ్య</string>
+    <string name="make_transfer">బదిలీ చేయండి</string>
+    <string name="pay_to">దీనికి చెల్లించండి</string>
+    <string name="remarks">వ్యాఖ్యలు</string>
+    <string name="error_icon_description">లోపం</string>
+    <string name="error_description">మొత్తంలో చెల్లని అక్షరాలు ఉండకూడదు</string>
+    <string name="transfer_failed">బదిలీ విఫలమైంది</string>
+    <string name="transfer_successful">బదిలీ విజయవంతమైంది</string>
+    <string name="back_to_accounts">హోమ్ స్క్రీన్‌కు తిరిగి వెళ్ళు</string>
+    <string name="transfer_id_prefix">బదిలీ ఐడి:</string>
+    <string name="feature_make_transfer_error_amount_required">మొత్తం తప్పనిసరి</string>
+    <string name="feature_make_transfer_error_amount_invalid">దయచేసి సరైన మొత్తాన్ని నమోదు చేయండి</string>
+    <string name="feature_make_transfer_error_remarks_empty">వ్యాఖ్యలు ఖాళీగా ఉండకూడదు</string>
+    <string name="feature_make_transfer_error_remarks_invalid">చెల్లని వ్యాఖ్యలు నమోదు చేయబడ్డాయి</string>
+    <string name="feature_make_transfer_error_server">మా వైపు నుండి సర్వర్ సమస్య ఉంది, కొనసాగించలేము. కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి</string>
+    <string name="feature_make_transfer_account_number">ఖాతా సంఖ్య</string>
+    <string name="feature_make_transfer_customer_name">కస్టమర్ పేరు</string>
+    <string name="feature_make_transfer_beneficiary_name">లబ్ధిదారుని పేరు</string>
+    <string name="feature_make_transfer_details">బదిలీ వివరాలు</string>
+</resources>

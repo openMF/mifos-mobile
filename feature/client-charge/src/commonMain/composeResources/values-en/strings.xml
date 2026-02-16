@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -21,6 +21,20 @@
     <string name="amount_waived">Waved:</string>
     <string name="amount_paid">Paid:</string>
     <string name="feature_client_charge_share_charges">Share Charges</string>
+
+    <string name="feature_client_charges_filter_charges">Filter Charges</string>
+    <string name="feature_client_charges_clear_all">Clear All</string>
+    <string name="feature_client_charges_account_type">Account Type:</string>
+    <string name="feature_client_charges_select_account">Select Account:</string>
+    <string name="feature_client_charges_all_accounts">All Accounts</string>
+    <string name="feature_client_charges_account_label">Account</string>
+    <string name="feature_client_charges_charge_status">Charge Status:</string>
+    <string name="feature_client_charges_apply_filters">Apply Filters</string>
+    <string name="feature_client_charges_account_type_savings">Savings</string>
+    <string name="feature_client_charges_account_type_loan">Loan</string>
+    <string name="feature_client_charges_account_type_shares">Shares</string>
+    <string name="feature_client_charges_charge_id">ChargeId : %1$s</string>
+
 
 
     <string name="charge_details">Charge Details</string>

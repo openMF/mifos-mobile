@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -185,6 +185,17 @@ class UserPreferencesRepositoryImpl(
 
     override suspend fun setPasscode(passcode: String) {
         preferenceManager.setPasscode(passcode)
+    }
+
+    override suspend fun setSelectedServices(selectedServices: Set<String>?) {
+        preferenceManager.setSelectedServices(selectedServices)
+    }
+
+    override val selectedServices: Set<String>?
+        get() = preferenceManager.getSelectedServicesDirectly()
+
+    override fun saveSelectedServices(services: Set<String>?) {
+        preferenceManager.saveSelectedServicesDirectly(services)
     }
 
     override suspend fun logOut() {

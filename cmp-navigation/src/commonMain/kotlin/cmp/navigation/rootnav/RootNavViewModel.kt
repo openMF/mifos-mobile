@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.model.AppSettings
 import org.mifos.mobile.core.model.AuthState
@@ -27,6 +28,16 @@ class RootNavViewModel(
 ) {
 
     init {
+        viewModelScope.launch {
+            userDataRepository.authState
+                .collect { authState ->
+                    if (authState is AuthState.Unauthenticated) {
+                        if (mutableStateFlow.value !is RootNavState.Auth) {
+                            mutableStateFlow.update { RootNavState.Auth }
+                        }
+                    }
+                }
+        }
         combine(
             userDataRepository.authState,
             userDataRepository.settingsState,

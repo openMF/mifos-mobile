@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,7 +13,6 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.utils.EmptyContent.status
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -345,8 +344,15 @@ val SavingStatus.allowedActions: Set<SavingsActionItems>
             SavingsActionItems.Transfer,
             SavingsActionItems.Transactions,
         )
+        SavingStatus.APPROVED -> setOf(
+            SavingsActionItems.QrCode,
+            SavingsActionItems.Transfer,
+        )
         SavingStatus.SUBMIT_AND_PENDING_APPROVAL -> setOf(
             SavingsActionItems.QrCode,
+        )
+        SavingStatus.UNKNOWN -> setOf(
+            SavingsActionItems.Transactions,
         )
     }
 

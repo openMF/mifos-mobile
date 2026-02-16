@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">Transferência</string>
+    <string name="transferred_successfully">Transferido com sucesso</string>
+    <string name="amount">Valor</string>
+    <string name="transfer_from_savings">Transferir da Poupança</string>
+    <string name="pay_from">Pagar de</string>
+    <string name="date">Data</string>
+    <string name="cancel">Cancelar</string>
+    <string name="remark">Observação</string>
+    <string name="make_transfer">Realizar Transferência</string>
+    <string name="pay_to">Pagar para</string>
+    <string name="remarks">Observações</string>
+    <string name="error_icon_description">Erro</string>
+    <string name="error_description">O valor não deve conter caracteres inválidos</string>
+    <string name="transfer_failed">Transferência falhou</string>
+    <string name="transfer_successful">Transferência bem-sucedida</string>
+    <string name="back_to_accounts">Voltar ao Início</string>
+    <string name="transfer_id_prefix">ID da Transferência:</string>
+    <string name="feature_make_transfer_error_amount_required">O valor é obrigatório</string>
+    <string name="feature_make_transfer_error_amount_invalid">Por favor, insira um valor válido</string>
+    <string name="feature_make_transfer_error_remarks_empty">As observações não podem estar vazias</string>
+    <string name="feature_make_transfer_error_remarks_invalid">Observações inválidas inseridas</string>
+    <string name="feature_make_transfer_error_server">Problema no servidor do nosso lado, não é possível prosseguir. Tente novamente em instantes</string>
+    <string name="feature_make_transfer_account_number">Número da Conta</string>
+    <string name="feature_make_transfer_customer_name">Nome do Cliente</string>
+    <string name="feature_make_transfer_beneficiary_name">Nome do Beneficiário</string>
+    <string name="feature_make_transfer_details">Detalhes da Transferência</string>
+</resources>

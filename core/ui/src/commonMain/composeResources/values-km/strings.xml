@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="no_internet">គ្មានការតភ្ជាប់អ៊ីនធឺណិត</string>
+    <string name="back_online">ត្រឡប់មកអ៊ីនធឺណិតវិញ</string>
+    <string name="retry">ព្យាយាមម្តងទៀត</string>
+    <string name="no_data">គ្មានទិន្នន័យ</string>
+    <string name="something_went_wrong">មានបញ្ហាមួយកើតឡើង</string>
+    <string name="core_common_working">ប្រព័ន្ធមូលដ្ឋានកំពុងដំណើរការ</string>
+    <string name="customer_name">ឈ្មោះអតិថិជន</string>
+    <string name="product">ផលិតផល</string>
+    <string name="error_loading_balance">កំហុស</string>
+
+    <string name="powered_by">ផ្តល់អំណាចដោយ</string>
+
+    <string name="password_checker_empty_error">ពាក្យសម្ងាត់មិនអាចទទេបានទេ។</string>
+    <string name="password_checker_too_long_error">ពាក្យសម្ងាត់វែងពេក។ ប្រវែងអតិបរមា 128 តួអក្សរ។</string>
+
+    <!-- PasswordChecker Feedback Messages -->
+    <string name="password_checker_min_length_feedback">ពាក្យសម្ងាត់គួរតែមានយ៉ាងហោចណាស់ 12 តួអក្សរ។</string>
+    <string name="password_checker_uppercase_feedback">បញ្ចូលអក្សរធំយ៉ាងហោចណាស់មួយ។</string>
+    <string name="password_checker_lowercase_feedback">បញ្ចូលអក្សរតូចយ៉ាងហោចណាស់មួយ។</string>
+    <string name="password_checker_digit_feedback">បញ្ចូលលេខយ៉ាងហោចណាស់មួយ។</string>
+    <string name="password_checker_special_char_feedback">បញ្ចូលតួអក្សរពិសេសយ៉ាងហោចណាស់មួយ។</string>
+    <string name="password_checker_strong_length_feedback">សម្រាប់ពាក្យសម្ងាត់ខ្លាំង សូមប្រើយ៉ាងហោចណាស់ 12 តួអក្សរ។</string>
+
+    <!-- PasswordStrength Labels -->
+    <string name="password_strength_level_0">ខ្សោយខ្លាំងណាស់</string>
+    <string name="password_strength_level_1">ខ្សោយ</string>
+    <string name="password_strength_level_2">មធ្យម</string>
+    <string name="password_strength_level_3">ល្អ</string>
+    <string name="password_strength_level_4">ខ្លាំង</string>
+    <string name="password_strength_level_5">ខ្លាំងខ្លាំងណាស់</string>
+    <string name="password_strength_none">បញ្ចូលពាក្យសម្ងាត់</string>
+
+    <!-- PasswordStrengthIndicator Accessibility -->
+    <string name="password_strength_indicator_description">សូចនាករកម្លាំងពាក្យសម្ងាត់</string>
+    <string name="password_strength_announcement">កម្លាំងពាក្យសម្ងាត់៖ %1$s</string>
+    <string name="minimum_characters_requirement">ត្រូវការយ៉ាងហោចណាស់ %1$d តួអក្សរ</string>
+    <string name="minimum_characters_met">បានបំពេញលក្ខខណ្ឌចំនួនតួអក្សរអប្បបរមា</string>
+    <string name="minimum_characters_not_met">មិនទាន់បំពេញលក្ខខណ្ឌចំនួនតួអក្សរអប្បបរមា</string>
+
+    <!-- General Password UI Labels -->
+    <string name="password_requirements_title">លក្ខខណ្ឌពាក្យសម្ងាត់</string>
+    <string name="password_feedback_title">សំណើរពាក្យសម្ងាត់</string>
+    <string name="password_feedback_all_good">ពាក្យសម្ងាត់របស់អ្នកបំពេញលក្ខខណ្ឌទាំងអស់!</string>
+    <string name="character_count">%1$d តួអក្សរ</string>
+    <string name="character_count_with_limit">%1$d / %2$d តួអក្សរ</string>
+
+    <!-- Email Validation Messages -->
+    <string name="validation_email_empty">អាសយដ្ឋានអ៊ីមែលមិនអាចទទេបានទេ</string>
+    <string name="validation_email_max_length_exceeded">អាសយដ្ឋានអ៊ីមែលលើសប្រវែងអតិបរមា 254 តួអក្សរ</string>
+    <string name="validation_email_missing_at_symbol">អាសយដ្ឋានអ៊ីមែលត្រូវតែមានសញ្ញា @</string>
+    <string name="validation_email_starts_with_at">អាសយដ្ឋានអ៊ីមែលមិនអាចចាប់ផ្តើមដោយ @ បានទេ</string>
+    <string name="validation_email_ends_with_at">អាសយដ្ឋានអ៊ីមែលមិនអាចបញ្ចប់ដោយ @ បានទេ</string>
+    <string name="validation_email_multiple_at_symbols">អាសយដ្ឋានអ៊ីមែលមិនអាចមាន @ ច្រើនបានទេ</string>
+
+    <!-- Email Local Part Validation -->
+    <string name="validation_email_local_empty">ផ្នែកមុខអ៊ីមែលមិនអាចទទេបានទេ</string>
+    <string name="validation_email_local_max_length">ផ្នែកមុខអ៊ីមែលលើសប្រវែងអតិបរមា 64 តួអក្សរ</string>
+    <string name="validation_email_local_starts_with_dot">ផ្នែកមុខអ៊ីមែលមិនអាចចាប់ផ្តើមដោយចំណុចបានទេ</string>
+    <string name="validation_email_local_ends_with_dot">ផ្នែកមុខអ៊ីមែលមិនអាចបញ្ចប់ដោយចំណុចបានទេ</string>
+    <string name="validation_email_local_consecutive_dots">ផ្នែកមុខអ៊ីមែលមិនអាចមានចំណុចជាប់គ្នាបានទេ</string>
+    <string name="validation_email_local_invalid_characters">ផ្នែកមុខអ៊ីមែលមានតួអក្សរមិនត្រឹមត្រូវ</string>
+
+    <!-- Email Domain Part Validation -->
+    <string name="validation_email_domain_empty">ផ្នែកដែនអ៊ីមែលមិនអាចទទេបានទេ</string>
+    <string name="validation_email_domain_max_length">ផ្នែកដែនអ៊ីមែលលើសប្រវែងអតិបរមា 253 តួអក្សរ</string>
+    <string name="validation_email_domain_missing_dot">ដែនអ៊ីមែលត្រូវមានចំណុចយ៉ាងហោចណាស់មួយ</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ដែនអ៊ីមែលមិនអាចចាប់ផ្តើម ឬបញ្ចប់ដោយចំណុចបានទេ</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ដែនអ៊ីមែលមិនអាចចាប់ផ្តើម ឬបញ្ចប់ដោយសញ្ញា - បានទេ</string>
+    <string name="validation_email_domain_insufficient_parts">ដែនអ៊ីមែលត្រូវមានយ៉ាងហោចណាស់ពីរផ្នែកបំបែកដោយចំណុច</string>
+    <string name="validation_email_tld_invalid">ដែនកំពូលត្រូវមានយ៉ាងហោចណាស់ 2 អក្សរ និងមានតែអក្សរប៉ុណ្ណោះ</string>
+
+    <!-- Email Domain Label Validation -->
+    <string name="validation_email_label_empty">ស្លាកដែនមិនអាចទទេបានទេ</string>
+    <string name="validation_email_label_max_length">ស្លាកដែនលើសប្រវែងអតិបរមា 63 តួអក្សរ</string>
+    <string name="validation_email_label_starts_with_hyphen">ស្លាកដែនមិនអាចចាប់ផ្តើមដោយ - បានទេ</string>
+    <string name="validation_email_label_ends_with_hyphen">ស្លាកដែនមិនអាចបញ្ចប់ដោយ - បានទេ</string>
+    <string name="validation_email_label_invalid_characters">ស្លាកដែនមានតួអក្សរមិនត្រឹមត្រូវ</string>
+
+    <!-- Phone Validation -->
+    <string name="validation_phone_empty">លេខទូរស័ព្ទមិនអាចទទេបានទេ</string>
+    <string name="validation_phone_too_short">លេខទូរស័ព្ទខ្លីពេក</string>
+    <string name="validation_phone_too_long">លេខទូរស័ព្ទវែងពេក</string>
+    <string name="validation_phone_invalid_characters">លេខទូរស័ព្ទមានតួអក្សរមិនត្រឹមត្រូវ</string>
+    <string name="validation_phone_spanish_country_code_required">សូមប្រើកូដប្រទេសអេស្ប៉ាញ (+34)</string>
+    <string name="validation_phone_spanish_format_invalid">ទម្រង់លេខទូរស័ព្ទអេស្ប៉ាញមិនត្រឹមត្រូវ</string>
+
+    <string name="validation_phone_invalid_for_country">លេខទូរស័ព្ទមិនត្រឹមត្រូវសម្រាប់ប្រទេសដែលបានជ្រើស</string>
+    <string name="validation_phone_no_valid_country_found">មិនអាចស្គាល់ទម្រង់លេខទូរស័ព្ទសម្រាប់ប្រទេសណាមួយបានទេ</string>
+
+    <!-- Name Validation -->
+    <string name="validation_name_empty">ឈ្មោះមិនអាចទទេបានទេ</string>
+    <string name="validation_name_invalid_characters">ឈ្មោះមានតួអក្សរមិនត្រឹមត្រូវ</string>
+
+    <!-- General Validation -->
+    <string name="validation_field_required">វាលនេះត្រូវបានទាមទារ</string>
+    <string name="validation_format_invalid">ទម្រង់មិនត្រឹមត្រូវ</string>
+    <string name="validation_length_exceeded">លើសប្រវែងអតិបរមា</string>
+    <string name="validation_length_insufficient">មិនទាន់បំពេញប្រវែងអប្បបរមា</string>
+
+    <string name="validation_amount_empty">ចំនួនទឹកប្រាក់មិនអាចទទេបានទេ</string>
+    <string name="validation_amount_invalid_format">សូមបញ្ចូលទម្រង់ចំនួនទឹកប្រាក់ត្រឹមត្រូវ (ឧ. 99.99)</string>
+    <string name="validation_amount_invalid_number">សូមបញ្ចូលលេខត្រឹមត្រូវ</string>
+    <string name="validation_amount_negative">ចំនួនទឹកប្រាក់មិនអាចអវិជ្ជមានបានទេ</string>
+    <string name="validation_amount_too_small">ចំនួនទឹកប្រាក់ត្រូវមានយ៉ាងហោចណាស់ 0.01</string>
+    <string name="validation_amount_too_large">ចំនួនទឹកប្រាក់មិនអាចលើស 999,999,999.99</string>
+    <string name="validation_amount_invalid_decimal_places">ចំនួនទឹកប្រាក់មានខ្ទង់ទសភាគច្រើនពេក</string>
+    <string name="validation_amount_invalid_increment">ចំនួនទឹកប្រាក់ត្រូវតែស្របតាមជំហានរូបិយប័ណ្ណ</string>
+
+    <string name="savings_account">គណនីសន្សំ</string>
+    <string name="available_balance">សមតុល្យដែលអាចប្រើបាន</string>
+    <string name="select_other_payment_account">ជ្រើសរើសគណនីបង់ប្រាក់ផ្សេងទៀត</string>
+    <string name="pay_from">បង់ពី</string>
+    <string name="available_balance_formatted">សមតុល្យដែលអាចប្រើបាន - %1$s</string>
+
+    <string name="feature_dashboard_welcome_back">សូមស្វាគមន៍ត្រឡប់មក Mifos</string>
+    <string name="feature_dashboard_no_accounts_title">មិនទាន់មានគណនី</string>
+    <string name="feature_dashboard_no_accounts_description">ចាប់ផ្តើមដំណើរហិរញ្ញវត្ថុរបស់អ្នកដោយបើកគណនីដំបូងជាមួយយើង។</string>
+    <string name="feature_dashboard_open_account">បើកគណនី</string>
+
+    <string name="feature_savings_filter">តម្រង</string>
+    <string name="feature_savings_reset">កំណត់ឡើងវិញ</string>
+    <string name="feature_savings_apply">អនុវត្ត</string>
+
+</resources>

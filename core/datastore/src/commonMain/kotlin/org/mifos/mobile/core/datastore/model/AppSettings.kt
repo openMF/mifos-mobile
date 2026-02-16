@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,6 +29,7 @@ data class AppSettings(
     val showOnboarding: Boolean,
     val firstTimeState: Boolean,
     val timeBasedTheme: TimeBasedTheme,
+    val selectedServices: Set<String> = emptySet(),
 ) {
     companion object {
         val DEFAULT = AppSettings(

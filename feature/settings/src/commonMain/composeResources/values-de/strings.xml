@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Abmelden</string>
     <string name="feature_settings_action_logout_tip">Von allen Geräten abmelden</string>
+    <string name="feature_settings_logout_description">Durch das Abmelden werden Ihre aktuelle Sitzung sowie alle aktiven Sitzungen aus Sicherheitsgründen beendet. Sie müssen sich erneut anmelden, um auf Ihr Konto zuzugreifen.</string>
+    <string name="feature_settings_logout_action">Zurück zur Startseite</string>
 
     <string name="feature_settings_top_bar_title">Einstellungen</string>
 

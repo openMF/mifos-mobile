@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -74,6 +74,11 @@ interface UserPreferencesRepository {
     suspend fun setFirstTimeState(firstTimeState: Boolean)
 
     suspend fun setLanguage(language: LanguageConfig)
+
+    suspend fun setSelectedServices(selectedServices: Set<String>?)
+
+    val selectedServices: Set<String>?
+    fun saveSelectedServices(services: Set<String>?)
 
     suspend fun logOut(): Unit
 }

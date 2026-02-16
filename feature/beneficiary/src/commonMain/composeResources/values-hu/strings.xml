@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -41,6 +41,7 @@
     <string name="delete_beneficiary">Kedvezményezett törlése</string>
     <string name="delete_beneficiary_confirmation">Biztosan törölni szeretné ezt a kedvezményezettet?</string>
     <string name="login_using_password_confirmation">Biztosan be szeretne jelentkezni jelszó használatával?</string>
+    <string name="update">Frissítés</string>
     <string name="delete">Törlés</string>
     <string name="beneficiary_deleted_successfully">Kedvezményezett sikeresen törölve</string>
     <string name="third_party_transfer">Harmadik fél átvitele</string>

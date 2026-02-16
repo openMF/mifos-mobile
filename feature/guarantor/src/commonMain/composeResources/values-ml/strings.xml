@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="view_guarantor">ജാമ്യക്കാരനെ കാണുക</string>
+    <string name="add_guarantor">ജാമ്യക്കാരനെ ചേർക്കുക</string>
+    <string name="delete_guarantor">ജാമ്യക്കാരനെ നീക്കം ചെയ്യുക</string>
+    <string name="update_guarantor">ജാമ്യക്കാരനെ അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="guarantor_type">ജാമ്യക്കാരന്റെ തരം</string>
+    <string name="no_guarantors">ജാമ്യക്കാർ ആരുമില്ല</string>
+    <string name="tap_to_add_guarantor">ജാമ്യക്കാരനെ ചേർക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="guarantor_details">ജാമ്യക്കാരന്റെ വിശദാംശങ്ങൾ</string>
+    <string name="screen_guarantor_list">സ്ക്രീൻ ജാമ്യക്കാരുടെ ലിസ്റ്റ്</string>
+    <string name="screen_guarantor_details">സ്ക്രീൻ ജാമ്യക്കാരന്റെ വിശദാംശങ്ങൾ</string>
+    <string name="screen_guarantor_add">സ്ക്രീൻ ജാമ്യക്കാരനെ ചേർക്കൽ</string>
+    <string name="city">നഗരം</string>
+    <string name="guarantor_deleted_successfully">ജാമ്യക്കാരനെ വിജയകരമായി നീക്കം ചെയ്തു</string>
+    <string name="guarantor_created_successfully">ജാമ്യക്കാരനെ വിജയകരമായി സൃഷ്ടിച്ചു</string>
+    <string name="guarantor_updated_successfully">ജാമ്യക്കാരന്റെ വിവരങ്ങൾ വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു</string>
+    <string name="error_validation_blank">%1$s ശൂന്യമായി ഇടരുത്</string>
+    <string name="first_name">ആദ്യ പേര്</string>
+    <string name="last_name">അവസാന പേര്</string>
+    <string name="phone_number">ഫോൺ നമ്പർ</string>
+    <string name="internet_not_connected">ദയവായി വൈഫൈ അല്ലെങ്കിൽ മൊബൈൽ ഡാറ്റ ഓൺ ചെയ്യുക</string>
+    <string name="office_name">ഓഫീസിന്റെ പേര്</string>
+    <string name="submit">സമർപ്പിക്കുക</string>
+    <string name="dialog_are_you_sure_that_you_want_to_string">നിങ്ങൾക്ക് %1$s ചെയ്യണമെന്ന് ഉറപ്പാണോ?</string>
+    <string name="yes">ശരി</string>
+    <string name="dismiss">നിരസിക്കുക</string>
+</resources>

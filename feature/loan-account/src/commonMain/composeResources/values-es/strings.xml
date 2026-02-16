@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -111,6 +111,6 @@
     <string name="feature_loan_due">Pendiente</string>
     <string name="feature_loan_pay">Pagar</string>
 
-    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
 
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,26 +17,26 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
-import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
-import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
-import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
+import org.mifos.mobile.core.network.dto.beneficiary.BeneficiaryListResponseDto
+import org.mifos.mobile.core.network.dto.payloads.BeneficiaryCreatePayloadDto
+import org.mifos.mobile.core.network.dto.payloads.BeneficiaryUpdatePayloadDto
+import org.mifos.mobile.core.network.dto.templates.beneficiary.BeneficiaryTemplateDto
 import org.mifos.mobile.core.network.utils.ApiEndPoints
 
 interface BeneficiaryService {
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt")
-    fun beneficiaryList(): Flow<List<Beneficiary>>
+    fun beneficiaryList(): Flow<List<BeneficiaryListResponseDto>>
 
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt/template")
-    fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>
+    fun beneficiaryTemplate(): Flow<BeneficiaryTemplateDto>
 
     @POST(ApiEndPoints.BENEFICIARIES + "/tpt")
-    suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload?): HttpResponse
+    suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryCreatePayloadDto?): HttpResponse
 
     @PUT(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
     suspend fun updateBeneficiary(
         @Path("beneficiaryId") beneficiaryId: Long,
-        @Body payload: BeneficiaryUpdatePayload?,
+        @Body payload: BeneficiaryUpdatePayloadDto?,
     ): HttpResponse
 
     @DELETE(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")

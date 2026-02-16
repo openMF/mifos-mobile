@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -287,7 +287,11 @@ class SavingsAccountViewmodel(
      * @param accounts List of [SavingAccount] to compute totals from.
      */
     private fun sortAccountsByStatus(accounts: List<SavingAccount>): List<SavingAccount> {
-        return accounts.sortedWith(compareBy { state.statusOrder.indexOf(it.status?.value) })
+        return accounts.sortedBy {
+            runCatching {
+                SavingStatus.fromStatus(it.status?.value.orEmpty()).sortOrder
+            }.getOrElse { Int.MAX_VALUE }
+        }
     }
 
     /** Calculates total savings balance and updates state. */

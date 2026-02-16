@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -74,7 +74,7 @@ object DateHelper {
         val inputDate = LocalDate(dateList[0], dateList[1], dateList[2])
         val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 
-        val formatted = "${inputDate.month.number} ${getMonthName(inputDate.month.number)} ${inputDate.year}"
+        val formatted = "${inputDate.day} ${getMonthName(inputDate.month.number)} ${inputDate.year}"
 
         val today = now
         val yesterday = today.minus(1, DateTimeUnit.DAY)

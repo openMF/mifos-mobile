@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -36,6 +36,7 @@ import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.core.ui.utils.observe
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * ViewModel responsible for managing the transfer process logic.
@@ -86,12 +87,15 @@ internal class TransferProcessViewModel(
                 dateFormat = "dd MMMM yyyy",
                 locale = "en",
             ),
+            fromClientName = route.fromClientName,
+            toClientName = route.toClientName,
         )
     },
 ) {
 
     init {
         observeNetworkStatus()
+        observeAuthResult()
     }
 
     /**
@@ -109,9 +113,7 @@ internal class TransferProcessViewModel(
 
             is TransferProcessAction.Internal.ReceiveAuthenticationResult -> {
                 if (action.result) {
-                    viewModelScope.launch {
-                        sendAction(TransferProcessAction.Internal.MakeTransfer)
-                    }
+                    makeTransfer()
                 }
             }
 
@@ -136,7 +138,9 @@ internal class TransferProcessViewModel(
         viewModelScope.launch {
             navigator.observe<AuthResult>()
                 .collect { result ->
-                    sendAction(TransferProcessAction.Internal.ReceiveAuthenticationResult(result.success))
+                    if (result.success) {
+                        sendAction(TransferProcessAction.Internal.ReceiveAuthenticationResult(result.success))
+                    }
                 }
         }
     }
@@ -162,21 +166,18 @@ internal class TransferProcessViewModel(
      */
     private fun handleNetworkStatus(isOnline: Boolean) {
         updateState { it.copy(networkStatus = isOnline) }
+        if (!isOnline) {
+            updateState { current ->
+                if (current.showOverlay) return@updateState current
 
-        viewModelScope.launch {
-            if (!isOnline) {
-                updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                if (current.uiState is ScreenUiState.Loading ||
+                    current.uiState is ScreenUiState.Error ||
+                    current.uiState is ScreenUiState.Network
+                ) {
+                    current.copy(uiState = ScreenUiState.Network)
+                } else {
+                    current
                 }
-            } else {
-                observeAuthResult()
             }
         }
     }
@@ -187,15 +188,26 @@ internal class TransferProcessViewModel(
      * Updates the UI state to reflect loading and processes the result.
      */
     private fun makeTransfer() {
-        state.transferPayload?.let { payload ->
-            updateState {
-                it.copy(
-                    showOverlay = true,
+        val currentState = state
+        if (currentState.showOverlay ||
+            currentState.transferPayload == null ||
+            currentState.transferType == null
+        ) {
+            return
+        }
+        updateState { it.copy(showOverlay = true) }
+
+        viewModelScope.launch {
+            try {
+                val result = transferRepository.makeTransfer(
+                    currentState.transferPayload,
+                    currentState.transferType,
                 )
-            }
-            viewModelScope.launch {
-                val response = transferRepository.makeTransfer(payload, state.transferType)
-                processTransferResult(response)
+                processTransferResult(result)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                processTransferResult(DataState.Error(e))
             }
         }
     }
@@ -208,11 +220,6 @@ internal class TransferProcessViewModel(
      * @param response The [DataState] containing the result of the transfer operation.
      */
     private suspend fun processTransferResult(response: DataState<String>) {
-        updateState {
-            it.copy(
-                showOverlay = true,
-            )
-        }
         when (response) {
             is DataState.Error -> {
                 updateState {
@@ -236,6 +243,7 @@ internal class TransferProcessViewModel(
             }
 
             is DataState.Success -> {
+                updateState { it.copy(showOverlay = false) }
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
                         eventType = EventType.SUCCESS.name,
@@ -264,6 +272,8 @@ data class TransferProcessState(
     val networkStatus: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Success,
     val showOverlay: Boolean = false,
+    val fromClientName: String? = null,
+    val toClientName: String? = null,
 )
 
 /**

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">కొత్త రుణానికి దరఖాస్తు చేయండి</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">రుణ దరఖాస్తు</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">దరఖాస్తుదారుని పేరు</string>
+    <string name="feature_apply_loan_label_loan_product">రుణ ఉత్పత్తి</string>
+    <string name="feature_apply_loan_label_purpose">రుణ ఉద్దేశ్యం</string>
+    <string name="feature_apply_loan_label_disbursement_date">పంపిణీ తేదీ</string>
+    <string name="feature_apply_loan_label_principal_amount">ప్రధాన మొత్తం</string>
+    <string name="feature_apply_loan_label_currency">కరెన్సీ</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">కొనసాగించు</string>
+    <string name="feature_apply_loan_button_ok">సరే</string>
+    <string name="feature_apply_loan_button_cancel">రద్దు చేయండి</string>
+    <string name="feature_apply_loan_button_apply">రుణానికి దరఖాస్తు చేయండి</string>
+    <string name="feature_button_next">తరువాత</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">దరఖాస్తుదారుని పేరు అవసరం</string>
+    <string name="feature_apply_loan_error_name_too_short">దరఖాస్తుదారుని పేరు కనీసం 4 అక్షరాలు ఉండాలి</string>
+    <string name="feature_apply_loan_error_name_too_long">దరఖాస్తుదారుని పేరు 100 అక్షరాలకు మించకూడదు</string>
+    <string name="feature_apply_loan_error_name_invalid_format">దరఖాస్తుదారుని పేరు చెల్లని అక్షరాలను కలిగి ఉంది</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">రుణ ఉత్పత్తి అవసరం</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">ప్రధాన మొత్తం అవసరం</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">దయచేసి సరైన మొత్తం ఆకృతిని నమోదు చేయండి</string>
+    <string name="feature_apply_loan_error_amount_too_small">ప్రధాన మొత్తం చాలా చిన్నగా ఉంది</string>
+    <string name="feature_apply_loan_error_amount_too_large">ప్రధాన మొత్తం గరిష్ట పరిమితిని మించిపోయింది</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">ఎంచుకున్న కరెన్సీకి మొత్తంలో ఎక్కువ దశాంశ స్థానాలు ఉన్నాయి</string>
+    <string name="feature_apply_loan_error_amount_multiple">మొత్తం సరైన గుణకాల్లో లేదు</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">పంపిణీ తేదీ అవసరం</string>
+    <string name="feature_apply_loan_error_date_invalid_format">దయచేసి చెల్లుబాటు అయ్యే తేదీ ఆకృతిని నమోదు చేయండి (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">పంపిణీ తేదీ భవిష్యత్తులో ఉండాలి</string>
+    <string name="feature_apply_loan_error_date_out_of_range">పంపిణీ తేదీ చాలా దూరంలో ఉంది (గరిష్టంగా 10 సంవత్సరాలు)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">మా వైపు నుండి సర్వర్ సమస్య, ముందుకు సాగలేము, కాసేపటి తర్వాత మళ్లీ ప్రయత్నించండి</string>
+    <string name="feature_apply_loan_error_too_many_attempts">చాలా విఫల ప్రయత్నాలు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.</string>
+    <string name="feature_apply_loan_error_submit_failed">రుణ దరఖాస్తును సమర్పించడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">రుణ దరఖాస్తు విజయవంతంగా సమర్పించబడింది!</string>
+    <string name="feature_apply_loan_success_draft_saved">దరఖాస్తు డ్రాఫ్ట్ విజయవంతంగా సేవ్ చేయబడింది</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">సేవ్ చేయని మార్పులు!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">మీకు సేవ్ చేయని మార్పులు ఉన్నాయి. మీరు ఖచ్చితంగా వెనుకకు వెళ్లాలనుకుంటున్నారా?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">విస్మరించు</string>
+    <string name="feature_apply_loan_action_save_draft">డ్రాఫ్ట్ సేవ్ చేయండి</string>
+    <string name="feature_apply_loan_action_retry">మళ్లీ ప్రయత్నించండి</string>
+    <string name="feature_apply_loan_action_cancel">రద్దు చేయండి</string>
+    <string name="feature_apply_loan_action_continue">కొనసాగించు</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">మీ పూర్తి పేరు నమోదు చేయండి</string>
+    <string name="feature_apply_loan_hint_loan_product">రుణ ఉత్పత్తిని ఎంచుకోండి</string>
+    <string name="feature_apply_loan_hint_principal_amount">రుణ మొత్తాన్ని నమోదు చేయండి</string>
+    <string name="feature_apply_loan_hint_disbursement_date">పంపిణీ తేదీని ఎంచుకోండి</string>
+    <string name="feature_apply_loan_hint_purpose">ఉద్దేశ్యాన్ని క్లుప్తంగా వివరించండి</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">కరెన్సీ మార్చబడింది. మొత్తం మళ్లీ ధృవీకరించబడుతుంది.</string>
+    <string name="feature_apply_loan_info_min_amount">కనీస రుణ మొత్తం: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">గరిష్ట రుణ మొత్తం: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">వివరాలను నిర్ధారించండి</string>
+
+    <string name="feature_apply_loan_status_success">అభ్యర్థన విజయవంతంగా సమర్పించబడింది</string>
+    <string name="feature_apply_loan_status_success_tip">మీ రుణ దరఖాస్తు సమర్పించబడింది. అది సమీక్షించబడిన తర్వాత మీకు తెలియజేయబడుతుంది.</string>
+    <string name="feature_apply_loan_status_success_action">హోమ్‌కి తిరిగి వెళ్లు</string>
+
+    <string name="feature_apply_loan_status_failure">అభ్యర్థన సమర్పించడంలో విఫలమైంది</string>
+    <string name="feature_apply_loan_status_failure_tip">మీ రుణ దరఖాస్తును సమర్పించేటప్పుడు ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="feature_apply_loan_status_failure_action">మళ్లీ ప్రయత్నించండి</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">కొత్త రుణానికి దరఖాస్తు చేయండి</string>
+    <string name="feature_select_loan_type_choose_loan">రుణ రకాన్ని ఎంచుకోండి</string>
+    <string name="feature_select_loan_type_empty">ప్రస్తుతం రుణ ఉత్పత్తులు అందుబాటులో లేవు</string>
+    <string name="feature_select_loan_type_network_issue">మీరు ఇంటర్నెట్‌కు కనెక్ట్ అయ్యారని నిర్ధారించుకోండి</string>
+    <string name="feature_loan_product_details_terms">నిబంధనలు మరియు షరతులను అంగీకరించండి</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s రుణానికి దరఖాస్తు చేయండి</string>
+    <string name="feature_loan_get_loan">%1$s రుణం పొందండి</string>
+    <string name="feature_loan_up_to">%1$s వరకు</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s నుండి %2$s వడ్డీ</string>
+    <string name="feature_loan_terms_and_conditions">నిబంధనలు మరియు షరతులు</string>
+
+    <string name="feature_loan_sanction_and_disbursement">రుణ మంజూరు మరియు పంపిణీ</string>
+    <string name="feature_loan_interest_rate">వడ్డీ రేటు</string>
+    <string name="feature_loan_continue">కొనసాగించు</string>
+    <string name="feature_loan_repayment">తిరిగి చెల్లింపు</string>
+    <string name="feature_loan_security_and_collateral">సెక్యూరిటీ మరియు కొలేటరల్</string>
+    <string name="feature_loan_insurance">భీమా</string>
+    <string name="feature_loan_default">డిఫాల్ట్</string>
+    <string name="feature_loan_documentation">డాక్యుమెంటేషన్</string>
+    <string name="feature_loan_continue_legal_compliance">చట్టపరమైన సమ్మతి</string>
+    <string name="feature_loan_amendments_and_termination">సవరణలు మరియు రద్దు</string>
+    <string name="feature_loan_jurisdiction">అధికార పరిధి</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">దరఖాస్తుదారు అర్హత, ఆదాయ స్థిరత్వం, క్రెడిట్ అర్హత మరియు రుణదాత యొక్క అంతర్గత క్రెడిట్ విధానాల ఆధారంగా వ్యక్తిగత రుణం మంజూరు చేయబడుతుంది. ఎటువంటి కారణం చెప్పకుండా ఏ వ్యక్తిగత రుణ దరఖాస్తునైనా ఆమోదించడానికి లేదా తిరస్కరించడానికి రుణదాతకు పూర్తి అధికారం ఉంటుంది. మంజూరైన రుణ మొత్తం రుణ ఒప్పందం మరియు డాక్యుమెంటేషన్ అవసరాలను బట్టి పూర్తిగా లేదా పాక్షికంగా పంపిణీ చేయబడవచ్చు. పంపిణీ కేవైసీ విధానాల విజయవంతమైన పూర్తికి, సమర్పించిన పత్రాల ధృవీకరణకు మరియు మంజూరు లేఖలో పేర్కొన్న అన్ని షరతులకు కట్టుబడి ఉండటానికి లోబడి ఉంటుంది.</string>
+    <string name="feature_personal_loan_interest_rate_description">వ్యక్తిగత రుణం కోసం రుణ ఒప్పందం సమయంలో రుణగ్రహీత ఎంచుకున్నదాని ప్రకారం, స్థిరమైన లేదా ఫ్లోటింగ్ వడ్డీ రేటు ఉండవచ్చు. ఫ్లోటింగ్ వడ్డీ రేటు రుణాల విషయంలో, వర్తించే రేటు రుణదాత యొక్క బెంచ్‌మార్క్ లేదా రిఫరెన్స్ రేటులో మార్పుల ఆధారంగా ఎప్పటికప్పుడు సవరించబడుతుంది. అటువంటి మార్పులు రుణగ్రహీతకు కట్టుబడి ఉంటాయి మరియు రుణదాత అవసరమని భావించినట్లయితే ఈఎంఐ మొత్తం మరియు/లేదా రుణ కాలపరిమితిలో మార్పుకు దారితీయవచ్చు.</string>
+    <string name="feature_personal_loan_repayment_details">వ్యక్తిగత రుణాన్ని అసలు మరియు వడ్డీ రెండూ కలిపి సమానమైన నెలవారీ వాయిదాల (ఈఎంఐలు) ద్వారా తిరిగి చెల్లించాలి. ఈఎంఐలు రుణ ఒప్పందంలో పేర్కొన్న తేదీ నుండి ప్రారంభమవుతాయి మరియు వర్తించే వడ్డీతో పాటు పూర్తి రుణ మొత్తం తిరిగి చెల్లించే వరకు నెలవారీగా కొనసాగుతాయి. రుణదాత యొక్క ప్రస్తుత విధానాలకు అనుగుణంగా ముందస్తు చెల్లింపు లేదా పాక్షిక చెల్లింపు అనుమతించబడవచ్చు మరియు స్థిర వడ్డీ రేటు రుణాలకు కొన్ని ఛార్జీలు వర్తించవచ్చు.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">వ్యక్తిగత రుణాలు సాధారణంగా అసురక్షితమైనవి మరియు వాటికి కొలేటరల్ అవసరం లేదు. అయితే, రుణగ్రహీత యొక్క క్రెడిట్ ప్రొఫైల్ మరియు రుణ మొత్తం ఆధారంగా అసాధారణ సందర్భాల్లో అదనపు గ్యారెంటీలు లేదా సెక్యూరిటీని కోరే హక్కు రుణదాతకు ఉంటుంది. అటువంటి అవసరాలు ఏవైనా ఉంటే మంజూరు లేఖలో స్పష్టంగా పేర్కొనబడతాయి. వర్తిస్తే డాక్యుమెంటేషన్ లేదా చట్టపరమైన ఫార్మాలిటీలకు సంబంధించిన అన్ని ఖర్చులను రుణగ్రహీత భరించాలి.</string>
+    <string name="feature_personal_loan_insurance_details">వ్యక్తిగత రుణాలకు సాధారణంగా ఆస్తి భీమా అవసరం లేనప్పటికీ, రుణగ్రహీత మరణం సంభవిస్తే బకాయి ఉన్న రుణ మొత్తాన్ని సురక్షితం చేయడానికి రుణగ్రహీత జీవిత బీమా పాలసీని ఎంచుకోవాలని రుణదాత సిఫార్సు చేయవచ్చు. ఇది తప్పనిసరి కాదు కానీ రుణగ్రహీత కుటుంబానికి లేదా ఆధారపడిన వారికి ఆర్థిక రక్షణ చర్యగా ఇది మంచిది.</string>
+    <string name="feature_personal_loan_default_details">ఈఎంఐలు చెల్లించకపోవడమో లేదా ఆలస్యంగా చెల్లించడమో డిఫాల్ట్‌గా పరిగణించబడుతుంది. అటువంటి సందర్భాల్లో, బకాయిలను వసూలు చేయడానికి రుణదాత రికవరీ చర్యలను ప్రారంభించవచ్చు, ఇందులో చట్టపరమైన చర్యలు కూడా ఉండవచ్చు. మీరిన మొత్తాలపై పెనల్ వడ్డీ మరియు ఇతర ఛార్జీలు వర్తించవచ్చు. నిరంతర లేదా పదేపదే డిఫాల్ట్ రుణగ్రహీత యొక్క క్రెడిట్ స్కోర్‌ను మరియు భవిష్యత్తులో రుణం తీసుకునే సామర్థ్యాన్ని ప్రతికూలంగా ప్రభావితం చేస్తుంది.</string>
+    <string name="feature_personal_loan_documentation_details">రుణగ్రహీత ఖచ్చితమైన మరియు పూర్తి పత్రాలను సమర్పించాల్సి ఉంటుంది, ఇందులో గుర్తింపు రుజువు, చిరునామా రుజువు, ఆదాయ వివరాలు, బ్యాంక్ స్టేట్‌మెంట్‌లు మరియు రుణదాత కోరిన ఇతర పత్రాలు ఉంటాయి. సమర్పించిన పత్రాలలో ఏవైనా వ్యత్యాసాలు, తప్పుడు సమాచారం లేదా తారుమారు ఉంటే రుణ దరఖాస్తు తిరస్కరణకు లేదా రుణ ఒప్పందం రద్దుకు దారితీయవచ్చు, అలాగే చట్టపరమైన చిక్కులు కూడా ఉండవచ్చు.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">రుణగ్రహీత వారి ఆర్థిక బాధ్యతలకు సంబంధించిన అన్ని వర్తించే స్థానిక, రాష్ట్ర మరియు జాతీయ చట్టాలకు పూర్తిగా కట్టుబడి ఉన్నారని నిర్ధారించుకోవాలి. ఇందులో పన్నుల సకాలంలో చెల్లింపు, నిబంధనలకు కట్టుబడి ఉండటం మరియు చెల్లుబాటు అయ్యే పత్రాల సమర్పణ ఉంటాయి. రుణగ్రహీత చేసే చట్టపరమైన ఉల్లంఘనలకు రుణదాత బాధ్యత వహించరు.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">రుణదాత ఎప్పటికప్పుడు ఈ నిబంధనలు మరియు షరతులను సవరించవచ్చు లేదా నవీకరించవచ్చు, దీనికి రుణగ్రహీతకు తగిన ముందస్తు నోటీసు ఇవ్వబడుతుంది. రుణ మొత్తం పూర్తిగా తిరిగి చెల్లించినప్పుడు లేదా డిఫాల్ట్ కారణంగా ప్రారంభించిన జప్తు చర్యల ద్వారా రుణ ఒప్పందం ముగిసినట్లు పరిగణించబడుతుంది.</string>
+    <string name="feature_personal_loan_jurisdiction_details">వ్యక్తిగత రుణ ఒప్పందం నుండి లేదా దానికి సంబంధించి తలెత్తే అన్ని వివాదాలు ఒప్పందంలో వేరే విధంగా పేర్కొనకపోతే, రుణదాత యొక్క రిజిస్టర్డ్ ఆఫీస్ ఉన్న ప్రదేశంలోని న్యాయస్థానాల ప్రత్యేక అధికార పరిధిలోకి వస్తాయి.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">బ్యాంక్ ఖాతా స్టేట్‌మెంట్‌లను అప్‌లోడ్ చేయండి</string>
+    <string name="feature_upload_docs_collateral">కొలేటరల్ పత్రాలను అప్‌లోడ్ చేయండి</string>
+    <string name="feature_upload_docs_signature">సంతకాన్ని అప్‌లోడ్ చేయండి</string>
+
+    <string name="feature_upload_file_error">ఏదో తప్పు జరిగింది! ఫైల్‌ను అప్‌లోడ్ చేయలేకపోతోంది</string>
+    <string name="feature_upload_statement_error">దయచేసి బ్యాంక్ స్టేట్‌మెంట్‌ను అప్‌లోడ్ చేయండి</string>
+    <string name="feature_upload_property_document_error">దయచేసి ఆస్తి పత్రాన్ని అప్‌లోడ్ చేయండి</string>
+    <string name="feature_upload_signature_error">దయచేసి సంతకాన్ని అప్‌లోడ్ చేయండి</string>
+    <string name="feature_upload_documents_success_title">పత్రాలు విజయవంతంగా అప్‌లోడ్ చేయబడ్డాయి!</string>
+
+    <string name="sign_here">ఇక్కడ సంతకం చేయండి</string>
+    <string name="reset">రీసెట్</string>
+    <string name="sign">సంతకం</string>
+    <string name="capture">క్యాప్చర్</string>
+    <string name="attach">జత చేయండి</string>
+    <string name="upload_signature">సంతకాన్ని అప్‌లోడ్ చేయండి</string>
+    <string name="save_and_submit">సేవ్ చేసి సమర్పించండి</string>
+</resources>

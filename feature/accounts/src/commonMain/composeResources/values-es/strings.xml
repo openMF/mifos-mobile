@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -71,11 +71,12 @@
     <string name="feature_no_transactions_found">Sin transacciones</string>
     <string name="feature_no__filtered_transactions_found">No se encontraron transacciones para los filtros seleccionados</string>
 
-    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Por favor, inténtalo de nuevo.</string>
+    <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
 
     <!--    Transaction Details -->
     <string name="feature_transaction_details">Detalles de la transacción</string>
     <string name="feature_transaction_detail_id">Id Transacción</string>
+    <string name="feature_transaction_detail_transfer_description">Descripción de la transferencia</string>
     <string name="feature_transaction_detail_date">Fecha</string>
     <string name="feature_transaction_detail_status">Estado</string>
     <string name="feature_transaction_detail_status_success">Exitosa</string>

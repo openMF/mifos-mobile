@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,20 +15,20 @@ actual object CurrencyFormatter {
         currencyCode: String?,
         maximumFractionDigits: Int?,
     ): String {
-        if (balance == null || currencyCode == null) {
-            return ""
-        }
+        if (balance == null || currencyCode.isNullOrBlank()) return ""
 
         val options = js("{}").unsafeCast<dynamic>()
         options.style = "currency"
         options.currency = currencyCode
-        if (maximumFractionDigits != null) {
-            options.maximumFractionDigits = maximumFractionDigits
-        }
+        options.currencyDisplay = "symbol"
+
+        val digits = maximumFractionDigits ?: 2
+        options.minimumFractionDigits = digits
+        options.maximumFractionDigits = digits
 
         return try {
-            js("new Intl.NumberFormat('en-US', options).format(balance)").toString()
-        } catch (e: Exception) {
+            js("new Intl.NumberFormat(undefined, options).format(balance)").toString()
+        } catch (e: dynamic) {
             console.error("Error formatting currency: ${e.message}")
             balance.toString()
         }
