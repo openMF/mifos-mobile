@@ -19,7 +19,7 @@
     <string name="filter">Filtrar</string>
     <string name="filter_transactions">Filtrar Transações</string>
     <string name="clear_all">Limpar Tudo</string>
-    <string name="filter_by_account">Filtrar por Conta :</string>
+    <string name="filter_by_account">Filtrar por Conta:</string>
     <string name="account_number_label">Nº da Conta: %1$s</string>
     <string name="select_account">Selecionar Conta</string>
     <string name="balance">Saldo: %1$s %2$s</string>

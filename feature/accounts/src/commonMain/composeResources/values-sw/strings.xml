@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">Hali</string>
     <string name="feature_accounts_filter_type">Aina</string>
 
-<string name="feature_loan_account_filter_active">Inatumika</string>
+    <string name="feature_loan_account_filter_active">Inatumika</string>
     <string name="feature_loan_account_filter_approval_pending">Inasubiri Idhini</string>
     <string name="feature_loan_account_filter_closed">Imefungwa</string>
     <string name="feature_loan_account_filter_disburse">Inasubiri Utoaji</string>

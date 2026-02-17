@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">Status</string>
     <string name="feature_accounts_filter_type">Jenis</string>
 
-<string name="feature_loan_account_filter_active">Aktif</string>
+    <string name="feature_loan_account_filter_active">Aktif</string>
     <string name="feature_loan_account_filter_approval_pending">Menunggu Persetujuan</string>
     <string name="feature_loan_account_filter_closed">Ditutup</string>
     <string name="feature_loan_account_filter_disburse">Menunggu Pencairan</string>

@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">स्थिती</string>
     <string name="feature_accounts_filter_type">प्रकार</string>
 
-<string name="feature_loan_account_filter_active">सक्रिय</string>
+    <string name="feature_loan_account_filter_active">सक्रिय</string>
     <string name="feature_loan_account_filter_approval_pending">मंजूरी प्रलंबित</string>
     <string name="feature_loan_account_filter_closed">बंद</string>
     <string name="feature_loan_account_filter_disburse">वितरणाच्या प्रतीक्षेत</string>

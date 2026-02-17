@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">Status</string>
     <string name="feature_accounts_filter_type">Typ</string>
 
-<string name="feature_loan_account_filter_active">Aktiv</string>
+    <string name="feature_loan_account_filter_active">Aktiv</string>
     <string name="feature_loan_account_filter_approval_pending">Genehmigung ausstehend</string>
     <string name="feature_loan_account_filter_closed">Geschlossen</string>
     <string name="feature_loan_account_filter_disburse">Warten auf Auszahlung</string>

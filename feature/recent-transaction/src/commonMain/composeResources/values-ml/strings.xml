@@ -19,10 +19,10 @@
     <string name="filter">ഫിൽട്ടർ</string>
     <string name="filter_transactions">ഇടപാടുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="clear_all">എല്ലാം മായ്‌ക്കുക</string>
-    <string name="filter_by_account">അക്കൗണ്ട് പ്രകാരം ഫിൽട്ടർ ചെയ്യുക :</string>
-    <string name="account_number_label">അക്കൗണ്ട് നമ്പർ: %1$s</string>
+    <string name="filter_by_account">അക്കൗണ്ട് പ്രകാരം ഫിൽട്ടർ ചെയ്യുക:</string>
+    <string name="account_number_label">അക്കൗണ്ട് നമ്പർ : %1$s</string>
     <string name="select_account">അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
-    <string name="balance">ബാലൻസ്: %1$s %2$s</string>
+    <string name="balance">ബാലൻസ് : %1$s %2$s</string>
     <string name="account">അക്കൗണ്ട്</string>
     <string name="transaction_type">ഇടപാട് തരം:</string>
     <string name="all">എല്ലാം</string>

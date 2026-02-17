@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">الحالة</string>
     <string name="feature_accounts_filter_type">النوع</string>
 
-<string name="feature_loan_account_filter_active">نشط</string>
+    <string name="feature_loan_account_filter_active">نشط</string>
     <string name="feature_loan_account_filter_approval_pending">بانتظار الموافقة</string>
     <string name="feature_loan_account_filter_closed">مغلق</string>
     <string name="feature_loan_account_filter_disburse">بانتظار الصرف</string>

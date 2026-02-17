@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">ಸ್ಥಿತಿ</string>
     <string name="feature_accounts_filter_type">ಪ್ರಕಾರ</string>
 
-<string name="feature_loan_account_filter_active">ಸಕ್ರಿಯ</string>
+    <string name="feature_loan_account_filter_active">ಸಕ್ರಿಯ</string>
     <string name="feature_loan_account_filter_approval_pending">ಅನುಮೋದನೆ ಬಾಕಿ ಇದೆ</string>
     <string name="feature_loan_account_filter_closed">ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="feature_loan_account_filter_disburse">ವಿತರಣೆಗೆ ಕಾಯುತ್ತಿದೆ</string>

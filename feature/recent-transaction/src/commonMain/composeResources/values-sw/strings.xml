@@ -19,7 +19,7 @@
     <string name="filter">Chuja</string>
     <string name="filter_transactions">Chuja Miamala</string>
     <string name="clear_all">Futa Vyote</string>
-    <string name="filter_by_account">Chuja kwa Akaunti :</string>
+    <string name="filter_by_account">Chuja kwa Akaunti:</string>
     <string name="account_number_label">Nambari ya Akaunti: %1$s</string>
     <string name="select_account">Chagua Akaunti</string>
     <string name="balance">Salio: %1$s %2$s</string>

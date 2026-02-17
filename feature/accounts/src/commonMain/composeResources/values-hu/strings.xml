@@ -18,7 +18,7 @@
     <string name="feature_accounts_filter_status">Állapot</string>
     <string name="feature_accounts_filter_type">Típus</string>
 
-<string name="feature_loan_account_filter_active">Aktív</string>
+    <string name="feature_loan_account_filter_active">Aktív</string>
     <string name="feature_loan_account_filter_approval_pending">Jóváhagyásra vár</string>
     <string name="feature_loan_account_filter_closed">Lezárt</string>
     <string name="feature_loan_account_filter_disburse">Folyósításra vár</string>
