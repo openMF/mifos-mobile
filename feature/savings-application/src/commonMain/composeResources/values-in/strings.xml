@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Detail Aplikasi Tabungan</string>
+
+    <string name="feature_apply_savings_section_fill_details">Isi Detail Aplikasi</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Nama Pemohon</string>
+    <string name="feature_apply_savings_label_savings_product">Nama Produk</string>
+    <string name="feature_apply_savings_label_field_officer">Petugas Lapangan</string>
+    <string name="feature_apply_savings_label_submission_date">Tanggal Pengajuan</string>
+    <string name="feature_apply_savings_label_fill_application_details">Isi Detail Aplikasi</string>
+    <string name="feature_apply_savings_label_details">Detail</string>
+    <string name="feature_apply_savings_label_currency">Mata Uang</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Saldo Awal Minimum</string>
+    <string name="feature_apply_savings_label_lock_in_period">Periode Penguncian</string>
+    <string name="feature_apply_savings_label_frequency">Frekuensi</string>
+    <string name="feature_apply_savings_label_frequency_type">Jenis Frekuensi</string>
+    <string name="feature_apply_savings_label_overdraft">Overdraft</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Permintaan untuk mengizinkan overdraft</string>
+
+    <string name="feature_apply_savings_button_continue">Lanjut</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Batal</string>
+    <string name="feature_apply_savings_button_apply">Ajukan Tabungan</string>
+    <string name="feature_button_next">Berikutnya</string>
+
+    <string name="feature_apply_savings_error_amount_empty">Jumlah pokok diperlukan</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Silakan masukkan format jumlah yang valid</string>
+    <string name="feature_apply_savings_error_amount_too_small">Jumlah pokok terlalu kecil</string>
+    <string name="feature_apply_savings_error_amount_too_large">Jumlah pokok melebihi batas maksimum</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Jumlah memiliki terlalu banyak tempat desimal untuk mata uang yang dipilih</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Produk tabungan diperlukan</string>
+
+    <string name="feature_apply_savings_error_server">Masalah server dari sisi kami, tidak dapat melanjutkan. Coba lagi sesaat lagi</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Terlalu banyak upaya gagal. Silakan coba lagi nanti.</string>
+    <string name="feature_apply_savings_error_submit_failed">Gagal mengirimkan aplikasi tabungan. Silakan coba lagi.</string>
+
+    <string name="feature_apply_savings_success_submit">Aplikasi tabungan berhasil dikirim!</string>
+    <string name="feature_apply_savings_success_draft_saved">Draf aplikasi berhasil disimpan</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Perubahan Belum Disimpan!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin kembali?</string>
+
+
+    <string name="feature_apply_savings_label_next">Berikutnya</string>
+
+    <string name="feature_apply_savings_error_currency_required">Mata uang diperlukan</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Saldo awal minimum diperlukan</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Periode penguncian diperlukan</string>
+    <string name="feature_apply_savings_error_frequency_required">Frekuensi diperlukan</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Masukkan frekuensi yang valid</string>
+
+    <string name="feature_apply_savings_status_success">Berhasil Diajukan!</string>
+    <string name="feature_apply_savings_status_success_tip">Anda telah berhasil mengajukan akun tabungan di bawah %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Kembali Ke Beranda</string>
+
+    <string name="feature_apply_savings_status_failure">Aplikasi Gagal Dikirim</string>
+    <string name="feature_apply_savings_status_failure_tip">Gagal mengajukan akun tabungan di bawah %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Coba Lagi</string>
+
+</resources>

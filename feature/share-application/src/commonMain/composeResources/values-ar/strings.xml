@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">تفاصيل طلب الأسهم</string>
+    <string name="feature_share_navigation_back">رجوع</string>
+
+    <string name="feature_share_label_applicant_name">اسم مقدم الطلب</string>
+    <string name="feature_share_label_submission_date">تاريخ التقديم</string>
+    <string name="feature_share_label_product_name">اسم المنتج</string>
+
+    <string name="feature_share_button_next">التالي</string>
+
+    <string name="feature_apply_share_error_server">مشكلة في الخادم من جانبنا، لا يمكن المتابعة، حاول مرة أخرى بعد قليل</string>
+    <string name="feature_apply_share_error_too_many_attempts">محاولات فاشلة كثيرة جداً. يرجى المحاولة لاحقاً.</string>
+    <string name="feature_apply_share_error_submit_failed">فشل تقديم طلب حساب التوفير. يرجى المحاولة مرة أخرى.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">تغييرات غير محفوظة!</string>
+    <string name="feature_apply_share_unsaved_changes_message">لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد الرجوع؟</string>
+    <string name="feature_share_no_products_available">لا توجد منتجات أسهم متاحة للتقديم عليها</string>
+
+
+    <string name="feature_apply_share_label_terms">الشروط</string>
+    <string name="feature_apply_share_label_currency">العملة</string>
+    <string name="feature_apply_share_label_current_price">السعر الحالي</string>
+    <string name="feature_apply_share_label_total_number_of_shares">إجمالي عدد الأسهم</string>
+    <string name="feature_apply_share_label_default_savings_account">حساب التوفير الافتراضي</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">الحد الأدنى للفترة النشطة</string>
+    <string name="feature_apply_share_section_minimum_active_period">الحد الأدنى للفترة النشطة</string>
+    <string name="feature_apply_share_label_minimum_frequency">التكرار</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">نوع التكرار</string>
+
+    <string name="feature_apply_share_label_lockin_period">فترة الحظر</string>
+    <string name="feature_apply_share_section_lockin_period">فترة الحظر</string>
+    <string name="feature_apply_share_label_lockin_frequency">التكرار</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">نوع التكرار</string>
+
+    <string name="feature_apply_share_error_frequency_required">التكرار مطلوب</string>
+    <string name="feature_apply_share_frequency_invalid">يرجى إدخال تكرار صحيح</string>
+
+    <string name="feature_apply_share_error_shares_required">الأسهم مطلوبة</string>
+    <string name="feature_apply_share_shares_invalid">يرجى إدخال أسهم صحيحة</string>
+
+    <string name="feature_apply_share_error_price_required">السعر مطلوب</string>
+    <string name="feature_apply_share_price_invalid">يرجى إدخال سعر صحيح</string>
+
+    <string name="feature_apply_share_status_failure">فشل تقديم الطلب</string>
+    <string name="feature_apply_share_status_failure_tip">فشل التقديم على حساب أسهم تحت %1$s</string>
+    <string name="feature_apply_share_status_failure_action">حاول مرة أخرى</string>
+
+    <string name="feature_apply_share_status_success">تم التقديم بنجاح!</string>
+    <string name="feature_apply_share_status_success_tip">لقد قمت بالتقديم بنجاح على حساب أسهم تحت %1$s</string>
+    <string name="feature_apply_share_status_success_action">العودة للرئيسية</string>
+</resources>
