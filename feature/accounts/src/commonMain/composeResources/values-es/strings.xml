@@ -94,4 +94,14 @@
     <string name="feature_transaction_detail_balance">Saldo disponible</string>
     <string name="feature_transaction_detail_default_type">Transacción</string>
 
+    <string name="feature_transaction_history_deposit">Depósito</string>
+    <string name="feature_transaction_history_withdrawal">Retiro</string>
+    <string name="feature_transaction_history_interest_posting">Publicación de intereses</string>
+    <string name="feature_transaction_history_fee_deduction">Deducción de tarifa</string>
+    <string name="feature_transaction_history_transfer">Transferencia</string>
+    <string name="feature_transaction_history_transaction">Transacción</string>
+    <string name="feature_transaction_history_disbursement">Desembolso</string>
+    <string name="feature_transaction_history_repayment">Reembolso</string>
+    <string name="feature_transaction_history_purchase">Compra</string>
+    <string name="feature_transaction_history_charge_payment">Pago de cargo</string>
 </resources>

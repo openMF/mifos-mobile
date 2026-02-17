@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">حالیہ لین دین</string>
+    <string name="no_transaction">کوئی لین دین نہیں</string>
+    <string name="filter">فلٹر</string>
+    <string name="filter_transactions">لین دین فلٹر کریں</string>
+    <string name="clear_all">تمام صاف کریں</string>
+    <string name="filter_by_account">اکاؤنٹ کے ذریعے فلٹر کریں:</string>
+    <string name="account_number_label">اکاؤنٹ نمبر: %1$s</string>
+    <string name="select_account">اکاؤنٹ منتخب کریں</string>
+    <string name="balance">بیلنس: %1$s %2$s</string>
+    <string name="transaction_type">لین دین کی قسم:</string>
+    <string name="all">تمام</string>
+    <string name="debits">ڈیبٹ</string>
+    <string name="credits">کریڈٹ</string>
+    <string name="apply_filters">فلٹر لگائیں</string>
+
+    <string name="deposit">جمع</string>
+    <string name="withdrawal">نکلوائی</string>
+    <string name="interest_posting">سود کی ادائیگی</string>
+    <string name="fee_deduction">فیس کی کٹوتی</string>
+    <string name="transfer">منتقلی</string>
+    <string name="transaction">لین دین</string>
+</resources>

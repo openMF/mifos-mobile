@@ -14,6 +14,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.feature.recent_transaction.generated.resources.Res
+import mifos_mobile.feature.recent_transaction.generated.resources.deposit
+import mifos_mobile.feature.recent_transaction.generated.resources.fee_deduction
+import mifos_mobile.feature.recent_transaction.generated.resources.interest_posting
+import mifos_mobile.feature.recent_transaction.generated.resources.transaction
+import mifos_mobile.feature.recent_transaction.generated.resources.transfer
+import mifos_mobile.feature.recent_transaction.generated.resources.withdrawal
+import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -358,9 +366,21 @@ internal class RecentTransactionViewModel(
         amount = amount,
         type = transactionType,
         typeValue = transactionType?.value,
+        labelRes = transactionType.getLabelRes(),
         isCredit = transactionType.isCredit(),
         currency = currency?.code ?: "USD",
     )
+
+    internal fun TransactionType?.getLabelRes(): StringResource {
+        return when {
+            this?.deposit == true -> Res.string.deposit
+            this?.withdrawal == true -> Res.string.withdrawal
+            this?.interestPosting == true -> Res.string.interest_posting
+            this?.feeDeduction == true -> Res.string.fee_deduction
+            this?.initiateTransfer == true -> Res.string.transfer
+            else -> Res.string.transaction
+        }
+    }
 
     /**
      * Determines if a transaction type represents a credit.
@@ -403,6 +423,7 @@ internal data class UiTransaction(
     val amount: Double?,
     val type: TransactionType? = null,
     val typeValue: String? = null,
+    val labelRes: StringResource? = null,
     val isCredit: Boolean,
     val currency: String,
 )

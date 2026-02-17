@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_account_title">ఖాతాలు</string>
+    <string name="feature_loan_account_title">రుణ ఖాతాలు</string>
+    <string name="feature_saving_account_title">పొదుపు ఖాతాలు</string>
+    <string name="feature_share_account_title">వాటా ఖాతాలు</string>
+
+    <string name="feature_accounts_filter_status">స్థితి</string>
+    <string name="feature_accounts_filter_type">రకం</string>
+
+    <string name="feature_loan_account_filter_active">క్రియాశీల</string>
+    <string name="feature_loan_account_filter_approval_pending">ఆమోదం పెండింగ్‌లో ఉంది</string>
+    <string name="feature_loan_account_filter_closed">మూసివేయబడింది</string>
+    <string name="feature_loan_account_filter_disburse">పంపిణీ కోసం వేచి ఉంది</string>
+    <string name="feature_loan_account_filter_overpaid">అదనంగా చెల్లించారు</string>
+    <string name="feature_loan_account_filter_in_arrears">బకాయిల్లో ఉంది</string>
+    <string name="feature_loan_account_filter_withdrawn">ఉపసంహరించబడింది</string>
+    <string name="feature_loan_account_filter_matured">గడువు ముగిసింది</string>
+    <string name="feature_loan_account_filter_rejected">తిరస్కరించబడింది</string>
+
+    <string name="feature_loan_account_filter_personal">వ్యక్తిగత</string>
+    <string name="feature_loan_account_filter_bronze">బ్రాంజ్</string>
+
+    <string name="feature_savings_filter_wallet_account">వాలెట్ ఖాతా</string>
+    <string name="feature_savings_filter_bank_account">బ్యాంకు ఖాతా</string>
+    <string name="feature_savings_filter_group_account">గ్రూప్ ఖాతా</string>
+    <string name="feature_savings_filter_nb_account">NB ఖాతా</string>
+
+    <string name="feature_savings_filter_active_account">క్రియాశీల</string>
+    <string name="feature_savings_filter_pending_account">ఆమోదం కోసం పెండింగ్‌లో ఉంది</string>
+    <string name="feature_savings_filter_closed_account">మూసివేయబడింది</string>
+    <string name="feature_savings_filter_matured_account">గడువు ముగిసింది</string>
+    <string name="feature_savings_filter_approved_account">ఆమోదించబడింది</string>
+
+    <string name="feature_savings_filter">ఫిల్టర్లు</string>
+    <string name="feature_savings_reset">రీసెట్</string>
+    <string name="feature_savings_apply">వర్తింపజేయి</string>
+    <string name="feature_filters_count">%1$s ఎంపిక చేయబడ్డాయి</string>
+
+    <string name="feature_transaction_transaction_history">లావాదేవీల చరిత్ర</string>
+    <string name="feature_transaction_statement">స్టేట్‌మెంట్</string>
+    <string name="feature_transaction_download_icon_description">డౌన్‌లోడ్ చిహ్నం</string>
+    <string name="feature_transaction_filter">ఫిల్టర్</string>
+    <string name="feature_transaction_filter_icon_description">ఫిల్టర్ చిహ్నం</string>
+
+    <string name="feature_transaction_filter_credit">క్రెడిట్</string>
+    <string name="feature_transaction_filter_debit">డెబిట్</string>
+
+    <string name="feature_transaction_filter_past_month">గత నెల</string>
+    <string name="feature_transaction_filter_past_3_months">గత 3 నెలలు</string>
+    <string name="feature_transaction_filter_past_6_months">గత 6 నెలలు</string>
+    <string name="feature_transaction_filter_past_1_year">గత 1 సంవత్సరం</string>
+    <string name="feature_transaction_filter_past_2_years">గత 2 సంవత్సరాలు</string>
+
+    <string name="feature_transaction_type">లావాదేవీ రకం</string>
+    <string name="feature_duration">వ్యవధి</string>
+    <string name="feature_no_transactions_found">లావాదేవీలు కనుగొనబడలేదు</string>
+    <string name="feature_no__filtered_transactions_found">ఎంచుకున్న ఫిల్టర్లకు లావాదేవీలు ఏవీ కనుగొనబడలేదు</string>
+
+    <string name="feature_generic_error_server">మా వైపు నుండి సర్వర్ సమస్య ఉంది, ముందుకు వెళ్ళలేము, కాసేపు ఆగి మళ్ళీ ప్రయత్నించండి</string>
+
+    <string name="feature_transaction_details">లావాదేవీ వివరాలు</string>
+    <string name="feature_transaction_detail_id">లావాదేవీ ID</string>
+    <string name="feature_transaction_detail_transfer_description">బదిలీ వివరణ</string>
+    <string name="feature_transaction_detail_date">తేదీ</string>
+    <string name="feature_transaction_detail_status">స్థితి</string>
+    <string name="feature_transaction_detail_status_success">విజయం</string>
+    <string name="feature_transaction_detail_account_ref">ఖాతా రిఫరెన్స్</string>
+    <string name="feature_transaction_detail_payment_method">చెల్లింపు విధానం</string>
+    <string name="feature_transaction_detail_type">రకం</string>
+    <string name="feature_transaction_detail_status_reversed">వెనక్కి తీసుకోబడింది (Reversed)</string>
+    <string name="feature_transaction_detail_receipt">రసీదు సంఖ్య #</string>
+    <string name="feature_transaction_detail_external_id">బాహ్య ID</string>
+    <string name="feature_transaction_detail_breakdown">వివరణాత్మక జాబితా</string>
+    <string name="feature_transaction_detail_principal">అసలు</string>
+    <string name="feature_transaction_detail_interest">వడ్డీ</string>
+    <string name="feature_transaction_detail_fees">రుసుములు</string>
+    <string name="feature_transaction_detail_penalties">పెనాల్టీలు</string>
+    <string name="feature_transaction_detail_balance">మిగిలిన బ్యాలెన్స్</string>
+    <string name="feature_transaction_detail_default_type">లావాదేవీ</string>
+
+    <string name="feature_transaction_history_deposit">డిపాజిట్</string>
+    <string name="feature_transaction_history_withdrawal">విత్ డ్రా</string>
+    <string name="feature_transaction_history_interest_posting">వడ్డీ పోస్టింగ్</string>
+    <string name="feature_transaction_history_fee_deduction">రుసుము కోత</string>
+    <string name="feature_transaction_history_transfer">బదిలీ</string>
+    <string name="feature_transaction_history_transaction">లావాదేవీ</string>
+    <string name="feature_transaction_history_disbursement">పంపిణీ</string>
+    <string name="feature_transaction_history_repayment">తిరిగి చెల్లింపు</string>
+    <string name="feature_transaction_history_purchase">కొనుగోలు</string>
+    <string name="feature_transaction_history_charge_payment">ఛార్జ్ చెల్లింపు</string>
+    <string name="feature_transaction_history_redeem">రిడీమ్</string>
+</resources>
