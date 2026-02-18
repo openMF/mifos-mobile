@@ -764,6 +764,12 @@ object ColumnInfoTypeAffinity {
 
     /** Store as BLOB (binary data) */
     const val BLOB = 5
+
+    /** Indicates that the column name should be inherited from the field name */
+    const val INHERIT_FIELD_NAME: String = "[field-name]"
+
+    /** Indicates that no default value is specified for the column */
+    const val VALUE_UNSPECIFIED: String = "[value-unspecified]"
 }
 
 /**
@@ -789,4 +795,26 @@ object CollationSequence {
 
     /** Unicode-aware comparison */
     const val UNICODE = 6
+}
+
+/**
+ * Cross-platform constants for foreign key actions.
+ *
+ * These constants define the action to take when a referenced key is updated or deleted.
+ */
+object ForeignKeyAction {
+    /** Take no action when a referenced key changes */
+    const val NO_ACTION = 1
+
+    /** Prevent the operation if it would violate the foreign key constraint */
+    const val RESTRICT = 2
+
+    /** Set the foreign key column to NULL when the referenced key is deleted/updated */
+    const val SET_NULL = 3
+
+    /** Set the foreign key column to its default value when the referenced key is deleted/updated */
+    const val SET_DEFAULT = 4
+
+    /** Cascade the delete/update operation to the referencing rows */
+    const val CASCADE = 5
 }
