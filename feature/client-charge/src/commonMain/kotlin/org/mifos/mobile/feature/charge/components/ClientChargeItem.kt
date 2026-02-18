@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,16 +21,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import mifos_mobile.feature.client_charge.generated.resources.Res
+import mifos_mobile.feature.client_charge.generated.resources.amount_due
+import mifos_mobile.feature.client_charge.generated.resources.amount_paid
 import mifos_mobile.feature.client_charge.generated.resources.database_checkmark
 import mifos_mobile.feature.client_charge.generated.resources.database_warning
+import mifos_mobile.feature.client_charge.generated.resources.error_no_charge
+import mifos_mobile.feature.client_charge.generated.resources.feature_client_charges_charge_id
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DateHelper
@@ -40,6 +43,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.Charge
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function that displays a charge item.
@@ -61,7 +65,7 @@ fun ClientChargeItem(
             .clickable {
                 onChargeClick()
             }
-            .padding(vertical = DesignToken.padding.large),
+            .padding(vertical = KptTheme.spacing.md),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -72,17 +76,17 @@ fun ClientChargeItem(
                 painterResource(Res.drawable.database_warning)
             },
             contentDescription = "Charges Symbol",
-            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            tint = KptTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             modifier = Modifier
-                .size(36.dp)
+                .size(DesignToken.sizes.iconExtraLarge)
                 .background(
-                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
+                    color = KptTheme.colorScheme.background.copy(alpha = 0.3f),
                     shape = CircleShape,
                 )
-                .padding(DesignToken.padding.small),
+                .padding(KptTheme.spacing.sm),
 
         )
-        Spacer(Modifier.width(DesignToken.padding.medium))
+        Spacer(Modifier.width(KptTheme.spacing.md))
         Column(
             modifier = Modifier.weight(1f),
         ) {
@@ -92,37 +96,41 @@ fun ClientChargeItem(
             )
             // TODO: in Figma account Number is there instead of charge id. Refactor it
             Text(
-                text = "ChargeId : ${charge.chargeId}",
+                text = stringResource(
+                    Res.string.feature_client_charges_charge_id,
+                    charge.chargeId.toString(),
+                ),
                 style = MifosTypography.bodySmall,
             )
+
             Text(
-                text = if (charge.dueDate.isNotEmpty()) {
+                text = if (!charge.dueDate.isEmpty() && charge.dueDate.size >= 3) {
                     DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
                 } else {
-                    ""
+                    stringResource(Res.string.error_no_charge)
                 },
                 style = MifosTypography.bodySmall,
             )
         }
-        Spacer(Modifier.width(DesignToken.padding.medium))
+        Spacer(Modifier.width(KptTheme.spacing.md))
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Column(
                 horizontalAlignment = Alignment.End,
             ) {
                 Text(
                     text = if (charge.isChargePaid) {
-                        "Paid"
+                        stringResource(Res.string.amount_paid)
                     } else {
-                        "Due"
+                        stringResource(Res.string.amount_due)
                     },
                     style = MifosTypography.labelSmall,
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        MaterialTheme.colorScheme.error
+                        KptTheme.colorScheme.error
                     },
                 )
                 Text(
@@ -147,14 +155,14 @@ fun ClientChargeItem(
                     color = if (charge.isChargePaid) {
                         AppColors.customEnable
                     } else {
-                        MaterialTheme.colorScheme.error
+                        KptTheme.colorScheme.error
                     },
                 )
             }
             Icon(
                 imageVector = MifosIcons.ChevronRight,
-                contentDescription = "",
-                modifier = Modifier.size(20.dp),
+                contentDescription = "Navigation Icon",
+                modifier = Modifier.size(DesignToken.sizes.iconDp20),
             )
         }
     }

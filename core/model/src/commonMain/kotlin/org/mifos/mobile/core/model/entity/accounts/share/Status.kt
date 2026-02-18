@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,11 +10,8 @@
 package org.mifos.mobile.core.model.entity.accounts.share
 
 import kotlinx.serialization.Serializable
-import org.mifos.mobile.core.model.Parcelable
-import org.mifos.mobile.core.model.Parcelize
 
 @Serializable
-@Parcelize
 data class Status(
 
     val id: Int? = null,
@@ -33,4 +30,4 @@ data class Status(
 
     val closed: Boolean? = null,
 
-) : Parcelable
+)

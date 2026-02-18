@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">درخواست وام جدید</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">درخواست وام</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">نام متقاضی</string>
+    <string name="feature_apply_loan_label_loan_product">محصول وام</string>
+    <string name="feature_apply_loan_label_purpose">هدف وام</string>
+    <string name="feature_apply_loan_label_disbursement_date">تاریخ پرداخت</string>
+    <string name="feature_apply_loan_label_principal_amount">مبلغ اصلی</string>
+    <string name="feature_apply_loan_label_currency">ارز</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">ادامه</string>
+    <string name="feature_apply_loan_button_ok">تایید</string>
+    <string name="feature_apply_loan_button_cancel">لغو</string>
+    <string name="feature_apply_loan_button_apply">درخواست وام</string>
+    <string name="feature_button_next">بعدی</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">نام متقاضی الزامی است</string>
+    <string name="feature_apply_loan_error_name_too_short">نام متقاضی باید حداقل ۴ کاراکتر باشد</string>
+    <string name="feature_apply_loan_error_name_too_long">نام متقاضی نمی‌تواند بیش از ۱۰۰ کاراکتر باشد</string>
+    <string name="feature_apply_loan_error_name_invalid_format">نام متقاضی حاوی کاراکترهای نامعتبر است</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">محصول وام الزامی است</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">مبلغ اصلی الزامی است</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">لطفا فرمت مبلغ معتبری وارد کنید</string>
+    <string name="feature_apply_loan_error_amount_too_small">مبلغ اصلی بسیار کم است</string>
+    <string name="feature_apply_loan_error_amount_too_large">مبلغ اصلی بیش از حد مجاز است</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">مبلغ دارای اعشار زیادی برای ارز انتخاب شده است</string>
+    <string name="feature_apply_loan_error_amount_multiple">مبلغ در ضرایب معتبر نیست</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">تاریخ پرداخت الزامی است</string>
+    <string name="feature_apply_loan_error_date_invalid_format">لطفا فرمت تاریخ معتبر وارد کنید (روز/ماه/سال)</string>
+    <string name="feature_apply_loan_error_date_future">تاریخ پرداخت باید در آینده باشد</string>
+    <string name="feature_apply_loan_error_date_out_of_range">تاریخ پرداخت خیلی دور در آینده است (حداکثر ۱۰ سال)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">مشکل سرور از سمت ما، امکان ادامه وجود ندارد، لطفا کمی بعد دوباره تلاش کنید</string>
+    <string name="feature_apply_loan_error_too_many_attempts">تلاش های ناموفق بیش از حد. لطفا بعدا دوباره تلاش کنید.</string>
+    <string name="feature_apply_loan_error_submit_failed">ارسال درخواست وام ناموفق بود. لطفا دوباره تلاش کنید.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">درخواست وام با موفقیت ارسال شد!</string>
+    <string name="feature_apply_loan_success_draft_saved">پیش نویس درخواست با موفقیت ذخیره شد</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">تغییرات ذخیره نشده!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">شما تغییرات ذخیره نشده دارید. آیا مطمئن هستید که می‌خواهید برگردید؟</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">دور انداختن</string>
+    <string name="feature_apply_loan_action_save_draft">ذخیره پیش نویس</string>
+    <string name="feature_apply_loan_action_retry">تلاش مجدد</string>
+    <string name="feature_apply_loan_action_cancel">لغو</string>
+    <string name="feature_apply_loan_action_continue">ادامه</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">نام کامل خود را وارد کنید</string>
+    <string name="feature_apply_loan_hint_loan_product">محصول وام را انتخاب کنید</string>
+    <string name="feature_apply_loan_hint_principal_amount">مبلغ وام را وارد کنید</string>
+    <string name="feature_apply_loan_hint_disbursement_date">تاریخ پرداخت را انتخاب کنید</string>
+    <string name="feature_apply_loan_hint_purpose">هدف را مختصر توضیح دهید</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">ارز تغییر کرده است. مبلغ مجددا تایید خواهد شد.</string>
+    <string name="feature_apply_loan_info_min_amount">حداقل مبلغ وام: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">حداکثر مبلغ وام: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">تایید جزئیات</string>
+
+    <string name="feature_apply_loan_status_success">درخواست با موفقیت ارسال شد</string>
+    <string name="feature_apply_loan_status_success_tip">درخواست وام شما ارسال شده است. پس از بررسی به شما اطلاع داده خواهد شد.</string>
+    <string name="feature_apply_loan_status_success_action">بازگشت به خانه</string>
+
+    <string name="feature_apply_loan_status_failure">ارسال درخواست ناموفق بود</string>
+    <string name="feature_apply_loan_status_failure_tip">مشکلی در هنگام ارسال درخواست وام شما پیش آمد. لطفا دوباره تلاش کنید.</string>
+    <string name="feature_apply_loan_status_failure_action">تلاش مجدد</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">درخواست وام جدید</string>
+    <string name="feature_select_loan_type_choose_loan">نوع وام را انتخاب کنید</string>
+    <string name="feature_select_loan_type_empty">محصولات وام در حال حاضر در دسترس نیستند</string>
+    <string name="feature_select_loan_type_network_issue">اطمینان حاصل کنید که به اینترنت متصل هستید</string>
+    <string name="feature_loan_product_details_terms">شرایط و ضوابط را بپذیرید</string>
+
+
+    <string name="feature_loan_apply_loan">درخواست وام %1$s</string>
+    <string name="feature_loan_get_loan">دریافت وام %1$s</string>
+    <string name="feature_loan_up_to">تا %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s تا %2$s بهره</string>
+    <string name="feature_loan_terms_and_conditions">شرایط و ضوابط</string>
+
+    <string name="feature_loan_sanction_and_disbursement">تصویب و پرداخت وام</string>
+    <string name="feature_loan_interest_rate">نرخ بهره</string>
+    <string name="feature_loan_continue">ادامه</string>
+    <string name="feature_loan_repayment">بازپرداخت</string>
+    <string name="feature_loan_security_and_collateral">امنیت و وثیقه</string>
+    <string name="feature_loan_insurance">بیمه</string>
+    <string name="feature_loan_default">نکول</string>
+    <string name="feature_loan_documentation">مستندات</string>
+    <string name="feature_loan_continue_legal_compliance">رعایت قانونی</string>
+    <string name="feature_loan_amendments_and_termination">اصلاحات و فسخ</string>
+    <string name="feature_loan_jurisdiction">صلاحیت قضایی</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">وام شخصی بر اساس واجد شرایط بودن متقاضی، ثبات درآمد، اعتبار و سیاست‌های اعتباری داخلی وام‌دهنده تصویب می‌شود. وام‌دهنده حق دارد هر درخواست وام شخصی را به صلاحدید خود بدون ارائه دلیل تصویب یا رد کند. مبلغ وام تصویب شده ممکن است بسته به قرارداد وام و الزامات اسناد به صورت کامل یا اقساط پرداخت شود. پرداخت منوط به تکمیل موفقیت‌آمیز فرآیندهای KYC، تأیید اسناد ارسال شده و رعایت کلیه شرایط ذکر شده در نامه تصویب است.</string>
+    <string name="feature_personal_loan_interest_rate_description">وام شخصی ممکن است دارای نرخ بهره ثابت یا شناور باشد، همانطور که توسط وام‌گیرنده در زمان قرارداد وام انتخاب شده است. در مورد وام‌های با نرخ بهره شناور، نرخ اعمال شده منوط به بازنگری‌های دوره‌ای بر اساس تغییرات در معیار یا نرخ پایه وام‌دهنده است. چنین تغییراتی برای وام‌گیرنده لازم‌الاجرا خواهد بود و ممکن است منجر به تغییر در مبلغ اقساط و/یا دوره تصدی وام شود، همانطور که وام‌دهنده ضروری بداند.</string>
+    <string name="feature_personal_loan_repayment_details">بازپرداخت وام شخصی از طریق اقساط ماهانه برابر (EMI) شامل اجزای اصل و بهره انجام می‌شود. اقساط از تاریخ ذکر شده در قرارداد وام شروع می‌شود و به صورت ماهانه تا زمانی که کل مبلغ وام به همراه سود مربوطه بازپرداخت شود، ادامه می‌یابد. پیش‌پرداخت یا پرداخت جزئی ممکن است طبق سیاست‌های جاری وام‌دهنده مجاز باشد و ممکن است مشمول هزینه‌های خاصی شود، به ویژه برای وام‌های با نرخ ثابت.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">وام‌های شخصی معمولا ماهیت بدون وثیقه دارند و نیازی به وثیقه ندارند. با این حال، وام‌دهنده حق دارد در موارد استثنایی بسته به مشخصات اعتباری وام‌گیرنده و مبلغ وام، ضمانت یا امنیت اضافی درخواست کند. هرگونه الزام این چنینی به وضوح در نامه تصویب ذکر خواهد شد. وام‌گیرنده کلیه هزینه‌های مربوط به اسناد یا تشریفات قانونی را در صورت وجود بر عهده خواهد گرفت.</string>
+    <string name="feature_personal_loan_insurance_details">اگرچه معمولا بیمه دارایی برای وام‌های شخصی مورد نیاز نیست، وام‌دهنده ممکن است توصیه کند که وام‌گیرنده یک بیمه نامه عمر برای پوشش مبلغ وام معوق در صورت فوت وام‌گیرنده انتخاب کند. این اجباری نیست اما به عنوان یک اقدام حفاظت مالی برای خانواده یا افراد تحت تکفل وام‌گیرنده توصیه می‌شود.</string>
+    <string name="feature_personal_loan_default_details">عدم پرداخت یا تاخیر در پرداخت اقساط به منزله نکول خواهد بود. در چنین مواردی، وام‌دهنده ممکن است اقدامات بازیابی را برای وصول بدهی‌های معوق آغاز کند که ممکن است شامل اقدامات قانونی باشد. سود جریمه و سایر هزینه‌ها ممکن است برای مبالغ معوق اعمال شود. نکول مداوم یا مکرر ممکن است بر امتیاز اعتباری وام‌گیرنده و توانایی وام‌گیری در آینده تأثیر منفی بگذارد.</string>
+    <string name="feature_personal_loan_documentation_details">وام‌گیرنده موظف است اسناد دقیق و کامل را ارسال کند، از جمله اما نه محدود به مدرک هویت، مدرک آدرس، جزئیات درآمد، صورت‌حساب‌های بانکی و هر سند دیگری که توسط وام‌دهنده درخواست شده است. هرگونه مغایرت، ارائه نادرست یا جعل در اسناد ارسال شده می‌تواند منجر به رد درخواست وام یا فسخ قرارداد وام، همراه با عواقب قانونی احتمالی شود.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">وام‌گیرنده باید از رعایت کامل کلیه قوانین محلی، ایالتی و ملی مربوط به تعهدات مالی خود اطمینان حاصل کند. این شامل پرداخت به موقع مالیات، رعایت الزامات نظارتی و ارسال اسناد معتبر است. وام‌دهنده مسئولیتی در قبال هرگونه تخلف قانونی توسط وام‌گیرنده نخواهد داشت.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">وام‌دهنده ممکن است این شرایط و ضوابط را هر از چند گاهی با اطلاع قبلی مناسب به وام‌گیرنده بازنگری یا به‌روزرسانی کند. قرارداد وام پس از بازپرداخت کامل مبلغ وام یا از طریق اقدامات سلب مالکیت که به دلیل نکول آغاز شده است، فسخ شده تلقی می‌شود.</string>
+    <string name="feature_personal_loan_jurisdiction_details">کلیه اختلافات ناشی از یا مربوط به قرارداد وام شخصی مشمول صلاحیت انحصاری دادگاه‌های محل دفتر ثبت شده وام‌دهنده خواهد بود، مگر اینکه در قرارداد خلاف آن ذکر شده باشد.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">بارگذاری صورت‌حساب‌های بانکی</string>
+    <string name="feature_upload_docs_collateral">بارگذاری اسناد وثیقه</string>
+    <string name="feature_upload_docs_signature">بارگذاری امضا</string>
+
+    <string name="feature_upload_file_error">مشکلی پیش آمد! امکان بارگذاری فایل وجود ندارد</string>
+    <string name="feature_upload_statement_error">لطفا صورت‌حساب بانکی را بارگذاری کنید</string>
+    <string name="feature_upload_property_document_error">لطفا سند ملک را بارگذاری کنید</string>
+    <string name="feature_upload_signature_error">لطفا امضا را بارگذاری کنید</string>
+    <string name="feature_upload_documents_success_title">اسناد با موفقیت بارگذاری شد!</string>
+
+    <string name="sign_here">اینجا امضا کنید</string>
+    <string name="reset">بازنشانی</string>
+    <string name="sign">امضا</string>
+    <string name="capture">ثبت</string>
+    <string name="attach">پیوست</string>
+    <string name="upload_signature">بارگذاری امضا</string>
+    <string name="save_and_submit">ذخیره و ارسال</string>
+</resources>

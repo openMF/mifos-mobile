@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">Kwota jest wymagana</string>
+    <string name="feature_tpt_error_amount_invalid">Proszę podać prawidłową kwotę</string>
+    <string name="feature_tpt_error_remarks_empty">Uwagi nie mogą być puste</string>
+    <string name="feature_tpt_error_remarks_invalid">Wprowadzono nieprawidłowe uwagi</string>
+    <string name="feature_tpt_error_server">Problem z serwerem po naszej stronie, spróbuj ponownie za chwilę</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Kwota przekracza dostępne saldo</string>
+    <string name="feature_tpt_label_origin_account">Konto źródłowe</string>
+    <string name="feature_tpt_label_origin_account_hint">Wybierz inne konto płatnicze</string>
+    <string name="feature_tpt_label_destination">Konto docelowe</string>
+    <string name="feature_tpt_label_amount">Kwota</string>
+    <string name="feature_tpt_label_remarks">Uwagi</string>
+    <string name="feature_tpt_tip">Nie znajdujesz konta docelowego?</string>
+    <string name="feature_tpt_tip_action">Dodaj odbiorcę!</string>
+    <string name="feature_tpt_transfer_button">Przelej kwotę</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">ವರ್ಗಾವಣೆ</string>
+    <string name="transferred_successfully">ಯಶಸ್ವಿಯಾಗಿ ವರ್ಗಾಯಿಸಲಾಗಿದೆ</string>
+    <string name="amount">ಮೊತ್ತ</string>
+    <string name="transfer_from_savings">ಉಳಿತಾಯ ಖಾತೆಯಿಂದ ವರ್ಗಾವಣೆ</string>
+    <string name="pay_from">ಇಲ್ಲಿಂದ ಪಾವತಿಸಿ</string>
+    <string name="date">ದಿನಾಂಕ</string>
+    <string name="cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="remark">ಟಿಪ್ಪಣಿ</string>
+    <string name="make_transfer">ವರ್ಗಾವಣೆ ಮಾಡಿ</string>
+    <string name="pay_to">ಇವರಿಗೆ ಪಾವತಿಸಿ</string>
+    <string name="remarks">ಟಿಪ್ಪಣಿಗಳು</string>
+    <string name="error_icon_description">ದೋಷ</string>
+    <string name="error_description">ಮೊತ್ತವು ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬಾರದು</string>
+    <string name="transfer_failed">ವರ್ಗಾವಣೆ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="transfer_successful">ವರ್ಗಾವಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
+    <string name="back_to_accounts">ಖಾತೆಗಳ ಪಟ್ಟಿಗೆ ಹಿಂತಿರುಗಿ</string>
+    <string name="transfer_id_prefix">ವರ್ಗಾವಣೆ ಐಡಿ:</string>
+    <string name="feature_make_transfer_error_amount_required">ಮೊತ್ತ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_make_transfer_error_amount_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_make_transfer_error_remarks_empty">ಟಿಪ್ಪಣಿಗಳು ಖಾಲಿ ಇರಬಾರದು</string>
+    <string name="feature_make_transfer_error_remarks_invalid">ಅಮಾನ್ಯ ಟಿಪ್ಪಣಿಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ</string>
+    <string name="feature_make_transfer_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ ಇದೆ, ಮುಂದುವರಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_make_transfer_account_number">ಖಾತೆ ಸಂಖ್ಯೆ</string>
+    <string name="feature_make_transfer_customer_name">ಗ್ರಾಹಕರ ಹೆಸರು</string>
+    <string name="feature_make_transfer_beneficiary_name">ಫಲಾನುಭವಿಯ ಹೆಸರು</string>
+    <string name="feature_make_transfer_details">ವರ್ಗಾವಣೆ ವಿವರಗಳು</string>
+</resources>

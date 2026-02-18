@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,26 +16,24 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_action
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_message
-import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_now
-import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.MifosButton
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A composable function that displays a confirmation dialog for logging out.
@@ -64,11 +62,11 @@ fun MifosLogoutDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(DesignToken.sizes.buttonHeight),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         onClick = visibilityState.onLogout,
                     ) {
                         Text(
-                            text = stringResource(Res.string.feature_settings_logout_now),
+                            text = stringResource(Res.string.feature_settings_action_logout),
                             style = MifosTypography.titleMedium,
                         )
                     }
@@ -77,20 +75,20 @@ fun MifosLogoutDialog(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(
-                            space = DesignToken.spacing.extraSmall,
+                            space = KptTheme.spacing.xs,
                             alignment = Alignment.CenterHorizontally,
                         ),
                     ) {
                         Text(
                             text = stringResource(visibilityState.message),
                             style = MifosTypography.bodySmallEmphasized,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = KptTheme.colorScheme.secondary,
                         )
 
                         Text(
                             text = stringResource(visibilityState.messageActionText),
                             style = MifosTypography.bodySmallEmphasized,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = KptTheme.colorScheme.primary,
                             modifier = Modifier.clickable {
                                 visibilityState.onNavigateToHome.invoke()
                             },
@@ -102,7 +100,6 @@ fun MifosLogoutDialog(
                 Text(
                     text = stringResource(visibilityState.title),
                     style = MifosTypography.headlineSmallEmphasized,
-                    color = AppColors.customBlack,
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("AlertTitleText"),
@@ -112,14 +109,13 @@ fun MifosLogoutDialog(
                 Text(
                     text = stringResource(visibilityState.description),
                     style = MifosTypography.labelMediumEmphasized,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = KptTheme.colorScheme.secondary,
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("AlertContentText"),
                 )
             },
-            containerColor = Color.White,
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         )
     }
 }
@@ -165,7 +161,7 @@ fun MifosLogoutDialogPreview() {
     MifosLogoutDialog(
         visibilityState = LogoutDialogState.Shown(
             description = Res.string.feature_settings_logout_description,
-            title = Res.string.feature_settings_logout_title,
+            title = Res.string.feature_settings_action_logout_tip,
             message = Res.string.feature_settings_logout_message,
             messageActionText = Res.string.feature_settings_logout_action,
             onLogout = { },

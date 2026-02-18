@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,12 +25,11 @@ fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) =
     navigate(HomeRoute, navOptions)
 
 sealed class HomeNavigationDestination {
-    // Add more as needed
     object Notification : HomeNavigationDestination()
     object Charge : HomeNavigationDestination()
     object Faq : HomeNavigationDestination()
     object Beneficiary : HomeNavigationDestination()
-    object Transaction : HomeNavigationDestination()
+    object TransactionHistory : HomeNavigationDestination()
     object ApplyLoan : HomeNavigationDestination()
     object ApplySavings : HomeNavigationDestination()
     object ApplyShare : HomeNavigationDestination()

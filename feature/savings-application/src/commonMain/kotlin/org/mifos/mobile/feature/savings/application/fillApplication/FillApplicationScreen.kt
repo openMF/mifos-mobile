@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,7 +21,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,7 +61,19 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * A stateful composable serving as the entry point for the "Fill Savings Application" screen.
+ *
+ * This function connects to the [SavingsFillApplicationViewModel] to observe state, handle UI
+ * events, and orchestrate navigation based on user actions and ViewModel commands.
+ *
+ * @param navigateBack A lambda to handle the back navigation event.
+ * @param navigateToStatusScreen A lambda to navigate to a generic status screen after an operation.
+ * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen for sensitive actions.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun SavingsFillApplicationScreen(
     navigateBack: () -> Unit,
@@ -106,6 +117,16 @@ internal fun SavingsFillApplicationScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [SavingsApplicationDialogState].
+ *
+ * This function handles the presentation of error dialogs and confirmation dialogs
+ * for unsaved changes.
+ *
+ * @param state The current [SavingsApplicationState] used for context like network status.
+ * @param dialogState The current state of the dialog to be displayed.
+ * @param onAction A callback to send actions (like dismiss or confirm) to the ViewModel.
+ */
 @Composable
 internal fun SavingsFillApplicationDialog(
     state: SavingsApplicationState,
@@ -135,6 +156,16 @@ internal fun SavingsFillApplicationDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Fill Savings Application" screen.
+ *
+ * It conditionally displays UI based on the [ScreenUiState] (e.g., loading, error, success).
+ * The success state includes a form with various input fields for the application details.
+ *
+ * @param state The current [SavingsApplicationState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SavingsFillApplicationContent(
     state: SavingsApplicationState,
@@ -176,14 +207,14 @@ internal fun SavingsFillApplicationContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     Text(
                         text = stringResource(Res.string.feature_apply_savings_label_details),
                         style = MifosTypography.labelLargeEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
                     MifosOutlineDropdown(
@@ -198,7 +229,7 @@ internal fun SavingsFillApplicationContent(
                         value = state.minOpeningBalance,
                         onValueChange = { onAction(SavingsApplicationAction.MinimumOpeningBalanceChange(it)) },
                         label = stringResource(Res.string.feature_apply_savings_label_minimum_opening_balance),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.minOpeningBalanceError != null,
@@ -213,14 +244,14 @@ internal fun SavingsFillApplicationContent(
                     Text(
                         text = stringResource(Res.string.feature_apply_savings_label_lock_in_period),
                         style = MifosTypography.labelLargeEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = KptTheme.colorScheme.onSurface,
                     )
 
                     MifosOutlinedTextField(
                         value = state.frequency,
                         onValueChange = { onAction(SavingsApplicationAction.FrequencyChange(it)) },
                         label = stringResource(Res.string.feature_apply_savings_label_frequency),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             isError = state.frequencyError != null,
@@ -245,7 +276,7 @@ internal fun SavingsFillApplicationContent(
                         Text(
                             text = stringResource(Res.string.feature_apply_savings_label_overdraft),
                             style = MifosTypography.labelLargeEmphasized,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = KptTheme.colorScheme.onSurface,
                         )
 
                         Row(
@@ -277,7 +308,7 @@ internal fun SavingsFillApplicationContent(
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToAuthentication)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_button_next),

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,27 +9,36 @@
  */
 package org.mifos.mobile.core.common
 
+external class IntlNumberFormat {
+    fun format(value: Double): String
+}
+
+@JsFun(
+    """
+    (currencyCode, digits) => new Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency: currencyCode,
+        currencyDisplay: "symbol",
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+    })
+""",
+)
+external fun createIntlFormatter(currencyCode: String, digits: Int): IntlNumberFormat
+
 actual object CurrencyFormatter {
     actual fun format(
         balance: Double?,
         currencyCode: String?,
         maximumFractionDigits: Int?,
     ): String {
-        return "$currencyCode ${
-            balance?.let {
-                val formattedBalance = balance.toString()
-                val fractionDigits = formattedBalance.substringAfterLast(".")
-                val fractionDigitsLength = fractionDigits.length
-                val fractionDigitsToDisplay = if (fractionDigitsLength > maximumFractionDigits!!) {
-                    fractionDigits.substring(0, maximumFractionDigits)
-                } else {
-                    fractionDigits
-                }
-                val integerDigits = formattedBalance.substringBeforeLast(".")
-                val integerDigitsWithCommas =
-                    integerDigits.reversed().chunked(3).joinToString(",").reversed()
-                "$integerDigitsWithCommas.$fractionDigitsToDisplay"
-            } ?: "0.00"
-        }"
+        if (balance == null || currencyCode.isNullOrBlank()) return ""
+
+        return try {
+            val digits = maximumFractionDigits ?: 2
+            createIntlFormatter(currencyCode, digits).format(balance)
+        } catch (_: Throwable) {
+            balance.toString()
+        }
     }
 }

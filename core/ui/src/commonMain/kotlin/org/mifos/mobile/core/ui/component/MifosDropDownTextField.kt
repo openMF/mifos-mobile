@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,38 +9,35 @@
  */
 package org.mifos.mobile.core.ui.component
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults.colors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.retry
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosDropDownTextField(
     onClick: (Int, String) -> Unit,
@@ -53,26 +50,26 @@ fun MifosDropDownTextField(
     selectedOption: String? = null,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
 
-    LaunchedEffect(key1 = isPressed) {
-        if (isPressed) expanded = true && isEnabled
-    }
-
-    Box(
-        modifier = modifier.alpha(if (!isEnabled) 0.4f else 1f),
+    ExposedDropdownMenuBox(
+        expanded = expanded && isEnabled,
+        onExpandedChange = {
+            if (isEnabled) {
+                expanded = !expanded
+            }
+        },
+        modifier = modifier.alpha(if (!isEnabled) 0.4f else 1f).fillMaxWidth(),
     ) {
         OutlinedTextField(
             value = selectedOption ?: "",
             onValueChange = { },
             label = { Text(stringResource(labelResId)) },
-            interactionSource = interactionSource,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelMedium,
+            textStyle = KptTheme.typography.labelMedium,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -90,18 +87,17 @@ fun MifosDropDownTextField(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
+                focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                errorBorderColor = KptTheme.colorScheme.error,
             ),
         )
 
-        DropdownMenu(
+        ExposedDropdownMenu(
             expanded = expanded && isEnabled,
-            modifier = Modifier
-                .fillMaxWidth(0.92f)
-                .heightIn(max = 200.dp),
             onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .heightIn(max = DesignToken.sizes.dropDownMenuHeightInDp200),
         ) {
             optionsList.forEachIndexed { index, item ->
                 DropdownMenuItem(
@@ -116,6 +112,7 @@ fun MifosDropDownTextField(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosDropDownDoubleTextField(
     onClick: (Int, Pair<String, String>) -> Unit,
@@ -128,26 +125,26 @@ fun MifosDropDownDoubleTextField(
     selectedOption: String? = null,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
 
-    LaunchedEffect(key1 = isPressed) {
-        if (isPressed) expanded = true && isEnabled
-    }
-
-    Box(
-        modifier = modifier.alpha(if (!isEnabled) 0.4f else 1f),
+    ExposedDropdownMenuBox(
+        expanded = expanded && isEnabled,
+        onExpandedChange = {
+            if (isEnabled) {
+                expanded = !expanded
+            }
+        },
+        modifier = modifier.alpha(if (!isEnabled) 0.4f else 1f).fillMaxWidth(),
     ) {
         OutlinedTextField(
             value = selectedOption ?: "",
             onValueChange = { },
             label = { Text(stringResource(labelResId)) },
-            interactionSource = interactionSource,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
             readOnly = true,
             enabled = isEnabled,
-            textStyle = MaterialTheme.typography.labelSmall,
+            textStyle = KptTheme.typography.labelSmall,
             supportingText = { if (error) Text(text = supportingText ?: "") },
             isError = error,
             trailingIcon = {
@@ -165,18 +162,17 @@ fun MifosDropDownDoubleTextField(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.secondaryContainer,
-                errorBorderColor = MaterialTheme.colorScheme.error,
+                focusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                unfocusedBorderColor = KptTheme.colorScheme.secondaryContainer,
+                errorBorderColor = KptTheme.colorScheme.error,
             ),
         )
 
-        DropdownMenu(
+        ExposedDropdownMenu(
             expanded = expanded && isEnabled,
-            modifier = Modifier
-                .fillMaxWidth(0.92f)
-                .heightIn(max = 200.dp),
             onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .heightIn(max = DesignToken.sizes.dropDownMenuHeightInDp200),
         ) {
             optionsList.forEachIndexed { index, item ->
                 DropdownMenuItem(
@@ -190,7 +186,6 @@ fun MifosDropDownDoubleTextField(
                             Text(text = item.second)
                         }
                     },
-
                 )
             }
         }

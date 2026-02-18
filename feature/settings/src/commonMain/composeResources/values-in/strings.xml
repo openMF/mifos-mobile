@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Keluar</string>
     <string name="feature_settings_action_logout_tip">Keluar dari semua perangkat</string>
+    <string name="feature_settings_logout_description">Keluar akan mengakhiri sesi saat ini dan semua sesi aktif untuk tujuan keamanan. Anda harus masuk lagi untuk mengakses akun Anda.</string>
+    <string name="feature_settings_logout_action">Kembali ke beranda</string>
 
     <string name="feature_settings_top_bar_title">Pengaturan</string>
 

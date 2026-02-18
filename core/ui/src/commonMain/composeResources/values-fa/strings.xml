@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">اتصال اینترنت برقرار نیست</string>
+    <string name="back_online">دوباره آنلاین شدید</string>
+    <string name="retry">تلاش مجدد</string>
+    <string name="no_data">اطلاعاتی موجود نیست</string>
+    <string name="something_went_wrong">خطایی رخ داده است</string>
+    <string name="core_common_working">عملکرد عادی سیستم</string>
+    <string name="customer_name">نام مشتری</string>
+    <string name="product">محصول</string>
+    <string name="error_loading_balance">خطا در بارگذاری موجودی</string>
+    <string name="powered_by">قدرت گرفته از</string>
+    <string name="password_checker_empty_error">رمز عبور نمی‌تواند خالی باشد.</string>
+    <string name="password_checker_too_long_error">رمز عبور خیلی طولانی است. حداکثر ۱۲۸ کاراکتر.</string>
+    <string name="password_checker_min_length_feedback">رمز عبور باید حداقل ۱۲ کاراکتر باشد.</string>
+    <string name="password_checker_uppercase_feedback">حداقل از یک حرف بزرگ استفاده کنید.</string>
+    <string name="password_checker_lowercase_feedback">حداقل از یک حرف کوچک استفاده کنید.</string>
+    <string name="password_checker_digit_feedback">حداقل از یک عدد استفاده کنید.</string>
+    <string name="password_checker_special_char_feedback">حداقل از یک کاراکتر خاص استفاده کنید.</string>
+    <string name="password_checker_strong_length_feedback">برای داشتن رمز عبور قوی‌تر، حداقل از ۱۲ کاراکتر استفاده کنید.</string>
+    <string name="password_strength_level_0">خیلی ضعیف</string>
+    <string name="password_strength_level_1">ضعیف</string>
+    <string name="password_strength_level_2">متوسط</string>
+    <string name="password_strength_level_3">خوب</string>
+    <string name="password_strength_level_4">قوی</string>
+    <string name="password_strength_level_5">خیلی قوی</string>
+    <string name="password_strength_none">رمز عبور را وارد کنید</string>
+    <string name="password_strength_indicator_description">شاخص قدرت رمز عبور</string>
+    <string name="password_strength_announcement">قدرت رمز عبور: %1$s</string>
+    <string name="minimum_characters_requirement">حداقل %1$d کاراکتر</string>
+    <string name="minimum_characters_met">حداقل کاراکتر رعایت شده است</string>
+    <string name="minimum_characters_not_met">حداقل کاراکتر رعایت نشده است</string>
+    <string name="password_requirements_title">الزامات رمز عبور</string>
+    <string name="password_feedback_title">پیشنهادات رمز عبور</string>
+    <string name="password_feedback_all_good">رمز عبور شما تمام الزامات را برآورده می‌کند!</string>
+    <string name="character_count">%1$d کاراکتر</string>
+    <string name="character_count_with_limit">%1$d / %2$d کاراکتر</string>
+    <string name="validation_email_empty">آدرس ایمیل نمی‌تواند خالی باشد</string>
+    <string name="validation_email_max_length_exceeded">آدرس ایمیل بیش از حداکثر ۲۵۴ کاراکتر است</string>
+    <string name="validation_email_missing_at_symbol">آدرس ایمیل باید شامل علامت @ باشد</string>
+    <string name="validation_email_starts_with_at">آدرس ایمیل نمی‌تواند با علامت @ شروع شود</string>
+    <string name="validation_email_ends_with_at">آدرس ایمیل نمی‌تواند با علامت @ تمام شود</string>
+    <string name="validation_email_multiple_at_symbols">آدرس ایمیل نمی‌تواند شامل چندین علامت @ باشد</string>
+    <string name="validation_email_local_empty">بخش محلی (Local part) نمی‌تواند خالی باشد</string>
+    <string name="validation_email_local_max_length">بخش محلی بیش از حداکثر ۶۴ کاراکتر است</string>
+    <string name="validation_email_local_starts_with_dot">بخش محلی نمی‌تواند با نقطه شروع شود</string>
+    <string name="validation_email_local_ends_with_dot">بخش محلی نمی‌تواند با نقطه تمام شود</string>
+    <string name="validation_email_local_consecutive_dots">بخش محلی نمی‌تواند شامل نقطه‌های متوالی باشد</string>
+    <string name="validation_email_local_invalid_characters">بخش محلی شامل کاراکترهای غیرمجاز است</string>
+    <string name="validation_email_domain_empty">بخش دامنه نمی‌تواند خالی باشد</string>
+    <string name="validation_email_domain_max_length">بخش دامنه بیش از حداکثر ۲۵۳ کاراکتر است</string>
+    <string name="validation_email_domain_missing_dot">دامنه باید حداقل شامل یک نقطه باشد</string>
+    <string name="validation_email_domain_starts_ends_with_dot">دامنه نمی‌تواند با نقطه شروع یا تمام شود</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">دامنه نمی‌تواند با خط تیره شروع یا تمام شود</string>
+    <string name="validation_email_domain_insufficient_parts">دامنه باید حداقل شامل دو بخش جدا شده با نقطه باشد</string>
+    <string name="validation_email_tld_invalid">پسوند دامنه باید حداقل ۲ حرف باشد و فقط شامل حروف باشد</string>
+    <string name="validation_email_label_empty">برچسب دامنه نمی‌تواند خالی باشد</string>
+    <string name="validation_email_label_max_length">برچسب دامنه بیش از حداکثر ۶۳ کاراکتر است</string>
+    <string name="validation_email_label_starts_with_hyphen">برچسب دامنه نمی‌تواند با خط تیره شروع شود</string>
+    <string name="validation_email_label_ends_with_hyphen">برچسب دامنه نمی‌تواند با خط تیره تمام شود</string>
+    <string name="validation_email_label_invalid_characters">برچسب دامنه شامل کاراکترهای غیرمجاز است</string>
+    <string name="validation_phone_empty">شماره تلفن نمی‌تواند خالی باشد</string>
+    <string name="validation_phone_too_short">شماره تلفن خیلی کوتاه است</string>
+    <string name="validation_phone_too_long">شماره تلفن خیلی طولانی است</string>
+    <string name="validation_phone_invalid_characters">شماره تلفن شامل کاراکترهای غیرمجاز است</string>
+    <string name="validation_phone_spanish_country_code_required">لطفاً از کد کشور اسپانیا (+34) استفاده کنید</string>
+    <string name="validation_phone_spanish_format_invalid">فرمت شماره تلفن اسپانیا نامعتبر است</string>
+    <string name="validation_phone_invalid_for_country">شماره تلفن برای کشور انتخاب شده معتبر نیست</string>
+    <string name="validation_phone_no_valid_country_found">فرمت شماره تلفن برای هیچ کشور پشتیبانی شده‌ای شناسایی نشد</string>
+    <string name="validation_name_empty">نام نمی‌تواند خالی باشد</string>
+    <string name="validation_name_invalid_characters">نام شامل کاراکترهای غیرمجاز است</string>
+    <string name="validation_field_required">این فیلد اجباری است</string>
+    <string name="validation_format_invalid">فرمت نامعتبر است</string>
+    <string name="validation_length_exceeded">از حداکثر طول مجاز فراتر رفتید</string>
+    <string name="validation_length_insufficient">حداقل طول مجاز رعایت نشده است</string>
+    <string name="validation_amount_empty">مبلغ نمی‌تواند خالی باشد</string>
+    <string name="validation_amount_invalid_format">لطفاً فرمت مبلغ معتبر وارد کنید (مثلاً ۹۹.۹۹)</string>
+    <string name="validation_amount_invalid_number">لطفاً یک عدد معتبر وارد کنید</string>
+    <string name="validation_amount_negative">مبلغ نمی‌تواند منفی باشد</string>
+    <string name="validation_amount_too_small">مبلغ باید حداقل ۰.۰۱ باشد</string>
+    <string name="validation_amount_too_large">مبلغ نمی‌تواند از ۹۹۹,۹۹۹,۹۹۹.۹۹ فراتر رود</string>
+    <string name="validation_amount_invalid_decimal_places">تعداد ارقام اعشار برای این واحد پولی زیاد است</string>
+    <string name="validation_amount_invalid_increment">مبلغ باید در واحدهای معتبر برای این واحد پولی باشد</string>
+    <string name="savings_account">حساب پس‌انداز</string>
+    <string name="available_balance">موجودی قابل برداشت</string>
+    <string name="select_other_payment_account">انتخاب حساب پرداخت دیگر</string>
+    <string name="pay_from">پرداخت از</string>
+    <string name="available_balance_formatted">موجودی قابل برداشت - %1$s</string>
+    <string name="feature_dashboard_welcome_back">به Mifos خوش آمدید</string>
+    <string name="feature_dashboard_no_accounts_title">هنوز حسابی ندارید</string>
+    <string name="feature_dashboard_no_accounts_description">سفر مالی خود را با افتتاح اولین حساب در نزد ما آغاز کنید.</string>
+    <string name="feature_dashboard_open_account">افتتاح حساب</string>
+    <string name="feature_savings_filter">فیلترها</string>
+    <string name="feature_savings_reset">بازنشانی</string>
+    <string name="feature_savings_apply">اعمال</string>
+</resources>

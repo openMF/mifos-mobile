@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,13 +42,13 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.packFloats
 import androidx.compose.ui.util.unpackFloat1
 import androidx.compose.ui.util.unpackFloat2
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
+import org.mifos.mobile.core.designsystem.theme.DesignToken
 import kotlin.jvm.JvmInline
 import kotlin.math.max
 import kotlin.math.min
@@ -192,7 +192,7 @@ fun Scrollbar(
     state: ScrollbarState,
     modifier: Modifier = Modifier,
     interactionSource: MutableInteractionSource? = null,
-    minThumbSize: Dp = 40.dp,
+    minThumbSize: Dp = DesignToken.sizes.minThumbSizeDp40,
     onThumbMoved: ((Float) -> Unit)? = null,
     thumb: @Composable () -> Unit,
 ) {

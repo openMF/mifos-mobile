@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,7 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +43,7 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_transfer_button
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.common.formatAmount
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -52,7 +52,6 @@ import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
-import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosDropDownDoubleTextField
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPayFromDropdownUI
@@ -61,6 +60,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigator
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function for the Third Party Transfer screen.
@@ -152,7 +152,7 @@ internal fun TprContent(
         onNavigateBack = { },
         actions = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 // TODO : once ui/ux team gives this flow uncomment and implement
 //                Image(
@@ -165,7 +165,7 @@ internal fun TprContent(
                     modifier = Modifier.clickable {
                         onAction(TptAction.OnNotificationClicked)
                     },
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                    colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                 )
             }
         },
@@ -213,19 +213,43 @@ internal fun TptForm(
 ) {
     Column(
         modifier = modifier
-            .padding(DesignToken.padding.large)
+            .padding(KptTheme.spacing.md)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         MifosPayFromDropdownUI(
             accounts = state.fromAccountOptions.map
                 { Pair(it.accountNo ?: "", it.clientName ?: "") },
-            onAccountSelected = { account, balance ->
-                onAction(TptAction.OnFromAccountSelected(account))
+            onAccountSelected = { accountNo, _ ->
+
+                val selectedAccount = state.fromAccountOptions
+                    .firstOrNull { it.accountNo == accountNo }
+
+                if (selectedAccount == null) {
+                    return@MifosPayFromDropdownUI
+                }
+
+                val accountId = selectedAccount.accountId
+
+                if (accountId == null) {
+                    return@MifosPayFromDropdownUI
+                }
+
+                onAction(
+                    TptAction.OnFromAccountSelected(
+                        accountId = accountId.toLong(),
+                        accountNo = accountNo,
+                    ),
+                )
             },
             label = stringResource(Res.string.feature_tpt_label_origin_account),
             selectedAccountNo = state.fromAccount?.accountNo ?: "",
             selectedAccountName = state.fromAccount?.clientName ?: "",
+            showExtendedDetails = true,
+            productName = state.fromAccountDetails?.savingsProductName,
+            availableBalance = state.fromAccountBalance?.let { formatAmount(it) },
+            isBalanceLoading = state.isBalanceLoading,
+            balanceError = state.balanceError,
         )
 
         MifosDropDownDoubleTextField(
@@ -243,38 +267,34 @@ internal fun TptForm(
             },
         )
 
-        if (state.toAccount?.accountNo.isNullOrBlank()) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.small),
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_tpt_tip),
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally),
+        ) {
+            Text(
+                text = stringResource(Res.string.feature_tpt_tip),
+                style = KptTheme.typography.labelMedium,
+                color = KptTheme.colorScheme.secondary,
+            )
 
-                Text(
-                    modifier = Modifier
-                        .clickable {
-                            onAction(TptAction.OnAddBeneficiaryClicked)
-                        },
-                    text = stringResource(Res.string.feature_tpt_tip_action),
-                    style = MifosTypography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
-        } else {
-            Box(modifier = Modifier.height(DesignToken.spacing.extraSmall))
+            Text(
+                modifier = Modifier
+                    .clickable {
+                        onAction(TptAction.OnAddBeneficiaryClicked)
+                    },
+                text = stringResource(Res.string.feature_tpt_tip_action),
+                style = KptTheme.typography.labelMedium,
+                color = KptTheme.colorScheme.primary,
+            )
         }
 
         MifosOutlinedTextField(
             value = state.amount,
             onValueChange = { onAction(TptAction.OnAmountChanged(it)) },
             label = stringResource(Res.string.feature_tpt_label_amount),
-            shape = DesignToken.shapes.medium,
-            textStyle = MifosTypography.bodyLarge,
+            shape = KptTheme.shapes.medium,
+            textStyle = KptTheme.typography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.amountError != null,
                 errorText = state.amountError?.let {
@@ -285,7 +305,7 @@ internal fun TptForm(
                         Icon(
                             imageVector = MifosIcons.ErrorCircle,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = KptTheme.colorScheme.error,
                         )
                     }
                 } else {
@@ -301,8 +321,8 @@ internal fun TptForm(
             value = state.remark,
             onValueChange = { onAction(TptAction.OnRemarksChanged(it)) },
             label = stringResource(Res.string.feature_tpt_label_remarks),
-            shape = DesignToken.shapes.medium,
-            textStyle = MifosTypography.bodyLarge,
+            shape = KptTheme.shapes.medium,
+            textStyle = KptTheme.typography.bodyLarge,
             config = MifosTextFieldConfig(
                 isError = state.remarkError != null,
                 errorText = state.remarkError?.let {
@@ -313,7 +333,7 @@ internal fun TptForm(
                         Icon(
                             imageVector = MifosIcons.ErrorCircle,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error,
+                            tint = KptTheme.colorScheme.error,
                         )
                     }
                 } else {
@@ -330,11 +350,11 @@ internal fun TptForm(
                 onAction(TptAction.OnMakeTransferClicked)
             },
             enabled = state.isEnabled,
-            shape = DesignToken.shapes.medium,
+            shape = KptTheme.shapes.medium,
         ) {
             Text(
                 text = stringResource(Res.string.feature_tpt_transfer_button),
-                style = MifosTypography.titleMedium,
+                style = KptTheme.typography.titleMedium,
             )
         }
     }

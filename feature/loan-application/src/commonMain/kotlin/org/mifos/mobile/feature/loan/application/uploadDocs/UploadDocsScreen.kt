@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,7 +23,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -51,7 +50,18 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.feature.loan.application.component.UploadDocumentsSection
 import org.mifos.mobile.feature.loan.application.uploadDocs.component.BottomSheetContent
+import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Entry point for the Document Upload screen.
+ * Orchestrates the UI state, handles navigation side effects, and manages the display of
+ * dialogs and bottom sheets.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToNext Callback to proceed to the next stage after successful uploads.
+ * @param navigateToPreviewDoc Callback to view a specific uploaded document.
+ * @param viewModel The state holder managing document selection and upload logic.
+ */
 @Composable
 internal fun UploadDocsScreen(
     navigateBack: () -> Unit,
@@ -86,6 +96,14 @@ internal fun UploadDocsScreen(
     )
 }
 
+/**
+ * Renders overlay UIs such as error alerts or the signature capture bottom sheet based on
+ * the active dialog state.
+ * Handles the transition between the standard bottom sheet and the full-screen signature canvas.
+ *
+ * @param dialogState The current state determining which dialog or sheet to show.
+ * @param onAction Callback to handle dialog interactions (dismissal, mode switching).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UploadDocsDialogs(
@@ -153,6 +171,13 @@ internal fun UploadDocsDialogs(
     }
 }
 
+/**
+ * Displays the main layout containing the document list, upload controls, and the submission
+ * button.
+ *
+ * @param state The current UI state containing the list of required and uploaded documents.
+ * @param onAction Callback to handle user interactions like clicking upload or submit.
+ */
 @Composable
 internal fun UploadDocsScreenContent(
     state: UploadDocsState,
@@ -177,10 +202,10 @@ internal fun UploadDocsScreenContent(
             Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(top = DesignToken.padding.large)
-                .padding(DesignToken.padding.large)
+                .padding(top = KptTheme.spacing.md)
+                .padding(KptTheme.spacing.md)
                 .statusBarsPadding(),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             UploadDocumentsSection(
                 state = state,
@@ -191,7 +216,7 @@ internal fun UploadDocsScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(DesignToken.sizes.buttonHeight),
-                shape = DesignToken.shapes.medium,
+                shape = KptTheme.shapes.medium,
                 onClick = {
                     onAction(UploadDocsAction.NavigateToNextScreen)
                 },
@@ -199,7 +224,7 @@ internal fun UploadDocsScreenContent(
             ) {
                 Text(
                     text = stringResource(Res.string.feature_button_next),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = KptTheme.typography.labelLarge,
                 )
             }
         }

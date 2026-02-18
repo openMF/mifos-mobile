@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,7 +23,6 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_failure
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_failure_action
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_failure_tip
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_action
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_tip
@@ -289,7 +288,7 @@ internal class ConfirmDetailsViewModel(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_loan_status_failure),
-                        subtitle = getString(Res.string.feature_apply_loan_status_failure_tip),
+                        subtitle = status.message,
                         buttonText = getString(Res.string.feature_apply_loan_status_failure_action),
                     ),
                 )

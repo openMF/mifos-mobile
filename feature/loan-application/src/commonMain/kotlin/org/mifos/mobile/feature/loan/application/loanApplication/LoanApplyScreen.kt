@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.feature.loan.application.loanApplication
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,16 +18,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,18 +30,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_application.generated.resources.Res
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_cancel
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_continue
-import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_button_ok
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_applicant_name
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_disbursement_date
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_loan_product
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_principal_amount
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_purpose
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_section_fill_details
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_message
+import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
@@ -64,9 +56,18 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import kotlin.time.Clock
+import template.core.base.designsystem.theme.KptTheme
 import kotlin.time.ExperimentalTime
 
+/**
+ * Entry point for the Loan Application form.
+ * Manages the form state, handles navigation events, and coordinates dialog interactions.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToConfirmDetailsScreen Callback to proceed to the confirmation
+ * page with valid form data.
+ * @param viewModel The state holder managing form validation and business logic.
+ */
 @Composable
 internal fun LoanApplyScreen(
     navigateBack: () -> Unit,
@@ -107,6 +108,12 @@ internal fun LoanApplyScreen(
     )
 }
 
+/**
+ * Renders modal dialogs for critical interruptions, such as error alerts or unsaved changes warnings.
+ *
+ * @param dialogState The current dialog type to display (Error or UnsavedChanges).
+ * @param onAction Callback to handle dialog responses (e.g., dismiss, confirm navigation).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoanAccountDialog(
@@ -126,7 +133,8 @@ internal fun LoanAccountDialog(
         is LoanApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_loan_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_loan_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(LoanApplicationAction.DismissDialog) },
                 onConfirm = { onAction(LoanApplicationAction.ConfirmNavigation) },
@@ -137,6 +145,13 @@ internal fun LoanAccountDialog(
     }
 }
 
+/**
+ * Displays the input fields for the loan application, including name, purpose, and disbursement date.
+ * Handles the date picker visibility and input validation feedback.
+ *
+ * @param state The current UI state containing field values, errors, and list options.
+ * @param onAction Callback for user interactions (text input, date selection, submission).
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 internal fun LoanAccountContent(
@@ -179,20 +194,37 @@ internal fun LoanAccountContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     MifosOutlinedTextField(
                         value = state.applicantName,
-                        onValueChange = { onAction(LoanApplicationAction.ApplicantNameChange(it)) },
+                        onValueChange = { },
                         label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
-                            isError = state.applicantNameError != null,
-                            errorText = state.applicantNameError?.let { stringResource(it) },
+                            enabled = false,
                         ),
+                    )
+
+                    MifosOutlinedTextField(
+                        value = state.disbursementDate,
+                        onValueChange = { },
+                        label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
+                        config = MifosTextFieldConfig(
+                            showClearIcon = false,
+                            enabled = false,
+                            readOnly = true,
+                            trailingIcon = {
+                                Icon(
+                                    imageVector = MifosIcons.Calendar,
+                                    contentDescription = "Open Date Picker",
+                                )
+                            },
+                        ),
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosOutlineDropdown(
@@ -213,28 +245,6 @@ internal fun LoanAccountContent(
                     )
 
                     MifosOutlinedTextField(
-                        value = state.disbursementDate,
-                        onValueChange = { },
-                        label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
-                        config = MifosTextFieldConfig(
-                            isError = state.disbursementDateError != null,
-                            errorText = state.disbursementDateError?.let { stringResource(it) },
-                            showClearIcon = false,
-                            readOnly = true,
-                            trailingIcon = {
-                                Icon(
-                                    modifier = Modifier.clickable {
-                                        onAction(LoanApplicationAction.ToggleDatePicker)
-                                    },
-                                    imageVector = MifosIcons.Calendar,
-                                    contentDescription = "Open Date Picker",
-                                )
-                            },
-                        ),
-                        shape = DesignToken.shapes.medium,
-                    )
-
-                    MifosOutlinedTextField(
                         value = state.principalAmount,
                         onValueChange = { onAction(LoanApplicationAction.PrincipalAmountChange(it)) },
                         label = stringResource(Res.string.feature_apply_loan_label_principal_amount),
@@ -246,7 +256,7 @@ internal fun LoanAccountContent(
                                 imeAction = ImeAction.Done,
                             ),
                         ),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosButton(
@@ -255,61 +265,12 @@ internal fun LoanAccountContent(
                         onClick = {
                             onAction(LoanApplicationAction.NavigateToConfirmDetails)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_apply_loan_button_continue),
-                            style = MaterialTheme.typography.labelLarge,
+                            style = KptTheme.typography.labelLarge,
                         )
-                    }
-
-                    if (state.showDatePicker) {
-                        val today = Clock.System.now().toEpochMilliseconds()
-                        val activationMillis = DateHelper.getDateAsLongFromList(
-                            DateHelper.getDateAsList(state.activationDate),
-                        ) ?: 0L
-
-                        val datePickerState = rememberDatePickerState(
-                            initialSelectedDateMillis = state.currentDate,
-                            selectableDates = object : SelectableDates {
-                                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                                    return utcTimeMillis in activationMillis..today
-                                }
-                            },
-                        )
-
-                        DatePickerDialog(
-                            onDismissRequest = {
-                                onAction(LoanApplicationAction.ToggleDatePicker)
-                            },
-                            confirmButton = {
-                                TextButton(
-                                    onClick = {
-                                        onAction(LoanApplicationAction.ToggleDatePicker)
-                                        datePickerState.selectedDateMillis?.let {
-                                            onAction(
-                                                LoanApplicationAction.DisbursementDateChange(
-                                                    DateHelper.getDateMonthYearString(it),
-                                                ),
-                                            )
-                                        }
-                                    },
-                                ) {
-                                    Text(stringResource(Res.string.feature_apply_loan_button_ok))
-                                }
-                            },
-                            dismissButton = {
-                                TextButton(
-                                    onClick = {
-                                        onAction(LoanApplicationAction.ToggleDatePicker)
-                                    },
-                                ) {
-                                    Text(stringResource(Res.string.feature_apply_loan_button_cancel))
-                                }
-                            },
-                        ) {
-                            DatePicker(state = datePickerState)
-                        }
                     }
                 }
             }

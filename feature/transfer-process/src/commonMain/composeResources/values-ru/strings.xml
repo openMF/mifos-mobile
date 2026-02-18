@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">Перевод</string>
+    <string name="transferred_successfully">Успешно переведено</string>
+    <string name="amount">Сумма</string>
+    <string name="transfer_from_savings">Перевод со сберегательного счета</string>
+    <string name="pay_from">Оплатить с</string>
+    <string name="date">Дата</string>
+    <string name="cancel">Отмена</string>
+    <string name="remark">Примечание</string>
+    <string name="make_transfer">Сделать перевод</string>
+    <string name="pay_to">Оплатить кому</string>
+    <string name="remarks">Примечания</string>
+    <string name="error_icon_description">Ошибка</string>
+    <string name="error_description">Сумма не должна содержать недопустимых символов</string>
+    <string name="transfer_failed">Перевод не удался</string>
+    <string name="transfer_successful">Перевод выполнен успешно</string>
+    <string name="back_to_accounts">Вернуться на главный экран</string>
+    <string name="transfer_id_prefix">ID перевода:</string>
+    <string name="feature_make_transfer_error_amount_required">Требуется указать сумму</string>
+    <string name="feature_make_transfer_error_amount_invalid">Введите корректную сумму</string>
+    <string name="feature_make_transfer_error_remarks_empty">Поле примечаний не может быть пустым</string>
+    <string name="feature_make_transfer_error_remarks_invalid">Введены недопустимые примечания</string>
+    <string name="feature_make_transfer_error_server">Проблема с сервером на нашей стороне, невозможно продолжить. Повторите попытку позже.</string>
+    <string name="feature_make_transfer_account_number">Номер счета</string>
+    <string name="feature_make_transfer_customer_name">Имя клиента</string>
+    <string name="feature_make_transfer_beneficiary_name">Имя бенефициара</string>
+    <string name="feature_make_transfer_details">Детали перевода</string>
+</resources>

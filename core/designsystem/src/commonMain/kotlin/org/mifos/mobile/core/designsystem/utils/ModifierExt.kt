@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,8 +16,10 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.isShiftPressed
@@ -89,5 +91,28 @@ fun Modifier.onClick(
         role = role,
     ) {
         onClick.invoke()
+    }
+}
+
+fun Modifier.clippedClickable(
+    shape: Shape? = null,
+    enabled: Boolean = true,
+    onClickLabel: String? = null,
+    onClick: () -> Unit,
+): Modifier = composed {
+    if (shape != null) {
+        this
+            .clip(shape)
+            .clickable(
+                enabled = enabled,
+                onClickLabel = onClickLabel,
+                onClick = onClick,
+            )
+    } else {
+        this.clickable(
+            enabled = enabled,
+            onClickLabel = onClickLabel,
+            onClick = onClick,
+        )
     }
 }

@@ -1,0 +1,25 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.core.network.dto.payloads
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ShareApplicationPayloadDto(
+    val productId: Int,
+    val unitPrice: Double,
+    val requestedShares: Int,
+    val submittedDate: String,
+    val savingsAccountId: Int,
+    val applicationDate: String,
+    val locale: String,
+    val dateFormat: String,
+    val clientId: Long,
+)

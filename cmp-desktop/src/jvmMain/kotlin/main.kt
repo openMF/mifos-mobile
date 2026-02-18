@@ -8,6 +8,11 @@
  * See https://github.com/openMF/mobile-wallet/blob/master/LICENSE.md
  */
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -16,6 +21,7 @@ import cmp.shared.generated.resources.Res
 import cmp.shared.generated.resources.application_title
 import cmp.shared.utils.initKoin
 import org.jetbrains.compose.resources.stringResource
+import java.util.Locale
 
 /**
  * Main function.
@@ -39,18 +45,39 @@ fun main() {
         // Creates a window state to manage the window's state.
         val windowState = rememberWindowState()
 
+        var localeVersion by remember { mutableStateOf(0) }
+
         // Creates a window with a specified title and close request handler.
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
             title = stringResource(Res.string.application_title),
         ) {
-            // Sets the content of the window.
-            SharedApp(
-                handleThemeMode = {},
-                handleAppLocale = {},
-                onSplashScreenRemoved = {},
-            )
+
+            key(localeVersion) {
+                SharedApp(
+                    handleThemeMode = {},
+                    handleAppLocale = { languageTag ->
+                        if (languageTag != null) {
+                            val locale = when {
+                                languageTag.contains("-") -> {
+                                    val parts = languageTag.split("-")
+                                    Locale(parts[0], parts[1])
+                                }
+
+                                else -> Locale(languageTag)
+                            }
+                            Locale.setDefault(locale)
+                        } else {
+                            val systemLocale = Locale.getDefault(Locale.Category.DISPLAY)
+                            Locale.setDefault(systemLocale)
+                        }
+                        localeVersion++
+                    },
+                    onSplashScreenRemoved = {},
+                )
+            }
         }
     }
 }
+

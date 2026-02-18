@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -32,6 +32,8 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_savings_product
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_title
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
+import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
@@ -50,7 +52,20 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * A stateful composable that serves as the entry point for the "Apply for Savings" screen.
+ *
+ * This function connects to the [SavingsApplyViewModel] to observe UI state and handle
+ * one-time events. It is responsible for orchestrating navigation to the next step
+ * in the application process.
+ *
+ * @param navigateBack A lambda function to handle back navigation events.
+ * @param navigateToFillDetailsScreen A lambda to navigate to the detailed application form,
+ *   passing product and officer information.
+ * @param viewModel The ViewModel responsible for the screen's logic and state.
+ */
 @Composable
 internal fun SavingsApplyScreen(
     navigateBack: () -> Unit,
@@ -87,6 +102,15 @@ internal fun SavingsApplyScreen(
     )
 }
 
+/**
+ * A composable responsible for displaying dialogs based on the [SavingsApplicationDialogState].
+ *
+ * This function handles the presentation of error dialogs and confirmation dialogs
+ * for unsaved changes.
+ *
+ * @param dialogState The current state of the dialog to be displayed.
+ * @param onAction A callback to send actions (like dismiss or confirm) to the ViewModel.
+ */
 @Composable
 internal fun SavingsAccountDialog(
     dialogState: SavingsApplicationDialogState?,
@@ -103,7 +127,8 @@ internal fun SavingsAccountDialog(
         is SavingsApplicationDialogState.UnsavedChanges -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
-                    message = stringResource(dialogState.message),
+                    title = stringResource(Res.string.feature_apply_savings_unsaved_changes_title),
+                    message = stringResource(Res.string.feature_apply_savings_unsaved_changes_message),
                 ),
                 onDismissRequest = { onAction(SavingsApplicationAction.DismissDialog) },
                 onConfirm = { onAction(SavingsApplicationAction.ConfirmNavigation) },
@@ -114,6 +139,16 @@ internal fun SavingsAccountDialog(
     }
 }
 
+/**
+ * A stateless composable that renders the main UI for the "Apply for Savings" screen.
+ *
+ * It conditionally displays UI based on the [ScreenUiState] (e.g., loading, error, success).
+ * The success state includes dropdowns for selecting a savings product and a field officer.
+ *
+ * @param state The current [SavingsApplicationState] to render.
+ * @param onAction A callback to send user actions to the ViewModel.
+ * @param modifier The [Modifier] to be applied to the layout.
+ */
 @Composable
 internal fun SavingsAccountContent(
     state: SavingsApplicationState,
@@ -155,15 +190,15 @@ internal fun SavingsAccountContent(
             ScreenUiState.Success -> {
                 Column(
                     modifier = Modifier
-                        .padding(DesignToken.padding.large)
+                        .padding(KptTheme.spacing.md)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     MifosOutlinedTextField(
                         value = state.applicantName,
                         onValueChange = { },
                         label = stringResource(Res.string.feature_apply_savings_label_applicant_name),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         textStyle = MifosTypography.bodyLarge,
                         config = MifosTextFieldConfig(
                             enabled = false,
@@ -185,7 +220,7 @@ internal fun SavingsAccountContent(
                                 )
                             },
                         ),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosOutlineDropdown(
@@ -214,7 +249,7 @@ internal fun SavingsAccountContent(
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToConfirmDetails)
                         },
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                     ) {
                         Text(
                             text = stringResource(Res.string.feature_apply_savings_button_continue),

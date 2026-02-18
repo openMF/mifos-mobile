@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">ချေးငွေအသစ်လျှောက်ထားရန်</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">ချေးငွေလျှောက်လွှာ</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">လျှောက်ထားသူအမည်</string>
+    <string name="feature_apply_loan_label_loan_product">ချေးငွေအမျိုးအစား</string>
+    <string name="feature_apply_loan_label_purpose">ချေးငွေရယူရသည့်ရည်ရွယ်ချက်</string>
+    <string name="feature_apply_loan_label_disbursement_date">ထုတ်ပေးမည့်ရက်စွဲ</string>
+    <string name="feature_apply_loan_label_principal_amount">ချေးငွေပမာဏ</string>
+    <string name="feature_apply_loan_label_currency">ငွေကြေး</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">ဆက်လက်လုပ်ဆောင်ရန်</string>
+    <string name="feature_apply_loan_button_ok">အိုကေ</string>
+    <string name="feature_apply_loan_button_cancel">မလုပ်တော့ပါ</string>
+    <string name="feature_apply_loan_button_apply">ချေးငွေလျှောက်ထားရန်</string>
+    <string name="feature_button_next">နောက်တစ်ဆင့်</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">လျှောက်ထားသူအမည် လိုအပ်ပါသည်</string>
+    <string name="feature_apply_loan_error_name_too_short">လျှောက်ထားသူအမည်သည် အနည်းဆုံး ၄ လုံး ရှိရပါမည်</string>
+    <string name="feature_apply_loan_error_name_too_long">လျှောက်ထားသူအမည်သည် စာလုံးရေ ၁၀၀ ထက်မပိုရပါ</string>
+    <string name="feature_apply_loan_error_name_invalid_format">လျှောက်ထားသူအမည်တွင် မမှန်ကန်သော စာလုံးများ ပါဝင်နေပါသည်</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">ချေးငွေအမျိုးအစား လိုအပ်ပါသည်</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">ချေးငွေပမာဏ လိုအပ်ပါသည်</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">ကျေးဇူးပြု၍ မှန်ကန်သော ပမာဏပုံစံကို ရိုက်ထည့်ပါ</string>
+    <string name="feature_apply_loan_error_amount_too_small">ချေးငွေပမာဏ အလွန်နည်းနေပါသည်</string>
+    <string name="feature_apply_loan_error_amount_too_large">ချေးငွေပမာဏသည် သတ်မှတ်ထားသော အမြင့်ဆုံးပမာဏထက် ကျော်လွန်နေပါသည်</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">ရွေးချယ်ထားသော ငွေကြေးအတွက် ဒသမကိန်းများလွန်းနေပါသည်</string>
+    <string name="feature_apply_loan_error_amount_multiple">ပမာဏသည် မှန်ကန်သော ဆခွဲကိန်းများတွင် မရှိပါ</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">ထုတ်ပေးမည့်ရက်စွဲ လိုအပ်ပါသည်</string>
+    <string name="feature_apply_loan_error_date_invalid_format">ကျေးဇူးပြု၍ မှန်ကန်သော ရက်စွဲပုံစံကို ရိုက်ထည့်ပါ (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">ထုတ်ပေးမည့်ရက်စွဲသည် အနာဂတ်တွင် ဖြစ်ရပါမည်</string>
+    <string name="feature_apply_loan_error_date_out_of_range">ထုတ်ပေးမည့်ရက်စွဲသည် အနာဂတ်တွင် အလွန်ဝေးကွာနေပါသည် (အများဆုံး ၁၀ နှစ်)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">ကျွန်ုပ်တို့ဘက်မှ ဆာဗာပြဿနာကြောင့် ဆက်လက်လုပ်ဆောင်၍မရပါ၊ ခဏကြာပြီးနောက် ထပ်မံကြိုးစားကြည့်ပါ</string>
+    <string name="feature_apply_loan_error_too_many_attempts">မအောင်မြင်သော ကြိုးပမ်းမှုများလွန်းနေပါသည်။ ကျေးဇူးပြု၍ နောက်မှ ထပ်မံကြိုးစားပါ။</string>
+    <string name="feature_apply_loan_error_submit_failed">ချေးငွေလျှောက်လွှာ တင်သွင်းမှု မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">ချေးငွေလျှောက်လွှာကို အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ!</string>
+    <string name="feature_apply_loan_success_draft_saved">လျှောက်လွှာမူကြမ်းကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">မသိမ်းဆည်းရသေးသော ပြောင်းလဲမှုများ!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">သင့်တွင် မသိမ်းဆည်းရသေးသော ပြောင်းလဲမှုများ ရှိနေပါသည်။ ပြန်ထွက်ရန် သေချာပါသလား?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">ပယ်ဖျက်ရန်</string>
+    <string name="feature_apply_loan_action_save_draft">မူကြမ်းသိမ်းရန်</string>
+    <string name="feature_apply_loan_action_retry">ထပ်မံကြိုးစားရန်</string>
+    <string name="feature_apply_loan_action_cancel">မလုပ်တော့ပါ</string>
+    <string name="feature_apply_loan_action_continue">ဆက်လက်လုပ်ဆောင်ရန်</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">သင့်အမည်အပြည့်အစုံကို ရိုက်ထည့်ပါ</string>
+    <string name="feature_apply_loan_hint_loan_product">ချေးငွေအမျိုးအစားကို ရွေးချယ်ပါ</string>
+    <string name="feature_apply_loan_hint_principal_amount">ချေးငွေပမာဏကို ရိုက်ထည့်ပါ</string>
+    <string name="feature_apply_loan_hint_disbursement_date">ထုတ်ပေးမည့်ရက်စွဲကို ရွေးချယ်ပါ</string>
+    <string name="feature_apply_loan_hint_purpose">ရည်ရွယ်ချက်ကို အတိုချုပ်ဖော်ပြပါ</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">ငွေကြေးပြောင်းလဲသွားပါပြီ။ ပမာဏကို ပြန်လည်စစ်ဆေးပါမည်။</string>
+    <string name="feature_apply_loan_info_min_amount">အနည်းဆုံး ချေးငွေပမာဏ: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">အများဆုံး ချေးငွေပမာဏ: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">အသေးစိတ်အချက်အလက်များကို အတည်ပြုပါ</string>
+
+    <string name="feature_apply_loan_status_success">တောင်းဆိုမှုကို အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ</string>
+    <string name="feature_apply_loan_status_success_tip">သင့်ချေးငွေလျှောက်လွှာကို တင်သွင်းပြီးပါပြီ။ စစ်ဆေးပြီးပါက သင့်အား အကြောင်းကြားပါမည်။</string>
+    <string name="feature_apply_loan_status_success_action">ပင်မစာမျက်နှာသို့ ပြန်သွားရန်</string>
+
+    <string name="feature_apply_loan_status_failure">တောင်းဆိုမှု တင်သွင်းရန် မအောင်မြင်ပါ</string>
+    <string name="feature_apply_loan_status_failure_tip">သင့်ချေးငွေလျှောက်လွှာကို တင်သွင်းရာတွင် တစ်စုံတစ်ခု မှားယွင်းသွားပါသည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။</string>
+    <string name="feature_apply_loan_status_failure_action">ထပ်မံကြိုးစားရန်</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">ချေးငွေအသစ်လျှောက်ထားရန်</string>
+    <string name="feature_select_loan_type_choose_loan">ချေးငွေအမျိုးအစားကို ရွေးချယ်ပါ</string>
+    <string name="feature_select_loan_type_empty">လောလောဆယ် ချေးငွေအမျိုးအစားများ မရရှိနိုင်ပါ</string>
+    <string name="feature_select_loan_type_network_issue">အင်တာနက် ချိတ်ဆက်ထားကြောင်း သေချာပါစေ</string>
+    <string name="feature_loan_product_details_terms">စည်းကမ်းနှင့် သတ်မှတ်ချက်များကို လက်ခံပါ</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s ချေးငွေလျှောက်ထားရန်</string>
+    <string name="feature_loan_get_loan">%1$s ချေးငွေရယူရန်</string>
+    <string name="feature_loan_up_to">%1$s အထိ</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s မှ %2$s အတိုး</string>
+    <string name="feature_loan_terms_and_conditions">စည်းကမ်းနှင့် သတ်မှတ်ချက်များ</string>
+
+    <string name="feature_loan_sanction_and_disbursement">ချေးငွေခွင့်ပြုခြင်းနှင့် ထုတ်ပေးခြင်း</string>
+    <string name="feature_loan_interest_rate">အတိုးနှုန်း</string>
+    <string name="feature_loan_continue">ဆက်လက်လုပ်ဆောင်ရန်</string>
+    <string name="feature_loan_repayment">ပြန်လည်ပေးဆပ်ခြင်း</string>
+    <string name="feature_loan_security_and_collateral">လုံခြုံရေးနှင့် အာမခံပစ္စည်း</string>
+    <string name="feature_loan_insurance">အာမခံ</string>
+    <string name="feature_loan_default">ပျက်ကွက်ခြင်း</string>
+    <string name="feature_loan_documentation">စာရွက်စာတမ်းများ</string>
+    <string name="feature_loan_continue_legal_compliance">ဥပဒေလိုက်နာမှု</string>
+    <string name="feature_loan_amendments_and_termination">ပြင်ဆင်ချက်များနှင့် ရပ်စဲခြင်း</string>
+    <string name="feature_loan_jurisdiction">တရားစီရင်ပိုင်ခွင့်</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">လျှောက်ထားသူ၏ အရည်အချင်းပြည့်မီမှု၊ ဝင်ငွေတည်ငြိမ်မှု၊ အကြွေးပေးဆပ်နိုင်မှုနှင့် ချေးငွေပေးသူ၏ အတွင်းပိုင်း အကြွေးမူဝါဒများအပေါ် အခြေခံ၍ ကိုယ်ပိုင်ချေးငွေကို ခွင့်ပြုပေးမည်ဖြစ်ပါသည်။ ချေးငွေပေးသူသည် မည်သည့်အကြောင်းပြချက်မျှ မပေးဘဲ မိမိ၏သဘောဆန္ဒအရ ကိုယ်ပိုင်ချေးငွေလျှောက်လွှာကို အတည်ပြုရန် သို့မဟုတ် ပယ်ချရန် အခွင့်အရေးရှိသည်။ ခွင့်ပြုထားသော ချေးငွေပမာဏကို ချေးငွေသဘောတူညီချက်နှင့် စာရွက်စာတမ်းလိုအပ်ချက်များအပေါ် မူတည်၍ တစ်လုံးတစ်ခဲတည်း သို့မဟုတ် အပိုင်းလိုက် ထုတ်ပေးနိုင်သည်။ ထုတ်ပေးမှုသည် KYC လုပ်ငန်းစဉ်များ အောင်မြင်စွာ ပြီးဆုံးခြင်း၊ တင်သွင်းထားသော စာရွက်စာတမ်းများကို စစ်ဆေးခြင်းနှင့် ခွင့်ပြုမိန့်စာတွင် ဖော်ပြထားသော အခြေအနေများအားလုံးကို လိုက်နာခြင်းတို့အပေါ် မူတည်ပါသည်။</string>
+    <string name="feature_personal_loan_interest_rate_description">ချေးငွေသဘောတူညီချက်ရယူချိန်တွင် ငွေချေးသူမှ ရွေးချယ်ထားသော အတိုးနှုန်းမှာ သေချာသော သို့မဟုတ် ပြောင်းလဲနိုင်သော အတိုးနှုန်း ဖြစ်နိုင်သည်။ ပြောင်းလဲနိုင်သော အတိုးနှုန်းဖြင့် ချေးငွေများအတွက်၊ သက်ဆိုင်ရာနှုန်းထားသည် ချေးငွေပေးသူ၏ စံနှုန်း သို့မဟုတ် ရည်ညွှန်းနှုန်းထား အပြောင်းအလဲများအပေါ် အခြေခံ၍ အခါအားလျော်စွာ ပြန်လည်ပြင်ဆင်မှုများအပေါ် မူတည်ပါသည်။ ထိုသို့သော ပြောင်းလဲမှုများသည် ငွေချေးသူအပေါ် တာဝန်ရှိမည်ဖြစ်ပြီး ချေးငွေပေးသူမှ လိုအပ်သည်ဟု ယူဆပါက EMI ပမာဏနှင့်/သို့မဟုတ် ချေးငွေသက်တမ်း အပြောင်းအလဲများကို ဖြစ်ပေါ်စေနိုင်သည်။</string>
+    <string name="feature_personal_loan_repayment_details">ကိုယ်ပိုင်ချေးငွေ ပြန်လည်ပေးဆပ်ခြင်းကို အရင်းနှင့် အတိုး နှစ်မျိုးလုံး ပါဝင်သော လစဉ်အရစ်ကျငွေပေးချေမှု (EMI) များမှတစ်ဆင့် ပြုလုပ်ရမည်။ EMI များသည် ချေးငွေသဘောတူညီချက်တွင် သတ်မှတ်ထားသော ရက်စွဲမှ စတင်မည်ဖြစ်ပြီး ချေးငွေပမာဏတစ်ခုလုံးနှင့် သက်ဆိုင်ရာအတိုးများကို ပြန်လည်ပေးဆပ်ပြီးသည်အထိ လစဉ် ဆက်လက်ပေးဆောင်ရမည်ဖြစ်သည်။ ကြိုတင်ပေးချေမှု သို့မဟုတ် တစ်စိတ်တစ်ပိုင်းပေးချေမှုကို ချေးငွေပေးသူ၏ လက်ရှိမူဝါဒများအရ ခွင့်ပြုနိုင်ပြီး အထူးသဖြင့် သေချာသော အတိုးနှုန်းဖြင့် ချေးငွေများအတွက် အခကြေးငွေများ ပေးဆောင်ရနိုင်သည်။</string>
+    <string name="feature_personal_loan_security_and_collateral_details">ကိုယ်ပိုင်ချေးငွေများသည် ပုံမှန်အားဖြင့် အာမခံမဲ့ အမျိုးအစားဖြစ်ပြီး အာမခံပစ္စည်း မလိုအပ်ပါ။ သို့သော်၊ ငွေချေးသူ၏ အကြွေးရာဇဝင်နှင့် ချေးငွေပမာဏအပေါ် မူတည်၍ ထူးခြားသောကိစ္စရပ်များတွင် အပိုဆောင်းအာမခံ သို့မဟုတ် လုံခြုံရေး တောင်းဆိုရန် အခွင့်အရေးကို ချေးငွေပေးသူမှ ရယူထားပါသည်။ ထိုသို့သော လိုအပ်ချက်များကို ခွင့်ပြုမိန့်စာတွင် ရှင်းလင်းစွာ ဖော်ပြထားမည်ဖြစ်ပါသည်။ စာရွက်စာတမ်းများ သို့မဟုတ် ဥပဒေရေးရာ လုပ်ထုံးလုပ်နည်းများနှင့် သက်ဆိုင်သော ကုန်ကျစရိတ်များအားလုံးကို သက်ဆိုင်ပါက ငွေချေးသူမှ ကျခံရမည်ဖြစ်သည်။</string>
+    <string name="feature_personal_loan_insurance_details">ကိုယ်ပိုင်ချေးငွေများအတွက် ပိုင်ဆိုင်မှုအာမခံ လိုအပ်လေ့မရှိသော်လည်း၊ ငွေချေးသူ သေဆုံးသည်ရှိသော် လက်ကျန်ချေးငွေပမာဏကို ကာကွယ်ရန်အတွက် အသက်အာမခံ ပေါ်လစီတစ်ခု ရယူရန် ချေးငွေပေးသူမှ အကြံပြုနိုင်သည်။ ၎င်းသည် မဖြစ်မနေ လိုအပ်သည်မဟုတ်သော်လည်း ငွေချေးသူ၏ မိသားစု သို့မဟုတ် မှီခိုသူများအတွက် ငွေကြေးကာကွယ်မှု အစီအမံအဖြစ် အကြံပြုပါသည်။</string>
+    <string name="feature_personal_loan_default_details">EMI များကို မပေးချေခြင်း သို့မဟုတ် နောက်ကျမှပေးချေခြင်းသည် ပျက်ကွက်ခြင်း ဖြစ်ပါသည်။ ထိုသို့သော ကိစ္စရပ်များတွင်၊ ချေးငွေပေးသူသည် ဥပဒေအရ အရေးယူခြင်း အပါအဝင် လက်ကျန်ငွေများကို ကောက်ခံရန် ပြန်လည်ရယူခြင်း လုပ်ငန်းစဉ်ကို စတင်နိုင်သည်။ ရက်လွန်ငွေပမာဏများအပေါ် ဒဏ်ကြေးအတိုးနှင့် အခြားအခကြေးငွေများ ကောက်ခံနိုင်သည်။ ဆက်တိုက် သို့မဟုတ် ထပ်ခါတလဲလဲ ပျက်ကွက်ခြင်းသည် ငွေချေးသူ၏ အကြွေးအမှတ်နှင့် အနာဂတ်တွင် ချေးငွေရယူနိုင်စွမ်းကို ဆိုးရွားစွာ ထိခိုက်စေနိုင်သည်။</string>
+    <string name="feature_personal_loan_documentation_details">ငွေချေးသူသည် မှတ်ပုံတင်၊ နေရပ်လိပ်စာ၊ ဝင်ငွေအထောက်အထား၊ ဘဏ်စာရင်းရှင်းတမ်းများနှင့် ချေးငွေပေးသူမှ တောင်းဆိုသော အခြားစာရွက်စာတမ်းများ အပါအဝင် တိကျပြီး ပြည့်စုံသော စာရွက်စာတမ်းများကို တင်သွင်းရန် လိုအပ်ပါသည်။ တင်သွင်းထားသော စာရွက်စာတမ်းများတွင် ကွဲလွဲမှု၊ လွဲမှားစွာ ဖော်ပြမှု သို့မဟုတ် အတုအပ ပြုလုပ်မှုများသည် ချေးငွေလျှောက်လွှာကို ပယ်ချခြင်း သို့မဟုတ် ချေးငွေသဘောတူညီချက်ကို ရပ်စဲခြင်းနှင့်အတူ ဖြစ်နိုင်ဖွယ်ရာ ဥပဒေရေးရာ အကျိုးဆက်များကို ဖြစ်ပေါ်စေနိုင်သည်။</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">ငွေချေးသူသည် ၎င်းတို့၏ ငွေကြေးဆိုင်ရာ တာဝန်ဝတ္တရားများနှင့် စပ်လျဉ်း၍ သက်ဆိုင်ရာ ဒေသဆိုင်ရာ၊ ပြည်နယ်နှင့် နိုင်ငံတော် ဥပဒေများအားလုံးကို အပြည့်အဝ လိုက်နာရန် သေချာစေရမည်။ ယင်းတွင် အခွန်များကို အချိန်မီ ပေးဆောင်ခြင်း၊ စည်းမျဉ်းစည်းကမ်း လိုအပ်ချက်များကို လိုက်နာခြင်းနှင့် တရားဝင် စာရွက်စာတမ်းများ တင်သွင်းခြင်းတို့ ပါဝင်သည်။ ငွေချေးသူ ကျူးလွန်သော မည်သည့် ဥပဒေချိုးဖောက်မှုများအတွက်မဆို ချေးငွေပေးသူတွင် တာဝန်မရှိပါ။</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">ချေးငွေပေးသူသည် ငွေချေးသူအား ကြိုတင်အကြောင်းကြားစာ ပေးပို့ပြီး ဤစည်းကမ်းနှင့် သတ်မှတ်ချက်များကို အခါအားလျော်စွာ ပြန်လည်ပြင်ဆင်ခြင်း သို့မဟုတ် မွမ်းမံခြင်း ပြုလုပ်နိုင်သည်။ ချေးငွေပမာဏ အပြည့်အဝ ပြန်လည်ပေးဆပ်ပြီးချိန် သို့မဟုတ် ပျက်ကွက်မှုကြောင့် သိမ်းဆည်းခြင်း လုပ်ငန်းစဉ်များ စတင်ချိန်တွင် ချေးငွေသဘောတူညီချက်ကို ရပ်စဲသည်ဟု မှတ်ယူရမည်။</string>
+    <string name="feature_personal_loan_jurisdiction_details">ကိုယ်ပိုင်ချေးငွေ သဘောတူညီချက်မှ ပေါ်ပေါက်လာသော သို့မဟုတ် ဆက်စပ်နေသော အငြင်းပွားမှုများအားလုံးသည် သဘောတူညီချက်တွင် အခြားနည်းဖြင့် သတ်မှတ်ထားခြင်း မရှိပါက ချေးငွေပေးသူ၏ မှတ်ပုံတင်ရုံး တည်ရှိရာ တရားရုံးများ၏ သီးသန့်တရားစီရင်ပိုင်ခွင့်အောက်တွင် ရှိရမည်။</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">ဘဏ်အကောင့်ရှင်းတမ်းများကို တင်ရန်</string>
+    <string name="feature_upload_docs_collateral">အာမခံစာရွက်စာတမ်းများကို တင်ရန်</string>
+    <string name="feature_upload_docs_signature">လက်မှတ်တင်ရန်</string>
+
+    <string name="feature_upload_file_error">တစ်ခုခုမှားယွင်းနေပါသည်! ဖိုင်တင်၍မရပါ</string>
+    <string name="feature_upload_statement_error">ကျေးဇူးပြု၍ ဘဏ်ရှင်းတမ်းကို တင်ပါ</string>
+    <string name="feature_upload_property_document_error">ကျေးဇူးပြု၍ ပိုင်ဆိုင်မှုစာရွက်စာတမ်းကို တင်ပါ</string>
+    <string name="feature_upload_signature_error">ကျေးဇူးပြု၍ လက်မှတ်ကို တင်ပါ</string>
+    <string name="feature_upload_documents_success_title">စာရွက်စာတမ်းများ အောင်မြင်စွာ တင်ပြီးပါပြီ!</string>
+
+    <string name="sign_here">ဤနေရာတွင် လက်မှတ်ထိုးပါ</string>
+    <string name="reset">ပြန်လည်သတ်မှတ်ရန်</string>
+    <string name="sign">လက်မှတ်</string>
+    <string name="capture">ဖမ်းယူရန်</string>
+    <string name="attach">ပူးတွဲရန်</string>
+    <string name="upload_signature">လက်မှတ်တင်ရန်</string>
+    <string name="save_and_submit">သိမ်းဆည်းပြီး တင်သွင်းရန်</string>
+</resources>

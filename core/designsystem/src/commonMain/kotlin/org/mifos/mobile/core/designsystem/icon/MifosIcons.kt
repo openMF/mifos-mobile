@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.RealEstateAgent
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.WifiOff
@@ -68,6 +69,7 @@ import fluent.ui.system.icons.filled.CaretUp
 import fluent.ui.system.icons.filled.ChatBubblesQuestion
 import fluent.ui.system.icons.filled.ChatHistory
 import fluent.ui.system.icons.filled.ChatMultiple
+import fluent.ui.system.icons.filled.CheckmarkCircle
 import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
@@ -253,6 +255,8 @@ object MifosIcons {
     val QuestionCircle = FluentIcons.Filled.QuestionCircle
     val ChatMultiple = FluentIcons.Filled.ChatMultiple
     val AppRecent = FluentIcons.Filled.AppRecent
+
+    val RateUs = Icons.Filled.Star
     val SignOut = FluentIcons.Filled.SignOut
 
     val Receipt = FluentIcons.Regular.Receipt
@@ -262,4 +266,8 @@ object MifosIcons {
     val Attach = FluentIcons.Regular.Attach
 
     val AddColor = FluentIcons.Colored.AddCircle
+
+    val GridApps = FluentIcons.Filled.Grid
+    val CheckCircle1 = FluentIcons.Filled.CheckmarkCircle
+    val Pencil = Icons.Filled.Edit
 }

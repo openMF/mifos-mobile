@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -37,6 +37,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * Composable function to render the beneficiary application confirmation screen.
@@ -145,7 +146,7 @@ fun BeneficiaryApplicationConfirmationScreenContent(
 
             ScreenUiState.Success -> {
                 Column(
-                    Modifier.padding(DesignToken.padding.large),
+                    Modifier.padding(KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.padding.largeIncreased),
                 ) {
                     Text(

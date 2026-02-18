@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -38,10 +38,12 @@ fun NavController.navigateToShareAccountScreen(navOptions: NavOptions? = null) =
  */
 fun NavGraphBuilder.shareAccountDestination(
     navigateBack: () -> Unit,
+    onAccountClicked: (Long) -> Unit,
 ) {
     composableWithSlideTransitions<ShareAccountRoute> {
         ShareAccountScreen(
             navigateBack = navigateBack,
+            onAccountClicked = { _, id -> onAccountClicked(id) },
         )
     }
 }

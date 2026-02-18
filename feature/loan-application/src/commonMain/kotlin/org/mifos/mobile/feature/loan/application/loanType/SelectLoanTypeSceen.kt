@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,21 +9,27 @@
  */
 package org.mifos.mobile.feature.loan.application.loanType
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_select_loan_type_choose_loan
@@ -32,9 +38,10 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_select_
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
+import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.MifosExploreCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -43,7 +50,16 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Entry point for the Loan Type Selection screen.
+ * Fetches available loan products via the ViewModel and handles navigation to the product details.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToLoanProductDetailsScreen Callback to navigate to the details of a selected product ID.
+ * @param viewModel The state holder responsible for fetching and mapping loan products.
+ */
 @Composable
 internal fun SelectLoanTypeScreen(
     navigateBack: () -> Unit,
@@ -77,6 +93,12 @@ internal fun SelectLoanTypeScreen(
     )
 }
 
+/**
+ * Renders modal dialogs (specifically error alerts) based on the current screen state.
+ *
+ * @param state The current state containing potential error messages.
+ * @param onAction Callback to dismiss the dialog or navigate back.
+ */
 @Composable
 internal fun SelectLoanTypeDialog(
     state: SelectLoanTypeState,
@@ -96,6 +118,13 @@ internal fun SelectLoanTypeDialog(
     }
 }
 
+/**
+ * Displays the visual layout including the header and a vertical list of available loan products.
+ * Handles Loading, Error, Empty, and Success UI states.
+ *
+ * @param state The current UI state containing the list of loan options.
+ * @param onAction Callback to handle card clicks and retry actions.
+ */
 @Composable
 internal fun SelectLoanTypeScreenContent(
     state: SelectLoanTypeState,
@@ -146,47 +175,100 @@ internal fun SelectLoanTypeScreenContent(
             }
 
             ScreenUiState.Success -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(DesignToken.padding.large)
-                        .padding(top = DesignToken.padding.large),
-                ) {
+                val productOptions = state.productOptions ?: emptyList()
+                if (productOptions.isNotEmpty()) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = KptTheme.spacing.md),
                     ) {
-                        val productOptions = state.productOptions ?: emptyList()
-                        if (productOptions.isNotEmpty()) {
-                            Text(
-                                text = stringResource(Res.string.feature_select_loan_type_choose_loan),
-                                style = MifosTypography.labelLargeEmphasized,
-                            )
-                            LazyVerticalStaggeredGrid(
-                                columns = StaggeredGridCells.Fixed(2),
-                                horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-                                content = {
-                                    items(productOptions) { loanType ->
-                                        MifosExploreCard(
-                                            icon = MifosIcons.Money,
-                                            text = loanType.name ?: "",
-                                            onClick = {
-                                                onAction(
-                                                    SelectLoanTypeAction.NavigateTo(
-                                                        loanType.id ?: -1,
-                                                        loanType.name ?: "",
-                                                    ),
-                                                )
-                                            },
-                                        )
-                                    }
-                                },
-                            )
+                        Text(
+                            text = stringResource(Res.string.feature_select_loan_type_choose_loan),
+                            style = MifosTypography.labelLargeEmphasized,
+                            modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
+                        )
+
+                        LazyColumn(
+                            contentPadding = PaddingValues(KptTheme.spacing.md),
+                            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+                        ) {
+                            items(productOptions, key = { it.id ?: -1 }) { loanType ->
+                                val loanName = loanType.name.orEmpty()
+
+                                LoanTypeListCard(
+                                    icon = MifosIcons.Money,
+                                    title = loanName,
+                                    onClick = {
+                                        loanType.id?.let { id ->
+                                            onAction(
+                                                SelectLoanTypeAction.NavigateTo(
+                                                    id,
+                                                    loanName,
+                                                ),
+                                            )
+                                        }
+                                    },
+                                )
+                            }
                         }
                     }
+                } else {
+                    MifosErrorComponent(
+                        isRetryEnabled = true,
+                        message = stringResource(Res.string.feature_select_loan_type_empty),
+                        onRetry = { onAction(SelectLoanTypeAction.Retry) },
+                    )
                 }
             }
 
             else -> { }
+        }
+    }
+}
+
+@Composable
+internal fun LoanTypeListCard(
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    MifosCustomCard(
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
+        variant = CardVariant.ELEVATED,
+        shape = KptTheme.shapes.medium,
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = KptTheme.elevation.level1,
+        ),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = KptTheme.colorScheme.surface,
+            contentColor = KptTheme.colorScheme.onSurface,
+        ),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(KptTheme.spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                imageVector = icon,
+                contentDescription = title,
+                modifier = Modifier.size(DesignToken.sizes.iconLarge),
+                colorFilter = ColorFilter.tint(KptTheme.colorScheme.primary),
+            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+            ) {
+                Text(
+                    text = title,
+                    style = MifosTypography.titleMediumEmphasized,
+                    color = KptTheme.colorScheme.onSurface,
+                )
+            }
         }
     }
 }

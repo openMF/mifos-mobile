@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -59,13 +59,19 @@ fun NavGraphBuilder.chargesDetailsDestination(onNavigateBack: () -> Unit) {
  * @param charge Charge object containing the details of the charge.
  */
 fun NavController.navigateToChargesDetailsScreen(charge: Charge) {
+    val safeDateString = if (charge.dueDate.isEmpty()) {
+        "-"
+    } else {
+        DateHelper.getDateAsString(charge.dueDate.mapNotNull { it })
+    }
+
     this.navigate(
         ChargesDetailsRoute(
             title = charge.name ?: "",
             isPaid = charge.paid,
             waived = charge.amountWaived.toString(),
             outstanding = charge.amountOutstanding.toString(),
-            date = DateHelper.getDateAsString(charge.dueDate.mapNotNull { it }),
+            date = safeDateString,
             due = charge.amount.toString(),
             paid = charge.amountPaid.toString(),
             refNo = charge.chargeId.toString(),

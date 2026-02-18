@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
+import mifos_mobile.feature.settings.generated.resources.feature_settings_action_logout_tip
 import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_description
-import mifos_mobile.feature.settings.generated.resources.feature_settings_logout_title
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.HomeRepository
@@ -45,6 +45,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  * @param homeRepositoryImpl Repository for fetching home-related data, such as client info and image.
  * @param userPreferencesRepositoryImpl Repository for accessing user preferences, including the client ID.
  * @param userDataRepositoryImpl Repository for logout user.
+ * @param appReviewManager Manager for handling in-app reviews.
  */
 internal class SettingsViewModel(
     private val homeRepositoryImpl: HomeRepository,
@@ -113,6 +114,7 @@ internal class SettingsViewModel(
             is SettingsAction.Internal.ReceiveClientInfo -> handleClientResponse(action.dataState)
             is SettingsAction.Internal.ReceiveClientImage -> handleClientImageResponse(action.dataState)
             is SettingsAction.NavigateTo -> sendEvent(SettingsEvents.NavigateTo(action.item))
+            SettingsAction.RateApp -> sendEvent(SettingsEvents.RateApp)
         }
     }
 
@@ -167,7 +169,7 @@ internal class SettingsViewModel(
         mutableStateFlow.update {
             it.copy(
                 dialogState = SettingsState.DialogState.Logout(
-                    title = Res.string.feature_settings_logout_title,
+                    title = Res.string.feature_settings_action_logout_tip,
                     message = Res.string.feature_settings_logout_description,
                 ),
             )
@@ -361,6 +363,9 @@ internal sealed interface SettingsAction {
     /** Action to observe network status */
     data class ReceiveNetworkStatus(val isOnline: Boolean) : SettingsAction
 
+    /** Action to rate application */
+    data object RateApp : SettingsAction
+
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
      */
@@ -388,4 +393,5 @@ internal sealed interface SettingsEvents {
     data object NavigateBack : SettingsEvents
 
     data class NavigateTo(val item: SettingsItems) : SettingsEvents
+    data object RateApp : SettingsEvents
 }

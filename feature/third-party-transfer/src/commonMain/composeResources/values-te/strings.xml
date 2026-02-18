@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">మొత్తం తప్పనిసరి</string>
+    <string name="feature_tpt_error_amount_invalid">దయచేసి సరైన మొత్తాన్ని నమోదు చేయండి</string>
+    <string name="feature_tpt_error_remarks_empty">వ్యాఖ్యలు ఖాళీగా ఉండకూడదు</string>
+    <string name="feature_tpt_error_remarks_invalid">చెల్లని వ్యాఖ్యలు నమోదు చేయబడ్డాయి</string>
+    <string name="feature_tpt_error_server">మా వైపు నుండి సర్వర్ సమస్య ఉంది, కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">మొత్తం అందుబాటులో ఉన్న బ్యాలెన్స్ కంటే ఎక్కువగా ఉంది</string>
+    <string name="feature_tpt_label_origin_account">మూల ఖాతా</string>
+    <string name="feature_tpt_label_origin_account_hint">ఇతర చెల్లింపు ఖాతాను ఎంచుకోండి</string>
+    <string name="feature_tpt_label_destination">గమ్యస్థాన ఖాతా</string>
+    <string name="feature_tpt_label_amount">మొత్తం</string>
+    <string name="feature_tpt_label_remarks">వ్యాఖ్యలు</string>
+    <string name="feature_tpt_tip">గమ్యస్థాన ఖాతా కనిపించడం లేదా?</string>
+    <string name="feature_tpt_tip_action">లబ్ధిదారుని జోడించండి!</string>
+    <string name="feature_tpt_transfer_button">మొత్తాన్ని బదిలీ చేయండి</string>
+</resources>
