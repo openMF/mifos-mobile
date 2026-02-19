@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Detalhes da Subscrição de Ações</string>
+    <string name="feature_share_navigation_back">Voltar</string>
+
+    <string name="feature_share_label_applicant_name">Nome do Requerente</string>
+    <string name="feature_share_label_submission_date">Data de Submissão</string>
+    <string name="feature_share_label_product_name">Nome do Produto</string>
+
+    <string name="feature_share_button_next">Seguinte</string>
+
+    <string name="feature_apply_share_error_server">Problema no servidor, não é possível prosseguir. Tente novamente mais tarde.</string>
+    <string name="feature_apply_share_error_too_many_attempts">Demasiadas tentativas falhadas. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_apply_share_error_submit_failed">Falha ao submeter o pedido de poupança. Por favor, tente novamente.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Alterações não guardadas!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Tem alterações não guardadas. Tem a certeza que pretende voltar?</string>
+    <string name="feature_share_no_products_available">Nenhum produto de ações disponível para subscrição</string>
+
+
+    <string name="feature_apply_share_label_terms">Termos</string>
+    <string name="feature_apply_share_label_currency">Moeda</string>
+    <string name="feature_apply_share_label_current_price">Preço Atual</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Número Total de Ações</string>
+    <string name="feature_apply_share_label_default_savings_account">Conta Poupança Padrão</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Período Ativo Mínimo</string>
+    <string name="feature_apply_share_section_minimum_active_period">Período Ativo Mínimo</string>
+    <string name="feature_apply_share_label_minimum_frequency">Frequência</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Tipo de Frequência</string>
+
+    <string name="feature_apply_share_label_lockin_period">Período de Carência</string>
+    <string name="feature_apply_share_section_lockin_period">Período de Carência</string>
+    <string name="feature_apply_share_label_lockin_frequency">Frequência</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Tipo de Frequência</string>
+
+    <string name="feature_apply_share_error_frequency_required">A frequência é obrigatória</string>
+    <string name="feature_apply_share_frequency_invalid">Por favor, introduza uma frequência válida</string>
+
+    <string name="feature_apply_share_error_shares_required">As ações são obrigatórias</string>
+    <string name="feature_apply_share_shares_invalid">Por favor, introduza ações válidas</string>
+
+    <string name="feature_apply_share_error_price_required">O preço é obrigatório</string>
+    <string name="feature_apply_share_price_invalid">Por favor, introduza um preço válido</string>
+
+    <string name="feature_apply_share_status_failure">Falha ao Submeter o Pedido</string>
+    <string name="feature_apply_share_status_failure_tip">Falha ao subscrever a conta de ações em %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Tentar Novamente</string>
+
+    <string name="feature_apply_share_status_success">Subscrição Bem-sucedida!</string>
+    <string name="feature_apply_share_status_success_tip">Subscreveu com sucesso uma conta de ações em %1$s</string>
+    <string name="feature_apply_share_status_success_action">Voltar ao Início</string>
+</resources>

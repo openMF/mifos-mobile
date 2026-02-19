@@ -9,7 +9,7 @@
  */
 package template.core.base.analytics
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 /** Performance tracking utilities for analytics */
 

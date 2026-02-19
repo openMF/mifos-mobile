@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">શેર એપ્લિકેશન વિગતો</string>
+    <string name="feature_share_navigation_back">પાછા</string>
+
+    <string name="feature_share_label_applicant_name">અરજદારનું નામ</string>
+    <string name="feature_share_label_submission_date">સબમિશન તારીખ</string>
+    <string name="feature_share_label_product_name">પ્રોડક્ટનું નામ</string>
+
+    <string name="feature_share_button_next">આગળ</string>
+
+    <string name="feature_apply_share_error_server">અમારી બાજુથી સર્વર સમસ્યા હોવાથી આગળ વધી શકાતું નથી, થોડીવાર પછી ફરી પ્રયાસ કરો</string>
+    <string name="feature_apply_share_error_too_many_attempts">ઘણા બધા નિષ્ફળ પ્રયાસો. કૃપા કરીને પછીથી ફરી પ્રયાસ કરો.</string>
+    <string name="feature_apply_share_error_submit_failed">બચત એપ્લિકેશન સબમિટ કરવામાં નિષ્ફળ. કૃપા કરીને ફરી પ્રયાસ કરો.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">સાચવ્યા વગરના ફેરફારો!</string>
+    <string name="feature_apply_share_unsaved_changes_message">તમારી પાસે સાચવ્યા વગરના ફેરફારો છે. શું તમે ખરેખર પાછા જવા માંગો છો?</string>
+    <string name="feature_share_no_products_available">શેર ખાતું ખોલવા માટે કોઈ શેર પ્રોડક્ટ્સ ઉપલબ્ધ નથી</string>
+
+
+    <string name="feature_apply_share_label_terms">શરતો</string>
+    <string name="feature_apply_share_label_currency">ચલણ</string>
+    <string name="feature_apply_share_label_current_price">વર્તમાન કિંમત</string>
+    <string name="feature_apply_share_label_total_number_of_shares">શેરની કુલ સંખ્યા</string>
+    <string name="feature_apply_share_label_default_savings_account">ડિફોલ્ટ બચત ખાતું</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">ન્યૂનતમ સક્રિય સમયગાળો</string>
+    <string name="feature_apply_share_section_minimum_active_period">ન્યૂનતમ સક્રિય સમયગાળો</string>
+    <string name="feature_apply_share_label_minimum_frequency">આવર્તન (Frequency)</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">આવર્તન પ્રકાર</string>
+
+    <string name="feature_apply_share_label_lockin_period">લોક-ઇન સમયગાળો</string>
+    <string name="feature_apply_share_section_lockin_period">લોક-ઇન સમયગાળો</string>
+    <string name="feature_apply_share_label_lockin_frequency">આવર્તન (Frequency)</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">આવર્તન પ્રકાર</string>
+
+    <string name="feature_apply_share_error_frequency_required">આવર્તન જરૂરી છે</string>
+    <string name="feature_apply_share_frequency_invalid">કૃપા કરીને માન્ય આવર્તન દાખલ કરો</string>
+
+    <string name="feature_apply_share_error_shares_required">શેર જરૂરી છે</string>
+    <string name="feature_apply_share_shares_invalid">કૃપા કરીને માન્ય શેર દાખલ કરો</string>
+
+    <string name="feature_apply_share_error_price_required">કિંમત જરૂરી છે</string>
+    <string name="feature_apply_share_price_invalid">કૃપા કરીને માન્ય કિંમત દાખલ કરો</string>
+
+    <string name="feature_apply_share_status_failure">એપ્લિકેશન સબમિટ કરવામાં નિષ્ફળ</string>
+    <string name="feature_apply_share_status_failure_tip">%1$s હેઠળ શેર ખાતા માટે અરજી કરવામાં નિષ્ફળ</string>
+    <string name="feature_apply_share_status_failure_action">ફરી પ્રયાસ કરો</string>
+
+    <string name="feature_apply_share_status_success">સફળતાપૂર્વક અરજી કરી!</string>
+    <string name="feature_apply_share_status_success_tip">તમે %1$s હેઠળ શેર ખાતા માટે સફળતાપૂર્વક અરજી કરી છે</string>
+    <string name="feature_apply_share_status_success_action">હોમ પર પાછા જાઓ</string>
+</resources>

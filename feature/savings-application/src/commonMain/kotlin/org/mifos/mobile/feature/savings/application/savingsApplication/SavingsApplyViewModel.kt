@@ -567,17 +567,6 @@ internal data class SavingsApplicationState(
     val showOverlay: Boolean = false,
 ) {
     /**
-     * A boolean indicating if the entire form is valid for submission.
-     * This is based on the absence of errors and non-empty fields.
-     */
-    val isFormValid: Boolean
-        get() = selectedSavingsProductId != 0L &&
-            selectedFieldOfficerId != 0L &&
-            savingsProductError == null &&
-            applicantName.isNotBlank() &&
-            selectedSavingsProduct.isNotBlank()
-
-    /**
      * A map of savings product IDs to their names, derived from `productOptions`.
      */
     val productOptionsMap: Map<Long, String> = productOptions.associate { option ->

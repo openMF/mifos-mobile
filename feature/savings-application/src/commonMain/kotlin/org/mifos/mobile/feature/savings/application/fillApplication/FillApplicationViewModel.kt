@@ -19,11 +19,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
+import mifos_mobile.core.ui.generated.resources.validation_amount_empty
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_invalid
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_required
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_too_many_attempts
@@ -76,7 +76,7 @@ private const val DEFAULT_IN_MULTIPLES_OF = 1.0
  * @property resultNavigator A navigator to observe and receive results from other screens, like authentication.
  * @property savedStateHandle A handle to saved state data, used to retrieve navigation arguments.
  */
-@Suppress("CyclomaticComplexMethod", "TooManyFunctions")
+@Suppress("CyclomaticComplexMethod", "TooManyFunctions", "MaxLineLength")
 internal class SavingsFillApplicationViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val savingsAccountRepositorImpl: SavingsAccountRepository,
@@ -112,15 +112,22 @@ internal class SavingsFillApplicationViewModel(
      */
     override fun handleAction(action: SavingsApplicationAction) {
         when (action) {
-            is SavingsApplicationAction.MinimumOpeningBalanceChange -> onMinimumOpeningBalanceChange(action.balance)
+            is SavingsApplicationAction.MinimumOpeningBalanceChange -> onMinimumOpeningBalanceChange(
+                action.balance,
+            )
 
             is SavingsApplicationAction.Retry -> retry()
 
             is SavingsApplicationAction.FrequencyChange -> onFrequencyChange(action.frequency)
 
-            is SavingsApplicationAction.FrequencyTypeChange -> onFrequencyTypeChange(action.id, action.value)
+            is SavingsApplicationAction.FrequencyTypeChange -> onFrequencyTypeChange(
+                action.id,
+                action.value,
+            )
 
-            is SavingsApplicationAction.Internal.ReceiveSavingsTemplate -> handleSavingsTemplateResult(action.template)
+            is SavingsApplicationAction.Internal.ReceiveSavingsTemplate -> handleSavingsTemplateResult(
+                action.template,
+            )
 
             is SavingsApplicationAction.OverDraftChange -> onOverDraftChange()
 
@@ -136,7 +143,9 @@ internal class SavingsFillApplicationViewModel(
 
             is SavingsApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
 
-            is SavingsApplicationAction.Internal.ReceiveAuthenticationResult -> handleSavingsApplyRequest(action.result)
+            is SavingsApplicationAction.Internal.ReceiveAuthenticationResult -> handleSavingsApplyRequest(
+                action.result,
+            )
 
             is SavingsApplicationAction.NavigateToAuthentication -> validateAndSubmit()
 
@@ -242,7 +251,10 @@ internal class SavingsFillApplicationViewModel(
     private fun fetchSavingsTemplateByProduct() {
         viewModelScope.launch {
             savingsAccountRepositorImpl
-                .getSavingAccountApplicationTemplateByProduct(state.clientId, state.savingsProductId)
+                .getSavingAccountApplicationTemplateByProduct(
+                    state.clientId,
+                    state.savingsProductId,
+                )
                 .collect { result ->
                     sendAction(SavingsApplicationAction.Internal.ReceiveSavingsTemplate(result))
                 }
@@ -298,7 +310,10 @@ internal class SavingsFillApplicationViewModel(
         }
         debounceValidation {
             val result =
-                validateMinimumOpeningBalanceChange(state.minOpeningBalance, state.currency.toModelCurrency())
+                validateMinimumOpeningBalanceChange(
+                    state.minOpeningBalance,
+                    state.currency.toModelCurrency(),
+                )
             mutableStateFlow.update {
                 it.copy(
                     minOpeningBalanceError = if (result is ValidationResult.Error) result.message else null,
@@ -336,7 +351,16 @@ internal class SavingsFillApplicationViewModel(
                     )
                 }
             }
-            is AmountValidationResult.Invalid -> ValidationResult.Error(result.errorResource)
+
+            is AmountValidationResult.Invalid -> {
+                // this is to bypass empty validation error without having any logical changes
+                // in loan application
+                if (result.errorResource == mifos_mobile.core.ui.generated.resources.Res.string.validation_amount_empty) {
+                    ValidationResult.Success
+                } else {
+                    ValidationResult.Error(result.errorResource)
+                }
+            }
         }
     }
 
@@ -371,12 +395,10 @@ internal class SavingsFillApplicationViewModel(
      * @return A [ValidationResult] indicating success or a specific error.
      */
     private fun validateFrequencyChange(newValue: String): ValidationResult = when {
-        newValue.isBlank() -> {
-            ValidationResult.Error(Res.string.feature_apply_savings_error_frequency_required)
-        }
         newValue.toIntOrNull() == null -> {
             ValidationResult.Error(Res.string.feature_apply_savings_error_frequency_invalid)
         }
+
         else -> {
             mutableStateFlow.update {
                 it.copy(frequency = newValue, frequencyError = null)
@@ -450,7 +472,10 @@ internal class SavingsFillApplicationViewModel(
             return
         }
         val minOpeningBalanceResult =
-            validateMinimumOpeningBalanceChange(state.minOpeningBalance, state.currency.toModelCurrency())
+            validateMinimumOpeningBalanceChange(
+                state.minOpeningBalance,
+                state.currency.toModelCurrency(),
+            )
         val frequencyResult = validateFrequencyChange(state.frequency)
 
         mutableStateFlow.update {
@@ -549,6 +574,7 @@ internal class SavingsFillApplicationViewModel(
                     )
                 }
             }
+
             is DataState.Success -> {
                 val savingsTemplate = template.data ?: return
                 updateState {
@@ -677,7 +703,7 @@ internal class SavingsFillApplicationViewModel(
             productId = savingsProductId.toInt(),
             submittedOnDate = state.currentDate,
             minRequiredOpeningBalance = minOpeningBalance.toDoubleOrNull() ?: 0.0,
-            lockinPeriodFrequency = state.frequency.toInt(),
+            lockinPeriodFrequency = state.frequency.toIntOrNull(),
             lockinPeriodFrequencyType = selectedFrequencyTypeId.toInt(),
             allowOverdraft = if (isOverDraftAllowed) checked else isOverDraftAllowed,
             locale = "en",
@@ -748,15 +774,6 @@ internal data class SavingsApplicationState(
         val name = option.value
         id to name
     }
-
-    /**
-     * A boolean indicating if the entire form is valid for submission.
-     */
-    val isFormValid: Boolean
-        get() = minOpeningBalance.isNotBlank() &&
-            selectedFrequencyTypeName.isNotBlank() &&
-            minOpeningBalanceError == null &&
-            frequencyError == null
 }
 
 /**
@@ -874,7 +891,8 @@ internal sealed interface SavingsApplicationAction {
          * An internal action to handle the result of fetching a savings account template.
          * @property template The [DataState] containing the savings account template data.
          */
-        data class ReceiveSavingsTemplate(val template: DataState<SavingsAccountTemplate?>) : Internal
+        data class ReceiveSavingsTemplate(val template: DataState<SavingsAccountTemplate?>) :
+            Internal
 
         /**
          * Receives the result from the authentication screen.
