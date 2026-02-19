@@ -28,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_button_continue
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_applicant_name
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_field_officer
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_savings_product
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_label_submission_date
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_title
@@ -233,19 +232,9 @@ internal fun SavingsAccountContent(
                         label = stringResource(Res.string.feature_apply_savings_label_savings_product),
                     )
 
-                    MifosOutlineDropdown(
-                        selectedText = state.selectedFieldOfficer,
-                        items = state.savingsFieldOfficer,
-                        enabled = state.selectedSavingsProduct.isNotBlank(),
-                        onItemSelected = { id, officer ->
-                            onAction(SavingsApplicationAction.FieldOfficerChange(id, officer))
-                        },
-                        label = stringResource(Res.string.feature_apply_savings_label_field_officer),
-                    )
-
                     MifosButton(
                         modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
-                        enabled = state.isFormValid,
+                        enabled = state.selectedSavingsProductId != 0L,
                         onClick = {
                             onAction(SavingsApplicationAction.NavigateToConfirmDetails)
                         },

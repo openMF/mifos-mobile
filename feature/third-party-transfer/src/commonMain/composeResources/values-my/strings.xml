@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">ပမာဏ လိုအပ်ပါသည်</string>
+    <string name="feature_tpt_error_amount_invalid">မှန်ကန်သော ပမာဏကို ရိုက်ထည့်ပါ</string>
+    <string name="feature_tpt_error_remarks_empty">မှတ်ချက် အလွတ်မဖြစ်ရပါ</string>
+    <string name="feature_tpt_error_remarks_invalid">မမှန်ကန်သော မှတ်ချက်များ ဖြစ်နေပါသည်</string>
+    <string name="feature_tpt_error_server">ဆာဗာ ချို့ယွင်းနေပါသည်၊ ခေတ္တစောင့်ပြီးမှ ပြန်လည် ကြိုးစားပါ</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">ပမာဏသည် လက်ကျန်ငွေထက် ကျော်လွန်နေပါသည်</string>
+    <string name="feature_tpt_label_origin_account">မူရင်းအကောင့်</string>
+    <string name="feature_tpt_label_origin_account_hint">အခြားပေးချေမှုအကောင့်ကို ရွေးချယ်ပါ</string>
+    <string name="feature_tpt_label_destination">လက်ခံမည့်အကောင့်</string>
+    <string name="feature_tpt_label_amount">ပမာဏ</string>
+    <string name="feature_tpt_label_remarks">မှတ်ချက်များ</string>
+    <string name="feature_tpt_tip">လက်ခံမည့်အကောင့်ကို ရှာမတွေ့ဘူးလား?</string>
+    <string name="feature_tpt_tip_action">အကျိုးခံစားခွင့်ရှိသူ ထည့်သွင်းပါ!</string>
+    <string name="feature_tpt_transfer_button">ငွေပမာဏ လွှဲပြောင်းမည်</string>
+</resources>

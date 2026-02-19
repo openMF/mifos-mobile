@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_account_title">Comptes</string>
+    <string name="feature_loan_account_title">Comptes de prêt</string>
+    <string name="feature_saving_account_title">Comptes d\'épargne</string>
+    <string name="feature_share_account_title">Comptes de parts</string>
+
+    <string name="feature_accounts_filter_status">Statut</string>
+    <string name="feature_accounts_filter_type">Type</string>
+
+    <string name="feature_loan_account_filter_active">Actif</string>
+    <string name="feature_loan_account_filter_approval_pending">En attente d\'approbation</string>
+    <string name="feature_loan_account_filter_closed">Fermé</string>
+    <string name="feature_loan_account_filter_disburse">En attente de versement</string>
+    <string name="feature_loan_account_filter_overpaid">Trop-perçu</string>
+    <string name="feature_loan_account_filter_in_arrears">En retard</string>
+    <string name="feature_loan_account_filter_withdrawn">Retiré</string>
+    <string name="feature_loan_account_filter_matured">Échu</string>
+    <string name="feature_loan_account_filter_rejected">Rejeté</string>
+
+    <string name="feature_loan_account_filter_personal">Personnel</string>
+    <string name="feature_loan_account_filter_bronze">Bronze</string>
+
+    <string name="feature_savings_filter_wallet_account">Compte portefeuille</string>
+    <string name="feature_savings_filter_bank_account">Compte bancaire</string>
+    <string name="feature_savings_filter_group_account">Compte de groupe</string>
+    <string name="feature_savings_filter_nb_account">Compte NB</string>
+
+    <string name="feature_savings_filter_active_account">Actif</string>
+    <string name="feature_savings_filter_pending_account">En attente d\'approbation</string>
+    <string name="feature_savings_filter_closed_account">Fermé</string>
+    <string name="feature_savings_filter_matured_account">Échu</string>
+    <string name="feature_savings_filter_approved_account">Approuvé</string>
+
+    <string name="feature_savings_filter">Filtres</string>
+    <string name="feature_savings_reset">Réinitialiser</string>
+    <string name="feature_savings_apply">Appliquer</string>
+    <string name="feature_filters_count">%1$s Sélectionné(s)</string>
+
+    <string name="feature_transaction_transaction_history">Historique des transactions</string>
+    <string name="feature_transaction_statement">Relevé</string>
+    <string name="feature_transaction_download_icon_description">Icône de téléchargement</string>
+    <string name="feature_transaction_filter">Filtrer</string>
+    <string name="feature_transaction_filter_icon_description">Icône de filtre</string>
+
+    <string name="feature_transaction_filter_credit">Crédit</string>
+    <string name="feature_transaction_filter_debit">Débit</string>
+
+    <string name="feature_transaction_filter_past_month">Mois dernier</string>
+    <string name="feature_transaction_filter_past_3_months">3 derniers mois</string>
+    <string name="feature_transaction_filter_past_6_months">6 derniers mois</string>
+    <string name="feature_transaction_filter_past_1_year">Année dernière</string>
+    <string name="feature_transaction_filter_past_2_years">2 dernières années</string>
+
+    <string name="feature_transaction_type">Type de transaction</string>
+    <string name="feature_duration">Durée</string>
+    <string name="feature_no_transactions_found">Aucune transaction trouvée</string>
+    <string name="feature_no__filtered_transactions_found">Aucune transaction trouvée pour les filtres sélectionnés</string>
+
+    <string name="feature_generic_error_server">Problème de serveur de notre côté, impossible de continuer. Réessayez dans un moment.</string>
+
+    <string name="feature_transaction_details">Détails de la transaction</string>
+    <string name="feature_transaction_detail_id">ID de transaction</string>
+    <string name="feature_transaction_detail_transfer_description">Description du transfert</string>
+    <string name="feature_transaction_detail_date">Date</string>
+    <string name="feature_transaction_detail_status">Statut</string>
+    <string name="feature_transaction_detail_status_success">Succès</string>
+    <string name="feature_transaction_detail_account_ref">Réf compte</string>
+    <string name="feature_transaction_detail_payment_method">Moyen de paiement</string>
+    <string name="feature_transaction_detail_type">Type</string>
+    <string name="feature_transaction_detail_status_reversed">Annulé</string>
+    <string name="feature_transaction_detail_receipt">Reçu n°</string>
+    <string name="feature_transaction_detail_external_id">ID externe</string>
+    <string name="feature_transaction_detail_breakdown">Détail</string>
+    <string name="feature_transaction_detail_principal">Principal</string>
+    <string name="feature_transaction_detail_interest">Intérêts</string>
+    <string name="feature_transaction_detail_fees">Frais</string>
+    <string name="feature_transaction_detail_penalties">Pénalités</string>
+    <string name="feature_transaction_detail_balance">Solde restant</string>
+    <string name="feature_transaction_detail_default_type">Transaction</string>
+
+</resources>

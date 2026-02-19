@@ -76,7 +76,10 @@ class AppDatabaseFactory(
      * - Add appropriate type converters for complex data types
      * - Configure database callbacks for initialization or validation logic
      */
-    fun <T : RoomDatabase> createDatabase(databaseClass: Class<T>, databaseName: String): RoomDatabase.Builder<T> {
+    fun <T : RoomDatabase> createDatabase(
+        databaseClass: Class<T>,
+        databaseName: String,
+    ): RoomDatabase.Builder<T> {
         return Room.databaseBuilder(
             context.applicationContext,
             databaseClass,

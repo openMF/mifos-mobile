@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,11 +20,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -35,12 +39,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.home.generated.resources.Res
+import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
+import mifos_mobile.feature.home.generated.resources.feature_home_no_services_hint
+import mifos_mobile.feature.home.generated.resources.feature_home_selected
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
@@ -208,17 +216,38 @@ internal fun HomeContent(
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
 
-                    Text(
-                        text = stringResource(Res.string.feature_home_services),
-                        style = MifosTypography.titleMediumEmphasized,
-                        color = KptTheme.colorScheme.onSurface,
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.feature_home_services),
+                            style = MifosTypography.titleMediumEmphasized,
+                            color = KptTheme.colorScheme.onSurface,
+                        )
+                        IconButton(onClick = { onAction(HomeAction.ToggleEditMode) }) {
+                            Icon(
+                                imageVector = if (state.isEditMode) MifosIcons.Edit else MifosIcons.GridApps,
+                                contentDescription = stringResource(Res.string.feature_home_edit_services),
+                                tint = KptTheme.colorScheme.primary,
+                                modifier = Modifier.size(DesignToken.sizes.iconSmall),
+                            )
+                        }
+                    }
 
-                    Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
 
                     ServiceBox(
-                        items = state.items,
-                        onAction = onAction,
+                        visibleItems = state.visibleItems,
+                        isEditMode = state.isEditMode,
+                        selectedServices = state.selectedServices,
+                        onServiceClick = { route ->
+                            if (state.isEditMode) {
+                                onAction(HomeAction.ToggleServiceSelection(route))
+                            } else {
+                                onAction(HomeAction.OnNavigate(route))
+                            }
+                        },
                     )
                 }
             }
@@ -230,24 +259,38 @@ internal fun HomeContent(
 
 @Composable
 internal fun ServiceBox(
-    items: ImmutableList<ServiceItem>,
-    onAction: (HomeAction) -> Unit,
+    visibleItems: ImmutableList<ServiceItem>,
+    isEditMode: Boolean,
+    selectedServices: Set<String>,
+    onServiceClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val columnCount = 4
     val spacing = DesignToken.spacing.medium
-    val rows = items.chunked(columnCount)
+    val rows = visibleItems.chunked(columnCount)
 
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
+        if (visibleItems.isEmpty() && !isEditMode) {
+            Text(
+                text = stringResource(Res.string.feature_home_no_services_hint),
+                style = MifosTypography.bodyMedium,
+                color = KptTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(DesignToken.padding.large),
+            )
+        }
         rows.forEach { rowItems ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
             ) {
                 rowItems.forEach { item ->
+                    val isSelected = selectedServices.contains(item.route)
                     Box(
                         modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.TopCenter,
@@ -255,7 +298,9 @@ internal fun ServiceBox(
                         ServiceItemCard(
                             title = item.title,
                             icon = item.icon,
-                            onClick = { onAction(HomeAction.OnNavigate(item.route)) },
+                            isSelected = isSelected,
+                            isEditMode = isEditMode,
+                            onClick = { onServiceClick(item.route) },
                         )
                     }
                 }
@@ -273,30 +318,50 @@ internal fun ServiceItemCard(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    isEditMode: Boolean = false,
 ) {
     Column(
         modifier = modifier
             .padding(vertical = KptTheme.spacing.sm)
-            .clippedClickable(
-                onClick = onClick,
-            ),
+            .clickable(role = Role.Button, onClickLabel = stringResource(title)) { onClick() },
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier
-                .border(
-                    DesignToken.strokes.thin,
-                    KptTheme.colorScheme.secondaryContainer,
-                    KptTheme.shapes.medium,
-                )
-                .padding(DesignToken.padding.dp14),
-        ) {
+        Box {
             Image(
+                modifier = Modifier
+                    .border(
+                        DesignToken.strokes.thin,
+                        if (isEditMode && isSelected) {
+                            KptTheme.colorScheme.primary
+                        } else {
+                            KptTheme.colorScheme.outlineVariant
+                        },
+                        KptTheme.shapes.medium,
+                    )
+                    .padding(DesignToken.padding.dp14),
                 imageVector = icon,
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(KptTheme.colorScheme.tertiary),
+                colorFilter = ColorFilter.tint(
+                    if (isEditMode && isSelected) {
+                        KptTheme.colorScheme.primary
+                    } else {
+                        KptTheme.colorScheme.tertiary
+                    },
+                ),
             )
+            if (isEditMode && isSelected) {
+                Icon(
+                    imageVector = MifosIcons.CheckCircle1,
+                    contentDescription = stringResource(Res.string.feature_home_selected),
+                    tint = KptTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(DesignToken.spacing.extraSmall)
+                        .size(DesignToken.spacing.medium),
+                )
+            }
         }
 
         Text(

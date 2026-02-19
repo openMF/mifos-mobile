@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">මෑත ගනුදෙනු</string>
+    <string name="no_transaction">ගනුදෙනු නැත</string>
+    <string name="atm_icon">ATM අයිකනය</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">යමක් වැරදී ඇත</string>
+    <string name="filter">පෙරහන</string>
+    <string name="filter_transactions">ගනුදෙනු පෙරීම</string>
+    <string name="clear_all">සියල්ල ඉවත් කරන්න</string>
+    <string name="filter_by_account">ගිණුම අනුව පෙරීම:</string>
+    <string name="account_number_label">ගිණුම් අංකය: %1$s</string>
+    <string name="select_account">ගිණුම තෝරන්න</string>
+    <string name="balance">ශේෂය: %1$s %2$s</string>
+    <string name="account">ගිණුම</string>
+    <string name="transaction_type">ගනුදෙනු වර්ගය:</string>
+    <string name="all">සියල්ල</string>
+    <string name="debits">හර</string>
+    <string name="credits">බැර</string>
+    <string name="apply_filters">පෙරහන් යොදන්න</string>
+</resources>

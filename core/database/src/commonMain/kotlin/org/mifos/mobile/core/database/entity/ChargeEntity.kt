@@ -9,8 +9,8 @@
  */
 package org.mifos.mobile.core.database.entity
 
-import org.mifos.mobile.core.database.Entity
-import org.mifos.mobile.core.database.PrimaryKey
+import template.core.base.database.Entity
+import template.core.base.database.PrimaryKey
 
 @Entity(
     tableName = "charges",

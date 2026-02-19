@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">ඉතුරුම් අයදුම්පත් විස්තර</string>
+
+    <string name="feature_apply_savings_section_fill_details">අයදුම්පත් විස්තර පුරවන්න</string>
+
+    <string name="feature_apply_savings_label_applicant_name">අයදුම්කරුගේ නම</string>
+    <string name="feature_apply_savings_label_savings_product">නිෂ්පාදනයේ නම</string>
+    <string name="feature_apply_savings_label_field_officer">ක්ෂේත්‍ර නිලධාරි</string>
+    <string name="feature_apply_savings_label_submission_date">ඉදිරිපත් කළ දිනය</string>
+    <string name="feature_apply_savings_label_fill_application_details">අයදුම්පත් විස්තර පුරවන්න</string>
+    <string name="feature_apply_savings_label_details">විස්තර</string>
+    <string name="feature_apply_savings_label_currency">මුදල් වර්ගය</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">අවම ආරම්භක ශේෂය</string>
+    <string name="feature_apply_savings_label_lock_in_period">අගුලු දැමීමේ කාලය (Lock-in Period)</string>
+    <string name="feature_apply_savings_label_frequency">සංඛ්‍යාතය (Frequency)</string>
+    <string name="feature_apply_savings_label_frequency_type">සංඛ්‍යාත වර්ගය</string>
+    <string name="feature_apply_savings_label_overdraft">අයිරා (Overdraft)</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">අයිරා ලබා ගැනීමට ඉල්ලීම</string>
+
+    <string name="feature_apply_savings_button_continue">ඉදිරියට යන්න</string>
+    <string name="feature_apply_savings_button_ok">හරි</string>
+    <string name="feature_apply_savings_button_cancel">අවලංගු කරන්න</string>
+    <string name="feature_apply_savings_button_apply">ඉතුරුම් සඳහා අයදුම් කරන්න</string>
+    <string name="feature_button_next">ඊළඟ</string>
+
+    <string name="feature_apply_savings_error_amount_empty">මූලික මුදල අවශ්‍යයි</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">කරුණාකර වලංගු මුදල් ආකෘතියක් ඇතුළත් කරන්න</string>
+    <string name="feature_apply_savings_error_amount_too_small">මූලික මුදල ඉතා කුඩාය</string>
+    <string name="feature_apply_savings_error_amount_too_large">මූලික මුදල උපරිම සීමාව ඉක්මවයි</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">තෝරාගත් මුදල් වර්ගය සඳහා දශම ස්ථාන වැඩිය</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">ඉතුරුම් නිෂ්පාදනය අවශ්‍යයි</string>
+
+    <string name="feature_apply_savings_error_server">අපගේ පාර්ශවයෙන් සේවාදායක දෝෂයක් ඇත, ඉදිරියට යා නොහැක, මොහොතකින් නැවත උත්සාහ කරන්න</string>
+    <string name="feature_apply_savings_error_too_many_attempts">අසාර්ථක උත්සාහයන් වැඩියි. කරුණාකර පසුව නැවත උත්සාහ කරන්න.</string>
+    <string name="feature_apply_savings_error_submit_failed">ඉතුරුම් අයදුම්පත ඉදිරිපත් කිරීමට අපහසු විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+
+    <string name="feature_apply_savings_success_submit">ඉතුරුම් අයදුම්පත සාර්ථකව ඉදිරිපත් කරන ලදී!</string>
+    <string name="feature_apply_savings_success_draft_saved">අයදුම්පත් කෙටුම්පත සාර්ථකව සුරැකිණි</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">සුරැක නොමැති වෙනස්කම්!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">ඔබ සතුව සුරැක නොමැති වෙනස්කම් ඇත. ඔබට ආපසු යාමට අවශ්‍ය බව විශ්වාසද?</string>
+
+
+    <string name="feature_apply_savings_label_next">ඊළඟ</string>
+
+    <string name="feature_apply_savings_error_currency_required">මුදල් වර්ගය අවශ්‍යයි</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">අවම ආරම්භක ශේෂය අවශ්‍යයි</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">අගුලු දැමීමේ කාලය අවශ්‍යයි</string>
+    <string name="feature_apply_savings_error_frequency_required">සංඛ්‍යාතය අවශ්‍යයි</string>
+    <string name="feature_apply_savings_error_frequency_invalid">වලංගු සංඛ්‍යාතයක් ඇතුළත් කරන්න</string>
+
+    <string name="feature_apply_savings_status_success">අයදුම් කිරීම සාර්ථකයි!</string>
+    <string name="feature_apply_savings_status_success_tip">ඔබ %1$s යටතේ ඉතුරුම් ගිණුමක් සඳහා සාර්ථකව අයදුම් කර ඇත.</string>
+    <string name="feature_apply_savings_status_success_action">මුල් පිටුවට</string>
+
+    <string name="feature_apply_savings_status_failure">අයදුම්පත ඉදිරිපත් කිරීම අසාර්ථකයි</string>
+    <string name="feature_apply_savings_status_failure_tip">%1$s යටතේ ඉතුරුම් ගිණුමක් සඳහා අයදුම් කිරීම අසාර්ථකයි.</string>
+    <string name="feature_apply_savings_status_failure_action">නැවත උත්සාහ කරන්න</string>
+
+</resources>

@@ -69,6 +69,7 @@ import fluent.ui.system.icons.filled.CaretUp
 import fluent.ui.system.icons.filled.ChatBubblesQuestion
 import fluent.ui.system.icons.filled.ChatHistory
 import fluent.ui.system.icons.filled.ChatMultiple
+import fluent.ui.system.icons.filled.CheckmarkCircle
 import fluent.ui.system.icons.filled.ChevronRight
 import fluent.ui.system.icons.filled.CoinMultiple
 import fluent.ui.system.icons.filled.ContactCardRibbon
@@ -265,4 +266,8 @@ object MifosIcons {
     val Attach = FluentIcons.Regular.Attach
 
     val AddColor = FluentIcons.Colored.AddCircle
+
+    val GridApps = FluentIcons.Filled.Grid
+    val CheckCircle1 = FluentIcons.Filled.CheckmarkCircle
+    val Pencil = Icons.Filled.Edit
 }
