@@ -24,11 +24,8 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.io.IOException
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
-import mifos_mobile.feature.accounts.generated.resources.feature_loan_account_filter_active
 import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_default_type
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_fees
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_interest
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_credit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_debit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_1_year
@@ -40,8 +37,11 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_his
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_deposit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_disbursement
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_fee_deduction
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_fee_waiver
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_interest_posting
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_interest_waiver
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_purchase
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_recovery_repayment
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_redeem
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_repayment
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_transaction
@@ -761,9 +761,9 @@ internal fun mapLoanTransactionTypeToRes(typeValue: String?): StringResource {
     return when (typeValue?.lowercase()) {
         "disbursement" -> Res.string.feature_transaction_history_disbursement
         "repayment" -> Res.string.feature_transaction_history_repayment
-        "recovery repayment" -> Res.string.feature_loan_account_filter_active
-        "interest waiver" -> Res.string.feature_transaction_detail_interest
-        "fee waiver" -> Res.string.feature_transaction_detail_fees
+        "recovery repayment" -> Res.string.feature_transaction_history_recovery_repayment
+        "interest waiver" -> Res.string.feature_transaction_history_interest_waiver
+        "fee waiver" -> Res.string.feature_transaction_history_fee_waiver
         else -> Res.string.feature_transaction_detail_default_type
     }
 }

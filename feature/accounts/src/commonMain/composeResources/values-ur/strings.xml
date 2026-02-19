@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">خریداری</string>
     <string name="feature_transaction_history_charge_payment">چارج ادائیگی</string>
     <string name="feature_transaction_history_redeem">استرداد (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">رقم کی واپسی کی وصولی</string>
+    <string name="feature_transaction_history_interest_waiver">سود کی معافی</string>
+    <string name="feature_transaction_history_fee_waiver">فیس کی معافی</string>
 </resources>

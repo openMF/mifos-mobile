@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">खरीद</string>
     <string name="feature_transaction_history_charge_payment">शुल्क भुगतान</string>
     <string name="feature_transaction_history_redeem">भुनाना (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">वसूली पुनर्भुगतान</string>
+    <string name="feature_transaction_history_interest_waiver">ब्याज छूट</string>
+    <string name="feature_transaction_history_fee_waiver">शुल्क छूट</string>
 </resources>

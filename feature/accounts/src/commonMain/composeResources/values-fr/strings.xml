@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Achat</string>
     <string name="feature_transaction_history_charge_payment">Paiement de frais</string>
     <string name="feature_transaction_history_redeem">Racheter</string>
+    <string name="feature_transaction_history_recovery_repayment">Remboursement de recouvrement</string>
+    <string name="feature_transaction_history_interest_waiver">Remise d\'intérêts</string>
+    <string name="feature_transaction_history_fee_waiver">Remise de frais</string>
 </resources>

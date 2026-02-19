@@ -104,4 +104,8 @@
     <string name="feature_transaction_history_repayment">Reembolso</string>
     <string name="feature_transaction_history_purchase">Compra</string>
     <string name="feature_transaction_history_charge_payment">Pago de cargo</string>
+    <string name="feature_transaction_history_redeem">Canjear</string>
+    <string name="feature_transaction_history_recovery_repayment">Reembolso de recuperación</string>
+    <string name="feature_transaction_history_interest_waiver">Exoneración de intereses</string>
+    <string name="feature_transaction_history_fee_waiver">Exoneración de comisiones</string>
 </resources>

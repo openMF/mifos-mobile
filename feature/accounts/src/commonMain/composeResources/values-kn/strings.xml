@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">ಖರೀದಿ</string>
     <string name="feature_transaction_history_charge_payment">ಶುಲ್ಕ ಪಾವತಿ</string>
     <string name="feature_transaction_history_redeem">ರಿಡೀಮ್</string>
+    <string name="feature_transaction_history_recovery_repayment">ಮರುಪಡೆಯುವಿಕೆ ಮರುಪಾವತಿ</string>
+    <string name="feature_transaction_history_interest_waiver">ಬಡ್ಡಿ ಮನ್ನಾ</string>
+    <string name="feature_transaction_history_fee_waiver">ಶುಲ್ಕ ಮನ್ನಾ</string>
 </resources>

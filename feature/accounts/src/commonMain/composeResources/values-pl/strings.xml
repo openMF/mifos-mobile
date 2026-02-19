@@ -53,7 +53,7 @@
     <string name="feature_transaction_filter_icon_description">Ikona filtra</string>
 
     <string name="feature_transaction_filter_credit">Uznanie (Credit)</string>
-    <string name="feature_transaction_filter_debet">Obciążenie (Debit)</string>
+    <string name="feature_transaction_filter_debit">Obciążenie (Debit)</string>
 
     <string name="feature_transaction_filter_past_month">Ostatni miesiąc</string>
     <string name="feature_transaction_filter_past_3_months">Ostatnie 3 miesiące</string>
@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Zakup</string>
     <string name="feature_transaction_history_charge_payment">Opłata płatnicza</string>
     <string name="feature_transaction_history_redeem">Wykup (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">Spłata windykacyjna</string>
+    <string name="feature_transaction_history_interest_waiver">Umorzenie odsetek</string>
+    <string name="feature_transaction_history_fee_waiver">Umorzenie opłat</string>
 </resources>

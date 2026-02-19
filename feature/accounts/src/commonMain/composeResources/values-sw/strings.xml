@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Ununuzi</string>
     <string name="feature_transaction_history_charge_payment">Malipo ya Ada</string>
     <string name="feature_transaction_history_redeem">Kukomboa</string>
+    <string name="feature_transaction_history_recovery_repayment">Malipo ya urejesahaji</string>
+    <string name="feature_transaction_history_interest_waiver">Msamaha wa riba</string>
+    <string name="feature_transaction_history_fee_waiver">Msamaha wa ada</string>
 </resources>

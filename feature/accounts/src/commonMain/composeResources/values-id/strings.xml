@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Pembelian</string>
     <string name="feature_transaction_history_charge_payment">Pembayaran Biaya</string>
     <string name="feature_transaction_history_redeem">Tukar (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">Pembayaran Pemulihan</string>
+    <string name="feature_transaction_history_interest_waiver">Penghapusan Bunga</string>
+    <string name="feature_transaction_history_fee_waiver">Penghapusan Biaya</string>
 </resources>

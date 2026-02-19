@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Compra</string>
     <string name="feature_transaction_history_charge_payment">Pagamento de Encargo</string>
     <string name="feature_transaction_history_redeem">Resgatar</string>
+    <string name="feature_transaction_history_recovery_repayment">Reembolso de recuperação</string>
+    <string name="feature_transaction_history_interest_waiver">Isenção de juros</string>
+    <string name="feature_transaction_history_fee_waiver">Isenção de taxas</string>
 </resources>

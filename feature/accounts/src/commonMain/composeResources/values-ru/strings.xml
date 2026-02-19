@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">Покупка</string>
     <string name="feature_transaction_history_charge_payment">Оплата сбора</string>
     <string name="feature_transaction_history_redeem">Погашение (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">Погашение задолженности</string>
+    <string name="feature_transaction_history_interest_waiver">Списание процентов</string>
+    <string name="feature_transaction_history_fee_waiver">Списание комиссий</string>
 </resources>

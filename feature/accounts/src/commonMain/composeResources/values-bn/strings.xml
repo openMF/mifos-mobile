@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">ক্রয়</string>
     <string name="feature_transaction_history_charge_payment">চার্জ পেমেন্ট</string>
     <string name="feature_transaction_history_redeem">রিডিম</string>
+    <string name="feature_transaction_history_recovery_repayment">পুনরুদ্ধার পরিশোধ</string>
+    <string name="feature_transaction_history_interest_waiver">সুদ মওকুফ</string>
+    <string name="feature_transaction_history_fee_waiver">ফি মওকুফ</string>
 </resources>

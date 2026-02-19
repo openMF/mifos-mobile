@@ -105,5 +105,8 @@
     <string name="feature_transaction_history_purchase">Purchase</string>
     <string name="feature_transaction_history_charge_payment">Charge Payment</string>
     <string name="feature_transaction_history_redeem">Redeem</string>
+    <string name="feature_transaction_history_recovery_repayment">Recovery Repayment</string>
+    <string name="feature_transaction_history_interest_waiver">Interest Waiver</string>
+    <string name="feature_transaction_history_fee_waiver">Fee Waiver</string>
 
 </resources>

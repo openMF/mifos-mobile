@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">కొనుగోలు</string>
     <string name="feature_transaction_history_charge_payment">ఛార్జ్ చెల్లింపు</string>
     <string name="feature_transaction_history_redeem">రిడీమ్</string>
+    <string name="feature_transaction_history_recovery_repayment">రికవరీ చెల్లింపు</string>
+    <string name="feature_transaction_history_interest_waiver">వడ్డీ మినహాయింపు</string>
+    <string name="feature_transaction_history_fee_waiver">రుసుము మినహాయింపు</string>
 </resources>

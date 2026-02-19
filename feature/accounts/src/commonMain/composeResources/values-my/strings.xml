@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">ဝယ်ယူခြင်း</string>
     <string name="feature_transaction_history_charge_payment">ဝန်ဆောင်ခပေးချေခြင်း</string>
     <string name="feature_transaction_history_redeem">ပြန်လည်ထုတ်ယူခြင်း</string>
+    <string name="feature_transaction_history_recovery_repayment">ပြန်လည်ရရှိငွေပေးဆပ်မှု</string>
+    <string name="feature_transaction_history_interest_waiver">အတိုးကင်းလွတ်ခွင့်</string>
+    <string name="feature_transaction_history_fee_waiver">ဝန်ဆောင်ခကင်းလွတ်ခွင့်</string>
 </resources>

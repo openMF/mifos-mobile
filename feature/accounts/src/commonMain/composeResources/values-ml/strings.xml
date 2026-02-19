@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">പർച്ചേസ്</string>
     <string name="feature_transaction_history_charge_payment">ചാർജ് പേയ്‌മെന്റ്</string>
     <string name="feature_transaction_history_redeem">തിരിച്ചെടുക്കുക (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">തിരിച്ചടവ് വീണ്ടെടുക്കൽ</string>
+    <string name="feature_transaction_history_interest_waiver">പലിശ ഇളവ്</string>
+    <string name="feature_transaction_history_fee_waiver">ഫീസ് ഇളവ്</string>
 </resources>

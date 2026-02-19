@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">ការទិញ</string>
     <string name="feature_transaction_history_charge_payment">ការបង់ថ្លៃសេវា</string>
     <string name="feature_transaction_history_redeem">លោះយកវិញ</string>
+    <string name="feature_transaction_history_recovery_repayment">ការសងត្រឡប់មកវិញនូវការស្តារឡើងវិញ</string>
+    <string name="feature_transaction_history_interest_waiver">ការលើកលែងការប្រាក់</string>
+    <string name="feature_transaction_history_fee_waiver">ការលើកលែងកម្រៃសេវា</string>
 </resources>
