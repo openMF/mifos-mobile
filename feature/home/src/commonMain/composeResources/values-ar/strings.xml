@@ -12,6 +12,8 @@
     <string name="beneficiaries">المستفيدون</string>
     <string name="survey">الاستبيانات</string>
     <string name="apply_for_loan">التقديم على قرض</string>
+    <string name="apply_for_savings">طلب حساب توفير</string>
+    <string name="apply_for_share">طلب حساب أسهم</string>
     <string name="charges">الرسوم</string>
     <string name="transfer">تحويل</string>
     <string name="accounts">الحسابات</string>

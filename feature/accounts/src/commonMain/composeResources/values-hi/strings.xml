@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_account_title">खाते</string>
+    <string name="feature_loan_account_title">ऋण खाते</string>
+    <string name="feature_saving_account_title">बचत खाते</string>
+    <string name="feature_share_account_title">शेयर खाते</string>
+
+    <string name="feature_accounts_filter_status">स्थिति</string>
+    <string name="feature_accounts_filter_type">प्रकार</string>
+
+    <string name="feature_loan_account_filter_active">सक्रिय</string>
+    <string name="feature_loan_account_filter_approval_pending">अनुमोदन लंबित</string>
+    <string name="feature_loan_account_filter_closed">बंद</string>
+    <string name="feature_loan_account_filter_disburse">संवितरण की प्रतीक्षा में</string>
+    <string name="feature_loan_account_filter_overpaid">अधिक भुगतान</string>
+    <string name="feature_loan_account_filter_in_arrears">बकाया</string>
+    <string name="feature_loan_account_filter_withdrawn">निकाला गया</string>
+    <string name="feature_loan_account_filter_matured">परिपक्व</string>
+    <string name="feature_loan_account_filter_rejected">अस्वीकृत</string>
+
+    <string name="feature_loan_account_filter_personal">व्यक्तिगत</string>
+    <string name="feature_loan_account_filter_bronze">कांस्य</string>
+
+    <string name="feature_savings_filter_wallet_account">वॉलेट खाता</string>
+    <string name="feature_savings_filter_bank_account">बैंक खाता</string>
+    <string name="feature_savings_filter_group_account">समूह खाता</string>
+    <string name="feature_savings_filter_nb_account">NB खाता</string>
+
+    <string name="feature_savings_filter_active_account">सक्रिय</string>
+    <string name="feature_savings_filter_pending_account">अनुमोदन लंबित</string>
+    <string name="feature_savings_filter_closed_account">बंद</string>
+    <string name="feature_savings_filter_matured_account">परिपक्व</string>
+    <string name="feature_savings_filter_approved_account">स्वीकृत</string>
+
+    <string name="feature_savings_filter">फ़िल्टर</string>
+    <string name="feature_savings_reset">रीसेट</string>
+    <string name="feature_savings_apply">लागू करें</string>
+    <string name="feature_filters_count">%1$s चयनित</string>
+
+    <string name="feature_transaction_transaction_history">लेन-देन इतिहास</string>
+    <string name="feature_transaction_statement">विवरण (Statement)</string>
+    <string name="feature_transaction_download_icon_description">डाउनलोड आइकन</string>
+    <string name="feature_transaction_filter">फ़िल्टर</string>
+    <string name="feature_transaction_filter_icon_description">फ़िल्टर आइकन</string>
+
+    <string name="feature_transaction_filter_credit">जमा</string>
+    <string name="feature_transaction_filter_debit">नामे</string>
+
+    <string name="feature_transaction_filter_past_month">पिछला महीना</string>
+    <string name="feature_transaction_filter_past_3_months">पिछले 3 महीने</string>
+    <string name="feature_transaction_filter_past_6_months">पिछले 6 महीने</string>
+    <string name="feature_transaction_filter_past_1_year">पिछला 1 वर्ष</string>
+    <string name="feature_transaction_filter_past_2_years">पिछले 2 वर्ष</string>
+
+    <string name="feature_transaction_type">लेन-देन का प्रकार</string>
+    <string name="feature_duration">अवधि</string>
+    <string name="feature_no_transactions_found">कोई लेन-देन नहीं मिला</string>
+    <string name="feature_no__filtered_transactions_found">चयनित फ़िल्टर के लिए कोई लेन-देन नहीं मिला</string>
+
+    <string name="feature_generic_error_server">हमारी ओर से सर्वर की समस्या के कारण आगे नहीं बढ़ सकते, कुछ देर बाद पुन: प्रयास करें</string>
+
+    <string name="feature_transaction_details">लेन-देन विवरण</string>
+    <string name="feature_transaction_detail_id">लेन-देन आईडी</string>
+    <string name="feature_transaction_detail_transfer_description">स्थानांतरण विवरण</string>
+    <string name="feature_transaction_detail_date">तारीख</string>
+    <string name="feature_transaction_detail_status">स्थिति</string>
+    <string name="feature_transaction_detail_status_success">सफल</string>
+    <string name="feature_transaction_detail_account_ref">खाता संदर्भ</string>
+    <string name="feature_transaction_detail_payment_method">भुगतान विधि</string>
+    <string name="feature_transaction_detail_type">प्रकार</string>
+    <string name="feature_transaction_detail_status_reversed">उलट दिया गया (Reversed)</string>
+    <string name="feature_transaction_detail_receipt">रसीद #</string>
+    <string name="feature_transaction_detail_external_id">बाहरी आईडी</string>
+    <string name="feature_transaction_detail_breakdown">ब्रेकडाउन</string>
+    <string name="feature_transaction_detail_principal">मूलधन</string>
+    <string name="feature_transaction_detail_interest">ब्याज</string>
+    <string name="feature_transaction_detail_fees">शुल्क</string>
+    <string name="feature_transaction_detail_penalties">जुर्माना</string>
+    <string name="feature_transaction_detail_balance">शेष राशि</string>
+    <string name="feature_transaction_detail_default_type">लेन-देन</string>
+
+</resources>

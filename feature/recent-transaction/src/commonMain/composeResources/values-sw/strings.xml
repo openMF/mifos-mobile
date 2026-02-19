@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">Miamala ya Hivi Karibuni</string>
+    <string name="no_transaction">Hakuna Muamala</string>
+    <string name="atm_icon">Aikoni ya ATM</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Kuna hitilafu</string>
+    <string name="filter">Chuja</string>
+    <string name="filter_transactions">Chuja Miamala</string>
+    <string name="clear_all">Futa Vyote</string>
+    <string name="filter_by_account">Chuja kwa Akaunti:</string>
+    <string name="account_number_label">Nambari ya Akaunti: %1$s</string>
+    <string name="select_account">Chagua Akaunti</string>
+    <string name="balance">Salio: %1$s %2$s</string>
+    <string name="account">Akaunti</string>
+    <string name="transaction_type">Aina ya Muamala:</string>
+    <string name="all">Yote</string>
+    <string name="debits">Makato</string>
+    <string name="credits">Amana</string>
+    <string name="apply_filters">Weka Vichujio</string>
+</resources>

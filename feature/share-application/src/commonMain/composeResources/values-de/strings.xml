@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Details zum Aktienantrag</string>
+    <string name="feature_share_navigation_back">Zurück</string>
+
+    <string name="feature_share_label_applicant_name">Name des Antragstellers</string>
+    <string name="feature_share_label_submission_date">Einreichungsdatum</string>
+    <string name="feature_share_label_product_name">Produktname</string>
+
+    <string name="feature_share_button_next">Weiter</string>
+
+    <string name="feature_apply_share_error_server">Serverproblem auf unserer Seite, Vorgang kann nicht fortgesetzt werden. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_apply_share_error_too_many_attempts">Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_apply_share_error_submit_failed">Antrag auf Sparkonto fehlgeschlagen. Bitte versuchen Sie es erneut.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Ungespeicherte Änderungen!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Sie haben ungespeicherte Änderungen. Sind Sie sicher, dass Sie zurückgehen möchten?</string>
+    <string name="feature_share_no_products_available">Keine Aktienprodukte für die Beantragung eines Aktienkontos verfügbar</string>
+
+
+    <string name="feature_apply_share_label_terms">Bedingungen</string>
+    <string name="feature_apply_share_label_currency">Währung</string>
+    <string name="feature_apply_share_label_current_price">Aktueller Preis</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Gesamtanzahl der Aktien</string>
+    <string name="feature_apply_share_label_default_savings_account">Standard-Sparkonto</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Mindestlaufzeit</string>
+    <string name="feature_apply_share_section_minimum_active_period">Mindestlaufzeit</string>
+    <string name="feature_apply_share_label_minimum_frequency">Frequenz</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Frequenztyp</string>
+
+    <string name="feature_apply_share_label_lockin_period">Sperrfrist</string>
+    <string name="feature_apply_share_section_lockin_period">Sperrfrist</string>
+    <string name="feature_apply_share_label_lockin_frequency">Frequenz</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Frequenztyp</string>
+
+    <string name="feature_apply_share_error_frequency_required">Frequenz ist erforderlich</string>
+    <string name="feature_apply_share_frequency_invalid">Bitte geben Sie eine gültige Frequenz ein</string>
+
+    <string name="feature_apply_share_error_shares_required">Aktien sind erforderlich</string>
+    <string name="feature_apply_share_shares_invalid">Bitte geben Sie gültige Aktien ein</string>
+
+    <string name="feature_apply_share_error_price_required">Preis ist erforderlich</string>
+    <string name="feature_apply_share_price_invalid">Bitte geben Sie einen gültigen Preis ein</string>
+
+    <string name="feature_apply_share_status_failure">Antrag konnte nicht gesendet werden</string>
+    <string name="feature_apply_share_status_failure_tip">Antrag auf ein Aktienkonto unter %1$s fehlgeschlagen</string>
+    <string name="feature_apply_share_status_failure_action">Erneut versuchen</string>
+
+    <string name="feature_apply_share_status_success">Erfolgreich beantragt!</string>
+    <string name="feature_apply_share_status_success_tip">Sie haben erfolgreich ein Aktienkonto unter %1$s beantragt</string>
+    <string name="feature_apply_share_status_success_action">Zurück zur Startseite</string>
+</resources>
