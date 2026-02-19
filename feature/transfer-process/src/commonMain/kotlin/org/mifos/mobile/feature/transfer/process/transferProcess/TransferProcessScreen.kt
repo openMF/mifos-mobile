@@ -194,7 +194,7 @@ private fun TransferProcessContent(
         MifosDetailsCard(
             keyValuePairs = mapOf(
                 Res.string.amount to state.transferPayload?.transferAmount.toString(),
-                Res.string.date to state.transferPayload?.transferDate.toString(),
+                Res.string.date to state.uiTransferDate.toString(),
                 Res.string.remark to state.transferPayload?.transferDescription.toString(),
             ),
         )

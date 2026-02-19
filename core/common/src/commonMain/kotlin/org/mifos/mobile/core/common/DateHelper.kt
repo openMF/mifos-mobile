@@ -78,6 +78,18 @@ object DateHelper {
     }
 
     @OptIn(ExperimentalTime::class)
+    fun getBackendDateFromLong(timeInMillis: Long): String {
+        val instant = Instant.fromEpochMilliseconds(timeInMillis)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+
+        val day = instant.day.toString().padStart(2, '0')
+        val month = instant.monthNumber.toString().padStart(2, '0')
+        val year = instant.year.toString()
+
+        return "$day $month $year"
+    }
+
+    @OptIn(ExperimentalTime::class)
     fun isDarkModeBasedOnTime(
         startHour: Int,
         startMinute: Int,
@@ -179,7 +191,7 @@ object DateHelper {
      * @return The date string in the format "08 March 2025"
      */
     fun getDateMonthYearString(integersOfDate: List<Int>): String {
-        val (year, month, day) = integersOfDate
+        val (day, month, year) = integersOfDate
         return LocalizedDateFormatter.formatFullDate(year, month, day)
     }
 
