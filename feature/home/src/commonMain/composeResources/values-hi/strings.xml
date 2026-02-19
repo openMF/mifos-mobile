@@ -12,6 +12,8 @@
     <string name="beneficiaries">लाभार्थी</string>
     <string name="survey">सर्वेक्षण</string>
     <string name="apply_for_loan">ऋण के लिए आवेदन करें</string>
+    <string name="apply_for_savings">बचत खाता आवेदन</string>
+    <string name="apply_for_share">शेयर खाता आवेदन</string>
     <string name="charges">शुल्क</string>
     <string name="transfer">स्थानांतरण</string>
     <string name="accounts">खाते</string>

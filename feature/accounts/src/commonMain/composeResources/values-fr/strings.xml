@@ -9,20 +9,21 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
+
     <string name="feature_account_title">Comptes</string>
     <string name="feature_loan_account_title">Comptes de prêt</string>
-    <string name="feature_saving_account_title">Comptes d’épargne</string>
-    <string name="feature_share_account_title">Comptes d’actions</string>
+    <string name="feature_saving_account_title">Comptes d\'épargne</string>
+    <string name="feature_share_account_title">Comptes de parts</string>
 
     <string name="feature_accounts_filter_status">Statut</string>
     <string name="feature_accounts_filter_type">Type</string>
 
     <string name="feature_loan_account_filter_active">Actif</string>
-    <string name="feature_loan_account_filter_approval_pending">Approbation en attente</string>
+    <string name="feature_loan_account_filter_approval_pending">En attente d\'approbation</string>
     <string name="feature_loan_account_filter_closed">Fermé</string>
-    <string name="feature_loan_account_filter_disburse">En attente de décaissement</string>
+    <string name="feature_loan_account_filter_disburse">En attente de versement</string>
     <string name="feature_loan_account_filter_overpaid">Trop-perçu</string>
-    <string name="feature_loan_account_filter_in_arrears">En impayés</string>
+    <string name="feature_loan_account_filter_in_arrears">En retard</string>
     <string name="feature_loan_account_filter_withdrawn">Retiré</string>
     <string name="feature_loan_account_filter_matured">Échu</string>
     <string name="feature_loan_account_filter_rejected">Rejeté</string>
@@ -36,7 +37,7 @@
     <string name="feature_savings_filter_nb_account">Compte NB</string>
 
     <string name="feature_savings_filter_active_account">Actif</string>
-    <string name="feature_savings_filter_pending_account">Approbation en attente</string>
+    <string name="feature_savings_filter_pending_account">En attente d\'approbation</string>
     <string name="feature_savings_filter_closed_account">Fermé</string>
     <string name="feature_savings_filter_matured_account">Échu</string>
     <string name="feature_savings_filter_approved_account">Approuvé</string>
@@ -58,7 +59,7 @@
     <string name="feature_transaction_filter_past_month">Mois dernier</string>
     <string name="feature_transaction_filter_past_3_months">3 derniers mois</string>
     <string name="feature_transaction_filter_past_6_months">6 derniers mois</string>
-    <string name="feature_transaction_filter_past_1_year">Dernière année</string>
+    <string name="feature_transaction_filter_past_1_year">Année dernière</string>
     <string name="feature_transaction_filter_past_2_years">2 dernières années</string>
 
     <string name="feature_transaction_type">Type de transaction</string>
@@ -74,32 +75,18 @@
     <string name="feature_transaction_detail_date">Date</string>
     <string name="feature_transaction_detail_status">Statut</string>
     <string name="feature_transaction_detail_status_success">Succès</string>
-    <string name="feature_transaction_detail_account_ref">Réf. Compte</string>
-    <string name="feature_transaction_detail_payment_method">Mode de paiement</string>
+    <string name="feature_transaction_detail_account_ref">Réf compte</string>
+    <string name="feature_transaction_detail_payment_method">Moyen de paiement</string>
     <string name="feature_transaction_detail_type">Type</string>
     <string name="feature_transaction_detail_status_reversed">Annulé</string>
-    <string name="feature_transaction_detail_receipt">Reçu #</string>
+    <string name="feature_transaction_detail_receipt">Reçu n°</string>
     <string name="feature_transaction_detail_external_id">ID externe</string>
-    <string name="feature_transaction_detail_breakdown">Détails</string>
+    <string name="feature_transaction_detail_breakdown">Détail</string>
     <string name="feature_transaction_detail_principal">Principal</string>
-    <string name="feature_transaction_detail_interest">Intérêt</string>
+    <string name="feature_transaction_detail_interest">Intérêts</string>
     <string name="feature_transaction_detail_fees">Frais</string>
     <string name="feature_transaction_detail_penalties">Pénalités</string>
     <string name="feature_transaction_detail_balance">Solde restant</string>
     <string name="feature_transaction_detail_default_type">Transaction</string>
 
-    <string name="feature_transaction_history_deposit">Dépôt</string>
-    <string name="feature_transaction_history_withdrawal">Retrait</string>
-    <string name="feature_transaction_history_interest_posting">Comptabilisation des intérêts</string>
-    <string name="feature_transaction_history_fee_deduction">Déduction de frais</string>
-    <string name="feature_transaction_history_transfer">Transfert</string>
-    <string name="feature_transaction_history_transaction">Transaction</string>
-    <string name="feature_transaction_history_disbursement">Décaissement</string>
-    <string name="feature_transaction_history_repayment">Remboursement</string>
-    <string name="feature_transaction_history_purchase">Achat</string>
-    <string name="feature_transaction_history_charge_payment">Paiement de frais</string>
-    <string name="feature_transaction_history_redeem">Racheter</string>
-    <string name="feature_transaction_history_recovery_repayment">Remboursement de recouvrement</string>
-    <string name="feature_transaction_history_interest_waiver">Remise d\'intérêts</string>
-    <string name="feature_transaction_history_fee_waiver">Remise de frais</string>
 </resources>

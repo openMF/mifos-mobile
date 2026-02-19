@@ -9,15 +9,21 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
+
     <string name="recent_transactions">Transactions récentes</string>
     <string name="no_transaction">Aucune transaction</string>
+    <string name="atm_icon">Icône DAB</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Une erreur est survenue</string>
     <string name="filter">Filtrer</string>
     <string name="filter_transactions">Filtrer les transactions</string>
     <string name="clear_all">Tout effacer</string>
     <string name="filter_by_account">Filtrer par compte :</string>
     <string name="account_number_label">N° de compte : %1$s</string>
-    <string name="select_account">Choisir un compte</string>
+    <string name="select_account">Sélectionner un compte</string>
     <string name="balance">Solde : %1$s %2$s</string>
+    <string name="account">Compte</string>
     <string name="transaction_type">Type de transaction :</string>
     <string name="all">Tout</string>
     <string name="debits">Débits</string>

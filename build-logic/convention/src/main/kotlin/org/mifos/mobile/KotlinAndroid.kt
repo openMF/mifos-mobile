@@ -68,10 +68,9 @@ private fun Project.configureKotlin() {
             // Override by setting warningsAsErrors=true in your ~/.gradle/gradle.properties
             val warningsAsErrors: String? by project
             allWarningsAsErrors = warningsAsErrors.toBoolean()
-            freeCompilerArgs.add(
-                // Enable experimental coroutines APIs, including Flow
-                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            )
+            freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
         }
     }
 }

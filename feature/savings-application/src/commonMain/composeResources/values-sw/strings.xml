@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Maelezo ya Maombi ya Akiba</string>
+
+    <string name="feature_apply_savings_section_fill_details">Jaza Maelezo ya Maombi</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Jina la Mwombaji</string>
+    <string name="feature_apply_savings_label_savings_product">Jina la Bidhaa</string>
+    <string name="feature_apply_savings_label_field_officer">Afisa wa Nyanjani</string>
+    <string name="feature_apply_savings_label_submission_date">Tarehe ya Kuwasilisha</string>
+    <string name="feature_apply_savings_label_fill_application_details">Jaza Maelezo ya Maombi</string>
+    <string name="feature_apply_savings_label_details">Maelezo</string>
+    <string name="feature_apply_savings_label_currency">Sarafu</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Kiwango cha Chini cha Kufungua</string>
+    <string name="feature_apply_savings_label_lock_in_period">Kipindi cha Kufunga (Lock-in)</string>
+    <string name="feature_apply_savings_label_frequency">Marudio (Frequency)</string>
+    <string name="feature_apply_savings_label_frequency_type">Aina ya Marudio</string>
+    <string name="feature_apply_savings_label_overdraft">Ovadrafti</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Ombi la kuruhusu ovadrafti</string>
+
+    <string name="feature_apply_savings_button_continue">Endelea</string>
+    <string name="feature_apply_savings_button_ok">Sawa</string>
+    <string name="feature_apply_savings_button_cancel">Ghairi</string>
+    <string name="feature_apply_savings_button_apply">Omba Akiba</string>
+    <string name="feature_button_next">Endelea</string>
+
+    <string name="feature_apply_savings_error_amount_empty">Kiasi kikuu kinahitajika</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Tafadhali ingiza muundo sahihi wa kiasi</string>
+    <string name="feature_apply_savings_error_amount_too_small">Kiasi kikuu ni kidogo sana</string>
+    <string name="feature_apply_savings_error_amount_too_large">Kiasi kikuu kinazidi kikomo cha juu</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Kiasi kina nafasi nyingi za desimali kwa sarafu iliyochaguliwa</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Bidhaa ya akiba inahitajika</string>
+
+    <string name="feature_apply_savings_error_server">Tatizo la seva kutoka upande wetu, haiwezi kuendelea. Jaribu tena baada ya muda</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Majaribio mengi yaliyoshindikana. Tafadhali jaribu tena baadaye.</string>
+    <string name="feature_apply_savings_error_submit_failed">Imeshindwa kuwasilisha maombi ya akiba. Tafadhali jaribu tena.</string>
+
+    <string name="feature_apply_savings_success_submit">Maombi ya akiba yamewasilishwa kikamilifu!</string>
+    <string name="feature_apply_savings_success_draft_saved">Rasimu ya maombi imehifadhiwa</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Mabadiliko Hayajahifadhiwa!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Una mabadiliko ambayo hayajahifadhiwa. Una uhakika unataka kurudi?</string>
+
+
+    <string name="feature_apply_savings_label_next">Endelea</string>
+
+    <string name="feature_apply_savings_error_currency_required">Sarafu inahitajika</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Kiwango cha chini cha kufungua kinahitajika</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Kipindi cha kufunga kinahitajika</string>
+    <string name="feature_apply_savings_error_frequency_required">Marudio yanahitajika</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Ingiza marudio sahihi</string>
+
+    <string name="feature_apply_savings_status_success">Imefanikiwa Kuomba!</string>
+    <string name="feature_apply_savings_status_success_tip">Umeomba akaunti ya akiba kwa mafanikio chini ya %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Rudi Nyumbani</string>
+
+    <string name="feature_apply_savings_status_failure">Imeshindwa Kuwasilisha Maombi</string>
+    <string name="feature_apply_savings_status_failure_tip">Imeshindwa kuomba akaunti ya akiba chini ya %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Jaribu Tena</string>
+
+</resources>

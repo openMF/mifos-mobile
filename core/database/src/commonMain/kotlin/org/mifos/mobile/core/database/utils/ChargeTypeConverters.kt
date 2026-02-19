@@ -11,10 +11,10 @@ package org.mifos.mobile.core.database.utils
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.mifos.mobile.core.database.TypeConverter
 import org.mifos.mobile.core.database.entity.ChargeCalculationTypeEntity
 import org.mifos.mobile.core.database.entity.ChargeTimeTypeEntity
 import org.mifos.mobile.core.database.entity.CurrencyEntity
+import template.core.base.database.TypeConverter
 
 class ChargeTypeConverters {
 

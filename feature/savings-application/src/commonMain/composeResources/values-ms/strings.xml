@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Butiran Permohonan Simpanan</string>
+
+    <string name="feature_apply_savings_section_fill_details">Isi Butiran Permohonan</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Nama Pemohon</string>
+    <string name="feature_apply_savings_label_savings_product">Nama Produk</string>
+    <string name="feature_apply_savings_label_field_officer">Pegawai Lapangan</string>
+    <string name="feature_apply_savings_label_submission_date">Tarikh Penyerahan</string>
+    <string name="feature_apply_savings_label_fill_application_details">Isi Butiran Permohonan</string>
+    <string name="feature_apply_savings_label_details">Butiran</string>
+    <string name="feature_apply_savings_label_currency">Mata Wang</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Baki Permulaan Minimum</string>
+    <string name="feature_apply_savings_label_lock_in_period">Tempoh Terkunci (Lock-in)</string>
+    <string name="feature_apply_savings_label_frequency">Kekerapan</string>
+    <string name="feature_apply_savings_label_frequency_type">Jenis Kekerapan</string>
+    <string name="feature_apply_savings_label_overdraft">Overdraf</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Permintaan untuk membenarkan overdraf</string>
+
+    <string name="feature_apply_savings_button_continue">Teruskan</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Batal</string>
+    <string name="feature_apply_savings_button_apply">Mohon Simpanan</string>
+    <string name="feature_button_next">Seterusnya</string>
+
+    <string name="feature_apply_savings_error_amount_empty">Jumlah pokok diperlukan</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Sila masukkan format jumlah yang sah</string>
+    <string name="feature_apply_savings_error_amount_too_small">Jumlah pokok terlalu kecil</string>
+    <string name="feature_apply_savings_error_amount_too_large">Jumlah pokok melebihi had maksimum</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Jumlah mempunyai terlalu banyak tempat perpuluhan untuk mata wang yang dipilih</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Produk simpanan diperlukan</string>
+
+    <string name="feature_apply_savings_error_server">Masalah pelayan dari pihak kami, tidak dapat meneruskan. Cuba lagi sebentar lagi</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Terlalu banyak percubaan gagal. Sila cuba lagi kemudian.</string>
+    <string name="feature_apply_savings_error_submit_failed">Gagal menyerahkan permohonan simpanan. Sila cuba lagi.</string>
+
+    <string name="feature_apply_savings_success_submit">Permohonan simpanan berjaya diserahkan!</string>
+    <string name="feature_apply_savings_success_draft_saved">Draf permohonan berjaya disimpan</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Perubahan Tidak Disimpan!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Anda mempunyai perubahan yang tidak disimpan. Adakah anda pasti mahu kembali?</string>
+
+
+    <string name="feature_apply_savings_label_next">Seterusnya</string>
+
+    <string name="feature_apply_savings_error_currency_required">Mata wang diperlukan</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Baki permulaan minimum diperlukan</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Tempoh terkunci diperlukan</string>
+    <string name="feature_apply_savings_error_frequency_required">Kekerapan diperlukan</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Masukkan kekerapan yang sah</string>
+
+    <string name="feature_apply_savings_status_success">Berjaya Memohon!</string>
+    <string name="feature_apply_savings_status_success_tip">Anda telah berjaya memohon akaun simpanan di bawah %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Kembali Ke Laman Utama</string>
+
+    <string name="feature_apply_savings_status_failure">Permohonan Gagal Diserahkan</string>
+    <string name="feature_apply_savings_status_failure_tip">Gagal memohon akaun simpanan di bawah %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Cuba Lagi</string>
+
+</resources>
