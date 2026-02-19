@@ -9,6 +9,8 @@
  */
 package template.core.base.database
 
+import androidx.room.AutoMigration
+import androidx.room.BuiltInTypeConverters
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -147,7 +149,7 @@ actual typealias TypeConverters = TypeConverters
  * Typealias for the Room `BuiltInTypeConverters` annotation.
  * Used to configure built-in type converters.
  */
-actual typealias BuiltInTypeConverters = androidx.room.BuiltInTypeConverters
+actual typealias BuiltInTypeConverters = BuiltInTypeConverters
 
 /**
  * Typealias for the Room `@Database` annotation.
@@ -159,7 +161,7 @@ actual typealias Database = Database
  * Typealias for the Room `@AutoMigration` annotation.
  * Used to define automatic migrations between database versions.
  */
-actual typealias AutoMigration = androidx.room.AutoMigration
+actual typealias AutoMigration = AutoMigration
 
 /**
  * Typealias for the Room `@Ignore` annotation.
