@@ -62,11 +62,9 @@ internal class TransferProcessViewModel(
 ) : BaseViewModel<TransferProcessState, TransferProcessEvent, TransferProcessAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<TransferProcessRoute>()
-        val backendDate = DateHelper.getBackendDateFromLong(
-            DateHelper.getDateAsLongFromList(
-                listOf(currentDate.year, currentDate.month.number, currentDate.day),
-            )!!,
-        )
+        val backendDate = "${currentDate.day.toString().padStart(2, '0')} " +
+            "${currentDate.month.number.toString().padStart(2, '0')} " +
+            "${currentDate.year}"
         val uiDate = DateHelper.getDateMonthYearString(
             listOf(currentDate.day, currentDate.month.number, currentDate.year),
         )
