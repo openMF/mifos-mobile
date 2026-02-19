@@ -99,4 +99,7 @@
     <string name="feature_transaction_history_purchase">خرید</string>
     <string name="feature_transaction_history_charge_payment">پرداخت هزینه</string>
     <string name="feature_transaction_history_redeem">بازخرید</string>
+    <string name="feature_transaction_history_recovery_repayment">بازپرداخت وصولی</string>
+    <string name="feature_transaction_history_interest_waiver">بخشودگی سود</string>
+    <string name="feature_transaction_history_fee_waiver">بخشودگی کارمزد</string>
 </resources>
