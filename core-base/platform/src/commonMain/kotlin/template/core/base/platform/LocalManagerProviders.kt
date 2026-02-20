@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,7 +42,7 @@ expect fun LocalManagerProvider(
  * Provides access to the app review manager throughout the app.
  */
 val LocalAppReviewManager: ProvidableCompositionLocal<AppReviewManager> = compositionLocalOf {
-    error("CompositionLocal AppReviewManager not present")
+    NoOpAppReviewManager
 }
 
 /**
@@ -57,4 +57,9 @@ val LocalIntentManager: ProvidableCompositionLocal<IntentManager> = compositionL
  */
 val LocalAppUpdateManager: ProvidableCompositionLocal<AppUpdateManager> = compositionLocalOf {
     error("CompositionLocal LocalAppUpdateManager not present")
+}
+
+object NoOpAppReviewManager : AppReviewManager {
+    override fun promptForReview() = Unit
+    override fun promptForCustomReview() = Unit
 }

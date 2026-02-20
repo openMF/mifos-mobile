@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -12,6 +12,8 @@
     <string name="beneficiaries">ಲಾಭಾಧಾರಿಗಳು</string>
     <string name="survey">ಸಮೀಕ್ಷೆಗಳು</string>
     <string name="apply_for_loan">ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</string>
+    <string name="apply_for_savings">ಉಳಿತಾಯ ಖಾತೆಗೆ ಅರ್ಜಿ</string>
+    <string name="apply_for_share">ಷೇರು ಖಾತೆಗೆ ಅರ್ಜಿ</string>
     <string name="charges">ಶುಲ್ಕಗಳು</string>
     <string name="transfer">ಹಸ್ತಾಂತರ</string>
     <string name="accounts">ಖಾತೆಗಳು</string>

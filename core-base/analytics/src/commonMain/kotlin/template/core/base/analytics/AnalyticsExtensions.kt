@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,7 +9,7 @@
  */
 package template.core.base.analytics
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 

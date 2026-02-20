@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,6 +13,7 @@ enum class MifosThemeConfig(val configName: String, val osValue: Int) {
     FOLLOW_SYSTEM("Follow System", -1),
     LIGHT("Light", 1),
     DARK("Dark", 2),
+    BASED_ON_TIME("Based on Time", 3),
     ;
 
     companion object {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,4 +24,6 @@ interface ClientChargeRepository {
     fun clientLocalCharges(): Flow<DataState<Page<Charge>>>
 
     suspend fun syncCharges(charges: Page<Charge>?): DataState<Page<Charge>?>
+
+    fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>>
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -26,6 +26,7 @@
     <string name="feature_apply_share_error_too_many_attempts">Too many failed attempts. Please try again later.</string>
     <string name="feature_apply_share_error_submit_failed">Failed to submit savings application. Please try again.</string>
 
+    <string name="feature_apply_share_unsaved_changes_title">Unsaved Changes!</string>
     <string name="feature_apply_share_unsaved_changes_message">You have unsaved changes. Are you sure you want to go back?</string>
     <string name="feature_share_no_products_available">No Share Products Available for applying share account</string>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.third_party_transfer.generated.resources.Res
+import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_exceeds_balance
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_invalid
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_amount_required
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_remarks_empty
@@ -23,12 +24,15 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.payload.ReviewTransferPayload
 import org.mifos.mobile.core.model.entity.templates.account.AccountOption
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
@@ -43,7 +47,9 @@ import org.mifos.mobile.core.ui.utils.ValidationHelper
  * @param networkMonitor A utility to monitor network connectivity.
  * @param userPreferencesRepositoryImpl The repository for accessing user preferences, like client ID.
  */
+@Suppress("TooManyFunctions")
 internal class TptViewModel(
+    private val savingsAccountRepositoryImpl: SavingsAccountRepository,
     private val thirdPartyTransferRepositoryImpl: ThirdPartyTransferRepository,
     private val networkMonitor: NetworkMonitor,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
@@ -109,7 +115,10 @@ internal class TptViewModel(
 
             is TptAction.OnToAccountSelected -> handleToAccountChange(action.accountNo)
 
-            is TptAction.OnFromAccountSelected -> handleFromAccountChange(action.accountNo)
+            is TptAction.OnFromAccountSelected -> handleFromAccountChange(
+                accountId = action.accountId,
+                accountNo = action.accountNo,
+            )
 
             is TptAction.OnAmountChanged -> handleAmountChange(action.amount)
 
@@ -133,6 +142,10 @@ internal class TptViewModel(
                 handleTransferTemplateResult(action.dataState)
 
             TptAction.OnRetry -> retry()
+
+            is TptAction.Internal.FetchSavingsBalance -> fetchSavingsBalance(action.accountId)
+
+            is TptAction.Internal.ReceiveSavingsBalance -> handleSavingsBalanceResult(action.dataState)
         }
     }
 
@@ -158,20 +171,108 @@ internal class TptViewModel(
      * 1. Finding the selected account from the full list of 'from' accounts.
      * 2. Filtering the list of 'to' (destination) accounts to exclude the selected 'from' account.
      *
-     * @param fromAccount The account number of the selected 'from' account.
+     * @param accountId The unique identifier of the selected origin savings account.
+     * @param accountNo The account number of the selected origin savings account.
      */
-    private fun handleFromAccountChange(fromAccount: String) {
-        val fromAccountSelected = state.accountOptionsTemplate.fromAccountOptions
-            .find { it.accountNo == fromAccount }
+    private fun handleFromAccountChange(
+        accountId: Long,
+        accountNo: String,
+    ) {
+        val fromAccountSelected =
+            state.accountOptionsTemplate.fromAccountOptions
+                .filterSavingsAccounts()
+                .find { it.accountNo == accountNo }
 
-        val toAccounts = state.accountOptionsTemplate.toAccountOptions.filter {
-            it.accountNo != fromAccount
-        }
+        val toAccounts =
+            state.accountOptionsTemplate.toAccountOptions
+                .filter { it.accountNo != accountNo }
+
         updateState {
             it.copy(
                 fromAccount = fromAccountSelected,
+                fromAccountBalance = null,
+                fromAccountDetails = null,
+                isBalanceLoading = true,
+                balanceError = false,
                 toAccountOptions = toAccounts,
             )
+        }
+
+        viewModelScope.launch {
+            sendAction(
+                TptAction.Internal.FetchSavingsBalance(accountId),
+            )
+        }
+    }
+
+    /**
+     * Fetches detailed savings account information for the selected origin account.
+     *
+     * This function triggers an asynchronous request to retrieve account details,
+     * including the available balance, which is required for validating transfer
+     * amounts and displaying origin account information in the UI.
+     *
+     * @param accountId The unique identifier of the selected savings account.
+     */
+    private fun fetchSavingsBalance(accountId: Long) {
+        viewModelScope.launch {
+            savingsAccountRepositoryImpl
+                .getSavingsWithAssociations(
+                    accountId = accountId,
+                    associationType = null,
+                )
+                .collect { result ->
+                    sendAction(
+                        TptAction.Internal.ReceiveSavingsBalance(result),
+                    )
+                }
+        }
+    }
+
+    /**
+     * Handles the result of fetching savings account details.
+     *
+     * This function updates the UI state based on the loading, error, or success
+     * outcome of the savings account details request. On success, it stores the
+     * account details and available balance, and re-validates the transfer amount
+     * against the fetched balance.
+     *
+     * @param dataState The result of the savings account details fetch operation.
+     */
+    private fun handleSavingsBalanceResult(
+        dataState: DataState<SavingsWithAssociations>,
+    ) {
+        when (dataState) {
+            is DataState.Loading -> updateState {
+                it.copy(isBalanceLoading = true)
+            }
+
+            is DataState.Error -> updateState {
+                it.copy(
+                    isBalanceLoading = false,
+                    balanceError = true,
+                )
+            }
+
+            is DataState.Success -> {
+                val savings = dataState.data
+                val balance = savings.summary?.accountBalance
+
+                val amountResult = validateAmount(state.amount)
+
+                updateState {
+                    it.copy(
+                        isBalanceLoading = false,
+                        fromAccountDetails = savings,
+                        fromAccountBalance = balance,
+                        amountError = if (amountResult is ValidationResult.Error) {
+                            amountResult.message
+                        } else {
+                            null
+                        },
+                    )
+                }
+            }
         }
     }
 
@@ -189,9 +290,9 @@ internal class TptViewModel(
         val toAccountSelected = state.accountOptionsTemplate.toAccountOptions
             .find { it.accountNo == toAccount }
 
-        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions.filter {
-            it.accountNo != toAccount
-        }
+        val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
+            .filterSavingsAccounts()
+            .filter { it.accountNo != toAccount }
 
         updateState {
             it.copy(
@@ -312,10 +413,27 @@ internal class TptViewModel(
      * @param amount The string amount to validate.
      * @return A [ValidationResult] indicating success or an error.
      */
-    private fun validateAmount(amount: String) = when {
-        amount.isBlank() -> ValidationResult.Error(Res.string.feature_tpt_error_amount_required)
-        amount.toIntOrNull() == null -> ValidationResult.Error(Res.string.feature_tpt_error_amount_invalid)
-        else -> ValidationResult.Success
+    @Suppress("ReturnCount")
+    private fun validateAmount(amount: String): ValidationResult {
+        if (amount.isBlank()) {
+            return ValidationResult.Error(
+                Res.string.feature_tpt_error_amount_required,
+            )
+        }
+
+        val value = amount.toDoubleOrNull()
+            ?: return ValidationResult.Error(
+                Res.string.feature_tpt_error_amount_invalid,
+            )
+
+        val balance = state.fromAccountBalance
+        if (balance != null && value > balance) {
+            return ValidationResult.Error(
+                Res.string.feature_tpt_error_amount_exceeds_balance,
+            )
+        }
+
+        return ValidationResult.Success
     }
 
     /**
@@ -422,10 +540,14 @@ internal class TptViewModel(
             DataState.Loading -> showLoading()
 
             is DataState.Success -> {
+                val template = dataState.data
+
+                val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
+
                 updateState {
                     it.copy(
                         accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = dataState.data.fromAccountOptions,
+                        fromAccountOptions = savingsFromAccounts,
                         toAccountOptions = dataState.data.toAccountOptions,
                         uiState = ScreenUiState.Success,
                     )
@@ -478,6 +600,10 @@ internal data class TptState(
     var toAccountOptions: List<AccountOption> = emptyList(),
     val fromAccount: AccountOption? = null,
     val toAccount: AccountOption? = null,
+    val fromAccountBalance: Double? = null,
+    val isBalanceLoading: Boolean = false,
+    val balanceError: Boolean = false,
+    val fromAccountDetails: SavingsWithAssociations? = null,
 
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
@@ -499,12 +625,14 @@ internal data class TptState(
      * It requires a valid 'from' account, a valid 'to' account, a non-blank amount and remark,
      * and no validation errors.
      */
-    val isEnabled: Boolean = fromAccount != null &&
-        toAccount != null &&
-        amount.isNotBlank() &&
-        remark.isNotBlank() &&
-        amountError == null &&
-        remarkError == null
+    val isEnabled: Boolean =
+        fromAccount != null &&
+            toAccount != null &&
+            amount.isNotBlank() &&
+            remark.isNotBlank() &&
+            amountError == null &&
+            remarkError == null &&
+            fromAccountBalance != null
 }
 
 /**
@@ -516,7 +644,10 @@ internal sealed interface TptAction {
     data class OnToAccountSelected(val accountNo: String) : TptAction
 
     /** Action triggered when a 'from' account is selected. @property accountNo The account number selected. */
-    data class OnFromAccountSelected(val accountNo: String) : TptAction
+    data class OnFromAccountSelected(
+        val accountId: Long,
+        val accountNo: String,
+    ) : TptAction
 
     /** Action triggered when the transfer amount is changed. @property amount The new amount string. */
     data class OnAmountChanged(val amount: String) : TptAction
@@ -554,6 +685,11 @@ internal sealed interface TptAction {
          * @property dataState The result of the fetch operation.
          */
         data class ReceiveTransferTemplateResult(val dataState: DataState<AccountOptionsTemplate>) : Internal
+
+        data class FetchSavingsBalance(val accountId: Long) : Internal
+        data class ReceiveSavingsBalance(
+            val dataState: DataState<SavingsWithAssociations>,
+        ) : Internal
     }
 }
 
@@ -600,3 +736,9 @@ internal sealed class ValidationResult {
      */
     data class Error(val message: StringResource) : ValidationResult()
 }
+
+/**
+ * Extension function to filter a list of AccountOptions to include only SAVINGS accounts.
+ */
+private fun List<AccountOption>.filterSavingsAccounts(): List<AccountOption> =
+    filter { it.accountType?.value == AccountType.SAVINGS.value }

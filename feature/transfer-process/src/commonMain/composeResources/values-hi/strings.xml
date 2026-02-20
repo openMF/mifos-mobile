@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">स्थानांतरण</string>
+    <string name="transferred_successfully">सफलतापूर्वक स्थानांतरित किया गया</string>
+    <string name="amount">राशि</string>
+    <string name="transfer_from_savings">बचत खाते से स्थानांतरण</string>
+    <string name="pay_from">यहाँ से भुगतान करें</string>
+    <string name="date">तारीख</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="remark">विवरण</string>
+    <string name="make_transfer">स्थानांतरण करें</string>
+    <string name="pay_to">यहाँ भुगतान करें</string>
+    <string name="remarks">विवरण</string>
+    <string name="error_icon_description">त्रुटि</string>
+    <string name="error_description">राशि में अमान्य अक्षर नहीं होने चाहिए</string>
+    <string name="transfer_failed">स्थानांतरण विफल</string>
+    <string name="transfer_successful">स्थानांतरण सफल</string>
+    <string name="back_to_accounts">होम स्क्रीन पर वापस जाएं</string>
+    <string name="transfer_id_prefix">स्थानांतरण आईडी:</string>
+    <string name="feature_make_transfer_error_amount_required">राशि आवश्यक है</string>
+    <string name="feature_make_transfer_error_amount_invalid">कृपया एक मान्य राशि दर्ज करें</string>
+    <string name="feature_make_transfer_error_remarks_empty">विवरण खाली नहीं हो सकता</string>
+    <string name="feature_make_transfer_error_remarks_invalid">अमान्य विवरण दर्ज किया गया</string>
+    <string name="feature_make_transfer_error_server">हमारी ओर से सर्वर की समस्या है, आगे नहीं बढ़ सकते। कुछ समय बाद पुनः प्रयास करें।</string>
+    <string name="feature_make_transfer_account_number">खाता संख्या</string>
+    <string name="feature_make_transfer_customer_name">ग्राहक का नाम</string>
+    <string name="feature_make_transfer_beneficiary_name">लाभार्थी का नाम</string>
+    <string name="feature_make_transfer_details">स्थानांतरण विवरण</string>
+</resources>

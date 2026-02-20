@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -67,8 +67,17 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.loan.application.component.ApplyLoanBottomBar
 import org.mifos.mobile.feature.loan.application.component.LoanCard
 import org.mifos.mobile.feature.loan.application.component.TermsAndConditionItem
+import template.core.base.designsystem.theme.KptTheme
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
+/**
+ * Entry point for the Loan Product Details screen.
+ * Orchestrates state management, handles navigation side effects, and delegates UI rendering.
+ *
+ * @param navigateBack Callback to return to the previous screen.
+ * @param navigateToApplyLoanScreen Callback to proceed to the loan application form with the selected product.
+ * @param viewModel The state holder managing the product data and UI state.
+ */
 @Composable
 internal fun LoanProductDetailsScreen(
     navigateBack: () -> Unit,
@@ -103,6 +112,12 @@ internal fun LoanProductDetailsScreen(
     )
 }
 
+/**
+ * Renders modal dialogs (such as critical error alerts) based on the current screen state.
+ *
+ * @param state The current state containing dialog configuration.
+ * @param onAction Callback to handle dialog interactions (e.g., dismissal).
+ */
 @Composable
 internal fun LoanProductDetailsDialog(
     state: LoanProductDetailsState,
@@ -122,6 +137,13 @@ internal fun LoanProductDetailsDialog(
     }
 }
 
+/**
+ * Displays the visual layout including the product summary card, terms and conditions
+ * list, and the "Apply" bottom bar.
+ *
+ * @param state The current UI state containing product details and loading status.
+ * @param onAction Callback to handle user interactions like agreeing to terms or clicking apply.
+ */
 @Composable
 internal fun LoanProductDetailsScreenContent(
     state: LoanProductDetailsState,
@@ -185,8 +207,8 @@ internal fun LoanProductDetailsScreenContent(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large)
-                        .padding(top = DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md)
+                        .padding(top = KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {
                     item {
@@ -210,7 +232,7 @@ internal fun LoanProductDetailsScreenContent(
                         Spacer(modifier = Modifier.height(DesignToken.spacing.largeIncreased))
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+                            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                         ) {
                             TermsAndConditionItem(
                                 title = Res.string.feature_loan_sanction_and_disbursement,

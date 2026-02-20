@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,7 +33,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +44,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.niyajali.compose.sign.ComposeSign
 import com.niyajali.compose.sign.exportSignature
@@ -72,7 +70,15 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.feature.loan.application.component.SignatureUploadType
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsAction
+import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Orchestrates the bottom sheet UI, transitioning between the document upload method selection
+ * and the digital signature drawing canvas based on the current mode.
+ *
+ * @param onAction Callback to handle upload selection or signature submission events.
+ * @param isSignatureMode Determines whether to display the drawing canvas (true) or selection grid (false).
+ */
 @Composable
 internal fun BottomSheetContent(
     onAction: (UploadDocsAction) -> Unit,
@@ -102,7 +108,7 @@ internal fun BottomSheetContent(
             )
         } else {
             Column(
-                modifier = Modifier.padding(horizontal = DesignToken.padding.large),
+                modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
             ) {
                 Row {
                     BottomSheetIconContainer(
@@ -134,6 +140,13 @@ internal fun BottomSheetContent(
     }
 }
 
+/**
+ * Renders a single action item (Icon + Label) within the upload method selection grid.
+ *
+ * @param text The label resource to display below the icon.
+ * @param icon The icon vector to display.
+ * @param onClick Action to perform when this item is selected.
+ */
 @Composable
 internal fun BottomSheetIconContainer(
     text: StringResource,
@@ -143,14 +156,14 @@ internal fun BottomSheetIconContainer(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(horizontal = DesignToken.padding.large),
+        modifier = modifier.padding(horizontal = KptTheme.spacing.md),
     ) {
         Box(
             modifier = Modifier.size(DesignToken.sizes.inputHeight)
                 .border(
-                    1.dp,
-                    MaterialTheme.colorScheme.secondaryContainer,
-                    DesignToken.shapes.medium,
+                    DesignToken.strokes.thin,
+                    KptTheme.colorScheme.secondaryContainer,
+                    KptTheme.shapes.medium,
                 )
                 .clickable { onClick() },
             contentAlignment = Alignment.Center,
@@ -162,16 +175,22 @@ internal fun BottomSheetIconContainer(
             )
         }
 
-        Spacer(modifier = Modifier.height(DesignToken.spacing.small))
+        Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
 
         Text(
             text = stringResource(text),
             style = MifosTypography.bodySmallEmphasized,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = KptTheme.colorScheme.onBackground,
         )
     }
 }
 
+/**
+ * Provides an interactive canvas for capturing the user's digital signature.
+ * Handles the logic for clearing the canvas and exporting the drawing to a Base64 string.
+ *
+ * @param onAction Callback to send the generated signature data or dismiss the screen.
+ */
 @Composable
 private fun SignatureContent(
     modifier: Modifier = Modifier,
@@ -195,8 +214,8 @@ private fun SignatureContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large),
-            verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                .padding(KptTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             val signatureState = rememberSignatureState()
             var size = remember { Size.Zero }
@@ -216,11 +235,11 @@ private fun SignatureContent(
                     modifier = modifier
                         .fillMaxWidth()
                         .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            DesignToken.shapes.medium,
+                            DesignToken.strokes.thin,
+                            KptTheme.colorScheme.secondaryContainer,
+                            KptTheme.shapes.medium,
                         ),
-                    shape = DesignToken.shapes.medium,
+                    shape = KptTheme.shapes.medium,
                 ) {
                     ComposeSign(
                         modifier = Modifier
@@ -251,7 +270,7 @@ private fun SignatureContent(
                 ) {
                     MifosButton(
                         modifier = Modifier.weight(0.4f),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         onClick = signatureState::clear,
                     ) {
                         Text(
@@ -263,7 +282,7 @@ private fun SignatureContent(
                     val scope = rememberCoroutineScope()
                     MifosButton(
                         modifier = Modifier.weight(0.4f),
-                        shape = DesignToken.shapes.medium,
+                        shape = KptTheme.shapes.medium,
                         onClick = {
                             scope.launch {
                                 val data = signatureState.exportSignature(

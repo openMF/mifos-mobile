@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,13 +24,28 @@ import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeRoute
 import org.mifos.mobile.feature.loan.application.loanType.selectLoanTypeDestination
 import org.mifos.mobile.feature.loan.application.uploadDocs.uploadDocsDestination
 
+/**
+ * Defines the root navigation route for the entire Loan Application feature module.
+ * Acts as a nested graph container for loan selection, application, and confirmation flows.
+ */
 @Serializable
 data object LoanApplicationNavGraph
 
+/**
+ * Navigates the user to the start of the Loan Application flow.
+ */
 fun NavController.navigateToLoanApplicationGraph(navOptions: NavOptions? = null) {
     this.navigate(LoanApplicationNavGraph, navOptions)
 }
 
+/**
+ * Constructs the navigation graph for the Loan Application feature.
+ * Connects the Loan Selection, Product Details, Application Form, and Confirmation screens.
+ *
+ * @param navController The controller used to manage internal navigation within this graph.
+ * @param navigateToAuthenticateScreen External callback to navigate to the authentication flow (e.g., PIN/Biometric).
+ * @param navigateToStatusScreen External callback to navigate to the final success/failure result screen.
+ */
 fun NavGraphBuilder.loanApplicationNavGraph(
     navController: NavController,
     navigateToAuthenticateScreen: () -> Unit,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">Are you sure you want to delete this Beneficiary</string>
     <string name="login_using_password_confirmation">Are you sure you want to login using Password?</string>
     <string name="delete">Delete</string>
+    <string name="update">Update</string>
     <string name="beneficiary_deleted_successfully">Beneficiary deleted successfully</string>
     <string name="third_party_transfer">Third Party Transfer</string>
     <string name="total_loan">Total Loan</string>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,12 +14,13 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.MifosDispatchers
-import org.mifos.mobile.core.database.AppDatabaseFactory
+import org.mifos.mobile.core.database.AppDatabase
+import template.core.base.database.AppDatabaseFactory
 
 actual val platformModule: Module = module {
     single {
         AppDatabaseFactory()
-            .createDatabase()
+            .createDatabase<AppDatabase>(AppDatabase.DATABASE_NAME)
             .fallbackToDestructiveMigrationOnDowngrade(false)
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(get(named(MifosDispatchers.IO.name)))

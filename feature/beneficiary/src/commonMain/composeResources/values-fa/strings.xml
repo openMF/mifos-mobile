@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="error_fetching_beneficiaries">دریافت گیرندگان ناموفق بود</string>
+    <string name="error_fetching_beneficiary_template">دریافت الگوی گیرنده ناموفق بود</string>
+    <string name="error_fetching_template">دریافت الگو ناموفق بود</string>
+    <string name="error_creating_beneficiary">ایجاد گیرنده ناموفق بود</string>
+    <string name="error_updating_beneficiary">به‌روزرسانی گیرنده ناموفق بود</string>
+    <string name="error_deleting_beneficiary">حذف گیرنده ناموفق بود</string>
+    <string name="error_loan_account_withdraw">خطا در برداشت حساب وام</string>
+    <string name="error_fetching_third_party_transfer_template">خطا در دریافت الگوی انتقال شخص ثالث</string>
+    <string name="no_beneficiary_found_please_add">در حال حاضر، هیچ گیرنده‌ای ندارید. لطفاً گیرنده اضافه کنید</string>
+    <string name="no_filtered_beneficiary_found">هیچ گیرنده‌ای برای فیلتر داده شده یافت نشد</string>
+    <string name="beneficiary">گیرنده</string>
+    <string name="manage_beneficiaries">مدیریت گیرندگان</string>
+    <string name="beneficiaries">گیرندگان</string>
+    <string name="beneficiary_detail">جزئیات گیرنده</string>
+    <string name="beneficiary_name">نام گیرنده</string>
+    <string name="account_type">نوع حساب</string>
+    <string name="transfer_limit">محدودیت انتقال</string>
+    <string name="add_beneficiary">افزودن گیرنده</string>
+    <string name="office_name">نام دفتر</string>
+    <string name="select_account_type">انتخاب نوع حساب*</string>
+    <string name="submit_beneficiary">ارسال گیرنده</string>
+    <string name="enter_office_name">نام دفتر گیرنده را وارد کنید</string>
+    <string name="enter_beneficiary_name">نام گیرنده را وارد کنید</string>
+    <string name="enter_transfer_limit">محدودیت انتقال را وارد کنید</string>
+    <string name="enter_account_number">شماره حساب گیرنده را وارد کنید</string>
+    <string name="choose_account_type">نوع حساب را از لیست کشویی انتخاب کنید</string>
+    <string name="beneficiary_created_successfully">گیرنده با موفقیت ایجاد شد</string>
+    <string name="beneficiary_updated_successfully">گیرنده با موفقیت به‌روزرسانی شد</string>
+    <string name="update_beneficiary">به‌روزرسانی گیرنده</string>
+    <string name="delete_beneficiary">حذف گیرنده</string>
+    <string name="delete_beneficiary_confirmation">آیا مطمئن هستید که می‌خواهید این گیرنده را حذف کنید</string>
+    <string name="login_using_password_confirmation">آیا مطمئن هستید که می‌خواهید با رمز عبور وارد شوید؟</string>
+    <string name="delete">حذف</string>
+    <string name="update">به‌روزرسانی</string>
+    <string name="beneficiary_deleted_successfully">گیرنده با موفقیت حذف شد</string>
+    <string name="third_party_transfer">انتقال شخص ثالث</string>
+    <string name="total_loan">کل وام</string>
+    <string name="total_saving">کل پس‌انداز</string>
+    <string name="accounts_overview">نمای کلی حساب‌ها</string>
+    <string name="show_hide_total_saving_amount">نمایش یا پنهان کردن مبلغ کل پس‌انداز</string>
+    <string name="show_hide_total_loan_amount">نمایش یا پنهان کردن مبلغ کل وام</string>
+    <string name="hidden_amount">*****</string>
+    <string name="survey">نظرسنجی‌ها</string>
+    <string name="activation_date">تاریخ فعال‌سازی</string>
+    <string name="groups">گروه‌ها</string>
+    <string name="user_details">جزئیات کاربر</string>
+    <string name="client_type">نوع مشتری</string>
+    <string name="client_classification">طبقه‌بندی مشتری</string>
+    <string name="select_mode">انتخاب حالت</string>
+    <string name="add_beneficiary_option">گیرندگان شخص ثالث را به حساب خود اضافه کنید.\nیا به صورت دستی وارد کنید یا کد QR حساب را اسکن کنید</string>
+    <string name="invalid_amount">مبلغ نامعتبر</string>
+    <string name="account_number">شماره حساب</string>
+    <string name="client_name">نام مشتری</string>
+    <string name="cancel">لغو</string>
+    <string name="internet_not_connected">لطفاً مطمئن شوید که به اینترنت متصل هستید</string>
+    <string name="add">افزودن</string>
+    <string name="scan">اسکن</string>
+    <string name="upload_qr_code">بارگذاری QR</string>
+    <string name="beneficiary_name_label">نام گیرنده</string>
+    <string name="office_label">دفتر</string>
+    <string name="account_type_label">نوع حساب</string>
+    <string name="account_number_label">شماره حساب</string>
+    <string name="transfer_limit_label">محدودیت انتقال</string>
+    <string name="account_type_savings">پس‌انداز</string>
+    <string name="account_type_loan">وام</string>
+    <string name="account_type_share">سهم</string>
+    <string name="validate_details">تأیید جزئیات</string>
+    <string name="confirm_details">تأیید جزئیات</string>
+    <string name="beneficiary_creation_failed">ایجاد گیرنده ناموفق بود</string>
+    <string name="beneficiary_updation_failed">به‌روزرسانی گیرنده ناموفق بود</string>
+    <string name="try_again">دوباره امتحان کنید</string>
+    <string name="back_to_home">بازگشت به خانه</string>
+    <string name="feature_savings_filter">فیلترها</string>
+    <string name="feature_savings_reset">بازنشانی</string>
+    <string name="feature_savings_apply">اعمال</string>
+    <string name="feature_filters_count">%1$s انتخاب شده</string>
+    <string name="filter_account_type">نوع حساب</string>
+    <string name="filter_loan_account">حساب وام</string>
+    <string name="filter_savings_account">حساب پس‌انداز</string>
+    <string name="filter_linked_with">پیوند با</string>
+    <string name="filter_self">خود</string>
+    <string name="filter_other_clients">مشتریان دیگر</string>
+    <string name="beneficiary_created_successfully_account">گیرنده با موفقیت برای حساب %1$s به گیرنده به نام %2$s ایجاد شد.</string>
+    <string name="beneficiary_updated_successfully_account">گیرنده با موفقیت برای گیرنده به نام %1$s با محدودیت انتقال %2$d به‌روزرسانی شد.</string>
+    <string name="skip_the_form">فرم را رد کنید</string>
+    <string name="upload_or_scan_qr_code">کد QR را بارگذاری یا اسکن کنید</string>
+    <string name="filter">فیلتر</string>
+    <string name="linked_with">پیوند با</string>
+    <string name="type_of_account">نوع حساب</string>
+    <string name="selected_count">%1$d انتخاب شده</string>
+    <string name="filter_icon_description">آیکون فیلتر</string>
+    <string name="feature_generic_error_server">مشکل سرور از طرف ما، نمی‌توان ادامه داد، پس از لحظه‌ای دوباره امتحان کنید</string>
+</resources>

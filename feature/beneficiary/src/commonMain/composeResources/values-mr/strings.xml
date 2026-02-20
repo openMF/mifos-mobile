@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -42,6 +42,7 @@
     <string name="delete_beneficiary_confirmation">तुम्हाला खात्री आहे की तुम्ही हा लाभार्थी हटवू इच्छिता?</string>
     <string name="login_using_password_confirmation">तुम्हाला खात्री आहे की तुम्ही पासवर्ड वापरून लॉगिन करू इच्छिता?</string>
     <string name="delete">हटवा</string>
+    <string name="update">अपडेट</string>
     <string name="beneficiary_deleted_successfully">लाभार्थी यशस्वीरित्या हटवला</string>
     <string name="third_party_transfer">थर्ड पार्टी हस्तांतरण</string>
     <string name="total_loan">एकूण कर्ज</string>

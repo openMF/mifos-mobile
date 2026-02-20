@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.datastore.model.AppSettings
+import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.model.MifosThemeConfig
@@ -72,6 +73,9 @@ class UserPreferencesRepositoryImpl(
     override val observeDarkThemeConfig: Flow<MifosThemeConfig>
         get() = preferenceManager.observeDarkThemeConfig
 
+    override val observeTimeBasedThemeConfig: Flow<TimeBasedTheme>
+        get() = preferenceManager.observeTimeBasedThemeConfig
+
     override val observeDynamicColorPreference: Flow<Boolean>
         get() = preferenceManager.observeDynamicColorPreference
 
@@ -90,6 +94,15 @@ class UserPreferencesRepositoryImpl(
     override suspend fun updateTheme(theme: MifosThemeConfig): DataState<Unit> {
         return try {
             val result = preferenceManager.updateTheme(theme)
+            DataState.Success(result)
+        } catch (e: Exception) {
+            DataState.Error(e)
+        }
+    }
+
+    override suspend fun updateTimeBasedTheme(theme: TimeBasedTheme): DataState<Unit> {
+        return try {
+            val result = preferenceManager.updateTimeBasedTheme(theme)
             DataState.Success(result)
         } catch (e: Exception) {
             DataState.Error(e)
@@ -172,6 +185,17 @@ class UserPreferencesRepositoryImpl(
 
     override suspend fun setPasscode(passcode: String) {
         preferenceManager.setPasscode(passcode)
+    }
+
+    override suspend fun setSelectedServices(selectedServices: Set<String>?) {
+        preferenceManager.setSelectedServices(selectedServices)
+    }
+
+    override val selectedServices: Set<String>?
+        get() = preferenceManager.getSelectedServicesDirectly()
+
+    override fun saveSelectedServices(services: Set<String>?) {
+        preferenceManager.saveSelectedServicesDirectly(services)
     }
 
     override suspend fun logOut() {

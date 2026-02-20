@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,7 +14,6 @@ package cmp.navigation.authenticated
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
@@ -30,6 +29,8 @@ import org.mifos.mobile.feature.accounts.accountTransactions.navigateToAccountTr
 import org.mifos.mobile.feature.accounts.accounts.AccountNavRoute
 import org.mifos.mobile.feature.accounts.accounts.accountsDestination
 import org.mifos.mobile.feature.accounts.accounts.navigateToAccountsScreen
+import org.mifos.mobile.feature.accounts.transactionDetail.navigateToTransactionDetails
+import org.mifos.mobile.feature.accounts.transactionDetail.transactionDetailDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.beneficiary.beneficiaryApplication.navigateToManualBeneficiaryAddScreen
@@ -53,7 +54,8 @@ import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
-import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionNavGraph
+import org.mifos.mobile.feature.recent.transaction.navigation.navigateToRecentTransactionScreen
+import org.mifos.mobile.feature.recent.transaction.navigation.recentTransactionDestination
 import org.mifos.mobile.feature.savings.application.navigation.navigateToSavingsApplicationGraph
 import org.mifos.mobile.feature.savings.application.navigation.savingsApplicationNavGraph
 import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
@@ -62,6 +64,8 @@ import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.faq.navigateToFaq
 import org.mifos.mobile.feature.share.application.navigation.navigateToShareApplicationGraph
 import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
+import org.mifos.mobile.feature.shareaccount.navigation.shareNavGraph
+import org.mifos.mobile.feature.shareaccount.shareAccountDetails.navigateToShareAccountDetailsScreen
 import org.mifos.mobile.feature.status.navigation.StatusNavigationRoute
 import org.mifos.mobile.feature.status.navigation.statusDestination
 import org.mifos.mobile.feature.third.party.transfer.navigation.TptNavigationDestination
@@ -113,11 +117,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     is HomeNavigationDestination.Beneficiary ->
                         navController.navigateToBeneficiaryNavGraph()
 
-                    is HomeNavigationDestination.Transaction ->
-                        navController.navigateToAccountTransactionsScreen(
-                            Constants.RECENT_TRANSACTIONS,
-                            -1L,
-                        )
+                    is HomeNavigationDestination.TransactionHistory ->
+                        navController.navigateToRecentTransactionScreen()
 
                     is HomeNavigationDestination.ApplyLoan ->
                         navController.navigateToLoanApplicationGraph()
@@ -159,11 +160,24 @@ internal fun NavGraphBuilder.authenticatedGraph(
                     navController.navigateToSavingsAccountDetailsScreen(accountId)
                 } else if (accountType == Constants.LOAN_ACCOUNT) {
                     navController.navigateToLoanAccountDetailsScreen(accountId)
+                } else if (accountType == Constants.SHARE_ACCOUNTS) {
+                    navController.navigateToShareAccountDetailsScreen(accountId)
                 }
             },
         )
 
         accountTransactionsDestination(
+            navigateBack = navController::popBackStack,
+            navigateToDetails = { transactionId, accountType, accountId ->
+                navController.navigateToTransactionDetails(
+                    transactionId = transactionId,
+                    accountType = accountType,
+                    accountId = accountId,
+                )
+            },
+        )
+
+        transactionDetailDestination(
             navigateBack = navController::popBackStack,
         )
 
@@ -249,6 +263,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
             },
         )
 
+        shareNavGraph(
+            navController = navController,
+            navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
+            navigateToShareAccountTransactionScreen = { accountId ->
+                navController.navigateToAccountTransactionsScreen(Constants.SHARE_ACCOUNTS, accountId)
+            },
+            navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
+        )
+
         loanApplicationNavGraph(
             navController = navController,
             navigateToAuthenticateScreen = navController::navigateToVerifyPasscodeScreen,
@@ -273,8 +296,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         locationsNavGraph()
 
-        recentTransactionNavGraph(
-            navController = navController,
+        recentTransactionDestination(
+            navigateBack = navController::popBackStack,
+            navigateToDetails = { transactionId, accountType, accountId ->
+                navController.navigateToTransactionDetails(
+                    transactionId = transactionId,
+                    accountType = accountType,
+                    accountId = accountId,
+                )
+            },
         )
 
         beneficiaryNavGraph(

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Złóż wniosek o nową pożyczkę</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Wniosek o pożyczkę</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Imię i nazwisko wnioskodawcy</string>
+    <string name="feature_apply_loan_label_loan_product">Produkt pożyczkowy</string>
+    <string name="feature_apply_loan_label_purpose">Cel pożyczki</string>
+    <string name="feature_apply_loan_label_disbursement_date">Data wypłaty</string>
+    <string name="feature_apply_loan_label_principal_amount">Kwota główna</string>
+    <string name="feature_apply_loan_label_currency">Waluta</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Kontynuuj</string>
+    <string name="feature_apply_loan_button_ok">OK</string>
+    <string name="feature_apply_loan_button_cancel">Anuluj</string>
+    <string name="feature_apply_loan_button_apply">Złóż wniosek</string>
+    <string name="feature_button_next">Dalej</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Imię i nazwisko wnioskodawcy jest wymagane</string>
+    <string name="feature_apply_loan_error_name_too_short">Imię i nazwisko wnioskodawcy musi mieć co najmniej 4 znaki</string>
+    <string name="feature_apply_loan_error_name_too_long">Imię i nazwisko wnioskodawcy nie może przekraczać 100 znaków</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Imię i nazwisko wnioskodawcy zawiera nieprawidłowe znaki</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Produkt pożyczkowy jest wymagany</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Kwota główna jest wymagana</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Wprowadź prawidłowy format kwoty</string>
+    <string name="feature_apply_loan_error_amount_too_small">Kwota główna jest zbyt mała</string>
+    <string name="feature_apply_loan_error_amount_too_large">Kwota główna przekracza maksymalny limit</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">Kwota ma zbyt wiele miejsc po przecinku dla wybranej waluty</string>
+    <string name="feature_apply_loan_error_amount_multiple">Kwota nie jest w prawidłowych wielokrotnościach</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Data wypłaty jest wymagana</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Wprowadź prawidłowy format daty (DD/MM/RRRR)</string>
+    <string name="feature_apply_loan_error_date_future">Data wypłaty musi być w przyszłości</string>
+    <string name="feature_apply_loan_error_date_out_of_range">Data wypłaty jest zbyt odległa w przyszłości (maks. 10 lat)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Problem z serwerem po naszej stronie, nie można kontynuować, spróbuj ponownie za chwilę</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Zbyt wiele nieudanych prób. Spróbuj ponownie później.</string>
+    <string name="feature_apply_loan_error_submit_failed">Nie udało się złożyć wniosku o pożyczkę. Spróbuj ponownie.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Wniosek o pożyczkę został pomyślnie złożony!</string>
+    <string name="feature_apply_loan_success_draft_saved">Wersja robocza wniosku została pomyślnie zapisana</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Niezapisane zmiany!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Masz niezapisane zmiany. Czy na pewno chcesz wrócić?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Odrzuć</string>
+    <string name="feature_apply_loan_action_save_draft">Zapisz wersję roboczą</string>
+    <string name="feature_apply_loan_action_retry">Spróbuj ponownie</string>
+    <string name="feature_apply_loan_action_cancel">Anuluj</string>
+    <string name="feature_apply_loan_action_continue">Kontynuuj</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Wpisz swoje pełne imię i nazwisko</string>
+    <string name="feature_apply_loan_hint_loan_product">Wybierz produkt pożyczkowy</string>
+    <string name="feature_apply_loan_hint_principal_amount">Wpisz kwotę pożyczki</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Wybierz datę wypłaty</string>
+    <string name="feature_apply_loan_hint_purpose">Opisz krótko cel</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Waluta uległa zmianie. Kwota zostanie ponownie zweryfikowana.</string>
+    <string name="feature_apply_loan_info_min_amount">Minimalna kwota pożyczki: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Maksymalna kwota pożyczki: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Potwierdź szczegóły</string>
+
+    <string name="feature_apply_loan_status_success">Żądanie zostało pomyślnie złożone</string>
+    <string name="feature_apply_loan_status_success_tip">Twój wniosek o pożyczkę został złożony. Powiadomimy Cię po jego rozpatrzeniu.</string>
+    <string name="feature_apply_loan_status_success_action">Wróć do strony głównej</string>
+
+    <string name="feature_apply_loan_status_failure">Nie udało się złożyć żądania</string>
+    <string name="feature_apply_loan_status_failure_tip">Coś poszło nie tak podczas składania wniosku o pożyczkę. Spróbuj ponownie.</string>
+    <string name="feature_apply_loan_status_failure_action">Spróbuj ponownie</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Złóż wniosek o nową pożyczkę</string>
+    <string name="feature_select_loan_type_choose_loan">Wybierz typ pożyczki</string>
+    <string name="feature_select_loan_type_empty">Produkty pożyczkowe są obecnie niedostępne</string>
+    <string name="feature_select_loan_type_network_issue">Upewnij się, że masz połączenie z Internetem</string>
+    <string name="feature_loan_product_details_terms">Zaakceptuj Regulamin</string>
+
+
+    <string name="feature_loan_apply_loan">Złóż wniosek o pożyczkę %1$s</string>
+    <string name="feature_loan_get_loan">Uzyskaj pożyczkę %1$s</string>
+    <string name="feature_loan_up_to">Do %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">Odsetki %1$s do %2$s</string>
+    <string name="feature_loan_terms_and_conditions">Regulamin</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Zatwierdzenie i wypłata pożyczki</string>
+    <string name="feature_loan_interest_rate">Stopa procentowa</string>
+    <string name="feature_loan_continue">Kontynuuj</string>
+    <string name="feature_loan_repayment">Spłata</string>
+    <string name="feature_loan_security_and_collateral">Zabezpieczenie i hipoteka</string>
+    <string name="feature_loan_insurance">Ubezpieczenie</string>
+    <string name="feature_loan_default">Niewywiązanie się</string>
+    <string name="feature_loan_documentation">Dokumentacja</string>
+    <string name="feature_loan_continue_legal_compliance">Zgodność z prawem</string>
+    <string name="feature_loan_amendments_and_termination">Zmiany i rozwiązanie</string>
+    <string name="feature_loan_jurisdiction">Jurysdykcja</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">Pożyczka osobista zostanie zatwierdzona na podstawie kwalifikowalności Wnioskodawcy, stabilności dochodów, zdolności kredytowej i wewnętrznych polityk kredytowych Pożyczkodawcy. Pożyczkodawca zastrzega sobie prawo do zatwierdzenia lub odrzucenia każdego wniosku o pożyczkę osobistą według własnego uznania bez podawania przyczyny. Zatwierdzona kwota pożyczki może zostać wypłacona w całości lub w częściach, w zależności od Umowy pożyczki i wymogów dokumentacyjnych. Wypłata jest uzależniona od pomyślnego zakończenia procesów KYC, weryfikacji złożonych dokumentów i spełnienia wszystkich warunków określonych w Liście zatwierdzającym.</string>
+    <string name="feature_personal_loan_interest_rate_description">Pożyczka osobista może mieć stałą lub zmienną stopę procentową, zgodnie z wyborem Pożyczkobiorcy w momencie zawierania Umowy pożyczki. W przypadku pożyczek o zmiennej stopie procentowej, obowiązująca stopa podlega okresowym rewizjom w oparciu o zmiany stopy referencyjnej lub wskaźnika Pożyczkodawcy. Takie zmiany będą wiążące dla Pożyczkobiorcy i mogą skutkować zmianą kwoty raty EMI i/lub okresu kredytowania, jeśli Pożyczkodawca uzna to za konieczne.</string>
+    <string name="feature_personal_loan_repayment_details">Spłata pożyczki osobistej będzie dokonywana w równych miesięcznych ratach (EMI) obejmujących zarówno kapitał, jak i odsetki. Raty EMI rozpoczną się od daty określonej w Umowie pożyczki i będą kontynuowane co miesiąc aż do spłaty całej kwoty pożyczki wraz z należnymi odsetkami. Wcześniejsza spłata lub częściowa spłata może być dozwolona zgodnie z obowiązującymi zasadami Pożyczkodawcy i może wiązać się z pewnymi opłatami, zwłaszcza w przypadku pożyczek o stałej stopie.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Pożyczki osobiste są zazwyczaj niezabezpieczone i nie wymagają zabezpieczenia. Jednakże Pożyczkodawca zastrzega sobie prawo do żądania dodatkowej gwarancji lub zabezpieczenia w wyjątkowych przypadkach, w zależności od profilu kredytowego Pożyczkobiorcy i kwoty pożyczki. Wszelkie takie wymagania zostaną wyraźnie określone w Liście zatwierdzającym. Pożyczkobiorca poniesie wszelkie koszty związane z dokumentacją lub formalnościami prawnymi, jeśli dotyczy.</string>
+    <string name="feature_personal_loan_insurance_details">Chociaż ubezpieczenie mienia nie jest zazwyczaj wymagane w przypadku pożyczek osobistych, Pożyczkodawca może zalecić Pożyczkobiorcy wykupienie polisy ubezpieczenia na życie w celu zabezpieczenia niespłaconej kwoty pożyczki w przypadku śmierci Pożyczkobiorcy. Nie jest to obowiązkowe, ale zalecane jako środek ochrony finansowej dla rodziny lub osób na utrzymaniu Pożyczkobiorcy.</string>
+    <string name="feature_personal_loan_default_details">Brak płatności lub opóźniona płatność rat EMI będzie stanowić niewywiązanie się z umowy. W takich przypadkach Pożyczkodawca może wszcząć postępowanie windykacyjne w celu odzyskania należności, co może obejmować kroki prawne. Odsetki karne i inne opłaty mogą zostać naliczone od przeterminowanych kwot. Uporczywe lub powtarzające się niewywiązanie się z płatności może negatywnie wpłynąć na ocenę kredytową Pożyczkobiorcy i przyszłą zdolność kredytową.</string>
+    <string name="feature_personal_loan_documentation_details">Pożyczkobiorca jest zobowiązany do złożenia dokładnej i kompletnej dokumentacji, w tym między innymi dowodu tożsamości, dowodu adresu, szczegółów dochodów, wyciągów bankowych i wszelkich innych dokumentów wymaganych przez Pożyczkodawcę. Wszelkie rozbieżności, fałszywe oświadczenia lub fałszerstwa w złożonych dokumentach mogą skutkować odrzuceniem wniosku o pożyczkę lub rozwiązaniem Umowy pożyczki, wraz z możliwymi konsekwencjami prawnymi.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">Pożyczkobiorca musi zapewnić pełną zgodność ze wszystkimi obowiązującymi przepisami lokalnymi, stanowymi i krajowymi w odniesieniu do swoich zobowiązań finansowych. Obejmuje to terminową zapłatę podatków, przestrzeganie wymogów regulacyjnych i składanie ważnych dokumentów. Pożyczkodawca nie ponosi odpowiedzialności za jakiekolwiek naruszenia prawa popełnione przez Pożyczkobiorcę.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">Pożyczkodawca może od czasu do czasu zmieniać lub aktualizować niniejszy Regulamin, z zastrzeżeniem odpowiedniego uprzedniego powiadomienia Pożyczkobiorcy. Umowę pożyczki uznaje się za rozwiązaną po całkowitej spłacie kwoty pożyczki lub w drodze postępowania egzekucyjnego wszczętego z powodu niewywiązania się z umowy.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Wszelkie spory wynikające z Umowy pożyczki osobistej lub z nią związane podlegają wyłącznej jurysdykcji sądów właściwych dla siedziby Pożyczkodawcy, chyba że Umowa stanowi inaczej.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Prześlij wyciągi bankowe</string>
+    <string name="feature_upload_docs_collateral">Prześlij dokumenty zabezpieczenia</string>
+    <string name="feature_upload_docs_signature">Prześlij podpis</string>
+
+    <string name="feature_upload_file_error">Coś poszło nie tak! Nie można przesłać pliku</string>
+    <string name="feature_upload_statement_error">Prześlij wyciąg bankowy</string>
+    <string name="feature_upload_property_document_error">Prześlij dokument dotyczący nieruchomości</string>
+    <string name="feature_upload_signature_error">Prześlij podpis</string>
+    <string name="feature_upload_documents_success_title">Dokumenty przesłane pomyślnie!</string>
+
+    <string name="sign_here">Podpisz tutaj</string>
+    <string name="reset">Zresetuj</string>
+    <string name="sign">Podpis</string>
+    <string name="capture">Przechwyć</string>
+    <string name="attach">Załącz</string>
+    <string name="upload_signature">Prześlij podpis</string>
+    <string name="save_and_submit">Zapisz i prześlij</string>
+</resources>

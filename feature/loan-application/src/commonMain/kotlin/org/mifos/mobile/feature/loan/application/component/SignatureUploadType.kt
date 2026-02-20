@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,6 +9,9 @@
  */
 package org.mifos.mobile.feature.loan.application.component
 
+/**
+ * Defines the available methods for providing a user signature during the loan application.
+ */
 enum class SignatureUploadType {
     SIGN,
     CAPTURE,

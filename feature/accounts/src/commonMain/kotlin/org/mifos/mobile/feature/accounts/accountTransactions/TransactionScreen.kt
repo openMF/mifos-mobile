@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +34,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_duration
@@ -66,15 +64,18 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
+import template.core.base.designsystem.theme.KptTheme
 /**
  * Composable function for the Account Transactions Screen.
  *
  * @param navigateBack The function to be called when the back button is pressed.
+ * @param navigateToDetails The callback function to navigate to the transaction details screen.
  * @param viewModel The ViewModel for the Account Transactions Screen.
  */
 @Composable
 internal fun TransactionScreen(
     navigateBack: () -> Unit,
+    navigateToDetails: (String) -> Unit,
     viewModel: AccountsTransactionViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -83,6 +84,9 @@ internal fun TransactionScreen(
         when (event) {
             AccountTransactionEvent.OnNavigateBack -> {
                 navigateBack.invoke()
+            }
+            is AccountTransactionEvent.NavigateToDetails -> {
+                navigateToDetails(event.id)
             }
         }
     }
@@ -168,7 +172,7 @@ internal fun TransactionScreenContent(
                 Column(
                     Modifier
                         .fillMaxSize()
-                        .padding(DesignToken.padding.large),
+                        .padding(KptTheme.spacing.md),
                 ) {
                     if (state.data.isNotEmpty()) {
                         ActionBar(
@@ -205,6 +209,11 @@ internal fun TransactionScreenContent(
                                             maximumFractionDigits = 3,
                                         ),
                                         isCredited = transaction.isCredit == true,
+                                        onClick = {
+                                            transaction.id?.let { id ->
+                                                onAction(AccountTransactionAction.OnTransactionClick(id))
+                                            }
+                                        },
                                     )
                                 }
                             }
@@ -272,11 +281,11 @@ internal fun ActionBar(
 //            modifier = Modifier.clickable {
 //            },
 //            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+//            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
 //        ) {
 //            Text(
 //                text = stringResource(Res.string.feature_transaction_statement),
-//                color = MaterialTheme.colorScheme.primary,
+//                color = KptTheme.colorScheme.primary,
 //                style = MifosTypography.bodySmallEmphasized,
 //            )
 //
@@ -284,7 +293,7 @@ internal fun ActionBar(
 //                modifier = Modifier.size(DesignToken.sizes.iconSmall),
 //                imageVector = MifosIcons.Download,
 //                contentDescription = stringResource(Res.string.feature_transaction_download_icon_description),
-//                tint = MaterialTheme.colorScheme.primary,
+//                tint = KptTheme.colorScheme.primary,
 //            )
 //        }
 
@@ -295,11 +304,11 @@ internal fun ActionBar(
                 onAction(AccountTransactionAction.ToggleFilter)
             },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = stringResource(Res.string.feature_transaction_filter),
-                color = MaterialTheme.colorScheme.primary,
+                color = KptTheme.colorScheme.primary,
                 style = MifosTypography.bodySmallEmphasized,
             )
 
@@ -307,7 +316,7 @@ internal fun ActionBar(
                 modifier = Modifier.size(DesignToken.sizes.iconSmall),
                 imageVector = MifosIcons.Filter,
                 contentDescription = stringResource(Res.string.feature_transaction_filter_icon_description),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = KptTheme.colorScheme.primary,
             )
         }
     }
@@ -345,8 +354,8 @@ internal fun TransactionFilters(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(DesignToken.padding.large)
-                .padding(top = DesignToken.padding.large),
+                .padding(KptTheme.spacing.md)
+                .padding(top = KptTheme.spacing.md),
         ) {
             FilterTopSection(
                 isAnyFilterSelected = state.isAnyFilterSelected,
@@ -363,7 +372,7 @@ internal fun TransactionFilters(
 
             Spacer(Modifier.height(DesignToken.spacing.largeIncreased))
 
-            HorizontalDivider(modifier = Modifier.height(1.dp))
+            HorizontalDivider(modifier = Modifier.height(DesignToken.strokes.thin))
 
             FilterSection(
                 title = stringResource(Res.string.feature_transaction_type),

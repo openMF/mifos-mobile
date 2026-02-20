@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2025 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -12,6 +12,8 @@
     <string name="beneficiaries">Bénéficiaires</string>
     <string name="survey">Enquêtes</string>
     <string name="apply_for_loan">Demander un prêt</string>
+    <string name="apply_for_savings">Demander compte épargne</string>
+    <string name="apply_for_share">Demander compte parts</string>
     <string name="charges">Frais</string>
     <string name="transfer">Transfert</string>
     <string name="accounts">Comptes</string>

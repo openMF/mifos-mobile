@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,6 +38,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.templates.account.AccountType
 import org.mifos.mobile.core.ui.utils.DevicePreview
+import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosBeneficiaryTopCard(
@@ -47,7 +47,7 @@ fun MifosBeneficiaryTopCard(
 ) {
     MifosCustomCard(
         modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
+        shape = KptTheme.shapes.medium,
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -60,7 +60,7 @@ fun MifosBeneficiaryTopCard(
                 contentScale = ContentScale.Crop,
             )
             Row(
-                Modifier.padding(DesignToken.padding.large),
+                Modifier.padding(KptTheme.spacing.md),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // pass BitMap also once fetching client Image

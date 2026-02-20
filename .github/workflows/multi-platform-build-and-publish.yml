@@ -89,6 +89,16 @@ on:
         default: false
         description: Distribute iOS App to Appstore
 
+      distribute_macos_testflight:
+        type: boolean
+        default: false
+        description: Distribute macOS App via TestFlight (App Store Connect)
+
+      distribute_macos_appstore:
+        type: boolean
+        default: false
+        description: Distribute macOS App to Appstore
+
 permissions:
   contents: write
   id-token: write
@@ -125,6 +135,8 @@ jobs:
       distribute_ios_firebase: ${{ inputs.distribute_ios_firebase }}
       distribute_ios_testflight: ${{ inputs.distribute_ios_testflight }}
       distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
+      distribute_macos_testflight: ${{ inputs.distribute_macos_testflight }}
+      distribute_macos_appstore: ${{ inputs.distribute_macos_appstore }}
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
       original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}

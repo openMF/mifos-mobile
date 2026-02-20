@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -76,7 +76,10 @@ class AppDatabaseFactory(
      * - Add appropriate type converters for complex data types
      * - Configure database callbacks for initialization or validation logic
      */
-    fun <T : RoomDatabase> createDatabase(databaseClass: Class<T>, databaseName: String): RoomDatabase.Builder<T> {
+    fun <T : RoomDatabase> createDatabase(
+        databaseClass: Class<T>,
+        databaseName: String,
+    ): RoomDatabase.Builder<T> {
         return Room.databaseBuilder(
             context.applicationContext,
             databaseClass,

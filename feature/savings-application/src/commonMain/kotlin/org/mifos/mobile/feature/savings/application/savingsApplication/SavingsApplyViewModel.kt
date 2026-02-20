@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,7 +24,6 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_too_many_attempts
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
@@ -506,9 +505,7 @@ internal class SavingsApplyViewModel(
         if (state.hasChanges) {
             mutableStateFlow.update {
                 it.copy(
-                    savingsApplicationDialogState = SavingsApplicationDialogState.UnsavedChanges(
-                        Res.string.feature_apply_savings_unsaved_changes_message,
-                    ),
+                    savingsApplicationDialogState = SavingsApplicationDialogState.UnsavedChanges,
                 )
             }
         } else {
@@ -570,17 +567,6 @@ internal data class SavingsApplicationState(
     val showOverlay: Boolean = false,
 ) {
     /**
-     * A boolean indicating if the entire form is valid for submission.
-     * This is based on the absence of errors and non-empty fields.
-     */
-    val isFormValid: Boolean
-        get() = selectedSavingsProductId != 0L &&
-            selectedFieldOfficerId != 0L &&
-            savingsProductError == null &&
-            applicantName.isNotBlank() &&
-            selectedSavingsProduct.isNotBlank()
-
-    /**
      * A map of savings product IDs to their names, derived from `productOptions`.
      */
     val productOptionsMap: Map<Long, String> = productOptions.associate { option ->
@@ -611,9 +597,8 @@ internal sealed interface SavingsApplicationDialogState {
 
     /**
      * Represents a dialog to confirm navigation with unsaved changes.
-     * @property message The [StringResource] for the confirmation message.
      */
-    data class UnsavedChanges(val message: StringResource) : SavingsApplicationDialogState
+    data object UnsavedChanges : SavingsApplicationDialogState
 }
 
 /**

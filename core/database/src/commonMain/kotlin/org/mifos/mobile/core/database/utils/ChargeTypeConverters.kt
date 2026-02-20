@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11,10 +11,10 @@ package org.mifos.mobile.core.database.utils
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.mifos.mobile.core.database.TypeConverter
 import org.mifos.mobile.core.database.entity.ChargeCalculationTypeEntity
 import org.mifos.mobile.core.database.entity.ChargeTimeTypeEntity
 import org.mifos.mobile.core.database.entity.CurrencyEntity
+import template.core.base.database.TypeConverter
 
 class ChargeTypeConverters {
 

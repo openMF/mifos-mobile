@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_account_action_update
@@ -48,6 +46,7 @@ import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -58,6 +57,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.feature.savingsaccount.components.SavingsActionItems
 import org.mifos.mobile.feature.savingsaccount.components.savingsAccountActions
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Savings Account Details" screen.
@@ -182,8 +182,8 @@ internal fun SavingsAccountDetailsContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(DesignToken.padding.large),
-                    verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+                        .padding(KptTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
                     ActionBar(
                         isUpdatable = state.isUpdatable,
@@ -192,14 +192,12 @@ internal fun SavingsAccountDetailsContent(
 
                     AccountDetailsGrid(
                         details = state.displayItems,
-                        isActive = state.isActive,
                     )
 
                     if (state.transactionList.isNotEmpty()) {
                         AccountDetailsGrid(
                             label = "Last Transactions",
                             details = state.transactionList,
-                            isActive = state.isActive,
                         )
                     }
 
@@ -244,14 +242,14 @@ internal fun ActionBar(
                 onAction(SavingsAccountDetailsAction.OnUpdateAccount)
             },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(DesignToken.spacing.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Text(
                 text = stringResource(Res.string.feature_account_action_update),
                 color = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
+                    KptTheme.colorScheme.primary
                 } else {
-                    MaterialTheme.colorScheme.inversePrimary
+                    KptTheme.colorScheme.inversePrimary
                 },
                 style = MifosTypography.bodySmallEmphasized,
             )
@@ -261,9 +259,9 @@ internal fun ActionBar(
                 imageVector = MifosIcons.EditRegular,
                 contentDescription = null,
                 tint = if (isUpdatable) {
-                    MaterialTheme.colorScheme.primary
+                    KptTheme.colorScheme.primary
                 } else {
-                    MaterialTheme.colorScheme.inversePrimary
+                    KptTheme.colorScheme.inversePrimary
                 },
 
             )
@@ -279,13 +277,11 @@ internal fun ActionBar(
  *
  * @param label An optional string for the section's title.
  * @param details A list of [LabelValueItem]s to display in the grid.
- * @param isActive A boolean to conditionally color the status field.
  */
 @Composable
 internal fun AccountDetailsGrid(
     label: String? = null,
     details: List<LabelValueItem>? = emptyList(),
-    isActive: Boolean = false,
 ) {
     Column(
         modifier = Modifier
@@ -296,7 +292,7 @@ internal fun AccountDetailsGrid(
             Text(
                 text = label,
                 style = MifosTypography.labelLargeEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = KptTheme.colorScheme.onSurface,
             )
         }
         if (details != null) {
@@ -309,16 +305,19 @@ internal fun AccountDetailsGrid(
                 details.forEach { item ->
                     MifosLabelValueCard(
                         modifier = Modifier
-                            .height(64.dp)
+                            .height(DesignToken.sizes.cardDp64)
                             .weight(1f),
                         label = stringResource(item.label),
                         value = item.value,
-                        color = if (isActive && item.label == Res.string.feature_savings_status_label) {
-                            AppColors
-                                .customEnable
+                        color = if (item.label == Res.string.feature_savings_status_label) {
+                            when (item.value) {
+                                SavingStatus.ACTIVE.status -> AppColors.customEnable
+                                SavingStatus.SUBMIT_AND_PENDING_APPROVAL.status -> AppColors.customYellow
+                                SavingStatus.INACTIVE.status -> KptTheme.colorScheme.error
+                                else -> KptTheme.colorScheme.onSurface
+                            }
                         } else {
-                            MaterialTheme
-                                .colorScheme.onBackground
+                            KptTheme.colorScheme.onBackground
                         },
                     )
                 }
@@ -342,12 +341,12 @@ internal fun SavingsAccountActions(
     onActionClick: (String) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.large),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Text(
             text = "Actions",
             style = MifosTypography.labelLargeEmphasized,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = KptTheme.colorScheme.onSurface,
         )
         FlowRow(
             modifier = Modifier.fillMaxWidth(),

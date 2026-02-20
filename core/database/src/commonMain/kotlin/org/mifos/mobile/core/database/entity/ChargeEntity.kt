@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,8 +9,8 @@
  */
 package org.mifos.mobile.core.database.entity
 
-import org.mifos.mobile.core.database.Entity
-import org.mifos.mobile.core.database.PrimaryKey
+import template.core.base.database.Entity
+import template.core.base.database.PrimaryKey
 
 @Entity(
     tableName = "charges",

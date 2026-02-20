@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Top Bar -->
+    <string name="feature_share_title">Detalles de Solicitud de Cuenta</string>
+    <string name="feature_share_navigation_back">Atrás</string>
+
+    <!-- Form Labels -->
+    <string name="feature_share_label_applicant_name">Nombre del Solicitante</string>
+    <string name="feature_share_label_submission_date">Fecha de Solicitud</string>
+    <string name="feature_share_label_product_name">Nombre del Producto</string>
+
+    <!-- Buttons -->
+    <string name="feature_share_button_next">Siguiente</string>
+
+    <string name="feature_apply_share_error_server">Error interno del servidor. Inténtelo de nuevo</string>
+    <string name="feature_apply_share_error_too_many_attempts">Demasiados intentos fallidos. Inténtelo de nuevo.</string>
+    <string name="feature_apply_share_error_submit_failed">No se pudo enviar la solicitud de Acciones. Inténtelo de nuevo.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">¡Cambios no guardados!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Tiene cambios sin guardar. ¿Está seguro de que quiere volver atrás?</string>
+    <string name="feature_share_no_products_available">No hay productos compartidos disponibles para solicitar una cuenta de acciones</string>
+
+
+    <string name="feature_apply_share_label_terms">Términos</string>
+    <string name="feature_apply_share_label_currency">Moneda</string>
+    <string name="feature_apply_share_label_current_price">Precio Actual</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Número total de acciones</string>
+    <string name="feature_apply_share_label_default_savings_account">Cuenta de ahorros predeterminada</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Período mínimo activo</string>
+    <string name="feature_apply_share_section_minimum_active_period">Período mínimo activo</string>
+    <string name="feature_apply_share_label_minimum_frequency">Frecuencia</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Tipo de frecuencia</string>
+
+    <string name="feature_apply_share_label_lockin_period">Período de bloqueo</string>
+    <string name="feature_apply_share_section_lockin_period">Período de bloqueo</string>
+    <string name="feature_apply_share_label_lockin_frequency">Frecuencia</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Tipo de frecuencia</string>
+
+    <string name="feature_apply_share_error_frequency_required">Se requiere frecuencia</string>
+    <string name="feature_apply_share_frequency_invalid">Por favor, introduzca una frecuencia válida</string>
+
+    <string name="feature_apply_share_error_shares_required">Se requieren acciones</string>
+    <string name="feature_apply_share_shares_invalid">Por favor ingrese acciones válidas</string>
+
+    <string name="feature_apply_share_error_price_required">Se requiere precio</string>
+    <string name="feature_apply_share_price_invalid">Por favor, introduzca un precio válido</string>
+
+    <string name="feature_apply_share_status_failure">La solicitud no se pudo enviar</string>
+    <string name="feature_apply_share_status_failure_tip">No se pudo solicitar una cuenta de acciones bajo %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Intentar otra vez</string>
+
+    <string name="feature_apply_share_status_success">¡Solicitud registrada!</string>
+    <string name="feature_apply_share_status_success_tip">Ha solicitado una cuenta de acciones en %1$s</string>
+    <string name="feature_apply_share_status_success_action">Volver al Inicio</string>
+</resources>

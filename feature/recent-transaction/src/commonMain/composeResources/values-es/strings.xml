@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">Transacciones Recientes</string>
+    <string name="no_transaction">Sin Transacciones</string>
+    <string name="atm_icon">Icono de cajero automático</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Ocurrió un error</string>
+    <string name="filter">Filtro</string>
+    <string name="filter_transactions">Filtrar Transacciones</string>
+    <string name="clear_all">Limpiar Filtros</string>
+    <string name="filter_by_account">Filtrar por Cuenta :</string>
+    <string name="account_number_label">Número de Cuenta: %1$s</string>
+    <string name="select_account">Seleccionar Cuenta</string>
+    <string name="balance">Saldo: %1$s %2$s</string>
+    <string name="account">Cuenta</string>
+    <string name="transaction_type">Tipo de Transacción:</string>
+    <string name="all">Todas</string>
+    <string name="debits">Cargos</string>
+    <string name="credits">Abonos</string>
+    <string name="apply_filters">Aplicar Filtros</string>
+</resources>

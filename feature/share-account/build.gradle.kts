@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,6 +9,8 @@
  */
 plugins {
     alias(libs.plugins.cmp.feature.convention)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -23,10 +25,14 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.kotlinx.serialization.json)
+
 
             api(projects.core.ui)
             api(projects.core.model)
             api(projects.core.common)
+            implementation(projects.core.qrcode)
+
         }
     }
 }

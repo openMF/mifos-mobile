@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">കൈമാറുക</string>
+    <string name="transferred_successfully">വിജയകരമായി കൈമാറി</string>
+    <string name="amount">തുക</string>
+    <string name="transfer_from_savings">സേവിംഗ്സിൽ നിന്ന് കൈമാറുക</string>
+    <string name="pay_from">ഇതിൽ നിന്ന് പണമടയ്ക്കുക</string>
+    <string name="date">തീയതി</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="remark">റിമാർക്സ്</string>
+    <string name="make_transfer">കൈമാറ്റം നടത്തുക</string>
+    <string name="pay_to">ഇതിലേക്ക് പണമടയ്ക്കുക</string>
+    <string name="remarks">റിമാർക്സ്</string>
+    <string name="error_icon_description">പിശക്</string>
+    <string name="error_description">തുകയിൽ അസാധുവായ അക്ഷരങ്ങൾ അടങ്ങരുത്</string>
+
+    <string name="transfer_failed">കൈമാറ്റം പരാജയപ്പെട്ടു</string>
+    <string name="transfer_successful">കൈമാറ്റം വിജയിച്ചു</string>
+    <string name="back_to_accounts">ഹോം സ്‌ക്രീനിലേക്ക് മടങ്ങുക</string>
+    <string name="transfer_id_prefix">ട്രാൻസ്ഫർ ഐഡി:</string>
+
+    <string name="feature_make_transfer_error_amount_required">തുക ആവശ്യമാണ്</string>
+    <string name="feature_make_transfer_error_amount_invalid">ദയവായി ശരിയായ തുക നൽകുക</string>
+    <string name="feature_make_transfer_error_remarks_empty">റിമാർക്സ് ശൂന്യമായി ഇടരുത്</string>
+    <string name="feature_make_transfer_error_remarks_invalid">നൽകിയ റിമാർക്സ് അസാധുവാണ്</string>
+    <string name="feature_make_transfer_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
+
+    <string name="feature_make_transfer_account_number">അക്കൗണ്ട് നമ്പർ</string>
+    <string name="feature_make_transfer_customer_name">ഉപഭോക്താവിന്റെ പേര്</string>
+    <string name="feature_make_transfer_beneficiary_name">ഗുണഭോക്താവിന്റെ പേര്</string>
+    <string name="feature_make_transfer_details">കൈമാറ്റ വിവരങ്ങൾ</string>
+
+</resources>

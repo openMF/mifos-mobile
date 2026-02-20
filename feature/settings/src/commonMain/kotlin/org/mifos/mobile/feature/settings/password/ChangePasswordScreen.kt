@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,6 +42,7 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.MifosSuccessDialog
 import org.mifos.mobile.core.ui.component.SuccessDialogState
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import template.core.base.designsystem.theme.KptTheme
 
 /**
  * A stateful composable that serves as the entry point for the "Change Password" screen.
@@ -107,7 +108,7 @@ internal fun ChangePasswordScreen(
             PasswordScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = DesignToken.padding.large),
+                    .padding(horizontal = KptTheme.spacing.md),
                 state = state,
                 onAction = onAction,
             )

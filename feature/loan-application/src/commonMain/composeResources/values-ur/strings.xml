@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">نیا قرض لاگو کریں</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">قرض کی درخواست</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">درخواست دہندہ کا نام</string>
+    <string name="feature_apply_loan_label_loan_product">قرض کی مصنوعات</string>
+    <string name="feature_apply_loan_label_purpose">قرض کا مقصد</string>
+    <string name="feature_apply_loan_label_disbursement_date">ادائیگی کی تاریخ</string>
+    <string name="feature_apply_loan_label_principal_amount">اصل رقم</string>
+    <string name="feature_apply_loan_label_currency">کرنسی</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">جاری رکھیں</string>
+    <string name="feature_apply_loan_button_ok">ٹھیک ہے</string>
+    <string name="feature_apply_loan_button_cancel">منسوخ کریں</string>
+    <string name="feature_apply_loan_button_apply">قرض کے لیے درخواست دیں</string>
+    <string name="feature_button_next">اگلا</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">درخواست دہندہ کا نام درکار ہے</string>
+    <string name="feature_apply_loan_error_name_too_short">درخواست دہندہ کا نام کم از کم 4 حروف پر مشتمل ہونا چاہیے</string>
+    <string name="feature_apply_loan_error_name_too_long">درخواست دہندہ کا نام 100 حروف سے زیادہ نہیں ہو سکتا</string>
+    <string name="feature_apply_loan_error_name_invalid_format">درخواست دہندہ کے نام میں غلط حروف شامل ہیں</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">قرض کی مصنوعات درکار ہے</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">اصل رقم درکار ہے</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">براہ کرم ایک درست رقم کا فارمیٹ درج کریں</string>
+    <string name="feature_apply_loan_error_amount_too_small">اصل رقم بہت کم ہے</string>
+    <string name="feature_apply_loan_error_amount_too_large">اصل رقم زیادہ سے زیادہ حد سے تجاوز کر گئی ہے</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">منتخب کردہ کرنسی کے لیے رقم میں بہت سارے اعشاریہ ہیں</string>
+    <string name="feature_apply_loan_error_amount_multiple">رقم درست ضربوں میں نہیں ہے</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">ادائیگی کی تاریخ درکار ہے</string>
+    <string name="feature_apply_loan_error_date_invalid_format">براہ کرم ایک درست تاریخ کا فارمیٹ درج کریں (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">ادائیگی کی تاریخ مستقبل میں ہونی چاہیے</string>
+    <string name="feature_apply_loan_error_date_out_of_range">ادائیگی کی تاریخ مستقبل میں بہت دور ہے (زیادہ سے زیادہ 10 سال)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">ہماری طرف سے سرور کا مسئلہ مزید جاری نہیں رہ سکتا، تھوڑی دیر بعد دوبارہ کوشش کریں</string>
+    <string name="feature_apply_loan_error_too_many_attempts">بہت سی ناکام کوششیں۔ براہ کرم بعد میں دوبارہ کوشش کریں۔</string>
+    <string name="feature_apply_loan_error_submit_failed">قرض کی درخواست جمع کرانے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">قرض کی درخواست کامیابی کے ساتھ جمع کرائی گئی!</string>
+    <string name="feature_apply_loan_success_draft_saved">درخواست کا مسودہ کامیابی کے ساتھ محفوظ ہو گیا</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">غیر محفوظ شدہ تبدیلیاں!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">آپ کے پاس غیر محفوظ شدہ تبدیلیاں ہیں۔ کیا آپ واقعی واپس جانا چاہتے ہیں؟</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">رد کریں</string>
+    <string name="feature_apply_loan_action_save_draft">مسودہ محفوظ کریں</string>
+    <string name="feature_apply_loan_action_retry">دوبارہ کوشش کریں</string>
+    <string name="feature_apply_loan_action_cancel">منسوخ کریں</string>
+    <string name="feature_apply_loan_action_continue">جاری رکھیں</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">اپنا پورا نام درج کریں</string>
+    <string name="feature_apply_loan_hint_loan_product">قرض کی مصنوعات منتخب کریں</string>
+    <string name="feature_apply_loan_hint_principal_amount">قرض کی رقم درج کریں</string>
+    <string name="feature_apply_loan_hint_disbursement_date">ادائیگی کی تاریخ منتخب کریں</string>
+    <string name="feature_apply_loan_hint_purpose">مقصد کو مختصر بیان کریں</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">کرنسی تبدیل کر دی گئی ہے۔ رقم کی دوبارہ توثیق کی جائے گی۔</string>
+    <string name="feature_apply_loan_info_min_amount">قرض کی کم از کم رقم: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">زیادہ سے زیادہ قرض کی رقم: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">تفصیلات کی تصدیق کریں</string>
+
+    <string name="feature_apply_loan_status_success">درخواست کامیابی کے ساتھ جمع کرائی گئی</string>
+    <string name="feature_apply_loan_status_success_tip">آپ کی قرض کی درخواست جمع کر دی گئی ہے۔ اس کا جائزہ لینے کے بعد آپ کو مطلع کیا جائے گا۔</string>
+    <string name="feature_apply_loan_status_success_action">ہوم پر واپس جائیں</string>
+
+    <string name="feature_apply_loan_status_failure">درخواست جمع کرانے میں ناکام</string>
+    <string name="feature_apply_loan_status_failure_tip">آپ کی قرض کی درخواست جمع کراتے وقت کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔</string>
+    <string name="feature_apply_loan_status_failure_action">دوبارہ کوشش کریں</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">نیا قرض لاگو کریں</string>
+    <string name="feature_select_loan_type_choose_loan">قرض کی قسم منتخب کریں</string>
+    <string name="feature_select_loan_type_empty">فی الحال قرض کی مصنوعات دستیاب نہیں ہیں</string>
+    <string name="feature_select_loan_type_network_issue">یقینی بنائیں کہ آپ انٹرنیٹ سے جڑے ہوئے ہیں</string>
+    <string name="feature_loan_product_details_terms">شرائط و ضوابط قبول کریں</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s قرض کے لیے درخواست دیں</string>
+    <string name="feature_loan_get_loan">%1$s قرض حاصل کریں</string>
+    <string name="feature_loan_up_to">%1$s تک</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s سے %2$s سود</string>
+    <string name="feature_loan_terms_and_conditions">شرائط و ضوابط</string>
+
+    <string name="feature_loan_sanction_and_disbursement">قرض کی منظوری اور ادائیگی</string>
+    <string name="feature_loan_interest_rate">شرح سود</string>
+    <string name="feature_loan_continue">جاری رکھیں</string>
+    <string name="feature_loan_repayment">واپسی</string>
+    <string name="feature_loan_security_and_collateral">سیکورٹی اور ضمانت</string>
+    <string name="feature_loan_insurance">انشورنس</string>
+    <string name="feature_loan_default">ڈیفالٹ</string>
+    <string name="feature_loan_documentation">دستاویزی کارروائی</string>
+    <string name="feature_loan_continue_legal_compliance">قانونی تعمیل</string>
+    <string name="feature_loan_amendments_and_termination">ترمیمات اور خاتمہ</string>
+    <string name="feature_loan_jurisdiction">دائرہ اختیار</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">ذاتی قرض کی منظوری درخواست دہندہ کی اہلیت، آمدنی کے استحکام، ساکھ اور قرض دہندہ کی اندرونی کریڈٹ پالیسیوں کی بنیاد پر دی جائے گی۔ قرض دہندہ کسی بھی ذاتی قرض کی درخواست کو اپنی صوابدید پر اور بغیر کسی وجہ کے منظور یا مسترد کرنے کا حق محفوظ رکھتا ہے۔ منظور شدہ قرض کی رقم مکمل یا جزوی طور پر تقسیم کی جا سکتی ہے، جو قرض کے معاہدے اور دستاویزات کی ضروریات پر منحصر ہے۔ ادائیگی KYC طریقہ کار کی کامیاب تکمیل، جمع کرائے گئے دستاویزات کی تصدیق اور منظوری کے خط میں بیان کردہ تمام شرائط کی تعمیل سے مشروط ہے۔</string>
+    <string name="feature_personal_loan_interest_rate_description">ذاتی قرض میں یا تو مقررہ یا تیرتی سود کی شرح ہو سکتی ہے، جیسا کہ قرض کے معاہدے کے وقت قرض لینے والے نے منتخب کیا ہو۔ تیرتی سود کی شرح والے قرضوں کی صورت میں، لاگو ہونے والی شرح قرض دہندہ کے بینچ مارک یا حوالہ کی شرح میں تبدیلیوں کی بنیاد پر وقتاً فوقتاً نظر ثانی سے مشروط ہے۔ ایسی تبدیلیاں قرض لینے والے پر لازم ہوں گی اور EMI کی رقم اور/یا قرض کی مدت میں تبدیلی کا باعث بن سکتی ہیں، جیسا کہ قرض دہندہ ضروری سمجھے۔</string>
+    <string name="feature_personal_loan_repayment_details">ذاتی قرض کی واپسی مساوی ماہانہ اقساط (EMIs) کے ذریعے کی جائے گی جس میں اصل اور سود دونوں شامل ہیں۔ EMIs قرض کے معاہدے میں بیان کردہ تاریخ سے شروع ہوں گی اور ماہانہ بنیاد پر جاری رہیں گی جب تک کہ سود کے ساتھ قرض کی پوری رقم واپس نہ کر دی جائے۔ قرض دہندہ کی مروجہ پالیسیوں کے مطابق قبل از وقت ادائیگی یا جزوی ادائیگی کی اجازت دی جا سکتی ہے اور اس پر کچھ چارجز لاگو ہو سکتے ہیں، خاص طور پر مقررہ شرح والے قرضوں کے لیے۔</string>
+    <string name="feature_personal_loan_security_and_collateral_details">ذاتی قرضے عام طور پر غیر محفوظ نوعیت کے ہوتے ہیں اور انہیں ضمانت کی ضرورت نہیں ہوتی۔ تاہم، قرض دہندہ درخواست دہندہ کے کریڈٹ پروفائل اور قرض کی رقم کی بنیاد پر غیر معمولی معاملات میں اضافی گارنٹی یا سیکیورٹی کی درخواست کرنے کا حق محفوظ رکھتا ہے۔ ایسی کسی بھی ضرورت کو منظوری کے خط میں واضح طور پر بیان کیا جائے گا۔ اگر قابل اطلاق ہو تو، دستاویزات یا قانونی کارروائیوں سے وابستہ تمام اخراجات قرض لینے والے برداشت کریں گے۔</string>
+    <string name="feature_personal_loan_insurance_details">اگرچہ ذاتی قرضوں کے لیے عام طور پر اثاثہ انشورنس کی ضرورت نہیں ہوتی، قرض دہندہ تجویز کر سکتا ہے کہ قرض لینے والا درخواست دہندہ کی موت کی صورت میں بقایا قرض کی رقم کو محفوظ کرنے کے لیے لائف انشورنس پالیسی کا انتخاب کرے۔ یہ لازمی نہیں ہے لیکن قرض لینے والے کے خاندان یا انحصار کرنے والوں کے لیے مالی تحفظ کے اقدام کے طور پر مشورہ دیا جاتا ہے۔</string>
+    <string name="feature_personal_loan_default_details">EMIs کی عدم ادائیگی یا تاخیر سے ادائیگی ڈیفالٹ تصور کی جائے گی۔ ایسی صورتوں میں، قرض دہندہ بقایا جات وصول کرنے کے لیے بازیابی کی کارروائی شروع کر سکتا ہے، جس میں قانونی کارروائی بھی شامل ہو سکتی ہے۔ التواء شدہ رقوم پر تعزیری سود اور دیگر چارجز لاگو ہو سکتے ہیں۔ مسلسل یا بار بار ڈیفالٹ قرض لینے والے کے کریڈٹ سکور اور مستقبل میں قرض لینے کی صلاحیت کو منفی طور پر متاثر کر سکتا ہے۔</string>
+    <string name="feature_personal_loan_documentation_details">قرض لینے والے کو درست اور مکمل دستاویزات جمع کروانے کی ضرورت ہوتی ہے، بشمول شناخت کا ثبوت، پتہ کا ثبوت، آمدنی کی تفصیلات، بینک اسٹیٹمنٹ، اور قرض دہندہ کی درخواست کردہ دیگر دستاویزات۔ جمع کرائے گئے دستاویزات میں کوئی تضاد، غلط بیانی یا جعل سازی قرض کی درخواست مسترد ہونے یا قرض کا معاہدہ ختم کرنے کا سبب بن سکتی ہے، ساتھ ہی قانونی نتائج بھی بھگتنا پڑ سکتے ہیں۔</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">قرض لینے والے کو اپنی مالی ذمہ داریوں سے متعلق تمام قابل اطلاق مقامی، ریاستی اور قومی قوانین کی مکمل تعمیل کو یقینی بنانا چاہیے۔ اس میں ٹیکسوں کی بروقت ادائیگی، ریگولیٹری تقاضوں کی پاسداری اور درست دستاویزات جمع کرانا شامل ہے۔ قرض دہندہ کو قرض لینے والے کی طرف سے کی گئی کسی بھی قانونی خلاف ورزی کے لیے ذمہ دار نہیں ٹھہرایا جائے گا۔</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">قرض دہندہ وقتاً فوقتاً ان شرائط و ضوابط پر نظر ثانی یا اپ ڈیٹ کر سکتا ہے، بشرطیکہ قرض لینے والے کو پیشگی نوٹس دیا جائے۔ قرض کا معاہدہ قرض کی رقم کی مکمل واپسی یا ڈیفالٹ کی وجہ سے شروع کی گئی ضبطی کی کارروائی کے ذریعے ختم تصور کیا جائے گا۔</string>
+    <string name="feature_personal_loan_jurisdiction_details">ذاتی قرض کے معاہدے سے پیدا ہونے والے یا اس سے متعلق تمام تنازعات قرض دہندہ کے رجسٹرڈ آفس کے مقام پر عدالتوں کے خصوصی دائرہ اختیار میں آئیں گے، جب تک کہ معاہدے میں دوسری صورت میں وضاحت نہ کی گئی ہو۔</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">بینک اکاؤنٹ کے بیانات اپ لوڈ کریں</string>
+    <string name="feature_upload_docs_collateral">ضمانتی دستاویزات اپ لوڈ کریں</string>
+    <string name="feature_upload_docs_signature">دستخط اپ لوڈ کریں</string>
+
+    <string name="feature_upload_file_error">کچھ غلط ہو گیا! فائل اپ لوڈ کرنے سے قاصر</string>
+    <string name="feature_upload_statement_error">براہ کرم بینک اسٹیٹمنٹ اپ لوڈ کریں</string>
+    <string name="feature_upload_property_document_error">براہ کرم پراپرٹی کا دستاویز اپ لوڈ کریں</string>
+    <string name="feature_upload_signature_error">براہ کرم دستخط اپ لوڈ کریں</string>
+    <string name="feature_upload_documents_success_title">دستاویزات کامیابی کے ساتھ اپ لوڈ ہو گئیں!</string>
+
+    <string name="sign_here">یہاں دستخط کریں</string>
+    <string name="reset">دوبارہ ترتیب دیں</string>
+    <string name="sign">دستخط</string>
+    <string name="capture">کیپچر کریں</string>
+    <string name="attach">منسلک کریں</string>
+    <string name="upload_signature">دستخط اپ لوڈ کریں</string>
+    <string name="save_and_submit">محفوظ کریں اور جمع کرائیں</string>
+</resources>

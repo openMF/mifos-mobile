@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,8 +13,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.feature.accounts.accountTransactions.AccountsTransactionViewModel
 import org.mifos.mobile.feature.accounts.accounts.AccountsViewModel
+import org.mifos.mobile.feature.accounts.transactionDetail.TransactionDetailsViewModel
 
 val AccountsModule = module {
     viewModelOf(::AccountsViewModel)
     viewModelOf(::AccountsTransactionViewModel)
+    viewModelOf(::TransactionDetailsViewModel)
 }

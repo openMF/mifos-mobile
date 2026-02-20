@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Mifos Initiative
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -17,6 +17,10 @@ import org.mifos.mobile.feature.loan.application.loanProductDescription.LoanProd
 import org.mifos.mobile.feature.loan.application.loanType.SelectLoanTypeViewModel
 import org.mifos.mobile.feature.loan.application.uploadDocs.UploadDocsViewModel
 
+/**
+ * Defines the Koin dependency injection module for the Loan Application feature.
+ * Registers the ViewModels used across the loan selection, documentation, and confirmation screens.
+ */
 val loanApplicationModule = module {
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)

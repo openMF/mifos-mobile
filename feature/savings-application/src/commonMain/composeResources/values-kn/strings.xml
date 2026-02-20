@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">ಉಳಿತಾಯ ಅಪ್ಲಿಕೇಶನ್ ವಿವರಗಳು</string>
+
+    <string name="feature_apply_savings_section_fill_details">ಅಪ್ಲಿಕೇಶನ್ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
+
+    <string name="feature_apply_savings_label_applicant_name">ಅರ್ಜಿದಾರರ ಹೆಸರು</string>
+    <string name="feature_apply_savings_label_savings_product">ಉತ್ಪನ್ನದ ಹೆಸರು</string>
+    <string name="feature_apply_savings_label_field_officer">ಫೀಲ್ಡ್ ಆಫೀಸರ್</string>
+    <string name="feature_apply_savings_label_submission_date">ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ</string>
+    <string name="feature_apply_savings_label_fill_application_details">ಅಪ್ಲಿಕೇಶನ್ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
+    <string name="feature_apply_savings_label_details">ವಿವರಗಳು</string>
+    <string name="feature_apply_savings_label_currency">ಕರೆನ್ಸಿ</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">ಕನಿಷ್ಠ ಆರಂಭಿಕ ಬಾಕಿ</string>
+    <string name="feature_apply_savings_label_lock_in_period">ಲಾಕ್-ಇನ್ ಅವಧಿ</string>
+    <string name="feature_apply_savings_label_frequency">ಆವರ್ತನ (Frequency)</string>
+    <string name="feature_apply_savings_label_frequency_type">ಆವರ್ತನ ಪ್ರಕಾರ</string>
+    <string name="feature_apply_savings_label_overdraft">ಓವರ್‌ಡ್ರಾಫ್ಟ್</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">ಓವರ್‌ಡ್ರಾಫ್ಟ್‌ಗೆ ಅನುಮತಿಸಲು ವಿನಂತಿ</string>
+
+    <string name="feature_apply_savings_button_continue">ಮುಂದುವರಿಸಿ</string>
+    <string name="feature_apply_savings_button_ok">ಸರಿ</string>
+    <string name="feature_apply_savings_button_cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="feature_apply_savings_button_apply">ಉಳಿತಾಯವನ್ನು ಅನ್ವಯಿಸಿ</string>
+    <string name="feature_button_next">ಮುಂದೆ</string>
+
+    <string name="feature_apply_savings_error_amount_empty">ಮೂಲ ಮೊತ್ತ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊತ್ತದ ಸ್ವರೂಪವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="feature_apply_savings_error_amount_too_small">ಮೂಲ ಮೊತ್ತವು ತುಂಬಾ ಚಿಕ್ಕದಾಗಿದೆ</string>
+    <string name="feature_apply_savings_error_amount_too_large">ಮೂಲ ಮೊತ್ತವು ಗರಿಷ್ಠ ಮಿತಿಯನ್ನು ಮೀರಿದೆ</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">ಆಯ್ಕೆಮಾಡಿದ ಕರೆನ್ಸಿಗೆ ಮೊತ್ತವು ತುಂಬಾ ದಶಮಾಂಶ ಸ್ಥಾನಗಳನ್ನು ಹೊಂದಿದೆ</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">ಉಳಿತಾಯ ಉತ್ಪನ್ನ ಅಗತ್ಯವಿದೆ</string>
+
+    <string name="feature_apply_savings_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ ಇದೆ, ಮುಂದುವರಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ, ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_apply_savings_error_too_many_attempts">ತುಂಬಾ ವಿಫಲ ಪ್ರಯತ್ನಗಳು. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="feature_apply_savings_error_submit_failed">ಉಳಿತಾಯ ಅಪ್ಲಿಕೇಶನ್ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="feature_apply_savings_success_submit">ಉಳಿತಾಯ ಅಪ್ಲಿಕೇಶನ್ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!</string>
+    <string name="feature_apply_savings_success_draft_saved">ಅಪ್ಲಿಕೇಶನ್ ಡ್ರಾಫ್ಟ್ ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">ಉಳಿಸದ ಬದಲಾವಣೆಗಳು!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">ನೀವು ಉಳಿಸದ ಬದಲಾವಣೆಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ. ನೀವು ಖಂಡಿತವಾಗಿಯೂ ಹಿಂದಕ್ಕೆ ಹೋಗಲು ಬಯಸುವಿರಾ?</string>
+
+
+    <string name="feature_apply_savings_label_next">ಮುಂದೆ</string>
+
+    <string name="feature_apply_savings_error_currency_required">ಕರೆನ್ಸಿ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">ಕನಿಷ್ಠ ಆರಂಭಿಕ ಬಾಕಿ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">ಲಾಕ್-ಇನ್ ಅವಧಿ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_savings_error_frequency_required">ಆವರ್ತನ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_savings_error_frequency_invalid">ಮಾನ್ಯವಾದ ಆವರ್ತನವನ್ನು ನಮೂದಿಸಿ</string>
+
+    <string name="feature_apply_savings_status_success">ಅರ್ಜಿ ಸಲ್ಲಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ!</string>
+    <string name="feature_apply_savings_status_success_tip">ನೀವು %1$s ಅಡಿಯಲ್ಲಿ ಉಳಿತಾಯ ಖಾತೆಗೆ ಯಶಸ್ವಿಯಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿದ್ದೀರಿ.</string>
+    <string name="feature_apply_savings_status_success_action">ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</string>
+
+    <string name="feature_apply_savings_status_failure">ಅಪ್ಲಿಕೇಶನ್ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="feature_apply_savings_status_failure_tip">%1$s ಅಡಿಯಲ್ಲಿ ಉಳಿತಾಯ ಖಾತೆಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ.</string>
+    <string name="feature_apply_savings_status_failure_action">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+
+</resources>

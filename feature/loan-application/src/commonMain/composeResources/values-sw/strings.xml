@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Omba Mkopo Mpya</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Maombi ya Mkopo</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Jina la Mwombaji</string>
+    <string name="feature_apply_loan_label_loan_product">Bidhaa ya Mkopo</string>
+    <string name="feature_apply_loan_label_purpose">Kusudi la Mkopo</string>
+    <string name="feature_apply_loan_label_disbursement_date">Tarehe ya Utoaji</string>
+    <string name="feature_apply_loan_label_principal_amount">Kiasi Kikuu</string>
+    <string name="feature_apply_loan_label_currency">Sarafu</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Endelea</string>
+    <string name="feature_apply_loan_button_ok">Sawa</string>
+    <string name="feature_apply_loan_button_cancel">Ghairi</string>
+    <string name="feature_apply_loan_button_apply">Omba Mkopo</string>
+    <string name="feature_button_next">Ijayo</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Jina la mwombaji linahitajika</string>
+    <string name="feature_apply_loan_error_name_too_short">Jina la mwombaji lazima liwe na angalau herufi 4</string>
+    <string name="feature_apply_loan_error_name_too_long">Jina la mwombaji lisizidi herufi 100</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Jina la mwombaji lina herufi batili</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Bidhaa ya mkopo inahitajika</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Kiasi kikuu kinahitajika</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Tafadhali weka muundo sahihi wa kiasi</string>
+    <string name="feature_apply_loan_error_amount_too_small">Kiasi kikuu ni kidogo sana</string>
+    <string name="feature_apply_loan_error_amount_too_large">Kiasi kikuu kinazidi kikomo cha juu</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">Kiasi kina nafasi nyingi za desimali kwa sarafu iliyochaguliwa</string>
+    <string name="feature_apply_loan_error_amount_multiple">Kiasi hakiko katika vizidisho sahihi</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Tarehe ya utoaji inahitajika</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Tafadhali weka muundo sahihi wa tarehe (SIKU/MWEZI/MWAKA)</string>
+    <string name="feature_apply_loan_error_date_future">Tarehe ya utoaji lazima iwe ya baadaye</string>
+    <string name="feature_apply_loan_error_date_out_of_range">Tarehe ya utoaji iko mbali sana baadaye (kiwango cha juu miaka 10)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Tatizo la seva upande wetu, haiwezekani kuendelea, jaribu tena baada ya muda mfupi</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Majaribio mengi yaliyoshindwa. Tafadhali jaribu tena baadaye.</string>
+    <string name="feature_apply_loan_error_submit_failed">Imeshindwa kuwasilisha maombi ya mkopo. Tafadhali jaribu tena.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Maombi ya mkopo yamewasilishwa kikamilifu!</string>
+    <string name="feature_apply_loan_success_draft_saved">Rasimu ya maombi imehifadhiwa kikamilifu</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Mabadiliko Hayajahifadhiwa!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Una mabadiliko ambayo hayajahifadhiwa. Je, una uhakika unataka kurudi?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Tupa</string>
+    <string name="feature_apply_loan_action_save_draft">Hifadhi Rasimu</string>
+    <string name="feature_apply_loan_action_retry">Jaribu Tena</string>
+    <string name="feature_apply_loan_action_cancel">Ghairi</string>
+    <string name="feature_apply_loan_action_continue">Endelea</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Weka jina lako kamili</string>
+    <string name="feature_apply_loan_hint_loan_product">Chagua bidhaa ya mkopo</string>
+    <string name="feature_apply_loan_hint_principal_amount">Weka kiasi cha mkopo</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Chagua tarehe ya utoaji</string>
+    <string name="feature_apply_loan_hint_purpose">Eleza kusudi kwa ufupi</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Sarafu imebadilika. Kiasi kitathibitishwa tena.</string>
+    <string name="feature_apply_loan_info_min_amount">Kiasi cha chini cha mkopo: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Kiasi cha juu cha mkopo: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Thibitisha Maelezo</string>
+
+    <string name="feature_apply_loan_status_success">Ombi limewasilishwa kikamilifu</string>
+    <string name="feature_apply_loan_status_success_tip">Maombi yako ya mkopo yamewasilishwa. Utaarifiwa mara tu yatakapopitiwa.</string>
+    <string name="feature_apply_loan_status_success_action">Rudi Nyumbani</string>
+
+    <string name="feature_apply_loan_status_failure">Imeshindwa kuwasilisha ombi</string>
+    <string name="feature_apply_loan_status_failure_tip">Hitilafu imetokea wakati wa kuwasilisha maombi yako ya mkopo. Tafadhali jaribu tena.</string>
+    <string name="feature_apply_loan_status_failure_action">Jaribu tena</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Omba Mkopo Mpya</string>
+    <string name="feature_select_loan_type_choose_loan">Chagua Aina ya Mkopo</string>
+    <string name="feature_select_loan_type_empty">Bidhaa za mkopo hazipatikani kwa sasa</string>
+    <string name="feature_select_loan_type_network_issue">Hakikisha umeunganishwa kwenye mtandao</string>
+    <string name="feature_loan_product_details_terms">Kubali Sheria na Masharti</string>
+
+
+    <string name="feature_loan_apply_loan">Omba Mkopo wa %1$s</string>
+    <string name="feature_loan_get_loan">Pata Mkopo wa %1$s</string>
+    <string name="feature_loan_up_to">Hadi %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s hadi %2$s Riba</string>
+    <string name="feature_loan_terms_and_conditions">Sheria na Masharti</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Uidhinishaji na Utoaji wa Mkopo</string>
+    <string name="feature_loan_interest_rate">Kiwango cha Riba</string>
+    <string name="feature_loan_continue">Endelea</string>
+    <string name="feature_loan_repayment">Ulipaji</string>
+    <string name="feature_loan_security_and_collateral">Usalama na Dhamana</string>
+    <string name="feature_loan_insurance">Bima</string>
+    <string name="feature_loan_default">Kutolipa</string>
+    <string name="feature_loan_documentation">Nyaraka</string>
+    <string name="feature_loan_continue_legal_compliance">Uzingatiaji wa Kisheria</string>
+    <string name="feature_loan_amendments_and_termination">Marekebisho na Ukomeshaji</string>
+    <string name="feature_loan_jurisdiction">Mamlaka</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">Mkopo wa Binafsi utaidhinishwa kulingana na ustahiki wa mwombaji, uthabiti wa mapato, uwezo wa kukopesheka, na sera za ndani za mkopo za Mkopesha. Mkopesha anahifadhi haki ya kuidhinisha au kukataa maombi yoyote ya Mkopo wa Binafsi kwa hiari yake pekee bila kutoa sababu yoyote. Kiasi cha mkopo kilichoidhinishwa kinaweza kutolewa kikamilifu au kwa sehemu kulingana na Mkataba wa Mkopo na mahitaji ya nyaraka. Utoaji unategemea kukamilika kwa mafanikio kwa michakato ya KYC, uthibitishaji wa nyaraka zilizowasilishwa, na kufuata masharti yote yaliyotajwa katika Barua ya Uidhinishaji.</string>
+    <string name="feature_personal_loan_interest_rate_description">Mkopo wa Binafsi unaweza kuwa na kiwango cha riba kisichobadilika au kinachobadilika, kama ilivyochaguliwa na Mkopaji wakati wa Mkataba wa Mkopo. Kwa upande wa mikopo ya kiwango cha riba kinachobadilika, kiwango kinachotumika kinategemea marekebisho ya mara kwa mara kulingana na mabadiliko katika Kigezo au Kiwango cha Rejeleo cha Mkopesha. Mabadiliko kama hayo yatakuwa ya lazima kwa Mkopaji na yanaweza kusababisha mabadiliko katika kiasi cha EMI na/au muda wa mkopo kama itakavyoonekana inafaa na Mkopesha.</string>
+    <string name="feature_personal_loan_repayment_details">Ulipaji wa Mkopo wa Binafsi utafanywa kupitia Malipo ya Kila Mwezi Yaliyosawazishwa (EMIs) yanayojumuisha vipengele vya mkuu na riba. EMI zitaanza kutoka tarehe iliyotajwa katika Mkataba wa Mkopo na zitaendelea kila mwezi hadi kiasi chote cha mkopo pamoja na riba inayotumika kilipwe kikamilifu. Malipo ya mapema au malipo ya sehemu yanaweza kuruhusiwa kulingana na sera zilizopo za Mkopesha na yanaweza kuvutia tozo fulani, haswa kwa mikopo ya kiwango kisichobadilika.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Mikopo ya Binafsi kwa kawaida haina dhamana na haihitaji dhamana ya mali. Hata hivyo, Mkopesha anahifadhi haki ya kuomba dhamana au usalama wa ziada katika kesi za kipekee kulingana na wasifu wa mkopo wa Mkopaji na kiasi cha mkopo. Mahitaji yoyote kama hayo yataelezwa wazi katika Barua ya Uidhinishaji. Mkopaji atagharamia gharama zote zinazohusiana na nyaraka au taratibu za kisheria, ikiwa inafaa.</string>
+    <string name="feature_personal_loan_insurance_details">Ingawa bima ya mali haihitajiki kwa kawaida kwa Mikopo ya Binafsi, Mkopesha anaweza kupendekeza kwamba Mkopaji achague sera ya bima ya maisha ili kulinda kiasi cha mkopo kinachodaiwa ikitokea kifo cha Mkopaji. Hii sio lazima lakini inashauriwa kama hatua ya ulinzi wa kifedha kwa familia au wategemezi wa Mkopaji.</string>
+    <string name="feature_personal_loan_default_details">Kutolipa au kuchelewa kulipa EMI kutajumuisha kutolipa. Katika kesi kama hizo, Mkopesha anaweza kuanzisha kesi za kurejesha ili kukusanya madeni yaliyosalia, ambayo yanaweza kujumuisha hatua za kisheria. Riba ya adhabu na tozo zingine zinaweza kutumika kwa kiasi kilichopitwa na wakati. Kutolipa mara kwa mara au kwa kurudia kunaweza kuathiri vibaya alama ya mkopo ya Mkopaji na uwezo wa kukopa wa baadaye.</string>
+    <string name="feature_personal_loan_documentation_details">Mkopaji anatakiwa kuwasilisha nyaraka sahihi na kamili, ikiwa ni pamoja na lakini sio tu uthibitisho wa utambulisho, uthibitisho wa anwani, maelezo ya mapato, taarifa za benki, na nyaraka zingine zozote zinazoombwa na Mkopesha. Tofauti yoyote, kutoa taarifa za uongo, au kughushi katika nyaraka zilizowasilishwa kunaweza kusababisha kukataliwa kwa maombi ya mkopo au kusitishwa kwa Mkataba wa Mkopo, pamoja na uwezekano wa matokeo ya kisheria.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">Mkopaji lazima ahakikishe anafuata kikamilifu sheria zote za mitaa, jimbo, na kitaifa zinazotumika kuhusiana na majukumu yao ya kifedha. Hii inajumuisha malipo ya kodi kwa wakati, kufuata mahitaji ya udhibiti, na uwasilishaji wa nyaraka halali. Mkopesha hatawajibika kwa ukiukaji wowote wa shisheria unaofanywa na Mkopaji.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">Mkopesha anaweza kurekebisha au kusasisha Sheria na Masharti haya mara kwa mara, kulingana na taarifa ya mapema inayofaa kwa Mkopaji. Mkataba wa Mkopo utachukuliwa kuwa umekoma baada ya kulipa kikamilifu kiasi cha mkopo au kupitia kesi za utaifishaji zilizoanzishwa kutokana na kutolipa.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Migogoro yote inayotokana na au inayohusiana na Mkataba wa Mkopo wa Binafsi itakuwa chini ya mamlaka ya kipekee ya mahakama katika eneo la ofisi iliyosajiliwa ya Mkopesha, isipokuwa imeelezwa vinginevyo katika Mkataba.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Pakia Taarifa za Akaunti ya Benki</string>
+    <string name="feature_upload_docs_collateral">Pakia Nyaraka za Dhamana</string>
+    <string name="feature_upload_docs_signature">Pakia Sahihi</string>
+
+    <string name="feature_upload_file_error">Kuna hitilafu! Imeshindwa kupakia faili</string>
+    <string name="feature_upload_statement_error">Tafadhali pakia taarifa ya benki</string>
+    <string name="feature_upload_property_document_error">Tafadhali pakia hati ya mali</string>
+    <string name="feature_upload_signature_error">Tafadhali pakia sahihi</string>
+    <string name="feature_upload_documents_success_title">Nyaraka zimepakiwa kikamilifu!</string>
+
+    <string name="sign_here">Saini Hapa</string>
+    <string name="reset">Weka upya</string>
+    <string name="sign">Sahihi</string>
+    <string name="capture">Nasa</string>
+    <string name="attach">Ambatisha</string>
+    <string name="upload_signature">Pakia Sahihi</string>
+    <string name="save_and_submit">Hifadhi na Wasilisha</string>
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">انٹرنیٹ کنکشن نہیں ہے</string>
+    <string name="back_online">دوبارہ آن لائن</string>
+    <string name="retry">دوبارہ کوشش کریں</string>
+    <string name="no_data">ڈیٹا موجود نہیں ہے</string>
+    <string name="something_went_wrong">کچھ غلط ہو گیا ہے</string>
+    <string name="core_common_working">سسٹم نارمل کام کر رہا ہے</string>
+    <string name="customer_name">گاہک کا نام</string>
+    <string name="product">پروڈکٹ</string>
+    <string name="error_loading_balance">بیلنس لوڈ کرنے میں غلطی</string>
+    <string name="powered_by">پاورڈ بائی</string>
+    <string name="password_checker_empty_error">پاس ورڈ خالی نہیں ہو سکتا۔</string>
+    <string name="password_checker_too_long_error">پاس ورڈ بہت طویل ہے۔ زیادہ سے زیادہ لمبائی 128 حروف ہے۔</string>
+    <string name="password_checker_min_length_feedback">پاس ورڈ کم از کم 12 حروف کا ہونا چاہیے۔</string>
+    <string name="password_checker_uppercase_feedback">کم از کم ایک بڑا حرف (Uppercase) شامل کریں۔</string>
+    <string name="password_checker_lowercase_feedback">کم از کم ایک چھوٹا حرف (Lowercase) شامل کریں۔</string>
+    <string name="password_checker_digit_feedback">کم از کم ایک نمبر شامل کریں۔</string>
+    <string name="password_checker_special_char_feedback">کم از کم ایک خاص علامت (Special Character) شامل کریں۔</string>
+    <string name="password_checker_strong_length_feedback">مضبوط پاس ورڈ کے لیے کم از کم 12 حروف استعمال کریں۔</string>
+    <string name="password_strength_level_0">بہت کمزور</string>
+    <string name="password_strength_level_1">کمزور</string>
+    <string name="password_strength_level_2">مناسب</string>
+    <string name="password_strength_level_3">بہتر</string>
+    <string name="password_strength_level_4">مضبوط</string>
+    <string name="password_strength_level_5">بہت مضبوط</string>
+    <string name="password_strength_none">پاس ورڈ درج کریں</string>
+    <string name="password_strength_indicator_description">پاس ورڈ کی طاقت کا اشارہ</string>
+    <string name="password_strength_announcement">پاس ورڈ کی طاقت: %1$s</string>
+    <string name="minimum_characters_requirement">کم از کم %1$d حروف</string>
+    <string name="minimum_characters_met">کم از کم حروف کی ضرورت پوری ہو گئی</string>
+    <string name="minimum_characters_not_met">کم از کم حروف کی ضرورت پوری نہیں ہوئی</string>
+    <string name="password_requirements_title">پاس ورڈ کے تقاضے</string>
+    <string name="password_feedback_title">پاس ورڈ کے مشورے</string>
+    <string name="password_feedback_all_good">آپ کا پاس ورڈ تمام تقاضوں پر پورا اترتا ہے!</string>
+    <string name="character_count">%1$d حروف</string>
+    <string name="character_count_with_limit">%1$d / %2$d حروف</string>
+    <string name="validation_email_empty">ای میل ایڈریس خالی نہیں ہو سکتا</string>
+    <string name="validation_email_max_length_exceeded">ای میل ایڈریس کی لمبائی 254 حروف سے زیادہ ہے</string>
+    <string name="validation_email_missing_at_symbol">ای میل ایڈریس میں @ کی علامت ہونی چاہیے</string>
+    <string name="validation_email_starts_with_at">ای میل ایڈریس @ سے شروع نہیں ہو سکتا</string>
+    <string name="validation_email_ends_with_at">ای میل ایڈریس @ پر ختم نہیں ہو سکتا</string>
+    <string name="validation_email_multiple_at_symbols">ای میل ایڈریس میں ایک سے زیادہ @ نہیں ہو سکتے</string>
+    <string name="validation_email_local_empty">ای میل کا پہلا حصہ خالی نہیں ہو سکتا</string>
+    <string name="validation_email_local_max_length">ای میل کے پہلے حصے کی لمبائی 64 حروف سے زیادہ ہے</string>
+    <string name="validation_email_local_starts_with_dot">پہلا حصہ ڈاٹ (.) سے شروع نہیں ہو سکتا</string>
+    <string name="validation_email_local_ends_with_dot">پہلا حصہ ڈاٹ (.) پر ختم نہیں ہو سکتا</string>
+    <string name="validation_email_local_consecutive_dots">پہلے حصے میں مسلسل دو ڈاٹ نہیں ہو سکتے</string>
+    <string name="validation_email_local_invalid_characters">پہلے حصے میں غیر قانونی حروف ہیں</string>
+    <string name="validation_email_domain_empty">ڈومین کا حصہ خالی نہیں ہو سکتا</string>
+    <string name="validation_email_domain_max_length">ڈومین کی لمبائی 253 حروف سے زیادہ ہے</string>
+    <string name="validation_email_domain_missing_dot">ڈومین میں کم از کم ایک ڈاٹ ہونا چاہیے</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ڈومین ڈاٹ سے شروع یا ختم نہیں ہو سکتا</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ڈومین ہائفن (-) سے شروع یا ختم نہیں ہو سکتا</string>
+    <string name="validation_email_domain_insufficient_parts">ڈومین میں ڈاٹ کے ساتھ کم از کم دو حصے ہونے چاہئیں</string>
+    <string name="validation_email_tld_invalid">ٹاپ لیول ڈومین کم از کم 2 حروف کا ہونا چاہیے اور صرف حروف پر مشتمل ہو</string>
+    <string name="validation_email_label_empty">ڈومین لیبل خالی نہیں ہو سکتا</string>
+    <string name="validation_email_label_max_length">ڈومین لیبل کی لمبائی 63 حروف سے زیادہ ہے</string>
+    <string name="validation_email_label_starts_with_hyphen">ڈومین لیبل ہائفن سے شروع نہیں ہو سکتا</string>
+    <string name="validation_email_label_ends_with_hyphen">ڈومین لیبل ہائفن پر ختم نہیں ہو سکتا</string>
+    <string name="validation_email_label_invalid_characters">ڈومین لیبل میں غیر قانونی حروف ہیں</string>
+    <string name="validation_phone_empty">فون نمبر خالی نہیں ہو سکتا</string>
+    <string name="validation_phone_too_short">فون نمبر بہت چھوٹا ہے</string>
+    <string name="validation_phone_too_long">فون نمبر بہت لمبا ہے</string>
+    <string name="validation_phone_invalid_characters">فون نمبر میں غیر قانونی حروف ہیں</string>
+    <string name="validation_phone_spanish_country_code_required">براہ کرم سپین کا کنٹری کوڈ (+34) استعمال کریں</string>
+    <string name="validation_phone_spanish_format_invalid">سپین کے فون نمبر کا فارمیٹ غلط ہے</string>
+    <string name="validation_phone_invalid_for_country">فون نمبر منتخب کردہ ملک کے لیے درست نہیں ہے</string>
+    <string name="validation_phone_no_valid_country_found">فون نمبر کسی بھی ملک کے فارمیٹ سے مطابقت نہیں رکھتا</string>
+    <string name="validation_name_empty">نام خالی نہیں ہو سکتا</string>
+    <string name="validation_name_invalid_characters">نام میں غیر قانونی حروف ہیں</string>
+    <string name="validation_field_required">یہ خانہ پر کرنا ضروری ہے</string>
+    <string name="validation_format_invalid">فارمیٹ غلط ہے</string>
+    <string name="validation_length_exceeded">زیادہ سے زیادہ لمبائی سے تجاوز کر گیا</string>
+    <string name="validation_length_insufficient">کم از کم لمبائی کی شرط پوری نہیں ہوئی</string>
+    <string name="validation_amount_empty">رقم خالی نہیں ہو سکتی</string>
+    <string name="validation_amount_invalid_format">براہ کرم رقم کا درست فارمیٹ درج کریں (مثلاً 99.99)</string>
+    <string name="validation_amount_invalid_number">براہ کرم ایک درست عدد درج کریں</string>
+    <string name="validation_amount_negative">رقم منفی نہیں ہو سکتی</string>
+    <string name="validation_amount_too_small">رقم کم از کم 0.01 ہونی چاہیے</string>
+    <string name="validation_amount_too_large">رقم 999,999,999.99 سے زیادہ نہیں ہو سکتی</string>
+    <string name="validation_amount_invalid_decimal_places">اس کرنسی کے لیے رقم میں اعشاریہ کے مقامات بہت زیادہ ہیں</string>
+    <string name="validation_amount_invalid_increment">رقم اس کرنسی کے لیے درست اضافے (Increment) میں ہونی چاہیے</string>
+    <string name="savings_account">بچت اکاؤنٹ</string>
+    <string name="available_balance">دستیاب بیلنس</string>
+    <string name="select_other_payment_account">دوسرا ادائیگی کا اکاؤنٹ منتخب کریں</string>
+    <string name="pay_from">یہاں سے ادائیگی کریں</string>
+    <string name="available_balance_formatted">دستیاب بیلنس - %1$s</string>
+    <string name="feature_dashboard_welcome_back">Mifos میں خوش آمدید</string>
+    <string name="feature_dashboard_no_accounts_title">ابھی تک کوئی اکاؤنٹ نہیں ہے</string>
+    <string name="feature_dashboard_no_accounts_description">ہمارے ساتھ اپنا پہلا اکاؤنٹ کھول کر اپنے مالی سفر کا آغاز کریں۔</string>
+    <string name="feature_dashboard_open_account">اکاؤنٹ کھولیں</string>
+    <string name="feature_savings_filter">فلٹرز</string>
+    <string name="feature_savings_reset">ری سیٹ</string>
+    <string name="feature_savings_apply">لاگو کریں</string>
+</resources>
