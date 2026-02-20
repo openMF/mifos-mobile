@@ -12,4 +12,5 @@
     <string name="notification">إشعار</string>
     <string name="dialog_action_ok">موافق</string>
     <string name="no_notification">لا توجد إشعارات</string>
+
 </resources>
