@@ -62,6 +62,7 @@ fun NavController.navigateToSavingsFillApplicationScreen(
  *   where users can review their application before final submission.
  * @param navigateBack A lambda function to handle the back navigation event.
  */
+@Suppress("MaxLineLength")
 fun NavGraphBuilder.savingsFillApplicationDestination(
     navigateToConfirmDetailsScreen: (Long, String, String, String, String, String, String, Long, Boolean, String) -> Unit,
     navigateBack: () -> Unit,

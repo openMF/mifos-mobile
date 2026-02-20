@@ -74,6 +74,7 @@ import template.core.base.designsystem.theme.KptTheme
  * @param viewModel The ViewModel responsible for the screen's logic and state.
  */
 @Composable
+@Suppress("MaxLineLength")
 internal fun SavingsFillApplicationScreen(
     navigateBack: () -> Unit,
     navigateToConfirmDetailsScreen: (Long, String, String, String, String, String, String, Long, Boolean, String) -> Unit,
