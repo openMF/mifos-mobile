@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">സമീപകാല ഇടപാടുകൾ</string>
+    <string name="no_transaction">ഇടപാടുകൾ ഒന്നുമില്ല</string>
+    <string name="atm_icon">എടിഎം ഐക്കൺ</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു</string>
+    <string name="filter">ഫിൽട്ടർ</string>
+    <string name="filter_transactions">ഇടപാടുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="clear_all">എല്ലാം മായ്‌ക്കുക</string>
+    <string name="filter_by_account">അക്കൗണ്ട് പ്രകാരം ഫിൽട്ടർ ചെയ്യുക:</string>
+    <string name="account_number_label">അക്കൗണ്ട് നമ്പർ : %1$s</string>
+    <string name="select_account">അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
+    <string name="balance">ബാലൻസ് : %1$s %2$s</string>
+    <string name="account">അക്കൗണ്ട്</string>
+    <string name="transaction_type">ഇടപാട് തരം:</string>
+    <string name="all">എല്ലാം</string>
+    <string name="debits">ഡെബിറ്റുകൾ</string>
+    <string name="credits">ക്രെഡിറ്റുകൾ</string>
+    <string name="apply_filters">ഫിൽട്ടറുകൾ പ്രയോഗിക്കുക</string>
+</resources>

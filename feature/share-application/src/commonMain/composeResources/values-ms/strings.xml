@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Butiran Permohonan Saham</string>
+    <string name="feature_share_navigation_back">Kembali</string>
+
+    <string name="feature_share_label_applicant_name">Nama Pemohon</string>
+    <string name="feature_share_label_submission_date">Tarikh Penyerahan</string>
+    <string name="feature_share_label_product_name">Nama Produk</string>
+
+    <string name="feature_share_button_next">Seterusnya</string>
+
+    <string name="feature_apply_share_error_server">Masalah pelayan dari pihak kami, tidak dapat meneruskan. Cuba lagi sebentar lagi</string>
+    <string name="feature_apply_share_error_too_many_attempts">Terlalu banyak percubaan gagal. Sila cuba lagi kemudian.</string>
+    <string name="feature_apply_share_error_submit_failed">Gagal menyerahkan permohonan simpanan. Sila cuba lagi.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Perubahan Tidak Disimpan!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Anda mempunyai perubahan yang tidak disimpan. Adakah anda pasti mahu kembali?</string>
+    <string name="feature_share_no_products_available">Tiada Produk Saham Tersedia untuk memohon akaun saham</string>
+
+
+    <string name="feature_apply_share_label_terms">Terma</string>
+    <string name="feature_apply_share_label_currency">Mata Wang</string>
+    <string name="feature_apply_share_label_current_price">Harga Semasa</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Jumlah Bilangan Saham</string>
+    <string name="feature_apply_share_label_default_savings_account">Akaun Simpanan Lalai</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Tempoh Aktif Minimum</string>
+    <string name="feature_apply_share_section_minimum_active_period">Tempoh Aktif Minimum</string>
+    <string name="feature_apply_share_label_minimum_frequency">Kekerapan</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Jenis Kekerapan</string>
+
+    <string name="feature_apply_share_label_lockin_period">Tempoh Terkunci (Lock-in)</string>
+    <string name="feature_apply_share_section_lockin_period">Tempoh Terkunci (Lock-in)</string>
+    <string name="feature_apply_share_label_lockin_frequency">Kekerapan</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Jenis Kekerapan</string>
+
+    <string name="feature_apply_share_error_frequency_required">Kekerapan diperlukan</string>
+    <string name="feature_apply_share_frequency_invalid">Sila masukkan kekerapan yang sah</string>
+
+    <string name="feature_apply_share_error_shares_required">Saham diperlukan</string>
+    <string name="feature_apply_share_shares_invalid">Sila masukkan saham yang sah</string>
+
+    <string name="feature_apply_share_error_price_required">Harga diperlukan</string>
+    <string name="feature_apply_share_price_invalid">Sila masukkan harga yang sah</string>
+
+    <string name="feature_apply_share_status_failure">Permohonan Gagal Diserahkan</string>
+    <string name="feature_apply_share_status_failure_tip">Gagal memohon akaun saham di bawah %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Cuba Lagi</string>
+
+    <string name="feature_apply_share_status_success">Berjaya Memohon!</string>
+    <string name="feature_apply_share_status_success_tip">Anda telah berjaya memohon akaun saham di bawah %1$s</string>
+    <string name="feature_apply_share_status_success_action">Kembali Ke Laman Utama</string>
+</resources>
