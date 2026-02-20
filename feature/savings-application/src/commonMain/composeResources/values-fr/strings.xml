@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Détails de la demande d\'épargne</string>
+
+    <string name="feature_apply_savings_section_fill_details">Remplir les détails de la demande</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Nom du demandeur</string>
+    <string name="feature_apply_savings_label_savings_product">Nom du produit</string>
+    <string name="feature_apply_savings_label_field_officer">Agent de terrain</string>
+    <string name="feature_apply_savings_label_submission_date">Date de soumission</string>
+    <string name="feature_apply_savings_label_fill_application_details">Remplir les détails de la demande</string>
+    <string name="feature_apply_savings_label_details">Détails</string>
+    <string name="feature_apply_savings_label_currency">Devise</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Solde d\'ouverture minimum</string>
+    <string name="feature_apply_savings_label_lock_in_period">Période de blocage</string>
+    <string name="feature_apply_savings_label_frequency">Fréquence</string>
+    <string name="feature_apply_savings_label_frequency_type">Type de fréquence</string>
+    <string name="feature_apply_savings_label_overdraft">Découvert</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Demande d\'autorisation de découvert</string>
+
+    <string name="feature_apply_savings_button_continue">Continuer</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Annuler</string>
+    <string name="feature_apply_savings_button_apply">Demander l\'épargne</string>
+    <string name="feature_button_next">Suivant</string>
+
+    <string name="feature_apply_savings_error_amount_empty">Le montant principal est requis</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Veuillez entrer un format de montant valide</string>
+    <string name="feature_apply_savings_error_amount_too_small">Le montant principal est trop petit</string>
+    <string name="feature_apply_savings_error_amount_too_large">Le montant principal dépasse la limite maximale</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Le montant a trop de décimales pour la devise sélectionnée</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Le produit d\'épargne est requis</string>
+
+    <string name="feature_apply_savings_error_server">Problème de serveur de notre côté, impossible de continuer. Réessayez dans un moment.</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Trop de tentatives échouées. Veuillez réessayer plus tard.</string>
+    <string name="feature_apply_savings_error_submit_failed">Échec de la soumission de la demande d\'épargne. Veuillez réessayer.</string>
+
+    <string name="feature_apply_savings_success_submit">Demande d\'épargne soumise avec succès !</string>
+    <string name="feature_apply_savings_success_draft_saved">Brouillon de la demande enregistré avec succès</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Modifications non enregistrées !</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir revenir en arrière ?</string>
+
+
+    <string name="feature_apply_savings_label_next">Suivant</string>
+
+    <string name="feature_apply_savings_error_currency_required">La devise est requise</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Le solde d\'ouverture minimum est requis</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">La période de blocage est requise</string>
+    <string name="feature_apply_savings_error_frequency_required">La fréquence est requise</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Entrez une fréquence valide</string>
+
+    <string name="feature_apply_savings_status_success">Demande réussie !</string>
+    <string name="feature_apply_savings_status_success_tip">Vous avez demandé avec succès un compte d\'épargne sous %1$s.</string>
+    <string name="feature_apply_savings_status_success_action">Retour à l\'accueil</string>
+
+    <string name="feature_apply_savings_status_failure">Échec de la soumission de la demande</string>
+    <string name="feature_apply_savings_status_failure_tip">Échec de la demande de compte d\'épargne sous %1$s.</string>
+    <string name="feature_apply_savings_status_failure_action">Réessayer</string>
+
+</resources>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Detail Aplikasi Saham</string>
+    <string name="feature_share_navigation_back">Kembali</string>
+
+    <string name="feature_share_label_applicant_name">Nama Pemohon</string>
+    <string name="feature_share_label_submission_date">Tanggal Pengajuan</string>
+    <string name="feature_share_label_product_name">Nama Produk</string>
+
+    <string name="feature_share_button_next">Lanjut</string>
+
+    <string name="feature_apply_share_error_server">Masalah server dari sisi kami, tidak dapat melanjutkan. Coba lagi sesaat lagi</string>
+    <string name="feature_apply_share_error_too_many_attempts">Terlalu banyak upaya gagal. Silakan coba lagi nanti.</string>
+    <string name="feature_apply_share_error_submit_failed">Gagal mengirimkan aplikasi tabungan. Silakan coba lagi.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Perubahan Belum Disimpan!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin kembali?</string>
+    <string name="feature_share_no_products_available">Tidak Ada Produk Saham Tersedia untuk pengajuan akun saham</string>
+
+
+    <string name="feature_apply_share_label_terms">Syarat</string>
+    <string name="feature_apply_share_label_currency">Mata Uang</string>
+    <string name="feature_apply_share_label_current_price">Harga Saat Ini</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Jumlah Total Saham</string>
+    <string name="feature_apply_share_label_default_savings_account">Akun Tabungan Default</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Periode Aktif Minimum</string>
+    <string name="feature_apply_share_section_minimum_active_period">Periode Aktif Minimum</string>
+    <string name="feature_apply_share_label_minimum_frequency">Frekuensi</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Jenis Frekuensi</string>
+
+    <string name="feature_apply_share_label_lockin_period">Periode Penguncian</string>
+    <string name="feature_apply_share_section_lockin_period">Periode Penguncian</string>
+    <string name="feature_apply_share_label_lockin_frequency">Frekuensi</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Jenis Frekuensi</string>
+
+    <string name="feature_apply_share_error_frequency_required">Frekuensi diperlukan</string>
+    <string name="feature_apply_share_frequency_invalid">Silakan masukkan frekuensi yang valid</string>
+
+    <string name="feature_apply_share_error_shares_required">Saham diperlukan</string>
+    <string name="feature_apply_share_shares_invalid">Silakan masukkan saham yang valid</string>
+
+    <string name="feature_apply_share_error_price_required">Harga diperlukan</string>
+    <string name="feature_apply_share_price_invalid">Silakan masukkan harga yang valid</string>
+
+    <string name="feature_apply_share_status_failure">Aplikasi Gagal Dikirim</string>
+    <string name="feature_apply_share_status_failure_tip">Gagal mengajukan akun saham di bawah %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Coba Lagi</string>
+
+    <string name="feature_apply_share_status_success">Berhasil Diajukan!</string>
+    <string name="feature_apply_share_status_success_tip">Anda telah berhasil mengajukan akun saham di bawah %1$s</string>
+    <string name="feature_apply_share_status_success_action">Kembali Ke Beranda</string>
+</resources>

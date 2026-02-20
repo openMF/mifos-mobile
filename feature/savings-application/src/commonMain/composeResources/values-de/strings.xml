@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Details zum Sparantrag</string>
+
+    <string name="feature_apply_savings_section_fill_details">Antragsdetails ausfüllen</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Name des Antragstellers</string>
+    <string name="feature_apply_savings_label_savings_product">Produktname</string>
+    <string name="feature_apply_savings_label_field_officer">Außendienstmitarbeiter</string>
+    <string name="feature_apply_savings_label_submission_date">Einreichungsdatum</string>
+    <string name="feature_apply_savings_label_fill_application_details">Antragsdetails ausfüllen</string>
+    <string name="feature_apply_savings_label_details">Details</string>
+    <string name="feature_apply_savings_label_currency">Währung</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Mindesteröffnungsbetrag</string>
+    <string name="feature_apply_savings_label_lock_in_period">Sperrfrist</string>
+    <string name="feature_apply_savings_label_frequency">Frequenz</string>
+    <string name="feature_apply_savings_label_frequency_type">Frequenztyp</string>
+    <string name="feature_apply_savings_label_overdraft">Überziehung</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Überziehung beantragen</string>
+
+    <string name="feature_apply_savings_button_continue">Weiter</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Abbrechen</string>
+    <string name="feature_apply_savings_button_apply">Sparen beantragen</string>
+    <string name="feature_button_next">Weiter</string>
+
+    <string name="feature_apply_savings_error_amount_empty">Kapitalbetrag ist erforderlich</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Bitte geben Sie ein gültiges Betragsformat ein</string>
+    <string name="feature_apply_savings_error_amount_too_small">Kapitalbetrag ist zu gering</string>
+    <string name="feature_apply_savings_error_amount_too_large">Kapitalbetrag überschreitet das Maximum</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Betrag hat zu viele Nachkommastellen für die gewählte Währung</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Sparprodukt ist erforderlich</string>
+
+    <string name="feature_apply_savings_error_server">Serverproblem auf unserer Seite, Vorgang kann nicht fortgesetzt werden. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_apply_savings_error_submit_failed">Antrag auf Sparkonto fehlgeschlagen. Bitte versuchen Sie es erneut.</string>
+
+    <string name="feature_apply_savings_success_submit">Sparantrag erfolgreich eingereicht!</string>
+    <string name="feature_apply_savings_success_draft_saved">Antragsentwurf erfolgreich gespeichert</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Ungespeicherte Änderungen!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Sie haben ungespeicherte Änderungen. Sind Sie sicher, dass Sie zurückgehen möchten?</string>
+
+
+    <string name="feature_apply_savings_label_next">Weiter</string>
+
+    <string name="feature_apply_savings_error_currency_required">Währung ist erforderlich</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Mindesteröffnungsbetrag ist erforderlich</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Sperrfrist ist erforderlich</string>
+    <string name="feature_apply_savings_error_frequency_required">Frequenz ist erforderlich</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Geben Sie eine gültige Frequenz ein</string>
+
+    <string name="feature_apply_savings_status_success">Erfolgreich beantragt!</string>
+    <string name="feature_apply_savings_status_success_tip">Sie haben erfolgreich ein Sparkonto unter %1$s beantragt.</string>
+    <string name="feature_apply_savings_status_success_action">Zurück zur Startseite</string>
+
+    <string name="feature_apply_savings_status_failure">Antrag konnte nicht gesendet werden</string>
+    <string name="feature_apply_savings_status_failure_tip">Antrag auf ein Sparkonto unter %1$s fehlgeschlagen.</string>
+    <string name="feature_apply_savings_status_failure_action">Erneut versuchen</string>
+
+</resources>
