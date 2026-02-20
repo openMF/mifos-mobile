@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">পরিমাণ প্রয়োজন</string>
+    <string name="feature_tpt_error_amount_invalid">অনুগ্রহ করে একটি সঠিক পরিমাণ লিখুন</string>
+    <string name="feature_tpt_error_remarks_empty">মন্তব্য খালি রাখা যাবে না</string>
+    <string name="feature_tpt_error_remarks_invalid">অবৈধ মন্তব্য প্রবেশ করানো হয়েছে</string>
+    <string name="feature_tpt_error_server">সার্ভারে সমস্যা দেখা দিয়েছে, পরবর্তীতে আবার চেষ্টা করুন</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">পরিমাণ উপলব্ধ ব্যালেন্সের বেশি</string>
+    <string name="feature_tpt_label_origin_account">উৎস অ্যাকাউন্ট</string>
+    <string name="feature_tpt_label_origin_account_hint">অন্য পেমেন্ট অ্যাকাউন্ট নির্বাচন করুন</string>
+    <string name="feature_tpt_label_destination">গন্তব্য অ্যাকাউন্ট</string>
+    <string name="feature_tpt_label_amount">পরিমাণ</string>
+    <string name="feature_tpt_label_remarks">মন্তব্য</string>
+    <string name="feature_tpt_tip">গন্তব্য অ্যাকাউন্ট খুঁজে পাচ্ছেন না?</string>
+    <string name="feature_tpt_tip_action">সুবিধাভোগী যোগ করুন!</string>
+    <string name="feature_tpt_transfer_button">টাকা স্থানান্তর করুন</string>
+</resources>

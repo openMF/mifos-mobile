@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Maelezo ya Maombi ya Hisa</string>
+    <string name="feature_share_navigation_back">Nyuma</string>
+
+    <string name="feature_share_label_applicant_name">Jina la Mwombaji</string>
+    <string name="feature_share_label_submission_date">Tarehe ya Kuwasilisha</string>
+    <string name="feature_share_label_product_name">Jina la Bidhaa</string>
+
+    <string name="feature_share_button_next">Endelea</string>
+
+    <string name="feature_apply_share_error_server">Tatizo la seva kutoka upande wetu, haiwezi kuendelea. Jaribu tena baada ya muda</string>
+    <string name="feature_apply_share_error_too_many_attempts">Majaribio mengi yaliyoshindikana. Tafadhali jaribu tena baadaye.</string>
+    <string name="feature_apply_share_error_submit_failed">Imeshindwa kuwasilisha maombi ya akiba. Tafadhali jaribu tena.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Mabadiliko Hayajahifadhiwa!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Una mabadiliko ambayo hayajahifadhiwa. Una uhakika unataka kurudi?</string>
+    <string name="feature_share_no_products_available">Hakuna Bidhaa za Hisa zinazopatikana kwa ajili ya kuomba akaunti ya hisa</string>
+
+
+    <string name="feature_apply_share_label_terms">Masharti</string>
+    <string name="feature_apply_share_label_currency">Sarafu</string>
+    <string name="feature_apply_share_label_current_price">Bei ya Sasa</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Jumla ya Idadi ya Hisa</string>
+    <string name="feature_apply_share_label_default_savings_account">Akaunti ya Akiba ya Msingi</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Kipindi cha Chini cha Utendaji</string>
+    <string name="feature_apply_share_section_minimum_active_period">Kipindi cha Chini cha Utendaji</string>
+    <string name="feature_apply_share_label_minimum_frequency">Marudio (Frequency)</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Aina ya Marudio</string>
+
+    <string name="feature_apply_share_label_lockin_period">Kipindi cha Kuzuia (Lock-in)</string>
+    <string name="feature_apply_share_section_lockin_period">Kipindi cha Kuzuia</string>
+    <string name="feature_apply_share_label_lockin_frequency">Marudio</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Aina ya Marudio</string>
+
+    <string name="feature_apply_share_error_frequency_required">Marudio yanahitajika</string>
+    <string name="feature_apply_share_frequency_invalid">Tafadhali ingiza marudio sahihi</string>
+
+    <string name="feature_apply_share_error_shares_required">Hisa zinahitajika</string>
+    <string name="feature_apply_share_shares_invalid">Tafadhali ingiza hisa sahihi</string>
+
+    <string name="feature_apply_share_error_price_required">Bei inahitajika</string>
+    <string name="feature_apply_share_price_invalid">Tafadhali ingiza bei sahihi</string>
+
+    <string name="feature_apply_share_status_failure">Imeshindwa Kuwasilisha Maombi</string>
+    <string name="feature_apply_share_status_failure_tip">Imeshindwa kuomba akaunti ya hisa chini ya %1$s</string>
+    <string name="feature_apply_share_status_failure_action">Jaribu Tena</string>
+
+    <string name="feature_apply_share_status_success">Imefanikiwa Kuomba!</string>
+    <string name="feature_apply_share_status_success_tip">Umeomba akaunti ya hisa kwa mafanikio chini ya %1$s</string>
+    <string name="feature_apply_share_status_success_action">Rudi Nyumbani</string>
+</resources>

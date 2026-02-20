@@ -227,6 +227,7 @@ class LoanAccountsViewmodel(
             is DataState.Success -> {
                 val loanAccounts = dataState.data.loanAccounts
                 val filtered = filterAccounts(selectedFilters, loanAccounts)
+                val sortedAccounts = sortAccountsByStatus(filtered)
                 updateState {
                     it.copy(
                         decimals = filtered.firstOrNull()?.currency?.decimalPlaces?.toInt() ?: 2,
@@ -243,7 +244,7 @@ class LoanAccountsViewmodel(
                         items = filtered.size,
                         isFilteredEmpty = isFilteredEmpty,
                         currency = loanAccounts.firstOrNull()?.currency?.displaySymbol,
-                        loanAccounts = filtered,
+                        loanAccounts = sortedAccounts,
                         originalAccounts = loanAccounts,
                         selectedFilters = selectedFilters,
                         uiState = if (isEmptyAccounts) {
@@ -255,6 +256,10 @@ class LoanAccountsViewmodel(
                 }
             }
         }
+    }
+
+    private fun sortAccountsByStatus(accounts: List<LoanAccount>): List<LoanAccount> {
+        return accounts.sortedBy { it.status?.sortOrder ?: Int.MAX_VALUE }
     }
 
     /**

@@ -44,6 +44,9 @@ data class Status(
     val loanStatus: LoanStatus?
         get() = LoanStatus.fromStatus(value)
 
+    val sortOrder: Int
+        get() = loanStatus?.sortOrder ?: Int.MAX_VALUE
+
     fun isLoanTypeWithdrawn(): Boolean {
         return !(
             this.active == true || this.closed == true || this.pendingApproval == true ||

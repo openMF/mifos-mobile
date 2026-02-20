@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">ផ្ទេរប្រាក់</string>
+    <string name="transferred_successfully">បានផ្ទេរដោយជោគជ័យ</string>
+    <string name="amount">ចំនួនទឹកប្រាក់</string>
+    <string name="transfer_from_savings">ផ្ទេរពីគណនីសន្សំ</string>
+    <string name="pay_from">ទូទាត់ពី</string>
+    <string name="date">កាលបរិច្ឆេទ</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="remark">ចំណាំ</string>
+    <string name="make_transfer">ធ្វើការផ្ទេរប្រាក់</string>
+    <string name="pay_to">ទូទាត់ទៅ</string>
+    <string name="remarks">ការកត់សម្គាល់</string>
+    <string name="error_icon_description">កំហុស</string>
+    <string name="error_description">ចំនួនទឹកប្រាក់មិនគួរមានតួអក្សរមិនត្រឹមត្រូវទេ</string>
+    <string name="transfer_failed">ការផ្ទេរបានបរាជ័យ</string>
+    <string name="transfer_successful">ការផ្ទេរជោគជ័យ</string>
+    <string name="back_to_accounts">ត្រឡប់ទៅអេក្រង់ដើមវិញ</string>
+    <string name="transfer_id_prefix">លេខសម្គាល់ការផ្ទេរ៖</string>
+    <string name="feature_make_transfer_error_amount_required">តម្រូវឱ្យបញ្ចូលចំនួនទឹកប្រាក់</string>
+    <string name="feature_make_transfer_error_amount_invalid">សូមបញ្ចូលចំនួនទឹកប្រាក់ឱ្យបានត្រឹមត្រូវ</string>
+    <string name="feature_make_transfer_error_remarks_empty">ចំណាំមិនអាចទទេបានទេ</string>
+    <string name="feature_make_transfer_error_remarks_invalid">ចំណាំដែលបានបញ្ចូលមិនត្រឹមត្រូវ</string>
+    <string name="feature_make_transfer_error_server">បញ្ហាម៉ាស៊ីនមេពីខាងយើង មិនអាចបន្តបានទេ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ</string>
+    <string name="feature_make_transfer_account_number">លេខគណនី</string>
+    <string name="feature_make_transfer_customer_name">ឈ្មោះអតិថិជន</string>
+    <string name="feature_make_transfer_beneficiary_name">ឈ្មោះអ្នកទទួលផល</string>
+    <string name="feature_make_transfer_details">ព័ត៌មានលម្អិតនៃការផ្ទេរ</string>
+</resources>

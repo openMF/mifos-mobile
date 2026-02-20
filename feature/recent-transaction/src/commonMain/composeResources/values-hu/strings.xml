@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">Legutóbbi tranzakciók</string>
+    <string name="no_transaction">Nincs tranzakció</string>
+    <string name="atm_icon">ATM ikon</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Hiba történt</string>
+    <string name="filter">Szűrés</string>
+    <string name="filter_transactions">Tranzakciók szűrése</string>
+    <string name="clear_all">Összes törlése</string>
+    <string name="filter_by_account">Szűrés számla szerint:</string>
+    <string name="account_number_label">Számlaszám: %1$s</string>
+    <string name="select_account">Számla kiválasztása</string>
+    <string name="balance">Egyenleg: %1$s %2$s</string>
+    <string name="account">Számla</string>
+    <string name="transaction_type">Tranzakció típusa:</string>
+    <string name="all">Összes</string>
+    <string name="debits">Terhelések</string>
+    <string name="credits">Jóváírások</string>
+    <string name="apply_filters">Szűrők alkalmazása</string>
+</resources>

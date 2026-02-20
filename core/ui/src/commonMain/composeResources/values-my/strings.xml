@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">အင်တာနက်ချိတ်ဆက်မှုမရှိပါ</string>
+    <string name="back_online">အင်တာနက်ပြန်တက်လာပါပြီ</string>
+    <string name="retry">ပြန်လည်ကြိုးစားပါ</string>
+    <string name="no_data">ဒေတာမရှိပါ</string>
+    <string name="something_went_wrong">တစ်ခုခုမှားယွင်းနေပါသည်</string>
+    <string name="core_common_working">အခြေခံစနစ် ပုံမှန်အလုပ်လုပ်နေပါသည်</string>
+    <string name="customer_name">ဝယ်ယူသူအမည်</string>
+    <string name="product">ထုတ်ကုန်</string>
+    <string name="error_loading_balance">လက်ကျန်ငွေပြသရာတွင် အမှားအယွင်းရှိနေပါသည်</string>
+
+    <string name="powered_by">ပံ့ပိုးထားသောစနစ် -</string>
+
+    <string name="password_checker_empty_error">စကားဝှက်အလွတ်မဖြစ်ရပါ။</string>
+    <string name="password_checker_too_long_error">စကားဝှက် အလွန်ရှည်လျားနေပါသည်။ အများဆုံး ၁၂၈ လုံးသာ ထားရှိနိုင်ပါသည်။</string>
+
+    <string name="password_checker_min_length_feedback">စကားဝှက်သည် အနည်းဆုံး ၁၂ လုံးရှိသင့်ပါသည်။</string>
+    <string name="password_checker_uppercase_feedback">အနည်းဆုံး အင်္ဂလိပ်စာလုံးကြီးတစ်လုံး ပါဝင်ရပါမည်။</string>
+    <string name="password_checker_lowercase_feedback">အနည်းဆုံး အင်္ဂလိပ်စာလုံးသေးတစ်လုံး ပါဝင်ရပါမည်။</string>
+    <string name="password_checker_digit_feedback">အနည်းဆုံး ဂဏန်းတစ်လုံး ပါဝင်ရပါမည်။</string>
+    <string name="password_checker_special_char_feedback">အနည်းဆုံး အထူးသင်္ကေတတစ်ခု ပါဝင်ရပါမည်။</string>
+    <string name="password_checker_strong_length_feedback">စကားဝှက် ပိုမိုခိုင်မာစေရန် အနည်းဆုံး ၁၂ လုံး အသုံးပြုပါ။</string>
+
+    <string name="password_strength_level_0">အလွန်အားနည်းသည်</string>
+    <string name="password_strength_level_1">အားနည်းသည်</string>
+    <string name="password_strength_level_2">အသင့်အတင့်</string>
+    <string name="password_strength_level_3">ကောင်းမွန်သည်</string>
+    <string name="password_strength_level_4">ခိုင်မာသည်</string>
+    <string name="password_strength_level_5">အလွန်ခိုင်မာသည်</string>
+    <string name="password_strength_none">စကားဝှက်ရိုက်ထည့်ပါ</string>
+
+    <string name="password_strength_indicator_description">စကားဝှက်ခိုင်မာမှုပြကိရိယာ</string>
+    <string name="password_strength_announcement">စကားဝှက်ခိုင်မာမှုအဆင့် - %1$s</string>
+    <string name="minimum_characters_requirement">အနည်းဆုံး %1$d လုံး လိုအပ်ပါသည်</string>
+    <string name="minimum_characters_met">အနည်းဆုံးလိုအပ်ချက် ပြည့်မီပါသည်</string>
+    <string name="minimum_characters_not_met">အနည်းဆုံးလိုအပ်ချက် မပြည့်မီပါ</string>
+
+    <string name="password_requirements_title">စကားဝှက်သတ်မှတ်ချက်များ</string>
+    <string name="password_feedback_title">စကားဝှက်အတွက် အကြံပြုချက်များ</string>
+    <string name="password_feedback_all_good">သင့်စကားဝှက်သည် သတ်မှတ်ချက်အားလုံးနှင့် ကိုက်ညီပါသည်!</string>
+    <string name="character_count">%1$d လုံး</string>
+    <string name="character_count_with_limit">%1$d / %2$d လုံး</string>
+
+    <string name="validation_email_empty">အီးမေးလ်လိပ်စာ အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_email_max_length_exceeded">အီးမေးလ်လိပ်စာသည် အများဆုံးသတ်မှတ်ထားသော ၂၅၄ လုံးထက် ကျော်လွန်နေပါသည်</string>
+    <string name="validation_email_missing_at_symbol">အီးမေးလ်လိပ်စာတွင် @ သင်္ကေတ ပါဝင်ရပါမည်</string>
+    <string name="validation_email_starts_with_at">အီးမေးလ်လိပ်စာသည် @ သင်္ကေတနှင့် မစရပါ</string>
+    <string name="validation_email_ends_with_at">အီးမေးလ်လိပ်စာသည် @ သင်္ကေတနှင့် မဆုံးရပါ</string>
+    <string name="validation_email_multiple_at_symbols">အီးမေးလ်လိပ်စာတွင် @ သင်္ကေတ တစ်ခုထက်ပို၍ မပါဝင်ရပါ</string>
+
+    <string name="validation_email_local_empty">အီးမေးလ်ရှေ့ပိုင်း အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_email_local_max_length">အီးမေးလ်ရှေ့ပိုင်းသည် အများဆုံး ၆၄ လုံးထက် ကျော်လွန်နေပါသည်</string>
+    <string name="validation_email_local_starts_with_dot">အီးမေးလ်ရှေ့ပိုင်းသည် အစက် (.) နှင့် မစရပါ</string>
+    <string name="validation_email_local_ends_with_dot">အီးမေးလ်ရှေ့ပိုင်းသည် အစက် (.) နှင့် မဆုံးရပါ</string>
+    <string name="validation_email_local_consecutive_dots">အီးမေးလ်ရှေ့ပိုင်းတွင် အစက်များ ထပ်လျက်မပါဝင်ရပါ</string>
+    <string name="validation_email_local_invalid_characters">အီးမေးလ်ရှေ့ပိုင်းတွင် မမှန်ကန်သော စာလုံးများ ပါဝင်နေပါသည်</string>
+
+    <string name="validation_email_domain_empty">ဒိုမိန်းအပိုင်း အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_email_domain_max_length">ဒိုမိန်းအပိုင်းသည် အများဆုံး ၂၅၃ လုံးထက် ကျော်လွန်နေပါသည်</string>
+    <string name="validation_email_domain_missing_dot">ဒိုမိန်းတွင် အနည်းဆုံး အစက်တစ်စက် ပါဝင်ရပါမည်</string>
+    <string name="validation_email_domain_starts_ends_with_dot">ဒိုမိန်းသည် အစက်နှင့် စခြင်း သို့မဟုတ် ဆုံးခြင်း မရှိရပါ</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">ဒိုမိန်းသည် (-) သင်္ကေတနှင့် စခြင်း သို့မဟုတ် ဆုံးခြင်း မရှိရပါ</string>
+    <string name="validation_email_domain_insufficient_parts">ဒိုမိန်းတွင် အစက်ဖြင့် ခွဲထားသော အစိတ်အပိုင်း အနည်းဆုံး နှစ်ခု ပါဝင်ရပါမည်</string>
+    <string name="validation_email_tld_invalid">Top-level domain (TLD) သည် အနည်းဆုံး စာလုံး ၂ လုံးရှိရမည်ဖြစ်ပြီး စာလုံးများသာ ဖြစ်ရပါမည်</string>
+
+    <string name="validation_email_label_empty">ဒိုမိန်းအမည် အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_email_label_max_length">ဒိုမိန်းအမည်သည် အများဆုံး ၆၃ လုံးထက် ကျော်လွန်နေပါသည်</string>
+    <string name="validation_email_label_starts_with_hyphen">ဒိုမိန်းအမည်သည် (-) သင်္ကေတနှင့် မစရပါ</string>
+    <string name="validation_email_label_ends_with_hyphen">ဒိုမိန်းအမည်သည် (-) သင်္ကေတနှင့် မဆုံးရပါ</string>
+    <string name="validation_email_label_invalid_characters">ဒိုမိန်းအမည်တွင် မမှန်ကန်သော စာလုံးများ ပါဝင်နေပါသည်</string>
+
+    <string name="validation_phone_empty">ဖုန်းနံပါတ် အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_phone_too_short">ဖုန်းနံပါတ် အလွန်တိုနေပါသည်</string>
+    <string name="validation_phone_too_long">ဖုန်းနံပါတ် အလွန်ရှည်နေပါသည်</string>
+    <string name="validation_phone_invalid_characters">ဖုန်းနံပါတ်တွင် မမှန်ကန်သော ဂဏန်းများ ပါဝင်နေပါသည်</string>
+    <string name="validation_phone_spanish_country_code_required">စပိန်နိုင်ငံ ကုဒ် (+34) ကို အသုံးပြုပါ</string>
+    <string name="validation_phone_spanish_format_invalid">စပိန်ဖုန်းနံပါတ်ပုံစံ မမှန်ကန်ပါ</string>
+    <string name="validation_phone_invalid_for_country">ရွေးချယ်ထားသော နိုင်ငံအတွက် ဖုန်းနံပါတ် မမှန်ကန်ပါ</string>
+    <string name="validation_phone_no_valid_country_found">ထောက်ပံ့ထားသော မည်သည့်နိုင်ငံပုံစံနှင့်မျှ မကိုက်ညီပါ</string>
+
+    <string name="validation_name_empty">အမည် အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_name_invalid_characters">အမည်တွင် မမှန်ကန်သော စာလုံးများ ပါဝင်နေပါသည်</string>
+
+    <string name="validation_field_required">ဤနေရာအား မဖြစ်မနေ ဖြည့်စွက်ရပါမည်</string>
+    <string name="validation_format_invalid">ပုံစံ မမှန်ကန်ပါ</string>
+    <string name="validation_length_exceeded">အများဆုံး သတ်မှတ်ထားသော အရှည်ထက် ကျော်လွန်နေပါသည်</string>
+    <string name="validation_length_insufficient">အနည်းဆုံးလိုအပ်သော အရှည် မပြည့်မီပါ</string>
+
+    <string name="validation_amount_empty">ပမာဏ အလွတ်မဖြစ်ရပါ</string>
+    <string name="validation_amount_invalid_format">မှန်ကန်သော ပမာဏပုံစံကို ရိုက်ထည့်ပါ (ဥပမာ - ၉၉.၉၉)</string>
+    <string name="validation_amount_invalid_number">မှန်ကန်သော ဂဏန်းကို ရိုက်ထည့်ပါ</string>
+    <string name="validation_amount_negative">ပမာဏသည် အနှုတ်ဂဏန်း မဖြစ်ရပါ</string>
+    <string name="validation_amount_too_small">ပမာဏသည် အနည်းဆုံး ၀.၀၁ ဖြစ်ရပါမည်</string>
+    <string name="validation_amount_too_large">ပမာဏသည် ၉၉၉,၉၉၉,၉၉၉.၉၉ ထက် မကျော်ရပါ</string>
+    <string name="validation_amount_invalid_decimal_places">ဤငွေကြေးအတွက် ဒသမကိန်းနေရာများ များလွန်းနေပါသည်</string>
+    <string name="validation_amount_invalid_increment">ဤငွေကြေးအတွက် တိုးမြှင့်ရမည့် ပမာဏပုံစံ မမှန်ကန်ပါ</string>
+
+    <string name="savings_account">စုငွေအကောင့်</string>
+    <string name="available_balance">အသုံးပြုနိုင်သော လက်ကျန်ငွေ</string>
+    <string name="select_other_payment_account">အခြားပေးချေမှုအကောင့်ကို ရွေးချယ်ပါ</string>
+    <string name="pay_from">မှ ပေးချေမည်</string>
+    <string name="available_balance_formatted">အသုံးပြုနိုင်သော လက်ကျန်ငွေ - %1$s</string>
+
+    <string name="feature_dashboard_welcome_back">Mifos သို့ ပြန်လည်ကြိုဆိုပါသည်</string>
+    <string name="feature_dashboard_no_accounts_title">အကောင့်မရှိသေးပါ</string>
+    <string name="feature_dashboard_no_accounts_description">ကျွန်ုပ်တို့နှင့်အတူ ပထမဆုံးအကောင့်ဖွင့်ပြီး သင်၏ ငွေရေးကြေးရေးခရီးစဉ်ကို စတင်လိုက်ပါ။</string>
+    <string name="feature_dashboard_open_account">အကောင့်ဖွင့်မည်</string>
+
+    <string name="feature_savings_filter">စစ်ထုတ်မှုများ</string>
+    <string name="feature_savings_reset">မူလအတိုင်းပြန်ထားမည်</string>
+    <string name="feature_savings_apply">အတည်ပြုမည်</string>
+</resources>

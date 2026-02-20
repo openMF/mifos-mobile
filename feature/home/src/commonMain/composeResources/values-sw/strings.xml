@@ -12,6 +12,8 @@
     <string name="beneficiaries">Wafaidika</string>
     <string name="survey">Utafiti</string>
     <string name="apply_for_loan">Omba Mkopo</string>
+    <string name="apply_for_savings">Omba Akaunti ya Akiba</string>
+    <string name="apply_for_share">Omba Akaunti ya Hisa</string>
     <string name="charges">Ada</string>
     <string name="transfer">Hamisho</string>
     <string name="accounts">Akaunti</string>
