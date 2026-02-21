@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">Uhamisho</string>
+    <string name="transferred_successfully">Umehamishwa kwa mafanikio</string>
+    <string name="amount">Kiasi</string>
+    <string name="transfer_from_savings">Hamisha kutoka Akiba</string>
+    <string name="pay_from">Lipa Kutoka</string>
+    <string name="date">Tarehe</string>
+    <string name="cancel">Ghairi</string>
+    <string name="remark">Maelezo</string>
+    <string name="make_transfer">Fanya Uhamisho</string>
+    <string name="pay_to">Lipa Kwa</string>
+    <string name="remarks">Maelezo</string>
+    <string name="error_icon_description">Hitilafu</string>
+    <string name="error_description">Kiasi hakipaswi kuwa na herufi zisizofaa</string>
+    <string name="transfer_failed">Uhamisho Umeshindikana</string>
+    <string name="transfer_successful">Uhamisho Umefaulu</string>
+    <string name="back_to_accounts">Rudi Nyumbani</string>
+    <string name="transfer_id_prefix">ID ya Uhamisho:</string>
+    <string name="feature_make_transfer_error_amount_required">Kiasi kinahitajika</string>
+    <string name="feature_make_transfer_error_amount_invalid">Tafadhali ingiza kiasi sahihi</string>
+    <string name="feature_make_transfer_error_remarks_empty">Maelezo hayawezi kuwa tupu</string>
+    <string name="feature_make_transfer_error_remarks_invalid">Maelezo yasiyo sahihi yameingizwa</string>
+    <string name="feature_make_transfer_error_server">Tatizo la seva kutoka upande wetu, haliwezi kuendelea. Jaribu tena baada ya muda</string>
+    <string name="feature_make_transfer_account_number">Nambari ya Akaunti</string>
+    <string name="feature_make_transfer_customer_name">Jina la Mteja</string>
+    <string name="feature_make_transfer_beneficiary_name">Jina la Mnufaika</string>
+    <string name="feature_make_transfer_details">Maelezo ya Uhamisho</string>
+</resources>

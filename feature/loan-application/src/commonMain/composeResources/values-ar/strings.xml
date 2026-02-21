@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">تقديم طلب قرض جديد</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">طلب القرض</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">اسم مقدم الطلب</string>
+    <string name="feature_apply_loan_label_loan_product">منتج القرض</string>
+    <string name="feature_apply_loan_label_purpose">الغرض من القرض</string>
+    <string name="feature_apply_loan_label_disbursement_date">تاريخ الصرف</string>
+    <string name="feature_apply_loan_label_principal_amount">المبلغ الأصلي</string>
+    <string name="feature_apply_loan_label_currency">العملة</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">متابعة</string>
+    <string name="feature_apply_loan_button_ok">موافق</string>
+    <string name="feature_apply_loan_button_cancel">إلغاء</string>
+    <string name="feature_apply_loan_button_apply">تقديم طلب القرض</string>
+    <string name="feature_button_next">التالي</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">اسم مقدم الطلب مطلوب</string>
+    <string name="feature_apply_loan_error_name_too_short">يجب أن يتكون اسم مقدم الطلب من 4 أحرف على الأقل</string>
+    <string name="feature_apply_loan_error_name_too_long">لا يمكن أن يتجاوز اسم مقدم الطلب 100 حرف</string>
+    <string name="feature_apply_loan_error_name_invalid_format">يحتوي اسم مقدم الطلب على أحرف غير صالحة</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">منتج القرض مطلوب</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">المبلغ الأصلي مطلوب</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">الرجاء إدخال تنسيق مبلغ صالح</string>
+    <string name="feature_apply_loan_error_amount_too_small">المبلغ الأصلي صغير جداً</string>
+    <string name="feature_apply_loan_error_amount_too_large">المبلغ الأصلي يتجاوز الحد الأقصى</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">يحتوي المبلغ على عدد كبير جداً من المنازل العشرية للعملة المحددة</string>
+    <string name="feature_apply_loan_error_amount_multiple">المبلغ ليس ضمن المضاعفات الصالحة</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">تاريخ الصرف مطلوب</string>
+    <string name="feature_apply_loan_error_date_invalid_format">الرجاء إدخال تنسيق تاريخ صالح (يوم/شهر/سنة)</string>
+    <string name="feature_apply_loan_error_date_future">يجب أن يكون تاريخ الصرف في المستقبل</string>
+    <string name="feature_apply_loan_error_date_out_of_range">تاريخ الصرف بعيد جداً في المستقبل (بحد أقصى 10 سنوات)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">مشكلة في الخادم من جانبنا لا يمكن المتابعة، حاول مرة أخرى بعد قليل</string>
+    <string name="feature_apply_loan_error_too_many_attempts">فشل الكثير من المحاولات. الرجاء المحاولة مرة أخرى لاحقاً.</string>
+    <string name="feature_apply_loan_error_submit_failed">فشل تقديم طلب القرض. الرجاء المحاولة مرة أخرى.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">تم تقديم طلب القرض بنجاح!</string>
+    <string name="feature_apply_loan_success_draft_saved">تم حفظ مسودة الطلب بنجاح</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">تغييرات غير محفوظة!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد العودة؟</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">تجاهل</string>
+    <string name="feature_apply_loan_action_save_draft">حفظ المسودة</string>
+    <string name="feature_apply_loan_action_retry">إعادة المحاولة</string>
+    <string name="feature_apply_loan_action_cancel">إلغاء</string>
+    <string name="feature_apply_loan_action_continue">متابعة</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">أدخل اسمك الكامل</string>
+    <string name="feature_apply_loan_hint_loan_product">اختر منتج القرض</string>
+    <string name="feature_apply_loan_hint_principal_amount">أدخل مبلغ القرض</string>
+    <string name="feature_apply_loan_hint_disbursement_date">اختر تاريخ الصرف</string>
+    <string name="feature_apply_loan_hint_purpose">صف الغرض باختصار</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">تم تغيير العملة. سيتم إعادة التحقق من المبلغ.</string>
+    <string name="feature_apply_loan_info_min_amount">الحد الأدنى لمبلغ القرض: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">الحد الأقصى لمبلغ القرض: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">تأكيد التفاصيل</string>
+
+    <string name="feature_apply_loan_status_success">تم تقديم الطلب بنجاح</string>
+    <string name="feature_apply_loan_status_success_tip">تم تقديم طلب القرض الخاص بك. سيتم إعلامك بمجرد مراجعته.</string>
+    <string name="feature_apply_loan_status_success_action">العودة إلى الصفحة الرئيسية</string>
+
+    <string name="feature_apply_loan_status_failure">فشل تقديم الطلب</string>
+    <string name="feature_apply_loan_status_failure_tip">حدث خطأ ما أثناء تقديم طلب القرض الخاص بك. الرجاء المحاولة مرة أخرى.</string>
+    <string name="feature_apply_loan_status_failure_action">حاول مرة أخرى</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">تقديم طلب قرض جديد</string>
+    <string name="feature_select_loan_type_choose_loan">اختر نوع القرض</string>
+    <string name="feature_select_loan_type_empty">حالياً منتجات القروض غير متوفرة</string>
+    <string name="feature_select_loan_type_network_issue">تأكد من اتصالك بالإنترنت</string>
+    <string name="feature_loan_product_details_terms">قبول الشروط والأحكام</string>
+
+
+    <string name="feature_loan_apply_loan">تقديم طلب قرض %1$s</string>
+    <string name="feature_loan_get_loan">الحصول على قرض %1$s</string>
+    <string name="feature_loan_up_to">يصل إلى %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s إلى %2$s فائدة</string>
+    <string name="feature_loan_terms_and_conditions">الشروط والأحكام</string>
+
+    <string name="feature_loan_sanction_and_disbursement">الموافقة على القرض وصرفه</string>
+    <string name="feature_loan_interest_rate">سعر الفائدة</string>
+    <string name="feature_loan_continue">متابعة</string>
+    <string name="feature_loan_repayment">السداد</string>
+    <string name="feature_loan_security_and_collateral">الضمان والرهن</string>
+    <string name="feature_loan_insurance">التأمين</string>
+    <string name="feature_loan_default">التعثر</string>
+    <string name="feature_loan_documentation">التوثيق</string>
+    <string name="feature_loan_continue_legal_compliance">الامتثال القانوني</string>
+    <string name="feature_loan_amendments_and_termination">التعديلات والإنهاء</string>
+    <string name="feature_loan_jurisdiction">الاختصاص القضائي</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">سيتم الموافقة على القرض الشخصي بناءً على أهلية مقدم الطلب، واستقرار الدخل، والجدارة الائتمانية، والسياسات الائتمانية الداخلية للمقرض. يحتفظ المقرض بالحق في الموافقة على أي طلب قرض شخصي أو رفضه وفقاً لتقديره الخاص دون إبداء أي سبب. قد يتم صرف مبلغ القرض المعتمد بالكامل أو على أجزاء، اعتماداً على اتفاقية القرض ومتطلبات التوثيق. يخضع الصرف للإكمال الناجح لإجراءات التحقق من الهوية (KYC)، والتحقق من المستندات المقدمة، والالتزام بجميع الشروط الموضحة في خطاب الموافقة.</string>
+    <string name="feature_personal_loan_interest_rate_description">قد يحمل القرض الشخصي سعر فائدة ثابت أو متغير، كما يختاره المقترض وقت اتفاقية القرض. في حالة القروض ذات سعر الفائدة المتغير، يخضع السعر المطبق لمراجعات دورية بناءً على التغييرات في المؤشر أو السعر المرجعي للمقرض. ستكون هذه التغييرات ملزمة للمقترض وقد تؤدي إلى تغيير في مبلغ القسط الشهري و/أو مدة القرض، حسب ما يراه المقرض ضرورياً.</string>
+    <string name="feature_personal_loan_repayment_details">سيتم سداد القرض الشخصي من خلال أقساط شهرية متساوية (EMIs) تتكون من كل من أصل الدين ومكونات الفائدة. ستبدأ الأقساط الشهرية من التاريخ المحدد في اتفاقية القرض وستستمر على أساس شهري حتى يتم سداد مبلغ القرض بالكامل، جنباً إلى جنب مع الفائدة المطبقة. قد يُسمح بالسداد المبكر أو السداد الجزئي وفقاً للسياسات السائدة للمقرض وقد يترتب عليه رسوم معينة، خاصة بالنسبة للقروض ذات السعر الثابت.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">تكون القروض الشخصية عادةً غير مضمونة بطبيعتها ولا تتطلب رهناً. ومع ذلك، يحتفظ المقرض بالحق في طلب ضمانات أو تأمينات إضافية في حالات استثنائية، اعتماداً على الملف الائتماني للمقترض ومبلغ القرض. سيتم ذكر أي من هذه المتطلبات بوضوح في خطاب الموافقة. يتحمل المقترض جميع التكاليف المرتبطة بالتوثيق أو الإجراءات القانونية، إن وجدت.</string>
+    <string name="feature_personal_loan_insurance_details">على الرغم من أن القروض الشخصية لا تتطلب عموماً تأميناً على الأصول، إلا أن المقرض قد يوصي المقترض باختيار بوليصة تأمين على الحياة لحماية مبلغ القرض المستحق في حالة وفاة المقترض. هذا ليس إلزامياً ولكنه مستحسن كإجراء حماية مالية لأسرة المقترض أو المعالين.</string>
+    <string name="feature_personal_loan_default_details">سيشكل عدم دفع الأقساط الشهرية أو تأخر سدادها تعثراً. في مثل هذه الحالات، قد يبدأ المقرض إجراءات الاسترداد لتحصيل المستحقات القائمة، والتي قد تشمل إجراءات قانونية. قد يتم تطبيق فائدة جزائية ورسوم أخرى على المبالغ المتأخرة. يمكن أن يؤثر التعثر المستمر أو المتكرر سلباً على درجة الائتمان الخاصة بالمقترض وقدرته على الاقتراض في المستقبل.</string>
+    <string name="feature_personal_loan_documentation_details">يتعين على المقترض تقديم وثائق دقيقة وكاملة، بما في ذلك التوثيق الدقيق والكامل، بما في ذلك على سبيل المثال لا الحصر إثبات الهوية، وإثبات العنوان، وتفاصيل الدخل، وكشوفات الحساب المصرفي، وأي مستندات أخرى يطلبها المقرض. قد تؤدي أي اختلافات أو تحريف أو تزوير في المستندات المقدمة إلى رفض طلب القرض أو إنهاء اتفاقية القرض، جنباً إلى جنب مع الآثار القانونية المحتملة.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">يجب على المقترض ضمان الامتثال الكامل لجميع القوانين المحلية والولائية والوطنية المطبقة فيما يتعلق بالتزاماته المالية. ويشمل ذلك دفع الضرائب في الوقت المناسب، والالتزام بالمتطلبات التنظيمية، وتقديم مستندات صالحة. لن يتحمل المقرض المسؤولية عن أي انتهاكات قانونية يرتكبها المقترض.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">يجوز للمقرض، من وقت لآخر، مراجعة أو تحديث هذه الشروط والأحكام، مع مراعاة إشعار مسبق مناسب للمقترض. ستعتبر اتفاقية القرض منتهية عند السداد الكامل لمبلغ القرض أو من خلال إجراءات حبس الرهن التي بدأت بسبب التعثر.</string>
+    <string name="feature_personal_loan_jurisdiction_details">تخضع جميع النزاعات الناشئة عن أو المتعلقة باتفاقية القرض الشخصي للاختصاص القضائي الحصري للمحاكم في موقع المكتب المسجل للمقرض، ما لم ينص الاتفاق على خلاف ذلك.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">تحميل كشوف الحساب المصرفي</string>
+    <string name="feature_upload_docs_collateral">تحميل مستندات الرهن</string>
+    <string name="feature_upload_docs_signature">تحميل التوقيع</string>
+
+    <string name="feature_upload_file_error">حدث خطأ ما! تعذر تحميل الملف</string>
+    <string name="feature_upload_statement_error">الرجاء تحميل كشف حساب مصرفي</string>
+    <string name="feature_upload_property_document_error">الرجاء تحميل مستند ملكية</string>
+    <string name="feature_upload_signature_error">الرجاء تحميل توقيع</string>
+    <string name="feature_upload_documents_success_title">تم تحميل المستندات بنجاح!</string>
+
+    <string name="sign_here">وقع هنا</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="sign">توقيع</string>
+    <string name="capture">التقاط</string>
+    <string name="attach">إرفاق</string>
+    <string name="upload_signature">تحميل التوقيع</string>
+    <string name="save_and_submit">حفظ وإرسال</string>
+</resources>

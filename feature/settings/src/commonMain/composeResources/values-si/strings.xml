@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">නික්මීම</string>
     <string name="feature_settings_action_logout_tip">සියලුම උපාංගවලින් නික්මීම</string>
+    <string name="feature_settings_logout_description">ආරක්ෂක හේතූන් මත ඉවත් වීමෙන් ඔබගේ වත්මන් සහ සියලුම සක්‍රීය සැසි අවසන් වනු ඇත. ඔබගේ ගිණුමට ප්‍රවේශ වීමට ඔබට නැවත පුරනය වීමට අවශ්‍ය වනු ඇත.</string>
+    <string name="feature_settings_logout_action">මුල් පිටුවට ආපසු</string>
 
     <string name="feature_settings_top_bar_title">සැකසුම්</string>
 

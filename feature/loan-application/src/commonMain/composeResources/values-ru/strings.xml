@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Подать заявку на новый кредит</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Заявка на кредит</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Имя заявителя</string>
+    <string name="feature_apply_loan_label_loan_product">Кредитный продукт</string>
+    <string name="feature_apply_loan_label_purpose">Цель кредита</string>
+    <string name="feature_apply_loan_label_disbursement_date">Дата выдачи</string>
+    <string name="feature_apply_loan_label_principal_amount">Основная сумма</string>
+    <string name="feature_apply_loan_label_currency">Валюта</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Продолжить</string>
+    <string name="feature_apply_loan_button_ok">ОК</string>
+    <string name="feature_apply_loan_button_cancel">Отмена</string>
+    <string name="feature_apply_loan_button_apply">Подать заявку</string>
+    <string name="feature_button_next">Далее</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Требуется имя заявителя</string>
+    <string name="feature_apply_loan_error_name_too_short">Имя заявителя должно содержать не менее 4 символов</string>
+    <string name="feature_apply_loan_error_name_too_long">Имя заявителя не должно превышать 100 символов</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Имя заявителя содержит недопустимые символы</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Требуется кредитный продукт</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Требуется основная сумма</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Пожалуйста, введите правильный формат суммы</string>
+    <string name="feature_apply_loan_error_amount_too_small">Основная сумма слишком мала</string>
+    <string name="feature_apply_loan_error_amount_too_large">Основная сумма превышает максимальный лимит</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">Сумма имеет слишком много знаков после запятой для выбранной валюты</string>
+    <string name="feature_apply_loan_error_amount_multiple">Сумма не кратна допустимым значениям</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Требуется дата выдачи</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Пожалуйста, введите правильный формат даты (ДД/ММ/ГГГГ)</string>
+    <string name="feature_apply_loan_error_date_future">Дата выдачи должна быть в будущем</string>
+    <string name="feature_apply_loan_error_date_out_of_range">Дата выдачи слишком далека в будущем (макс. 10 лет)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Проблема с сервером на нашей стороне, невозможно продолжить, попробуйте позже</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Слишком много неудачных попыток. Пожалуйста, попробуйте позже.</string>
+    <string name="feature_apply_loan_error_submit_failed">Не удалось отправить заявку на кредит. Пожалуйста, попробуйте снова.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Заявка на кредит успешно отправлена!</string>
+    <string name="feature_apply_loan_success_draft_saved">Черновик заявки успешно сохранен</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Несохраненные изменения!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">У вас есть несохраненные изменения. Вы уверены, что хотите вернуться?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Сбросить</string>
+    <string name="feature_apply_loan_action_save_draft">Сохранить черновик</string>
+    <string name="feature_apply_loan_action_retry">Повторить</string>
+    <string name="feature_apply_loan_action_cancel">Отмена</string>
+    <string name="feature_apply_loan_action_continue">Продолжить</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Введите ваше полное имя</string>
+    <string name="feature_apply_loan_hint_loan_product">Выберите кредитный продукт</string>
+    <string name="feature_apply_loan_hint_principal_amount">Введите сумму кредита</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Выберите дату выдачи</string>
+    <string name="feature_apply_loan_hint_purpose">Кратко опишите цель</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Валюта изменилась. Сумма будет перепроверена.</string>
+    <string name="feature_apply_loan_info_min_amount">Минимальная сумма кредита: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Максимальная сумма кредита: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Подтвердить данные</string>
+
+    <string name="feature_apply_loan_status_success">Запрос успешно отправлен</string>
+    <string name="feature_apply_loan_status_success_tip">Ваша заявка на кредит отправлена. Вы будете уведомлены после ее рассмотрения.</string>
+    <string name="feature_apply_loan_status_success_action">Вернуться на главную</string>
+
+    <string name="feature_apply_loan_status_failure">Не удалось отправить запрос</string>
+    <string name="feature_apply_loan_status_failure_tip">Что-то пошло не так при отправке вашей заявки на кредит. Пожалуйста, попробуйте снова.</string>
+    <string name="feature_apply_loan_status_failure_action">Повторить</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Подать заявку на новый кредит</string>
+    <string name="feature_select_loan_type_choose_loan">Выберите тип кредита</string>
+    <string name="feature_select_loan_type_empty">Кредитные продукты в данный момент недоступны</string>
+    <string name="feature_select_loan_type_network_issue">Убедитесь, что вы подключены к интернету</string>
+    <string name="feature_loan_product_details_terms">Принять Условия и Положения</string>
+
+
+    <string name="feature_loan_apply_loan">Подать заявку на кредит %1$s</string>
+    <string name="feature_loan_get_loan">Получить кредит %1$s</string>
+    <string name="feature_loan_up_to">До %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s до %2$s Процентов</string>
+    <string name="feature_loan_terms_and_conditions">Условия и Положения</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Одобрение и выдача кредита</string>
+    <string name="feature_loan_interest_rate">Процентная ставка</string>
+    <string name="feature_loan_continue">Продолжить</string>
+    <string name="feature_loan_repayment">Погашение</string>
+    <string name="feature_loan_security_and_collateral">Безопасность и залог</string>
+    <string name="feature_loan_insurance">Страхование</string>
+    <string name="feature_loan_default">Дефолт</string>
+    <string name="feature_loan_documentation">Документация</string>
+    <string name="feature_loan_continue_legal_compliance">Правовое соответствие</string>
+    <string name="feature_loan_amendments_and_termination">Поправки и прекращение</string>
+    <string name="feature_loan_jurisdiction">Юрисдикция</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">Персональный кредит будет одобрен на основании соответствия требованиям Заявителя, стабильности дохода, кредитоспособности и внутренней кредитной политики Кредитора. Кредитор оставляет за собой право одобрить или отклонить любую заявку на Персональный кредит по своему усмотрению без объяснения причин. Одобренная сумма кредита может быть выдана полностью или частями в зависимости от Кредитного договора и требований к документации. Выдача зависит от успешного завершения процессов KYC, проверки представленных документов и соблюдения всех условий, указанных в Письме об одобрении.</string>
+    <string name="feature_personal_loan_interest_rate_description">Персональный кредит может иметь фиксированную или плавающую процентную ставку, по выбору Заемщика на момент заключения Кредитного договора. В случае кредитов с плавающей процентной ставкой, применимая ставка подлежит периодическому пересмотру в зависимости от изменений Бенчмарка или Справочной ставки Кредитора. Такие изменения будут обязательными для Заемщика и могут привести к изменению суммы EMI и/или срока кредита, если Кредитор сочтет это необходимым.</string>
+    <string name="feature_personal_loan_repayment_details">Погашение Персонального кредита будет осуществляться равными ежемесячными платежами (EMI), включающими как основной долг, так и проценты. EMI начнутся с даты, указанной в Кредитном договоре, и будут продолжаться ежемесячно до полного погашения всей суммы кредита вместе с применимыми процентами. Досрочное погашение или частичная оплата могут быть разрешены в соответствии с действующей политикой Кредитора и могут повлечь за собой определенные сборы, особенно для кредитов с фиксированной ставкой.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Персональные кредиты, как правило, являются необеспеченными и не требуют залога. Однако Кредитор оставляет за собой право запросить дополнительную гарантию или обеспечение в исключительных случаях в зависимости от кредитного профиля Заемщика и суммы кредита. Любое такое требование будет четко указано в Письме об одобрении. Заемщик несет все расходы, связанные с документацией или юридическими формальностями, если таковые имеются.</string>
+    <string name="feature_personal_loan_insurance_details">Хотя страхование активов обычно не требуется для Персональных кредитов, Кредитор может рекомендовать Заемщику выбрать полис страхования жизни для защиты непогашенной суммы кредита в случае смерти Заемщика. Это не является обязательным, но рекомендуется в качестве меры финансовой защиты для семьи или иждивенцев Заемщика.</string>
+    <string name="feature_personal_loan_default_details">Неуплата или задержка оплаты EMI будет считаться дефолтом. В таких случаях Кредитор может инициировать процедуры взыскания для сбора непогашенной задолженности, что может включать юридические действия. На просроченные суммы могут начисляться штрафные проценты и другие сборы. Постоянный или повторный дефолт может негативно повлиять на кредитный рейтинг Заемщика и будущую возможность получения кредитов.</string>
+    <string name="feature_personal_loan_documentation_details">Заемщик обязан предоставить точную и полную документацию, включая, помимо прочего, подтверждение личности, подтверждение адреса, сведения о доходах, банковские выписки и любые другие документы, запрошенные Кредитором. Любое несоответствие, искажение фактов или подделка в представленных документах может привести к отклонению заявки на кредит или расторжению Кредитного договора, а также к возможным юридическим последствиям.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">Заемщик должен обеспечить полное соблюдение всех применимых местных, государственных и национальных законов в отношении своих финансовых обязательств. Это включает своевременную уплату налогов, соблюдение нормативных требований и подачу действительных документов. Кредитор не несет ответственности за любые правонарушения, совершенные Заемщиком.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">Кредитор может время от времени пересматривать или обновлять настоящие Условия и Положения при условии надлежащего предварительного уведомления Заемщика. Кредитный договор считается расторгнутым после полного погашения суммы кредита или посредством процедур взыскания, инициированных в связи с дефолтом.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Все споры, возникающие из или в связи с Договором персонального кредита, подлежат исключительной юрисдикции судов по месту нахождения зарегистрированного офиса Кредитора, если иное не указано в Договоре.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Загрузить банковские выписки</string>
+    <string name="feature_upload_docs_collateral">Загрузить документы по залогу</string>
+    <string name="feature_upload_docs_signature">Загрузить подпись</string>
+
+    <string name="feature_upload_file_error">Что-то пошло не так! Не удалось загрузить файл</string>
+    <string name="feature_upload_statement_error">Пожалуйста, загрузите банковскую выписку</string>
+    <string name="feature_upload_property_document_error">Пожалуйста, загрузите документ на собственность</string>
+    <string name="feature_upload_signature_error">Пожалуйста, загрузите подпись</string>
+    <string name="feature_upload_documents_success_title">Документы успешно загружены!</string>
+
+    <string name="sign_here">Подпишите здесь</string>
+    <string name="reset">Сбросить</string>
+    <string name="sign">Подпись</string>
+    <string name="capture">Снять</string>
+    <string name="attach">Прикрепить</string>
+    <string name="upload_signature">Загрузить подпись</string>
+    <string name="save_and_submit">Сохранить и отправить</string>
+</resources>

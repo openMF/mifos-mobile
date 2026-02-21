@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">Jumlah harus diisi</string>
+    <string name="feature_tpt_error_amount_invalid">Silakan masukkan jumlah yang valid</string>
+    <string name="feature_tpt_error_remarks_empty">Keterangan tidak boleh kosong</string>
+    <string name="feature_tpt_error_remarks_invalid">Keterangan yang dimasukkan tidak valid</string>
+    <string name="feature_tpt_error_server">Masalah server dari sisi kami, tidak dapat melanjutkan. Coba lagi setelah beberapa saat</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Jumlah melebihi saldo yang tersedia</string>
+
+    <string name="feature_tpt_label_origin_account">Rekening Asal</string>
+    <string name="feature_tpt_label_origin_account_hint">Pilih rekening pembayaran lain</string>
+    <string name="feature_tpt_label_destination">Rekening Tujuan</string>
+    <string name="feature_tpt_label_amount">Jumlah</string>
+    <string name="feature_tpt_label_remarks">Keterangan</string>
+    <string name="feature_tpt_tip">Tidak menemukan rekening tujuan?</string>
+    <string name="feature_tpt_tip_action">Tambah Penerima!</string>
+
+    <string name="feature_tpt_transfer_button">Transfer Dana</string>
+</resources>

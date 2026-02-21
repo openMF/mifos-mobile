@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_account_active">सक्रिय</string>
+    <string name="feature_share_account_approved">मंजूर</string>
+    <string name="feature_share_account_approval_pending">मंजुरी प्रलंबित</string>
+    <string name="feature_share_account_closed">बंद</string>
+    <string name="feature_share_account_rejected">नाकारले</string>
+
+    <string name="feature_share_account_empty_share_accounts">तुमच्याशी संबंधित कोणतेही शेअर खाते नाही</string>
+    <string name="feature_share_account_dashboard">एकूण कर्ज</string>
+    <string name="feature_share_account">शेअर खाते</string>
+    <string name="feature_share_account_items">%1$d वस्तू</string>
+
+    <string name="feature_share_account_generic_error_server">आमच्या बाजूने सर्व्हरमध्ये समस्या आहे, कृपया काही वेळाने पुन्हा प्रयत्न करा</string>
+
+
+    <string name="feature_share_account_number">खाते क्रमांक</string>
+    <string name="feature_share_account_product_name">उत्पादनाचे नाव</string>
+    <string name="feature_share_account_currency">चलन</string>
+    <string name="feature_share_account_status">स्थिती</string>
+    <string name="feature_share_account_approved_shares">मंजूर केलेले शेअर्स</string>
+    <string name="feature_share_account_pending_shares">लंबित शेअर्स</string>
+    <string name="feature_share_account_market_price">बाजार किंमत</string>
+    <string name="feature_share_account_application_date">अर्ज तारीख</string>
+    <string name="feature_share_account_activation_date">सक्रियता तारीख</string>
+
+    <string name="feature_share_account_details_top_bar_title">शेअर खाते तपशील</string>
+    <string name="feature_share_account_details_action">कृती</string>
+
+    <string name="feature_share_account_action_charges">शुल्क</string>
+    <string name="feature_share_account_action_charges_subtitle">खाते शुल्क पहा</string>
+
+    <string name="feature_share_account_action_transactions">व्यवहार</string>
+    <string name="feature_share_account_action_transactions_subtitle">खरेदी इतिहास पहा</string>
+
+    <string name="feature_share_account_action_qr_code">क्यूआर कोड</string>
+    <string name="feature_share_account_action_qr_code_subtitle">खाते तपशील सामायिक करा</string>
+
+    <string name="feature_share_account_purchased_shares">खरेदी केलेले शेअर्स</string>
+    <string name="feature_share_account_purchased_date">खरेदी तारीख</string>
+
+
+</resources>

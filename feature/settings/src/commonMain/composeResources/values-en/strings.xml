@@ -84,6 +84,8 @@
 
     <string name="feature_settings_action_logout">Logout</string>
     <string name="feature_settings_action_logout_tip">Logout from all devices</string>
+    <string name="feature_settings_logout_description">Logging out will end your current and all active sessions for security purposes. You’ll need to log in again to access your account.</string>
+    <string name="feature_settings_logout_action">Back to home</string>
 
     <string name="feature_settings_top_bar_title">Settings</string>
 

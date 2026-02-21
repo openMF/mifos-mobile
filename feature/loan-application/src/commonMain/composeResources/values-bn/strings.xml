@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">নতুন ঋণের জন্য আবেদন করুন</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">ঋণের আবেদন</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">আবেদনকারীর নাম</string>
+    <string name="feature_apply_loan_label_loan_product">ঋণ পণ্য</string>
+    <string name="feature_apply_loan_label_purpose">ঋণের উদ্দেশ্য</string>
+    <string name="feature_apply_loan_label_disbursement_date">বিতরণের তারিখ</string>
+    <string name="feature_apply_loan_label_principal_amount">মূল পরিমাণ</string>
+    <string name="feature_apply_loan_label_currency">মুদ্রা</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">চালিয়ে যান</string>
+    <string name="feature_apply_loan_button_ok">ঠিক আছে</string>
+    <string name="feature_apply_loan_button_cancel">বাতিল</string>
+    <string name="feature_apply_loan_button_apply">ঋণের জন্য আবেদন করুন</string>
+    <string name="feature_button_next">পরবর্তী</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">আবেদনকারীর নাম প্রয়োজন</string>
+    <string name="feature_apply_loan_error_name_too_short">আবেদনকারীর নাম অন্তত ৪ অক্ষরের হতে হবে</string>
+    <string name="feature_apply_loan_error_name_too_long">আবেদনকারীর নাম ১০০ অক্ষরের বেশি হতে পারবে না</string>
+    <string name="feature_apply_loan_error_name_invalid_format">আবেদনকারীর নামে অবৈধ অক্ষর রয়েছে</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">ঋণ পণ্য প্রয়োজন</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">মূল পরিমাণ প্রয়োজন</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">অনুগ্রহ করে একটি বৈধ পরিমাণ বিন্যাস লিখুন</string>
+    <string name="feature_apply_loan_error_amount_too_small">মূল পরিমাণ খুব কম</string>
+    <string name="feature_apply_loan_error_amount_too_large">মূল পরিমাণ সর্বোচ্চ সীমা অতিক্রম করেছে</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">নির্বাচিত মুদ্রার জন্য পরিমাণে খুব বেশি দশমিক স্থান রয়েছে</string>
+    <string name="feature_apply_loan_error_amount_multiple">পরিমাণটি বৈধ গুণিতকে নেই</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">বিতরণের তারিখ প্রয়োজন</string>
+    <string name="feature_apply_loan_error_date_invalid_format">অনুগ্রহ করে একটি বৈধ তারিখ বিন্যাস লিখুন (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">বিতরণের তারিখ ভবিষ্যতে হতে হবে</string>
+    <string name="feature_apply_loan_error_date_out_of_range">বিতরণের তারিখ ভবিষ্যতে খুব বেশি দূরে (সর্বোচ্চ ১০ বছর)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">আমাদের দিক থেকে সার্ভার সমস্যা, আর এগোনো যাচ্ছে না, কিছুক্ষণ পর আবার চেষ্টা করুন</string>
+    <string name="feature_apply_loan_error_too_many_attempts">খুব বেশি ব্যর্থ প্রচেষ্টা। অনুগ্রহ করে পরে আবার চেষ্টা করুন।</string>
+    <string name="feature_apply_loan_error_submit_failed">ঋণের আবেদন জমা দিতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">ঋণের আবেদন সফলভাবে জমা দেওয়া হয়েছে!</string>
+    <string name="feature_apply_loan_success_draft_saved">আবেদনের খসড়া সফলভাবে সংরক্ষিত হয়েছে</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">অসংরক্ষিত পরিবর্তন!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">আপনার অসংরক্ষিত পরিবর্তন আছে। আপনি কি নিশ্চিত যে আপনি ফিরে যেতে চান?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">বাতিল করুন</string>
+    <string name="feature_apply_loan_action_save_draft">খসড়া সংরক্ষণ করুন</string>
+    <string name="feature_apply_loan_action_retry">পুনরায় চেষ্টা করুন</string>
+    <string name="feature_apply_loan_action_cancel">বাতিল</string>
+    <string name="feature_apply_loan_action_continue">চালিয়ে যান</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">আপনার পুরো নাম লিখুন</string>
+    <string name="feature_apply_loan_hint_loan_product">ঋণ পণ্য নির্বাচন করুন</string>
+    <string name="feature_apply_loan_hint_principal_amount">ঋণের পরিমাণ লিখুন</string>
+    <string name="feature_apply_loan_hint_disbursement_date">বিতরণের তারিখ নির্বাচন করুন</string>
+    <string name="feature_apply_loan_hint_purpose">উদ্দেশ্য সংক্ষেপে বর্ণনা করুন</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">মুদ্রা পরিবর্তন করা হয়েছে। পরিমাণ পুনরায় যাচাই করা হবে।</string>
+    <string name="feature_apply_loan_info_min_amount">ন্যূনতম ঋণের পরিমাণ: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">সর্বোচ্চ ঋণের পরিমাণ: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">বিবরণ নিশ্চিত করুন</string>
+
+    <string name="feature_apply_loan_status_success">অনুরোধ সফলভাবে জমা দেওয়া হয়েছে</string>
+    <string name="feature_apply_loan_status_success_tip">আপনার ঋণের আবেদন জমা দেওয়া হয়েছে। এটি পর্যালোচনা করা হলে আপনাকে জানানো হবে।</string>
+    <string name="feature_apply_loan_status_success_action">হোমে ফিরে যান</string>
+
+    <string name="feature_apply_loan_status_failure">অনুরোধ জমা দিতে ব্যর্থ হয়েছে</string>
+    <string name="feature_apply_loan_status_failure_tip">আপনার ঋণের আবেদন জমা দেওয়ার সময় কিছু ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="feature_apply_loan_status_failure_action">আবার চেষ্টা করুন</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">নতুন ঋণের জন্য আবেদন করুন</string>
+    <string name="feature_select_loan_type_choose_loan">ঋণের ধরণ নির্বাচন করুন</string>
+    <string name="feature_select_loan_type_empty">বর্তমানে ঋণ পণ্য উপলব্ধ নেই</string>
+    <string name="feature_select_loan_type_network_issue">আপনি ইন্টারনেটের সাথে সংযুক্ত আছেন কিনা নিশ্চিত করুন</string>
+    <string name="feature_loan_product_details_terms">শর্তাবলী মেনে নিন</string>
+
+
+    <string name="feature_loan_apply_loan">%1$s ঋণের জন্য আবেদন করুন</string>
+    <string name="feature_loan_get_loan">%1$s ঋণ পান</string>
+    <string name="feature_loan_up_to">%1$s পর্যন্ত</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s থেকে %2$s সুদ</string>
+    <string name="feature_loan_terms_and_conditions">শর্তাবলী</string>
+
+    <string name="feature_loan_sanction_and_disbursement">ঋণ মঞ্জুরি এবং বিতরণ</string>
+    <string name="feature_loan_interest_rate">সুদের হার</string>
+    <string name="feature_loan_continue">চালিয়ে যান</string>
+    <string name="feature_loan_repayment">পরিশোধ</string>
+    <string name="feature_loan_security_and_collateral">নিরাপত্তা এবং জামানত</string>
+    <string name="feature_loan_insurance">বীমা</string>
+    <string name="feature_loan_default">খেলাপি</string>
+    <string name="feature_loan_documentation">নথিপত্র</string>
+    <string name="feature_loan_continue_legal_compliance">আইনী সম্মতি</string>
+    <string name="feature_loan_amendments_and_termination">সংশোধন এবং সমাপ্তি</string>
+    <string name="feature_loan_jurisdiction">এখতিয়ার</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">আবেদনকারীর যোগ্যতা, আয়ের স্থিতিশীলতা, ঋণযোগ্যতা এবং ঋণদাতার অভ্যন্তরীণ ঋণ নীতির উপর ভিত্তি করে ব্যক্তিগত ঋণ মঞ্জুর করা হবে। ঋণদাতা কোনো কারণ দর্শানো ছাড়াই তার নিজস্ব বিবেচনার ভিত্তিতে যেকোনো ব্যক্তিগত ঋণের আবেদন অনুমোদন বা প্রত্যাখ্যান করার অধিকার সংরক্ষণ করে। মঞ্জুরকৃত ঋণের পরিমাণ সম্পূর্ণ বা আংশিকভাবে বিতরণ করা যেতে পারে, যা ঋণ চুক্তি এবং নথিপত্রের প্রয়োজনীয়তার উপর নির্ভর করে। বিতরণ কেওয়াইসি প্রক্রিয়া সফলভাবে সমাপ্ত, জমা দেওয়া নথিপত্র যাচাই এবং মঞ্জুরি পত্রে নির্দিষ্ট সমস্ত শর্ত মেনে চলার সাপেক্ষে।</string>
+    <string name="feature_personal_loan_interest_rate_description">ব্যক্তিগত ঋণে স্থায়ী বা পরিবর্তনশীল সুদের হার থাকতে পারে, যা ঋণ চুক্তির সময় ঋণগ্রহীতা নির্বাচন করবেন। পরিবর্তনশীল সুদের হারের ঋণের ক্ষেত্রে, প্রযোজ্য হার ঋণদাতার বেঞ্চমার্ক বা রেফারেন্স হারের পরিবর্তনের উপর ভিত্তি করে পর্যায়ক্রমিক সংশোধনের সাপেক্ষে। এই ধরনের পরিবর্তন ঋণগ্রহীতার জন্য বাধ্যতামূলক হবে এবং ঋণদাতার প্রয়োজন অনুযায়ী ইএমআই পরিমাণ এবং/অথবা ঋণের মেয়াদে পরিবর্তন ঘটাতে পারে।</string>
+    <string name="feature_personal_loan_repayment_details">ব্যক্তিগত ঋণ পরিশোধ সমান মাসিক কিস্তি (ইএমআই) এর মাধ্যমে করা হবে যাতে মূল এবং সুদ উভয়ই অন্তর্ভুক্ত থাকে। ইএমআই ঋণ চুক্তিতে নির্দিষ্ট তারিখ থেকে শুরু হবে এবং সম্পূর্ণ ঋণের পরিমাণ, প্রযোজ্য সুদ সহ পরিশোধ না হওয়া পর্যন্ত মাসিক ভিত্তিতে চলতে থাকবে। ঋণদাতার প্রচলিত নীতি অনুযায়ী প্রিপেমেন্ট বা আংশিক পেমেন্ট অনুমোদিত হতে পারে এবং এতে নির্দিষ্ট চার্জ প্রযোজ্য হতে পারে, বিশেষ করে স্থায়ী হারের ঋণের জন্য।</string>
+    <string name="feature_personal_loan_security_and_collateral_details">ব্যক্তিগত ঋণ সাধারণত জামানতবিহীন প্রকৃতির হয় এবং জামানতের প্রয়োজন হয় না। তবে, ঋণগ্রহীতার ক্রেডিট প্রোফাইল এবং ঋণের পরিমাণের উপর ভিত্তি করে ব্যতিক্রমী ক্ষেত্রে অতিরিক্ত গ্যারান্টি বা নিরাপত্তা চাওয়ার অধিকার ঋণদাতা সংরক্ষণ করে। এই ধরনের প্রয়োজনীয়তা মঞ্জুরি পত্রে স্পষ্টভাবে উল্লেখ করা হবে। প্রযোজ্য হলে নথিপত্র বা আইনি আনুষ্ঠানিকতার সাথে সম্পর্কিত সমস্ত খরচ ঋণগ্রহীতাকে বহন করতে হবে।</string>
+    <string name="feature_personal_loan_insurance_details">যদিও ব্যক্তিগত ঋণের জন্য সাধারণত সম্পদ বীমার প্রয়োজন হয় না, তবে ঋণদাতা সুপারিশ করতে পারেন যে ঋণগ্রহীতা মৃত্যুর ক্ষেত্রে বকেয়া ঋণের পরিমাণ সুরক্ষিত করার জন্য একটি জীবন বীমা পলিসি বেছে নিন। এটি বাধ্যতামূলক নয় তবে ঋণগ্রহীতার পরিবার বা নির্ভরশীলদের জন্য আর্থিক সুরক্ষা ব্যবস্থা হিসাবে এটি পরামর্শ দেওয়া হয়।</string>
+    <string name="feature_personal_loan_default_details">ইএমআই পরিশোধ না করা বা বিলম্বিত পেমেন্ট খেলাপি হিসেবে গণ্য হবে। এই ধরনের ক্ষেত্রে, ঋণদাতা বকেয়া আদায়ের জন্য পুনরুদ্ধারের প্রক্রিয়া শুরু করতে পারে, যাতে আইনি প্রক্রিয়া অন্তর্ভুক্ত থাকতে পারে। বকেয়া পরিমাণের উপর পেনাল সুদ এবং অন্যান্য চার্জ প্রয়োগ করা যেতে পারে। ধারাবাহিক বা বারবার খেলাপি ঋণগ্রহীতার ক্রেডিট স্কোর এবং ভবিষ্যতে ঋণ নেওয়ার ক্ষমতাকে নেতিবাচকভাবে প্রভাবিত করতে পারে।</string>
+    <string name="feature_personal_loan_documentation_details">ঋণগ্রহীতাকে সঠিক এবং সম্পূর্ণ নথিপত্র জমা দিতে হবে, যার মধ্যে পরিচয় প্রমাণ, ঠিকানার প্রমাণ, আয়ের বিবরণ, ব্যাংক স্টেটমেন্ট এবং ঋণদাতার অনুরোধ করা অন্য কোনো নথিপত্র অন্তর্ভুক্ত। জমা দেওয়া নথিপত্রে কোনো অসঙ্গতি, ভুল উপস্থাপনা বা জালিয়াতি থাকলে ঋণের আবেদন প্রত্যাখ্যান বা ঋণ চুক্তি বাতিল হতে পারে, সাথে সম্ভাব্য আইনি প্রভাবও পড়তে পারে।</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">ঋণগ্রহীতাকে তাদের আর্থিক বাধ্যবাধকতা সংক্রান্ত সমস্ত প্রযোজ্য স্থানীয়, রাজ্য এবং জাতীয় আইন সম্পূর্ণ মেনে চলতে হবে। এর মধ্যে রয়েছে সময়মতো কর পরিশোধ, নিয়ন্ত্রক প্রয়োজনীয়তা মেনে চলা এবং বৈধ নথিপত্র জমা দেওয়া। ঋণগ্রহীতার দ্বারা সংঘটিত কোনো আইনি লঙ্ঘনের জন্য ঋণদাতা দায়ী থাকবে না।</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">ঋণদাতা সময়ে সময়ে এই শর্তাবলী সংশোধন বা আপডেট করতে পারে, তবে ঋণগ্রহীতাকে উপযুক্ত পূর্ব নোটিশ দিতে হবে। ঋণের পরিমাণ সম্পূর্ণ পরিশোধ বা খেলাপির কারণে শুরু হওয়া ফোরক্লোজার প্রক্রিয়ার মাধ্যমে ঋণ চুক্তি সমাপ্ত বলে গণ্য হবে।</string>
+    <string name="feature_personal_loan_jurisdiction_details">ব্যক্তিগত ঋণ চুক্তি থেকে উদ্ভূত বা সম্পর্কিত সমস্ত বিরোধ চুক্তিতে অন্যথায় উল্লেখ না থাকলে ঋণদাতার নিবন্ধিত অফিসের অবস্থানের আদালতের একচেটিয়া এখতিয়ারে আসবে।</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">ব্যাংক অ্যাকাউন্টের বিবরণী আপলোড করুন</string>
+    <string name="feature_upload_docs_collateral">জামানত নথিপত্র আপলোড করুন</string>
+    <string name="feature_upload_docs_signature">স্বাক্ষর আপলোড করুন</string>
+
+    <string name="feature_upload_file_error">কিছু ভুল হয়েছে! ফাইল আপলোড করা যাচ্ছে না</string>
+    <string name="feature_upload_statement_error">অনুগ্রহ করে একটি ব্যাংক স্টেটমেন্ট আপলোড করুন</string>
+    <string name="feature_upload_property_document_error">অনুগ্রহ করে একটি সম্পত্তির নথি আপলোড করুন</string>
+    <string name="feature_upload_signature_error">অনুগ্রহ করে একটি স্বাক্ষর আপলোড করুন</string>
+    <string name="feature_upload_documents_success_title">নথিপত্র সফলভাবে আপলোড করা হয়েছে!</string>
+
+    <string name="sign_here">এখানে স্বাক্ষর করুন</string>
+    <string name="reset">রিসেট</string>
+    <string name="sign">স্বাক্ষর</string>
+    <string name="capture">ক্যাপচার</string>
+    <string name="attach">সংযুক্ত করুন</string>
+    <string name="upload_signature">স্বাক্ষর আপলোড করুন</string>
+    <string name="save_and_submit">সংরক্ষণ করুন এবং জমা দিন</string>
+</resources>

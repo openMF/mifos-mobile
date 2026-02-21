@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">Megtakarítási kérelem részletei</string>
+
+    <string name="feature_apply_savings_section_fill_details">Töltse ki a kérelem részleteit</string>
+
+    <string name="feature_apply_savings_label_applicant_name">Igénylő neve</string>
+    <string name="feature_apply_savings_label_savings_product">Termék neve</string>
+    <string name="feature_apply_savings_label_field_officer">Területi képviselő</string>
+    <string name="feature_apply_savings_label_submission_date">Benyújtás dátuma</string>
+    <string name="feature_apply_savings_label_fill_application_details">Töltse ki a kérelem részleteit</string>
+    <string name="feature_apply_savings_label_details">Részletek</string>
+    <string name="feature_apply_savings_label_currency">Pénznem</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">Minimális nyitóegyenleg</string>
+    <string name="feature_apply_savings_label_lock_in_period">Zárolási időszak</string>
+    <string name="feature_apply_savings_label_frequency">Gyakoriság</string>
+    <string name="feature_apply_savings_label_frequency_type">Gyakoriság típusa</string>
+    <string name="feature_apply_savings_label_overdraft">Folyószámlahitel</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">Folyószámlahitel engedélyezésének kérése</string>
+
+    <string name="feature_apply_savings_button_continue">Folytatás</string>
+    <string name="feature_apply_savings_button_ok">Ok</string>
+    <string name="feature_apply_savings_button_cancel">Mégse</string>
+    <string name="feature_apply_savings_button_apply">Megtakarítás igénylése</string>
+    <string name="feature_button_next">Tovább</string>
+
+    <string name="feature_apply_savings_error_amount_empty">A tőkeösszeg megadása kötelező</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">Kérjük, adjon meg érvényes összegformátumot</string>
+    <string name="feature_apply_savings_error_amount_too_small">A tőkeösszeg túl kicsi</string>
+    <string name="feature_apply_savings_error_amount_too_large">A tőkeösszeg meghaladja a maximális határt</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">Az összeg túl sok tizedesjegyet tartalmaz a választott pénznemhez</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">Megtakarítási termék megadása kötelező</string>
+
+    <string name="feature_apply_savings_error_server">Szerverhiba lépett fel, nem lehet folytatni. Kérjük, próbálja újra később.</string>
+    <string name="feature_apply_savings_error_too_many_attempts">Túl sok sikertelen kísérlet. Kérjük, próbálja újra később.</string>
+    <string name="feature_apply_savings_error_submit_failed">A megtakarítási kérelem benyújtása sikertelen. Kérjük, próbálja újra.</string>
+
+    <string name="feature_apply_savings_success_submit">Megtakarítási kérelem sikeresen benyújtva!</string>
+    <string name="feature_apply_savings_success_draft_saved">Kérelem piszkozata sikeresen mentve</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">Mentetlen változások!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">Mentetlen változtatásai vannak. Biztosan vissza akar lépni?</string>
+
+
+    <string name="feature_apply_savings_label_next">Tovább</string>
+
+    <string name="feature_apply_savings_error_currency_required">Pénznem megadása kötelező</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">Minimális nyitóegyenleg megadása kötelező</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">Zárolási időszak megadása kötelező</string>
+    <string name="feature_apply_savings_error_frequency_required">Gyakoriság megadása kötelező</string>
+    <string name="feature_apply_savings_error_frequency_invalid">Adjon meg érvényes gyakoriságot</string>
+
+    <string name="feature_apply_savings_status_success">Sikeres igénylés!</string>
+    <string name="feature_apply_savings_status_success_tip">Sikeresen igényelt megtakarítási számlát a(z) %1$s alatt.</string>
+    <string name="feature_apply_savings_status_success_action">Vissza a főoldalra</string>
+
+    <string name="feature_apply_savings_status_failure">A kérelem benyújtása sikertelen</string>
+    <string name="feature_apply_savings_status_failure_tip">Nem sikerült megtakarítási számlát igényelni a(z) %1$s alatt.</string>
+    <string name="feature_apply_savings_status_failure_action">Próbálja újra</string>
+
+</resources>

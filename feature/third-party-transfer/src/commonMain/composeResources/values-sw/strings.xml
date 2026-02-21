@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_tpt_error_amount_required">Kiasi kinahitajika</string>
+    <string name="feature_tpt_error_amount_invalid">Tafadhali ingiza kiasi sahihi</string>
+    <string name="feature_tpt_error_remarks_empty">Maelezo hayawezi kuwa tupu</string>
+    <string name="feature_tpt_error_remarks_invalid">Maelezo yasiyo sahihi yameingizwa</string>
+    <string name="feature_tpt_error_server">Tatizo la seva kutoka upande wetu, jaribu tena baada ya muda</string>
+    <string name="feature_tpt_error_amount_exceeds_balance">Kiasi kinazidi salio lililopo</string>
+    <string name="feature_tpt_label_origin_account">Akaunti ya Chanzo</string>
+    <string name="feature_tpt_label_origin_account_hint">Chagua akaunti nyingine ya malipo</string>
+    <string name="feature_tpt_label_destination">Akaunti ya Unakoenda</string>
+    <string name="feature_tpt_label_amount">Kiasi</string>
+    <string name="feature_tpt_label_remarks">Maelezo</string>
+    <string name="feature_tpt_tip">Je, huioni akaunti ya unakoenda?</string>
+    <string name="feature_tpt_tip_action">Ongeza Mnufaika!</string>
+    <string name="feature_tpt_transfer_button">Hamisha Kiasi</string>
+</resources>

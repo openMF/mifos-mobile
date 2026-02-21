@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Demander un prêt</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Demande de prêt</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Nom du demandeur</string>
+    <string name="feature_apply_loan_label_loan_product">Produit de prêt</string>
+    <string name="feature_apply_loan_label_purpose">Objectif du prêt</string>
+    <string name="feature_apply_loan_label_disbursement_date">Date de versement</string>
+    <string name="feature_apply_loan_label_principal_amount">Montant principal</string>
+    <string name="feature_apply_loan_label_currency">Devise</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Continuer</string>
+    <string name="feature_apply_loan_button_ok">Ok</string>
+    <string name="feature_apply_loan_button_cancel">Annuler</string>
+    <string name="feature_apply_loan_button_apply">Appliquer le prêt</string>
+    <string name="feature_button_next">Suivant</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Le nom du demandeur est obligatoire</string>
+    <string name="feature_apply_loan_error_name_too_short">Le nom du demandeur doit comporter au moins 4 caractères</string>
+    <string name="feature_apply_loan_error_name_too_long">Le nom du demandeur ne peut pas dépasser 100 caractères</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Le nom du demandeur contient des caractères invalides</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Le produit de prêt est requis</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Le montant principal est requis</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Veuillez saisir un format de montant valide</string>
+    <string name="feature_apply_loan_error_amount_too_small">Le montant principal est trop petit</string>
+    <string name="feature_apply_loan_error_amount_too_large">Le montant principal dépasse la limite maximale</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">Le montant comporte trop de décimales pour la devise sélectionnée</string>
+    <string name="feature_apply_loan_error_amount_multiple">Le montant n\'est pas dans des multiples valides</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">La date de versement est requise</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Veuillez saisir un format de date valide (JJ/MM/AAAA)</string>
+    <string name="feature_apply_loan_error_date_future">La date de versement doit être future</string>
+    <string name="feature_apply_loan_error_date_out_of_range">La date de versement est trop lointaine (max 10 ans)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Problème de serveur de notre côté, impossible de continuer, réessayez après un moment</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Trop de tentatives échouées. Veuillez réessayer plus tard.</string>
+    <string name="feature_apply_loan_error_submit_failed">Échec de l\'envoi de la demande de prêt. Veuillez réessayer.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Demande de prêt envoyée avec succès !</string>
+    <string name="feature_apply_loan_success_draft_saved">Brouillon de demande enregistré avec succès</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Modifications non enregistrées !</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir revenir en arrière ?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Ignorer</string>
+    <string name="feature_apply_loan_action_save_draft">Enregistrer le brouillon</string>
+    <string name="feature_apply_loan_action_retry">Réessayer</string>
+    <string name="feature_apply_loan_action_cancel">Annuler</string>
+    <string name="feature_apply_loan_action_continue">Continuer</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Entrez votre nom complet</string>
+    <string name="feature_apply_loan_hint_loan_product">Sélectionner un produit de prêt</string>
+    <string name="feature_apply_loan_hint_principal_amount">Saisir le montant du prêt</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Sélectionner la date de versement</string>
+    <string name="feature_apply_loan_hint_purpose">Décrivez brièvement l\'objectif</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Devise modifiée. Le montant sera revalidé.</string>
+    <string name="feature_apply_loan_info_min_amount">Montant minimum du prêt : %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Montant maximum du prêt : %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Confirmer les détails</string>
+
+    <string name="feature_apply_loan_status_success">Demande envoyée avec succès</string>
+    <string name="feature_apply_loan_status_success_tip">Votre demande de prêt a été envoyée. Vous serez informé une fois qu\'elle sera examinée.</string>
+    <string name="feature_apply_loan_status_success_action">Retour à l\'accueil</string>
+
+    <string name="feature_apply_loan_status_failure">Échec de l\'envoi de la demande</string>
+    <string name="feature_apply_loan_status_failure_tip">Une erreur s\'est produite lors de l\'envoi de votre demande de prêt. Veuillez réessayer.</string>
+    <string name="feature_apply_loan_status_failure_action">Réessayer</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Demander un nouveau prêt</string>
+    <string name="feature_select_loan_type_choose_loan">Choisir le type de prêt</string>
+    <string name="feature_select_loan_type_empty">Les produits de prêt ne sont actuellement pas disponibles</string>
+    <string name="feature_select_loan_type_network_issue">Assurez-vous d\'être connecté à Internet</string>
+    <string name="feature_loan_product_details_terms">Accepter les conditions générales</string>
+
+
+    <string name="feature_loan_apply_loan">Demander un prêt %1$s</string>
+    <string name="feature_loan_get_loan">Obtenir un prêt %1$s</string>
+    <string name="feature_loan_up_to">Jusqu\'à %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s à %2$s Intérêt</string>
+    <string name="feature_loan_terms_and_conditions">Termes et Conditions</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Sanction et décaissement du prêt</string>
+    <string name="feature_loan_interest_rate">Taux d\'intérêt</string>
+    <string name="feature_loan_continue">Continuer</string>
+    <string name="feature_loan_repayment">Remboursement</string>
+    <string name="feature_loan_security_and_collateral">Garantie et sûreté</string>
+    <string name="feature_loan_insurance">Assurance</string>
+    <string name="feature_loan_default">Défaut</string>
+    <string name="feature_loan_documentation">Documentation</string>
+    <string name="feature_loan_continue_legal_compliance">Conformité légale</string>
+    <string name="feature_loan_amendments_and_termination">Amendements et résiliation</string>
+    <string name="feature_loan_jurisdiction">Juridiction</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">Le prêt personnel sera sanctionné en fonction de l\'éligibilité du demandeur, de la stabilité des revenus, de la solvabilité et des politiques de crédit internes du prêteur. Le prêteur se réserve le droit d\'approuver ou de rejeter toute demande de prêt personnel à sa seule discrétion sans donner de raison. Le montant du prêt sanctionné peut être décaissé intégralement ou en partie, selon l\'accord de prêt et les exigences en matière de documentation. Le décaissement est soumis à la réussite des procédures KYC, à la vérification des documents soumis et au respect de toutes les conditions spécifiées dans la lettre de sanction.</string>
+    <string name="feature_personal_loan_interest_rate_description">Le prêt personnel peut comporter un taux d\'intérêt fixe ou variable, choisi par l\'emprunteur au moment de l\'accord de prêt. Dans le cas de prêts à taux variable, le taux applicable est soumis à des révisions périodiques en fonction des changements du taux de référence ou du taux de référence du prêteur. De tels changements lieront l\'emprunteur et pourront entraîner une variation du montant de l\'EMI et/ou de la durée du prêt, selon ce que le prêteur jugera nécessaire.</string>
+    <string name="feature_personal_loan_repayment_details">Le remboursement du prêt personnel se fera par versements mensuels équivalents (EMI) comprenant à la fois le principal et les intérêts. Les EMI commenceront à la date spécifiée dans l\'accord de prêt et se poursuivront sur une base mensuelle jusqu\'à ce que le montant total du prêt, ainsi que les intérêts applicables, soit remboursé. Le remboursement anticipé ou partiel peut être autorisé conformément aux politiques en vigueur du prêteur et peut entraîner certains frais, en particulier pour les prêts à taux fixe.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Les prêts personnels sont généralement de nature non garantie et ne nécessitent pas de garantie. Cependant, le prêteur se réserve le droit de demander des garanties ou des sûretés supplémentaires dans des cas exceptionnels, en fonction du profil de crédit de l\'emprunteur et du montant du prêt. De telles exigences seront clairement indiquées dans la lettre de sanction. L\'emprunteur supportera tous les frais liés à la documentation ou aux formalités légales, le cas échéant.</string>
+    <string name="feature_personal_loan_insurance_details">Bien que les prêts personnels ne nécessitent généralement pas d\'assurance des biens, le prêteur peut recommander à l\'emprunteur d\'opter pour une police d\'assurance-vie pour garantir le montant du prêt impayé en cas de décès de l\'emprunteur. Cela n\'est pas obligatoire mais est conseillé comme mesure de protection financière pour la famille ou les personnes à charge de l\'emprunteur.</string>
+    <string name="feature_personal_loan_default_details">Le non-paiement ou le retard de paiement des EMI constituera un défaut. Dans de telles cas, le prêteur peut engager des procédures de recouvrement pour récupérer les sommes dues, ce qui peut inclure des procédures judiciaires. Des intérêts de retard et d\'autres frais peuvent être appliqués sur les montants en souffrance. Un défaut continu ou répété peut affecter négativement la cote de crédit de l\'emprunteur et sa capacité d\'emprunt future.</string>
+    <string name="feature_personal_loan_documentation_details">L\'emprunteur est tenu de soumettre des documents exacts et complets, y compris, mais sans s\'y limiter, une preuve d\'identité, une preuve d\'adresse, des détails sur les revenus, des relevés bancaires et tout autre document demandé par le prêteur. Toute divergence, fausse déclaration ou falsification dans les documents soumis peut entraîner le rejet de la demande de prêt ou la résiliation de l\'accord de prêt, ainsi que des implications juridiques possibles.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">L\'emprunteur doit s\'assurer du respect total de toutes les lois locales, étatiques et nationales applicables concernant ses obligations financières. Cela inclut le paiement en temps opportun des impôts, le respect des exigences réglementaires et la soumission de documents valides. Le prêteur ne sera pas tenu responsable des violations légales commises par l\'emprunteur.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">Le prêteur peut, de temps à autre, réviser ou mettre à jour les présentes conditions générales, sous réserve d\'un préavis approprié à l\'emprunteur. L\'accord de prêt sera considéré comme résilié lors du remboursement intégral du montant du prêt ou par des procédures de saisie engagées en raison d\'un défaut.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Tous les litiges découlant de ou liés à l\'accord de prêt personnel relèveront de la compétence exclusive des tribunaux du lieu du siège social du prêteur, sauf indication contraire dans l\'accord.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Télécharger les relevés bancaires</string>
+    <string name="feature_upload_docs_collateral">Télécharger les documents de garantie</string>
+    <string name="feature_upload_docs_signature">Télécharger la signature</string>
+
+    <string name="feature_upload_file_error">Une erreur s\'est produite ! Impossible de télécharger le fichier</string>
+    <string name="feature_upload_statement_error">Veuillez télécharger un relevé bancaire</string>
+    <string name="feature_upload_property_document_error">Veuillez télécharger un document de propriété</string>
+    <string name="feature_upload_signature_error">Veuillez télécharger une signature</string>
+    <string name="feature_upload_documents_success_title">Documents téléchargés avec succès !</string>
+
+    <string name="sign_here">Signer ici</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="sign">Signer</string>
+    <string name="capture">Capturer</string>
+    <string name="attach">Joindre</string>
+    <string name="upload_signature">Télécharger la signature</string>
+    <string name="save_and_submit">Enregistrer et envoyer</string>
+</resources>

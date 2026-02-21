@@ -12,11 +12,10 @@ package org.mifos.mobile.core.ui.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 /**
  * Convenience method for observing event flow from [BaseViewModel].
@@ -28,16 +27,14 @@ import kotlinx.coroutines.flow.onEach
 @Composable
 fun <E> EventsEffect(
     eventFlow: Flow<E>,
-    lifecycleOwner: Lifecycle = LocalLifecycleOwner.current.lifecycle,
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     handler: suspend (E) -> Unit,
 ) {
-    LaunchedEffect(key1 = Unit) {
-        eventFlow
-            .filter {
-                it is BackgroundEvent ||
-                    lifecycleOwner.currentState.isAtLeast(Lifecycle.State.RESUMED)
+    LaunchedEffect(key1 = eventFlow, key2 = lifecycleOwner) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            eventFlow.collect {
+                handler.invoke(it)
             }
-            .onEach { handler.invoke(it) }
-            .launchIn(this)
+        }
     }
 }

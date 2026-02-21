@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">ಷೇರು ಅಪ್ಲಿಕೇಶನ್ ವಿವರಗಳು</string>
+    <string name="feature_share_navigation_back">ಹಿಂದೆ</string>
+
+    <string name="feature_share_label_applicant_name">ಅರ್ಜಿದಾರರ ಹೆಸರು</string>
+    <string name="feature_share_label_submission_date">ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ</string>
+    <string name="feature_share_label_product_name">ಉತ್ಪನ್ನದ ಹೆಸರು</string>
+
+    <string name="feature_share_button_next">ಮುಂದೆ</string>
+
+    <string name="feature_apply_share_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ ಇದೆ, ಮುಂದುವರಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ, ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="feature_apply_share_error_too_many_attempts">ತುಂಬಾ ವಿಫಲ ಪ್ರಯತ್ನಗಳು. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="feature_apply_share_error_submit_failed">ಷೇರು ಅಪ್ಲಿಕೇಶನ್ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">ಉಳಿಸದ ಬದಲಾವಣೆಗಳು!</string>
+    <string name="feature_apply_share_unsaved_changes_message">ನೀವು ಉಳಿಸದ ಬದಲಾವಣೆಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ. ನೀವು ಖಂಡಿತವಾಗಿಯೂ ಹಿಂದಕ್ಕೆ ಹೋಗಲು ಬಯಸುವಿರಾ?</string>
+    <string name="feature_share_no_products_available">ಷೇರು ಖಾತೆಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಲು ಯಾವುದೇ ಷೇರು ಉತ್ಪನ್ನಗಳು ಲಭ್ಯವಿಲ್ಲ</string>
+
+
+    <string name="feature_apply_share_label_terms">ನಿಯಮಗಳು</string>
+    <string name="feature_apply_share_label_currency">ಕರೆನ್ಸಿ</string>
+    <string name="feature_apply_share_label_current_price">ಪ್ರಸ್ತುತ ಬೆಲೆ</string>
+    <string name="feature_apply_share_label_total_number_of_shares">ಒಟ್ಟು ಷೇರುಗಳ ಸಂಖ್ಯೆ</string>
+    <string name="feature_apply_share_label_default_savings_account">ಡೀಫಾಲ್ಟ್ ಉಳಿತಾಯ ಖಾತೆ</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">ಕನಿಷ್ಠ ಸಕ್ರಿಯ ಅವಧಿ</string>
+    <string name="feature_apply_share_section_minimum_active_period">ಕನಿಷ್ಠ ಸಕ್ರಿಯ ಅವಧಿ</string>
+    <string name="feature_apply_share_label_minimum_frequency">ಆವರ್ತನ (Frequency)</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">ಆವರ್ತನ ಪ್ರಕಾರ</string>
+
+    <string name="feature_apply_share_label_lockin_period">ಲಾಕ್-ಇನ್ ಅವಧಿ</string>
+    <string name="feature_apply_share_section_lockin_period">ಲಾಕ್-ಇನ್ ಅವಧಿ</string>
+    <string name="feature_apply_share_label_lockin_frequency">ಆವರ್ತನ</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">ಆವರ್ತನ ಪ್ರಕಾರ</string>
+
+    <string name="feature_apply_share_error_frequency_required">ಆವರ್ತನ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_share_frequency_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಆವರ್ತನವನ್ನು ನಮೂದಿಸಿ</string>
+
+    <string name="feature_apply_share_error_shares_required">ಷೇರುಗಳು ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_share_shares_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಷೇರುಗಳನ್ನು ನಮೂದಿಸಿ</string>
+
+    <string name="feature_apply_share_error_price_required">ಬೆಲೆ ಅಗತ್ಯವಿದೆ</string>
+    <string name="feature_apply_share_price_invalid">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಬೆಲೆಯನ್ನು ನಮೂದಿಸಿ</string>
+
+    <string name="feature_apply_share_status_failure">ಅಪ್ಲಿಕೇಶನ್ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="feature_apply_share_status_failure_tip">%1$s ಅಡಿಯಲ್ಲಿ ಷೇರು ಖಾತೆಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="feature_apply_share_status_failure_action">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+
+    <string name="feature_apply_share_status_success">ಅರ್ಜಿ ಸಲ್ಲಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ!</string>
+    <string name="feature_apply_share_status_success_tip">ನೀವು %1$s ಅಡಿಯಲ್ಲಿ ಷೇರು ಖಾತೆಗೆ ಯಶಸ್ವಿಯಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿದ್ದೀರಿ</string>
+    <string name="feature_apply_share_status_success_action">ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</string>
+</resources>

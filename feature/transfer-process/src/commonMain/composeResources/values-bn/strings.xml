@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">স্থানান্তর</string>
+    <string name="transferred_successfully">সফলভাবে স্থানান্তরিত হয়েছে</string>
+    <string name="amount">পরিমাণ</string>
+    <string name="transfer_from_savings">সঞ্চয় থেকে স্থানান্তর</string>
+    <string name="pay_from">প্রদানকারী</string>
+    <string name="date">তারিখ</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="remark">মন্তব্য</string>
+    <string name="make_transfer">স্থানান্তর করুন</string>
+    <string name="pay_to">প্রাপক</string>
+    <string name="remarks">মন্তব্যসমূহ</string>
+    <string name="error_icon_description">ত্রুটি</string>
+    <string name="error_description">পরিমাণে কোনো অবৈধ অক্ষর থাকা উচিত নয়</string>
+    <string name="transfer_failed">স্থানান্তর ব্যর্থ হয়েছে</string>
+    <string name="transfer_successful">স্থানান্তর সফল হয়েছে</string>
+    <string name="back_to_accounts">হোম স্ক্রিনে ফিরে যান</string>
+    <string name="transfer_id_prefix">স্থানান্তর আইডি:</string>
+    <string name="feature_make_transfer_error_amount_required">পরিমাণ প্রয়োজন</string>
+    <string name="feature_make_transfer_error_amount_invalid">অনুগ্রহ করে সঠিক পরিমাণ লিখুন</string>
+    <string name="feature_make_transfer_error_remarks_empty">মন্তব্য খালি রাখা যাবে না</string>
+    <string name="feature_make_transfer_error_remarks_invalid">অবৈধ মন্তব্য প্রবেশ করানো হয়েছে</string>
+    <string name="feature_make_transfer_error_server">সার্ভারে সমস্যা দেখা দিয়েছে, পরবর্তীতে আবার চেষ্টা করুন</string>
+    <string name="feature_make_transfer_account_number">অ্যাকাউন্ট নম্বর</string>
+    <string name="feature_make_transfer_customer_name">গ্রাহকের নাম</string>
+    <string name="feature_make_transfer_beneficiary_name">সুবিধাভোগীর নাম</string>
+    <string name="feature_make_transfer_details">স্থানান্তরের বিবরণ</string>
+</resources>

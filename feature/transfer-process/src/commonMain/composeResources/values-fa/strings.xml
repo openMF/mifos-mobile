@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="transfer">انتقال</string>
+    <string name="transferred_successfully">انتقال با موفقیت انجام شد</string>
+    <string name="amount">مبلغ</string>
+    <string name="transfer_from_savings">انتقال از پس‌انداز</string>
+    <string name="pay_from">پرداخت از</string>
+    <string name="date">تاریخ</string>
+    <string name="cancel">لغو</string>
+    <string name="remark">یادداشت</string>
+    <string name="make_transfer">انجام انتقال</string>
+    <string name="pay_to">پرداخت به</string>
+    <string name="remarks">یادداشت‌ها</string>
+    <string name="error_icon_description">خطا</string>
+    <string name="error_description">مبلغ نباید حاوی کاراکترهای غیرمجاز باشد</string>
+    <string name="transfer_failed">انتقال ناموفق بود</string>
+    <string name="transfer_successful">انتقال موفقیت‌آمیز بود</string>
+    <string name="back_to_accounts">بازگشت به صفحه اصلی</string>
+    <string name="transfer_id_prefix">شناسه انتقال:</string>
+    <string name="feature_make_transfer_error_amount_required">وارد کردن مبلغ الزامی است</string>
+    <string name="feature_make_transfer_error_amount_invalid">لطفاً یک مبلغ معتبر وارد کنید</string>
+    <string name="feature_make_transfer_error_remarks_empty">یادداشت نمی‌تواند خالی باشد</string>
+    <string name="feature_make_transfer_error_remarks_invalid">یادداشت نامعتبر وارد شده است</string>
+    <string name="feature_make_transfer_error_server">مشکل سرور از سمت ما، امکان ادامه وجود ندارد. لحظاتی دیگر دوباره تلاش کنید</string>
+    <string name="feature_make_transfer_account_number">شماره حساب</string>
+    <string name="feature_make_transfer_customer_name">نام مشتری</string>
+    <string name="feature_make_transfer_beneficiary_name">نام ذینفع</string>
+    <string name="feature_make_transfer_details">جزئیات انتقال</string>
+</resources>

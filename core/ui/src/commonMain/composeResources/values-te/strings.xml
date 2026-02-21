@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="no_internet">ఇంటర్నెట్ కనెక్షన్ లేదు</string>
+    <string name="back_online">మళ్ళీ ఆన్‌లైన్</string>
+    <string name="retry">మళ్ళీ ప్రయత్నించండి</string>
+    <string name="no_data">డేటా లేదు</string>
+    <string name="something_went_wrong">ఏదో తప్పు జరిగింది</string>
+    <string name="core_common_working">కోర్ కామన్ వర్కింగ్</string>
+    <string name="customer_name">కస్టమర్ పేరు</string>
+    <string name="product">ఉత్పత్తి</string>
+    <string name="error_loading_balance">బ్యాలెన్స్ లోడ్ చేయడంలో లోపం</string>
+    <string name="powered_by">పవర్డ్ బై</string>
+    <string name="password_checker_empty_error">పాస్‌వర్డ్ ఖాళీగా ఉండకూడదు.</string>
+    <string name="password_checker_too_long_error">పాస్‌వర్డ్ చాలా పొడవుగా ఉంది. గరిష్టంగా 128 అక్షరాలు ఉండవచ్చు.</string>
+    <string name="password_checker_min_length_feedback">పాస్‌వర్డ్ కనీసం 12 అక్షరాలు ఉండాలి.</string>
+    <string name="password_checker_uppercase_feedback">కనీసం ఒక పెద్ద అక్షరాన్ని చేర్చండి.</string>
+    <string name="password_checker_lowercase_feedback">కనీసం ఒక చిన్న అక్షరాన్ని చేర్చండి.</string>
+    <string name="password_checker_digit_feedback">కనీసం ఒక సంఖ్యను చేర్చండి.</string>
+    <string name="password_checker_special_char_feedback">కనీసం ఒక ప్రత్యేక అక్షరాన్ని చేర్చండి.</string>
+    <string name="password_checker_strong_length_feedback">బలమైన పాస్‌వర్డ్ కోసం కనీసం 12 అక్షరాలను ఉపయోగించండి.</string>
+    <string name="password_strength_level_0">చాలా బలహీనం</string>
+    <string name="password_strength_level_1">బలహీనం</string>
+    <string name="password_strength_level_2">మధ్యస్థం</string>
+    <string name="password_strength_level_3">మంచిది</string>
+    <string name="password_strength_level_4">బలంగా ఉంది</string>
+    <string name="password_strength_level_5">చాలా బలంగా ఉంది</string>
+    <string name="password_strength_none">పాస్‌వర్డ్ నమోదు చేయండి</string>
+    <string name="password_strength_indicator_description">పాస్‌వర్డ్ బలం సూచిక</string>
+    <string name="password_strength_announcement">పాస్‌వర్డ్ బలం: %1$s</string>
+    <string name="minimum_characters_requirement">కనీసం %1$d అక్షరాలు ఉండాలి</string>
+    <string name="minimum_characters_met">కనీస అక్షరాల అవసరం పూర్తయింది</string>
+    <string name="minimum_characters_not_met">కనీస అక్షరాల అవసరం పూర్తి కాలేదు</string>
+    <string name="password_requirements_title">పాస్‌వర్డ్ నిబంధనలు</string>
+    <string name="password_feedback_title">పాస్‌వర్డ్ సూచనలు</string>
+    <string name="password_feedback_all_good">మీ పాస్‌వర్డ్ అన్ని నిబంధనలకు అనుగుణంగా ఉంది!</string>
+    <string name="character_count">%1$d అక్షరాలు</string>
+    <string name="character_count_with_limit">%1$d / %2$d అక్షరాలు</string>
+    <string name="validation_email_empty">ఈమెయిల్ అడ్రస్ ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_email_max_length_exceeded">ఈమెయిల్ అడ్రస్ గరిష్టంగా 254 అక్షరాల కంటే మించిపోయింది</string>
+    <string name="validation_email_missing_at_symbol">ఈమెయిల్ అడ్రస్‌లో @ గుర్తు ఉండాలి</string>
+    <string name="validation_email_starts_with_at">ఈమెయిల్ అడ్రస్ @ గుర్తుతో ప్రారంభం కాకూడదు</string>
+    <string name="validation_email_ends_with_at">ఈమెయిల్ అడ్రస్ @ గుర్తుతో ముగియకూడదు</string>
+    <string name="validation_email_multiple_at_symbols">ఈమెయిల్ అడ్రస్‌లో ఒకటి కంటే ఎక్కువ @ గుర్తులు ఉండకూడదు</string>
+    <string name="validation_email_local_empty">లోకల్ పార్ట్ ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_email_local_max_length">లోకల్ పార్ట్ గరిష్టంగా 64 అక్షరాల కంటే మించిపోయింది</string>
+    <string name="validation_email_local_starts_with_dot">లోకల్ పార్ట్ చుక్క (.) తో ప్రారంభం కాకూడదు</string>
+    <string name="validation_email_local_ends_with_dot">లోకల్ పార్ట్ చుక్క (.) తో ముగియకూడదు</string>
+    <string name="validation_email_local_consecutive_dots">లోకల్ పార్ట్‌లో పక్కపక్కనే చుక్కలు ఉండకూడదు</string>
+    <string name="validation_email_local_invalid_characters">లోకల్ పార్ట్‌లో చెల్లని అక్షరాలు ఉన్నాయి</string>
+    <string name="validation_email_domain_empty">డొమైన్ పార్ట్ ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_email_domain_max_length">డొమైన్ పార్ట్ గరిష్టంగా 253 అక్షరాల కంటే మించిపోయింది</string>
+    <string name="validation_email_domain_missing_dot">డొమైన్‌లో కనీసం ఒక చుక్క ఉండాలి</string>
+    <string name="validation_email_domain_starts_ends_with_dot">డొమైన్ చుక్కతో ప్రారంభం కాకూడదు లేదా ముగియకూడదు</string>
+    <string name="validation_email_domain_starts_ends_with_hyphen">డొమైన్ హైఫన్ (-) తో ప్రారంభం కాకూడదు లేదా ముగియకూడదు</string>
+    <string name="validation_email_domain_insufficient_parts">డొమైన్‌లో చుక్కలతో విడదీయబడిన కనీసం రెండు భాగాలు ఉండాలి</string>
+    <string name="validation_email_tld_invalid">టాప్-లెవల్ డొమైన్ కనీసం 2 అక్షరాల పొడవు ఉండాలి మరియు కేవలం అక్షరాలను మాత్రమే కలిగి ఉండాలి</string>
+    <string name="validation_email_label_empty">డొమైన్ లేబుల్ ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_email_label_max_length">డొమైన్ లేబుల్ గరిష్టంగా 63 అక్షరాల కంటే మించిపోయింది</string>
+    <string name="validation_email_label_starts_with_hyphen">డొమైన్ లేబుల్ హైఫన్‌తో ప్రారంభం కాకూడదు</string>
+    <string name="validation_email_label_ends_with_hyphen">డొమైన్ లేబుల్ హైఫన్‌తో ముగియకూడదు</string>
+    <string name="validation_email_label_invalid_characters">డొమైన్ లేబుల్‌లో చెల్లని అక్షరాలు ఉన్నాయి</string>
+    <string name="validation_phone_empty">ఫోన్ నంబర్ ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_phone_too_short">ఫోన్ నంబర్ చాలా తక్కువగా ఉంది</string>
+    <string name="validation_phone_too_long">ఫోన్ నంబర్ చాలా పొడవుగా ఉంది</string>
+    <string name="validation_phone_invalid_characters">ఫోన్ నంబర్‌లో చెల్లని అక్షరాలు ఉన్నాయి</string>
+    <string name="validation_phone_spanish_country_code_required">దయచేసి స్పానిష్ కంట్రీ కోడ్ (+34) ఉపయోగించండి</string>
+    <string name="validation_phone_spanish_format_invalid">స్పానిష్ ఫోన్ నంబర్ ఫార్మాట్ చెల్లదు</string>
+    <string name="validation_phone_invalid_for_country">ఎంచుకున్న దేశానికి ఫోన్ నంబర్ చెల్లదు</string>
+    <string name="validation_phone_no_valid_country_found">ఏ మద్దతు ఉన్న దేశానికి కూడా ఫోన్ నంబర్ ఫార్మాట్ గుర్తించబడలేదు</string>
+    <string name="validation_name_empty">పేరు ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_name_invalid_characters">పేరులో చెల్లని అక్షరాలు ఉన్నాయి</string>
+    <string name="validation_field_required">ఈ ఫీల్డ్ తప్పనిసరి</string>
+    <string name="validation_format_invalid">ఫార్మాట్ చెల్లదు</string>
+    <string name="validation_length_exceeded">గరిష్ట పరిమితి మించిపోయింది</string>
+    <string name="validation_length_insufficient">కనీస పరిమితి పూర్తి కాలేదు</string>
+    <string name="validation_amount_empty">మొత్తం ఖాళీగా ఉండకూడదు</string>
+    <string name="validation_amount_invalid_format">దయచేసి సరైన మొత్తం ఫార్మాట్‌ను నమోదు చేయండి (ఉదా., 99.99)</string>
+    <string name="validation_amount_invalid_number">దయచేసి సరైన సంఖ్యను నమోదు చేయండి</string>
+    <string name="validation_amount_negative">మొత్తం నెగటివ్ కాకూడదు</string>
+    <string name="validation_amount_too_small">మొత్తం కనీసం 0.01 ఉండాలి</string>
+    <string name="validation_amount_too_large">మొత్తం 999,999,999.99 మించకూడదు</string>
+    <string name="validation_amount_invalid_decimal_places">ఈ కరెన్సీకి మొత్తంలో డెసిమల్ స్థానాలు చాలా ఎక్కువగా ఉన్నాయి</string>
+    <string name="validation_amount_invalid_increment">మొత్తం ఈ కరెన్సీకి సరైన ఇంక్రిమెంట్లలో ఉండాలి</string>
+    <string name="savings_account">పొదుపు ఖాతా</string>
+    <string name="available_balance">అందుబాటులో ఉన్న బ్యాలెన్స్</string>
+    <string name="select_other_payment_account">ఇతర చెల్లింపు ఖాతాను ఎంచుకోండి</string>
+    <string name="pay_from">దీని నుండి చెల్లించండి</string>
+    <string name="available_balance_formatted">అందుబాటులో ఉన్న బ్యాలెన్స్ - %1$s</string>
+    <string name="feature_dashboard_welcome_back">Mifos కి స్వాగతం</string>
+    <string name="feature_dashboard_no_accounts_title">ఇంకా ఖాతాలు లేవు</string>
+    <string name="feature_dashboard_no_accounts_description">మా దగ్గర మొదటి ఖాతా తెరవడం ద్వారా మీ ఆర్థిక ప్రయాణాన్ని ప్రారంభించండి.</string>
+    <string name="feature_dashboard_open_account">ఖాతా తెరువు</string>
+    <string name="feature_savings_filter">ఫిల్టర్లు</string>
+    <string name="feature_savings_reset">రీసెట్</string>
+    <string name="feature_savings_apply">వర్తింపజేయి</string>
+</resources>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <!-- Titles -->
+    <string name="feature_apply_loan_title">Ajukan Pinjaman Baru</string>
+
+    <!-- Sections -->
+    <string name="feature_apply_loan_section_fill_details">Aplikasi Pinjaman</string>
+
+    <!-- Labels -->
+    <string name="feature_apply_loan_label_applicant_name">Nama Pemohon</string>
+    <string name="feature_apply_loan_label_loan_product">Produk Pinjaman</string>
+    <string name="feature_apply_loan_label_purpose">Tujuan Pinjaman</string>
+    <string name="feature_apply_loan_label_disbursement_date">Tanggal Pencairan</string>
+    <string name="feature_apply_loan_label_principal_amount">Jumlah Pokok</string>
+    <string name="feature_apply_loan_label_currency">Mata Uang</string>
+
+    <!-- Buttons -->
+    <string name="feature_apply_loan_button_continue">Lanjutkan</string>
+    <string name="feature_apply_loan_button_ok">Oke</string>
+    <string name="feature_apply_loan_button_cancel">Batal</string>
+    <string name="feature_apply_loan_button_apply">Ajukan Pinjaman</string>
+    <string name="feature_button_next">Berikutnya</string>
+
+    <!-- Applicant Name Validation -->
+    <string name="feature_apply_loan_error_name_empty">Nama pemohon wajib diisi</string>
+    <string name="feature_apply_loan_error_name_too_short">Nama pemohon harus minimal 4 karakter</string>
+    <string name="feature_apply_loan_error_name_too_long">Nama pemohon tidak boleh lebih dari 100 karakter</string>
+    <string name="feature_apply_loan_error_name_invalid_format">Nama pemohon mengandung karakter yang tidak valid</string>
+
+    <!-- Loan Product Validation -->
+    <string name="feature_apply_loan_error_product_empty">Produk pinjaman wajib diisi</string>
+
+    <!-- Principal Amount Validation -->
+    <string name="feature_apply_loan_error_amount_empty">Jumlah pokok wajib diisi</string>
+    <string name="feature_apply_loan_error_amount_invalid_format">Masukkan format jumlah yang valid</string>
+    <string name="feature_apply_loan_error_amount_too_small">Jumlah pokok terlalu kecil</string>
+    <string name="feature_apply_loan_error_amount_too_large">Jumlah pokok melebihi batas maksimum</string>
+    <string name="feature_apply_loan_error_amount_invalid_decimal">Jumlah memiliki terlalu banyak tempat desimal untuk mata uang yang dipilih</string>
+    <string name="feature_apply_loan_error_amount_multiple">Jumlah tidak dalam kelipatan yang valid</string>
+
+    <!-- Disbursement Date Validation -->
+    <string name="feature_apply_loan_error_date_empty">Tanggal pencairan wajib diisi</string>
+    <string name="feature_apply_loan_error_date_invalid_format">Masukkan format tanggal yang valid (DD/MM/YYYY)</string>
+    <string name="feature_apply_loan_error_date_future">Tanggal pencairan harus di masa depan</string>
+    <string name="feature_apply_loan_error_date_out_of_range">Tanggal pencairan terlalu jauh di masa depan (maks 10 tahun)</string>
+
+    <!-- Error Dialogs -->
+    <string name="feature_apply_loan_error_server">Masalah server dari sisi kami, tidak dapat melanjutkan, coba lagi sesaat lagi</string>
+    <string name="feature_apply_loan_error_too_many_attempts">Terlalu banyak percobaan gagal. Silakan coba lagi nanti.</string>
+    <string name="feature_apply_loan_error_submit_failed">Gagal mengirim aplikasi pinjaman. Silakan coba lagi.</string>
+
+    <!-- Success Messages -->
+    <string name="feature_apply_loan_success_submit">Aplikasi pinjaman berhasil dikirim!</string>
+    <string name="feature_apply_loan_success_draft_saved">Draf aplikasi berhasil disimpan</string>
+
+    <!-- Dialog Titles & Messages -->
+    <string name="feature_apply_loan_unsaved_changes_title">Perubahan Belum Disimpan!</string>
+    <string name="feature_apply_loan_unsaved_changes_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin kembali?</string>
+
+    <!-- Dialog Actions -->
+    <string name="feature_apply_loan_action_discard">Buang</string>
+    <string name="feature_apply_loan_action_save_draft">Simpan Draf</string>
+    <string name="feature_apply_loan_action_retry">Coba Lagi</string>
+    <string name="feature_apply_loan_action_cancel">Batal</string>
+    <string name="feature_apply_loan_action_continue">Lanjutkan</string>
+
+    <!-- Hints -->
+    <string name="feature_apply_loan_hint_applicant_name">Masukkan nama lengkap Anda</string>
+    <string name="feature_apply_loan_hint_loan_product">Pilih produk pinjaman</string>
+    <string name="feature_apply_loan_hint_principal_amount">Masukkan jumlah pinjaman</string>
+    <string name="feature_apply_loan_hint_disbursement_date">Pilih tanggal pencairan</string>
+    <string name="feature_apply_loan_hint_purpose">Jelaskan tujuan secara singkat</string>
+
+    <!-- Info -->
+    <string name="feature_apply_loan_info_currency_revalidation">Mata uang berubah. Jumlah akan divalidasi ulang.</string>
+    <string name="feature_apply_loan_info_min_amount">Jumlah pinjaman minimum: %1$s</string>
+    <string name="feature_apply_loan_info_max_amount">Jumlah pinjaman maksimum: %1$s</string>
+    <string name="feature_apply_loan_info_confirm_details">Konfirmasi Detail</string>
+
+    <string name="feature_apply_loan_status_success">Permintaan Berhasil Dikirim</string>
+    <string name="feature_apply_loan_status_success_tip">Aplikasi pinjaman Anda telah dikirim. Anda akan diberitahu setelah ditinjau.</string>
+    <string name="feature_apply_loan_status_success_action">Kembali Ke Beranda</string>
+
+    <string name="feature_apply_loan_status_failure">Gagal Mengirim Permintaan</string>
+    <string name="feature_apply_loan_status_failure_tip">Terjadi kesalahan saat mengirim aplikasi pinjaman Anda. Silakan coba lagi.</string>
+    <string name="feature_apply_loan_status_failure_action">Coba Lagi</string>
+
+
+    <!-- New Flow   -->
+    <string name="feature_select_loan_type_top_bar_title">Ajukan Pinjaman Baru</string>
+    <string name="feature_select_loan_type_choose_loan">Pilih Jenis Pinjaman</string>
+    <string name="feature_select_loan_type_empty">Saat ini Produk Pinjaman tidak tersedia</string>
+    <string name="feature_select_loan_type_network_issue">Pastikan Anda terhubung ke internet</string>
+    <string name="feature_loan_product_details_terms">Terima Syarat &amp; Ketentuan</string>
+
+
+    <string name="feature_loan_apply_loan">Ajukan Pinjaman %1$s</string>
+    <string name="feature_loan_get_loan">Dapatkan Pinjaman %1$s</string>
+    <string name="feature_loan_up_to">Hingga %1$s</string>
+    <string name="feature_loan_interest_rate_in_numbers">%1$s hingga %2$s Bunga</string>
+    <string name="feature_loan_terms_and_conditions">Syarat &amp; Ketentuan</string>
+
+    <string name="feature_loan_sanction_and_disbursement">Sanksi dan Pencairan Pinjaman</string>
+    <string name="feature_loan_interest_rate">Suku Bunga</string>
+    <string name="feature_loan_continue">Lanjutkan</string>
+    <string name="feature_loan_repayment">Pelunasan</string>
+    <string name="feature_loan_security_and_collateral">Keamanan dan Jaminan</string>
+    <string name="feature_loan_insurance">Asuransi</string>
+    <string name="feature_loan_default">Default</string>
+    <string name="feature_loan_documentation">Dokumentasi</string>
+    <string name="feature_loan_continue_legal_compliance">Kepatuhan Hukum</string>
+    <string name="feature_loan_amendments_and_termination">Amandemen dan Pengakhiran</string>
+    <string name="feature_loan_jurisdiction">Yurisdiksi</string>
+
+
+    <string name="feature_personal_loan_sanction_and_disbursement_details">Pinjaman pribadi akan disetujui berdasarkan kelayakan pemohon, stabilitas pendapatan, kelayakan kredit, dan kebijakan kredit internal pemberi pinjaman. Pemberi pinjaman berhak untuk menyetujui atau menolak aplikasi pinjaman pribadi apa pun atas kebijakannya sendiri tanpa memberikan alasan apa pun. Jumlah pinjaman yang disetujui dapat dicairkan secara penuh atau sebagian, tergantung pada perjanjian pinjaman dan persyaratan dokumentasi. Pencairan tunduk pada keberhasilan penyelesaian prosedur KYC, verifikasi dokumen yang diserahkan, dan kepatuhan terhadap semua kondisi yang ditentukan dalam surat persetujuan.</string>
+    <string name="feature_personal_loan_interest_rate_description">Pinjaman pribadi dapat memiliki suku bunga tetap atau mengambang, seperti yang dipilih oleh peminjam pada saat perjanjian pinjaman. Dalam hal pinjaman suku bunga mengambang, suku bunga yang berlaku tunduk pada revisi berkala berdasarkan perubahan dalam tolok ukur atau suku bunga acuan pemberi pinjaman. Perubahan tersebut akan mengikat peminjam dan dapat menyebabkan variasi dalam jumlah EMI dan/atau tenor pinjaman, sebagaimana dianggap perlu oleh pemberi pinjaman.</string>
+    <string name="feature_personal_loan_repayment_details">Pelunasan pinjaman pribadi akan dilakukan melalui Angsuran Bulanan yang Disamakan (EMI) yang terdiri dari komponen pokok dan bunga. EMI akan dimulai dari tanggal yang ditentukan dalam perjanjian pinjaman dan akan terus berlanjut setiap bulan sampai jumlah pinjaman penuh, bersama dengan bunga yang berlaku, dilunasi. Pembayaran di muka atau pembayaran sebagian dapat diizinkan sesuai dengan kebijakan pemberi pinjaman yang berlaku dan dapat dikenakan biaya tertentu, terutama untuk pinjaman suku bunga tetap.</string>
+    <string name="feature_personal_loan_security_and_collateral_details">Pinjaman pribadi biasanya bersifat tanpa jaminan dan tidak memerlukan agunan. Namun, pemberi pinjaman berhak untuk meminta jaminan atau keamanan tambahan dalam kasus luar biasa, tergantung pada profil kredit peminjam dan jumlah pinjaman. Persyaratan semacam itu akan dinyatakan dengan jelas dalam surat persetujuan. Peminjam akan menanggung semua biaya yang terkait dengan dokumentasi atau formalitas hukum, jika berlaku.</string>
+    <string name="feature_personal_loan_insurance_details">Meskipun pinjaman pribadi umumnya tidak memerlukan asuransi aset, pemberi pinjaman dapat merekomendasikan agar peminjam memilih polis asuransi jiwa untuk melindungi jumlah pinjaman yang belum lunas jika terjadi kematian peminjam. Ini tidak wajib tetapi disarankan sebagai tindakan perlindungan finansial bagi keluarga atau tanggungan peminjam.</string>
+    <string name="feature_personal_loan_default_details">Tidak membayar atau terlambat membayar EMI akan dianggap sebagai default. Dalam kejadian seperti itu, pemberi pinjaman dapat memulai prosedur pemulihan untuk menagih iuran yang belum lunas, yang dapat mencakup proses hukum. Bunga denda dan biaya lainnya dapat dikenakan pada jumlah yang telah jatuh tempo. Default yang berkelanjutan atau berulang dapat berdampak negatif pada skor kredit peminjam dan kemampuan meminjam di masa depan.</string>
+    <string name="feature_personal_loan_documentation_details">Peminjam diharuskan untuk menyerahkan dokumentasi yang akurat dan lengkap, termasuk namun tidak terbatas pada bukti identitas, bukti alamat, rincian pendapatan, laporan bank, dan dokumen lain yang diminta oleh pemberi pinjaman. Setiap perbedaan, kesalahan penyajian, atau pemalsuan dalam dokumen yang diserahkan dapat mengakibatkan penolakan aplikasi pinjaman atau pengakhiran perjanjian pinjaman, bersama dengan kemungkinan implikasi hukum.</string>
+    <string name="feature_personal_loan_continue_legal_compliance_details">Peminjam harus memastikan kepatuhan penuh terhadap semua hukum lokal, negara bagian, dan nasional yang berlaku mengenai kewajiban keuangan mereka. Ini termasuk pembayaran pajak tepat waktu, kepatuhan terhadap persyaratan peraturan, dan penyerahan dokumen yang valid. Pemberi pinjaman tidak bertanggung jawab atas pelanggaran hukum yang dilakukan oleh peminjam.</string>
+    <string name="feature_personal_loan_amendments_and_termination_details">Pemberi pinjaman dapat, dari waktu ke waktu, merevisi atau memperbarui syarat dan ketentuan ini, dengan pemberitahuan sebelumnya yang sesuai kepada peminjam. Perjanjian pinjaman akan dianggap berakhir setelah pelunasan penuh jumlah pinjaman atau melalui prosedur penyitaan yang dimulai karena default.</string>
+    <string name="feature_personal_loan_jurisdiction_details">Semua perselisihan yang timbul dari atau sehubungan dengan perjanjian pinjaman pribadi akan berada di bawah yurisdiksi eksklusif pengadilan di lokasi kantor terdaftar pemberi pinjaman, kecuali ditentukan lain dalam perjanjian.</string>
+
+
+    <!-- Upload docs   -->
+
+    <string name="feature_upload_docs_bank_account">Unggah Laporan Rekening Bank</string>
+    <string name="feature_upload_docs_collateral">Unggah Dokumen Jaminan</string>
+    <string name="feature_upload_docs_signature">Unggah Tanda Tangan</string>
+
+    <string name="feature_upload_file_error">Ada yang Salah! Tidak dapat mengunggah file</string>
+    <string name="feature_upload_statement_error">Harap Unggah Laporan Bank</string>
+    <string name="feature_upload_property_document_error">Harap Unggah Dokumen Properti</string>
+    <string name="feature_upload_signature_error">Harap Unggah Tanda Tangan</string>
+    <string name="feature_upload_documents_success_title">Dokumen Berhasil Diunggah!</string>
+
+    <string name="sign_here">Tanda Tangan Di Sini</string>
+    <string name="reset">Atur Ulang</string>
+    <string name="sign">Tanda Tangan</string>
+    <string name="capture">Tangkap</string>
+    <string name="attach">Lampirkan</string>
+    <string name="upload_signature">Unggah Tanda Tangan</string>
+    <string name="save_and_submit">Simpan &amp; Kirim</string>
+</resources>

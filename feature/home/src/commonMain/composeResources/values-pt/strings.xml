@@ -12,6 +12,8 @@
     <string name="beneficiaries">Beneficiários</string>
     <string name="survey">Pesquisas</string>
     <string name="apply_for_loan">Solicitar Empréstimo</string>
+    <string name="apply_for_savings">Pedir Conta Poupança</string>
+    <string name="apply_for_share">Pedir Conta Ações</string>
     <string name="charges">Taxas</string>
     <string name="transfer">Transferência</string>
     <string name="accounts">Contas</string>
