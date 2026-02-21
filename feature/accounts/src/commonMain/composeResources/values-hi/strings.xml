@@ -88,4 +88,21 @@
     <string name="feature_transaction_detail_balance">शेष राशि</string>
     <string name="feature_transaction_detail_default_type">लेन-देन</string>
 
+    <string name="feature_transaction_history_deposit">जमा</string>
+    <string name="feature_transaction_history_withdrawal">निकासी</string>
+    <string name="feature_transaction_history_interest_posting">ब्याज पोस्टिंग</string>
+    <string name="feature_transaction_history_fee_deduction">शुल्क कटौती</string>
+    <string name="feature_transaction_history_transfer">स्थानांतरण</string>
+    <string name="feature_transaction_history_transaction">लेन-देन</string>
+    <string name="feature_transaction_history_disbursement">संवितरण</string>
+    <string name="feature_transaction_history_repayment">पुनर्भुगतान</string>
+    <string name="feature_transaction_history_purchase">खरीद</string>
+    <string name="feature_transaction_history_charge_payment">शुल्क भुगतान</string>
+    <string name="feature_transaction_history_redeem">रिडीम</string>
+    <string name="feature_transaction_history_recovery_repayment">वसूली पुनर्भुगतान</string>
+    <string name="feature_transaction_history_interest_waiver">ब्याज माफी</string>
+    <string name="feature_transaction_history_fee_waiver">शुल्क माफी</string>
+
+
+
 </resources>

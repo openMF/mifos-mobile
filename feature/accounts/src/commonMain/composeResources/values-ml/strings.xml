@@ -11,95 +11,82 @@
 <resources>
     <string name="feature_account_title">അക്കൗണ്ടുകൾ</string>
     <string name="feature_loan_account_title">വായ്പാ അക്കൗണ്ടുകൾ</string>
-    <string name="feature_saving_account_title">സേവിംഗ്സ് അക്കൗണ്ടുകൾ</string>
+    <string name="feature_saving_account_title">സമ്പാദ്യ അക്കൗണ്ടുകൾ</string>
     <string name="feature_share_account_title">ഷെയർ അക്കൗണ്ടുകൾ</string>
-
     <string name="feature_accounts_filter_status">സ്റ്റാറ്റസ്</string>
-    <string name="feature_accounts_filter_type">തരം</string>
-
+    <string name="feature_accounts_filter_type">ഇനം</string>
     <string name="feature_loan_account_filter_active">സജീവം</string>
     <string name="feature_loan_account_filter_approval_pending">അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു</string>
     <string name="feature_loan_account_filter_closed">അടച്ചു</string>
     <string name="feature_loan_account_filter_disburse">വിതരണത്തിനായി കാത്തിരിക്കുന്നു</string>
-    <string name="feature_loan_account_filter_overpaid">അമിതമായി അടച്ചു</string>
-    <string name="feature_loan_account_filter_in_arrears">കുടിശ്ശികയിൽ</string>
-    <string name="feature_loan_account_filter_withdrawn">പിൻവലിച്ചു</string>
-    <string name="feature_loan_account_filter_matured">കാലാവധി പൂർത്തിയായി</string>
-    <string name="feature_loan_account_filter_rejected">നിരസിച്ചു</string>
-
+    <string name="feature_loan_account_filter_overpaid">അധികമായി അടച്ചത്</string>
+    <string name="feature_loan_account_filter_in_arrears">കുടിശ്ശികയുള്ളവ</string>
+    <string name="feature_loan_account_filter_withdrawn">പിൻവലിക്കപ്പെട്ടവ</string>
+    <string name="feature_loan_account_filter_matured">കാലാവധി പൂർത്തിയായവ</string>
+    <string name="feature_loan_account_filter_rejected">നിരസിക്കപ്പെട്ടവ</string>
     <string name="feature_loan_account_filter_personal">വ്യക്തിഗതം</string>
     <string name="feature_loan_account_filter_bronze">ബ്രോൺസ്</string>
-
     <string name="feature_savings_filter_wallet_account">വാലറ്റ് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_bank_account">ബാങ്ക് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_group_account">ഗ്രൂപ്പ് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_nb_account">NB അക്കൗണ്ട്</string>
-
     <string name="feature_savings_filter_active_account">സജീവം</string>
     <string name="feature_savings_filter_pending_account">അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു</string>
     <string name="feature_savings_filter_closed_account">അടച്ചു</string>
-    <string name="feature_savings_filter_matured_account">കാലാവധി പൂർത്തിയായി</string>
+    <string name="feature_savings_filter_matured_account">കാലാവധി പൂർത്തിയായവ</string>
     <string name="feature_savings_filter_approved_account">അംഗീകരിച്ചു</string>
-
     <string name="feature_savings_filter">ഫിൽട്ടറുകൾ</string>
     <string name="feature_savings_reset">റീസെറ്റ്</string>
-    <string name="feature_savings_apply">അപ്ലൈ ചെയ്യുക</string>
+    <string name="feature_savings_apply">പ്രയോഗിക്കുക</string>
     <string name="feature_filters_count">%1$s എണ്ണം തിരഞ്ഞെടുത്തു</string>
-
     <string name="feature_transaction_transaction_history">ഇടപാട് ചരിത്രം</string>
     <string name="feature_transaction_statement">സ്റ്റേറ്റ്‌മെന്റ്</string>
     <string name="feature_transaction_download_icon_description">ഡൗൺലോഡ് ഐക്കൺ</string>
     <string name="feature_transaction_filter">ഫിൽട്ടർ</string>
     <string name="feature_transaction_filter_icon_description">ഫിൽട്ടർ ഐക്കൺ</string>
-
     <string name="feature_transaction_filter_credit">വരവ് (Credit)</string>
     <string name="feature_transaction_filter_debit">ചെലവ് (Debit)</string>
-
     <string name="feature_transaction_filter_past_month">കഴിഞ്ഞ മാസം</string>
     <string name="feature_transaction_filter_past_3_months">കഴിഞ്ഞ 3 മാസം</string>
     <string name="feature_transaction_filter_past_6_months">കഴിഞ്ഞ 6 മാസം</string>
     <string name="feature_transaction_filter_past_1_year">കഴിഞ്ഞ 1 വർഷം</string>
     <string name="feature_transaction_filter_past_2_years">കഴിഞ്ഞ 2 വർഷം</string>
-
-    <string name="feature_transaction_type">ഇടപാട് തരം</string>
-    <string name="feature_duration">കാലാവധി</string>
-    <string name="feature_no_transactions_found">ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
-    <string name="feature_no__filtered_transactions_found">തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകൾക്ക് ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
-
-    <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം തുടരാനാവില്ല, അല്പം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
-
+    <string name="feature_transaction_type">ഇടപാട് രീതി</string>
+    <string name="feature_duration">കാലയളവ്</string>
+    <string name="feature_no_transactions_found">ഇടപാടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_no__filtered_transactions_found">തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകളിൽ ഇടപാടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാൻ കഴിയില്ല, ദയവായി അൽപ്പസമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക</string>
     <string name="feature_transaction_details">ഇടപാട് വിവരങ്ങൾ</string>
-    <string name="feature_transaction_detail_id">ഇടപാട് ഐഡി</string>
-    <string name="feature_transaction_detail_transfer_description">ട്രാൻസ്ഫർ വിവരണം</string>
-    <string name="feature_transaction_detail_date">തിയതി</string>
-    <string name="feature_transaction_detail_status">സ്റ്റാറ്റസ്</string>
+    <string name="feature_transaction_detail_id">ട്രാൻസാക്ഷൻ ഐഡി</string>
+    <string name="feature_transaction_detail_transfer_description">കൈമാറ്റ വിവരണം</string>
+    <string name="feature_transaction_detail_date">തീയതി</string>
+    <string name="feature_transaction_detail_status">നില</string>
     <string name="feature_transaction_detail_status_success">വിജയിച്ചു</string>
     <string name="feature_transaction_detail_account_ref">അക്കൗണ്ട് റഫറൻസ്</string>
-    <string name="feature_transaction_detail_payment_method">പേയ്‌മെന്റ് രീതി</string>
-    <string name="feature_transaction_detail_type">തരം</string>
-    <string name="feature_transaction_detail_status_reversed">തിരിച്ചയച്ചു</string>
+    <string name="feature_transaction_detail_payment_method">പേയ്മെന്റ് രീതി</string>
+    <string name="feature_transaction_detail_type">ഇനം</string>
+    <string name="feature_transaction_detail_status_reversed">തിരിച്ചയച്ചു (Reversed)</string>
     <string name="feature_transaction_detail_receipt">രസീത് നമ്പർ #</string>
     <string name="feature_transaction_detail_external_id">എക്സ്റ്റേണൽ ഐഡി</string>
     <string name="feature_transaction_detail_breakdown">വിശദാംശങ്ങൾ</string>
     <string name="feature_transaction_detail_principal">മുതൽ (Principal)</string>
     <string name="feature_transaction_detail_interest">പലിശ</string>
-    <string name="feature_transaction_detail_fees">ഫീസ്</string>
+    <string name="feature_transaction_detail_fees">ഫീസുകൾ</string>
     <string name="feature_transaction_detail_penalties">പിഴകൾ</string>
     <string name="feature_transaction_detail_balance">ബാക്കി തുക</string>
     <string name="feature_transaction_detail_default_type">ഇടപാട്</string>
-
     <string name="feature_transaction_history_deposit">നിക്ഷേപം</string>
     <string name="feature_transaction_history_withdrawal">പിൻവലിക്കൽ</string>
-    <string name="feature_transaction_history_interest_posting">പലിശ ചേർക്കൽ</string>
-    <string name="feature_transaction_history_fee_deduction">ഫീസ് കുറയ്ക്കൽ</string>
-    <string name="feature_transaction_history_transfer">ട്രാൻസ്ഫർ</string>
+    <string name="feature_transaction_history_interest_posting">പലിശ വരവ്</string>
+    <string name="feature_transaction_history_fee_deduction">ഫീസ്‌ ഈടാക്കൽ</string>
+    <string name="feature_transaction_history_transfer">കൈമാറ്റം</string>
     <string name="feature_transaction_history_transaction">ഇടപാട്</string>
-    <string name="feature_transaction_history_disbursement">വിതരണം</string>
+    <string name="feature_transaction_history_disbursement">വായ്പാ വിതരണം</string>
     <string name="feature_transaction_history_repayment">തിരിച്ചടവ്</string>
-    <string name="feature_transaction_history_purchase">പർച്ചേസ്</string>
-    <string name="feature_transaction_history_charge_payment">ചാർജ് പേയ്‌മെന്റ്</string>
-    <string name="feature_transaction_history_redeem">തിരിച്ചെടുക്കുക (Redeem)</string>
-    <string name="feature_transaction_history_recovery_repayment">തിരിച്ചടവ് വീണ്ടെടുക്കൽ</string>
+    <string name="feature_transaction_history_purchase">വാങ്ങൽ</string>
+    <string name="feature_transaction_history_charge_payment">ചാർജ് പേയ്മെന്റ്</string>
+    <string name="feature_transaction_history_redeem">റീഡീം ചെയ്യുക</string>
+    <string name="feature_transaction_history_recovery_repayment">റിക്കവറി തിരിച്ചടവ്</string>
     <string name="feature_transaction_history_interest_waiver">പലിശ ഇളവ്</string>
-    <string name="feature_transaction_history_fee_waiver">ഫീസ് ഇളവ്</string>
+    <string name="feature_transaction_history_fee_waiver">ഫീസ്‌ ഇളവ്</string>
 </resources>

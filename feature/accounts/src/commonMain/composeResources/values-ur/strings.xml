@@ -12,94 +12,81 @@
     <string name="feature_account_title">اکاؤنٹس</string>
     <string name="feature_loan_account_title">قرض کے اکاؤنٹس</string>
     <string name="feature_saving_account_title">بچت کے اکاؤنٹس</string>
-    <string name="feature_share_account_title">حصص کے اکاؤنٹس</string>
-
-    <string name="feature_accounts_filter_status">حالت</string>
+    <string name="feature_share_account_title">شیئر اکاؤنٹس</string>
+    <string name="feature_accounts_filter_status">حیثیت</string>
     <string name="feature_accounts_filter_type">قسم</string>
-
     <string name="feature_loan_account_filter_active">فعال</string>
-    <string name="feature_loan_account_filter_approval_pending">منظوری زیر التواء</string>
-    <string name="feature_loan_account_filter_closed">بند</string>
+    <string name="feature_loan_account_filter_approval_pending">منظوری کا انتظار</string>
+    <string name="feature_loan_account_filter_closed">بند شدہ</string>
     <string name="feature_loan_account_filter_disburse">ادائیگی کا انتظار</string>
     <string name="feature_loan_account_filter_overpaid">زائد ادا شدہ</string>
     <string name="feature_loan_account_filter_in_arrears">واجب الادا</string>
     <string name="feature_loan_account_filter_withdrawn">واپس لیا گیا</string>
     <string name="feature_loan_account_filter_matured">میعاد مکمل</string>
     <string name="feature_loan_account_filter_rejected">مسترد شدہ</string>
-
     <string name="feature_loan_account_filter_personal">ذاتی</string>
     <string name="feature_loan_account_filter_bronze">برونز</string>
-
     <string name="feature_savings_filter_wallet_account">والٹ اکاؤنٹ</string>
     <string name="feature_savings_filter_bank_account">بینک اکاؤنٹ</string>
     <string name="feature_savings_filter_group_account">گروپ اکاؤنٹ</string>
     <string name="feature_savings_filter_nb_account">NB اکاؤنٹ</string>
-
     <string name="feature_savings_filter_active_account">فعال</string>
     <string name="feature_savings_filter_pending_account">منظوری کا انتظار</string>
-    <string name="feature_savings_filter_closed_account">بند</string>
+    <string name="feature_savings_filter_closed_account">بند شدہ</string>
     <string name="feature_savings_filter_matured_account">میعاد مکمل</string>
     <string name="feature_savings_filter_approved_account">منظور شدہ</string>
-
     <string name="feature_savings_filter">فلٹرز</string>
-    <string name="feature_savings_reset">دوبارہ ترتیب دیں</string>
-    <string name="feature_savings_apply">نافذ کریں</string>
+    <string name="feature_savings_reset">ری سیٹ کریں</string>
+    <string name="feature_savings_apply">لاگو کریں</string>
     <string name="feature_filters_count">%1$s منتخب کیے گئے</string>
-
     <string name="feature_transaction_transaction_history">لین دین کی تاریخ</string>
     <string name="feature_transaction_statement">سٹیٹمنٹ</string>
     <string name="feature_transaction_download_icon_description">ڈاؤن لوڈ آئیکن</string>
     <string name="feature_transaction_filter">فلٹر</string>
     <string name="feature_transaction_filter_icon_description">فلٹر آئیکن</string>
-
-    <string name="feature_transaction_filter_credit">کریڈٹ</string>
-    <string name="feature_transaction_filter_debit">ڈیبٹ</string>
-
+    <string name="feature_transaction_filter_credit">جمع (Credit)</string>
+    <string name="feature_transaction_filter_debit">نام (Debit)</string>
     <string name="feature_transaction_filter_past_month">گزشتہ مہینہ</string>
     <string name="feature_transaction_filter_past_3_months">گزشتہ 3 ماہ</string>
     <string name="feature_transaction_filter_past_6_months">گزشتہ 6 ماہ</string>
     <string name="feature_transaction_filter_past_1_year">گزشتہ 1 سال</string>
     <string name="feature_transaction_filter_past_2_years">گزشتہ 2 سال</string>
-
     <string name="feature_transaction_type">لین دین کی قسم</string>
     <string name="feature_duration">دورانیہ</string>
-    <string name="feature_no_transactions_found">لین دین نہیں ملا</string>
-    <string name="feature_no__filtered_transactions_found">منتخب کردہ فلٹرز کے لیے کوئی لین دین نہیں ملا</string>
-
-    <string name="feature_generic_error_server">ہماری طرف سے سرور کا مسئلہ ہے، فی الحال آگے نہیں بڑھ سکتے، کچھ دیر بعد دوبارہ کوشش کریں</string>
-
+    <string name="feature_no_transactions_found">کوئی لین دین نہیں ملا</string>
+    <string name="feature_no__filtered_transactions_found">منتخب فلٹرز کے لیے کوئی لین دین نہیں ملا</string>
+    <string name="feature_generic_error_server">سرور کی خرابی، جاری نہیں رکھا جا سکتا۔ تھوڑی دیر بعد دوبارہ کوشش کریں</string>
     <string name="feature_transaction_details">لین دین کی تفصیلات</string>
     <string name="feature_transaction_detail_id">ٹرانزیکشن ID</string>
     <string name="feature_transaction_detail_transfer_description">منتقلی کی تفصیل</string>
     <string name="feature_transaction_detail_date">تاریخ</string>
-    <string name="feature_transaction_detail_status">حالت</string>
+    <string name="feature_transaction_detail_status">حیثیت</string>
     <string name="feature_transaction_detail_status_success">کامیاب</string>
     <string name="feature_transaction_detail_account_ref">اکاؤنٹ حوالہ</string>
     <string name="feature_transaction_detail_payment_method">ادائیگی کا طریقہ</string>
     <string name="feature_transaction_detail_type">قسم</string>
-    <string name="feature_transaction_detail_status_reversed">واپس شدہ</string>
+    <string name="feature_transaction_detail_status_reversed">منسوخ شدہ</string>
     <string name="feature_transaction_detail_receipt">رسید نمبر #</string>
     <string name="feature_transaction_detail_external_id">بیرونی ID</string>
     <string name="feature_transaction_detail_breakdown">تفصیلات</string>
     <string name="feature_transaction_detail_principal">اصل رقم</string>
     <string name="feature_transaction_detail_interest">سود</string>
     <string name="feature_transaction_detail_fees">فیس</string>
-    <string name="feature_transaction_detail_penalties">جرمانے</string>
-    <string name="feature_transaction_detail_balance">باقی ماندہ رقم</string>
+    <string name="feature_transaction_detail_penalties">جرمانہ</string>
+    <string name="feature_transaction_detail_balance">بقیہ بیلنس</string>
     <string name="feature_transaction_detail_default_type">لین دین</string>
-
-    <string name="feature_transaction_history_deposit">جمع رقم</string>
-    <string name="feature_transaction_history_withdrawal">رقم کی نکاسی</string>
-    <string name="feature_transaction_history_interest_posting">سود کی پوسٹنگ</string>
+    <string name="feature_transaction_history_deposit">رقم جمع کروانا</string>
+    <string name="feature_transaction_history_withdrawal">رقم نکلوانا</string>
+    <string name="feature_transaction_history_interest_posting">سود کا اندراج</string>
     <string name="feature_transaction_history_fee_deduction">فیس کی کٹوتی</string>
     <string name="feature_transaction_history_transfer">منتقلی</string>
     <string name="feature_transaction_history_transaction">لین دین</string>
-    <string name="feature_transaction_history_disbursement">ادائیگی قرض</string>
+    <string name="feature_transaction_history_disbursement">قرض کی ادائیگی</string>
     <string name="feature_transaction_history_repayment">قرض کی واپسی</string>
     <string name="feature_transaction_history_purchase">خریداری</string>
-    <string name="feature_transaction_history_charge_payment">چارج ادائیگی</string>
-    <string name="feature_transaction_history_redeem">استرداد (Redeem)</string>
-    <string name="feature_transaction_history_recovery_repayment">رقم کی واپسی کی وصولی</string>
+    <string name="feature_transaction_history_charge_payment">چارجز کی ادائیگی</string>
+    <string name="feature_transaction_history_redeem">کیش کروانا (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">ریکوری ادائیگی</string>
     <string name="feature_transaction_history_interest_waiver">سود کی معافی</string>
     <string name="feature_transaction_history_fee_waiver">فیس کی معافی</string>
 </resources>
