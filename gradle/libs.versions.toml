@@ -2,7 +2,7 @@
 accompanistVersion = "0.36.0"
 activityVersion = "1.9.3"
 androidDesugarJdkLibs = "2.1.5"
-androidGradlePlugin = "8.13.2"
+androidGradlePlugin = "8.10.0"
 androidTools = "31.10.0"
 androidx-test-ext-junit = "1.2.1"
 androidxActivity = "1.10.1"
