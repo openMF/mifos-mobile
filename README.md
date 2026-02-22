@@ -27,7 +27,7 @@ An Android Application built on top of the MifosX Self-Service platform for end-
 > **Please join our daily Mobile Stand-Up on [Zoom](https://us02web.zoom.us/meeting/register/xV5scn0XQpGXM5aUDFmUIA).**
 
 ### Demo Credentials
-Access the Mifos Mobile demo credentials on our [Jira Wiki page](https://mifosforge.jira.com/wiki/spaces/MP/pages/4537024513/Welcome+to+the+Mifos+Mobile+Apps+Community#%F0%9F%93%B2-Mifos-Mobile-App).
+Access the Mifos Mobile demo credentials on our [Jira Wiki page](https://mifosforge.jira.com/wiki/spaces/MP/pages/4537024513/Welcome+to+the+Mifos+Mobile+Apps+Community#%F0%9F%92%B8-Mifos-Wallet-(Mifos-Pay).1).
 
 ### How to Contribute
 Thank you for your interest in contributing to the Mifos Mobile project by Mifos! We welcome all contributions and encourage you to follow these guidelines to ensure a smooth and efficient collaboration process.
