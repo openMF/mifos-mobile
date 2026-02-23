@@ -186,10 +186,10 @@ private fun ScaffoldBottomAppBar(
                                     shadowColor,
                                 ),
                                 startY = -shadowHeight,
-                                endY = 0f
+                                endY = 0f,
                             ),
                             topLeft = Offset(0f, -shadowHeight),
-                            size = Size(size.width, shadowHeight)
+                            size = Size(size.width, shadowHeight),
                         )
                         drawContent()
                     }
