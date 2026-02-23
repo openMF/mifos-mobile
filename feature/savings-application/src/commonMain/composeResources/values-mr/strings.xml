@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_apply_savings_title">बचत अर्ज तपशील</string>
+
+    <string name="feature_apply_savings_section_fill_details">अर्ज तपशील भरा</string>
+
+    <string name="feature_apply_savings_label_applicant_name">अर्जदाराचे नाव</string>
+    <string name="feature_apply_savings_label_savings_product">उत्पादनाचे नाव</string>
+    <string name="feature_apply_savings_label_field_officer">फील्ड ऑफिसर</string>
+    <string name="feature_apply_savings_label_submission_date">सादर करण्याची तारीख</string>
+    <string name="feature_apply_savings_label_fill_application_details">अर्ज तपशील भरा</string>
+    <string name="feature_apply_savings_label_details">तपशील</string>
+    <string name="feature_apply_savings_label_currency">चलन</string>
+    <string name="feature_apply_savings_label_minimum_opening_balance">किमान सुरुवातीची शिल्लक</string>
+    <string name="feature_apply_savings_label_lock_in_period">लॉक-इन कालावधी</string>
+    <string name="feature_apply_savings_label_frequency">वारंवारता (Frequency)</string>
+    <string name="feature_apply_savings_label_frequency_type">वारंवारता प्रकार</string>
+    <string name="feature_apply_savings_label_overdraft">ओव्हरड्राफ्ट</string>
+    <string name="feature_apply_savings_label_request_to_allow_overdraft">ओव्हरड्राफ्टला परवानगी देण्यासाठी विनंती</string>
+
+    <string name="feature_apply_savings_button_continue">पुढे चालू ठेवा</string>
+    <string name="feature_apply_savings_button_ok">ठीक आहे</string>
+    <string name="feature_apply_savings_button_cancel">रद्द करा</string>
+    <string name="feature_apply_savings_button_apply">बचत अर्ज करा</string>
+    <string name="feature_button_next">पुढील</string>
+
+    <string name="feature_apply_savings_error_amount_empty">मूळ रक्कम आवश्यक आहे</string>
+    <string name="feature_apply_savings_error_amount_invalid_format">कृपया वैध रक्कम स्वरूप प्रविष्ट करा</string>
+    <string name="feature_apply_savings_error_amount_too_small">मूळ रक्कम खूप लहान आहे</string>
+    <string name="feature_apply_savings_error_amount_too_large">मूळ रक्कम कमाल मर्यादेपेक्षा जास्त आहे</string>
+    <string name="feature_apply_savings_error_amount_invalid_decimal">निवडलेल्या चलनासाठी रक्कमेमध्ये खूप जास्त दशांश स्थाने आहेत</string>
+
+
+    <string name="feature_apply_savings_error_product_empty">बचत उत्पादन आवश्यक आहे</string>
+
+    <string name="feature_apply_savings_error_server">आमच्या बाजूने सर्व्हर समस्या असल्याने पुढे जाऊ शकत नाही, थोड्या वेळाने पुन्हा प्रयत्न करा</string>
+    <string name="feature_apply_savings_error_too_many_attempts">खूप अयशस्वी प्रयत्न. कृपया नंतर पुन्हा प्रयत्न करा.</string>
+    <string name="feature_apply_savings_error_submit_failed">बचत अर्ज सादर करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.</string>
+
+    <string name="feature_apply_savings_success_submit">बचत अर्ज यशस्वीरित्या सादर केला!</string>
+    <string name="feature_apply_savings_success_draft_saved">अर्ज मसुदा यशस्वीरित्या जतन केला</string>
+
+    <string name="feature_apply_savings_unsaved_changes_title">जतन न केलेले बदल!</string>
+    <string name="feature_apply_savings_unsaved_changes_message">तुमच्याकडे जतन न केलेले बदल आहेत. तुम्हाला खात्री आहे की तुम्हाला परत जायचे आहे?</string>
+
+
+    <string name="feature_apply_savings_label_next">पुढील</string>
+
+    <string name="feature_apply_savings_error_currency_required">चलन आवश्यक आहे</string>
+    <string name="feature_apply_savings_error_minimum_opening_balance_required">किमान सुरुवातीची शिल्लक आवश्यक आहे</string>
+    <string name="feature_apply_savings_error_lock_in_period_required">लॉक-इन कालावधी आवश्यक आहे</string>
+    <string name="feature_apply_savings_error_frequency_required">वारंवारता आवश्यक आहे</string>
+    <string name="feature_apply_savings_error_frequency_invalid">एक वैध वारंवारता प्रविष्ट करा</string>
+
+    <string name="feature_apply_savings_status_success">यशस्वीरित्या अर्ज केला!</string>
+    <string name="feature_apply_savings_status_success_tip">तुम्ही %1$s अंतर्गत बचत खात्यासाठी यशस्वीरित्या अर्ज केला आहे.</string>
+    <string name="feature_apply_savings_status_success_action">मुख्य पृष्ठावर परत जा</string>
+
+    <string name="feature_apply_savings_status_failure">अर्ज सादर करण्यात अयशस्वी</string>
+    <string name="feature_apply_savings_status_failure_tip">%1$s अंतर्गत बचत खात्यासाठी अर्ज करण्यात अयशस्वी.</string>
+    <string name="feature_apply_savings_status_failure_action">पुन्हा प्रयत्न करा</string>
+
+</resources>

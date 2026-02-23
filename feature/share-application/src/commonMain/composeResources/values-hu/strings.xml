@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="feature_share_title">Részjegy igénylés részletei</string>
+    <string name="feature_share_navigation_back">Vissza</string>
+
+    <string name="feature_share_label_applicant_name">Igénylő neve</string>
+    <string name="feature_share_label_submission_date">Benyújtás dátuma</string>
+    <string name="feature_share_label_product_name">Termék neve</string>
+
+    <string name="feature_share_button_next">Tovább</string>
+
+    <string name="feature_apply_share_error_server">Szerverhiba lépett fel, nem lehet folytatni. Kérjük, próbálja újra később.</string>
+    <string name="feature_apply_share_error_too_many_attempts">Túl sok sikertelen kísérlet. Kérjük, próbálja újra később.</string>
+    <string name="feature_apply_share_error_submit_failed">A megtakarítási kérelem benyújtása sikertelen. Kérjük, próbálja újra.</string>
+
+    <string name="feature_apply_share_unsaved_changes_title">Mentetlen változások!</string>
+    <string name="feature_apply_share_unsaved_changes_message">Mentetlen változtatásai vannak. Biztosan vissza akar lépni?</string>
+    <string name="feature_share_no_products_available">Nincs elérhető részjegy termék az igényléshez</string>
+
+
+    <string name="feature_apply_share_label_terms">Feltételek</string>
+    <string name="feature_apply_share_label_currency">Pénznem</string>
+    <string name="feature_apply_share_label_current_price">Aktuális ár</string>
+    <string name="feature_apply_share_label_total_number_of_shares">Részjegyek teljes száma</string>
+    <string name="feature_apply_share_label_default_savings_account">Alapértelmezett megtakarítási számla</string>
+
+    <string name="feature_apply_share_label_minimum_active_period">Minimális aktív időszak</string>
+    <string name="feature_apply_share_section_minimum_active_period">Minimális aktív időszak</string>
+    <string name="feature_apply_share_label_minimum_frequency">Gyakoriság</string>
+    <string name="feature_apply_share_label_minimum_frequency_type">Gyakoriság típusa</string>
+
+    <string name="feature_apply_share_label_lockin_period">Zárolási időszak</string>
+    <string name="feature_apply_share_section_lockin_period">Zárolási időszak</string>
+    <string name="feature_apply_share_label_lockin_frequency">Gyakoriság</string>
+    <string name="feature_apply_share_label_lockin_frequency_type">Gyakoriság típusa</string>
+
+    <string name="feature_apply_share_error_frequency_required">Gyakoriság megadása kötelező</string>
+    <string name="feature_apply_share_frequency_invalid">Kérjük, adjon meg érvényes gyakoriságot</string>
+
+    <string name="feature_apply_share_error_shares_required">Részjegyek megadása kötelező</string>
+    <string name="feature_apply_share_shares_invalid">Kérjük, adjon meg érvényes részjegyeket</string>
+
+    <string name="feature_apply_share_error_price_required">Ár megadása kötelező</string>
+    <string name="feature_apply_share_price_invalid">Kérjük, adjon meg érvényes árat</string>
+
+    <string name="feature_apply_share_status_failure">A kérelem benyújtása sikertelen</string>
+    <string name="feature_apply_share_status_failure_tip">Nem sikerült részjegy számlát igényelni a(z) %1$s alatt</string>
+    <string name="feature_apply_share_status_failure_action">Próbálja újra</string>
+
+    <string name="feature_apply_share_status_success">Sikeres igénylés!</string>
+    <string name="feature_apply_share_status_success_tip">Sikeresen igényelt részjegy számlát a(z) %1$s alatt</string>
+    <string name="feature_apply_share_status_success_action">Vissza a főoldalra</string>
+</resources>
