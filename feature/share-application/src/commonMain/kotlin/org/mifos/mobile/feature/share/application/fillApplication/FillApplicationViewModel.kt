@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.share_application.generated.resources.Res
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_frequency_required
 import mifos_mobile.feature.share_application.generated.resources.feature_apply_share_error_server
@@ -63,6 +65,7 @@ import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
@@ -647,15 +650,21 @@ internal class ShareFillApplicationViewModel(
         when (response) {
             is DataState.Error -> {
                 updateState { it.copy(showOverlay = false) }
+
+                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    getString(UiRes.string.internal_server_error)
+                } else {
+                    "${response.message}, ${getString(
+                        Res.string.feature_apply_share_status_failure_tip,
+                        state.shareProductName,
+                    )}"
+                }
                 sendEvent(
                     ShareApplicationEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_share_status_failure),
-                        subtitle = "${response.message}, ${getString(
-                            Res.string.feature_apply_share_status_failure_tip,
-                            state.shareProductName,
-                        )}",
+                        subtitle = errorMsg,
                         buttonText = getString(Res.string.feature_apply_share_status_failure_action),
                     ),
                 )
