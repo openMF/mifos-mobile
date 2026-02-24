@@ -12,10 +12,12 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary_confirmation
 import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
@@ -26,6 +28,7 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * A view model for the beneficiary detail screen.
@@ -217,9 +220,15 @@ internal class BeneficiaryDetailViewModel(
                             showOverlay = false,
                         )
                     }
+                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                        getString(UiRes.string.internal_server_error)
+                    } else {
+                        response.message
+                    }
+
                     setDialogState(
                         BeneficiaryDetailState.DialogState.Error(
-                            response.message,
+                            errorMsg,
                         ),
                     )
                 }
