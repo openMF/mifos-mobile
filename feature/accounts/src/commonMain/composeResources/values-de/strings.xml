@@ -10,16 +10,16 @@
 -->
 <resources>
     <string name="feature_account_title">Konten</string>
-    <string name="feature_loan_account_title">Darlehenskonten</string>
+    <string name="feature_loan_account_title">Kreditkonten</string>
     <string name="feature_saving_account_title">Sparkonten</string>
-    <string name="feature_share_account_title">Anteilskonten</string>
+    <string name="feature_share_account_title">Aktienkonten</string>
     <string name="feature_accounts_filter_status">Status</string>
     <string name="feature_accounts_filter_type">Typ</string>
     <string name="feature_loan_account_filter_active">Aktiv</string>
     <string name="feature_loan_account_filter_approval_pending">Genehmigung ausstehend</string>
     <string name="feature_loan_account_filter_closed">Geschlossen</string>
     <string name="feature_loan_account_filter_disburse">Warten auf Auszahlung</string>
-    <string name="feature_loan_account_filter_overpaid">Überbezahlt</string>
+    <string name="feature_loan_account_filter_overpaid">Überzahlt</string>
     <string name="feature_loan_account_filter_in_arrears">Im Rückstand</string>
     <string name="feature_loan_account_filter_withdrawn">Zurückgezogen</string>
     <string name="feature_loan_account_filter_matured">Fällig</string>
@@ -42,7 +42,7 @@
     <string name="feature_transaction_transaction_history">Transaktionsverlauf</string>
     <string name="feature_transaction_statement">Kontoauszug</string>
     <string name="feature_transaction_download_icon_description">Download-Symbol</string>
-    <string name="feature_transaction_filter">Filter</string>
+    <string name="feature_transaction_filter">Filtern</string>
     <string name="feature_transaction_filter_icon_description">Filter-Symbol</string>
     <string name="feature_transaction_filter_credit">Haben</string>
     <string name="feature_transaction_filter_debit">Soll</string>
@@ -66,14 +66,14 @@
     <string name="feature_transaction_detail_payment_method">Zahlungsmethode</string>
     <string name="feature_transaction_detail_type">Typ</string>
     <string name="feature_transaction_detail_status_reversed">Storniert</string>
-    <string name="feature_transaction_detail_receipt">Beleg-Nr.</string>
+    <string name="feature_transaction_detail_receipt">Beleg #</string>
     <string name="feature_transaction_detail_external_id">Externe ID</string>
     <string name="feature_transaction_detail_breakdown">Aufschlüsselung</string>
     <string name="feature_transaction_detail_principal">Kapital</string>
     <string name="feature_transaction_detail_interest">Zinsen</string>
     <string name="feature_transaction_detail_fees">Gebühren</string>
     <string name="feature_transaction_detail_penalties">Strafen</string>
-    <string name="feature_transaction_detail_balance">Restguthaben</string>
+    <string name="feature_transaction_detail_balance">Verbleibender Saldo</string>
     <string name="feature_transaction_detail_default_type">Transaktion</string>
     <string name="feature_transaction_history_deposit">Einzahlung</string>
     <string name="feature_transaction_history_withdrawal">Auszahlung</string>

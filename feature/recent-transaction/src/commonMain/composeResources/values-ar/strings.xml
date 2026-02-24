@@ -14,7 +14,7 @@
     <string name="no_transaction">لا توجد معاملات</string>
     <string name="atm_icon">رمز الصراف الآلي</string>
     <string name="string_and_string">%1$s %2$s</string>
-
+    <string name="account">الحساب</string>
     <string name="something_went_wrong">حدث خطأ ما</string>
     <string name="filter">تصفية</string>
     <string name="filter_transactions">تصفية المعاملات</string>
@@ -25,9 +25,9 @@
     <string name="balance">الرصيد: %1$s %2$s</string>
     <string name="transaction_type">نوع المعاملة:</string>
     <string name="all">الكل</string>
-    <string name="debits">مدين</string>
-    <string name="credits">دائن</string>
-    <string name="apply_filters">تطبيق الفلاتر</string>
+    <string name="debits">الخصم</string>
+    <string name="credits">الإيداع</string>
+    <string name="apply_filters">تطبيق التصفية</string>
 
     <string name="deposit">إيداع</string>
     <string name="withdrawal">سحب</string>

@@ -23,8 +23,9 @@
     <string name="account_number_label">Nº da Conta: %1$s</string>
     <string name="select_account">Selecionar Conta</string>
     <string name="balance">Saldo: %1$s %2$s</string>
+    <string name="account">Conta</string>
     <string name="transaction_type">Tipo de Transação:</string>
-    <string name="all">Todos</string>
+    <string name="all">Tudo</string>
     <string name="debits">Débitos</string>
     <string name="credits">Créditos</string>
     <string name="apply_filters">Aplicar Filtros</string>
