@@ -13,12 +13,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.core.ui.generated.resources.validation_amount_empty
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
@@ -57,6 +59,7 @@ import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
@@ -601,27 +604,33 @@ internal class SavingsFillApplicationViewModel(
                 updateState {
                     it.copy(showOverlay = false)
                 }
+                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    getString(UiRes.string.internal_server_error)
+                } else {
+                    buildString {
+                        val serverMessage = response.message.takeIf { it.isNotBlank() }
+                        if (serverMessage != null) {
+                            append(serverMessage)
+                            if (!serverMessage.endsWith(".") && !serverMessage.endsWith("!")) {
+                                append(".")
+                            }
+                            append(" ")
+                        }
+                        append(
+                            getString(
+                                Res.string.feature_apply_savings_status_failure_tip,
+                                state.fieldOfficerName,
+                            ),
+                        )
+                    }
+                }
+
                 sendEvent(
                     SavingsApplicationEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_savings_status_failure),
-                        subtitle = buildString {
-                            val serverMessage = response.message.takeIf { it.isNotBlank() }
-                            if (serverMessage != null) {
-                                append(serverMessage)
-                                if (!serverMessage.endsWith(".") && !serverMessage.endsWith("!")) {
-                                    append(".")
-                                }
-                                append(" ")
-                            }
-                            append(
-                                getString(
-                                    Res.string.feature_apply_savings_status_failure_tip,
-                                    state.fieldOfficerName,
-                                ),
-                            )
-                        },
+                        subtitle = errorMsg,
                         buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
                     ),
                 )
