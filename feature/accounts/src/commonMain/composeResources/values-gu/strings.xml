@@ -42,7 +42,6 @@
     <string name="feature_transaction_statement">સ્ટેટમેન્ટ</string>
     <string name="feature_transaction_filter_icon_description">ફિલ્ટર આયકન</string>
     <string name="feature_transaction_filter">ફિલ્ટર</string>
-    <string name="feature_transaction_filter_icon_description">ફિલ્ટર આઇકન</string>
     <string name="feature_transaction_filter_credit">જમા</string>
     <string name="feature_transaction_filter_debit">ઉધાર</string>
     <string name="feature_transaction_filter_past_month">છેલ્લો મહિનો</string>
