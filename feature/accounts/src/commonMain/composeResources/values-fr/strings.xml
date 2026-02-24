@@ -33,7 +33,7 @@
     <string name="feature_savings_filter_active_account">Actif</string>
     <string name="feature_savings_filter_pending_account">En attente d\'approbation</string>
     <string name="feature_savings_filter_closed_account">Fermé</string>
-    <string name="feature_savings_filter_matured_account">Arrivé à échéance</string>
+    <string name="feature_savings_filter_matured_account">Échu</string>
     <string name="feature_savings_filter_approved_account">Approuvé</string>
     <string name="feature_savings_filter">Filtres</string>
     <string name="feature_savings_reset">Réinitialiser</string>
@@ -62,13 +62,13 @@
     <string name="feature_transaction_detail_date">Date</string>
     <string name="feature_transaction_detail_status">Statut</string>
     <string name="feature_transaction_detail_status_success">Succès</string>
-    <string name="feature_transaction_detail_account_ref">Réf. Compte</string>
-    <string name="feature_transaction_detail_payment_method">Mode de paiement</string>
+    <string name="feature_transaction_detail_account_ref">Réf compte</string>
+    <string name="feature_transaction_detail_payment_method">Moyen de paiement</string>
     <string name="feature_transaction_detail_type">Type</string>
     <string name="feature_transaction_detail_status_reversed">Annulé</string>
     <string name="feature_transaction_detail_receipt">Reçu n°</string>
     <string name="feature_transaction_detail_external_id">ID externe</string>
-    <string name="feature_transaction_detail_breakdown">Ventilation</string>
+    <string name="feature_transaction_detail_breakdown">Détail</string>
     <string name="feature_transaction_detail_principal">Principal</string>
     <string name="feature_transaction_detail_interest">Intérêts</string>
     <string name="feature_transaction_detail_fees">Frais</string>

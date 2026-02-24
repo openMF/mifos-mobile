@@ -55,7 +55,7 @@
     <string name="feature_duration">Dauer</string>
     <string name="feature_no_transactions_found">Keine Transaktionen gefunden</string>
     <string name="feature_no__filtered_transactions_found">Keine Transaktionen für ausgewählte Filter gefunden</string>
-    <string name="feature_generic_error_server">Serverproblem unsererseits, Vorgang kann nicht fortgesetzt werden. Versuchen Sie es später erneut.</string>
+    <string name="feature_generic_error_server">Serverproblem auf unserer Seite, Vorgang kann nicht fortgesetzt werden. Bitte versuchen Sie es später erneut.</string>
     <string name="feature_transaction_details">Transaktionsdetails</string>
     <string name="feature_transaction_detail_id">Transaktions-ID</string>
     <string name="feature_transaction_detail_transfer_description">Überweisungsbeschreibung</string>

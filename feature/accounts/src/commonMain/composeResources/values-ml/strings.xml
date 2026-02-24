@@ -53,9 +53,9 @@
     <string name="feature_transaction_filter_past_2_years">കഴിഞ്ഞ 2 വർഷങ്ങൾ</string>
     <string name="feature_transaction_type">ഇടപാട് തരം</string>
     <string name="feature_duration">കാലയളവ്</string>
-    <string name="feature_no_transactions_found">ഇടപാടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
-    <string name="feature_no__filtered_transactions_found">തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകളിൽ ഇടപാടുകൾ ഒന്നും കണ്ടെത്തിയില്ല</string>
-    <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാൻ കഴിയില്ല, ദയവായി അൽപ്പസമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="feature_no_transactions_found">ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_no__filtered_transactions_found">തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകൾക്കായി ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
     <string name="feature_transaction_details">ഇടപാട് വിവരങ്ങൾ</string>
     <string name="feature_transaction_detail_id">ഇടപാട് ഐഡി</string>
     <string name="feature_transaction_detail_transfer_description">കൈമാറ്റ വിവരണം</string>
