@@ -12,9 +12,11 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.account_number_label
 import mifos_mobile.feature.beneficiary.generated.resources.account_type_label
@@ -49,6 +51,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * ViewModel for confirming beneficiary details before final submission.
@@ -176,12 +179,17 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     updateState {
                         it.copy(showOverlay = false)
                     }
+                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                        getString(UiRes.string.internal_server_error)
+                    } else {
+                        response.message
+                    }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.FAILURE.name,
                             eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_creation_failed),
-                            subtitle = response.message,
+                            subtitle = errorMsg,
                             buttonText = getString(Res.string.try_again),
                         ),
                     )
@@ -244,12 +252,19 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     updateState {
                         it.copy(showOverlay = false)
                     }
+
+                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                        getString(UiRes.string.internal_server_error)
+                    } else {
+                        response.message
+                    }
+
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
                             eventType = EventType.FAILURE.name,
                             eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_updation_failed),
-                            subtitle = response.message,
+                            subtitle = errorMsg,
                             buttonText = getString(Res.string.try_again),
                         ),
                     )
