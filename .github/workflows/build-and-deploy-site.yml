@@ -59,7 +59,7 @@ permissions:
 jobs:
   build_and_deploy_web:
     name: Build And Deploy Web App
-    uses: openMF/mifos-x-actionhub/.github/workflows/build-and-deploy-site.yaml@v1.0.8
+    uses: openMF/mifos-x-actionhub/.github/workflows/build-and-deploy-site.yaml@v1.0.11
     secrets: inherit
     with:
       web_package_name: 'cmp-web' # <-- Change with your web package name

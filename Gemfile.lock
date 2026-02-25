@@ -312,6 +312,8 @@ GEM
       xcpretty (~> 0.2, >= 0.0.7)
 
 PLATFORMS
+  arm64-darwin-21
+  arm64-darwin-23
   arm64-darwin-25
   ruby
 
@@ -326,7 +328,7 @@ DEPENDENCIES
   mutex_m
 
 RUBY VERSION
-   ruby 3.3.6p108
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.7.2

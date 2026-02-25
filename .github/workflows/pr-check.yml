@@ -82,7 +82,7 @@ permissions:
 jobs:
   pr_checks:
     name: PR Checks
-    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.8
+    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.11
     with:
       android_package_name: 'cmp-android' # <-- Change Your Android Package Name
       desktop_package_name: 'cmp-desktop' # <-- Change Your Desktop Package Name

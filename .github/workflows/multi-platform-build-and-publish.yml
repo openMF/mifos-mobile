@@ -113,7 +113,11 @@ jobs:
       use_cocoapods: true
       shared_module: ':cmp-shared'
       distribute_ios_firebase: ${{ inputs.distribute_ios_firebase }}
-      distribute_ios_testflight: ${{ inputs.distribute_ios_testflight }}
+      # When App Store is enabled, skip TestFlight — deliver() already uploads
+      # the IPA to App Store Connect which makes the build available in TestFlight.
+      # Running both in parallel causes version conflicts since the upstream
+      # reusable workflow has no job dependency between the two.
+      distribute_ios_testflight: ${{ inputs.distribute_ios_testflight && !inputs.distribute_ios_appstore }}
       distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
@@ -147,7 +151,15 @@ jobs:
       linux_signing_password: ${{ secrets.LINUX_SIGNING_PASSWORD }}
       linux_signing_certificate: ${{ secrets.LINUX_SIGNING_CERTIFICATE }}
 
+      keychain_password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      certificates_password: ${{ secrets.CERTIFICATES_PASSWORD }}
+      mac_app_distribution_certificate_b64: ${{ secrets.MAC_APP_DISTRIBUTION_CERTIFICATE_B64 }}
+      mac_installer_distribution_certificate_b64: ${{ secrets.MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64 }}
+      mac_embedded_provision_b64: ${{ secrets.MAC_EMBEDDED_PROVISION_B64 }}
+      mac_runtime_provision_b64: ${{ secrets.MAC_RUNTIME_PROVISION_B64 }}
+
       google_services: ${{ secrets.GOOGLESERVICES }}
       firebase_creds: ${{ secrets.FIREBASECREDS }}
       playstore_creds: ${{ secrets.PLAYSTORECREDS }}
       token: ${{ secrets.GITHUB_TOKEN }}
+      supabase_creds: ${{ secrets.SUPABASECREDS }}

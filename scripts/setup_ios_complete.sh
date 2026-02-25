@@ -450,6 +450,16 @@ chmod 600 secrets/shared_keys.env
 print_success "Created secrets/shared_keys.env"
 echo
 
+# Auto-sync iOS secrets to secrets.env for GitHub Actions
+print_info "Synchronizing iOS secrets to secrets.env for GitHub Actions..."
+if bash ./keystore-manager.sh sync; then
+    print_success "iOS secrets synchronized to secrets.env"
+else
+    print_warning "Sync encountered issues - you may need to run manually:"
+    echo "  ./keystore-manager.sh sync"
+fi
+echo
+
 # Initialize Match
 print_section "9️⃣  Initializing Fastlane Match"
 print_info "This will sync your code signing certificates from the Match repository"
