@@ -229,7 +229,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                     StatusNavigationDestination.SAVINGS_UPDATE.name,
                     StatusNavigationDestination.SAVINGS_WITHDRAW.name,
-                        -> {
+                    -> {
                         repeat(2) { navController.popBackStack() }
                     }
 
