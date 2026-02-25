@@ -218,7 +218,7 @@ internal fun TptForm(
     ) {
         MifosPayFromDropdownUI(
             accounts = state.fromAccountOptions.map
-            { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                { Pair(it.accountNo ?: "", it.clientName ?: "") },
             onAccountSelected = { accountNo, _ ->
 
                 val selectedAccount = state.fromAccountOptions
@@ -253,7 +253,7 @@ internal fun TptForm(
 
         MifosDropDownDoubleTextField(
             optionsList = state.toAccountOptions.map
-            { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                { Pair(it.accountNo ?: "", it.clientName ?: "") },
             selectedOption = state.toAccount?.accountNo ?: "",
             isEnabled = true,
             labelResId = Res.string.feature_tpt_label_destination,

@@ -158,7 +158,7 @@ internal fun MakeTransferScreenContent(
                 ) {
                     MifosDropDownDoubleTextField(
                         optionsList = state.toAccountOptions.map
-                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         selectedOption = state.toAccount?.accountNo ?: "",
                         isEnabled = state.outstandingBalance == null,
                         labelResId = Res.string.pay_to,
@@ -174,7 +174,7 @@ internal fun MakeTransferScreenContent(
 
                     MifosPayFromDropdownUI(
                         accounts = state.fromAccountOptions.map
-                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         onAccountSelected = { account, balance ->
                             onAction(MakeTransferAction.OnFromAccountSelected(account))
                         },
