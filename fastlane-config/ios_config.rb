@@ -32,13 +32,13 @@ module FastlaneConfig
       app_rating_config_path: ProjectConfig::IOS[:age_rating_config_path],
       screenshots_ios_path: "./fastlane/screenshots_ios",
       screenshots_macos_path: "./fastlane/screenshots_macos",
-      primary_locale: ProjectConfig::IOS[:primary_locale],
+      primary_locale: ProjectConfig::IOS[:primary_locale]
+    }
 
       # TestFlight Configuration (from IOS_SHARED)
       TESTFLIGHT_CONFIG = ProjectConfig::IOS_SHARED[:testflight]
 
       # App Store Configuration (from IOS_SHARED)
       APPSTORE_CONFIG = ProjectConfig::IOS_SHARED[:appstore]
-    }
   end
 end
