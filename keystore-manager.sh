@@ -1269,8 +1269,8 @@ update_fastlane_config() {
             }
             if (/key_password:/) {
                 gsub(/key_password: "[^"]*"/, "key_password: \"" k_pass "\"")
-        }
             }
+        }
             { print }
             ' "$config_file" > "$temp_file"
 
