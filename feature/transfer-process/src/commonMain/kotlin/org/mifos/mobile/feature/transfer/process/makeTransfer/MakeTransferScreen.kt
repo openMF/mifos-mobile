@@ -70,8 +70,13 @@ internal fun MakeTransferScreen(
             MakeTransferEvent.NavigateBack -> {
                 navigateBack.invoke()
             }
+
             is MakeTransferEvent.NavigateToTransferScreen -> {
-                navigateToTransferScreen(event.reviewTransferPayload, event.transferType, event.destination)
+                navigateToTransferScreen(
+                    event.reviewTransferPayload,
+                    event.transferType,
+                    event.destination,
+                )
             }
         }
     }
@@ -153,7 +158,7 @@ internal fun MakeTransferScreenContent(
                 ) {
                     MifosDropDownDoubleTextField(
                         optionsList = state.toAccountOptions.map
-                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         selectedOption = state.toAccount?.accountNo ?: "",
                         isEnabled = state.outstandingBalance == null,
                         labelResId = Res.string.pay_to,
@@ -164,11 +169,12 @@ internal fun MakeTransferScreenContent(
                                 ),
                             )
                         },
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosPayFromDropdownUI(
                         accounts = state.fromAccountOptions.map
-                            { Pair(it.accountNo ?: "", it.clientName ?: "") },
+                        { Pair(it.accountNo ?: "", it.clientName ?: "") },
                         onAccountSelected = { account, balance ->
                             onAction(MakeTransferAction.OnFromAccountSelected(account))
                         },
@@ -267,6 +273,7 @@ internal fun MakeTransferDialog(
                 modifier = modifier,
             )
         }
+
         null -> {}
     }
 }
