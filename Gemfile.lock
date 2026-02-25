@@ -178,6 +178,7 @@ GEM
     fastlane-plugin-increment_build_number (0.0.4)
     fastlane-sirp (1.0.0)
       sysrandom (~> 1.0)
+    ffi (1.17.1)
     ffi (1.17.1-arm64-darwin)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
@@ -298,14 +299,23 @@ GEM
       xcpretty (~> 0.2, >= 0.0.7)
 
 PLATFORMS
-  arm64-darwin-24
+  arm64-darwin-21
+  arm64-darwin-23
+  arm64-darwin-25
   ruby
 
 DEPENDENCIES
-  cocoapods
+  abbrev
+  base64
+  bigdecimal
+  cocoapods (~> 1.16)
   fastlane
   fastlane-plugin-firebase_app_distribution
   fastlane-plugin-increment_build_number
+  mutex_m
+
+RUBY VERSION
+    ruby 3.3.5p100
 
 BUNDLED WITH
    2.5.18
