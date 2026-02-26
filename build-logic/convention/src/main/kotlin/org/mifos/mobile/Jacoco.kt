@@ -76,8 +76,8 @@ internal fun Project.configureJacoco(
                     ?: provider { emptyList() }
                 sourceDirectories.setFrom(
                     files(
-                        "$projectDir/src/main/java",
-                        "$projectDir/src/main/kotlin"
+                        variant.sources.java.toFilePaths(),
+                        variant.sources.kotlin.toFilePaths()
                     )
                 )
 
