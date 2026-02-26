@@ -13,8 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
-import mifos_mobile.core.ui.generated.resources.internal_server_error
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -44,7 +42,6 @@ import org.mifos.mobile.core.ui.utils.ValidationHelper
 import kotlin.String
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
-import mifos_mobile.core.ui.generated.resources.Res as UiRes
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
