@@ -12,8 +12,10 @@ package org.mifos.mobile.feature.loan.application.confirmDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.loan_application.generated.resources.Res
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_server
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_label_applicant_name
@@ -43,6 +45,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * `ViewModel` for the confirm details screen of the loan application process.
@@ -283,12 +286,17 @@ internal class ConfirmDetailsViewModel(
                 updateState {
                     it.copy(showOverlay = false)
                 }
+                val errorMsg = if (status.exception.cause is ServerResponseException) {
+                    getString(UiRes.string.internal_server_error)
+                } else {
+                    status.message
+                }
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_loan_status_failure),
-                        subtitle = status.message,
+                        subtitle = errorMsg,
                         buttonText = getString(Res.string.feature_apply_loan_status_failure_action),
                     ),
                 )

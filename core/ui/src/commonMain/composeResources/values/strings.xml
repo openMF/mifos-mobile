@@ -131,4 +131,6 @@
     <string name="feature_savings_filter">Filters</string>
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Apply</string>
+
+    <string name="internal_server_error">Something went wrong on our end. Please try again in a moment.</string>
 </resources>

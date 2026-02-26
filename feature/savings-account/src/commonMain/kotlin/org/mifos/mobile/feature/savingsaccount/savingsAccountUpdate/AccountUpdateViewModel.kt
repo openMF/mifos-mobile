@@ -12,11 +12,13 @@ package org.mifos.mobile.feature.savingsaccount.savingsAccountUpdate
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.savings_account.generated.resources.Res
 import mifos_mobile.feature.savings_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.savings_account.generated.resources.feature_savings_update_account_number_label
@@ -44,6 +46,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.observe
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * ViewModel responsible for handling the logic of updating a savings account product.
@@ -314,12 +317,17 @@ internal class AccountUpdateViewModel(
                 updateState {
                     it.copy(showOverlay = false)
                 }
+                val errorMsg = if (dataState.exception.cause is ServerResponseException) {
+                    getString(UiRes.string.internal_server_error)
+                } else {
+                    getString(Res.string.feature_savings_update_request_failed_message)
+                }
                 sendEvent(
                     AccountUpdateEvent.NavigateToStatus(
                         eventType = EventType.FAILURE.name,
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_savings_update_request_failed),
-                        subtitle = getString(Res.string.feature_savings_update_request_failed_message),
+                        subtitle = errorMsg,
                         buttonText = getString(Res.string.feature_savings_update_request_try_again),
                     ),
                 )

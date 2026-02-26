@@ -70,8 +70,13 @@ internal fun MakeTransferScreen(
             MakeTransferEvent.NavigateBack -> {
                 navigateBack.invoke()
             }
+
             is MakeTransferEvent.NavigateToTransferScreen -> {
-                navigateToTransferScreen(event.reviewTransferPayload, event.transferType, event.destination)
+                navigateToTransferScreen(
+                    event.reviewTransferPayload,
+                    event.transferType,
+                    event.destination,
+                )
             }
         }
     }
@@ -164,6 +169,7 @@ internal fun MakeTransferScreenContent(
                                 ),
                             )
                         },
+                        shape = KptTheme.shapes.medium,
                     )
 
                     MifosPayFromDropdownUI(
@@ -267,6 +273,7 @@ internal fun MakeTransferDialog(
                 modifier = modifier,
             )
         }
+
         null -> {}
     }
 }
