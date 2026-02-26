@@ -53,9 +53,19 @@
     <string name="feature_loan_next_installment_label">Next Installment</string>
     <string name="feature_loan_installment_amount_label">Installment Amount</string>
     <string name="feature_loan_due_date_label">Due Date</string>
+    <string name="feature_loan_client_name_label">Client Name</string>
+    <string name="feature_loan_current_balance_label">Current balance</string>
+    <string name="feature_loan_arrears_label">Arrears</string>
+
+    <string name="feature_loan_repayment_schedule_pdf_title">Loan Repayment Schedule</string>
+    <string name="feature_loan_paid_label">Paid</string>
+    <string name="feature_loan_total_label">Total</string>
+    <string name="feature_loan_period_details">Period Details</string>
+    <string name="feature_loan_amount_and_balance">Loan Amount and Balance</string>
+    <string name="feature_loan_total_cost_of_loan">Total Cost of Loan</string>
+    <string name="feature_loan_installment_totals">Installment Totals</string>
 
     <!-- Account Summary -->
-
     <string name="feature_loan_account_details_title">Account Details</string>
     <string name="feature_loan_payoff_details_title">Pay-off Details</string>
     <string name="feature_loan_charges_title">Charges</string>
@@ -63,6 +73,7 @@
     <string name="feature_loan_paid_off_details_title">Paid-off Details</string>
     <string name="feature_loan_outstanding_details_title">Outstanding Details</string>
     <string name="feature_loan_installment_details_title">Installment Details</string>
+
 
     <!-- Account Details -->
     <string name="feature_loan_type_label">Loan Type</string>
@@ -110,6 +121,30 @@
     <string name="feature_loan_paid">Paid</string>
     <string name="feature_loan_due">Due</string>
     <string name="feature_loan_pay">Pay</string>
+
+    <!-- Repayment Schedule table headers -->
+    <string name="feature_loan_table_header_installment">#</string>
+    <string name="feature_loan_table_header_days">Days</string>
+    <string name="feature_loan_table_header_date">Date</string>
+    <string name="feature_loan_table_header_paid_date">Paid Date</string>
+    <string name="feature_loan_table_header_balance">Balance of loan</string>
+    <string name="feature_loan_table_header_principal">Principal Due</string>
+    <string name="feature_loan_table_header_interest">Interest</string>
+    <string name="feature_loan_table_header_fees">Fees</string>
+    <string name="feature_loan_table_header_penalties">Penalties</string>
+    <string name="feature_loan_table_header_due">Due</string>
+    <string name="feature_loan_table_header_paid">Paid</string>
+    <string name="feature_loan_table_header_in_advance">In advance</string>
+    <string name="feature_loan_table_header_late">Late</string>
+    <string name="feature_loan_table_header_outstanding">Outstanding</string>
+
+    <string name="feature_loan_table_total">Total</string>
+
+    <string name="feature_loan_export_to_pdf">Export to PDF</string>
+
+    <string name="feature_loan_export_pdf_error">Failed to export PDF. Please try again.</string>
+    <string name="feature_loan_export_pdf_error_title">Export Failed</string>
+    <string name="feature_loan_details_not_available">N/A</string>
 
     <string name="feature_generic_error_server">Server issue from our side cannot proceed further, Try again after a moment</string>
 
