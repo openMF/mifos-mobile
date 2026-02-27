@@ -661,10 +661,11 @@ internal class ShareFillApplicationViewModel(
                 }
                 sendEvent(
                     ShareApplicationEvent.NavigateToStatus(
-                        eventType = if (response.exception.cause is ServerResponseException)
+                        eventType = if (response.exception.cause is ServerResponseException) {
                             EventType.SERVER_EXCEPTION.name
-                        else
-                            EventType.FAILURE.name,
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_share_status_failure),
                         subtitle = errorMsg,

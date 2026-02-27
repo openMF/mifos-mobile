@@ -206,10 +206,11 @@ internal class AccountWithdrawViewModel(
 
                 sendEvent(
                     AccountWithdrawEvent.NavigateToStatus(
-                        eventType = if (dataState.exception.cause is ServerResponseException)
+                        eventType = if (dataState.exception.cause is ServerResponseException) {
                             EventType.SERVER_EXCEPTION.name
-                        else
-                            EventType.FAILURE.name,
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_savings_withdraw_request_failed),
                         subtitle = errorMsg,

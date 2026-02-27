@@ -196,10 +196,11 @@ internal class OtpAuthenticationViewModel(
                 delay(1500)
                 sendEvent(
                     OtpAuthEvent.NavigateToStatus(
-                        eventType = if (action.exception.cause is ServerResponseException)
+                        eventType = if (action.exception.cause is ServerResponseException) {
                             EventType.SERVER_EXCEPTION.name
-                        else
-                            EventType.FAILURE.name,
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = LoginRoute::class.serializer().descriptor.serialName,
                         title = getString(Res.string.feature_signup_user_registered_failed),
                         subtitle = getString(Res.string.feature_signup_user_registered_failed_tip),
