@@ -13,53 +13,35 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
-import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.core.ui.generated.resources.validation_amount_empty
 import mifos_mobile.feature.savings_application.generated.resources.Res
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_large
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_amount_too_small
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_invalid
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_submit_failed
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_too_many_attempts
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure_action
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_failure_tip
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success_action
-import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_status_success_tip
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_unsaved_changes_message
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
-import org.mifos.mobile.core.model.EventType
-import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.accounts.savings.Currency
-import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsOptions
 import org.mifos.mobile.core.ui.utils.AmountValidationResult
-import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
-import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
-import org.mifos.mobile.core.ui.utils.observe
 import kotlin.String
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
-import mifos_mobile.core.ui.generated.resources.Res as UiRes
 import org.mifos.mobile.core.model.entity.Currency as ModelCurrency
 
 private const val DEFAULT_DECIMAL_PLACES = 2
@@ -84,7 +66,6 @@ internal class SavingsFillApplicationViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val savingsAccountRepositorImpl: SavingsAccountRepository,
     private val networkMonitor: NetworkMonitor,
-    private val resultNavigator: ResultNavigator,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SavingsApplicationState, SavingsApplicationEvent, SavingsApplicationAction>(
     initialState = run {
@@ -93,7 +74,7 @@ internal class SavingsFillApplicationViewModel(
             clientId = requireNotNull(userPreferencesRepository.clientId.value),
             currency = Currency(),
             savingsProductId = route.savingsProductId,
-            fieldOfficerName = route.fieldOfficerName,
+            savingsProductName = route.savingsProductName,
         )
     },
 ) {
@@ -104,7 +85,6 @@ internal class SavingsFillApplicationViewModel(
 
     init {
         observeNetworkStatus()
-        observeAuthResult()
     }
 
     /**
@@ -138,17 +118,7 @@ internal class SavingsFillApplicationViewModel(
                 mutableStateFlow.update { it.copy(checked = action.checked) }
             }
 
-            is SavingsApplicationAction.RequestSavingsAccount -> submitSavingsAccountApplication()
-
-            is SavingsApplicationAction.Internal.ReceiveSavingsApplicationResult -> {
-                viewModelScope.launch { handleSavingsApplicationResult(action.result) }
-            }
-
             is SavingsApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
-
-            is SavingsApplicationAction.Internal.ReceiveAuthenticationResult -> handleSavingsApplyRequest(
-                action.result,
-            )
 
             is SavingsApplicationAction.NavigateToAuthentication -> validateAndSubmit()
 
@@ -217,19 +187,6 @@ internal class SavingsFillApplicationViewModel(
                 .distinctUntilChanged()
                 .collect { isOnline ->
                     sendAction(SavingsApplicationAction.ReceiveNetworkStatus(isOnline))
-                }
-        }
-    }
-
-    /**
-     * Observes the result from the authentication screen.
-     * If the authentication is successful, it triggers the loan application flow.
-     */
-    private fun observeAuthResult() {
-        viewModelScope.launch {
-            resultNavigator.observe<AuthResult>()
-                .collect { result ->
-                    sendAction(SavingsApplicationAction.Internal.ReceiveAuthenticationResult(result.success))
                 }
         }
     }
@@ -328,6 +285,9 @@ internal class SavingsFillApplicationViewModel(
     /**
      * Validates the minimum opening balance amount.
      *
+     * The field is optional - empty values are allowed.
+     * If a value is provided, it must be a valid amount according to the currency rules.
+     *
      * @param amount The minimum opening balance amount as a string.
      * @param currency The currency details for validation.
      * @return A [ValidationResult] indicating success or a specific error.
@@ -339,25 +299,14 @@ internal class SavingsFillApplicationViewModel(
         return when (val result = ValidationHelper.validateAmountWithDetails(amount, currency)) {
             is AmountValidationResult.Valid -> {
                 val value = result.normalizedAmount
-                return if (value in 1000.0..10000.0) {
-                    mutableStateFlow.update {
-                        it.copy(minOpeningBalance = value.toString(), minOpeningBalanceError = null)
-                    }
-                    ValidationResult.Success
-                } else {
-                    ValidationResult.Error(
-                        if (value < 1000.0) {
-                            Res.string.feature_apply_savings_error_amount_too_small
-                        } else {
-                            Res.string.feature_apply_savings_error_amount_too_large
-                        },
-                    )
+                mutableStateFlow.update {
+                    it.copy(minOpeningBalance = value.toString(), minOpeningBalanceError = null)
                 }
+                ValidationResult.Success
             }
 
             is AmountValidationResult.Invalid -> {
-                // this is to bypass empty validation error without having any logical changes
-                // in loan application
+                // Allow empty values since field is optional
                 if (result.errorResource == mifos_mobile.core.ui.generated.resources.Res.string.validation_amount_empty) {
                     ValidationResult.Success
                 } else {
@@ -394,10 +343,17 @@ internal class SavingsFillApplicationViewModel(
     /**
      * Validates the frequency field.
      *
+     * The frequency field is optional - empty values are allowed.
+     * If a value is provided, it must be a valid integer.
+     *
      * @param newValue The new value of the frequency field.
      * @return A [ValidationResult] indicating success or a specific error.
      */
     private fun validateFrequencyChange(newValue: String): ValidationResult = when {
+        newValue.trim().isEmpty() -> {
+            // Empty is valid - field is optional
+            ValidationResult.Success
+        }
         newValue.toIntOrNull() == null -> {
             ValidationResult.Error(Res.string.feature_apply_savings_error_frequency_invalid)
         }
@@ -505,13 +461,10 @@ internal class SavingsFillApplicationViewModel(
 
     /**
      * Handles the successful submission of the savings account application.
-     * It shows a loading overlay, resets the submit attempts,
-     * and sends an event to navigate to the authentication screen.
+     * It resets the submit attempts and navigates to the confirm details screen
+     * where the user can review their application before final submission.
      */
     private fun handleSubmit() {
-        updateState {
-            it.copy(showOverlay = true)
-        }
         viewModelScope.launch {
             try {
                 updateState {
@@ -521,40 +474,24 @@ internal class SavingsFillApplicationViewModel(
                     )
                 }
                 submitAttempts = 0
-                sendEvent(SavingsApplicationEvent.NavigateToAuthentication)
+                sendEvent(
+                    SavingsApplicationEvent.NavigateToConfirmDetails(
+                        savingsProductId = state.savingsProductId,
+                        applicantName = state.applicantName,
+                        savingsProductName = state.savingsProductName,
+                        currency = state.currency.displayLabel ?: state.currency.code ?: "",
+                        minOpeningBalance = state.minOpeningBalance,
+                        frequency = state.frequency,
+                        frequencyTypeName = state.selectedFrequencyTypeName,
+                        frequencyTypeId = state.selectedFrequencyTypeId,
+                        allowOverdraft = if (state.isOverDraftAllowed) state.checked else state.isOverDraftAllowed,
+                        submittedOnDate = state.currentDate,
+                    ),
+                )
             } catch (e: Exception) {
                 submitAttempts++
                 showErrorDialog(Res.string.feature_apply_savings_error_submit_failed)
             }
-        }
-    }
-
-    /**
-     * Handles the result of the authentication screen. If authentication is successful,
-     * it proceeds to submit the savings account application.
-     *
-     * @param isAuthenticated A boolean indicating if the user was successfully authenticated.
-     */
-    private fun handleSavingsApplyRequest(isAuthenticated: Boolean) {
-        if (isAuthenticated) {
-            viewModelScope.launch {
-                sendAction(SavingsApplicationAction.RequestSavingsAccount)
-            }
-        }
-    }
-
-    /**
-     * Submits the savings account application to the repository.
-     */
-    private fun submitSavingsAccountApplication() {
-        updateState {
-            it.copy(showOverlay = true)
-        }
-        viewModelScope.launch {
-            val response = savingsAccountRepositorImpl.submitSavingAccountApplication(
-                payload = state.toSavingsApplicationPayload(),
-            )
-            sendAction(SavingsApplicationAction.Internal.ReceiveSavingsApplicationResult(response))
         }
     }
 
@@ -589,70 +526,6 @@ internal class SavingsFillApplicationViewModel(
                         frequencyType = savingsTemplate.lockinPeriodFrequencyTypeOptions,
                     )
                 }
-            }
-        }
-    }
-
-    /**
-     * Handles the result of the savings account application submission.
-     *
-     * @param response The [DataState] containing the result of the submission.
-     */
-    private suspend fun handleSavingsApplicationResult(response: DataState<String>) {
-        when (response) {
-            is DataState.Error -> {
-                updateState {
-                    it.copy(showOverlay = false)
-                }
-                val errorMsg = if (response.exception.cause is ServerResponseException) {
-                    getString(UiRes.string.internal_server_error)
-                } else {
-                    buildString {
-                        val serverMessage = response.message.takeIf { it.isNotBlank() }
-                        if (serverMessage != null) {
-                            append(serverMessage)
-                            if (!serverMessage.endsWith(".") && !serverMessage.endsWith("!")) {
-                                append(".")
-                            }
-                            append(" ")
-                        }
-                        append(
-                            getString(
-                                Res.string.feature_apply_savings_status_failure_tip,
-                                state.fieldOfficerName,
-                            ),
-                        )
-                    }
-                }
-
-                sendEvent(
-                    SavingsApplicationEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
-                        eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
-                        title = getString(Res.string.feature_apply_savings_status_failure),
-                        subtitle = errorMsg,
-                        buttonText = getString(Res.string.feature_apply_savings_status_failure_action),
-                    ),
-                )
-            }
-
-            DataState.Loading -> updateState {
-                it.copy(showOverlay = true)
-            }
-
-            is DataState.Success -> {
-                sendEvent(
-                    SavingsApplicationEvent.NavigateToStatus(
-                        eventType = EventType.SUCCESS.name,
-                        eventDestination = StatusNavigationDestination.SAVINGS_APPLICATION.name,
-                        title = getString(Res.string.feature_apply_savings_status_success),
-                        subtitle = getString(
-                            Res.string.feature_apply_savings_status_success_tip,
-                            state.fieldOfficerName,
-                        ),
-                        buttonText = getString(Res.string.feature_apply_savings_status_success_action),
-                    ),
-                )
             }
         }
     }
@@ -694,32 +567,6 @@ internal class SavingsFillApplicationViewModel(
         super.onCleared()
         validationJob?.cancel()
     }
-
-    /*
-     * Utility Functions
-     */
-
-    /**
-     * Converts the current [SavingsApplicationState] into a [SavingsAccountApplicationPayload]
-     * for submission to the API.
-     *
-     * @return The payload object containing all necessary data for the savings account application.
-     */
-    // TODO add other backend-required fields if API needs them
-    private fun SavingsApplicationState.toSavingsApplicationPayload(): SavingsAccountApplicationPayload {
-        return SavingsAccountApplicationPayload(
-            clientId = state.clientId.toInt(),
-            productId = savingsProductId.toInt(),
-            submittedOnDate = state.currentDate,
-            minRequiredOpeningBalance = minOpeningBalance.toDoubleOrNull() ?: 0.0,
-            lockinPeriodFrequency = state.frequency.toIntOrNull(),
-            lockinPeriodFrequencyType = selectedFrequencyTypeId.toInt(),
-            allowOverdraft = if (isOverDraftAllowed) checked else isOverDraftAllowed,
-            locale = "en",
-            dateFormat = "dd MMMM yyyy",
-            monthDayFormat = "dd MMM",
-        )
-    }
 }
 
 /**
@@ -728,7 +575,7 @@ internal class SavingsFillApplicationViewModel(
  * @property clientId The ID of the current client.
  * @property applicantName The name of the applicant.
  * @property savingsProductId The ID of the currently selected savings product.
- * @property fieldOfficerName The name of the field officer assigned to this application.
+ * @property savingsProductName The name of the currently selected savings product.
  * @property currency The currency details for the savings account.
  * @property minOpeningBalance The minimum opening balance entered by the user.
  * @property frequency The lock-in period frequency entered by the user.
@@ -750,7 +597,7 @@ internal data class SavingsApplicationState(
     val clientId: Long,
     val applicantName: String = "",
     val savingsProductId: Long,
-    val fieldOfficerName: String,
+    val savingsProductName: String,
     val currency: Currency,
     val minOpeningBalance: String = "",
     val frequency: String = "",
@@ -811,23 +658,20 @@ internal sealed interface SavingsApplicationEvent {
     /** Navigates back from the current screen. */
     data object NavigateBack : SavingsApplicationEvent
 
-    /** Navigates to the authentication screen. */
-    data object NavigateToAuthentication : SavingsApplicationEvent
-
     /**
-     * Navigates to a generic status screen after a submission operation.
-     * @property eventType The status type (SUCCESS or FAILURE).
-     * @property eventDestination The route to return to after the status screen.
-     * @property title The title to show on the status screen.
-     * @property subtitle A subtitle for further information.
-     * @property buttonText The text for the action button on the status screen.
+     * Navigates to the confirm details screen where the user can review their application.
      */
-    data class NavigateToStatus(
-        val eventType: String,
-        val eventDestination: String,
-        val title: String,
-        val subtitle: String,
-        val buttonText: String,
+    data class NavigateToConfirmDetails(
+        val savingsProductId: Long,
+        val applicantName: String,
+        val savingsProductName: String,
+        val currency: String,
+        val minOpeningBalance: String,
+        val frequency: String,
+        val frequencyTypeName: String,
+        val frequencyTypeId: Long,
+        val allowOverdraft: Boolean,
+        val submittedOnDate: String,
     ) : SavingsApplicationEvent
 }
 
@@ -888,9 +732,6 @@ internal sealed interface SavingsApplicationAction {
     /** User action to retry a form submission after an error. */
     data object RetrySubmit : SavingsApplicationAction
 
-    /** User action to submit the savings account application. */
-    data object RequestSavingsAccount : SavingsApplicationAction
-
     /**
      * A sealed interface for internal actions, which are not triggered directly by the UI.
      */
@@ -902,19 +743,6 @@ internal sealed interface SavingsApplicationAction {
          */
         data class ReceiveSavingsTemplate(val template: DataState<SavingsAccountTemplate?>) :
             Internal
-
-        /**
-         * Receives the result from the authentication screen.
-         *
-         * @property result `true` if the user was authenticated.
-         */
-        data class ReceiveAuthenticationResult(val result: Boolean) : Internal
-
-        /**
-         * Receives the result of the savings account application submission.
-         * @property result The [DataState] containing the result.
-         */
-        data class ReceiveSavingsApplicationResult(val result: DataState<String>) : Internal
     }
 }
 

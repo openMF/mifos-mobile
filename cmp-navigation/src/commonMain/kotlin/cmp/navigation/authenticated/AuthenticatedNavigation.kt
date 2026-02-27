@@ -62,6 +62,8 @@ import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.faq.navigateToFaq
+import org.mifos.mobile.feature.settings.help.helpDestination
+import org.mifos.mobile.feature.settings.help.navigateToHelp
 import org.mifos.mobile.feature.share.application.navigation.navigateToShareApplicationGraph
 import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
 import org.mifos.mobile.feature.shareaccount.navigation.shareNavGraph
@@ -142,6 +144,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                             StatusNavigationDestination.THIRD_PARTY_TRANSFER.name,
                         )
                     }
+
                     else -> {
                         navController.navigateToManualBeneficiaryAddScreen()
                     }
@@ -267,7 +270,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToShareAccountTransactionScreen = { accountId ->
-                navController.navigateToAccountTransactionsScreen(Constants.SHARE_ACCOUNTS, accountId)
+                navController.navigateToAccountTransactionsScreen(
+                    Constants.SHARE_ACCOUNTS,
+                    accountId,
+                )
             },
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
         )
@@ -345,7 +351,15 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
         )
 
-        faqDestination(onBackClick = navController::popBackStack, contact = {})
+        faqDestination(
+            onBackClick = navController::popBackStack,
+            contact = navController::navigateToHelp,
+        )
+
+        helpDestination(
+            onBackClick = navController::popBackStack,
+            navigateToFAQ = navController::navigateToFaq,
+        )
     }
 }
 

@@ -106,11 +106,11 @@ internal fun TptScreen(
 }
 
 /**
-* Composable function for the Third Party Transfer dialog.
-*
-* @param dialogState The dialog state for the Third Party Transfer screen.
-* @param onAction A [TptAction] function to handle actions from this dialog.
-* */
+ * Composable function for the Third Party Transfer dialog.
+ *
+ * @param dialogState The dialog state for the Third Party Transfer screen.
+ * @param onAction A [TptAction] function to handle actions from this dialog.
+ * */
 @Composable
 internal fun TptDialog(
     dialogState: TptState.DialogState?,
@@ -192,18 +192,18 @@ internal fun TprContent(
                 TptForm(state, onAction)
             }
 
-            else -> { }
+            else -> {}
         }
     }
 }
 
 /**
-* Composable function for the Third Party Transfer form.
-*
-* @param state The state for the Third Party Transfer screen.
-* @param onAction A [TptAction] function to handle actions from this form.
-* @param modifier The modifier to apply to this composable.
-* */
+ * Composable function for the Third Party Transfer form.
+ *
+ * @param state The state for the Third Party Transfer screen.
+ * @param onAction A [TptAction] function to handle actions from this form.
+ * @param modifier The modifier to apply to this composable.
+ * */
 @Composable
 internal fun TptForm(
     state: TptState,
@@ -264,6 +264,7 @@ internal fun TptForm(
                     ),
                 )
             },
+            shape = KptTheme.shapes.medium,
         )
 
         Row(
