@@ -126,6 +126,7 @@ class LoginViewModel(
                 updateState { it.copy(showOverlay = false) }
                 val user = action.loginResult.data
                 if (user.clients.isEmpty()) {
+                    val noClientsMsg = getString(Res.string.no_clients_assigned)
                     viewModelScope.launch {
                         userPreferencesRepositoryImpl.updateUser(UserData.DEFAULT)
                         userPreferencesRepositoryImpl.setIsAuthenticated(false)
@@ -133,9 +134,7 @@ class LoginViewModel(
                     updateState {
                         it.copy(
                             isError = true,
-                            dialogState = LoginState.DialogState.Error(
-                                Res.string.no_clients_assigned,
-                            ),
+                            dialogState = LoginState.DialogState.Error(noClientsMsg),
                         )
                     }
                 } else {
@@ -156,6 +155,8 @@ class LoginViewModel(
                 }
             }
         }
+    }
+
     }
 
     private fun loginUser(
@@ -188,7 +189,7 @@ data class LoginState(
     val showOverlay: Boolean = false,
 ) {
     sealed interface DialogState {
-        data class Error(val message: StringResource) : DialogState
+        data class Error(val message: String) : DialogState
     }
 
     val isLoginButtonEnabled: Boolean
