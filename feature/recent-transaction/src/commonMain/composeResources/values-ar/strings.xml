@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">أحدث المعاملات</string>
+    <string name="no_transaction">لا توجد معاملات</string>
+    <string name="atm_icon">رمز الصراف الآلي</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="filter">تصفية</string>
+    <string name="filter_transactions">تصفية المعاملات</string>
+    <string name="clear_all">مسح الكل</string>
+    <string name="filter_by_account">تصفية حسب الحساب:</string>
+    <string name="account_number_label">رقم الحساب: %1$s</string>
+    <string name="select_account">اختر الحساب</string>
+    <string name="balance">الرصيد: %1$s %2$s</string>
+    <string name="account">الحساب</string>
+    <string name="transaction_type">نوع المعاملة:</string>
+    <string name="all">الكل</string>
+    <string name="debits">الخصم</string>
+    <string name="credits">الإيداع</string>
+    <string name="apply_filters">تطبيق التصفية</string>
+</resources>

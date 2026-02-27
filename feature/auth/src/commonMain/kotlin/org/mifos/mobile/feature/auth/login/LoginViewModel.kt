@@ -11,16 +11,19 @@ package org.mifos.mobile.feature.auth.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_error
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
 import mifos_mobile.feature.auth.generated.resources.login_failed
 import mifos_mobile.feature.auth.generated.resources.no_clients_assigned
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -28,6 +31,7 @@ import org.mifos.mobile.core.datastore.model.UserData
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 class LoginViewModel(
     private val userAuthRepositoryImpl: UserAuthRepository,
@@ -90,23 +94,33 @@ class LoginViewModel(
     }
 
     private fun handleLoginResult(action: LoginAction.Internal.ReceiveLoginResult) {
-        when (action.loginResult) {
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        isError = true,
-                        uiState = ScreenUiState.Success,
-                        showOverlay = false,
-                        dialogState = LoginState.DialogState.Error(Res.string.login_failed),
-                        userNameError = Res.string.feature_sign_in_username_error,
-                        passwordError = Res.string.feature_sign_in_password_error,
-                    )
-                }
-            }
+        viewModelScope.launch {
+            when (action.loginResult) {
+                is DataState.Error -> {
+                    val errorMsg =
+                        if (action.loginResult.exception.cause is ServerResponseException) {
+                            getString(
+                                UiRes.string.internal_server_error,
+                            )
+                        } else {
+                            action.loginResult.message
+                        }
 
-            is DataState.Loading -> {
-                updateState { it.copy(showOverlay = true) }
-            }
+                    updateState {
+                        it.copy(
+                            isError = true,
+                            uiState = ScreenUiState.Success,
+                            showOverlay = false,
+                            dialogState = LoginState.DialogState.Error(errorMsg),
+                            userNameError = Res.string.feature_sign_in_username_error,
+                            passwordError = Res.string.feature_sign_in_password_error,
+                        )
+                    }
+                }
+
+                is DataState.Loading -> {
+                    updateState { it.copy(showOverlay = true) }
+                }
 
             is DataState.Success -> {
                 updateState { it.copy(showOverlay = false) }

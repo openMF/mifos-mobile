@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+
+    <string name="recent_transactions">Transaksi Terkini</string>
+    <string name="no_transaction">Tiada Transaksi</string>
+    <string name="atm_icon">Ikon ATM</string>
+    <string name="string_and_string">%1$s %2$s</string>
+
+    <string name="something_went_wrong">Sesuatu telah berlaku</string>
+    <string name="filter">Tapis</string>
+    <string name="filter_transactions">Tapis Transaksi</string>
+    <string name="clear_all">Kosongkan Semua</string>
+    <string name="filter_by_account">Tapis Mengikut Akaun:</string>
+    <string name="account_number_label">No Akaun: %1$s</string>
+    <string name="select_account">Pilih Akaun</string>
+    <string name="balance">Baki: %1$s %2$s</string>
+    <string name="account">Akaun</string>
+    <string name="transaction_type">Jenis Transaksi:</string>
+    <string name="all">Semua</string>
+    <string name="debits">Debit</string>
+    <string name="credits">Kredit</string>
+    <string name="apply_filters">Gunakan Penapis</string>
+</resources>
