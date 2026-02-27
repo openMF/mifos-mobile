@@ -14,6 +14,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.savings.application.confirmDetails.navigateToSavingsConfirmDetailsScreen
+import org.mifos.mobile.feature.savings.application.confirmDetails.savingsConfirmDetailsDestination
 import org.mifos.mobile.feature.savings.application.fillApplication.navigateToSavingsFillApplicationScreen
 import org.mifos.mobile.feature.savings.application.fillApplication.savingsFillApplicationDestination
 import org.mifos.mobile.feature.savings.application.savingsApplication.SavingsApplyRoute
@@ -42,7 +44,7 @@ fun NavController.navigateToSavingsApplicationGraph(navOptions: NavOptions? = nu
  * Builds the nested navigation graph for the savings account application feature.
  *
  * This function defines all the destinations within the savings application module
- * (product selection and form filling) and wires them together. It promotes a
+ * (product selection, form filling, and confirmation) and wires them together. It promotes a
  * decoupled architecture by accepting lambdas for navigation to external screens.
  *
  * @param navController The [NavController] used for handling navigation events within the graph.
@@ -65,6 +67,11 @@ fun NavGraphBuilder.savingsApplicationNavGraph(
         )
 
         savingsFillApplicationDestination(
+            navigateToConfirmDetailsScreen = navController::navigateToSavingsConfirmDetailsScreen,
+            navigateBack = navController::popBackStack,
+        )
+
+        savingsConfirmDetailsDestination(
             navigateToAuthenticateScreen = navigateToAuthenticateScreen,
             navigateToStatusScreen = navigateToStatusScreen,
             navigateBack = navController::popBackStack,

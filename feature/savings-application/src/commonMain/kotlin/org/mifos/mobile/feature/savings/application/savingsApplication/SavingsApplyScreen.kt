@@ -68,7 +68,7 @@ import template.core.base.designsystem.theme.KptTheme
 @Composable
 internal fun SavingsApplyScreen(
     navigateBack: () -> Unit,
-    navigateToFillDetailsScreen: (Long, Long, String) -> Unit,
+    navigateToFillDetailsScreen: (Long, String) -> Unit,
     viewModel: SavingsApplyViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -80,8 +80,7 @@ internal fun SavingsApplyScreen(
             is SavingsApplicationEvent.NavigateToFillDetailsScreen ->
                 navigateToFillDetailsScreen.invoke(
                     state.selectedSavingsProductId,
-                    state.selectedFieldOfficerId,
-                    state.selectedFieldOfficer,
+                    state.selectedSavingsProduct,
                 )
         }
     }
