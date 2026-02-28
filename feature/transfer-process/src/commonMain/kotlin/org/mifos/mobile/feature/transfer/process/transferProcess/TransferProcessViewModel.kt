@@ -65,12 +65,10 @@ internal class TransferProcessViewModel(
 ) : BaseViewModel<TransferProcessState, TransferProcessEvent, TransferProcessAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<TransferProcessRoute>()
-        val backendDate = "${currentDate.day.toString().padStart(2, '0')} " +
-            "${currentDate.month.number.toString().padStart(2, '0')} " +
-            "${currentDate.year}"
-        val uiDate = DateHelper.getDateMonthYearString(
+        val backendDate = DateHelper.getDateMonthYearString(
             listOf(currentDate.day, currentDate.month.number, currentDate.year),
         )
+        val uiDate = backendDate
 
         println("TransferProcessViewModel: route = ${route.transferSuccessDestination}")
         TransferProcessState(
@@ -88,7 +86,7 @@ internal class TransferProcessViewModel(
                 transferDate = backendDate,
                 transferAmount = route.transferAmount?.toDouble(),
                 transferDescription = route.transferDescription,
-                dateFormat = "dd MM yyyy",
+                dateFormat = "dd MMMM yyyy",
                 locale = "en",
             ),
             fromClientName = route.fromClientName,

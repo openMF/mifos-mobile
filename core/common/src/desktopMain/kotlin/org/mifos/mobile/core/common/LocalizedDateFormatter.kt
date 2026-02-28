@@ -27,7 +27,13 @@ actual object LocalizedDateFormatter {
     }
 
     actual fun getRelativePrefix(year: Int, month: Int, day: Int): String? {
-        return null
+        val target = LocalDate.of(year, month, day)
+        val today = LocalDate.now()
+        return when (target) {
+            today -> "Today"
+            today.minusDays(1) -> "Yesterday"
+            else -> null
+        }
     }
 
     private fun localizeDateDigits(text: String, locale: Locale): String {
