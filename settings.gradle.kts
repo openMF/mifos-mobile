@@ -67,7 +67,6 @@ include(":core-base:analytics")
 
 // Feature Modules
 include(":feature:beneficiary")
-include(":feature:savings")
 include(":feature:guarantor")
 include(":feature:qr")
 include(":feature:transfer-process")
