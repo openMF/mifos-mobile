@@ -62,7 +62,7 @@ fun MifosStatusComponent(
         }
 
         path?.let {
-            MifosLottieAnimation(path = path)
+            MifosLottieAnimation(path = path, iterations = 1)
         }
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.medium))

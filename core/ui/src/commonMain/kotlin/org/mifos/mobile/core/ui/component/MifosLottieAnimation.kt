@@ -29,6 +29,7 @@ fun MifosLottieAnimation(
     path: String,
     modifier: Modifier = Modifier,
     size: Dp = DesignToken.sizes.imageDp212,
+    iterations: Int? = null,
 ) {
     val composition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(
@@ -38,7 +39,7 @@ fun MifosLottieAnimation(
 
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = Int.MAX_VALUE,
+        iterations = iterations ?: Int.MAX_VALUE,
     )
 
     Box(
