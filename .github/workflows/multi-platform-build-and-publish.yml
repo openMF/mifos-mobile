@@ -71,7 +71,7 @@ on:
 
       target_branch:
         type: string
-        default: 'dev'
+        default: 'development'
         description: 'Target branch for release'
 
       distribute_ios_firebase:
