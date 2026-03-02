@@ -11,7 +11,6 @@ package cmp.android.app
 
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -34,7 +33,7 @@ import kotlin.getValue
  * activity.
  *
  * @constructor Create empty Main activity
- * @see ComponentActivity
+ * @see AppCompatActivity
  */
 @Suppress("UnusedPrivateProperty")
 class MainActivity : AppCompatActivity() {

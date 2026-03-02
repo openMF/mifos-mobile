@@ -7,6 +7,8 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:Suppress("UnusedPrivateMember")
+
 package org.mifos.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
