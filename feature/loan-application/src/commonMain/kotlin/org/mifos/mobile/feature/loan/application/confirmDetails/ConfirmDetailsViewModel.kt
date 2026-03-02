@@ -293,7 +293,11 @@ internal class ConfirmDetailsViewModel(
                 }
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
+                        eventType = if (status.exception.cause is ServerResponseException) {
+                            EventType.SERVER_EXCEPTION.name
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.feature_apply_loan_status_failure),
                         subtitle = errorMsg,
