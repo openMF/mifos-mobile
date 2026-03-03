@@ -239,7 +239,11 @@ internal class TransferProcessViewModel(
 
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
+                        eventType = if (response.exception.cause is ServerResponseException) {
+                            EventType.SERVER_EXCEPTION.name
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.transfer_failed),
                         subtitle = errorMsg,
