@@ -103,7 +103,6 @@ jobs:
     name: Multi-Platform Build and Publish
     uses: openMF/mifos-x-actionhub/.github/workflows/multi-platform-build-and-publish.yaml@v1.0.11
     with:
-      java-version: 21
       release_type: ${{ inputs.release_type }}
       target_branch: ${{ inputs.target_branch }}
       android_package_name: 'cmp-android'
@@ -126,6 +125,8 @@ jobs:
       # reusable workflow has no job dependency between the two.
       distribute_macos_testflight: ${{ inputs.distribute_macos_testflight }}
       distribute_macos_appstore: ${{ inputs.distribute_macos_appstore }}
+      distribute_ios_testflight: ${{ inputs.distribute_ios_testflight && !inputs.distribute_ios_appstore }}
+      distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
       original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
@@ -169,3 +170,4 @@ jobs:
       firebase_creds: ${{ secrets.FIREBASECREDS }}
       playstore_creds: ${{ secrets.PLAYSTORECREDS }}
       token: ${{ secrets.GITHUB_TOKEN }}
+      supabase_creds: ${{ secrets.SUPABASECREDS }}
