@@ -255,11 +255,26 @@ object Types {
  *
  * @since 1.0.0
  */
-data class Param(val key: String, val value: String) {
-    init {
-        require(key.isNotBlank()) { "Parameter key cannot be blank" }
-        require(key.length <= 40) { "Parameter key cannot exceed 40 characters" }
-        require(value.length <= 100) { "Parameter value cannot exceed 100 characters" }
+@ConsistentCopyVisibility
+data class Param private constructor(
+    val key: String,
+    val value: String,
+) {
+    companion object {
+        private const val MAX_VALUE_LENGTH = 100
+        private const val MAX_KEY_LENGTH = 40
+        private const val FALLBACK_KEY = "unknown_param"
+
+        operator fun invoke(key: String, value: String): Param {
+            val safeKey = key
+                .takeIf { it.isNotBlank() }
+                ?.take(MAX_KEY_LENGTH)
+                ?: FALLBACK_KEY
+
+            val safeValue = value.take(MAX_VALUE_LENGTH)
+
+            return Param(safeKey, safeValue)
+        }
     }
 }
 
