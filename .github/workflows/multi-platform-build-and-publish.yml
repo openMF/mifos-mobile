@@ -89,16 +89,6 @@ on:
         default: false
         description: Distribute iOS App to Appstore
 
-      distribute_macos_testflight:
-        type: boolean
-        default: false
-        description: Distribute macOS App via TestFlight (App Store Connect)
-
-      distribute_macos_appstore:
-        type: boolean
-        default: false
-        description: Distribute macOS App to Appstore
-
 permissions:
   contents: write
   id-token: write
@@ -111,32 +101,24 @@ concurrency:
 jobs:
   multi_platform_build_and_publish:
     name: Multi-Platform Build and Publish
-    uses: openMF/mifos-x-actionhub/.github/workflows/multi-platform-build-and-publish.yaml@v1.0.7
+    uses: openMF/mifos-x-actionhub/.github/workflows/multi-platform-build-and-publish.yaml@v1.0.8
     with:
-      java-version: 21
       release_type: ${{ inputs.release_type }}
       target_branch: ${{ inputs.target_branch }}
       android_package_name: 'cmp-android'
       ios_package_name: 'cmp-ios'
       desktop_package_name: 'cmp-desktop'
       web_package_name: 'cmp-web'
-      tester_groups: 'mifos-mobile-apps'
-      app_identifier: 'org.mifos.mobile'
-      git_url: 'git@github.com:openMF/ios-provisioning-profile.git'
-      git_branch: 'mifos-mobile'
-      match_type: 'adhoc'
-      provisioning_profile_name: 'match AdHoc org.mifos.mobile'
-      firebase_app_id: '1:728434912738:ios:ee2e0815a6915b351a1dbb'
-      metadata_path: './fastlane/metadata/ios'
-      use_cocoapods: true         # <-- Set to true if using CocoaPods integration for KMP
-      shared_module: ':cmp-shared' # <-- Gradle path to your shared KMP module (e.g., :shared)
-      cmp_desktop_dir: 'cmp-desktop'
-      keychain_name: signing.keychain-db # optional
+      metadata_path: './fastlane/metadata'
+      use_cocoapods: true
+      shared_module: ':cmp-shared'
       distribute_ios_firebase: ${{ inputs.distribute_ios_firebase }}
-      distribute_ios_testflight: ${{ inputs.distribute_ios_testflight }}
+      # When App Store is enabled, skip TestFlight — deliver() already uploads
+      # the IPA to App Store Connect which makes the build available in TestFlight.
+      # Running both in parallel causes version conflicts since the upstream
+      # reusable workflow has no job dependency between the two.
+      distribute_ios_testflight: ${{ inputs.distribute_ios_testflight && !inputs.distribute_ios_appstore }}
       distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
-      distribute_macos_testflight: ${{ inputs.distribute_macos_testflight }}
-      distribute_macos_appstore: ${{ inputs.distribute_macos_appstore }}
     secrets:
       original_keystore_file: ${{ secrets.ORIGINAL_KEYSTORE_FILE }}
       original_keystore_file_password: ${{ secrets.ORIGINAL_KEYSTORE_FILE_PASSWORD }}
@@ -151,12 +133,6 @@ jobs:
       notarization_apple_id: ${{ secrets.NOTARIZATION_APPLE_ID }}
       notarization_password: ${{ secrets.NOTARIZATION_PASSWORD }}
       notarization_team_id: ${{ secrets.NOTARIZATION_TEAM_ID }}
-      keychain_password: ${{ secrets.KEYCHAIN_PASSWORD }}
-      certificates_password: ${{ secrets.CERTIFICATES_PASSWORD }}
-      mac_app_distribution_certificate_b64: ${{ secrets.MAC_APP_DISTRIBUTION_CERTIFICATE_B64 }}
-      mac_installer_distribution_certificate_b64: ${{ secrets.MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64 }}
-      mac_embedded_provision_b64: ${{ secrets.MAC_EMBEDDED_PROVISION_B64 }}
-      mac_runtime_provision_b64: ${{ secrets.MAC_RUNTIME_PROVISION_B64 }}
       appstore_key_id: ${{ secrets.APPSTORE_KEY_ID }}
       appstore_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
       appstore_auth_key: ${{ secrets.APPSTORE_AUTH_KEY }}
@@ -175,7 +151,15 @@ jobs:
       linux_signing_password: ${{ secrets.LINUX_SIGNING_PASSWORD }}
       linux_signing_certificate: ${{ secrets.LINUX_SIGNING_CERTIFICATE }}
 
+      keychain_password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      certificates_password: ${{ secrets.CERTIFICATES_PASSWORD }}
+      mac_app_distribution_certificate_b64: ${{ secrets.MAC_APP_DISTRIBUTION_CERTIFICATE_B64 }}
+      mac_installer_distribution_certificate_b64: ${{ secrets.MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64 }}
+      mac_embedded_provision_b64: ${{ secrets.MAC_EMBEDDED_PROVISION_B64 }}
+      mac_runtime_provision_b64: ${{ secrets.MAC_RUNTIME_PROVISION_B64 }}
+
       google_services: ${{ secrets.GOOGLESERVICES }}
       firebase_creds: ${{ secrets.FIREBASECREDS }}
       playstore_creds: ${{ secrets.PLAYSTORECREDS }}
       token: ${{ secrets.GITHUB_TOKEN }}
+      supabase_creds: ${{ secrets.SUPABASECREDS }}

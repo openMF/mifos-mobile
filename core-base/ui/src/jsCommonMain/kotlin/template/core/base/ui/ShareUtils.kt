@@ -42,4 +42,34 @@ actual object ShareUtils {
             fileName = "$title.png",
         )
     }
+
+    actual fun openUrl(url: String) {
+    }
+
+    actual fun openAppInfo() {
+    }
+
+    actual fun callPhone(number: String) {
+    }
+
+    actual fun sendEmail(to: String, subject: String?, body: String?) {
+    }
+
+    actual fun sendViaSMS(number: String, message: String) {
+    }
+
+    actual fun copyText(text: String) {
+    }
+
+    actual suspend fun shareApp(storeLink: String, message: String) {
+        val shareContent = if (message.isNotEmpty()) {
+            "$message\n$storeLink"
+        } else {
+            storeLink
+        }
+        FileKit.download(
+            bytes = shareContent.encodeToByteArray(),
+            fileName = "share_app.txt",
+        )
+    }
 }

@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    abbrev (0.1.2)
     CFPropertyList (3.0.7)
       base64
       nkf
@@ -44,7 +45,7 @@ GEM
     babosa (1.0.4)
     base64 (0.2.0)
     benchmark (0.3.0)
-    bigdecimal (3.2.2)
+    bigdecimal (3.1.9)
     claide (1.1.0)
     cocoapods (1.16.2)
       addressable (~> 2.8)
@@ -239,6 +240,7 @@ GEM
     molinillo (0.8.0)
     multi_json (1.15.0)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     nanaimo (0.4.0)
     nap (1.1.0)
     naturally (2.2.1)
@@ -302,10 +304,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods
+  abbrev
+  base64
+  bigdecimal
+  cocoapods (~> 1.16)
   fastlane
   fastlane-plugin-firebase_app_distribution
   fastlane-plugin-increment_build_number
+  mutex_m
 
 BUNDLED WITH
    2.5.18

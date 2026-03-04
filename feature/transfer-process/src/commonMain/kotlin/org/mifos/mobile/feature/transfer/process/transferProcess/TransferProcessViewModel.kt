@@ -148,6 +148,11 @@ internal class TransferProcessViewModel(
         }
     }
 
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * Monitors connectivity changes and updates the [networkStatus] flag in [TransferProcessState]
+     * so the UI can react to network availability changes.
+     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
@@ -239,7 +244,11 @@ internal class TransferProcessViewModel(
 
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
+                        eventType = if (response.exception.cause is ServerResponseException) {
+                            EventType.SERVER_EXCEPTION.name
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.transfer_failed),
                         subtitle = errorMsg,
