@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.platform
 
@@ -42,7 +42,7 @@ expect fun LocalManagerProvider(
  * Provides access to the app review manager throughout the app.
  */
 val LocalAppReviewManager: ProvidableCompositionLocal<AppReviewManager> = compositionLocalOf {
-    NoOpAppReviewManager
+    error("CompositionLocal AppReviewManager not present")
 }
 
 /**
@@ -57,9 +57,4 @@ val LocalIntentManager: ProvidableCompositionLocal<IntentManager> = compositionL
  */
 val LocalAppUpdateManager: ProvidableCompositionLocal<AppUpdateManager> = compositionLocalOf {
     error("CompositionLocal LocalAppUpdateManager not present")
-}
-
-object NoOpAppReviewManager : AppReviewManager {
-    override fun promptForReview() = Unit
-    override fun promptForCustomReview() = Unit
 }

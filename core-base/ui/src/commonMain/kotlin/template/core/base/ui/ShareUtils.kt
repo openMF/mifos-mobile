@@ -39,4 +39,61 @@ expect object ShareUtils {
      * @param byte The raw image data as ByteArray
      */
     suspend fun shareImage(title: String, byte: ByteArray)
+
+    /**
+     * Opens the specified URL in the device's default web browser.
+     *
+     * @param url The URL to open.
+     */
+    fun openUrl(url: String)
+
+    /**
+     * Opens the application info screen in the device settings.
+     *
+     * Typically used to allow users to manage app permissions,
+     * storage, or other app-specific settings.
+     */
+    fun openAppInfo()
+
+    /**
+     * Initiates a phone call using the platform dialer UI.
+     *
+     * @param number The phone number to dial, digits only or including country code.
+     */
+    fun callPhone(number: String)
+
+    /**
+     * Opens the platform email composer with the given parameters.
+     *
+     * @param to Recipient email address
+     * @param subject Optional subject line
+     * @param body Optional email body
+     */
+    fun sendEmail(to: String, subject: String? = null, body: String? = null)
+
+    /**
+     * Opens the platform SMS composer with the given parameters.
+     *
+     * @param number Recipient phone number (can be empty to let user choose)
+     * @param message The SMS message body
+     */
+    fun sendViaSMS(number: String, message: String)
+
+    /**
+     * Copies the given text to the system clipboard.
+     *
+     * @param text The text to copy to clipboard
+     */
+    fun copyText(text: String)
+
+    /**
+     * Shares the app store link with a custom message.
+     *
+     * Opens the platform share sheet with the store link and message combined,
+     * allowing users to share the app with others via various apps.
+     *
+     * @param storeLink The app store URL (Play Store, App Store, etc.)
+     * @param message Optional promotional message to include with the link
+     */
+    suspend fun shareApp(storeLink: String, message: String = "")
 }

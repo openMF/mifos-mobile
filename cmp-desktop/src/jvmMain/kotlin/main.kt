@@ -45,6 +45,7 @@ fun main() {
         // Creates a window state to manage the window's state.
         val windowState = rememberWindowState()
 
+        // State to trigger recomposition when locale changes
         var localeVersion by remember { mutableStateOf(0) }
 
         // Creates a window with a specified title and close request handler.
@@ -80,4 +81,3 @@ fun main() {
         }
     }
 }
-
