@@ -354,7 +354,7 @@ internal fun TptForm(
         ) {
             Text(
                 text = stringResource(Res.string.feature_tpt_transfer_button),
-                style = KptTheme.typography.titleMedium,
+                style = KptTheme.typography.titleSmall,
             )
         }
     }

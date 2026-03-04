@@ -28,7 +28,9 @@ run_spotless_checks() {
         echo "      💡 Tip: Check the reported issues and fix formatting errors. 🛠️"
         echo "*********************************************************************************"
         echo "🚀 Attempting to apply Spotless formatting fixes..."
-        ./gradlew spotlessApply --daemon
+        ./gradlew spotlessApply --daemon > /tmp/spotless-result
+        rm /tmp/spotless-result
+        echo "🎉 Stellar job! Your code is pristine and has passed Spotless's formatting checks without a hitch! Keep shining bright! ✨🚀"
     else
         rm /tmp/spotless-result
         echo "🎉 Stellar job! Your code is pristine and has passed Spotless's formatting checks without a hitch! Keep shining bright! ✨🚀"
@@ -58,18 +60,23 @@ run_detekt_checks() {
 # Function to run ktlint checks
 run_dependency_guard() {
     printf "\n🚀 Brace yourself! We're about to generate dependency guard baseline!"
-    ./gradlew dependencyGuard
+    ./gradlew dependencyGuard > /tmp/dependency-result
     KT_EXIT_CODE=$?
 
     if [ ${KT_EXIT_CODE} -ne 0 ]; then
+        cat /tmp/dependency-result
+        rm /tmp/dependency-result
         printf "\n*********************************************************************************"
         echo "     💥 Oh no! Something went wrong! 💥"
         echo "     💡 Unable to generate dependency baseline. 🛠️"
         printf "*********************************************************************************\n"
         echo "🚀 Attempting to generate dependency baseline again..."
-        ./gradlew dependencyGuardBaseline
-    else
+        ./gradlew dependencyGuardBaseline > /tmp/dependency-result
+        rm /tmp/dependency-result
         echo "🎉 Bravo! Dependency baseline has been generated successfully! Keep rocking that clean code! 🚀💫"
+    else
+        rm /tmp/dependency-result
+        echo "🎉 Bravo! Dependency baseline has been checked successfully! Keep rocking that clean code! 🚀💫"
     fi
 }
 

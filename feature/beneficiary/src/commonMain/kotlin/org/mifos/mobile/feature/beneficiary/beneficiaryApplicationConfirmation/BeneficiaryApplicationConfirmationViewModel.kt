@@ -186,7 +186,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
-                            eventType = EventType.FAILURE.name,
+                            eventType = if (response.exception.cause is ServerResponseException) {
+                                EventType.SERVER_EXCEPTION.name
+                            } else {
+                                EventType.FAILURE.name
+                            },
                             eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_creation_failed),
                             subtitle = errorMsg,
@@ -261,7 +265,11 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
-                            eventType = EventType.FAILURE.name,
+                            eventType = if (response.exception.cause is ServerResponseException) {
+                                EventType.SERVER_EXCEPTION.name
+                            } else {
+                                EventType.FAILURE.name
+                            },
                             eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                             title = getString(Res.string.beneficiary_updation_failed),
                             subtitle = errorMsg,

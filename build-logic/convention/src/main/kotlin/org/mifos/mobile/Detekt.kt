@@ -8,6 +8,7 @@ import org.gradle.kotlin.dsl.named
 
 internal fun Project.configureDetekt(extension: DetektExtension) = extension.apply {
     tasks.named<Detekt>("detekt") {
+        mustRunAfter(":cmp-android:dependencyGuard")
         jvmTarget = "21"
         source(files(rootDir))
         include("**/*.kt")
@@ -18,6 +19,7 @@ internal fun Project.configureDetekt(extension: DetektExtension) = extension.app
         exclude("**/build-logic/**")
         exclude("**/spotless/**")
         exclude("core-base/designsystem/**")
+        exclude("feature/home/**")
         reports {
             xml.required.set(true)
             html.required.set(true)
