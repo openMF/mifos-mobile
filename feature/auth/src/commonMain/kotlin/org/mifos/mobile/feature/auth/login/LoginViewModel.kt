@@ -20,7 +20,6 @@ import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_error
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
-import mifos_mobile.feature.auth.generated.resources.login_failed
 import mifos_mobile.feature.auth.generated.resources.no_clients_assigned
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -122,41 +121,40 @@ class LoginViewModel(
                     updateState { it.copy(showOverlay = true) }
                 }
 
-            is DataState.Success -> {
-                updateState { it.copy(showOverlay = false) }
-                val user = action.loginResult.data
-                if (user.clients.isEmpty()) {
-                    val noClientsMsg = getString(Res.string.no_clients_assigned)
-                    viewModelScope.launch {
-                        userPreferencesRepositoryImpl.updateUser(UserData.DEFAULT)
-                        userPreferencesRepositoryImpl.setIsAuthenticated(false)
-                    }
-                    updateState {
-                        it.copy(
-                            isError = true,
-                            dialogState = LoginState.DialogState.Error(noClientsMsg),
+                is DataState.Success -> {
+                    updateState { it.copy(showOverlay = false) }
+                    val user = action.loginResult.data
+                    if (user.clients.isEmpty()) {
+                        val noClientsMsg = getString(Res.string.no_clients_assigned)
+                        viewModelScope.launch {
+                            userPreferencesRepositoryImpl.updateUser(UserData.DEFAULT)
+                            userPreferencesRepositoryImpl.setIsAuthenticated(false)
+                        }
+                        updateState {
+                            it.copy(
+                                isError = true,
+                                dialogState = LoginState.DialogState.Error(noClientsMsg),
+                            )
+                        }
+                    } else {
+                        val userData = UserData(
+                            userId = user.userId,
+                            userName = user.username.orEmpty(),
+                            clientId = user.clients[0],
+                            isAuthenticated = user.isAuthenticated,
+                            base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
+                            officeName = user.officeName.orEmpty(),
+                            password = state.password,
                         )
+                        viewModelScope.launch {
+                            userPreferencesRepositoryImpl.updateUser(userData)
+                            userPreferencesRepositoryImpl.setIsAuthenticated(true)
+                        }
+                        sendEvent(LoginEvent.NavigateToPasscode)
                     }
-                } else {
-                    val userData = UserData(
-                        userId = user.userId,
-                        userName = user.username.orEmpty(),
-                        clientId = user.clients[0],
-                        isAuthenticated = user.isAuthenticated,
-                        base64EncodedAuthenticationKey = user.base64EncodedAuthenticationKey.orEmpty(),
-                        officeName = user.officeName.orEmpty(),
-                        password = state.password,
-                    )
-                    viewModelScope.launch {
-                        userPreferencesRepositoryImpl.updateUser(userData)
-                        userPreferencesRepositoryImpl.setIsAuthenticated(true)
-                    }
-                    sendEvent(LoginEvent.NavigateToPasscode)
                 }
             }
         }
-    }
-
     }
 
     private fun loginUser(
