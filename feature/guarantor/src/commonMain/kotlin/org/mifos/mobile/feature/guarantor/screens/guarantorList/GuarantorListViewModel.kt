@@ -31,6 +31,19 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
+/**
+ * ViewModel for managing state and business logic of "Guarantor List" screen.
+ *
+ * This ViewModel handles displaying the list of guarantors for a loan, including:
+ * - Fetching guarantor list from the repository
+ * - Managing network connectivity status
+ * - Handling UI states and error conditions
+ * - Providing navigation to add and detail guarantor screens
+ *
+ * @property guarantorRepositoryImp Repository for guarantor-related API operations.
+ * @property savedStateHandle Handle to saved state for retrieving navigation arguments.
+ * @property networkMonitor Utility to monitor network connectivity status.
+ */
 internal class GuarantorListViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
     savedStateHandle: SavedStateHandle,
@@ -57,10 +70,20 @@ internal class GuarantorListViewModel(
         getGuarantorList()
     }
 
+    /**
+     * Helper function to update [GuarantorListState].
+     *
+     * @param update A lambda function that takes the current state and returns an updated state.
+     */
     private fun updateState(update: (GuarantorListState) -> GuarantorListState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Fetches the list of guarantors from the repository.
+     * Updates UI state based on the result (loading, error, or success).
+     * Filters for active guarantors and updates the state accordingly.
+     */
     private fun getGuarantorList() {
         viewModelScope.launch {
             state.loanId?.let { loanId ->
@@ -95,6 +118,11 @@ internal class GuarantorListViewModel(
         }
     }
 
+    /**
+     * Handles incoming actions from the UI or internal events within the ViewModel.
+     *
+     * @param action The [GuarantorListAction] to be processed.
+     */
     override fun handleAction(action: GuarantorListAction) {
         when (action) {
             is GuarantorListAction.OnAddGuarantor -> sendEvent(
@@ -114,6 +142,14 @@ internal class GuarantorListViewModel(
     }
 }
 
+/**
+ * Represents the UI state for the "Guarantor List" screen.
+ *
+ * @property loanId The ID of the loan for which guarantors are being managed.
+ * @property dialogState The current dialog state (loading, error, or null).
+ * @property isOnline The network connectivity status.
+ * @property guarantorList The list of guarantors to display.
+ */
 @Parcelize
 data class GuarantorListState(
     val loanId: Long? = -1L,
@@ -123,6 +159,9 @@ data class GuarantorListState(
     val guarantorList: List<GuarantorPayload?>? = null,
 ) : Parcelable {
 
+    /**
+     * Sealed interface representing possible dialog states for the "Guarantor List" screen.
+     */
     sealed interface DialogState : Parcelable {
         @Parcelize
         data object Loading : DialogState
@@ -132,6 +171,10 @@ data class GuarantorListState(
     }
 }
 
+/**
+ * Sealed interface representing events that can be emitted from the "Guarantor List" ViewModel.
+ * These events are typically used to trigger navigation or show one-time messages.
+ */
 sealed interface GuarantorListEvent {
     data object NavigateBack : GuarantorListEvent
     data class ShowToast(val message: String) : GuarantorListEvent
@@ -139,6 +182,10 @@ sealed interface GuarantorListEvent {
     data class GuarantorClicked(val index: Int, val loanId: Long) : GuarantorListEvent
 }
 
+/**
+ * Sealed interface representing actions that can be dispatched to the "Guarantor List" ViewModel.
+ * These actions can originate from the UI or be used internally by the ViewModel.
+ */
 sealed interface GuarantorListAction {
     data object OnNavigateBackClick : GuarantorListAction
     data class OnGuarantorClicked(val index: Int) : GuarantorListAction
