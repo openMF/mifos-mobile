@@ -12,18 +12,27 @@ package cmp.shared
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cmp.navigation.ComposeApp
+import coil3.compose.LocalPlatformContext
+import template.core.base.platform.LocalManagerProvider
+import template.core.base.platform.context.LocalContext
+import template.core.base.ui.LocalImageLoaderProvider
+import template.core.base.ui.getDefaultImageLoader
 
 @Composable
 fun SharedApp(
     handleThemeMode: (osValue: Int) -> Unit,
     handleAppLocale: (locale: String?) -> Unit,
-    onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
+    onSplashScreenRemoved: () -> Unit,
 ) {
-    ComposeApp(
-        handleThemeMode = handleThemeMode,
-        handleAppLocale = handleAppLocale,
-        onSplashScreenRemoved = onSplashScreenRemoved,
-        modifier = modifier,
-    )
+    LocalManagerProvider(LocalContext.current) {
+        LocalImageLoaderProvider(getDefaultImageLoader(LocalPlatformContext.current)) {
+            ComposeApp(
+                handleThemeMode = handleThemeMode,
+                handleAppLocale = handleAppLocale,
+                onSplashScreenRemoved = onSplashScreenRemoved,
+                modifier = modifier,
+            )
+        }
+    }
 }

@@ -13,7 +13,7 @@
 ### Workflow Jobs
 # 1. **Setup**: Prepares the build environment
 #   - Checks out repository code
-#   - Sets up Java (configurable; defaults to 17)
+#   - Sets up Java 17
 #   - Configures Gradle
 #   - Manages dependency caching
 #
@@ -36,7 +36,7 @@
 #   - Generates platform-specific executables and packages
 #
 ### Prerequisites
-#   - Java (configurable; default 17)
+#   - Java 17
 #   - Gradle
 #   - Configured build scripts for:
 #       - Android module
@@ -49,16 +49,10 @@
 ### Configuration Parameters
 # The workflow requires two input parameters:
 #
-#   |         Parameter      |              Description           |  Type  | Required  |
-#   |------------------------|------------------------------------|--------|-----------|
-#   | `android_package_name` | Name of the Android project module | String |    Yes    |
-#   | `desktop_package_name` | Name of the Desktop project module | String |    Yes    |
-#   |`web_package_name`      | Name of the Web (Kotlin/JS) project/module | String | No|
-#   |`ios_package_name`      | Name of the iOS project/module	| String |	No	       |
-#   |`build_ios`	         | Build iOS targets as part of PR checks |	Boolean	| No   |
-#   |`use_cocoapods`         | Use CocoaPods for iOS integration	| Boolean	| No   |
-#   |`shared_module	         | Path of the shared KMP module  |	String	| (required when build_ios=true) |
-#   |`java-version	         | Java version to use (configurable; defaults to 17)| No  |
+#   |         Parameter      |              Description           |  Type  | Required |
+#   |------------------------|------------------------------------|--------|----------|
+#   | `android_package_name` | Name of the Android project module | String |    Yes   |
+#   | `desktop_package_name` | Name of the Desktop project module | String |    Yes   |
 #
 
 # https://github.com/openMF/mifos-x-actionhub/blob/main/.github/workflows/pr-check.yaml
@@ -68,7 +62,7 @@
 # ##############################################################################
 
 
-name: PR Checks for KMP
+name: PR Checks
 
 # Trigger conditions for the workflow
 on:
@@ -79,7 +73,7 @@ on:
 
 # Concurrency settings to prevent multiple simultaneous workflow runs
 concurrency:
-  group: pr-kmp-${{ github.ref }}
+  group: pr-${{ github.ref }}
   cancel-in-progress: true  # Cancels previous runs if a new one is triggered
 
 permissions:
@@ -87,9 +81,8 @@ permissions:
 
 jobs:
   pr_checks:
-    name: PR Checks KMP
-    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.7
-    secrets: inherit
+    name: PR Checks
+    uses: openMF/mifos-x-actionhub/.github/workflows/pr-check.yaml@v1.0.11
     with:
       android_package_name: 'cmp-android' # <-- Change Your Android Package Name
       desktop_package_name: 'cmp-desktop' # <-- Change Your Desktop Package Name

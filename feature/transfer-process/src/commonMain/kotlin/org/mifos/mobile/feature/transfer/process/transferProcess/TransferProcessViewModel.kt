@@ -148,6 +148,11 @@ internal class TransferProcessViewModel(
         }
     }
 
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * Monitors connectivity changes and updates the [networkStatus] flag in [TransferProcessState]
+     * so the UI can react to network availability changes.
+     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline

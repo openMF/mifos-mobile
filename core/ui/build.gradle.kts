@@ -30,6 +30,7 @@ kotlin{
             implementation(libs.google.oss.licenses)
         }
         commonMain.dependencies {
+            implementation(projects.core.analytics)
             api(projects.core.designsystem)
             implementation(projects.core.model)
             api(libs.kotlinx.datetime)

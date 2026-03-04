@@ -8,7 +8,7 @@
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
 plugins {
-    alias(libs.plugins.kmp.library.convention)
+    alias(libs.plugins.kmp.core.base.library.convention)
     alias(libs.plugins.kotlin.serialization)
 }
 
