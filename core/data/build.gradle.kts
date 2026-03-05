@@ -36,6 +36,7 @@ kotlin {
             api(projects.core.datastore)
             api(projects.core.model)
             implementation(projects.core.network)
+            implementation(projects.core.analytics)
             implementation(libs.kotlinx.serialization.json)
         }
         androidMain.dependencies {

@@ -58,6 +58,22 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Main composable function for the "Transfer Process" screen.
+ *
+ * This screen displays the final transfer details before execution and handles
+ * the transfer processing workflow. It shows transfer information, manages authentication
+ * requirements, and handles the final transfer execution.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param navigateToStatusScreen A lambda to navigate to the status screen after transfer
+ *   completion with event details.
+ * @param navigateToAuthenticateScreen A lambda to navigate to the authentication screen
+ *   before proceeding with the transfer.
+ * @param modifier Modifier for styling and positioning the screen.
+ * @param viewModel The ViewModel that manages the screen's state and business logic.
+ *   Provided by Koin dependency injection.
+ */
 @Composable
 internal fun TransferProcessScreen(
     navigateBack: () -> Unit,
@@ -96,6 +112,17 @@ internal fun TransferProcessScreen(
     )
 }
 
+/**
+ * Private composable function for the "Transfer Process" screen content.
+ *
+ * This composable renders the main UI structure including the scaffold,
+ * content based on UI state, and overlay loading indicators. It handles
+ * different states like loading, network issues, and success.
+ *
+ * @param state The current UI state containing all necessary data for rendering.
+ * @param onAction Callback function to handle user actions and UI events.
+ * @param modifier Modifier for styling and positioning the screen.
+ */
 @Composable
 private fun TransferProcessScreen(
     state: TransferProcessState,
@@ -141,6 +168,18 @@ private fun TransferProcessScreen(
     }
 }
 
+/**
+ * Content composable for the "Transfer Process" screen.
+ *
+ * This composable displays the transfer details in a structured format,
+ * including source account information, destination account information,
+ * and transfer details (amount, date, remarks). It also provides buttons
+ * for canceling or proceeding with the transfer.
+ *
+ * @param state The current state containing transfer payload and UI information.
+ * @param onAction Callback function to handle user actions (cancel, transfer).
+ * @param modifier Modifier for styling and positioning the content.
+ */
 @Composable
 private fun TransferProcessContent(
     state: TransferProcessState,
@@ -228,6 +267,12 @@ private fun TransferProcessContent(
     }
 }
 
+/**
+ * Preview composable for the "Transfer Process" screen.
+ *
+ * This preview function allows developers to visualize the Transfer Process screen
+ * in the Android Studio preview panel with sample transfer data.
+ */
 @Preview
 @Composable
 private fun TransferProcessScreenPreview() {
