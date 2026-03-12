@@ -38,6 +38,20 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
+/**
+ * ViewModel for managing the state and business logic of the "Add Guarantor" screen.
+ *
+ * This ViewModel handles the creation and editing of guarantors for loans, including:
+ * - Fetching guarantor templates and existing guarantor data
+ * - Validating form input fields
+ * - Creating new guarantors and updating existing ones
+ * - Managing network connectivity status
+ * - Handling UI states and error conditions
+ *
+ * @property guarantorRepositoryImp Repository for guarantor-related API operations.
+ * @property networkMonitor Utility to monitor network connectivity status.
+ * @property savedStateHandle Handle to saved state for retrieving navigation arguments.
+ */
 internal class AddGuarantorViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
     networkMonitor: NetworkMonitor,
@@ -67,10 +81,19 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Helper function to update the [AddGuarantorState].
+     *
+     * @param update A lambda function that takes the current state and returns an updated state.
+     */
     private fun updateState(update: (AddGuarantorState) -> AddGuarantorState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Fetches the guarantor template from the repository.
+     * Updates the UI state based on the result (loading, error, or success).
+     */
     private fun getGuarantorTemplate() {
         viewModelScope.launch {
             guarantorRepositoryImp.getGuarantorTemplate(state.loanId).collect { result ->
@@ -97,6 +120,12 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Validates the form fields for guarantor creation/editing.
+     * Checks that first name, last name, and guarantor type are not empty.
+     *
+     * @return True if all fields are valid, false otherwise with appropriate error state.
+     */
     private fun validateFields(): Boolean {
         return when {
             state.firstName.isEmpty() -> {
@@ -134,6 +163,12 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Creates a new guarantor using the repository.
+     * Updates UI state based on the API response and sends success events.
+     *
+     * @param payload The guarantor data to be created.
+     */
     private fun createGuarantor(payload: GuarantorApplicationPayload) {
         viewModelScope.launch {
             when (val result = guarantorRepositoryImp.createGuarantor(state.loanId, payload)) {
@@ -154,6 +189,10 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Fetches existing guarantor data for editing.
+     * Only called when the index is >= 0 (edit mode).
+     */
     private fun getGuarantorItem() {
         viewModelScope.launch {
             if (state.index >= 0) {
@@ -189,6 +228,12 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Updates an existing guarantor using the repository.
+     * Updates UI state based on the API response and sends success events.
+     *
+     * @param payload The guarantor data to be updated.
+     */
     private fun updateGuarantor(payload: GuarantorApplicationPayload) {
         viewModelScope.launch {
             when (
@@ -220,6 +265,11 @@ internal class AddGuarantorViewModel(
         }
     }
 
+    /**
+     * Handles incoming actions from the UI or internal events within the ViewModel.
+     *
+     * @param action The [AddGuarantorAction] to be processed.
+     */
     override fun handleAction(action: AddGuarantorAction) {
         when (action) {
             is AddGuarantorAction.NavigateBack -> sendEvent(AddGuarantorEvent.NavigateBack)
@@ -265,6 +315,20 @@ internal class AddGuarantorViewModel(
     }
 }
 
+/**
+ * Represents the UI state for the "Add Guarantor" screen.
+ *
+ * @property index The index of the guarantor being edited (-1 for new guarantors).
+ * @property loanId The ID of the loan for which guarantors are being managed.
+ * @property dialogState The current dialog state (loading, error, or null).
+ * @property isOnline The network connectivity status.
+ * @property firstName The first name input value for the guarantor form.
+ * @property lastName The last name input value for the guarantor form.
+ * @property city The city input value for the guarantor form.
+ * @property guarantorItem The existing guarantor data when editing (null for new guarantors).
+ * @property templatePayload The guarantor template payload containing available options.
+ * @property guarantorType The selected guarantor type from the template options.
+ */
 @Parcelize
 data class AddGuarantorState(
     val index: Int = -1,
@@ -282,6 +346,9 @@ data class AddGuarantorState(
     var guarantorType: GuarantorType = GuarantorType(),
 ) : Parcelable {
 
+    /**
+     * Sealed interface representing possible dialog states for the "Add Guarantor" screen.
+     */
     sealed interface DialogState : Parcelable {
 
         @Parcelize
@@ -292,12 +359,20 @@ data class AddGuarantorState(
     }
 }
 
+/**
+ * Sealed interface representing events that can be emitted from the "Add Guarantor" ViewModel.
+ * These events are typically used to trigger navigation or show one-time messages.
+ */
 sealed interface AddGuarantorEvent {
     data object NavigateBack : AddGuarantorEvent
     data class ShowToast(val message: String) : AddGuarantorEvent
     data class Success(val message: String) : AddGuarantorEvent
 }
 
+/**
+ * Sealed interface representing actions that can be dispatched to the "Add Guarantor" ViewModel.
+ * These actions can originate from the UI or be used internally by the ViewModel.
+ */
 sealed interface AddGuarantorAction {
     data class OnFirstNameChange(val firstName: String) : AddGuarantorAction
     data class OnLastnameChange(val lastname: String) : AddGuarantorAction
