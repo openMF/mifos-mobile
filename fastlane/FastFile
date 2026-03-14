@@ -177,6 +177,7 @@ platform :android do
     gradle(
       task: options[:taskName],
       build_type: options[:buildType],
+      flags: "--stacktrace --info",
       properties: {
         "android.injected.signing.store.file" => keystore_path,
         "android.injected.signing.store.password" => options[:storePassword],

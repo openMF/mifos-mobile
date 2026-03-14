@@ -73,8 +73,9 @@ concurrency:
 jobs:
   android_build_and_publish:
     name: Android Build and Publish
-    uses: openMF/mifos-x-actionhub/.github/workflows/android-build-and-publish.yaml@v1.0.0
+    uses: openMF/mifos-x-actionhub/.github/workflows/android-build-and-publish.yaml@v1.0.7
     with:
+      java-version: '21'
       release_type: ${{ inputs.release_type }}
       target_branch: ${{ inputs.target_branch }}
       android_package_name: 'cmp-android' # <-- Change this to your android package name
