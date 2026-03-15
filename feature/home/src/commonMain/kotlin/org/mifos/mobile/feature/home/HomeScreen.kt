@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
@@ -47,12 +49,12 @@ import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
-import mifos_mobile.feature.home.generated.resources.feature_home_no_services_hint
-import mifos_mobile.feature.home.generated.resources.feature_home_selected
+import mifos_mobile.feature.home.generated.resources.feature_home_no_active_accounts
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
 import mifos_mobile.feature.home.generated.resources.feature_server_error
+import mifos_mobile.feature.home.generated.resources.notifications
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -81,7 +83,6 @@ internal fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.handleAuthCheckOnResume()
     }
@@ -142,13 +143,9 @@ internal fun HomeContent(
                 horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
                 // TODO : once ui/ux team gives this flow uncomment and implement
-//                Image(
-//                    imageVector = MifosIcons.SearchNew,
-//                    contentDescription = null,
-//                )
                 Image(
                     imageVector = MifosIcons.Alert,
-                    contentDescription = null,
+                    contentDescription = stringResource(Res.string.notifications),
                     colorFilter = ColorFilter.tint(KptTheme.colorScheme.onSurface),
                     modifier = Modifier
                         .clippedClickable(
@@ -194,6 +191,7 @@ internal fun HomeContent(
                         ),
                         style = MifosTypography.titleLarge,
                         color = KptTheme.colorScheme.onSurface,
+                        modifier = Modifier.semantics { heading() },
                     )
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.md))
@@ -209,9 +207,20 @@ internal fun HomeContent(
                             currency = state.currency,
                         )
                     } else {
-                        MifosAccountApplyDashboard(
-                            onOpenAccountClick = { onAction(HomeAction.BottomBarPicker) },
-                        )
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.feature_home_no_active_accounts),
+                                style = MifosTypography.bodyMedium,
+                                color = KptTheme.colorScheme.onSurface,
+                                textAlign = TextAlign.Center,
+                            )
+                            Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+                            MifosAccountApplyDashboard(
+                                onOpenAccountClick = { onAction(HomeAction.BottomBarPicker) },
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
@@ -324,7 +333,11 @@ internal fun ServiceItemCard(
     Column(
         modifier = modifier
             .padding(vertical = KptTheme.spacing.sm)
-            .clickable(role = Role.Button, onClickLabel = stringResource(title)) { onClick() },
+            .clippedClickable(
+                onClick = onClick,
+            ).semantics(mergeDescendants = true) {
+                role = Role.Button
+            },
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
