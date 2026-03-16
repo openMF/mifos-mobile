@@ -11,9 +11,10 @@
 <resources>
     <string name="beneficiaries">Beneficiaries</string>
     <string name="survey">Surveys</string>
-    <string name="apply_for_loan">Apply Loan A/c</string>
-    <string name="apply_for_savings">Apply Savings A/c</string>
-    <string name="apply_for_share">Apply Share A/c</string>
+    <string name="apply_for_loan">Apply Loan Account</string>
+    <string name="apply_for_savings">Apply Savings Account</string>
+    <string name="apply_for_share">Apply Share Account</string>
+    <string name="notifications">Notifications</string>
     <string name="charges">Charges</string>
     <string name="transfer">Transfer</string>
     <string name="accounts">Accounts</string>
@@ -42,7 +43,6 @@
     <string name="no_app_to_support_action">There is no application that support this action</string>
     <string name="cancel">Cancel</string>
     <string name="dialog_logout">Are you sure you want to logout?</string>
-
     <string name="feature_home_greet">Hello %1$s,</string>
     <string name="feature_home_services">Services</string>
     <string name="feature_home_edit_services">Edit services</string>
@@ -55,7 +55,7 @@
     <string name="feature_home_charges">Charges</string>
     <string name="feature_home_beneficiary">Beneficiary</string>
     <string name="feature_home_faq">FAQ</string>
-
+    <string name="feature_home_no_active_accounts">You don't have any active accounts yet.</string>
     <string name="feature_home_saving_account">Savings Account</string>
     <string name="feature_home_loan_account">Loan Account</string>
     <string name="feature_home_savings_tip">Earn interest on your deposits with flexible access to your money anytime.</string>
