@@ -50,6 +50,8 @@ import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
 import mifos_mobile.feature.home.generated.resources.feature_home_no_active_accounts
+import mifos_mobile.feature.home.generated.resources.feature_home_no_services_hint
+import mifos_mobile.feature.home.generated.resources.feature_home_selected
 import mifos_mobile.feature.home.generated.resources.feature_home_services
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_loan
 import mifos_mobile.feature.home.generated.resources.feature_home_total_available_savings
