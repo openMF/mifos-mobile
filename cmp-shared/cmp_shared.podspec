@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'cmp_shared'
-    spec.version                  = '1.0'
+    spec.version                  = '2026.3.4'
     spec.homepage                 = 'https://github.com/openMF/mifos-mobile'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
@@ -46,8 +46,7 @@ Pod::Spec.new do |spec|
                 "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME \
                     -Pkotlin.native.cocoapods.archs="$ARCHS" \
-                    -Pkotlin.native.cocoapods.configuration="$CONFIGURATION" \
-                    --no-configuration-cache
+                    -Pkotlin.native.cocoapods.configuration="$CONFIGURATION"
             SCRIPT
         }
     ]
