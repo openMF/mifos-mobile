@@ -43,11 +43,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.core.ui.generated.resources.Res
-import mifos_mobile.core.ui.generated.resources.dashboard_toggle_visibility
-import mifos_mobile.core.ui.generated.resources.dashboard_totals
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_title
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_open_account
+import mifos_mobile.core.ui.generated.resources.feature_dashboard_toggle_visibility
+import mifos_mobile.core.ui.generated.resources.feature_dashboard_totals
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.powered_by
 import org.jetbrains.compose.resources.StringResource
@@ -78,7 +78,7 @@ fun MifosDashboardCard(
     onVisibilityToggle: () -> Unit = {},
 ) {
     val totalDescription = stringResource(
-        Res.string.dashboard_totals,
+        Res.string.feature_dashboard_totals,
         loanAmount ?: "0",
         currency ?: "",
         savingsAmount ?: "0",
@@ -173,7 +173,7 @@ fun MifosDashboardCard(
         ) {
             Icon(
                 imageVector = if (isVisible) MifosIcons.Eye else MifosIcons.EyeOff,
-                contentDescription = stringResource(Res.string.dashboard_toggle_visibility),
+                contentDescription = stringResource(Res.string.feature_dashboard_toggle_visibility),
                 tint = Color.White,
             )
         }
