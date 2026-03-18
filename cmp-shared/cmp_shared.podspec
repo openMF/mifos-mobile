@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'cmp_shared'
-    spec.version                  = '2026.3.4'
+    spec.version                  = '1.0'
     spec.homepage                 = 'https://github.com/openMF/mifos-mobile'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
@@ -9,8 +9,8 @@ Pod::Spec.new do |spec|
     spec.vendored_frameworks      = 'build/cocoapods/framework/ComposeApp.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '16.0'
-                
-                
+
+
     if !Dir.exist?('build/cocoapods/framework/ComposeApp.framework') || Dir.empty?('build/cocoapods/framework/ComposeApp.framework')
         raise "
 
@@ -21,16 +21,16 @@ Pod::Spec.new do |spec|
 
         Alternatively, proper pod installation is performed during Gradle sync in the IDE (if Podfile location is set)"
     end
-                
+
     spec.xcconfig = {
         'ENABLE_USER_SCRIPT_SANDBOXING' => 'NO',
     }
-                
+
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':cmp-shared',
         'PRODUCT_MODULE_NAME' => 'ComposeApp',
     }
-                
+
     spec.script_phases = [
         {
             :name => 'Build cmp_shared',
@@ -46,7 +46,8 @@ Pod::Spec.new do |spec|
                 "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME \
                     -Pkotlin.native.cocoapods.archs="$ARCHS" \
-                    -Pkotlin.native.cocoapods.configuration="$CONFIGURATION"
+                    -Pkotlin.native.cocoapods.configuration="$CONFIGURATION" \
+                    --no-configuration-cache
             SCRIPT
         }
     ]
