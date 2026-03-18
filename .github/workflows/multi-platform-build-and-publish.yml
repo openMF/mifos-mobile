@@ -109,12 +109,6 @@ jobs:
       ios_package_name: 'cmp-ios'
       desktop_package_name: 'cmp-desktop'
       web_package_name: 'cmp-web'
-      app_identifier: 'org.mifos.mobile'
-      git_url: 'git@github.com:openMF/ios-provisioning-profile.git'
-      git_branch: 'mifos-mobile'
-      match_type: 'adhoc'
-      provisioning_profile_name: 'match AdHoc org.mifos.mobile'
-      firebase_app_id: '1:728434912738:ios:ee2e0815a6915b351a1dbb'
       metadata_path: './fastlane/metadata'
       use_cocoapods: true
       shared_module: ':cmp-shared'
@@ -123,8 +117,6 @@ jobs:
       # the IPA to App Store Connect which makes the build available in TestFlight.
       # Running both in parallel causes version conflicts since the upstream
       # reusable workflow has no job dependency between the two.
-      distribute_macos_testflight: ${{ inputs.distribute_macos_testflight }}
-      distribute_macos_appstore: ${{ inputs.distribute_macos_appstore }}
       distribute_ios_testflight: ${{ inputs.distribute_ios_testflight && !inputs.distribute_ios_appstore }}
       distribute_ios_appstore: ${{ inputs.distribute_ios_appstore }}
     secrets:
