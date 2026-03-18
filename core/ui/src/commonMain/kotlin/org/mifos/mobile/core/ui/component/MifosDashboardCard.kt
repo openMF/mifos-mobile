@@ -43,11 +43,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import mifos_mobile.core.ui.generated.resources.Res
-import mifos_mobile.core.ui.generated.resources.feature_dashboard_toggle_visibility
-import mifos_mobile.core.ui.generated.resources.feature_dashboard_totals
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_description
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_title
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_open_account
+import mifos_mobile.core.ui.generated.resources.feature_dashboard_toggle_visibility
+import mifos_mobile.core.ui.generated.resources.feature_dashboard_totals
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.powered_by
 import org.jetbrains.compose.resources.StringResource
