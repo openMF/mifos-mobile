@@ -20,7 +20,7 @@ import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_password_error
 import mifos_mobile.feature.auth.generated.resources.feature_sign_in_username_error
-import mifos_mobile.feature.auth.generated.resources.no_clients_assigned
+import mifos_mobile.feature.auth.generated.resources.no_client_assigned
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
@@ -125,7 +125,7 @@ class LoginViewModel(
                     updateState { it.copy(showOverlay = false) }
                     val user = action.loginResult.data
                     if (user.clients.isEmpty()) {
-                        val noClientsMsg = getString(Res.string.no_clients_assigned)
+                        val noClientsMsg = getString(Res.string.no_client_assigned)
                         viewModelScope.launch {
                             userPreferencesRepositoryImpl.updateUser(UserData.DEFAULT)
                             userPreferencesRepositoryImpl.setIsAuthenticated(false)
