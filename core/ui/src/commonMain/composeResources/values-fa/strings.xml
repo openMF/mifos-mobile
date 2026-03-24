@@ -102,4 +102,51 @@
     <string name="feature_savings_filter">فیلترها</string>
     <string name="feature_savings_reset">بازنشانی</string>
     <string name="feature_savings_apply">اعمال</string>
+
+    <string name="tx_date_today">امروز</string>
+    <string name="tx_date_yesterday">دیروز</string>
+
+    <string name="tx_month_jan">ژانویه</string>
+    <string name="tx_month_feb">فوریه</string>
+    <string name="tx_month_mar">مارس</string>
+    <string name="tx_month_apr">آوریل</string>
+    <string name="tx_month_may">مه</string>
+    <string name="tx_month_jun">ژوئن</string>
+    <string name="tx_month_jul">جولای</string>
+    <string name="tx_month_aug">اوت</string>
+    <string name="tx_month_sep">سپتامبر</string>
+    <string name="tx_month_oct">اکتبر</string>
+    <string name="tx_month_nov">نوامبر</string>
+    <string name="tx_month_dec">دسامبر</string>
+
+    <string name="tx_type_deposit">واریز</string>
+    <string name="tx_type_withdrawal">برداشت</string>
+    <string name="tx_type_interest_posting">ثبت سود</string>
+    <string name="tx_type_fee_deduction">کسر کارمزد</string>
+    <string name="tx_type_initiate_transfer">شروع انتقال</string>
+    <string name="tx_type_approve_transfer">تایید انتقال</string>
+    <string name="tx_type_withdraw_transfer">لغو انتقال</string>
+    <string name="tx_type_reject_transfer">رد انتقال</string>
+    <string name="tx_type_dividend_payout">پرداخت سود سهام</string>
+    <string name="tx_type_overpayment">پرداخت اضافی</string>
+    <string name="tx_type_repayment">بازپرداخت</string>
+    <string name="tx_type_repayment_at_disbursement">بازپرداخت هنگام پرداخت وام</string>
+    <string name="tx_type_waive_interest">بخشش سود</string>
+    <string name="tx_type_waive_charges">بخشش هزینه‌ها</string>
+    <string name="tx_type_write_off">سوخت کردن طلب</string>
+    <string name="tx_type_accrual">تعهدی</string>
+    <string name="tx_type_approval">تایید</string>
+    <string name="tx_type_undo_approval">لغو تایید</string>
+    <string name="tx_type_undo_disbursal">لغو پرداخت وام</string>
+    <string name="tx_type_reschedule">زمان‌بندی مجدد</string>
+    <string name="tx_type_recalculate_interest">محاسبه مجدد سود</string>
+    <string name="tx_type_refund">استرداد وجه</string>
+    <string name="tx_type_charge_payment">پرداخت هزینه</string>
+    <string name="tx_type_loan_charge_added">کارمزد وام اضافه شد</string>
+    <string name="tx_type_interest_waiver">معافیت از سود</string>
+    <string name="tx_type_recover_repayment">بازیابی بازپرداخت</string>
+    <string name="tx_type_credit_balance_refund">استرداد مانده بستانکار</string>
+    <string name="tx_type_charge_off">خروج از سرفصل</string>
+    <string name="tx_type_tax_withholding">مالیات تکلیفی</string>
+    <string name="tx_digits">۰۱۲۳۴۵۶۷۸۹</string>
 </resources>

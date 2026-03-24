@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Szűrő</string>
     <string name="feature_savings_reset">Visszaállítás</string>
     <string name="feature_savings_apply">Alkalmaz</string>
+
+    <string name="tx_date_today">Ma</string>
+    <string name="tx_date_yesterday">Tegnap</string>
+
+    <string name="tx_month_jan">Jan</string>
+    <string name="tx_month_feb">Febr</string>
+    <string name="tx_month_mar">Márc</string>
+    <string name="tx_month_apr">Ápr</string>
+    <string name="tx_month_may">Máj</string>
+    <string name="tx_month_jun">Jún</string>
+    <string name="tx_month_jul">Júl</string>
+    <string name="tx_month_aug">Aug</string>
+    <string name="tx_month_sep">Szept</string>
+    <string name="tx_month_oct">Okt</string>
+    <string name="tx_month_nov">Nov</string>
+    <string name="tx_month_dec">Dec</string>
+
+    <string name="tx_type_deposit">Befizetés</string>
+    <string name="tx_type_withdrawal">Kifizetés</string>
+    <string name="tx_type_interest_posting">Kamatjóváírás</string>
+    <string name="tx_type_fee_deduction">Díjlevonás</string>
+    <string name="tx_type_initiate_transfer">Átutalás kezdeményezése</string>
+    <string name="tx_type_approve_transfer">Átutalás jóváhagyása</string>
+    <string name="tx_type_withdraw_transfer">Átutalás visszavonása</string>
+    <string name="tx_type_reject_transfer">Átutalás elutasítása</string>
+    <string name="tx_type_dividend_payout">Osztalék kifizetés</string>
+    <string name="tx_type_overpayment">Túlfizetés</string>
+    <string name="tx_type_repayment">Törlesztés</string>
+    <string name="tx_type_repayment_at_disbursement">Törlesztés folyósításkor</string>
+    <string name="tx_type_waive_interest">Kamat elengedése</string>
+    <string name="tx_type_waive_charges">Díjak elengedése</string>
+    <string name="tx_type_write_off">Leírás</string>
+    <string name="tx_type_accrual">Elhatárolás</string>
+    <string name="tx_type_approval">Jóváhagyás</string>
+    <string name="tx_type_undo_approval">Jóváhagyás visszavonása</string>
+    <string name="tx_type_undo_disbursal">Folyósítás visszavonása</string>
+    <string name="tx_type_reschedule">Ütemezés módosítása</string>
+    <string name="tx_type_recalculate_interest">Kamat újraszámítása</string>
+    <string name="tx_type_refund">Visszatérítés</string>
+    <string name="tx_type_charge_payment">Díjfizetés</string>
+    <string name="tx_type_loan_charge_added">Hitel díja hozzáadva</string>
+    <string name="tx_type_interest_waiver">Kamatmentesség</string>
+    <string name="tx_type_recover_repayment">Törlesztés behajtása</string>
+    <string name="tx_type_credit_balance_refund">Túlfizetés visszatérítése</string>
+    <string name="tx_type_charge_off">Kivezetés</string>
+    <string name="tx_type_tax_withholding">Adólevonás</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

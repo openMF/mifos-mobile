@@ -35,7 +35,6 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_fil
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
@@ -356,7 +355,7 @@ internal class AccountsTransactionViewModel(
                 val transactions = dataState.data.purchasedShares.map { it.toUiTransaction(dataState.data.currency) }
 
                 val groupedTransactions = transactions.groupBy { transaction ->
-                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                    transaction.toIsoDateKey()
                 }
 
                 updateState {
@@ -399,6 +398,7 @@ internal class AccountsTransactionViewModel(
         amount = amount,
         type = null,
         typeValue = type?.value,
+        typeCode = type?.code,
         isCredit = when {
             type?.value?.contains("Purchase", ignoreCase = true) == true -> false
             type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false
@@ -468,7 +468,7 @@ internal class AccountsTransactionViewModel(
                 }
 
                 val groupedTransactions = transactions.groupBy { transaction ->
-                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                    transaction.toIsoDateKey()
                 }
 
                 updateState {
@@ -524,7 +524,7 @@ internal class AccountsTransactionViewModel(
                     .map { it.toUiTransaction() }
 
                 val groupedTransactions = transactions.groupBy { transaction ->
-                    DateHelper.getFormattedDateWithPrefix(transaction.date)
+                    transaction.toIsoDateKey()
                 }
 
                 updateState {
@@ -580,7 +580,7 @@ internal class AccountsTransactionViewModel(
                     ?.mapNotNull { it?.toUiTransaction() } ?: emptyList()
 
                 val grouped = transactions.groupBy {
-                    DateHelper.getFormattedDateWithPrefix(it.date)
+                    it.toIsoDateKey()
                 }
 
                 updateState {
@@ -703,7 +703,7 @@ internal class AccountsTransactionViewModel(
         }
 
         return durationFiltered.groupBy { transaction ->
-            DateHelper.getFormattedDateWithPrefix(transaction.date)
+            transaction.toIsoDateKey()
         }
     }
 
@@ -718,6 +718,7 @@ internal class AccountsTransactionViewModel(
         amount = amount,
         type = transactionType,
         typeValue = transactionType?.value,
+        typeCode = transactionType?.code,
         isCredit = getTransactionCreditStatus(transactionType),
         currency = currency?.code ?: "USD",
     )
@@ -732,6 +733,7 @@ internal class AccountsTransactionViewModel(
         date = date,
         amount = amount,
         typeValue = type.value,
+        typeCode = type.code,
         isCredit = when (type.value?.lowercase()) {
             "disbursement", "repayment" -> false
             else -> true
@@ -757,6 +759,7 @@ data class UiTransaction(
     val amount: Double?,
     val type: TransactionType? = null,
     val typeValue: String? = null,
+    val typeCode: String? = null,
     val isCredit: Boolean?,
     val currency: String,
 )
@@ -918,4 +921,11 @@ internal fun getTransactionCreditStatus(transactionType: TransactionType?): Bool
             else -> true
         }
     } ?: false
+}
+
+private fun UiTransaction.toIsoDateKey(): String {
+    val y = date.getOrElse(0) { 0 }
+    val m = date.getOrElse(1) { 1 }.toString().padStart(2, '0')
+    val d = date.getOrElse(2) { 1 }.toString().padStart(2, '0')
+    return "$y-$m-$d"
 }

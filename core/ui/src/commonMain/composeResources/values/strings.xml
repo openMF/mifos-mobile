@@ -183,5 +183,8 @@
     <string name="tx_type_interest_waiver">Interest Waiver</string>
     <string name="tx_type_tax_withholding">Tax Withholding</string>
     <string name="tx_type_recalculate_interest">Recalculate Interest</string>
+    <string name="tx_type_reject_transfer">Reject Transfer</string>
+    <!-- Digit chars for number localization (0-9 in this locale's script) -->
+    <string name="tx_digits">0123456789</string>
 
 </resources>

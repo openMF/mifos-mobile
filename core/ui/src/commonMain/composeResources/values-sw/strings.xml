@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Chuja</string>
     <string name="feature_savings_reset">Weka upya</string>
     <string name="feature_savings_apply">Omba</string>
+
+    <string name="tx_date_today">Leo</string>
+    <string name="tx_date_yesterday">Jana</string>
+
+    <string name="tx_month_jan">Jan</string>
+    <string name="tx_month_feb">Feb</string>
+    <string name="tx_month_mar">Mar</string>
+    <string name="tx_month_apr">Apr</string>
+    <string name="tx_month_may">Mei</string>
+    <string name="tx_month_jun">Jun</string>
+    <string name="tx_month_jul">Jul</string>
+    <string name="tx_month_aug">Ago</string>
+    <string name="tx_month_sep">Sep</string>
+    <string name="tx_month_oct">Okt</string>
+    <string name="tx_month_nov">Nov</string>
+    <string name="tx_month_dec">Des</string>
+
+    <string name="tx_type_deposit">Amana</string>
+    <string name="tx_type_withdrawal">Kutoa Pesa</string>
+    <string name="tx_type_interest_posting">Nyongeza ya Riba</string>
+    <string name="tx_type_fee_deduction">Makato ya Ada</string>
+    <string name="tx_type_initiate_transfer">Anzisha Uhamisho</string>
+    <string name="tx_type_approve_transfer">Idhinisha Uhamisho</string>
+    <string name="tx_type_withdraw_transfer">Ghairi Uhamisho</string>
+    <string name="tx_type_reject_transfer">Kataa Uhamisho</string>
+    <string name="tx_type_dividend_payout">Malipo ya Gawio</string>
+    <string name="tx_type_overpayment">Malipo ya Ziada</string>
+    <string name="tx_type_repayment">Malipo ya Marejesho</string>
+    <string name="tx_type_repayment_at_disbursement">Marejesho wakati wa Kutolewa</string>
+    <string name="tx_type_waive_interest">Msamaha wa Riba</string>
+    <string name="tx_type_waive_charges">Msamaha wa Tozo</string>
+    <string name="tx_type_write_off">Kufuta Deni</string>
+    <string name="tx_type_accrual">Riba Limbikizi</string>
+    <string name="tx_type_approval">Idhini</string>
+    <string name="tx_type_undo_approval">Batilisha Idhini</string>
+    <string name="tx_type_undo_disbursal">Batilisha Utoaji</string>
+    <string name="tx_type_reschedule">Panga Upya</string>
+    <string name="tx_type_recalculate_interest">Hesabu Upya Riba</string>
+    <string name="tx_type_refund">Rudishi</string>
+    <string name="tx_type_charge_payment">Malipo ya Tozo</string>
+    <string name="tx_type_loan_charge_added">Tozo ya Mkopo Imeongezwa</string>
+    <string name="tx_type_interest_waiver">Ondoleo la Riba</string>
+    <string name="tx_type_recover_repayment">Rejesha Marejesho</string>
+    <string name="tx_type_credit_balance_refund">Rudishi la Salio la Mikopo</string>
+    <string name="tx_type_charge_off">Futa Tozo</string>
+    <string name="tx_type_tax_withholding">Zuio la Kodi</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

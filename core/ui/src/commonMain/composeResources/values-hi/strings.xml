@@ -124,4 +124,55 @@
     <string name="feature_savings_filter">फ़िल्टर</string>
     <string name="feature_savings_reset">रीसेट</string>
     <string name="feature_savings_apply">लागू करें</string>
+
+    <!-- Date labels -->
+    <string name="tx_date_today">आज</string>
+    <string name="tx_date_yesterday">कल</string>
+
+    <!-- Month abbreviations -->
+    <string name="tx_month_jan">जन</string>
+    <string name="tx_month_feb">फर</string>
+    <string name="tx_month_mar">मार्च</string>
+    <string name="tx_month_apr">अप्रैल</string>
+    <string name="tx_month_may">मई</string>
+    <string name="tx_month_jun">जून</string>
+    <string name="tx_month_jul">जुल</string>
+    <string name="tx_month_aug">अग</string>
+    <string name="tx_month_sep">सित</string>
+    <string name="tx_month_oct">अक्टू</string>
+    <string name="tx_month_nov">नव</string>
+    <string name="tx_month_dec">दिस</string>
+
+    <!-- Transaction type names -->
+    <string name="tx_type_deposit">जमा</string>
+    <string name="tx_type_withdrawal">निकासी</string>
+    <string name="tx_type_interest_posting">ब्याज जमा</string>
+    <string name="tx_type_fee_deduction">शुल्क कटौती</string>
+    <string name="tx_type_initiate_transfer">स्थानांतरण शुरू</string>
+    <string name="tx_type_approve_transfer">स्थानांतरण स्वीकृत</string>
+    <string name="tx_type_withdraw_transfer">स्थानांतरण वापस</string>
+    <string name="tx_type_reject_transfer">स्थानांतरण अस्वीकृत</string>
+    <string name="tx_type_dividend_payout">लाभांश भुगतान</string>
+    <string name="tx_type_overpayment">अधिक भुगतान</string>
+    <string name="tx_type_repayment">पुनर्भुगतान</string>
+    <string name="tx_type_repayment_at_disbursement">संवितरण पर भुगतान</string>
+    <string name="tx_type_waive_interest">ब्याज माफ</string>
+    <string name="tx_type_waive_charges">शुल्क माफ</string>
+    <string name="tx_type_write_off">बट्टे खाते में डालें</string>
+    <string name="tx_type_accrual">उपचय</string>
+    <string name="tx_type_approval">अनुमोदन</string>
+    <string name="tx_type_undo_approval">अनुमोदन रद्द</string>
+    <string name="tx_type_undo_disbursal">संवितरण रद्द</string>
+    <string name="tx_type_reschedule">पुनर्निर्धारण</string>
+    <string name="tx_type_recalculate_interest">ब्याज पुनर्गणना</string>
+    <string name="tx_type_refund">वापसी</string>
+    <string name="tx_type_charge_payment">शुल्क भुगतान</string>
+    <string name="tx_type_loan_charge_added">ऋण शुल्क जोड़ा</string>
+    <string name="tx_type_interest_waiver">ब्याज माफी</string>
+    <string name="tx_type_recover_repayment">वसूली भुगतान</string>
+    <string name="tx_type_credit_balance_refund">क्रेडिट बैलेंस वापसी</string>
+    <string name="tx_type_charge_off">शुल्क बंद</string>
+    <string name="tx_type_tax_withholding">कर रोक</string>
+    <!-- Digit chars for number localization (Devanagari 0-9) -->
+    <string name="tx_digits">०१२३४५६७८९</string>
 </resources>

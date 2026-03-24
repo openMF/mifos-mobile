@@ -43,7 +43,6 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_det
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_balance
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_breakdown
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_date
-import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_default_type
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_fees
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_id
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_interest
@@ -58,17 +57,19 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_det
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.model.entity.client.Type
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.DevicePreview
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.formatTransactionDate
+import org.mifos.mobile.core.ui.utils.localizeTransactionType
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -151,7 +152,7 @@ fun TransactionDetailContent(
 
             DetailItem(
                 stringResource(Res.string.feature_transaction_detail_date),
-                DateHelper.getDateAsString(transaction.date),
+                formatTransactionDate(transaction.date),
             )
 
             val statusLabel = if (transaction.status == "reversed") {
@@ -179,10 +180,12 @@ fun TransactionDetailContent(
                 )
             }
 
-            if (transaction.typeValue != null) {
+            if (transaction.typeCode != null || transaction.typeValue != null) {
                 DetailItem(
                     stringResource(Res.string.feature_transaction_detail_type),
-                    transaction.typeValue,
+                    localizeTransactionType(
+                        Type(code = transaction.typeCode, value = transaction.typeValue),
+                    ),
                 )
             }
 
@@ -237,7 +240,9 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
         )
 
         Text(
-            text = transaction.typeValue ?: stringResource(Res.string.feature_transaction_detail_default_type),
+            text = localizeTransactionType(
+                Type(code = transaction.typeCode, value = transaction.typeValue),
+            ),
             style = KptTheme.typography.bodyMedium,
             color = KptTheme.colorScheme.onSurfaceVariant,
         )

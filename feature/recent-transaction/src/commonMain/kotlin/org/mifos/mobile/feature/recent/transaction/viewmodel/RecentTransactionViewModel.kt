@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -285,7 +284,7 @@ internal class RecentTransactionViewModel(
                     .map { it.toUiTransaction() }
 
                 val grouped = transactions.groupBy {
-                    DateHelper.getFormattedDateWithPrefix(it.date)
+                    it.toIsoDateKey()
                 }
 
                 updateState {
@@ -332,7 +331,7 @@ internal class RecentTransactionViewModel(
         }
 
         val groupedTransactions = filteredTransactions.groupBy { transaction ->
-            DateHelper.getFormattedDateWithPrefix(transaction.date)
+            transaction.toIsoDateKey()
         }
 
         updateState {
@@ -358,6 +357,7 @@ internal class RecentTransactionViewModel(
         amount = amount,
         type = transactionType,
         typeValue = transactionType?.value,
+        typeCode = transactionType?.code,
         isCredit = transactionType.isCredit(),
         currency = currency?.code ?: "USD",
     )
@@ -403,6 +403,7 @@ internal data class UiTransaction(
     val amount: Double?,
     val type: TransactionType? = null,
     val typeValue: String? = null,
+    val typeCode: String? = null,
     val isCredit: Boolean,
     val currency: String,
 )
@@ -484,4 +485,11 @@ sealed interface RecentTransactionEvent {
         val accountType: String,
         val accountId: Long,
     ) : RecentTransactionEvent
+}
+
+private fun UiTransaction.toIsoDateKey(): String {
+    val y = date.getOrElse(0) { 0 }
+    val m = date.getOrElse(1) { 1 }.toString().padStart(2, '0')
+    val d = date.getOrElse(2) { 1 }.toString().padStart(2, '0')
+    return "$y-$m-$d"
 }

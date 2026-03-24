@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Filtro</string>
     <string name="feature_savings_reset">Reiniciar</string>
     <string name="feature_savings_apply">Aplicar</string>
+
+    <string name="tx_date_today">Hoje</string>
+    <string name="tx_date_yesterday">Ontem</string>
+
+    <string name="tx_month_jan">jan</string>
+    <string name="tx_month_feb">fev</string>
+    <string name="tx_month_mar">mar</string>
+    <string name="tx_month_apr">abr</string>
+    <string name="tx_month_may">mai</string>
+    <string name="tx_month_jun">jun</string>
+    <string name="tx_month_jul">jul</string>
+    <string name="tx_month_aug">ago</string>
+    <string name="tx_month_sep">set</string>
+    <string name="tx_month_oct">out</string>
+    <string name="tx_month_nov">nov</string>
+    <string name="tx_month_dec">dez</string>
+
+    <string name="tx_type_deposit">Depósito</string>
+    <string name="tx_type_withdrawal">Levantamento</string>
+    <string name="tx_type_interest_posting">Lançamento de juros</string>
+    <string name="tx_type_fee_deduction">Dedução de taxa</string>
+    <string name="tx_type_initiate_transfer">Iniciar transferência</string>
+    <string name="tx_type_approve_transfer">Aprovar transferência</string>
+    <string name="tx_type_withdraw_transfer">Retirar transferência</string>
+    <string name="tx_type_reject_transfer">Rejeitar transferência</string>
+    <string name="tx_type_dividend_payout">Pagamento de dividendos</string>
+    <string name="tx_type_overpayment">Pagamento em excesso</string>
+    <string name="tx_type_repayment">Amortização</string>
+    <string name="tx_type_repayment_at_disbursement">Amortização no desembolso</string>
+    <string name="tx_type_waive_interest">Isentar juros</string>
+    <string name="tx_type_waive_charges">Isentar taxas</string>
+    <string name="tx_type_write_off">Abate</string>
+    <string name="tx_type_accrual">Acréscimo</string>
+    <string name="tx_type_approval">Aprovação</string>
+    <string name="tx_type_undo_approval">Anular aprovação</string>
+    <string name="tx_type_undo_disbursal">Anular desembolso</string>
+    <string name="tx_type_reschedule">Reescalonar</string>
+    <string name="tx_type_recalculate_interest">Recalcular juros</string>
+    <string name="tx_type_refund">Reembolso</string>
+    <string name="tx_type_charge_payment">Pagamento de taxas</string>
+    <string name="tx_type_loan_charge_added">Taxa de empréstimo adicionada</string>
+    <string name="tx_type_interest_waiver">Renúncia de juros</string>
+    <string name="tx_type_recover_repayment">Recuperar amortização</string>
+    <string name="tx_type_credit_balance_refund">Reembolso de saldo credor</string>
+    <string name="tx_type_charge_off">Anulação de dívida</string>
+    <string name="tx_type_tax_withholding">Retenção de impostos</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

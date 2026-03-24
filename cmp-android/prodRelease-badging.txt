@@ -1,4 +1,4 @@
-package: name='org.mifos.mobile' versionCode='1' versionName='0.0.4-beta.0.0' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+package: name='org.mifos.mobile' versionCode='1' versionName='0.0.4-beta.0.1' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
 minSdkVersion:'26'
 targetSdkVersion:'36'
 uses-permission: name='android.permission.INTERNET'

@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Filter</string>
     <string name="feature_savings_reset">Zurücksetzen</string>
     <string name="feature_savings_apply">Anwenden</string>
+
+    <string name="tx_date_today">Heute</string>
+    <string name="tx_date_yesterday">Gestern</string>
+
+    <string name="tx_month_jan">Jan.</string>
+    <string name="tx_month_feb">Feb.</string>
+    <string name="tx_month_mar">März</string>
+    <string name="tx_month_apr">Apr.</string>
+    <string name="tx_month_may">Mai</string>
+    <string name="tx_month_jun">Juni</string>
+    <string name="tx_month_jul">Juli</string>
+    <string name="tx_month_aug">Aug.</string>
+    <string name="tx_month_sep">Sept.</string>
+    <string name="tx_month_oct">Okt.</string>
+    <string name="tx_month_nov">Nov.</string>
+    <string name="tx_month_dec">Dez.</string>
+
+    <string name="tx_type_deposit">Einzahlung</string>
+    <string name="tx_type_withdrawal">Auszahlung</string>
+    <string name="tx_type_interest_posting">Zinsbuchung</string>
+    <string name="tx_type_fee_deduction">Gebührenabzug</string>
+    <string name="tx_type_initiate_transfer">Überweisung eingeleitet</string>
+    <string name="tx_type_approve_transfer">Überweisung genehmigt</string>
+    <string name="tx_type_withdraw_transfer">Überweisung zurückgezogen</string>
+    <string name="tx_type_reject_transfer">Überweisung abgelehnt</string>
+    <string name="tx_type_dividend_payout">Dividendenauszahlung</string>
+    <string name="tx_type_overpayment">Überzahlung</string>
+    <string name="tx_type_repayment">Rückzahlung</string>
+    <string name="tx_type_repayment_at_disbursement">Rückzahlung bei Auszahlung</string>
+    <string name="tx_type_waive_interest">Zinsverzicht</string>
+    <string name="tx_type_waive_charges">Gebührenverzicht</string>
+    <string name="tx_type_write_off">Abschreibung</string>
+    <string name="tx_type_accrual">Abgrenzung</string>
+    <string name="tx_type_approval">Genehmigung</string>
+    <string name="tx_type_undo_approval">Genehmigung rückgängig</string>
+    <string name="tx_type_undo_disbursal">Auszahlung rückgängig</string>
+    <string name="tx_type_reschedule">Neuplanung</string>
+    <string name="tx_type_recalculate_interest">Zinsneuberechnung</string>
+    <string name="tx_type_refund">Rückerstattung</string>
+    <string name="tx_type_charge_payment">Gebührenzahlung</string>
+    <string name="tx_type_loan_charge_added">Kreditgebühr hinzugefügt</string>
+    <string name="tx_type_interest_waiver">Zinserlass</string>
+    <string name="tx_type_recover_repayment">Rückzahlungserholung</string>
+    <string name="tx_type_credit_balance_refund">Guthabenerstattung</string>
+    <string name="tx_type_charge_off">Ausbuchung</string>
+    <string name="tx_type_tax_withholding">Quellensteuer</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Tapis</string>
     <string name="feature_savings_reset">Tetapkan semula</string>
     <string name="feature_savings_apply">Gunakan</string>
+
+    <string name="tx_date_today">Hari Ini</string>
+    <string name="tx_date_yesterday">Semalam</string>
+
+    <string name="tx_month_jan">Jan</string>
+    <string name="tx_month_feb">Feb</string>
+    <string name="tx_month_mar">Mac</string>
+    <string name="tx_month_apr">Apr</string>
+    <string name="tx_month_may">Mei</string>
+    <string name="tx_month_jun">Jun</string>
+    <string name="tx_month_jul">Jul</string>
+    <string name="tx_month_aug">Ogos</string>
+    <string name="tx_month_sep">Sept</string>
+    <string name="tx_month_oct">Okt</string>
+    <string name="tx_month_nov">Nov</string>
+    <string name="tx_month_dec">Dis</string>
+
+    <string name="tx_type_deposit">Deposit</string>
+    <string name="tx_type_withdrawal">Pengeluaran</string>
+    <string name="tx_type_interest_posting">Pengeposan Faedah</string>
+    <string name="tx_type_fee_deduction">Penolakan Yuran</string>
+    <string name="tx_type_initiate_transfer">Mulakan Pindahan</string>
+    <string name="tx_type_approve_transfer">Luluskan Pindahan</string>
+    <string name="tx_type_withdraw_transfer">Tarik Balik Pindahan</string>
+    <string name="tx_type_reject_transfer">Tolak Pindahan</string>
+    <string name="tx_type_dividend_payout">Pembayaran Dividen</string>
+    <string name="tx_type_overpayment">Lebihan Bayaran</string>
+    <string name="tx_type_repayment">Bayaran Balik</string>
+    <string name="tx_type_repayment_at_disbursement">Bayaran Balik semasa Pengeluaran</string>
+    <string name="tx_type_waive_interest">Pengecualian Faedah</string>
+    <string name="tx_type_waive_charges">Pengecualian Caj</string>
+    <string name="tx_type_write_off">Hapus Kira</string>
+    <string name="tx_type_accrual">Akruan</string>
+    <string name="tx_type_approval">Kelulusan</string>
+    <string name="tx_type_undo_approval">Batal Kelulusan</string>
+    <string name="tx_type_undo_disbursal">Batal Pengeluaran Pinjaman</string>
+    <string name="tx_type_reschedule">Penjadualan Semula</string>
+    <string name="tx_type_recalculate_interest">Kira Semula Faedah</string>
+    <string name="tx_type_refund">Bayaran Balik (Refund)</string>
+    <string name="tx_type_charge_payment">Bayaran Caj</string>
+    <string name="tx_type_loan_charge_added">Caj Pinjaman Ditambah</string>
+    <string name="tx_type_interest_waiver">Pelepasan Faedah</string>
+    <string name="tx_type_recover_repayment">Pemulihan Bayaran</string>
+    <string name="tx_type_credit_balance_refund">Bayaran Balik Baki Kredit</string>
+    <string name="tx_type_charge_off">Hapus Tuntut</string>
+    <string name="tx_type_tax_withholding">Potongan Cukai</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

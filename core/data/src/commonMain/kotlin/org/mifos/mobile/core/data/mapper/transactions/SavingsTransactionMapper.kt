@@ -39,6 +39,7 @@ fun SavingsTransactionDetailsResponseDto.toModel(): TransactionDetails {
     return TransactionDetails(
         id = this.id ?: -1L,
         transactionName = type?.value ?: "Savings Transaction",
+        typeCode = type?.code,
         isCredit = isCreditResolved,
         amount = this.amount ?: 0.0,
         currencyCode = this.currency?.code ?: "USD",

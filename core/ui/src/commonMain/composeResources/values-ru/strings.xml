@@ -102,4 +102,51 @@
     <string name="feature_savings_filter">Фильтры</string>
     <string name="feature_savings_reset">Сбросить</string>
     <string name="feature_savings_apply">Применить</string>
+
+    <string name="tx_date_today">Сегодня</string>
+    <string name="tx_date_yesterday">Вчера</string>
+
+    <string name="tx_month_jan">янв.</string>
+    <string name="tx_month_feb">февр.</string>
+    <string name="tx_month_mar">март</string>
+    <string name="tx_month_apr">апр.</string>
+    <string name="tx_month_may">май</string>
+    <string name="tx_month_jun">июнь</string>
+    <string name="tx_month_jul">июль</string>
+    <string name="tx_month_aug">авг.</string>
+    <string name="tx_month_sep">сент.</string>
+    <string name="tx_month_oct">окт.</string>
+    <string name="tx_month_nov">нояб.</string>
+    <string name="tx_month_dec">дек.</string>
+
+    <string name="tx_type_deposit">Депозит</string>
+    <string name="tx_type_withdrawal">Снятие</string>
+    <string name="tx_type_interest_posting">Начисление процентов</string>
+    <string name="tx_type_fee_deduction">Удержание комиссии</string>
+    <string name="tx_type_initiate_transfer">Инициировать перевод</string>
+    <string name="tx_type_approve_transfer">Одобрить перевод</string>
+    <string name="tx_type_withdraw_transfer">Отозвать перевод</string>
+    <string name="tx_type_reject_transfer">Отклонить перевод</string>
+    <string name="tx_type_dividend_payout">Выплата дивидендов</string>
+    <string name="tx_type_overpayment">Переплата</string>
+    <string name="tx_type_repayment">Погашение</string>
+    <string name="tx_type_repayment_at_disbursement">Погашение при выдаче</string>
+    <string name="tx_type_waive_interest">Списание процентов</string>
+    <string name="tx_type_waive_charges">Списание комиссий</string>
+    <string name="tx_type_write_off">Списание долга</string>
+    <string name="tx_type_accrual">Начисление (аккумулирование)</string>
+    <string name="tx_type_approval">Одобрение</string>
+    <string name="tx_type_undo_approval">Отменить одобрение</string>
+    <string name="tx_type_undo_disbursal">Отменить выплату</string>
+    <string name="tx_type_reschedule">Изменение графика</string>
+    <string name="tx_type_recalculate_interest">Пересчитать проценты</string>
+    <string name="tx_type_refund">Возврат</string>
+    <string name="tx_type_charge_payment">Оплата комиссии</string>
+    <string name="tx_type_loan_charge_added">Добавлена комиссия по кредиту</string>
+    <string name="tx_type_interest_waiver">Освобождение от процентов</string>
+    <string name="tx_type_recover_repayment">Восстановление платежа</string>
+    <string name="tx_type_credit_balance_refund">Возврат кредитового баланса</string>
+    <string name="tx_type_charge_off">Списание в убыток</string>
+    <string name="tx_type_tax_withholding">Удержание налога</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">फिल्टर</string>
     <string name="feature_savings_reset">रीसेट करा</string>
     <string name="feature_savings_apply">लागू करा</string>
+
+    <string name="tx_date_today">आज</string>
+    <string name="tx_date_yesterday">काल</string>
+
+    <string name="tx_month_jan">जाने</string>
+    <string name="tx_month_feb">फेब्रु</string>
+    <string name="tx_month_mar">मार्च</string>
+    <string name="tx_month_apr">एप्रिल</string>
+    <string name="tx_month_may">मे</string>
+    <string name="tx_month_jun">जून</string>
+    <string name="tx_month_jul">जुलै</string>
+    <string name="tx_month_aug">ऑग</string>
+    <string name="tx_month_sep">सप्टें</string>
+    <string name="tx_month_oct">ऑक्टो</string>
+    <string name="tx_month_nov">नोव्हें</string>
+    <string name="tx_month_dec">डिसें</string>
+
+    <string name="tx_type_deposit">ठेव</string>
+    <string name="tx_type_withdrawal">काढणे</string>
+    <string name="tx_type_interest_posting">व्याज जमा</string>
+    <string name="tx_type_fee_deduction">शुल्क कपात</string>
+    <string name="tx_type_initiate_transfer">हस्तांतरण सुरू</string>
+    <string name="tx_type_approve_transfer">हस्तांतरण मंजूर</string>
+    <string name="tx_type_withdraw_transfer">हस्तांतरण मागे घेतले</string>
+    <string name="tx_type_reject_transfer">हस्तांतरण नाकारले</string>
+    <string name="tx_type_dividend_payout">लाभांश वाटप</string>
+    <string name="tx_type_overpayment">जादा पेमेंट</string>
+    <string name="tx_type_repayment">पुनर्भरण</string>
+    <string name="tx_type_repayment_at_disbursement">वाटप करताना पेमेंट</string>
+    <string name="tx_type_waive_interest">व्याज माफी</string>
+    <string name="tx_type_waive_charges">शुल्क माफी</string>
+    <string name="tx_type_write_off">निर्लेखन</string>
+    <string name="tx_type_accrual">जमा होणारे</string>
+    <string name="tx_type_approval">मंजुरी</string>
+    <string name="tx_type_undo_approval">मंजुरी रद्द</string>
+    <string name="tx_type_undo_disbursal">वाटप रद्द</string>
+    <string name="tx_type_reschedule">पुनर्निर्धारित</string>
+    <string name="tx_type_recalculate_interest">व्याज पुनर्गणना</string>
+    <string name="tx_type_refund">परतावा</string>
+    <string name="tx_type_charge_payment">शुल्क पेमेंट</string>
+    <string name="tx_type_loan_charge_added">कर्ज शुल्क जोडले</string>
+    <string name="tx_type_interest_waiver">व्याज सवलत</string>
+    <string name="tx_type_recover_repayment">वसूली पेमेंट</string>
+    <string name="tx_type_credit_balance_refund">क्रेडिट शिल्लक परतावा</string>
+    <string name="tx_type_charge_off">बट्टा खाते</string>
+    <string name="tx_type_tax_withholding">कर कपात</string>
+    <string name="tx_digits">०१२३४५६७८९</string>
 </resources>

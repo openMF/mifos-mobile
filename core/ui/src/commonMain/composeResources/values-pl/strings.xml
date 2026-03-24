@@ -102,4 +102,51 @@
     <string name="feature_savings_filter">Filtry</string>
     <string name="feature_savings_reset">Resetuj</string>
     <string name="feature_savings_apply">Zastosuj</string>
+
+    <string name="tx_date_today">Dzisiaj</string>
+    <string name="tx_date_yesterday">Wczoraj</string>
+
+    <string name="tx_month_jan">sty</string>
+    <string name="tx_month_feb">lut</string>
+    <string name="tx_month_mar">mar</string>
+    <string name="tx_month_apr">kwi</string>
+    <string name="tx_month_may">maj</string>
+    <string name="tx_month_jun">cze</string>
+    <string name="tx_month_jul">lip</string>
+    <string name="tx_month_aug">sie</string>
+    <string name="tx_month_sep">wrz</string>
+    <string name="tx_month_oct">paź</string>
+    <string name="tx_month_nov">lis</string>
+    <string name="tx_month_dec">gru</string>
+
+    <string name="tx_type_deposit">Wpłata</string>
+    <string name="tx_type_withdrawal">Wypłata</string>
+    <string name="tx_type_interest_posting">Naliczenie odsetek</string>
+    <string name="tx_type_fee_deduction">Pobranie opłaty</string>
+    <string name="tx_type_initiate_transfer">Zainicjowanie przelewu</string>
+    <string name="tx_type_approve_transfer">Zatwierdzenie przelewu</string>
+    <string name="tx_type_withdraw_transfer">Wycofanie przelewu</string>
+    <string name="tx_type_reject_transfer">Odrzucenie przelewu</string>
+    <string name="tx_type_dividend_payout">Wypłata dywidendy</string>
+    <string name="tx_type_overpayment">Nadpłata</string>
+    <string name="tx_type_repayment">Spłata</string>
+    <string name="tx_type_repayment_at_disbursement">Spłata przy wypłacie</string>
+    <string name="tx_type_waive_interest">Umorzenie odsetek</string>
+    <string name="tx_type_waive_charges">Umorzenie opłat</string>
+    <string name="tx_type_write_off">Spisanie na straty</string>
+    <string name="tx_type_accrual">Naliczenie</string>
+    <string name="tx_type_approval">Zatwierdzenie</string>
+    <string name="tx_type_undo_approval">Cofnięcie zatwierdzenia</string>
+    <string name="tx_type_undo_disbursal">Cofnięcie wypłaty</string>
+    <string name="tx_type_reschedule">Zmiana harmonogramu</string>
+    <string name="tx_type_recalculate_interest">Ponowne przeliczenie odsetek</string>
+    <string name="tx_type_refund">Zwrot</string>
+    <string name="tx_type_charge_payment">Płatność opłaty</string>
+    <string name="tx_type_loan_charge_added">Dodano opłatę kredytową</string>
+    <string name="tx_type_interest_waiver">Zwolnienie z odsetek</string>
+    <string name="tx_type_recover_repayment">Odzyskanie spłaty</string>
+    <string name="tx_type_credit_balance_refund">Zwrot salda dodatniego</string>
+    <string name="tx_type_charge_off">Odpisanie</string>
+    <string name="tx_type_tax_withholding">Potrącenie podatku</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

@@ -102,4 +102,51 @@
     <string name="feature_savings_filter">ফিল্টার</string>
     <string name="feature_savings_reset">রিসেট</string>
     <string name="feature_savings_apply">প্রয়োগ করুন</string>
+
+    <string name="tx_date_today">আজ</string>
+    <string name="tx_date_yesterday">গতকাল</string>
+
+    <string name="tx_month_jan">জানু</string>
+    <string name="tx_month_feb">ফেব্রু</string>
+    <string name="tx_month_mar">মার্চ</string>
+    <string name="tx_month_apr">এপ্রিল</string>
+    <string name="tx_month_may">মে</string>
+    <string name="tx_month_jun">জুন</string>
+    <string name="tx_month_jul">জুলাই</string>
+    <string name="tx_month_aug">আগস্ট</string>
+    <string name="tx_month_sep">সেপ্টে</string>
+    <string name="tx_month_oct">অক্টো</string>
+    <string name="tx_month_nov">নভে</string>
+    <string name="tx_month_dec">ডিসে</string>
+
+    <string name="tx_type_deposit">জমা</string>
+    <string name="tx_type_withdrawal">উত্তোলন</string>
+    <string name="tx_type_interest_posting">সুদ জমা</string>
+    <string name="tx_type_fee_deduction">ফি কর্তন</string>
+    <string name="tx_type_initiate_transfer">স্থানান্তর শুরু</string>
+    <string name="tx_type_approve_transfer">স্থানান্তর অনুমোদিত</string>
+    <string name="tx_type_withdraw_transfer">স্থানান্তর প্রত্যাহার</string>
+    <string name="tx_type_reject_transfer">স্থানান্তর প্রত্যাখ্যাত</string>
+    <string name="tx_type_dividend_payout">লভ্যাংশ প্রদান</string>
+    <string name="tx_type_overpayment">অতিরিক্ত পেমেন্ট</string>
+    <string name="tx_type_repayment">পরিশোধ</string>
+    <string name="tx_type_repayment_at_disbursement">বিতরণের সময় পরিশোধ</string>
+    <string name="tx_type_waive_interest">সুদ মওকুফ</string>
+    <string name="tx_type_waive_charges">চার্জ মওকুফ</string>
+    <string name="tx_type_write_off">অনাদায়ী পাওনা লিখন</string>
+    <string name="tx_type_accrual">অর্জিত বকেয়া</string>
+    <string name="tx_type_approval">অনুমোদন</string>
+    <string name="tx_type_undo_approval">অনুমোদন বাতিল</string>
+    <string name="tx_type_undo_disbursal">বিতরণ বাতিল</string>
+    <string name="tx_type_reschedule">পুনঃনির্ধারণ</string>
+    <string name="tx_type_recalculate_interest">সুদ পুনঃগণনা</string>
+    <string name="tx_type_refund">ফেরত</string>
+    <string name="tx_type_charge_payment">চার্জ প্রদান</string>
+    <string name="tx_type_loan_charge_added">ঋণ চার্জ যোগ করা হয়েছে</string>
+    <string name="tx_type_interest_waiver">সুদ মওকুফ</string>
+    <string name="tx_type_recover_repayment">পরিশোধ পুনরুদ্ধার</string>
+    <string name="tx_type_credit_balance_refund">ক্রেডিট ব্যালেন্স ফেরত</string>
+    <string name="tx_type_charge_off">চার্জ অফ</string>
+    <string name="tx_type_tax_withholding">কর কর্তন</string>
+    <string name="tx_digits">০১২৩৪৫৬৭৮৯</string>
 </resources>

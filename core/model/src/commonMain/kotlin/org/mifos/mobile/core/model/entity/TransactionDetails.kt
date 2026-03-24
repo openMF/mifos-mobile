@@ -16,6 +16,7 @@ data class TransactionDetails(
 
     val id: Long,
     val transactionName: String,
+    val typeCode: String? = null,
     val isCredit: Boolean,
     val amount: Double,
     val currencyCode: String,

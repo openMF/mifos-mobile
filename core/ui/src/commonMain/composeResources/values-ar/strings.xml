@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">الفلاتر</string>
     <string name="feature_savings_reset">إعادة تعيين</string>
     <string name="feature_savings_apply">تطبيق</string>
+
+    <string name="tx_date_today">اليوم</string>
+    <string name="tx_date_yesterday">أمس</string>
+
+    <string name="tx_month_jan">يناير</string>
+    <string name="tx_month_feb">فبراير</string>
+    <string name="tx_month_mar">مارس</string>
+    <string name="tx_month_apr">أبريل</string>
+    <string name="tx_month_may">مايو</string>
+    <string name="tx_month_jun">يونيو</string>
+    <string name="tx_month_jul">يوليو</string>
+    <string name="tx_month_aug">أغسطس</string>
+    <string name="tx_month_sep">سبتمبر</string>
+    <string name="tx_month_oct">أكتوبر</string>
+    <string name="tx_month_nov">نوفمبر</string>
+    <string name="tx_month_dec">ديسمبر</string>
+
+    <string name="tx_type_deposit">إيداع</string>
+    <string name="tx_type_withdrawal">سحب</string>
+    <string name="tx_type_interest_posting">تقييد الفائدة</string>
+    <string name="tx_type_fee_deduction">خصم الرسوم</string>
+    <string name="tx_type_initiate_transfer">بدء التحويل</string>
+    <string name="tx_type_approve_transfer">موافقة على التحويل</string>
+    <string name="tx_type_withdraw_transfer">سحب التحويل</string>
+    <string name="tx_type_reject_transfer">رفض التحويل</string>
+    <string name="tx_type_dividend_payout">صرف أرباح الأسهم</string>
+    <string name="tx_type_overpayment">دفع زائد</string>
+    <string name="tx_type_repayment">سداد</string>
+    <string name="tx_type_repayment_at_disbursement">سداد عند الصرف</string>
+    <string name="tx_type_waive_interest">إعفاء من الفائدة</string>
+    <string name="tx_type_waive_charges">إعفاء من الرسوم</string>
+    <string name="tx_type_write_off">شطب</string>
+    <string name="tx_type_accrual">استحقاق</string>
+    <string name="tx_type_approval">موافقة</string>
+    <string name="tx_type_undo_approval">تراجع عن الموافقة</string>
+    <string name="tx_type_undo_disbursal">تراجع عن الصرف</string>
+    <string name="tx_type_reschedule">إعادة جدولة</string>
+    <string name="tx_type_recalculate_interest">إعادة احتساب الفائدة</string>
+    <string name="tx_type_refund">استرداد</string>
+    <string name="tx_type_charge_payment">دفع الرسوم</string>
+    <string name="tx_type_loan_charge_added">إضافة رسوم القرض</string>
+    <string name="tx_type_interest_waiver">تنازل عن الفائدة</string>
+    <string name="tx_type_recover_repayment">استرداد السداد</string>
+    <string name="tx_type_credit_balance_refund">رد الرصيد الدائن</string>
+    <string name="tx_type_charge_off">إسقاط الدين</string>
+    <string name="tx_type_tax_withholding">اقتطاع ضريبي</string>
+    <string name="tx_digits">٠١٢٣٤٥٦٧٨٩</string>
 </resources>

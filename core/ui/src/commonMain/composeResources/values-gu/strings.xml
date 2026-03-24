@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">ફિલ્ટર</string>
     <string name="feature_savings_reset">રીસેટ કરો</string>
     <string name="feature_savings_apply">લાગુ કરો</string>
+
+    <string name="tx_date_today">આજે</string>
+    <string name="tx_date_yesterday">ગઈકાલે</string>
+
+    <string name="tx_month_jan">જાન્યુ</string>
+    <string name="tx_month_feb">ફેબ્રુ</string>
+    <string name="tx_month_mar">માર્ચ</string>
+    <string name="tx_month_apr">એપ્રિલ</string>
+    <string name="tx_month_may">મે</string>
+    <string name="tx_month_jun">જૂન</string>
+    <string name="tx_month_jul">જુલાઈ</string>
+    <string name="tx_month_aug">ઓગસ્ટ</string>
+    <string name="tx_month_sep">સપ્ટે</string>
+    <string name="tx_month_oct">ઓક્ટો</string>
+    <string name="tx_month_nov">નવે</string>
+    <string name="tx_month_dec">ડિસે</string>
+
+    <string name="tx_type_deposit">જમા</string>
+    <string name="tx_type_withdrawal">ઉપાડ</string>
+    <string name="tx_type_interest_posting">વ્યાજ જમા</string>
+    <string name="tx_type_fee_deduction">ફી કપાત</string>
+    <string name="tx_type_initiate_transfer">ટ્રાન્સફર શરૂ કર્યું</string>
+    <string name="tx_type_approve_transfer">ટ્રાન્સફર મંજૂર</string>
+    <string name="tx_type_withdraw_transfer">ટ્રાન્સફર પાછું ખેંચ્યું</string>
+    <string name="tx_type_reject_transfer">ટ્રાન્સફર અસ્વીકાર</string>
+    <string name="tx_type_dividend_payout">ડિવિડન્ડ ચુકવણી</string>
+    <string name="tx_type_overpayment">વધારે ચુકવણી</string>
+    <string name="tx_type_repayment">પુનઃચુકવણી</string>
+    <string name="tx_type_repayment_at_disbursement">વિતરણ વખતે ચુકવણી</string>
+    <string name="tx_type_waive_interest">વ્યાજ માફ</string>
+    <string name="tx_type_waive_charges">ચાર્જ માફ</string>
+    <string name="tx_type_write_off">માંડી વાળેલું</string>
+    <string name="tx_type_accrual">ઉપાર્જિત</string>
+    <string name="tx_type_approval">મંજૂરી</string>
+    <string name="tx_type_undo_approval">મંજૂરી રદ</string>
+    <string name="tx_type_undo_disbursal">વિતરણ રદ</string>
+    <string name="tx_type_reschedule">ફરીથી સમયપત્રક</string>
+    <string name="tx_type_recalculate_interest">વ્યાજની ફરીથી ગણતરી</string>
+    <string name="tx_type_refund">રીફંડ</string>
+    <string name="tx_type_charge_payment">ચાર્જ ચુકવણી</string>
+    <string name="tx_type_loan_charge_added">લોન ચાર્જ ઉમેરાયો</string>
+    <string name="tx_type_interest_waiver">વ્યાજ માફી</string>
+    <string name="tx_type_recover_repayment">ચુકવણી વસૂલાત</string>
+    <string name="tx_type_credit_balance_refund">ક્રેડિટ બેલેન્સ રીફંડ</string>
+    <string name="tx_type_charge_off">ચાર્જ ઓફ</string>
+    <string name="tx_type_tax_withholding">ટેક્સ કપાત</string>
+    <string name="tx_digits">૦૧૨૩૪૫૬૭૮૯</string>
 </resources>

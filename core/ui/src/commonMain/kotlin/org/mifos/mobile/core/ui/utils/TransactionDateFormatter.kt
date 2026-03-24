@@ -18,6 +18,7 @@ import kotlinx.datetime.toLocalDateTime
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.tx_date_today
 import mifos_mobile.core.ui.generated.resources.tx_date_yesterday
+import mifos_mobile.core.ui.generated.resources.tx_digits
 import mifos_mobile.core.ui.generated.resources.tx_month_apr
 import mifos_mobile.core.ui.generated.resources.tx_month_aug
 import mifos_mobile.core.ui.generated.resources.tx_month_dec
@@ -46,6 +47,7 @@ import mifos_mobile.core.ui.generated.resources.tx_type_overpayment
 import mifos_mobile.core.ui.generated.resources.tx_type_recalculate_interest
 import mifos_mobile.core.ui.generated.resources.tx_type_recover_repayment
 import mifos_mobile.core.ui.generated.resources.tx_type_refund
+import mifos_mobile.core.ui.generated.resources.tx_type_reject_transfer
 import mifos_mobile.core.ui.generated.resources.tx_type_repayment
 import mifos_mobile.core.ui.generated.resources.tx_type_repayment_at_disbursement
 import mifos_mobile.core.ui.generated.resources.tx_type_reschedule
@@ -111,7 +113,7 @@ fun formatTransactionDate(date: LocalDate?): String {
     return when {
         date == today -> stringResource(Res.string.tx_date_today)
         date == yesterday -> stringResource(Res.string.tx_date_yesterday)
-        else -> "${date.day} ${localizedMonth(date.monthNumber)} ${date.year}"
+        else -> "${localizeNumber(date.day)} ${localizedMonth(date.monthNumber)} ${localizeNumber(date.year)}"
     }
 }
 
@@ -152,72 +154,109 @@ fun localizedMonth(monthNumber: Int): String = stringResource(
 )
 
 /**
+ * Converts an integer to a string using the locale's native digit script.
+ * Uses [Res.string.tx_digits] — a 10-char string where each char is the
+ * locale digit for 0–9 (e.g. "०१२३४५६७८९" for Hindi).
+ */
+@Composable
+fun localizeNumber(n: Int): String {
+    val digits = stringResource(Res.string.tx_digits)
+    if (digits.length != 10) return n.toString()
+    return n.toString().map { c ->
+        if (c.isDigit()) digits[c - '0'] else c
+    }.joinToString("")
+}
+
+/**
  * Maps a [Type] (from the Mifos API) to a localized transaction type label.
+ * Handles both short codes ("deposit") and full Mifos API codes
+ * ("savingsAccountTransactionType.deposit", "loanTransactionType.repayment", etc.).
  * Falls back to the API-provided [Type.value] string if no translation is found.
  */
 @Suppress("CyclomaticComplexMethod")
 @Composable
 fun localizeTransactionType(type: Type?): String {
     if (type == null) return ""
-    return when (type.code) {
-        "savingsAccountInterestPosting",
-        "loanInterestPosting",
-        "interestPosting",
-        -> stringResource(Res.string.tx_type_interest_posting)
+    // Normalize: strip common Mifos prefixes so both short and full codes match
+    val rawCode = type.code?.lowercase() ?: ""
+    val code = rawCode
+        .removePrefix("savingsaccounttransactiontype.")
+        .removePrefix("loantransactiontype.")
+        .removePrefix("sharetransactiontype.")
+        .removePrefix("loan")
+        .trimStart('.')
 
-        "deposit",
-        "savingsDeposit",
-        -> stringResource(Res.string.tx_type_deposit)
+    return when {
+        code in setOf("savingsaccountinterestposting", "loaninterestposting", "interestposting", "interestposting") ||
+            rawCode.contains("interestposting") ->
+            stringResource(Res.string.tx_type_interest_posting)
 
-        "withdrawal",
-        "savingsWithdrawal",
-        -> stringResource(Res.string.tx_type_withdrawal)
+        code in setOf("deposit", "savingsdeposit") || rawCode.contains("deposit") && !rawCode.contains("repayment") ->
+            stringResource(Res.string.tx_type_deposit)
 
-        "repayment",
-        "loanRepayment",
-        -> stringResource(Res.string.tx_type_repayment)
+        code in setOf("withdrawal", "savingswithdrawal") || rawCode.contains("withdrawal") ->
+            stringResource(Res.string.tx_type_withdrawal)
 
-        "repaymentAtDisbursement",
-        "loanRepaymentAtDisbursement",
-        -> stringResource(Res.string.tx_type_repayment_at_disbursement)
+        code in setOf("repayment") || rawCode == "loantransactiontype.repayment" || rawCode.endsWith(".repayment") ->
+            stringResource(Res.string.tx_type_repayment)
 
-        "waiveInterest",
-        "waiveLoanInterest",
-        -> stringResource(Res.string.tx_type_waive_interest)
+        code in setOf("repaymentAtDisbursement".lowercase(), "repaymentatdisbursement") ->
+            stringResource(Res.string.tx_type_repayment_at_disbursement)
 
-        "waiveCharges",
-        "waiveLoanCharges",
-        -> stringResource(Res.string.tx_type_waive_charges)
+        code in setOf("waiveinterest", "waiveloaninterest") || rawCode.contains("waiveinterest") ->
+            stringResource(Res.string.tx_type_waive_interest)
 
-        "chargePayment",
-        "loanChargePayment",
-        -> stringResource(Res.string.tx_type_charge_payment)
+        code in setOf("waivecharges", "waiveloancharges") || rawCode.contains("waivecharges") ->
+            stringResource(Res.string.tx_type_waive_charges)
 
-        "feeDeduction",
-        "savingsFeeDeduction",
-        -> stringResource(Res.string.tx_type_fee_deduction)
+        code in setOf("chargepayment", "loanchargepayment") || rawCode.contains("chargepayment") ->
+            stringResource(Res.string.tx_type_charge_payment)
 
-        "withdrawTransfer",
-        "initiateTransfer",
-        "loanInitiateTransfer",
-        -> stringResource(Res.string.tx_type_initiate_transfer)
+        code in setOf("feededuction", "savingsfeededuction") || rawCode.contains("feededuction") ->
+            stringResource(Res.string.tx_type_fee_deduction)
 
-        "dividendPayout" -> stringResource(Res.string.tx_type_dividend_payout)
-        "accrual" -> stringResource(Res.string.tx_type_accrual)
-        "writeOff", "loanWriteOff" -> stringResource(Res.string.tx_type_write_off)
-        "recoverRepayment" -> stringResource(Res.string.tx_type_recover_repayment)
-        "refund", "savingsRefund" -> stringResource(Res.string.tx_type_refund)
-        "creditBalanceRefund" -> stringResource(Res.string.tx_type_credit_balance_refund)
-        "overpaymentRefund", "overdraftInterest" -> stringResource(Res.string.tx_type_overpayment)
-        "loanChargeAdded" -> stringResource(Res.string.tx_type_loan_charge_added)
-        "approval" -> stringResource(Res.string.tx_type_approval)
-        "undoApproval" -> stringResource(Res.string.tx_type_undo_approval)
-        "undoDisbursal" -> stringResource(Res.string.tx_type_undo_disbursal)
-        "reschedule" -> stringResource(Res.string.tx_type_reschedule)
-        "chargeOff" -> stringResource(Res.string.tx_type_charge_off)
-        "interestWaiver" -> stringResource(Res.string.tx_type_interest_waiver)
-        "taxWithholding", "withholdTax" -> stringResource(Res.string.tx_type_tax_withholding)
-        "recalculateInterest" -> stringResource(Res.string.tx_type_recalculate_interest)
+        code in setOf("withdrawtransfer", "initiatetransfer", "loaninitiatetransfer") ||
+            rawCode.contains("initiatetransfer") || rawCode.contains("withdrawtransfer") ->
+            stringResource(Res.string.tx_type_initiate_transfer)
+
+        code == "approvetransfer" || rawCode.contains("approvetransfer") ->
+            stringResource(Res.string.tx_type_initiate_transfer)
+
+        code == "rejecttransfer" || rawCode.contains("rejecttransfer") ->
+            stringResource(Res.string.tx_type_reject_transfer)
+
+        code == "dividendpayout" -> stringResource(Res.string.tx_type_dividend_payout)
+        code == "accrual" -> stringResource(Res.string.tx_type_accrual)
+        code in setOf("writeoff", "loanwriteoff") || rawCode.contains("writeoff") ->
+            stringResource(Res.string.tx_type_write_off)
+        code == "recoverrepayment" -> stringResource(Res.string.tx_type_recover_repayment)
+        code in setOf("refund", "savingsrefund") -> stringResource(Res.string.tx_type_refund)
+        code == "creditbalancerefund" -> stringResource(Res.string.tx_type_credit_balance_refund)
+        code in setOf("overpaymentrefund", "overdraftinterest") -> stringResource(Res.string.tx_type_overpayment)
+        code == "loanchargeadded" -> stringResource(Res.string.tx_type_loan_charge_added)
+        code == "approval" -> stringResource(Res.string.tx_type_approval)
+        code == "undoapproval" -> stringResource(Res.string.tx_type_undo_approval)
+        code == "undodisbursal" || code == "disbursalundone" -> stringResource(Res.string.tx_type_undo_disbursal)
+        code == "reschedule" -> stringResource(Res.string.tx_type_reschedule)
+        code == "chargeoff" -> stringResource(Res.string.tx_type_charge_off)
+        code == "interestwaiver" -> stringResource(Res.string.tx_type_interest_waiver)
+        code in setOf("taxwithholding", "withholdtax") -> stringResource(Res.string.tx_type_tax_withholding)
+        code == "recalculateinterest" -> stringResource(Res.string.tx_type_recalculate_interest)
+        code in setOf("disbursement") -> stringResource(Res.string.tx_type_repayment)
         else -> type.value ?: type.code ?: ""
     }
+}
+
+/**
+ * Localizes the digit characters in a formatted currency/amount string
+ * using the same [tx_digits] resource as [localizeNumber].
+ * Non-digit characters (currency symbols, separators) are preserved unchanged.
+ */
+@Composable
+fun localizeAmount(formattedAmount: String): String {
+    val digits = stringResource(Res.string.tx_digits)
+    if (digits.length != 10 || digits == "0123456789") return formattedAmount
+    return formattedAmount.map { c ->
+        if (c.isDigit()) digits[c - '0'] else c
+    }.joinToString("")
 }

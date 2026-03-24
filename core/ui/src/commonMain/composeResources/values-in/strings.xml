@@ -124,4 +124,51 @@
     <string name="feature_savings_filter">Filter</string>
     <string name="feature_savings_reset">Reset</string>
     <string name="feature_savings_apply">Terapkan</string>
+
+    <string name="tx_date_today">Hari Ini</string>
+    <string name="tx_date_yesterday">Kemarin</string>
+
+    <string name="tx_month_jan">Jan</string>
+    <string name="tx_month_feb">Feb</string>
+    <string name="tx_month_mar">Mar</string>
+    <string name="tx_month_apr">Apr</string>
+    <string name="tx_month_may">Mei</string>
+    <string name="tx_month_jun">Jun</string>
+    <string name="tx_month_jul">Jul</string>
+    <string name="tx_month_aug">Agu</string>
+    <string name="tx_month_sep">Sep</string>
+    <string name="tx_month_oct">Okt</string>
+    <string name="tx_month_nov">Nov</string>
+    <string name="tx_month_dec">Des</string>
+
+    <string name="tx_type_deposit">Setoran</string>
+    <string name="tx_type_withdrawal">Penarikan</string>
+    <string name="tx_type_interest_posting">Pembukuan Bunga</string>
+    <string name="tx_type_fee_deduction">Pemotongan Biaya</string>
+    <string name="tx_type_initiate_transfer">Mulai Transfer</string>
+    <string name="tx_type_approve_transfer">Setujui Transfer</string>
+    <string name="tx_type_withdraw_transfer">Tarik Kembali Transfer</string>
+    <string name="tx_type_reject_transfer">Tolak Transfer</string>
+    <string name="tx_type_dividend_payout">Pembayaran Dividen</string>
+    <string name="tx_type_overpayment">Kelebihan Bayar</string>
+    <string name="tx_type_repayment">Angsuran</string>
+    <string name="tx_type_repayment_at_disbursement">Angsuran saat Pencairan</string>
+    <string name="tx_type_waive_interest">Bebas Bunga</string>
+    <string name="tx_type_waive_charges">Bebas Biaya</string>
+    <string name="tx_type_write_off">Hapus Buku</string>
+    <string name="tx_type_accrual">Akrual</string>
+    <string name="tx_type_approval">Persetujuan</string>
+    <string name="tx_type_undo_approval">Batal Persetujuan</string>
+    <string name="tx_type_undo_disbursal">Batal Pencairan</string>
+    <string name="tx_type_reschedule">Reschedule</string>
+    <string name="tx_type_recalculate_interest">Hitung Ulang Bunga</string>
+    <string name="tx_type_refund">Pengembalian Dana</string>
+    <string name="tx_type_charge_payment">Pembayaran Biaya</string>
+    <string name="tx_type_loan_charge_added">Biaya Pinjaman Ditambahkan</string>
+    <string name="tx_type_interest_waiver">Penghapusan Bunga</string>
+    <string name="tx_type_recover_repayment">Pemulihan Pembayaran</string>
+    <string name="tx_type_credit_balance_refund">Refund Saldo Kredit</string>
+    <string name="tx_type_charge_off">Hapus Tagih</string>
+    <string name="tx_type_tax_withholding">Pemotongan Pajak</string>
+    <string name="tx_digits">0123456789</string>
 </resources>

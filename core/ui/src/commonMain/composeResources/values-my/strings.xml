@@ -119,4 +119,51 @@
     <string name="feature_savings_filter">စစ်ထုတ်မှုများ</string>
     <string name="feature_savings_reset">မူလအတိုင်းပြန်ထားမည်</string>
     <string name="feature_savings_apply">အတည်ပြုမည်</string>
+
+    <string name="tx_date_today">ယနေ့</string>
+    <string name="tx_date_yesterday">မနေ့က</string>
+
+    <string name="tx_month_jan">ဇန်</string>
+    <string name="tx_month_feb">ဖေ</string>
+    <string name="tx_month_mar">မတ်</string>
+    <string name="tx_month_apr">ဧ</string>
+    <string name="tx_month_may">မေ</string>
+    <string name="tx_month_jun">ဇွန်</string>
+    <string name="tx_month_jul">ဇူ</string>
+    <string name="tx_month_aug">ဩ</string>
+    <string name="tx_month_sep">စက်</string>
+    <string name="tx_month_oct">အောက်</string>
+    <string name="tx_month_nov">နို</string>
+    <string name="tx_month_dec">ဒီ</string>
+
+    <string name="tx_type_deposit">ငွေသွင်းခြင်း</string>
+    <string name="tx_type_withdrawal">ငွေထုတ်ခြင်း</string>
+    <string name="tx_type_interest_posting">အတိုးထည့်သွင်းခြင်း</string>
+    <string name="tx_type_fee_deduction">ဝန်ဆောင်ခနှုတ်ယူခြင်း</string>
+    <string name="tx_type_initiate_transfer">လွှဲပြောင်းမှုစတင်ခြင်း</string>
+    <string name="tx_type_approve_transfer">လွှဲပြောင်းမှုအတည်ပြုခြင်း</string>
+    <string name="tx_type_withdraw_transfer">လွှဲပြောင်းမှုပြန်လည်ရုပ်သိမ်းခြင်း</string>
+    <string name="tx_type_reject_transfer">လွှဲပြောင်းမှုငြင်းပယ်ခြင်း</string>
+    <string name="tx_type_dividend_payout">အမြတ်ဝေစုထုတ်ပေးခြင်း</string>
+    <string name="tx_type_overpayment">ပိုမိုပေးချေခြင်း</string>
+    <string name="tx_type_repayment">ပြန်လည်ပေးဆပ်ခြင်း</string>
+    <string name="tx_type_repayment_at_disbursement">ထုတ်ချေးချိန်တွင် ပြန်လည်ပေးဆပ်ခြင်း</string>
+    <string name="tx_type_waive_interest">အတိုးကင်းလွတ်ခွင့်</string>
+    <string name="tx_type_waive_charges">ဝန်ဆောင်ခကင်းလွတ်ခွင့်</string>
+    <string name="tx_type_write_off">ကြွေးဆုံးအဖြစ်သတ်မှတ်ခြင်း</string>
+    <string name="tx_type_accrual">တိုးပွားလာသောငွေ</string>
+    <string name="tx_type_approval">အတည်ပြုချက်</string>
+    <string name="tx_type_undo_approval">အတည်ပြုချက်ကိုပြန်ဖျက်ခြင်း</string>
+    <string name="tx_type_undo_disbursal">ထုတ်ချေးမှုကိုပြန်ဖျက်ခြင်း</string>
+    <string name="tx_type_reschedule">အချိန်ဇယားပြန်လည်သတ်မှတ်ခြင်း</string>
+    <string name="tx_type_recalculate_interest">အတိုးပြန်လည်တွက်ချက်ခြင်း</string>
+    <string name="tx_type_refund">ငွေပြန်အမ်းခြင်း</string>
+    <string name="tx_type_charge_payment">ဝန်ဆောင်ခပေးချေခြင်း</string>
+    <string name="tx_type_loan_charge_added">ချေးငွေဝန်ဆောင်ခပေါင်းထည့်ခြင်း</string>
+    <string name="tx_type_interest_waiver">အတိုးလျှော့ပေါ့ပေးခြင်း</string>
+    <string name="tx_type_recover_repayment">ပေးဆပ်ငွေပြန်လည်ရယူခြင်း</string>
+    <string name="tx_type_credit_balance_refund">ပိုနေသောလက်ကျန်ငွေပြန်အမ်းခြင်း</string>
+    <string name="tx_type_charge_off">အကြွေးစာရင်းမှပယ်ဖျက်ခြင်း</string>
+    <string name="tx_type_tax_withholding">အခွန်ဖြတ်တောက်ခြင်း</string>
+    <string name="tx_digits">၀၁၂၃၄၅၆၇၈၉</string>
 </resources>

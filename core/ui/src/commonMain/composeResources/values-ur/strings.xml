@@ -102,4 +102,51 @@
     <string name="feature_savings_filter">فلٹرز</string>
     <string name="feature_savings_reset">ری سیٹ</string>
     <string name="feature_savings_apply">لاگو کریں</string>
+
+    <string name="tx_date_today">آج</string>
+    <string name="tx_date_yesterday">گزشتہ کل</string>
+
+    <string name="tx_month_jan">جنوری</string>
+    <string name="tx_month_feb">فروری</string>
+    <string name="tx_month_mar">مارچ</string>
+    <string name="tx_month_apr">اپریل</string>
+    <string name="tx_month_may">مئی</string>
+    <string name="tx_month_jun">جون</string>
+    <string name="tx_month_jul">جولائی</string>
+    <string name="tx_month_aug">اگست</string>
+    <string name="tx_month_sep">ستمبر</string>
+    <string name="tx_month_oct">اکتوبر</string>
+    <string name="tx_month_nov">نومبر</string>
+    <string name="tx_month_dec">دسمبر</string>
+
+    <string name="tx_type_deposit">جمع</string>
+    <string name="tx_type_withdrawal">نکلوائی</string>
+    <string name="tx_type_interest_posting">سود کا اندراج</string>
+    <string name="tx_type_fee_deduction">فیس کی کٹوتی</string>
+    <string name="tx_type_initiate_transfer">منتقلی کا آغاز</string>
+    <string name="tx_type_approve_transfer">منتقلی کی منظوری</string>
+    <string name="tx_type_withdraw_transfer">منتقلی کی واپسی</string>
+    <string name="tx_type_reject_transfer">منتقلی مسترد</string>
+    <string name="tx_type_dividend_payout">منافع کی ادائیگی</string>
+    <string name="tx_type_overpayment">اضافی ادائیگی</string>
+    <string name="tx_type_repayment">واپسی ادائیگی</string>
+    <string name="tx_type_repayment_at_disbursement">ادائیگی کے وقت واپسی</string>
+    <string name="tx_type_waive_interest">سود کی معافی</string>
+    <string name="tx_type_waive_charges">چارجز کی معافی</string>
+    <string name="tx_type_write_off">خارج از حساب</string>
+    <string name="tx_type_accrual">واجب الادا سود</string>
+    <string name="tx_type_approval">منظوری</string>
+    <string name="tx_type_undo_approval">منظوری کی منسوخی</string>
+    <string name="tx_type_undo_disbursal">ادائیگی کی منسوخی</string>
+    <string name="tx_type_reschedule">دوبارہ شیڈولنگ</string>
+    <string name="tx_type_recalculate_interest">سود کا دوبارہ حساب</string>
+    <string name="tx_type_refund">رقم کی واپسی</string>
+    <string name="tx_type_charge_payment">چارجز کی ادائیگی</string>
+    <string name="tx_type_loan_charge_added">قرض چارجز کا اضافہ</string>
+    <string name="tx_type_interest_waiver">سود کی چھوٹ</string>
+    <string name="tx_type_recover_repayment">ادائیگی کی وصولی</string>
+    <string name="tx_type_credit_balance_refund">کریڈٹ بیلنس کی واپسی</string>
+    <string name="tx_type_charge_off">ختم شدہ رقم</string>
+    <string name="tx_type_tax_withholding">ٹیکس کی کٹوتی</string>
+    <string name="tx_digits">۰۱۲۳۴۵۶۷۸۹</string>
 </resources>

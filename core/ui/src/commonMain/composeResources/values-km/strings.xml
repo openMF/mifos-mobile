@@ -133,4 +133,51 @@
     <string name="feature_savings_reset">កំណត់ឡើងវិញ</string>
     <string name="feature_savings_apply">អនុវត្ត</string>
 
+    <string name="tx_date_today">ថ្ងៃនេះ</string>
+    <string name="tx_date_yesterday">ម្សិលមិញ</string>
+
+    <string name="tx_month_jan">មករា</string>
+    <string name="tx_month_feb">កុម្ភៈ</string>
+    <string name="tx_month_mar">មីនា</string>
+    <string name="tx_month_apr">មេសា</string>
+    <string name="tx_month_may">ឧសភា</string>
+    <string name="tx_month_jun">មិថុនា</string>
+    <string name="tx_month_jul">កក្កដា</string>
+    <string name="tx_month_aug">សីហា</string>
+    <string name="tx_month_sep">កញ្ញា</string>
+    <string name="tx_month_oct">តុលា</string>
+    <string name="tx_month_nov">វិច្ឆិកា</string>
+    <string name="tx_month_dec">ធ្នូ</string>
+
+    <string name="tx_type_deposit">ប្រាក់បញ្ញើ</string>
+    <string name="tx_type_withdrawal">ការដកប្រាក់</string>
+    <string name="tx_type_interest_posting">ការបញ្ចូលការប្រាក់</string>
+    <string name="tx_type_fee_deduction">ការកាត់កម្រៃសេវា</string>
+    <string name="tx_type_initiate_transfer">ចាប់ផ្តើមផ្ទេរប្រាក់</string>
+    <string name="tx_type_approve_transfer">អនុម័តការផ្ទេរប្រាក់</string>
+    <string name="tx_type_withdraw_transfer">ដកការផ្ទេរប្រាក់វិញ</string>
+    <string name="tx_type_reject_transfer">បដិសេធការផ្ទេរប្រាក់</string>
+    <string name="tx_type_dividend_payout">ការទូទាត់ភាគលាភ</string>
+    <string name="tx_type_overpayment">ការបង់លើស</string>
+    <string name="tx_type_repayment">ការសងត្រឡប់</string>
+    <string name="tx_type_repayment_at_disbursement">ការសងត្រឡប់ពេលបើកប្រាក់កម្ចី</string>
+    <string name="tx_type_waive_interest">លើកលែងការប្រាក់</string>
+    <string name="tx_type_waive_charges">លើកលែងកម្រៃសេវា</string>
+    <string name="tx_type_write_off">ការលុបបំណុល</string>
+    <string name="tx_type_accrual">ការបង្កើនបង្កើយ</string>
+    <string name="tx_type_approval">ការអនុម័ត</string>
+    <string name="tx_type_undo_approval">បោះបង់ការអនុម័ត</string>
+    <string name="tx_type_undo_disbursal">បោះបង់ការបើកប្រាក់កម្ចី</string>
+    <string name="tx_type_reschedule">ការរៀបចំតារាងសងថ្មី</string>
+    <string name="tx_type_recalculate_interest">គណនាការប្រាក់ឡើងវិញ</string>
+    <string name="tx_type_refund">ការបង្វិលប្រាក់</string>
+    <string name="tx_type_charge_payment">ការបង់កម្រៃសេវា</string>
+    <string name="tx_type_loan_charge_added">បានបន្ថែមសេវាឥណទាន</string>
+    <string name="tx_type_interest_waiver">ការបន្ធូរបន្ថយការប្រាក់</string>
+    <string name="tx_type_recover_repayment">ការប្រមូលការសងត្រឡប់</string>
+    <string name="tx_type_credit_balance_refund">ការបង្វិលសមតុល្យឥណទាន</string>
+    <string name="tx_type_charge_off">ការបិទបញ្ជីបំណុល</string>
+    <string name="tx_type_tax_withholding">ការកាត់ពន្ធទុក</string>
+    <string name="tx_digits">០១២៣៤៥៦៧៨៩</string>
+
 </resources>
