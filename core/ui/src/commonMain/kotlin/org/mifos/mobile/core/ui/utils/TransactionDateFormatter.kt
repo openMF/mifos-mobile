@@ -248,7 +248,6 @@ fun localizeTransactionType(type: Type?): String {
         code == "interestwaiver" -> stringResource(Res.string.tx_type_interest_waiver)
         code in setOf("taxwithholding", "withholdtax") -> stringResource(Res.string.tx_type_tax_withholding)
         code == "recalculateinterest" -> stringResource(Res.string.tx_type_recalculate_interest)
-        code in setOf("disbursement") -> stringResource(Res.string.tx_type_repayment)
         else -> type.value ?: type.code ?: ""
     }
 }
