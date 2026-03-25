@@ -190,7 +190,7 @@ fun localizeTransactionType(type: Type?): String {
         .trimStart('.')
 
     return when {
-        code in setOf("savingsaccountinterestposting", "loaninterestposting", "interestposting", "interestposting") ||
+        code in setOf("savingsaccountinterestposting", "loaninterestposting", "interestposting") ||
             rawCode.contains("interestposting") ->
             stringResource(Res.string.tx_type_interest_posting)
 
