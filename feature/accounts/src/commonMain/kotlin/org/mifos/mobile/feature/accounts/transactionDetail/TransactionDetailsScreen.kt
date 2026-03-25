@@ -180,12 +180,13 @@ fun TransactionDetailContent(
                 )
             }
 
-            if (transaction.typeCode != null || transaction.typeValue != null) {
+            val localizedType = localizeTransactionType(
+                Type(code = transaction.typeCode, value = transaction.typeValue),
+            )
+            if (localizedType.isNotBlank()) {
                 DetailItem(
                     stringResource(Res.string.feature_transaction_detail_type),
-                    localizeTransactionType(
-                        Type(code = transaction.typeCode, value = transaction.typeValue),
-                    ),
+                    localizedType,
                 )
             }
 
@@ -239,13 +240,16 @@ private fun TransactionHeader(transaction: UiTransactionDetails) {
             color = KptTheme.colorScheme.onSurface,
         )
 
-        Text(
-            text = localizeTransactionType(
-                Type(code = transaction.typeCode, value = transaction.typeValue),
-            ),
-            style = KptTheme.typography.bodyMedium,
-            color = KptTheme.colorScheme.onSurfaceVariant,
+        val localizedType = localizeTransactionType(
+            Type(code = transaction.typeCode, value = transaction.typeValue),
         )
+        if (localizedType.isNotBlank()) {
+            Text(
+                text = localizedType,
+                style = KptTheme.typography.bodyMedium,
+                color = KptTheme.colorScheme.onSurfaceVariant,
+            )
+        }
     }
 }
 

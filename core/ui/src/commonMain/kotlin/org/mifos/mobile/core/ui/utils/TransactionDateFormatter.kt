@@ -33,6 +33,7 @@ import mifos_mobile.core.ui.generated.resources.tx_month_oct
 import mifos_mobile.core.ui.generated.resources.tx_month_sep
 import mifos_mobile.core.ui.generated.resources.tx_type_accrual
 import mifos_mobile.core.ui.generated.resources.tx_type_approval
+import mifos_mobile.core.ui.generated.resources.tx_type_approve_transfer
 import mifos_mobile.core.ui.generated.resources.tx_type_charge_off
 import mifos_mobile.core.ui.generated.resources.tx_type_charge_payment
 import mifos_mobile.core.ui.generated.resources.tx_type_credit_balance_refund
@@ -56,6 +57,7 @@ import mifos_mobile.core.ui.generated.resources.tx_type_undo_approval
 import mifos_mobile.core.ui.generated.resources.tx_type_undo_disbursal
 import mifos_mobile.core.ui.generated.resources.tx_type_waive_charges
 import mifos_mobile.core.ui.generated.resources.tx_type_waive_interest
+import mifos_mobile.core.ui.generated.resources.tx_type_withdraw_transfer
 import mifos_mobile.core.ui.generated.resources.tx_type_withdrawal
 import mifos_mobile.core.ui.generated.resources.tx_type_write_off
 import org.jetbrains.compose.resources.stringResource
@@ -149,7 +151,8 @@ fun localizedMonth(monthNumber: Int): String = stringResource(
         9 -> Res.string.tx_month_sep
         10 -> Res.string.tx_month_oct
         11 -> Res.string.tx_month_nov
-        else -> Res.string.tx_month_dec
+        12 -> Res.string.tx_month_dec
+        else -> Res.string.tx_month_jan // safe fallback for invalid month numbers
     },
 )
 
@@ -215,12 +218,15 @@ fun localizeTransactionType(type: Type?): String {
         code in setOf("feededuction", "savingsfeededuction") || rawCode.contains("feededuction") ->
             stringResource(Res.string.tx_type_fee_deduction)
 
-        code in setOf("withdrawtransfer", "initiatetransfer", "loaninitiatetransfer") ||
-            rawCode.contains("initiatetransfer") || rawCode.contains("withdrawtransfer") ->
+        code in setOf("initiatetransfer", "loaninitiatetransfer") ||
+            rawCode.contains("initiatetransfer") ->
             stringResource(Res.string.tx_type_initiate_transfer)
 
+        code == "withdrawtransfer" || rawCode.contains("withdrawtransfer") ->
+            stringResource(Res.string.tx_type_withdraw_transfer)
+
         code == "approvetransfer" || rawCode.contains("approvetransfer") ->
-            stringResource(Res.string.tx_type_initiate_transfer)
+            stringResource(Res.string.tx_type_approve_transfer)
 
         code == "rejecttransfer" || rawCode.contains("rejecttransfer") ->
             stringResource(Res.string.tx_type_reject_transfer)

@@ -101,28 +101,6 @@ dependencyGuard {
     configuration("prodReleaseRuntimeClasspath")
 }
 
-// Disambiguation rule so that Gradle resolves the correct artifact type when consuming
-// cmp-shared (a KMP library module). Without this, the OssLicensesPlugin and similar
-// tasks fail because multiple artifact variants share the same attributes.
-dependencies {
-    attributesSchema {
-        attribute(Attribute.of("artifactType", String::class.java)) {
-            disambiguationRules.add(PreferJarRule::class.java)
-        }
-    }
-}
-
-abstract class PreferJarRule : AttributeDisambiguationRule<String> {
-    override fun execute(details: MultipleCandidatesDetails<String>) {
-        val candidates = details.candidateValues
-        when {
-            "android-classes-jar" in candidates -> details.closestMatch("android-classes-jar")
-            "jar" in candidates -> details.closestMatch("jar")
-            else -> { /* let Gradle decide */ }
-        }
-    }
-}
-
 dependencies {
     implementation(projects.cmpShared)
     implementation(projects.core.ui)

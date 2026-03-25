@@ -158,8 +158,8 @@
     <string name="tx_type_reject_transfer">Rechazar transferencia</string>
     <string name="tx_type_dividend_payout">Pago de dividendos</string>
     <string name="tx_type_overpayment">Pago en exceso</string>
-    <string name="tx_type_repayment">Reembolso</string>
-    <string name="tx_type_repayment_at_disbursement">Reembolso al desembolso</string>
+    <string name="tx_type_repayment">Pago de préstamo</string>
+    <string name="tx_type_repayment_at_disbursement">Pago de préstamo al desembolso</string>
     <string name="tx_type_waive_interest">Condonar intereses</string>
     <string name="tx_type_waive_charges">Condonar cargos</string>
     <string name="tx_type_write_off">Castigo de deuda</string>
@@ -173,7 +173,7 @@
     <string name="tx_type_charge_payment">Pago de cargos</string>
     <string name="tx_type_loan_charge_added">Cargo de préstamo añadido</string>
     <string name="tx_type_interest_waiver">Exención de intereses</string>
-    <string name="tx_type_recover_repayment">Recuperar reembolso</string>
+    <string name="tx_type_recover_repayment">Recuperar pago de préstamo</string>
     <string name="tx_type_credit_balance_refund">Reembolso de saldo acreedor</string>
     <string name="tx_type_charge_off">Cancelación</string>
     <string name="tx_type_tax_withholding">Retención de impuestos</string>

@@ -167,6 +167,8 @@
     <string name="tx_type_charge_payment">Charge Payment</string>
     <string name="tx_type_fee_deduction">Fee Deduction</string>
     <string name="tx_type_initiate_transfer">Transfer</string>
+    <string name="tx_type_approve_transfer">Approve Transfer</string>
+    <string name="tx_type_withdraw_transfer">Withdraw Transfer</string>
     <string name="tx_type_dividend_payout">Dividend Payout</string>
     <string name="tx_type_accrual">Accrual</string>
     <string name="tx_type_write_off">Write-Off</string>
