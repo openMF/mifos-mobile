@@ -182,12 +182,7 @@ fun localizeTransactionType(type: Type?): String {
     if (type == null) return ""
     // Normalize: strip common Mifos prefixes so both short and full codes match
     val rawCode = type.code?.lowercase() ?: ""
-    val code = rawCode
-        .removePrefix("savingsaccounttransactiontype.")
-        .removePrefix("loantransactiontype.")
-        .removePrefix("sharetransactiontype.")
-        .removePrefix("loan")
-        .trimStart('.')
+        code == "chargeadded" -> stringResource(Res.string.tx_type_loan_charge_added)
 
     return when {
         code in setOf("savingsaccountinterestposting", "loaninterestposting", "interestposting") ||
