@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp.navigation.rootnav.RootNavScreen
@@ -42,7 +43,10 @@ fun ComposeApp(
     EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is AppEvent.ShowToast -> {}
-            is AppEvent.UpdateAppLocale -> handleAppLocale(event.localeName)
+            is AppEvent.UpdateAppLocale -> {
+                handleAppLocale(event.localeName)
+                viewModel.trySendAction(AppAction.Internal.BumpLocaleCompositionKey(event.localeName))
+            }
             is AppEvent.UpdateAppTheme -> handleThemeMode(event.osValue)
         }
     }
@@ -54,30 +58,32 @@ fun ComposeApp(
         }
     }
 
-    MifosMobileTheme(
-        darkTheme = uiState.darkTheme,
-        androidTheme = uiState.isAndroidTheme,
-        shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+    key(uiState.localeCompositionKey) {
+        MifosMobileTheme(
+            darkTheme = uiState.darkTheme,
+            androidTheme = uiState.isAndroidTheme,
+            shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
         ) {
-            Column(
-                modifier = modifier
+            Box(
+                modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding(),
+                    .background(MaterialTheme.colorScheme.surface),
             ) {
-                NetworkBanner(
-                    bannerState = uiState.networkBanner,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
+                ) {
+                    NetworkBanner(
+                        bannerState = uiState.networkBanner,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
 
-                RootNavScreen(
-                    modifier = Modifier,
-                    onSplashScreenRemoved = onSplashScreenRemoved,
-                )
+                    RootNavScreen(
+                        modifier = Modifier,
+                        onSplashScreenRemoved = onSplashScreenRemoved,
+                    )
+                }
             }
         }
     }

@@ -81,16 +81,14 @@ class MainActivity : AppCompatActivity() {
                     // Only update if the locale has actually changed
                     if (currentLocales != newLocales) {
                         AppCompatDelegate.setApplicationLocales(newLocales)
-                        // Update Locale.setDefault for non-UI formatting
-                        if (localeTag != null) {
-                            // Use forLanguageTag to properly parse locales like "en-GB", "pt-BR"
-                            Locale.setDefault(Locale.forLanguageTag(localeTag))
-                        } else {
-                            // Reset to true system default locale from device configuration
-                            // Use Resources.getSystem() to get device locale unaffected by app overrides
-                            val systemLocale = Resources.getSystem().configuration.locales[0]
-                            Locale.setDefault(systemLocale)
-                        }
+                    }
+                    // Always sync default JVM locale: Compose Multiplatform string resources use
+                    // Locale.current (see DefaultComposeEnvironment) and must match the app locale.
+                    if (localeTag != null) {
+                        Locale.setDefault(Locale.forLanguageTag(localeTag))
+                    } else {
+                        val systemLocale = Resources.getSystem().configuration.locales[0]
+                        Locale.setDefault(systemLocale)
                     }
                 },
                 onSplashScreenRemoved = {

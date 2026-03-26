@@ -13,7 +13,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -27,6 +26,8 @@ import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.NetworkBannerState
 
+private const val LOCALE_COMPOSITION_KEY_SYSTEM = "system"
+
 class ComposeAppViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
@@ -36,6 +37,7 @@ class ComposeAppViewModel(
         isAndroidTheme = false,
         isDynamicColorsEnabled = false,
         themeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
+        localeCompositionKey = LOCALE_COMPOSITION_KEY_SYSTEM,
     ),
 ) {
     val networkStatus = networkMonitor.isOnline
@@ -67,8 +69,9 @@ class ComposeAppViewModel(
 
         userPreferencesRepository
             .observeLanguage
-            .map { AppEvent.UpdateAppLocale(it.localName) }
-            .onEach(::sendEvent)
+            .onEach { config ->
+                sendEvent(AppEvent.UpdateAppLocale(config.localName))
+            }
             .launchIn(viewModelScope)
     }
 
@@ -139,6 +142,8 @@ class ComposeAppViewModel(
         when (action) {
             is AppAction.AppSpecificLanguageUpdate -> handleAppSpecificLanguageUpdate(action)
 
+            is AppAction.Internal.BumpLocaleCompositionKey -> handleBumpLocaleCompositionKey(action)
+
             is AppAction.Internal.ThemeUpdate -> handleAppThemeUpdated(action)
 
             is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
@@ -146,6 +151,14 @@ class ComposeAppViewModel(
             is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
 
             is AppAction.Internal.TimeBasedThemeUpdate -> handleTimeBasedThemeUpdate(action)
+        }
+    }
+
+    private fun handleBumpLocaleCompositionKey(action: AppAction.Internal.BumpLocaleCompositionKey) {
+        mutableStateFlow.update {
+            it.copy(
+                localeCompositionKey = action.localeName ?: LOCALE_COMPOSITION_KEY_SYSTEM,
+            )
         }
     }
 
@@ -228,6 +241,11 @@ data class AppState(
         timeStart = 0,
         timeEnd = 0,
     ),
+    /**
+     * Drives [androidx.compose.runtime.key] so Compose Multiplatform [org.jetbrains.compose.resources.stringResource]
+     * recomputes after app locale changes (see [org.jetbrains.compose.resources.DefaultComposeEnvironment]).
+     */
+    val localeCompositionKey: String = LOCALE_COMPOSITION_KEY_SYSTEM,
 )
 
 sealed interface AppEvent {
@@ -246,6 +264,14 @@ sealed interface AppAction {
     data class AppSpecificLanguageUpdate(val appLanguage: LanguageConfig) : AppAction
 
     sealed class Internal : AppAction {
+
+        /**
+         * Applied after [AppEvent.UpdateAppLocale] is handled on the platform so
+         * [localeCompositionKey] runs after [androidx.appcompat.app.AppCompatDelegate.setApplicationLocales].
+         */
+        data class BumpLocaleCompositionKey(
+            val localeName: String?,
+        ) : Internal()
 
         data class ThemeUpdate(
             val theme: MifosThemeConfig,
