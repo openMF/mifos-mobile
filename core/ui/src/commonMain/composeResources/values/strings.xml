@@ -135,5 +135,7 @@
     <string name="internal_server_error">Something went wrong on our end. Please try again in a moment.</string>
 
     <string name="feature_pdf_generation_date">Generation Date</string>
+    <string name="feature_dashboard_totals">Total Available Loan %2$s%1$s, Savings %4$s%3$s</string>
+    <string name="feature_dashboard_toggle_visibility">Toggle Visibility</string>
 
 </resources>
