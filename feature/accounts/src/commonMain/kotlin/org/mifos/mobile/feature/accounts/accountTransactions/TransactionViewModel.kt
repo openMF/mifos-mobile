@@ -21,7 +21,6 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.io.IOException
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
@@ -36,6 +35,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
@@ -341,9 +341,7 @@ internal class AccountsTransactionViewModel(
                 updateState {
                     it.copy(
                         isRefreshing = false,
-                        uiState = if (dataState.exception is IOException ||
-                            dataState.exception.cause is IOException
-                        ) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -447,7 +445,7 @@ internal class AccountsTransactionViewModel(
                 updateState {
                     it.copy(
                         isRefreshing = false,
-                        uiState = if (dataState.exception.cause is IOException) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -504,7 +502,7 @@ internal class AccountsTransactionViewModel(
                 updateState {
                     it.copy(
                         isRefreshing = false,
-                        uiState = if (dataState.exception.cause is IOException) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -560,7 +558,7 @@ internal class AccountsTransactionViewModel(
                 updateState {
                     it.copy(
                         isRefreshing = false,
-                        uiState = if (dataState.exception.cause is IOException) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)

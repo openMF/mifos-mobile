@@ -9,17 +9,14 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.TransferRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.TransferResponse
 import org.mifos.mobile.core.model.entity.payload.TransferPayload
 import org.mifos.mobile.core.model.enums.TransferType
@@ -44,13 +41,8 @@ class TransferRepositoryImp(
 
                 val transferResponse = Json.decodeFromString<TransferResponse>(response.bodyAsText())
                 DataState.Success(transferResponse.resourceId.toString())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }

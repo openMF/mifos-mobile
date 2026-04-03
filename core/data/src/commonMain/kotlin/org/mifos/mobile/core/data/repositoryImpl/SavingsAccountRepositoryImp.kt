@@ -9,15 +9,12 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.payloads.toDto
@@ -25,7 +22,8 @@ import org.mifos.mobile.core.data.mapper.savings.toModel
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosException
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
@@ -49,7 +47,7 @@ class SavingsAccountRepositoryImp(
             associationType,
         )
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override fun getSavingsAccountTransactionDetails(
@@ -59,7 +57,7 @@ class SavingsAccountRepositoryImp(
         return dataManager.savingAccountsListApi
             .getSavingsAccountTransactionDetails(accountId, transactionId)
             .map { it.toModel() }
-            .asDataStateFlow()
+            .asDataStateFlow(Throwable::toMifosException)
             .flowOn(ioDispatcher)
     }
 
@@ -68,7 +66,7 @@ class SavingsAccountRepositoryImp(
     ): Flow<DataState<SavingsAccountTemplate>> {
         return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplate(clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override fun getSavingAccountApplicationTemplateByProduct(
@@ -80,7 +78,7 @@ class SavingsAccountRepositoryImp(
             productId,
         )
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override suspend fun submitSavingAccountApplication(
@@ -91,13 +89,8 @@ class SavingsAccountRepositoryImp(
                 val response =
                     dataManager.savingAccountsListApi.submitSavingAccountApplication(payload?.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -114,13 +107,8 @@ class SavingsAccountRepositoryImp(
                         payload?.toDto(),
                     )
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -137,13 +125,8 @@ class SavingsAccountRepositoryImp(
                         payload?.toDto(),
                     )
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -154,6 +137,6 @@ class SavingsAccountRepositoryImp(
     ): Flow<DataState<AccountOptionsTemplate>> {
         return dataManager.savingAccountsListApi.accountTransferTemplate(accountId!!, accountType)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 }

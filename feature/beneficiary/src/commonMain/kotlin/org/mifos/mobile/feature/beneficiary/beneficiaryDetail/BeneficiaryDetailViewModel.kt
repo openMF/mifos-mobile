@@ -12,17 +12,16 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.delete_beneficiary_confirmation
 import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -150,7 +149,7 @@ internal class BeneficiaryDetailViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (beneficiary.exception is IOException) {
+                        uiState = if (beneficiary.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -220,7 +219,7 @@ internal class BeneficiaryDetailViewModel(
                             showOverlay = false,
                         )
                     }
-                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    val errorMsg = if (response.exception is MifosException.ServerError) {
                         getString(UiRes.string.internal_server_error)
                     } else {
                         response.message

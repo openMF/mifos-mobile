@@ -9,8 +9,6 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -18,13 +16,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.beneficiary.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosException
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
@@ -43,7 +41,7 @@ class BeneficiaryRepositoryImp(
                     emit(DataState.Success(response))
                 }
         } catch (exception: Exception) {
-            emit(DataState.Error(exception))
+            emit(DataState.Error(exception.toMifosException()))
         }
     }.flowOn(ioDispatcher)
 
@@ -53,13 +51,8 @@ class BeneficiaryRepositoryImp(
                 val response =
                     dataManager.beneficiaryApi.createBeneficiary(beneficiaryPayload?.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -73,13 +66,8 @@ class BeneficiaryRepositoryImp(
                 val response =
                     dataManager.beneficiaryApi.updateBeneficiary(beneficiaryId!!, payload?.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -90,13 +78,8 @@ class BeneficiaryRepositoryImp(
                 val response = dataManager.beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
 
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -108,7 +91,7 @@ class BeneficiaryRepositoryImp(
                     emit(DataState.Success(response.map { it.toModel() }))
                 }
         } catch (e: Exception) {
-            emit(DataState.Error(e, null))
+            emit(DataState.Error(e.toMifosException(), null))
         }
     }.flowOn(ioDispatcher)
 }

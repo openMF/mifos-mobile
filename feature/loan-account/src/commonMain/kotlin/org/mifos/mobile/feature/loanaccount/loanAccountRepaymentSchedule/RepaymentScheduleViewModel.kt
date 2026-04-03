@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.loan_account.generated.resources.Res
 import mifos_mobile.feature.loan_account.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.loan_account.generated.resources.feature_loan_account_number_label
@@ -32,6 +31,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.TransferSuccessDestination
@@ -177,7 +177,7 @@ internal class RepaymentScheduleViewModel(
                 .catch { error ->
                     updateState {
                         it.copy(
-                            uiState = if (error.cause is IOException) {
+                            uiState = if (error.cause is MifosException.NetworkError) {
                                 ScreenUiState.Network
                             } else {
                                 ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -318,7 +318,7 @@ internal class RepaymentScheduleViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (dataState.exception is IOException) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)

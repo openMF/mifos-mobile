@@ -19,6 +19,8 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.UserDetailRepository
+import org.mifos.mobile.core.data.util.toMifosException
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
 import org.mifos.mobile.core.network.DataManager
@@ -35,14 +37,14 @@ class UserDetailRepositoryImp(
             }
             DataState.Success("Notification Registered Successfully")
         } catch (e: Exception) {
-            DataState.Error(e, null)
+            DataState.Error(e.toMifosExceptionSuspend(), null)
         }
     }
 
     override fun getUserNotificationId(id: Long): Flow<DataState<NotificationUserDetail>> {
         return dataManager.notificationApi.getUserNotificationId(id)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override suspend fun updateRegisterNotification(
@@ -55,7 +57,7 @@ class UserDetailRepositoryImp(
             }
             DataState.Success("Notification Updated Successfully")
         } catch (e: Exception) {
-            DataState.Error(e, null)
+            DataState.Error(e.toMifosExceptionSuspend(), null)
         }
     }
 }

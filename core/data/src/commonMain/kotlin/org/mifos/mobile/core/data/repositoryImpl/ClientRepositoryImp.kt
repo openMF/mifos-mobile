@@ -18,6 +18,7 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientRepository
+import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.network.DataManager
@@ -34,6 +35,6 @@ class ClientRepositoryImp(
                     dto.toModel()
                 }
             }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 }

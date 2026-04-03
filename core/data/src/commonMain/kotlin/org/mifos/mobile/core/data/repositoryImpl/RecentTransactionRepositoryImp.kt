@@ -18,6 +18,7 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.mapper.transactions.toRecentTransactionModel
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
+import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
 import org.mifos.mobile.core.network.DataManager
@@ -41,6 +42,6 @@ class RecentTransactionRepositoryImp(
                     dto.toRecentTransactionModel()
                 }
             }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 }

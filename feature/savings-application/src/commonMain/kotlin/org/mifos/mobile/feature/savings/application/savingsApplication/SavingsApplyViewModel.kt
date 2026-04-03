@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_product_empty
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
@@ -27,6 +26,7 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -191,7 +191,7 @@ internal class SavingsApplyViewModel(
 
                     updateState {
                         it.copy(
-                            uiState = if (throwable.cause is IOException) {
+                            uiState = if (throwable.cause is MifosException.NetworkError) {
                                 ScreenUiState.Network
                             } else {
                                 ScreenUiState.Error(Res.string.feature_apply_savings_error_server)

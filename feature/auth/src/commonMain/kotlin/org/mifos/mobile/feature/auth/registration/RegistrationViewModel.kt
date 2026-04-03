@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.auth.registration
 
 import androidx.lifecycle.viewModelScope
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
@@ -30,6 +29,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
 import org.mifos.mobile.core.ui.PasswordStrengthState
@@ -553,7 +553,7 @@ class RegistrationViewModel(
 
                 is DataState.Error -> {
                     val errorMsg =
-                        if (result.exception.cause is ServerResponseException) {
+                        if (result.exception is MifosException.ServerError) {
                             getString(UiRes.string.internal_server_error)
                         } else {
                             result.message

@@ -9,17 +9,15 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.mapper.auth.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.UserAuthRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.payload.LoginPayload
@@ -39,13 +37,8 @@ class UserAuthRepositoryImp(
             try {
                 val response = dataManager.registrationApi.registerUser(registerPayload.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -65,16 +58,11 @@ class UserAuthRepositoryImp(
                 if (user.base64EncodedAuthenticationKey != null) {
                     DataState.Success(user)
                 } else {
-                    DataState.Error(Exception("Invalid Credentials"), null)
+                    DataState.Error(MifosException.ClientError("Invalid Credentials"), null)
                 }
             }
-        } catch (e: ClientRequestException) {
-            val errorMessage = extractErrorMessage(e.response)
-            DataState.Error(Exception(errorMessage), null)
-        } catch (e: IOException) {
-            DataState.Error(Exception("Network error", e), null)
-        } catch (e: ServerResponseException) {
-            DataState.Error(Exception("Server error", e), null)
+        } catch (e: Exception) {
+            DataState.Error(e.toMifosExceptionSuspend(), null)
         }
     }
 
@@ -91,13 +79,8 @@ class UserAuthRepositoryImp(
             try {
                 val response = dataManager.registrationApi.verifyUser(userVerify)
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -115,13 +98,8 @@ class UserAuthRepositoryImp(
             try {
                 val response = dataManager.userDetailsApi.updateAccountPassword(payload)
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }

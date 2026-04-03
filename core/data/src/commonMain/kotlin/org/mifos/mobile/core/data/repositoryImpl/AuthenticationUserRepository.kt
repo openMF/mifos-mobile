@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.Dispatcher
 import org.mifos.mobile.core.common.MifosDispatchers
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.AppSettings
@@ -51,7 +52,7 @@ class AuthenticationUserRepository(
             )
             emit(DataState.Success(userData))
         } catch (e: Exception) {
-            emit(DataState.Error(e, null))
+            emit(DataState.Error(MifosException.GenericError(e.message ?: "Unknown error", e), null))
         }
     }.flowOn(ioDispatcher)
 
@@ -62,7 +63,7 @@ class AuthenticationUserRepository(
             }
             DataState.Success("User logged out Successfully")
         } catch (e: Exception) {
-            DataState.Error(e, null)
+            DataState.Error(MifosException.GenericError(e.message ?: "Unknown error", e), null)
         }
     }
 

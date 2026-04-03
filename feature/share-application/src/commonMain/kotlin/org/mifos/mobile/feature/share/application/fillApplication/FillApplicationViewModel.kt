@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -42,6 +41,7 @@ import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -651,7 +651,7 @@ internal class ShareFillApplicationViewModel(
             is DataState.Error -> {
                 updateState { it.copy(showOverlay = false) }
 
-                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                val errorMsg = if (response.exception is MifosException.ServerError) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     "${response.message}, ${getString(
@@ -661,7 +661,7 @@ internal class ShareFillApplicationViewModel(
                 }
                 sendEvent(
                     ShareApplicationEvent.NavigateToStatus(
-                        eventType = if (response.exception.cause is ServerResponseException) {
+                        eventType = if (response.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name

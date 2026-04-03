@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +21,8 @@ import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.guarantor.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.GuarantorRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosException
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
@@ -36,7 +36,7 @@ class GuarantorRepositoryImp(
     override fun getGuarantorTemplate(loanId: Long?): Flow<DataState<GuarantorTemplatePayload?>> {
         return dataManager.guarantorApi.getGuarantorTemplate(loanId!!)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override suspend fun createGuarantor(
@@ -47,9 +47,8 @@ class GuarantorRepositoryImp(
             try {
                 val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload?.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -67,9 +66,8 @@ class GuarantorRepositoryImp(
                     guarantorId!!,
                 )
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -79,15 +77,16 @@ class GuarantorRepositoryImp(
             try {
                 val response = dataManager.guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
 
     override fun getGuarantorList(loanId: Long): Flow<DataState<List<GuarantorPayload?>?>> {
-        return flow { emit(getDemoGuarantorPayloads()) }.asDataStateFlow().flowOn(ioDispatcher)
+        return flow { emit(getDemoGuarantorPayloads()) }
+            .asDataStateFlow(Throwable::toMifosException)
+            .flowOn(ioDispatcher)
 //        return dataManager.guarantorApi.getGuarantorList(loanId)
 //            .asDataStateFlow().flowOn(ioDispatcher)
     }

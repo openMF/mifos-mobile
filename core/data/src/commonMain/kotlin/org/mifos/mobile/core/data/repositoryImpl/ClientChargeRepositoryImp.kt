@@ -21,6 +21,7 @@ import org.mifos.mobile.core.data.mapper.charge.toModel
 import org.mifos.mobile.core.data.mapper.share.toShareChargeModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
+import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -42,7 +43,7 @@ class ClientChargeRepositoryImp(
                     },
                 )
             }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+            .catch { exception -> DataState.Error(exception.toMifosException(), null) }
             .flowOn(ioDispatcher)
     }
 
@@ -53,7 +54,7 @@ class ClientChargeRepositoryImp(
                     response.map { it.toModel() },
                 )
             }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+            .catch { exception -> DataState.Error(exception.toMifosException(), null) }
             .flowOn(ioDispatcher)
     }
 
@@ -85,7 +86,7 @@ class ClientChargeRepositoryImp(
                 )
             }
             .catch { exception ->
-                DataState.Error(exception, exception.message)
+                DataState.Error(exception.toMifosException(), null)
             }
             .flowOn(ioDispatcher)
     }

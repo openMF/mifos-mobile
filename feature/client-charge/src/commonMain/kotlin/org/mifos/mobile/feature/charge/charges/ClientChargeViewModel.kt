@@ -15,7 +15,6 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.client_charge.generated.resources.Res
 import mifos_mobile.feature.client_charge.generated.resources.charges
 import mifos_mobile.feature.client_charge.generated.resources.client_charges
@@ -25,6 +24,7 @@ import mifos_mobile.feature.client_charge.generated.resources.savings_charges
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -336,7 +336,7 @@ internal class ClientChargeViewModel(
             is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Error -> updateState {
                 it.copy(
-                    uiState = if (result.exception.cause is IOException) {
+                    uiState = if (result.exception is MifosException.NetworkError) {
                         ScreenUiState.Network
                     } else {
                         ScreenUiState.Error(Res.string.feature_generic_error_server)
@@ -355,7 +355,7 @@ internal class ClientChargeViewModel(
             is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Error -> updateState {
                 it.copy(
-                    uiState = if (result.exception.cause is IOException) {
+                    uiState = if (result.exception is MifosException.NetworkError) {
                         ScreenUiState.Network
                     } else {
                         ScreenUiState.Error(Res.string.feature_generic_error_server)

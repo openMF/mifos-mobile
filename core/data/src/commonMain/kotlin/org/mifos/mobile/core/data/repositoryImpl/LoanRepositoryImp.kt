@@ -9,8 +9,6 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +16,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.loan.toModel
@@ -26,7 +23,8 @@ import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.LoanRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
+import org.mifos.mobile.core.data.util.toMifosException
+import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
@@ -48,7 +46,7 @@ class LoanRepositoryImp(
                     emit(DataState.Success(response.toModel()))
                 }
         } catch (exception: Exception) {
-            emit(DataState.Error(exception))
+            emit(DataState.Error(exception.toMifosException()))
         }
     }.flowOn(ioDispatcher)
 
@@ -59,7 +57,7 @@ class LoanRepositoryImp(
         return dataManager.loanAccountsListApi
             .getLoanTransactionDetails(loanId, transactionId)
             .map { it.toModel() }
-            .asDataStateFlow()
+            .asDataStateFlow(Throwable::toMifosException)
             .flowOn(ioDispatcher)
     }
 
@@ -72,13 +70,8 @@ class LoanRepositoryImp(
                 val response =
                     dataManager.loanAccountsListApi.withdrawLoanAccount(loanId!!, loanWithdraw?.toDto())
                 DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
+            } catch (e: Exception) {
+                DataState.Error(e.toMifosExceptionSuspend(), null)
             }
         }
     }
@@ -86,12 +79,12 @@ class LoanRepositoryImp(
     override fun template(clientId: Long?): Flow<DataState<LoanTemplate?>> {
         return dataManager.loanAccountsListApi.getLoanTemplate(clientId = clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override fun getLoanTemplateByProduct(clientId: Long?, productId: Int?): Flow<DataState<LoanTemplate?>> {
         return dataManager.loanAccountsListApi.getLoanTemplateByProduct(clientId, productId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 }

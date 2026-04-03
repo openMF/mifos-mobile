@@ -36,4 +36,16 @@ sealed class DataState<out T> {
 fun <T> Flow<T>.asDataStateFlow(): Flow<DataState<T>> =
     map<T, DataState<T>> { DataState.Success(it) }
         .onStart { emit(DataState.Loading) }
-        .catch { emit(DataState.Error(it, null)) }
+        .catch {
+            val mapped = if (it is MifosException) {
+                it
+            } else {
+                MifosException.GenericError(it.message ?: "Unknown error", it)
+            }
+            emit(DataState.Error(mapped, null))
+        }
+
+fun <T> Flow<T>.asDataStateFlow(exceptionMapper: (Throwable) -> MifosException): Flow<DataState<T>> =
+    map<T, DataState<T>> { DataState.Success(it) }
+        .onStart { emit(DataState.Loading) }
+        .catch { emit(DataState.Error(exceptionMapper(it), null)) }

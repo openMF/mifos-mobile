@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.auth.otpAuthentication
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
@@ -32,6 +31,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
@@ -196,7 +196,7 @@ internal class OtpAuthenticationViewModel(
                 delay(1500)
                 sendEvent(
                     OtpAuthEvent.NavigateToStatus(
-                        eventType = if (action.exception.cause is ServerResponseException) {
+                        eventType = if (action.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name

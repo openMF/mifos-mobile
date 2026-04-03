@@ -20,6 +20,7 @@ import org.mifos.mobile.core.data.mapper.accounts.toModel
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.NotificationRepository
+import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.network.DataManager
@@ -33,17 +34,17 @@ class HomeRepositoryImp(
     override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> =
         dataManager.clientsApi.getClientAccounts(clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
         return dataManager.clientsApi.getClientForId(clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 
     override fun clientImage(clientId: Long): Flow<DataState<String>> {
         return dataManager.clientsApi.getClientImage(clientId)
-            .asDataStateFlow()
+            .asDataStateFlow(Throwable::toMifosException)
             .map { response ->
                 when (response) {
                     is DataState.Success -> {

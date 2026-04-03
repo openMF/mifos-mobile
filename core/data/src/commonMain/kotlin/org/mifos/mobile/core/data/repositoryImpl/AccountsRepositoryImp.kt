@@ -17,6 +17,7 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.accounts.toModel
 import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.network.DataManager
 
@@ -28,6 +29,6 @@ class AccountsRepositoryImp(
     override fun loadAccounts(clientId: Long?, accountType: String?): Flow<DataState<ClientAccounts>> {
         return dataManager.clientsApi.getAccounts(clientId!!, accountType)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
     }
 }

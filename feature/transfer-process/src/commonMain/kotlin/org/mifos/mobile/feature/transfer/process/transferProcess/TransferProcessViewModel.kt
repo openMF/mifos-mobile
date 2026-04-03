@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +25,7 @@ import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.common.DateHelper.currentDate
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.TransferRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.EventType
@@ -236,7 +236,7 @@ internal class TransferProcessViewModel(
                     )
                 }
 
-                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                val errorMsg = if (response.exception is MifosException.ServerError) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     response.message
@@ -244,7 +244,7 @@ internal class TransferProcessViewModel(
 
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
-                        eventType = if (response.exception.cause is ServerResponseException) {
+                        eventType = if (response.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name
