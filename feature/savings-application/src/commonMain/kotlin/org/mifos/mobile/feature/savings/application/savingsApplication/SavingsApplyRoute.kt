@@ -44,11 +44,11 @@ fun NavController.navigateToSavingsApplyScreen(
  * and wires up the navigation callbacks for actions initiated from this screen.
  *
  * @param navigateToFillDetailsScreen A lambda to navigate to the application form screen,
- *   passing the selected product ID, officer ID, and officer name.
+ *   passing the selected product ID and product name.
  * @param navigateBack A lambda function to handle the back navigation event.
  */
 fun NavGraphBuilder.savingsApplyDestination(
-    navigateToFillDetailsScreen: (Long, Long, String) -> Unit,
+    navigateToFillDetailsScreen: (Long, String) -> Unit,
     navigateBack: () -> Unit,
 ) {
     composableWithSlideTransitions<SavingsApplyRoute> {

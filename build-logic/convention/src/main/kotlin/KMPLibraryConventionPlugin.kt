@@ -18,13 +18,15 @@ class KMPLibraryConventionPlugin : Plugin<Project> {
                 apply("org.convention.kmp.koin")
                 apply("mifos.detekt.plugin")
                 apply("mifos.spotless.plugin")
+                apply("org.jetbrains.kotlin.plugin.serialization")
+                apply("org.jetbrains.kotlin.plugin.parcelize")
             }
 
             configureKotlinMultiplatform()
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 34
+                defaultConfig.targetSdk = 36
                 configureFlavors(this)
                 /**
                  * The resource prefix is derived from the module name,
@@ -38,6 +40,7 @@ class KMPLibraryConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                add("commonMainImplementation", libs.findLibrary("kotlinx.serialization.json").get())
                 add("commonTestImplementation", libs.findLibrary("kotlin.test").get())
                 add("commonTestImplementation", libs.findLibrary("kotlinx.coroutines.test").get())
             }

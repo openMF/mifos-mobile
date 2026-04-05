@@ -7,18 +7,23 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
+            pluginManager.apply {
                 apply("org.convention.kmp.library")
                 apply("org.convention.kmp.koin")
                 apply("org.jetbrains.kotlin.plugin.compose")
                 apply("org.jetbrains.compose")
+                apply("mifos.detekt.plugin")
+                apply("mifos.spotless.plugin")
             }
 
             dependencies {
                 add("commonMainImplementation", project(":core:ui"))
+                add("commonMainImplementation", project(":core-base:ui"))
                 add("commonMainImplementation", project(":core:designsystem"))
 //                add("commonMainImplementation", project(":core:testing"))
                 add("commonMainImplementation", project(":core:data"))
+                add("commonMainImplementation", project(":core-base:designsystem"))
+//                add("commonMainImplementation", project(":core:analytics"))
 
                 add("commonMainImplementation", libs.findLibrary("koin.compose").get())
                 add("commonMainImplementation", libs.findLibrary("koin.compose.viewmodel").get())
@@ -27,7 +32,8 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
                 add("commonMainImplementation", libs.findLibrary("jb.lifecycle.compose").get())
                 add("commonMainImplementation", libs.findLibrary("jb.composeViewmodel").get())
                 add("commonMainImplementation", libs.findLibrary("jb.lifecycleViewmodel").get())
-                add("commonMainImplementation", libs.findLibrary("jb.lifecycleViewmodelSavedState").get())
+                add("commonMainImplementation", libs.findLibrary("jb.lifecycle.compose").get())
+                add("commonMainImplementation", libs.findLibrary("jb.lifecycleViewmodelSavedState").get(),)
                 add("commonMainImplementation", libs.findLibrary("jb.savedstate").get())
                 add("commonMainImplementation", libs.findLibrary("jb.bundle").get())
                 add("commonMainImplementation", libs.findLibrary("jb.composeNavigation").get())

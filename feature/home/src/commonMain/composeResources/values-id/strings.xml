@@ -12,12 +12,15 @@
     <string name="beneficiaries">Penerima</string>
     <string name="survey">Survei</string>
     <string name="apply_for_loan">Ajukan Pinjaman</string>
+    <string name="apply_for_savings">Ajukan Rekening Tabungan</string>
+    <string name="apply_for_share">Ajukan Rekening Saham</string>
+    <string name="notifications">Notifikasi</string>
     <string name="charges">Biaya</string>
     <string name="transfer">Transfer</string>
     <string name="accounts">Akun</string>
     <string name="recent_transactions">Transaksi Terbaru</string>
     <string name="error_fetching_client">Gagal mengambil data klien</string>
-    <string name="no_internet_connection">Tidak ada koneksi Internet</string>
+    <string name="no_internet_connection">Tidak ada koneksi internet</string>
     <string name="hello_client">Halo, %1$s</string>
     <string name="accounts_overview">Ringkasan Akun</string>
     <string name="total_saving">Total Tabungan</string>
@@ -43,17 +46,27 @@
 
     <string name="feature_home_greet">Halo %1$s,</string>
     <string name="feature_home_services">Layanan</string>
+    <string name="feature_home_edit_services">Edit layanan</string>
+    <string name="feature_home_selected">Dipilih</string>
     <string name="feature_home_saving_accounts">Rekening Tabungan</string>
     <string name="feature_home_loan_accounts">Rekening Pinjaman</string>
     <string name="feature_home_share_accounts">Rekening Saham</string>
-    <string name="feature_home_apply_for_loan">Ajukan Pinjaman</string>
+    <string name="feature_home_apply_for_loan">Ajukan Untuk Pinjaman</string>
     <string name="feature_home_transaction_history">Riwayat Transaksi</string>
     <string name="feature_home_charges">Biaya</string>
     <string name="feature_home_beneficiary">Penerima</string>
     <string name="feature_home_faq">FAQ</string>
+    <string name="feature_home_no_active_accounts">Anda tidak memiliki akun aktif.</string>
+    <string name="feature_home_saving_account">Rekening Tabungan</string>
+    <string name="feature_home_loan_account">Rekening Pinjaman</string>
+    <string name="feature_home_savings_tip">Dapatkan bunga dari setoran Anda dengan akses fleksibel ke uang Anda kapan saja.</string>
+    <string name="feature_home_loan_tip">Dapatkan dana yang Anda butuhkan untuk keperluan pribadi, bisnis, atau pendidikan.</string>
 
     <string name="feature_home_total_available_savings">Total Tabungan Tersedia</string>
     <string name="feature_home_total_available_loan">Total Pinjaman Tersedia</string>
 
     <string name="feature_home_common_error">Terjadi kesalahan</string>
+
+    <string name="feature_server_error">Terjadi kesalahan yang tidak terduga di server kami. Silakan coba lagi nanti.</string>
+    <string name="feature_home_no_services_hint">Ketuk ikon kisi untuk menambahkan layanan</string>
 </resources>

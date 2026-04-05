@@ -22,14 +22,38 @@ import org.mifos.mobile.feature.guarantor.screens.guarantorAdd.AddGuarantorScree
 import org.mifos.mobile.feature.guarantor.screens.guarantorDetails.GuarantorDetailScreen
 import org.mifos.mobile.feature.guarantor.screens.guarantorList.GuarantorListScreen
 
+/**
+ * Navigates to the Guarantor screen.
+ *
+ * This is an extension function on [NavController] that simplifies navigating
+ * to the guarantor screen with the specified loan ID.
+ *
+ * @param loanId The ID of the loan for which guarantors are being managed.
+ */
 fun NavController.navigateToGuarantorScreen(loanId: Long) {
     navigate(GuarantorNavigation.GuarantorScreenBase.passArguments(loanId = loanId.toString()))
 }
 
+/**
+ * Navigates to the Guarantor List screen.
+ *
+ * This is an extension function on [NavController] that simplifies navigating
+ * to the guarantor list screen with the specified loan ID.
+ *
+ * @param loanId The ID of the loan for which guarantors are being displayed.
+ */
 fun NavController.navigateToGuarantorListScreen(loanId: Long) {
     navigate(GuarantorNavigation.GuarantorList.passArguments(loanId = loanId.toString()))
 }
 
+/**
+ * Builds the navigation graph for the Guarantor feature.
+ *
+ * This function sets up the navigation structure for the guarantor management flow,
+ * including the list, add, and detail screens with their respective navigation connections.
+ *
+ * @param navController The NavHostController used for navigation within the graph.
+ */
 fun NavGraphBuilder.guarantorNavGraph(
     navController: NavHostController,
 ) {
@@ -75,6 +99,17 @@ fun NavGraphBuilder.guarantorNavGraph(
     }
 }
 
+/**
+ * Defines the composable destination for the Guarantor List screen
+ * within the navigation graph.
+ *
+ * This function sets up the route, the screen content ([GuarantorListScreen]),
+ * and wires up the navigation callbacks for actions initiated from this screen.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param addGuarantor A lambda to navigate to the add guarantor screen with the loan ID.
+ * @param onGuarantorClicked A lambda to navigate to guarantor details with index and loan ID.
+ */
 fun NavGraphBuilder.listGuarantorRoute(
     navigateBack: () -> Unit,
     addGuarantor: (Long) -> Unit,
@@ -94,6 +129,17 @@ fun NavGraphBuilder.listGuarantorRoute(
     }
 }
 
+/**
+ * Defines the composable destination for the Guarantor Detail screen
+ * within the navigation graph.
+ *
+ * This function sets up the route, the screen content ([GuarantorDetailScreen]),
+ * and wires up the navigation callbacks for actions initiated from this screen.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param updateGuarantor A lambda to navigate to the add guarantor screen for editing,
+ *   passing the guarantor index and loan ID.
+ */
 fun NavGraphBuilder.detailGuarantorRoute(
     navigateBack: () -> Unit,
     updateGuarantor: (index: Int, loanId: Long) -> Unit,
@@ -112,6 +158,15 @@ fun NavGraphBuilder.detailGuarantorRoute(
     }
 }
 
+/**
+ * Defines the composable destination for the Add Guarantor screen
+ * within the navigation graph.
+ *
+ * This function sets up the route, the screen content ([AddGuarantorScreen]),
+ * and wires up the navigation callbacks for actions initiated from this screen.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ */
 fun NavGraphBuilder.addGuarantorRoute(
     navigateBack: () -> Unit,
 ) {

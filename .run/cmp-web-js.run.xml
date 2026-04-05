@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":cmp-web:jsBrowserRun" />
+          <option value=":cmp-web:jsBrowserDevelopmentRun" />
         </list>
       </option>
       <option name="vmOptions" />
