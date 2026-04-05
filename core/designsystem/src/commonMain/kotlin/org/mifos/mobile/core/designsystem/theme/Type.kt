@@ -9,38 +9,72 @@
  */
 package org.mifos.mobile.core.designsystem.theme
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import mifos_mobile.core.designsystem.generated.resources.NotoSansArabic_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansBengali_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansDevanagari_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansKannada_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansKhmer_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansMalayalam_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansMyanmar_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSansTelugu_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Regular
 import mifos_mobile.core.designsystem.generated.resources.Res
-import mifos_mobile.core.designsystem.generated.resources.inter_black
-import mifos_mobile.core.designsystem.generated.resources.inter_bold
-import mifos_mobile.core.designsystem.generated.resources.inter_extra_bold
-import mifos_mobile.core.designsystem.generated.resources.inter_extra_light
-import mifos_mobile.core.designsystem.generated.resources.inter_light
-import mifos_mobile.core.designsystem.generated.resources.inter_medium
-import mifos_mobile.core.designsystem.generated.resources.inter_regular
-import mifos_mobile.core.designsystem.generated.resources.inter_semi_bold
-import mifos_mobile.core.designsystem.generated.resources.inter_thin
 import org.jetbrains.compose.resources.Font
 
 @Composable
-private fun fontFamily(): FontFamily {
+internal fun fontFamily(): FontFamily {
     return FontFamily(
-        Font(Res.font.inter_black, FontWeight.Black),
-        Font(Res.font.inter_bold, FontWeight.Bold),
-        Font(Res.font.inter_semi_bold, FontWeight.SemiBold),
-        Font(Res.font.inter_medium, FontWeight.Medium),
-        Font(Res.font.inter_regular, FontWeight.Normal),
-        Font(Res.font.inter_light, FontWeight.Light),
-        Font(Res.font.inter_thin, FontWeight.Thin),
-        Font(Res.font.inter_extra_light, FontWeight.ExtraLight),
-        Font(Res.font.inter_extra_bold, FontWeight.ExtraBold),
+        Font(Res.font.NotoSans_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansDevanagari_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansBengali_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansKannada_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansTelugu_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansArabic_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansKhmer_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansMyanmar_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSansMalayalam_Regular, FontWeight.Normal),
     )
+}
+
+/**
+ * A workaround for a known issue in Compose Web (Wasm/JS) with Skia font fallback.
+ * By rendering these fonts in an invisible box, Compose is forced to download them
+ * asynchronously at startup so they are available immediately when Skia needs them
+ * as fallbacks for missing glyphs.
+ */
+@Suppress("ModifierMissing")
+@Composable
+internal fun FontFallbackPreloader() {
+    Box(Modifier.size(0.dp)) {
+        val fonts = listOf(
+            FontFamily(Font(Res.font.NotoSansDevanagari_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansBengali_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansKannada_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansTelugu_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansArabic_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansKhmer_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansMyanmar_Regular, FontWeight.Normal)),
+            FontFamily(Font(Res.font.NotoSansMalayalam_Regular, FontWeight.Normal)),
+        )
+        fonts.forEach { font ->
+            Text(
+                text = " ",
+                fontFamily = font,
+            )
+        }
+    }
 }
 
 // Set of Material typography styles to start with

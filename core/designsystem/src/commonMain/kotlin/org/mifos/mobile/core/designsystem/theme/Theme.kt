@@ -11,11 +11,14 @@ package org.mifos.mobile.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import template.core.base.designsystem.KptMaterialTheme
 import template.core.base.designsystem.theme.KptThemeProviderImpl
 import template.core.base.designsystem.toKptColorScheme
@@ -279,15 +282,25 @@ fun MifosMobileTheme(
 
     val typography = appTypography().toKptTypography()
 
+    val fontFamily = fontFamily()
+
+    FontFallbackPreloader()
+
     val theme = KptThemeProviderImpl(
         colors = colorScheme,
         typography = typography,
     )
 
-    KptMaterialTheme(
-        theme = theme,
-        content = content,
-    )
+    CompositionLocalProvider(
+        LocalTextStyle provides TextStyle(
+            fontFamily = fontFamily,
+        ),
+    ) {
+        KptMaterialTheme(
+            theme = theme,
+            content = content,
+        )
+    }
 }
 
 @Composable
