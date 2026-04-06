@@ -291,15 +291,14 @@ fun MifosMobileTheme(
         typography = typography,
     )
 
-    CompositionLocalProvider(
-        LocalTextStyle provides TextStyle(
-            fontFamily = fontFamily,
-        ),
-    ) {
-        KptMaterialTheme(
-            theme = theme,
-            content = content,
-        )
+    KptMaterialTheme(theme = theme) {
+        CompositionLocalProvider(
+            LocalTextStyle provides LocalTextStyle.current.merge(
+                TextStyle(fontFamily = fontFamily),
+            ),
+        ) {
+            content()
+        }
     }
 }
 
