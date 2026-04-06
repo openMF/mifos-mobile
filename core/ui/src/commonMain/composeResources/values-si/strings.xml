@@ -127,8 +127,6 @@
 
     <string name="tx_date_today">අද</string>
     <string name="tx_date_yesterday">ඊයේ</string>
-    <string name="tx_date_format">%3$s %2$s %1$s</string>
-
     <string name="tx_month_jan">ජන</string>
     <string name="tx_month_feb">පෙබ</string>
     <string name="tx_month_mar">මාර්තු</string>

@@ -127,8 +127,6 @@
 
     <string name="tx_date_today">આજે</string>
     <string name="tx_date_yesterday">ગઈકાલે</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">જાન્યુ</string>
     <string name="tx_month_feb">ફેબ્રુ</string>
     <string name="tx_month_mar">માર્ચ</string>

@@ -127,8 +127,6 @@
 
     <string name="tx_date_today">Hoje</string>
     <string name="tx_date_yesterday">Ontem</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">jan</string>
     <string name="tx_month_feb">fev</string>
     <string name="tx_month_mar">mar</string>

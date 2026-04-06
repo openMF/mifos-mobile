@@ -141,8 +141,6 @@
     <!-- Transaction date labels -->
     <string name="tx_date_today">Today</string>
     <string name="tx_date_yesterday">Yesterday</string>
-    <!-- Date format: %1$s = day, %2$s = month, %3$s = year -->
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <!-- Month abbreviations for transaction date display -->
     <string name="tx_month_jan">Jan</string>

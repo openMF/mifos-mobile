@@ -115,12 +115,7 @@ fun formatTransactionDate(date: LocalDate?): String {
     return when {
         date == today -> stringResource(Res.string.tx_date_today)
         date == yesterday -> stringResource(Res.string.tx_date_yesterday)
-        else -> stringResource(
-            Res.string.tx_date_format,
-            localizeNumber(date.dayOfMonth),
-            localizedMonth(date.monthNumber),
-            localizeNumber(date.year),
-        )
+        else -> "${localizeNumber(date.dayOfMonth)} ${localizedMonth(date.monthNumber)} ${localizeNumber(date.year)}"
     }
 }
 

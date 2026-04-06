@@ -105,8 +105,6 @@
 
     <string name="tx_date_today">آج</string>
     <string name="tx_date_yesterday">گزشتہ کل</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">جنوری</string>
     <string name="tx_month_feb">فروری</string>
     <string name="tx_month_mar">مارچ</string>

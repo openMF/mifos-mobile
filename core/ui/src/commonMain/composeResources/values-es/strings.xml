@@ -134,8 +134,6 @@
 
     <string name="tx_date_today">Hoy</string>
     <string name="tx_date_yesterday">Ayer</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">Ene</string>
     <string name="tx_month_feb">Feb</string>
     <string name="tx_month_mar">Mar</string>

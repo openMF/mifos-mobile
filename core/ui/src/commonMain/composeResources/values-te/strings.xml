@@ -105,8 +105,6 @@
 
     <string name="tx_date_today">నేడు</string>
     <string name="tx_date_yesterday">నిన్న</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">జన</string>
     <string name="tx_month_feb">ఫిబ్ర</string>
     <string name="tx_month_mar">మార్చి</string>

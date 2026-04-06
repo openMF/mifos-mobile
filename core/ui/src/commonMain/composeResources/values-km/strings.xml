@@ -135,8 +135,6 @@
 
     <string name="tx_date_today">ថ្ងៃនេះ</string>
     <string name="tx_date_yesterday">ម្សិលមិញ</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">មករា</string>
     <string name="tx_month_feb">កុម្ភៈ</string>
     <string name="tx_month_mar">មីនា</string>

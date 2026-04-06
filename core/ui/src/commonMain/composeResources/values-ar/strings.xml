@@ -127,8 +127,6 @@
 
     <string name="tx_date_today">اليوم</string>
     <string name="tx_date_yesterday">أمس</string>
-    <string name="tx_date_format">%1$s %2$s %3$s</string>
-
     <string name="tx_month_jan">يناير</string>
     <string name="tx_month_feb">فبراير</string>
     <string name="tx_month_mar">مارس</string>
