@@ -127,6 +127,7 @@
 
     <string name="tx_date_today">Ma</string>
     <string name="tx_date_yesterday">Tegnap</string>
+    <string name="tx_date_format">%3$s. %2$s %1$s.</string>
 
     <string name="tx_month_jan">Jan</string>
     <string name="tx_month_feb">Febr</string>

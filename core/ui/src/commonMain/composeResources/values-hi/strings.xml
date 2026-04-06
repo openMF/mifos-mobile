@@ -128,6 +128,7 @@
     <!-- Date labels -->
     <string name="tx_date_today">आज</string>
     <string name="tx_date_yesterday">कल</string>
+    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <!-- Month abbreviations -->
     <string name="tx_month_jan">जन</string>

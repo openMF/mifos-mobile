@@ -105,6 +105,7 @@
 
     <string name="tx_date_today">Сегодня</string>
     <string name="tx_date_yesterday">Вчера</string>
+    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <string name="tx_month_jan">янв.</string>
     <string name="tx_month_feb">февр.</string>

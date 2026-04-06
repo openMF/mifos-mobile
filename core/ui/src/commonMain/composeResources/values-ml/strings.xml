@@ -134,6 +134,7 @@
 
     <string name="tx_date_today">ഇന്ന്</string>
     <string name="tx_date_yesterday">ഇന്നലെ</string>
+    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <string name="tx_month_jan">ജനു</string>
     <string name="tx_month_feb">ഫെബ്രു</string>

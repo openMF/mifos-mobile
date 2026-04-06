@@ -127,6 +127,7 @@
 
     <string name="tx_date_today">आज</string>
     <string name="tx_date_yesterday">काल</string>
+    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <string name="tx_month_jan">जाने</string>
     <string name="tx_month_feb">फेब्रु</string>

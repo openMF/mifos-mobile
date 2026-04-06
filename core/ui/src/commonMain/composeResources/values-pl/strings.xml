@@ -105,6 +105,7 @@
 
     <string name="tx_date_today">Dzisiaj</string>
     <string name="tx_date_yesterday">Wczoraj</string>
+    <string name="tx_date_format">%1$s %2$s %3$s</string>
 
     <string name="tx_month_jan">sty</string>
     <string name="tx_month_feb">lut</string>
