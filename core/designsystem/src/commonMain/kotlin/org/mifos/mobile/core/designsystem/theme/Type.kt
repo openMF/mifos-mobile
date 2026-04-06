@@ -29,13 +29,30 @@ import mifos_mobile.core.designsystem.generated.resources.NotoSansKhmer_Regular
 import mifos_mobile.core.designsystem.generated.resources.NotoSansMalayalam_Regular
 import mifos_mobile.core.designsystem.generated.resources.NotoSansMyanmar_Regular
 import mifos_mobile.core.designsystem.generated.resources.NotoSansTelugu_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Black
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Bold
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_ExtraBold
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_ExtraLight
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Light
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Medium
 import mifos_mobile.core.designsystem.generated.resources.NotoSans_Regular
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_SemiBold
+import mifos_mobile.core.designsystem.generated.resources.NotoSans_Thin
 import mifos_mobile.core.designsystem.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable
 internal fun fontFamily(): FontFamily {
     return FontFamily(
+        Font(Res.font.NotoSans_Black, FontWeight.Black),
+        Font(Res.font.NotoSans_Bold, FontWeight.Bold),
+        Font(Res.font.NotoSans_SemiBold, FontWeight.SemiBold),
+        Font(Res.font.NotoSans_Medium, FontWeight.Medium),
+        Font(Res.font.NotoSans_Regular, FontWeight.Normal),
+        Font(Res.font.NotoSans_Light, FontWeight.Light),
+        Font(Res.font.NotoSans_Thin, FontWeight.Thin),
+        Font(Res.font.NotoSans_ExtraLight, FontWeight.ExtraLight),
+        Font(Res.font.NotoSans_ExtraBold, FontWeight.ExtraBold),
         Font(Res.font.NotoSans_Regular, FontWeight.Normal),
         Font(Res.font.NotoSansDevanagari_Regular, FontWeight.Normal),
         Font(Res.font.NotoSansBengali_Regular, FontWeight.Normal),
@@ -45,6 +62,7 @@ internal fun fontFamily(): FontFamily {
         Font(Res.font.NotoSansKhmer_Regular, FontWeight.Normal),
         Font(Res.font.NotoSansMyanmar_Regular, FontWeight.Normal),
         Font(Res.font.NotoSansMalayalam_Regular, FontWeight.Normal),
+
     )
 }
 
