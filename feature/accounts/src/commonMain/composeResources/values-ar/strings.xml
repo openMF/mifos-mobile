@@ -25,8 +25,7 @@
     <string name="feature_loan_account_filter_in_arrears">متأخرات</string>
     <string name="feature_loan_account_filter_withdrawn">مسحوب</string>
     <string name="feature_loan_account_filter_matured">مستحق</string>
-    <string name="feature_loan_account_filter_rejected">مرفوض</string
-        >
+    <string name="feature_loan_account_filter_rejected">مرفوض</string>
     <string name="feature_loan_account_filter_personal">شخصي</string>
     <string name="feature_loan_account_filter_bronze">برونزي</string>
 
