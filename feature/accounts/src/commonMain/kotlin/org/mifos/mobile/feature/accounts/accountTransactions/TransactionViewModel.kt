@@ -414,10 +414,11 @@ internal class AccountsTransactionViewModel(
         amount = amount,
         type = null,
         typeValue = type?.value,
-        labelRes = mapShareTransactionTypeToRes(type?.value),
-        isCredit = when {
-            type?.value?.contains("Purchase", ignoreCase = true) == true -> false
-            type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false
+        labelRes = mapShareTransactionTypeToRes(type?.code),
+        isCredit = when (type?.code) {
+            Constants.SHARE_CODE_PURCHASE,
+            Constants.SHARE_CODE_CHARGE_PAYMENT,
+            -> false
             else -> true
         },
         currency = currency?.code ?: "USD",
@@ -748,31 +749,32 @@ internal class AccountsTransactionViewModel(
         date = date,
         amount = amount,
         typeValue = type.value,
-        labelRes = mapLoanTransactionTypeToRes(type?.value),
-        isCredit = when (type.value?.lowercase()) {
-            "disbursement", "repayment" -> false
+        labelRes = mapLoanTransactionTypeToRes(type?.code),
+        isCredit = when (type.code) {
+            Constants.LOAN_CODE_DISBURSEMENT,
+            Constants.LOAN_CODE_REPAYMENT,
+            -> false
             else -> true
         },
         currency = currency?.code ?: "USD",
     )
 }
 
-internal fun mapLoanTransactionTypeToRes(typeValue: String?): StringResource {
-    return when (typeValue?.lowercase()) {
-        "disbursement" -> Res.string.feature_transaction_history_disbursement
-        "repayment" -> Res.string.feature_transaction_history_repayment
-        "recovery repayment" -> Res.string.feature_transaction_history_recovery_repayment
-        "interest waiver" -> Res.string.feature_transaction_history_interest_waiver
-        "fee waiver" -> Res.string.feature_transaction_history_fee_waiver
+internal fun mapLoanTransactionTypeToRes(code: String?): StringResource {
+    return when (code) {
+        Constants.LOAN_CODE_DISBURSEMENT -> Res.string.feature_transaction_history_disbursement
+        Constants.LOAN_CODE_REPAYMENT -> Res.string.feature_transaction_history_repayment
+        Constants.LOAN_CODE_RECOVERY_REPAYMENT -> Res.string.feature_transaction_history_recovery_repayment
+        Constants.LOAN_CODE_INTEREST_WAIVER -> Res.string.feature_transaction_history_interest_waiver
+        Constants.LOAN_CODE_FEE_WAIVER -> Res.string.feature_transaction_history_fee_waiver
         else -> Res.string.feature_transaction_detail_default_type
     }
 }
-
-internal fun mapShareTransactionTypeToRes(typeValue: String?): StringResource {
-    return when (typeValue?.lowercase()) {
-        "purchase" -> Res.string.feature_transaction_history_purchase
-        "redeem" -> Res.string.feature_transaction_history_redeem
-        "charge payment" -> Res.string.feature_transaction_history_charge_payment
+internal fun mapShareTransactionTypeToRes(code: String?): StringResource {
+    return when (code) {
+        Constants.SHARE_CODE_PURCHASE -> Res.string.feature_transaction_history_purchase
+        Constants.SHARE_CODE_REDEEM -> Res.string.feature_transaction_history_redeem
+        Constants.SHARE_CODE_CHARGE_PAYMENT -> Res.string.feature_transaction_history_charge_payment
         else -> Res.string.feature_transaction_history_transaction
     }
 }
