@@ -14,6 +14,31 @@ sealed class MifosException(
     cause: Throwable? = null,
 ) : Exception(message, cause) {
 
+    class BadRequest(
+        message: String = "Bad request",
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
+    class Unauthorized(
+        message: String = "Unauthorized",
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
+    class NotFound(
+        message: String = "Not found",
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
+    class RequestTimeout(
+        message: String = "Request timeout",
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
+    class TooManyRequests(
+        message: String = "Too many requests",
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
     class ServerError(
         message: String = "Server error",
         cause: Throwable? = null,
@@ -21,6 +46,11 @@ sealed class MifosException(
 
     class ClientError(
         message: String,
+        cause: Throwable? = null,
+    ) : MifosException(message, cause)
+
+    class SerializationError(
+        message: String = "Serialization error",
         cause: Throwable? = null,
     ) : MifosException(message, cause)
 

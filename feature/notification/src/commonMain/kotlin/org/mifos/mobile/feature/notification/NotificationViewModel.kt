@@ -14,7 +14,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.DataState
@@ -59,6 +58,10 @@ internal class NotificationViewModel(
         }
     }
 
+    private fun handleError(exception: Throwable) {
+        _notificationUiState.value = NotificationUiState.Error(exception.message)
+    }
+
     /**
      * Kicks off the process of loading notifications from the repository. This function updates the
      * UI state to reflect the current status of the operation, such as Loading, Success, or Error.
@@ -67,15 +70,10 @@ internal class NotificationViewModel(
         _notificationUiState.value = Loading
         viewModelScope.launch {
             notificationRepositoryImp.loadNotifications()
-                .catch {
-                    _isRefreshing.emit(false)
-                    _notificationUiState.value =
-                        NotificationUiState.Error(errorMessage = it.message)
-                }.collect { notifications ->
+                .collect { notifications ->
                     when (notifications) {
                         is DataState.Error -> {
-                            _notificationUiState.value =
-                                NotificationUiState.Error(notifications.message)
+                            handleError(notifications.exception)
                         }
                         DataState.Loading -> {
                             Loading

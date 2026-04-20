@@ -15,7 +15,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -111,6 +110,17 @@ internal class ShareFillApplicationViewModel(
     init {
         observeNetworkStatus()
         observeAuthResult()
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ShareApplicationUiState.Network
+                    else -> ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server)
+                },
+            )
+        }
     }
 
     /**
@@ -280,13 +290,7 @@ internal class ShareFillApplicationViewModel(
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
-            ).catch { e ->
-                mutableStateFlow.update {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
-                    )
-                }
-            }.collect { clientAccounts ->
+            ).collect { clientAccounts ->
                 sendAction(
                     ShareApplicationAction.Internal.ReceiveClientSavingsAccounts(
                         accounts = clientAccounts,
@@ -307,15 +311,7 @@ internal class ShareFillApplicationViewModel(
     private fun handleClientAccountResult(response: DataState<ClientAccounts>) {
         when (response) {
             is DataState.Loading -> showLoading()
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(
-                            Res.string.feature_apply_share_error_server,
-                        ),
-                    )
-                }
-            }
+            is DataState.Error -> handleError(response.exception)
             is DataState.Success -> {
                 val shareTemplate = response.data
                 updateState {
@@ -339,15 +335,7 @@ internal class ShareFillApplicationViewModel(
     private fun handleShareTemplateResult(template: DataState<ShareProductDetails?>) {
         when (template) {
             is DataState.Loading -> showLoading()
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(
-                            Res.string.feature_apply_share_error_server,
-                        ),
-                    )
-                }
-            }
+            is DataState.Error -> handleError(template.exception)
             is DataState.Success -> {
                 val shareTemplate = template.data ?: return
                 updateState {

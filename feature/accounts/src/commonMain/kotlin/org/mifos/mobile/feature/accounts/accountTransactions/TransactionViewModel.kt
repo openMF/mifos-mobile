@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.accounts.accountTransactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,7 +22,6 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
-import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_credit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_debit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_1_year
@@ -169,6 +167,17 @@ internal class AccountsTransactionViewModel(
                 val id = action.id ?: return
                 sendEvent(AccountTransactionEvent.NavigateToDetails(id.toString()))
             }
+        }
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.Error(Res.string.feature_generic_error_server)
+                },
+            )
         }
     }
 
@@ -338,16 +347,8 @@ internal class AccountsTransactionViewModel(
     private fun handleShareTransactionsResult(dataState: DataState<ShareAccountWithAssociations>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        isRefreshing = false,
-                        uiState = if (dataState.exception is MifosException.NetworkError) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
+                updateState { it.copy(isRefreshing = false) }
+                handleError(dataState.exception)
             }
             DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
             is DataState.Success -> {
@@ -421,14 +422,6 @@ internal class AccountsTransactionViewModel(
     private fun loadRecentTransactions() {
         viewModelScope.launch {
             recentTransactionRepositoryImpl.recentTransactions(state.clientId, offset, limit)
-                .catch { error ->
-                    updateState {
-                        it.copy(
-                            isRefreshing = false,
-                            uiState = ScreenUiState.Error(Res.string.feature_no__filtered_transactions_found),
-                        )
-                    }
-                }
                 .collect { result ->
                     sendAction(AccountTransactionAction.Internal.ReceiveTransactions(result))
                 }
@@ -442,16 +435,8 @@ internal class AccountsTransactionViewModel(
     private fun handleTransactionResult(dataState: DataState<Page<Transaction>>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        isRefreshing = false,
-                        uiState = if (dataState.exception is MifosException.NetworkError) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
+                updateState { it.copy(isRefreshing = false) }
+                handleError(dataState.exception)
             }
 
             DataState.Loading -> {
@@ -499,16 +484,8 @@ internal class AccountsTransactionViewModel(
     private fun handleSavingsTransactionsResult(dataState: DataState<SavingsWithAssociations>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        isRefreshing = false,
-                        uiState = if (dataState.exception is MifosException.NetworkError) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
+                updateState { it.copy(isRefreshing = false) }
+                handleError(dataState.exception)
             }
 
             DataState.Loading -> {
@@ -555,16 +532,8 @@ internal class AccountsTransactionViewModel(
     private fun handleLoanTransactionsResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        isRefreshing = false,
-                        uiState = if (dataState.exception is MifosException.NetworkError) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
+                updateState { it.copy(isRefreshing = false) }
+                handleError(dataState.exception)
             }
 
             DataState.Loading -> {

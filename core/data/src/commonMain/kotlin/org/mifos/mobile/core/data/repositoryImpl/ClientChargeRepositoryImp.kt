@@ -11,17 +11,14 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.charge.toModel
 import org.mifos.mobile.core.data.mapper.share.toShareChargeModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
-import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.enums.ChargeType
@@ -31,31 +28,25 @@ import kotlin.collections.map
 class ClientChargeRepositoryImp(
     private val dataManager: DataManager,
 //    private val chargeDao: ChargeDao,
-    private val ioDispatcher: CoroutineDispatcher,
-) : ClientChargeRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), ClientChargeRepository {
 
     override fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
         return dataManager.clientChargeApi.getClientChargeList(clientId)
             .map { response ->
-                DataState.Success(
-                    response.toPageModel { dto ->
-                        dto.toModel()
-                    },
-                )
+                response.toPageModel { dto ->
+                    dto.toModel()
+                }
             }
-            .catch { exception -> DataState.Error(exception.toMifosException(), null) }
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
             .map { response ->
-                DataState.Success(
-                    response.map { it.toModel() },
-                )
+                response.map { it.toModel() }
             }
-            .catch { exception -> DataState.Error(exception.toMifosException(), null) }
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun clientLocalCharges(): Flow<DataState<Page<Charge>>> {
@@ -66,28 +57,16 @@ class ClientChargeRepositoryImp(
             .flowOn(ioDispatcher)
     }
 
-    override suspend fun syncCharges(charges: Page<Charge>?): DataState<Page<Charge>?> {
-        return withContext(ioDispatcher) {
-//            charges?.pageItems?.let {
-//                chargeDao.syncCharges(it.map { it.toChargeEntity() })
-//            }
-//
-//            charges?.copy(pageItems = charges.pageItems)
-            val result = charges?.copy(pageItems = charges.pageItems) ?: Page(0, emptyList())
-            DataState.Success(result)
-        }
+    override suspend fun syncCharges(charges: Page<Charge>?): DataState<Page<Charge>?> = safeCall {
+        val page = charges ?: Page(totalFilteredRecords = 0, pageItems = emptyList())
+        page
     }
 
     override fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
-                DataState.Success(
-                    response.charges.map { it.toShareChargeModel() },
-                )
+                response.charges.map { it.toShareChargeModel() }
             }
-            .catch { exception ->
-                DataState.Error(exception.toMifosException(), null)
-            }
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 }

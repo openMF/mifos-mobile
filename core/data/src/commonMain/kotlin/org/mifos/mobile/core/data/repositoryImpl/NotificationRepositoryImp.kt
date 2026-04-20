@@ -19,8 +19,8 @@ import org.mifos.mobile.core.model.entity.MifosNotification
 
 class NotificationRepositoryImp(
 //    private val notificationDao: MifosNotificationDao,
-    private val ioDispatcher: CoroutineDispatcher,
-) : NotificationRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), NotificationRepository {
 
     override fun loadNotifications(): Flow<DataState<List<MifosNotification>>> {
 //        return notificationDao.getNotifications()

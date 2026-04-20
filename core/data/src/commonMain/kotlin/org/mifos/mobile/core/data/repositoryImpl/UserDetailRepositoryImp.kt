@@ -11,53 +11,37 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.UserDetailRepository
-import org.mifos.mobile.core.data.util.toMifosException
-import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.notification.NotificationRegisterPayload
 import org.mifos.mobile.core.model.entity.notification.NotificationUserDetail
 import org.mifos.mobile.core.network.DataManager
 
 class UserDetailRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : UserDetailRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), UserDetailRepository {
 
-    override suspend fun registerNotification(payload: NotificationRegisterPayload?): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.notificationApi.registerNotification(payload?.toDto())
-            }
-            DataState.Success("Notification Registered Successfully")
-        } catch (e: Exception) {
-            DataState.Error(e.toMifosExceptionSuspend(), null)
+    override suspend fun registerNotification(payload: NotificationRegisterPayload?): DataState<String> =
+        safeCall {
+            dataManager.notificationApi.registerNotification(payload?.toDto())
+            "Notification Registered Successfully"
         }
-    }
 
     override fun getUserNotificationId(id: Long): Flow<DataState<NotificationUserDetail>> {
         return dataManager.notificationApi.getUserNotificationId(id)
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override suspend fun updateRegisterNotification(
         id: Long,
         payload: NotificationRegisterPayload?,
-    ): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                dataManager.notificationApi.updateRegisterNotification(id, payload?.toDto())
-            }
-            DataState.Success("Notification Updated Successfully")
-        } catch (e: Exception) {
-            DataState.Error(e.toMifosExceptionSuspend(), null)
-        }
+    ): DataState<String> = safeCall {
+        dataManager.notificationApi.updateRegisterNotification(id, payload?.toDto())
+        "Notification Updated Successfully"
     }
 }

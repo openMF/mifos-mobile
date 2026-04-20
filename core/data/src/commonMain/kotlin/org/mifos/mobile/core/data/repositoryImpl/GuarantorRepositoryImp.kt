@@ -13,16 +13,11 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.guarantor.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.GuarantorRepository
-import org.mifos.mobile.core.data.util.toMifosException
-import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorApplicationPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.model.entity.guarantor.GuarantorTemplatePayload
@@ -30,65 +25,45 @@ import org.mifos.mobile.core.network.DataManager
 
 class GuarantorRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : GuarantorRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), GuarantorRepository {
 
     override fun getGuarantorTemplate(loanId: Long?): Flow<DataState<GuarantorTemplatePayload?>> {
         return dataManager.guarantorApi.getGuarantorTemplate(loanId!!)
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override suspend fun createGuarantor(
         loanId: Long?,
         payload: GuarantorApplicationPayload?,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.guarantorApi.createGuarantor(loanId!!, payload?.toDto())
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.guarantorApi
+            .createGuarantor(loanId!!, payload?.toDto())
+            .bodyAsText()
     }
 
     override suspend fun updateGuarantor(
         payload: GuarantorApplicationPayload?,
         loanId: Long?,
         guarantorId: Long?,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.guarantorApi.updateGuarantor(
-                    payload?.toDto(),
-                    loanId!!,
-                    guarantorId!!,
-                )
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.guarantorApi
+            .updateGuarantor(payload?.toDto(), loanId!!, guarantorId!!)
+            .bodyAsText()
     }
 
-    override suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.guarantorApi.deleteGuarantor(loanId!!, guarantorId!!)
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+    override suspend fun deleteGuarantor(loanId: Long?, guarantorId: Long?): DataState<String> = safeCall {
+        dataManager.guarantorApi
+            .deleteGuarantor(loanId!!, guarantorId!!)
+            .bodyAsText()
     }
 
     override fun getGuarantorList(loanId: Long): Flow<DataState<List<GuarantorPayload?>?>> {
         return flow { emit(getDemoGuarantorPayloads()) }
-            .asDataStateFlow(Throwable::toMifosException)
-            .flowOn(ioDispatcher)
+            .asDataState()
 //        return dataManager.guarantorApi.getGuarantorList(loanId)
-//            .asDataStateFlow().flowOn(ioDispatcher)
+//            .asDataState()
     }
 }
 

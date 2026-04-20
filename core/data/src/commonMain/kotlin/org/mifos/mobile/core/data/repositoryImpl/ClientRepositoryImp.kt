@@ -11,22 +11,19 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ClientRepository
-import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.network.DataManager
 
 class ClientRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : ClientRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), ClientRepository {
 
     override fun loadClient(): Flow<DataState<Page<Client>>> {
         return dataManager.clientsApi.clients()
@@ -35,6 +32,6 @@ class ClientRepositoryImp(
                     dto.toModel()
                 }
             }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 }

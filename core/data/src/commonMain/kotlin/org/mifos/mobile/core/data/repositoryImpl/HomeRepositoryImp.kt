@@ -15,12 +15,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.accounts.toModel
 import org.mifos.mobile.core.data.mapper.client.toModel
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.NotificationRepository
-import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.client.Client
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.network.DataManager
@@ -28,23 +26,23 @@ import org.mifos.mobile.core.network.DataManager
 class HomeRepositoryImp(
     private val dataManager: DataManager,
     private val notificationRepository: NotificationRepository,
-    private val ioDispatcher: CoroutineDispatcher,
-) : HomeRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), HomeRepository {
 
     override fun clientAccounts(clientId: Long): Flow<DataState<ClientAccounts>> =
         dataManager.clientsApi.getClientAccounts(clientId)
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
 
     override fun currentClient(clientId: Long): Flow<DataState<Client>> {
         return dataManager.clientsApi.getClientForId(clientId)
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun clientImage(clientId: Long): Flow<DataState<String>> {
         return dataManager.clientsApi.getClientImage(clientId)
-            .asDataStateFlow(Throwable::toMifosException)
+            .asDataState()
             .map { response ->
                 when (response) {
                     is DataState.Success -> {

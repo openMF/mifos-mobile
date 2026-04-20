@@ -11,7 +11,6 @@ package org.mifos.mobile.feature.share.application.shareApplication
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -64,6 +63,17 @@ internal class ShareApplyViewModel(
 
     init {
         observeNetworkStatus()
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ShareApplicationUiState.Network
+                    else -> ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server)
+                },
+            )
+        }
     }
 
     /**
@@ -131,27 +141,14 @@ internal class ShareApplyViewModel(
                 shareAccountRepositoryImpl.getShareProducts(state.clientId),
             ) { client, template ->
                 client to template
+            }.collect { (client, template) ->
+                sendAction(
+                    ShareApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                        client,
+                        template,
+                    ),
+                )
             }
-                .catch { throwable ->
-
-                    updateState {
-                        it.copy(
-                            uiState = if (throwable.cause is MifosException.NetworkError) {
-                                ShareApplicationUiState.Network
-                            } else {
-                                ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server)
-                            },
-                        )
-                    }
-                }
-                .collect { (client, template) ->
-                    sendAction(
-                        ShareApplicationAction.Internal.ReceiveClientAndTemplateResult(
-                            client,
-                            template,
-                        ),
-                    )
-                }
         }
     }
 
@@ -168,7 +165,10 @@ internal class ShareApplyViewModel(
         template: DataState<Page<ShareProduct>>,
     ) {
         when {
-            listOf(client, template).any { it is DataState.Loading } -> {
+            client is DataState.Error -> handleError(client.exception)
+            template is DataState.Error -> handleError(template.exception)
+
+            client is DataState.Loading || template is DataState.Loading -> {
                 showLoading()
             }
 
@@ -185,12 +185,6 @@ internal class ShareApplyViewModel(
                         },
                     )
                 }
-            }
-
-            else -> updateState {
-                it.copy(
-                    uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
-                )
             }
         }
     }

@@ -9,10 +9,13 @@
  */
 package org.mifos.mobile.core.common
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.cancellation.CancellationException
 
 sealed class DataState<out T> {
     abstract val data: T?
@@ -29,23 +32,40 @@ sealed class DataState<out T> {
         val exception: Throwable,
         override val data: T? = null,
     ) : DataState<T>() {
-        val message = exception.message.toString()
+        val message: String get() = exception.message ?: "Unknown error"
     }
 }
 
-fun <T> Flow<T>.asDataStateFlow(): Flow<DataState<T>> =
-    map<T, DataState<T>> { DataState.Success(it) }
-        .onStart { emit(DataState.Loading) }
-        .catch {
-            val mapped = if (it is MifosException) {
-                it
-            } else {
-                MifosException.GenericError(it.message ?: "Unknown error", it)
-            }
-            emit(DataState.Error(mapped, null))
-        }
-
-fun <T> Flow<T>.asDataStateFlow(exceptionMapper: (Throwable) -> MifosException): Flow<DataState<T>> =
+fun <T> Flow<T>.asDataStateFlow(
+    exceptionMapper: suspend (Throwable) -> MifosException = ::defaultExceptionMapper,
+): Flow<DataState<T>> =
     map<T, DataState<T>> { DataState.Success(it) }
         .onStart { emit(DataState.Loading) }
         .catch { emit(DataState.Error(exceptionMapper(it), null)) }
+
+suspend fun <T> safeDataStateCall(
+    dispatcher: CoroutineDispatcher,
+    exceptionMapper: suspend (Throwable) -> MifosException = ::defaultExceptionMapper,
+    block: suspend () -> T,
+): DataState<T> {
+    return withContext(dispatcher) {
+        try {
+            DataState.Success(block())
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            DataState.Error(exceptionMapper(e), null)
+        }
+    }
+}
+
+private fun defaultExceptionMapper(throwable: Throwable): MifosException {
+    return if (throwable is MifosException) {
+        throwable
+    } else {
+        MifosException.GenericError(
+            throwable.message ?: "Unknown error",
+            throwable,
+        )
+    }
+}

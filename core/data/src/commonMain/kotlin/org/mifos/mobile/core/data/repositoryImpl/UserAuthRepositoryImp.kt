@@ -11,13 +11,11 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.mapper.auth.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.UserAuthRepository
-import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.UpdatePasswordPayload
 import org.mifos.mobile.core.model.entity.User
 import org.mifos.mobile.core.model.entity.payload.LoginPayload
@@ -27,80 +25,59 @@ import org.mifos.mobile.core.network.DataManager
 
 class UserAuthRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : UserAuthRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), UserAuthRepository {
 
     override suspend fun registerUser(
         registerPayload: RegisterPayload,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.registrationApi.registerUser(registerPayload.toDto())
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.registrationApi
+            .registerUser(registerPayload.toDto())
+            .bodyAsText()
     }
 
-    override suspend fun login(username: String, password: String): DataState<User> {
+    override suspend fun login(username: String, password: String): DataState<User> = safeCall {
         val loginPayload = LoginPayload(
             username = username,
             password = password,
         ).toDto()
 
-        return try {
-            withContext(ioDispatcher) {
-                val user = dataManager.authenticationApi
-                    .authenticate(loginPayload)
-                    .toModel()
+        val user = dataManager.authenticationApi
+            .authenticate(loginPayload)
+            .toModel()
 
-                if (user.base64EncodedAuthenticationKey != null) {
-                    DataState.Success(user)
-                } else {
-                    DataState.Error(MifosException.ClientError("Invalid Credentials"), null)
-                }
-            }
-        } catch (e: Exception) {
-            DataState.Error(e.toMifosExceptionSuspend(), null)
+        if (user.base64EncodedAuthenticationKey != null) {
+            user
+        } else {
+            throw MifosException.ClientError("Invalid Credentials")
         }
     }
 
     override suspend fun verifyUser(
         authenticationToken: String?,
         requestId: String?,
-    ): DataState<String> {
+    ): DataState<String> = safeCall {
         val userVerify = UserVerify(
             authenticationToken = authenticationToken,
             requestId = requestId,
         ).toDto()
 
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.registrationApi.verifyUser(userVerify)
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+        dataManager.registrationApi
+            .verifyUser(userVerify)
+            .bodyAsText()
     }
 
     override suspend fun updateAccountPassword(
         newPassword: String,
         confirmPassword: String,
-    ): DataState<String> {
+    ): DataState<String> = safeCall {
         val payload = UpdatePasswordPayload(
             password = newPassword,
             repeatPassword = confirmPassword,
         ).toDto()
 
-        return withContext(ioDispatcher) {
-            try {
-                val response = dataManager.userDetailsApi.updateAccountPassword(payload)
-                DataState.Success(response.bodyAsText())
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
-            }
-        }
+        dataManager.userDetailsApi
+            .updateAccountPassword(payload)
+            .bodyAsText()
     }
 }

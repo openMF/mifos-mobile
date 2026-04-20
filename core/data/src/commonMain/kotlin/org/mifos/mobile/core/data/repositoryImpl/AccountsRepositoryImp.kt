@@ -11,24 +11,21 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.accounts.toModel
 import org.mifos.mobile.core.data.repository.AccountsRepository
-import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.network.DataManager
 
 class AccountsRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : AccountsRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), AccountsRepository {
 
     override fun loadAccounts(clientId: Long?, accountType: String?): Flow<DataState<ClientAccounts>> {
         return dataManager.clientsApi.getAccounts(clientId!!, accountType)
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 }

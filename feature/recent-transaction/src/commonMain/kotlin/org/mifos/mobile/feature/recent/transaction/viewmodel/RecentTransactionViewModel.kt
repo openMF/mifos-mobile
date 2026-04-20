@@ -10,13 +10,13 @@
 package org.mifos.mobile.feature.recent.transaction.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -123,6 +123,17 @@ internal class RecentTransactionViewModel(
             } else {
                 loadTransactions()
             }
+        }
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                viewState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.ErrorString(exception.message ?: "Something went wrong")
+                },
+            )
         }
     }
 
@@ -235,13 +246,7 @@ internal class RecentTransactionViewModel(
                         }
                     }
                     is DataState.Error -> {
-                        updateState {
-                            it.copy(
-                                viewState = ScreenUiState.ErrorString(
-                                    dataState.exception.message ?: "Something went wrong",
-                                ),
-                            )
-                        }
+                        handleError(dataState.exception)
                     }
                 }
             }
@@ -263,15 +268,6 @@ internal class RecentTransactionViewModel(
                     accountId = selectedAccount.id,
                     associationType = Constants.TRANSACTIONS,
                 )
-                .catch { e ->
-                    updateState {
-                        it.copy(
-                            viewState = ScreenUiState.ErrorString(
-                                e.message ?: "Something went wrong",
-                            ),
-                        )
-                    }
-                }
                 .collect { dataState ->
                     sendAction(RecentTransactionAction.Internal.HandleTransactions(dataState))
                 }
@@ -302,13 +298,7 @@ internal class RecentTransactionViewModel(
             }
 
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        viewState = ScreenUiState.ErrorString(
-                            dataState.exception.message ?: "Something went wrong",
-                        ),
-                    )
-                }
+                handleError(dataState.exception)
             }
 
             is DataState.Loading -> {

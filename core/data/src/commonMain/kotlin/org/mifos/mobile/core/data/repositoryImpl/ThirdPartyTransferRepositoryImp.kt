@@ -11,23 +11,20 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
-import org.mifos.mobile.core.data.util.toMifosException
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.network.DataManager
 
 class ThirdPartyTransferRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : ThirdPartyTransferRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), ThirdPartyTransferRepository {
     override fun thirdPartyTransferTemplate(): Flow<DataState<AccountOptionsTemplate>> {
         return dataManager.thirdPartyTransferApi.accountTransferTemplate()
             .map { it.toModel() }
-            .asDataStateFlow(Throwable::toMifosException).flowOn(ioDispatcher)
+            .asDataState()
     }
 }

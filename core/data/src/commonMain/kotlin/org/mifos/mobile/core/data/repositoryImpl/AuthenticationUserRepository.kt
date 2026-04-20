@@ -15,15 +15,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.Dispatcher
 import org.mifos.mobile.core.common.MifosDispatchers
-import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.AppSettings
@@ -32,10 +29,10 @@ import org.mifos.mobile.core.model.UserData
 
 class AuthenticationUserRepository(
     private val preferencesHelper: UserPreferencesRepository,
-    private val ioDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher,
     @Dispatcher(MifosDispatchers.Unconfined)
     private val unconfinedDispatcher: CoroutineDispatcher,
-) : UserDataRepository {
+) : BaseRepository(ioDispatcher), UserDataRepository {
 
     private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
 
@@ -43,28 +40,19 @@ class AuthenticationUserRepository(
         get() = preferencesHelper.userInfo.value.userId
 
     override val userData: Flow<DataState<UserData>> = flow {
-        try {
-            val userData = UserData(
+        emit(
+            UserData(
                 isAuthenticated = !preferencesHelper.token.value.isNullOrEmpty(),
                 userName = preferencesHelper.userInfo.firstOrNull()?.userName ?: "",
                 clientId = preferencesHelper.clientId.value ?: 0,
                 password = preferencesHelper.userInfo.firstOrNull()?.password ?: "",
-            )
-            emit(DataState.Success(userData))
-        } catch (e: Exception) {
-            emit(DataState.Error(MifosException.GenericError(e.message ?: "Unknown error", e), null))
-        }
-    }.flowOn(ioDispatcher)
+            ),
+        )
+    }.asDataState()
 
-    override suspend fun logOut(): DataState<String> {
-        return try {
-            withContext(ioDispatcher) {
-                preferencesHelper.logOut()
-            }
-            DataState.Success("User logged out Successfully")
-        } catch (e: Exception) {
-            DataState.Error(MifosException.GenericError(e.message ?: "Unknown error", e), null)
-        }
+    override suspend fun logOut(): DataState<String> = safeCall {
+        preferencesHelper.logOut()
+        "User logged out Successfully"
     }
 
     override val authState: StateFlow<AuthState>

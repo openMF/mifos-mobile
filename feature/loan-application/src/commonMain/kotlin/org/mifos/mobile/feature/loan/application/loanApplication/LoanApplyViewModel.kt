@@ -15,7 +15,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
@@ -32,10 +31,10 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_server
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_submit_failed
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_error_too_many_attempts
-import okio.IOException
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -125,6 +124,17 @@ internal class LoanApplyViewModel(
      *
      * @param action The [LoanApplicationAction] to be handled.
      */
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.Error(Res.string.feature_apply_loan_error_server)
+                },
+            )
+        }
+    }
+
     override fun handleAction(action: LoanApplicationAction) {
         when (action) {
             is LoanApplicationAction.PurposeOfLoanChange -> {
@@ -203,28 +213,15 @@ internal class LoanApplyViewModel(
                 loanAccountRepositoryImp.getLoanTemplateByProduct(state.clientId, state.loanProductId),
             ) { client, template, purpose ->
                 Triple(client, template, purpose)
+            }.collect { (client, template, purpose) ->
+                sendAction(
+                    LoanApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                        client,
+                        template,
+                        purpose,
+                    ),
+                )
             }
-                .catch { throwable ->
-
-                    updateState {
-                        it.copy(
-                            uiState = if (throwable.cause is IOException) {
-                                ScreenUiState.Network
-                            } else {
-                                ScreenUiState.Error(Res.string.feature_apply_loan_error_server)
-                            },
-                        )
-                    }
-                }
-                .collect { (client, template, purpose) ->
-                    sendAction(
-                        LoanApplicationAction.Internal.ReceiveClientAndTemplateResult(
-                            client,
-                            template,
-                            purpose,
-                        ),
-                    )
-                }
         }
     }
 
@@ -243,7 +240,11 @@ internal class LoanApplyViewModel(
         purpose: DataState<LoanTemplate?>,
     ) {
         when {
-            listOf(client, template, purpose).any { it is DataState.Loading } -> {
+            client is DataState.Error -> handleError(client.exception)
+            template is DataState.Error -> handleError(template.exception)
+            purpose is DataState.Error -> handleError(purpose.exception)
+
+            client is DataState.Loading || template is DataState.Loading || purpose is DataState.Loading -> {
                 showLoading()
             }
 
@@ -311,8 +312,6 @@ internal class LoanApplyViewModel(
                     )
                 }
             }
-
-            else -> updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_apply_loan_error_server)) }
         }
     }
 

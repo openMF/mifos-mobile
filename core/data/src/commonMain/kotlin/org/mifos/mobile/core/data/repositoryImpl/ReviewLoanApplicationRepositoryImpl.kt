@@ -10,43 +10,33 @@
 package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
-import org.mifos.mobile.core.data.util.toMifosExceptionSuspend
 import org.mifos.mobile.core.model.entity.payload.LoansPayload
 import org.mifos.mobile.core.model.enums.LoanState
 import org.mifos.mobile.core.network.DataManager
 
 class ReviewLoanApplicationRepositoryImpl(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : ReviewLoanApplicationRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), ReviewLoanApplicationRepository {
 
     override suspend fun submitLoan(
         loanState: LoanState,
         loansPayload: LoansPayload,
         loanId: Long,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                when (loanState) {
-                    LoanState.CREATE -> {
-                        val response =
-                            dataManager.loanAccountsListApi.createLoansAccount(loansPayload.toDto())
-                        println("response $response")
-                        return@withContext DataState.Success("Loan Created Successfully")
-                    }
-                    LoanState.UPDATE -> {
-                        val response =
-                            dataManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload.toDto())
-                        println("response $response")
-                        return@withContext DataState.Success("Loan Updated Successfully")
-                    }
-                }
-            } catch (e: Exception) {
-                DataState.Error(e.toMifosExceptionSuspend(), null)
+    ): DataState<String> = safeCall {
+        when (loanState) {
+            LoanState.CREATE -> {
+                val response = dataManager.loanAccountsListApi.createLoansAccount(loansPayload.toDto())
+                println("response $response")
+                "Loan Created Successfully"
+            }
+            LoanState.UPDATE -> {
+                val response = dataManager.loanAccountsListApi.updateLoanAccount(loanId, loansPayload.toDto())
+                println("response $response")
+                "Loan Updated Successfully"
             }
         }
     }

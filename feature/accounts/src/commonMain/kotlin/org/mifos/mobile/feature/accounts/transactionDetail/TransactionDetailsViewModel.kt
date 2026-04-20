@@ -12,13 +12,13 @@ package org.mifos.mobile.feature.accounts.transactionDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.entity.TransactionDetails
@@ -71,6 +71,17 @@ class TransactionDetailsViewModel(
         }
     }
 
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.Error(Res.string.feature_generic_error_server)
+                },
+            )
+        }
+    }
+
     private fun fetchTransactionDetails() {
         updateState { it.copy(uiState = ScreenUiState.Loading) }
 
@@ -92,9 +103,6 @@ class TransactionDetailsViewModel(
 
     private suspend fun loadSavingsTransaction() {
         savingsRepository.getSavingsAccountTransactionDetails(state.accountId, state.transactionId)
-            .catch { exception ->
-                emit(DataState.Error(exception))
-            }
             .collect { dataState ->
                 handleDataState(dataState)
             }
@@ -102,9 +110,6 @@ class TransactionDetailsViewModel(
 
     private suspend fun loadLoanTransaction() {
         loanRepository.getLoanTransactionDetails(state.accountId, state.transactionId)
-            .catch { exception ->
-                emit(DataState.Error(exception))
-            }
             .collect { dataState ->
                 handleDataState(dataState)
             }
@@ -121,7 +126,7 @@ class TransactionDetailsViewModel(
                 }
             }
             is DataState.Error -> {
-                updateState { it.copy(uiState = ScreenUiState.Error(Res.string.feature_generic_error_server)) }
+                handleError(dataState.exception)
             }
             DataState.Loading -> {
                 updateState { it.copy(uiState = ScreenUiState.Loading) }
