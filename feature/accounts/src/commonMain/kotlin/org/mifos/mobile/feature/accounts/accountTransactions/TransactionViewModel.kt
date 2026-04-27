@@ -415,9 +415,9 @@ internal class AccountsTransactionViewModel(
         type = null,
         typeValue = type?.value,
         labelRes = mapShareTransactionTypeToRes(type?.code),
-        isCredit = when (type?.code) {
-            Constants.SHARE_CODE_PURCHASE,
-            Constants.SHARE_CODE_CHARGE_PAYMENT,
+        isCredit = when (ShareTransactionType.fromCode(type?.code)) {
+            ShareTransactionType.PURCHASE,
+            ShareTransactionType.CHARGE_PAYMENT,
             -> false
             else -> true
         },
@@ -750,32 +750,56 @@ internal class AccountsTransactionViewModel(
         amount = amount,
         typeValue = type.value,
         labelRes = mapLoanTransactionTypeToRes(type?.code),
-        isCredit = when (type.code) {
-            Constants.LOAN_CODE_DISBURSEMENT,
-            Constants.LOAN_CODE_REPAYMENT,
+        isCredit = when (LoanTransactionType.fromCode(type?.code)) {
+            LoanTransactionType.DISBURSEMENT,
+            LoanTransactionType.REPAYMENT,
             -> false
             else -> true
         },
         currency = currency?.code ?: "USD",
     )
 }
+internal enum class LoanTransactionType(val code: String) {
+    DISBURSEMENT("loanTransactionType.disbursement"),
+    REPAYMENT("loanTransactionType.repayment"),
+    RECOVERY_REPAYMENT("loanTransactionType.recoveryRepayment"),
+    INTEREST_WAIVER("loanTransactionType.interestWaiver"),
+    FEE_WAIVER("loanTransactionType.feeWaiver"),
+    UNKNOWN(""),
+    ;
 
-internal fun mapLoanTransactionTypeToRes(code: String?): StringResource {
-    return when (code) {
-        Constants.LOAN_CODE_DISBURSEMENT -> Res.string.feature_transaction_history_disbursement
-        Constants.LOAN_CODE_REPAYMENT -> Res.string.feature_transaction_history_repayment
-        Constants.LOAN_CODE_RECOVERY_REPAYMENT -> Res.string.feature_transaction_history_recovery_repayment
-        Constants.LOAN_CODE_INTEREST_WAIVER -> Res.string.feature_transaction_history_interest_waiver
-        Constants.LOAN_CODE_FEE_WAIVER -> Res.string.feature_transaction_history_fee_waiver
-        else -> Res.string.feature_transaction_detail_default_type
+    companion object {
+        fun fromCode(code: String?) = entries.find { it.code == code } ?: UNKNOWN
+    }
+}
+
+internal fun mapLoanTransactionTypeToRes(typeCode: String?): StringResource {
+    return when (LoanTransactionType.fromCode(typeCode)) {
+        LoanTransactionType.DISBURSEMENT -> Res.string.feature_transaction_history_disbursement
+        LoanTransactionType.REPAYMENT -> Res.string.feature_transaction_history_repayment
+        LoanTransactionType.RECOVERY_REPAYMENT -> Res.string.feature_transaction_history_recovery_repayment
+        LoanTransactionType.INTEREST_WAIVER -> Res.string.feature_transaction_history_interest_waiver
+        LoanTransactionType.FEE_WAIVER -> Res.string.feature_transaction_history_fee_waiver
+        LoanTransactionType.UNKNOWN -> Res.string.feature_transaction_detail_default_type
+    }
+}
+internal enum class ShareTransactionType(val code: String) {
+    PURCHASE("shareTransactionType.purchase"),
+    REDEEM("shareTransactionType.redeem"),
+    CHARGE_PAYMENT("shareTransactionType.chargePayment"),
+    UNKNOWN(""),
+    ;
+
+    companion object {
+        fun fromCode(code: String?) = entries.find { it.code == code } ?: UNKNOWN
     }
 }
 internal fun mapShareTransactionTypeToRes(code: String?): StringResource {
-    return when (code) {
-        Constants.SHARE_CODE_PURCHASE -> Res.string.feature_transaction_history_purchase
-        Constants.SHARE_CODE_REDEEM -> Res.string.feature_transaction_history_redeem
-        Constants.SHARE_CODE_CHARGE_PAYMENT -> Res.string.feature_transaction_history_charge_payment
-        else -> Res.string.feature_transaction_history_transaction
+    return when (ShareTransactionType.fromCode(code)) {
+        ShareTransactionType.PURCHASE -> Res.string.feature_transaction_history_purchase
+        ShareTransactionType.REDEEM -> Res.string.feature_transaction_history_redeem
+        ShareTransactionType.CHARGE_PAYMENT -> Res.string.feature_transaction_history_charge_payment
+        ShareTransactionType.UNKNOWN -> Res.string.feature_transaction_history_transaction
     }
 }
 
@@ -804,7 +828,7 @@ data class UiTransaction(
 /**
  * Extension function to map TransactionType to localized StringResource
  */
-internal fun TransactionType?.getLabelRes(): org.jetbrains.compose.resources.StringResource {
+internal fun TransactionType?.getLabelRes(): StringResource {
     return when {
         this?.deposit == true -> Res.string.feature_transaction_history_deposit
         this?.withdrawal == true -> Res.string.feature_transaction_history_withdrawal

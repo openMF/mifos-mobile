@@ -116,15 +116,4 @@ object Constants {
     const val APPLY_SAVINGS = "apply_savings"
     const val APPLY_SHARE = "apply_share"
     const val TRANSFER_TAB = "transfer_tab"
-
-    const val LOAN_CODE_DISBURSEMENT = "loanTransactionType.disbursement"
-    const val LOAN_CODE_REPAYMENT = "loanTransactionType.repayment"
-    const val LOAN_CODE_RECOVERY_REPAYMENT = "loanTransactionType.recoveryRepayment"
-    const val LOAN_CODE_INTEREST_WAIVER = "loanTransactionType.interestWaiver"
-    const val LOAN_CODE_FEE_WAIVER = "loanTransactionType.feeWaiver"
-
-    // Share Transaction Codes
-    const val SHARE_CODE_PURCHASE = "shareTransactionType.purchase"
-    const val SHARE_CODE_REDEEM = "shareTransactionType.redeem"
-    const val SHARE_CODE_CHARGE_PAYMENT = "shareTransactionType.chargePayment"
 }
