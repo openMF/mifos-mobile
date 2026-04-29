@@ -16,10 +16,6 @@ class BaseURL {
     val defaultBaseUrl: String
         get() = PROTOCOL_HTTPS + API_ENDPOINT
 
-    fun getUrl(endpoint: String): String {
-        return endpoint + API_PATH
-    }
-
     companion object {
         const val API_ENDPOINT = "tt.mifos.community"
         const val API_PATH = "/fineract-provider/api/v1/self/"
