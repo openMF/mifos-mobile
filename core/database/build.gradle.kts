@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             api(projects.core.common)
             api(projects.coreBase.database)
+            implementation(projects.coreBase.security)
         }
     }
 }

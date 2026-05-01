@@ -65,6 +65,8 @@ include(":core-base:designsystem")
 include(":core-base:platform")
 include(":core-base:ui")
 include(":core-base:analytics")
+include(":core-base:security")
+include(":core-base:store")
 
 // Feature Modules
 include(":feature:beneficiary")

@@ -42,12 +42,14 @@ kotlin {
             implementation(projects.feature.shareApplication)
             // Core Modules
             implementation(projects.core.data)
+            implementation(projects.core.database)
             implementation(projects.core.common)
             implementation(projects.core.network)
             implementation(projects.core.model)
             implementation(projects.core.datastore)
             implementation(projects.coreBase.common)
             implementation(projects.coreBase.platform)
+            implementation(projects.coreBase.security)
             implementation(projects.libs.mifosPasscode)
             //put your multiplatform dependencies here
             implementation(compose.material3)

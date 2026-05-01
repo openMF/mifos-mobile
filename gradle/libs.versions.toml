@@ -42,8 +42,11 @@ material3 = "1.3.1"
 mockitoCoreVersion = "5.6.0"
 multidexVersion = "2.0.1"
 roborazzi = "1.26.0"
-room = "2.7.2"
+androidxSecurityCrypto = "1.1.0-alpha06"
+bouncycastle = "1.78.1"
+room = "3.0.0-alpha03"
 sqliteBundled = "2.5.0-alpha12"
+store = "5.1.0-alpha08"
 secrets = "2.0.1"
 spotlessVersion = "6.25.0"
 truth = "1.4.4"
@@ -112,7 +115,6 @@ androidxMacroBenchmark = "1.3.4"
 packageName = "Mifos Mobile"
 packageNamespace = "org.mifos.mobile"
 packageVersion = "1.0.0"
-roomCommonVersion = "2.6.1"
 
 # Android Version
 androidPackageNamespace = "org.mifos.mobile"
@@ -164,11 +166,10 @@ androidx-multidex = { group = "androidx.multidex", name = "multidex", version.re
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileinstaller" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room" }
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "androidxSecurityCrypto" }
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqliteBundled" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
@@ -193,7 +194,10 @@ lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = 
 lint-checks = { group = "com.android.tools.lint", name = "lint-checks", version.ref = "androidTools" }
 lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "androidTools" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCoreVersion" }
-room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
+room-gradlePlugin = { module = "androidx.room3:room3-gradle-plugin", version.ref = "room" }
+store5 = { group = "org.mobilenativefoundation.store", name = "store5", version.ref = "store" }
+store5-cache = { group = "org.mobilenativefoundation.store", name = "cache5", version.ref = "store" }
 spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotlessVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
@@ -339,8 +343,8 @@ android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 
-# Room Plugins
-room = { id = "androidx.room", version.ref = "room" }
+#Room 3 Plugin
+room = { id = "androidx.room3", version.ref = "room" }
 
 mifos-kmp-room = { id = "mifos.kmp.room", version = "unspecified" }
 mifos-android-application = { id = "mifos.android.application", version = "unspecified" }

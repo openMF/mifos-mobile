@@ -32,6 +32,8 @@ kotlin{
             implementation(libs.kotlinx.serialization.core)
             implementation(projects.core.common)
             implementation(projects.core.model)
+            implementation(projects.coreBase.datastore)
+            implementation(projects.coreBase.security)
         }
     }
 }

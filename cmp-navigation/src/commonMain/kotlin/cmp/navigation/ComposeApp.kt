@@ -28,6 +28,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.NetworkBanner
+import template.core.base.security.SecurityGate
 
 @Composable
 fun ComposeApp(
@@ -54,30 +55,32 @@ fun ComposeApp(
         }
     }
 
-    MifosMobileTheme(
-        darkTheme = uiState.darkTheme,
-        androidTheme = uiState.isAndroidTheme,
-        shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+    SecurityGate {
+        MifosMobileTheme(
+            darkTheme = uiState.darkTheme,
+            androidTheme = uiState.isAndroidTheme,
+            shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
         ) {
-            Column(
-                modifier = modifier
+            Box(
+                modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding(),
+                    .background(MaterialTheme.colorScheme.surface),
             ) {
-                NetworkBanner(
-                    bannerState = uiState.networkBanner,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
+                ) {
+                    NetworkBanner(
+                        bannerState = uiState.networkBanner,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
 
-                RootNavScreen(
-                    modifier = Modifier,
-                    onSplashScreenRemoved = onSplashScreenRemoved,
-                )
+                    RootNavScreen(
+                        modifier = Modifier,
+                        onSplashScreenRemoved = onSplashScreenRemoved,
+                    )
+                }
             }
         }
     }

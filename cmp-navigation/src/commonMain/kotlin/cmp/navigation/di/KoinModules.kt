@@ -15,7 +15,9 @@ import cmp.navigation.rootnav.RootNavViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.di.DispatchersModule
+import org.mifos.mobile.core.data.di.AppStoreModule
 import org.mifos.mobile.core.data.di.RepositoryModule
+import org.mifos.mobile.core.database.di.DatabaseModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
 import org.mifos.mobile.core.ui.di.navigatorModule
@@ -40,6 +42,7 @@ import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.status.di.StatusModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
+import template.core.base.security.di.SecurityModule
 
 object KoinModules {
     private val commonModules = module {
@@ -87,10 +90,13 @@ object KoinModules {
     }
 
     val allModules = listOf(
+        SecurityModule,
+        DatabaseModule,
         commonModules,
-        dataModules,
         coreDataStoreModules,
         networkModules,
+        AppStoreModule,
+        dataModules,
         featureModules,
         sharedModule,
     )

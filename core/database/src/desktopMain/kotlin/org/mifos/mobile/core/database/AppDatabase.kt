@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.core.database
 
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -28,6 +29,7 @@ import org.mifos.mobile.core.database.utils.ChargeTypeConverters
     autoMigrations = [],
 )
 @TypeConverters(ChargeTypeConverters::class)
+@ConstructedBy(AppDatabaseConstructor::class)
 actual abstract class AppDatabase : RoomDatabase() {
 
     actual abstract val mifosNotificationDao: MifosNotificationDao

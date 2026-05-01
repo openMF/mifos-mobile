@@ -35,8 +35,12 @@ kotlin {
             api(projects.core.common)
             api(projects.core.datastore)
             api(projects.core.model)
+            implementation(projects.core.database)
             implementation(projects.core.network)
             implementation(projects.core.analytics)
+            implementation(projects.coreBase.store)
+            implementation(libs.store5)
+            implementation(libs.store5.cache)
             implementation(libs.kotlinx.serialization.json)
         }
         androidMain.dependencies {

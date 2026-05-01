@@ -9,16 +9,16 @@
  */
 package org.mifos.mobile.core.database
 
+import androidx.room3.RoomDatabaseConstructor
 import org.mifos.mobile.core.database.dao.ChargeDao
 import org.mifos.mobile.core.database.dao.MifosNotificationDao
+
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}
 
 expect abstract class AppDatabase {
     abstract val mifosNotificationDao: MifosNotificationDao
     abstract val chargeDao: ChargeDao
 }
-
-// fun getRoomDatabase(
-//    appDatabase: AppDatabase,
-// ): AppDatabase {
-//    return appDatabase
-// }

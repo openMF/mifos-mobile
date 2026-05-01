@@ -18,19 +18,21 @@ import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepositoryImpl
 
 val PreferencesModule = module {
-    factory<Settings> { Settings() }
+    single<Settings>(named("plain")) { Settings() }
+    single<Settings>(named("secure")) { Settings() }
 
     factory {
         UserPreferencesDataSource(
-            settings = get(),
+            plainSettings = get(named("plain")),
+            secureSettings = get(named("secure")),
             dispatcher = get(named(MifosDispatchers.IO.name)),
+            fieldEncryptor = get(),
         )
     }
 
     single<UserPreferencesRepository> {
         UserPreferencesRepositoryImpl(
             preferenceManager = get(),
-//            ioDispatcher = get(named(MifosDispatchers.IO.name)),
             unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
         )
     }

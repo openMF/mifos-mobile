@@ -15,10 +15,13 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.MifosDispatchers
 import org.mifos.mobile.core.database.AppDatabase
+import org.mifos.mobile.core.database.utils.ChargeTypeConverters
 import template.core.base.database.AppDatabaseFactory
+import template.core.base.security.FieldEncryptor
 
 actual val platformModule: Module = module {
     single {
+        ChargeTypeConverters.install(get<FieldEncryptor>())
         AppDatabaseFactory()
             .createDatabase<AppDatabase>(AppDatabase.DATABASE_NAME)
             .fallbackToDestructiveMigrationOnDowngrade(false)

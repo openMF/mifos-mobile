@@ -14,6 +14,22 @@ class MifosGitHooksConventionPlugin : Plugin<Project> {
             return osName.contains("linux") || osName.contains("mac os") || osName.contains("macos")
         }
 
+        // Resolve the actual .git directory (handles submodules where .git is a file)
+        fun resolveGitDir(): java.io.File {
+            val dotGit = java.io.File(project.rootDir, ".git")
+            return if (dotGit.isFile) {
+                // Submodule: .git is a file with "gitdir: <path>"
+                val gitdirLine = dotGit.readText().trim()
+                val relativePath = gitdirLine.removePrefix("gitdir:").trim()
+                java.io.File(project.rootDir, relativePath).canonicalFile
+            } else {
+                dotGit
+            }
+        }
+
+        val gitDir = resolveGitDir()
+        val hooksDir = java.io.File(gitDir, "hooks")
+
         // Define the copyGitHooks task
         project.tasks.register<Copy>("copyGitHooks") {
             description = "Copies the git hooks from /scripts to the .git/hooks folder."
@@ -21,7 +37,7 @@ class MifosGitHooksConventionPlugin : Plugin<Project> {
                 include("**/*.sh")
                 rename { it.removeSuffix(".sh") }
             }
-            into("${project.rootDir}/.git/hooks")
+            into(hooksDir)
         }
 
         // Define the installGitHooks task
@@ -31,9 +47,9 @@ class MifosGitHooksConventionPlugin : Plugin<Project> {
             workingDir = project.rootDir
 
             if (isLinuxOrMacOs()) {
-                commandLine("chmod", "-R", "+x", ".git/hooks/")
+                commandLine("chmod", "-R", "+x", hooksDir.absolutePath)
             }else {
-                commandLine("cmd", "/c", "attrib", "-R", "+X", ".git/hooks/*.*")
+                commandLine("cmd", "/c", "attrib", "-R", "+X", "${hooksDir.absolutePath}/*.*")
             }
             dependsOn(project.tasks.named("copyGitHooks"))
 
