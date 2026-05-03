@@ -46,6 +46,7 @@ import org.mifos.mobile.core.model.StatusNavigationDestination
 import org.mifos.mobile.core.model.entity.AccountDetails
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.model.enums.TransferType
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
@@ -188,6 +189,11 @@ internal fun LoanAccountDetailsContent(
                         .padding(KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
+                    DataFreshnessIndicator(
+                        isFromCache = state.isFromCache,
+                        isRefreshing = state.isRefreshing,
+                    )
+
                     AccountDetailsGrid(
                         details = state.displayItems,
                     )

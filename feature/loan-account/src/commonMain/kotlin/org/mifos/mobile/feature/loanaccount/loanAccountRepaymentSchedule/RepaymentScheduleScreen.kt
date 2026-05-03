@@ -80,6 +80,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.entity.AccountDetails
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.MifosDetailsCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -280,6 +281,11 @@ internal fun RepaymentScreenContent(
                     horizontalAlignment = Alignment.Start,
                 ) {
                     item {
+                        DataFreshnessIndicator(
+                            isFromCache = state.isFromCache,
+                            isRefreshing = state.isRefreshing,
+                        )
+                        Spacer(Modifier.height(KptTheme.spacing.sm))
                         MifosDetailsCard(
                             keyValuePairs = state.basicDetails,
                             modifier = Modifier.padding(

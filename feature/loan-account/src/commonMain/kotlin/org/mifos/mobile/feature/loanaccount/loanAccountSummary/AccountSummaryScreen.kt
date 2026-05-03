@@ -40,6 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
@@ -163,6 +164,10 @@ internal fun LoanAccountSummaryContent(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.largeIncreased),
                 ) {
+                    DataFreshnessIndicator(
+                        isFromCache = state.isFromCache,
+                        isRefreshing = state.isRefreshing,
+                    )
                     Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
                     AccountSummaryCard(
                         title = stringResource(Res.string.feature_loan_account_details_title),

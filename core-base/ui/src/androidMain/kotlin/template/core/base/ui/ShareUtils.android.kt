@@ -1,19 +1,22 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2024 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.ui
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
@@ -33,8 +36,8 @@ actual object ShareUtils {
     private var activityProvider: () -> Activity = {
         throw IllegalArgumentException(
             "You need to implement the 'activityProvider' to provide the required Activity. " +
-                    "Just make sure to set a valid activity using " +
-                    "the 'setActivityProvider()' method.",
+                "Just make sure to set a valid activity using " +
+                "the 'setActivityProvider()' method.",
         )
     }
 
@@ -170,6 +173,15 @@ actual object ShareUtils {
         val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
         val clip = android.content.ClipData.newPlainText("Copied Text", text)
         clipboardManager.setPrimaryClip(clip)
+
+        val isDebuggable = context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+        if (!isDebuggable) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                clipboardManager.setPrimaryClip(
+                    android.content.ClipData.newPlainText("", ""),
+                )
+            }, 60_000L)
+        }
     }
 
     actual suspend fun shareApp(storeLink: String, message: String) {

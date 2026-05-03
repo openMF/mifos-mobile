@@ -9,12 +9,12 @@
  */
 package org.mifos.mobile.core.database.dao
 
+import androidx.room3.Dao
+import androidx.room3.Insert
+import androidx.room3.OnConflictStrategy
+import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.database.entity.MifosNotificationEntity
-import template.core.base.database.Dao
-import template.core.base.database.Insert
-import template.core.base.database.OnConflictStrategy
-import template.core.base.database.Query
 
 @Dao
 interface MifosNotificationDao {

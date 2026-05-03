@@ -25,7 +25,7 @@ plugins {
 
 android {
     namespace = "org.mifos.mobile.core.database"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         consumerProguardFiles("consumer-rules.pro")
@@ -40,22 +40,8 @@ android {
 kotlin {
 
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(libs.koin.android)
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
-        }
-
-        nativeMain.dependencies {
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
-        }
-
-        desktopMain.dependencies {
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
         }
 
         commonMain.dependencies {

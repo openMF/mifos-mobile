@@ -65,6 +65,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.onClick
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FilterTopSection
 import org.mifos.mobile.core.ui.component.MifosBeneficiariesCard
@@ -200,6 +201,11 @@ fun BeneficiaryListContent(
             .padding(top = KptTheme.spacing.sm),
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
+        DataFreshnessIndicator(
+            isFromCache = state.isFromCache,
+            isRefreshing = state.isRefreshing,
+        )
+
         when (state.uiState) {
             is ScreenUiState.Loading -> {
                 MifosProgressIndicator()

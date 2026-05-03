@@ -68,6 +68,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.clippedClickable
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.MifosAccountApplyDashboard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -194,6 +195,11 @@ internal fun HomeContent(
                         style = MifosTypography.titleLarge,
                         color = KptTheme.colorScheme.onSurface,
                         modifier = Modifier.semantics { heading() },
+                    )
+
+                    DataFreshnessIndicator(
+                        isFromCache = state.isFromCache,
+                        isRefreshing = state.isRefreshing,
                     )
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.md))

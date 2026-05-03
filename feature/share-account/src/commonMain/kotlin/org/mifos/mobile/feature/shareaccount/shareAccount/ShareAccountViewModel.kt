@@ -138,15 +138,11 @@ class ShareAccountsViewmodel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 sendAction(ShareAccountsAction.LoadAccounts(emptyList()))
@@ -178,7 +174,13 @@ class ShareAccountsViewmodel(
         selectedFilters: List<StringResource?>,
     ) {
         viewModelScope.launch {
-            mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
+            updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
+            }
 
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId ?: return@launch,
@@ -206,20 +208,37 @@ class ShareAccountsViewmodel(
     ) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_share_account_generic_error_server)
-                        },
+                if (dataState.data != null) {
+                    handleReceivedAccounts(
+                        DataState.Success(dataState.data!!),
+                        selectedFilters,
                     )
+                    updateState { it.copy(isFromCache = true, isRefreshing = false) }
+                } else {
+                    updateState { current ->
+                        if (current.uiState is ScreenUiState.Success) {
+                            current.copy(isFromCache = true, isRefreshing = false)
+                        } else {
+                            current.copy(
+                                uiState = if (dataState.exception.cause is IOException) {
+                                    ScreenUiState.Network
+                                } else {
+                                    ScreenUiState.Error(Res.string.feature_share_account_generic_error_server)
+                                },
+                                isRefreshing = false,
+                            )
+                        }
+                    }
                 }
             }
 
             DataState.Loading -> {
-                updateState {
-                    it.copy(uiState = ScreenUiState.Loading)
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(uiState = ScreenUiState.Loading)
+                    }
                 }
             }
 
@@ -247,6 +266,8 @@ class ShareAccountsViewmodel(
                         shareAccounts = filtered,
                         originalAccounts = shareAccounts,
                         selectedFilters = selectedFilters,
+                        isRefreshing = false,
+                        isFromCache = !it.networkStatus,
                         uiState = if (isEmptyAccounts) {
                             ScreenUiState.Empty
                         } else {
@@ -339,6 +360,8 @@ data class ShareAccountsState(
     val isAmountVisible: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
 ) {
     /**
      * Represents UI dialog states.

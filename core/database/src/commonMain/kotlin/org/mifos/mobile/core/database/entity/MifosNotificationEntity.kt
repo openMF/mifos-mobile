@@ -9,17 +9,10 @@
  */
 package org.mifos.mobile.core.database.entity
 
-import template.core.base.database.Entity
-import template.core.base.database.PrimaryKey
+import androidx.room3.Entity
+import androidx.room3.PrimaryKey
 
-@Entity(
-    tableName = "mifos_notification",
-    indices = [],
-    inheritSuperIndices = false,
-    primaryKeys = [],
-    foreignKeys = [],
-    ignoredColumns = [],
-)
+@Entity(tableName = "mifos_notification")
 data class MifosNotificationEntity(
     @PrimaryKey(autoGenerate = false)
     val timeStamp: Long,

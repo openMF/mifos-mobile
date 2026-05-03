@@ -56,6 +56,7 @@ internal class RecentTransactionViewModel(
 
     init {
         observeNetworkStatus()
+        fetchAccounts()
     }
 
     /**
@@ -83,20 +84,14 @@ internal class RecentTransactionViewModel(
      * @param isOnline Boolean indicating whether the network is online.
      */
     private fun handleNetworkResult(isOnline: Boolean) {
-        updateState {
-            it.copy(networkStatus = isOnline)
-        }
+        updateState { it.copy(networkStatus = isOnline) }
         if (!isOnline) {
             updateState { current ->
-                if (current.viewState is ScreenUiState.Loading ||
-                    current.viewState is ScreenUiState.Error ||
-                    current.viewState is ScreenUiState.Empty ||
-                    current.viewState is ScreenUiState.Network
-                ) {
-                    current.copy(viewState = ScreenUiState.Network)
-                } else {
-                    current
-                }
+                val hasData = current.viewState is ScreenUiState.Success
+                current.copy(
+                    viewState = if (hasData) current.viewState else ScreenUiState.Network,
+                    isFromCache = hasData,
+                )
             }
         } else {
             fetchAccounts()
@@ -292,6 +287,8 @@ internal class RecentTransactionViewModel(
                     it.copy(
                         transactions = transactions,
                         groupedTransactions = grouped,
+                        isRefreshing = false,
+                        isFromCache = !it.networkStatus,
                         viewState = if (grouped.isEmpty()) {
                             ScreenUiState.Empty
                         } else {
@@ -302,17 +299,28 @@ internal class RecentTransactionViewModel(
             }
 
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        viewState = ScreenUiState.ErrorString(
-                            dataState.exception.message ?: "Something went wrong",
-                        ),
-                    )
+                updateState { current ->
+                    if (current.viewState is ScreenUiState.Success) {
+                        current.copy(isFromCache = true, isRefreshing = false)
+                    } else {
+                        current.copy(
+                            viewState = ScreenUiState.ErrorString(
+                                dataState.exception.message ?: "Something went wrong",
+                            ),
+                            isRefreshing = false,
+                        )
+                    }
                 }
             }
 
             is DataState.Loading -> {
-                updateState { it.copy(viewState = ScreenUiState.Loading) }
+                updateState { current ->
+                    if (current.viewState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(viewState = ScreenUiState.Loading)
+                    }
+                }
             }
         }
     }
@@ -439,6 +447,7 @@ internal data class RecentTransactionUiState(
     val filterAccount: SavingAccount? = null,
     val filterType: TransactionFilterType = TransactionFilterType.ALL,
     val isRefreshing: Boolean = false,
+    val isFromCache: Boolean = false,
     val networkStatus: Boolean = false,
 ) {
     /**

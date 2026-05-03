@@ -1,11 +1,11 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.designsystem
 
@@ -164,67 +164,68 @@ fun KptTypography.toMaterial3Typography(fontFamily: FontFamily? = FontFamily.Def
     )
 }
 
-fun Typography.toKptTypography(fontFamily: FontFamily? = FontFamily.Default): KptTypography = KptTypographyImpl(
-    displayLarge = this.displayLarge.copy(fontFamily = fontFamily),
-    displayMedium = this.displayMedium.copy(fontFamily = fontFamily),
-    displaySmall = this.displaySmall.copy(fontFamily = fontFamily),
-    headlineLarge = this.headlineLarge.copy(fontFamily = fontFamily),
-    headlineMedium = this.headlineMedium.copy(fontFamily = fontFamily),
-    headlineSmall = this.headlineSmall.copy(
-        fontFamily = fontFamily,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Bottom,
-            trim = Trim.None,
+fun Typography.toKptTypography(fontFamily: FontFamily? = FontFamily.Default): KptTypography =
+    KptTypographyImpl(
+        displayLarge = this.displayLarge.copy(fontFamily = fontFamily),
+        displayMedium = this.displayMedium.copy(fontFamily = fontFamily),
+        displaySmall = this.displaySmall.copy(fontFamily = fontFamily),
+        headlineLarge = this.headlineLarge.copy(fontFamily = fontFamily),
+        headlineMedium = this.headlineMedium.copy(fontFamily = fontFamily),
+        headlineSmall = this.headlineSmall.copy(
+            fontFamily = fontFamily,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Bottom,
+                trim = Trim.None,
+            ),
         ),
-    ),
-    titleLarge = this.titleLarge.copy(
-        fontFamily = fontFamily,
-        fontWeight = FontWeight.Bold,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Bottom,
-            trim = Trim.LastLineBottom,
+        titleLarge = this.titleLarge.copy(
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.Bold,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Bottom,
+                trim = Trim.LastLineBottom,
+            ),
         ),
-    ),
-    titleMedium = this.titleMedium.copy(
-        fontFamily = fontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
-    ),
-    titleSmall = this.titleSmall.copy(fontFamily = fontFamily),
-    bodyLarge = this.bodyLarge.copy(
-        fontFamily = fontFamily,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Center,
-            trim = Trim.None,
+        titleMedium = this.titleMedium.copy(
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
         ),
-    ),
-    bodyMedium = this.bodyMedium.copy(fontFamily = fontFamily),
-    bodySmall = this.bodySmall.copy(fontFamily = fontFamily),
-    labelLarge = this.labelLarge.copy(
-        fontFamily = fontFamily,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Center,
-            trim = Trim.LastLineBottom,
+        titleSmall = this.titleSmall.copy(fontFamily = fontFamily),
+        bodyLarge = this.bodyLarge.copy(
+            fontFamily = fontFamily,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = Trim.None,
+            ),
         ),
-    ),
-    labelMedium = this.labelMedium.copy(
-        fontFamily = fontFamily,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Center,
-            trim = Trim.LastLineBottom,
+        bodyMedium = this.bodyMedium.copy(fontFamily = fontFamily),
+        bodySmall = this.bodySmall.copy(fontFamily = fontFamily),
+        labelLarge = this.labelLarge.copy(
+            fontFamily = fontFamily,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = Trim.LastLineBottom,
+            ),
         ),
-    ),
-    labelSmall = this.labelSmall.copy(
-        fontFamily = fontFamily,
-        fontSize = 10.sp,
-        lineHeight = 14.sp,
-        letterSpacing = 0.sp,
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Center,
-            trim = Trim.LastLineBottom,
+        labelMedium = this.labelMedium.copy(
+            fontFamily = fontFamily,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = Trim.LastLineBottom,
+            ),
         ),
-    ),
-)
+        labelSmall = this.labelSmall.copy(
+            fontFamily = fontFamily,
+            fontSize = 10.sp,
+            lineHeight = 14.sp,
+            letterSpacing = 0.sp,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = Trim.LastLineBottom,
+            ),
+        ),
+    )
 
 /**
  * Extension function to convert KptTypography to Material3 Typography
@@ -275,42 +276,54 @@ fun Typography.toKptTypography(): KptTypography = KptTypographyImpl(
 @Composable
 fun KptColorScheme.toMaterial3ColorScheme(): ColorScheme {
     return ColorScheme(
-        primary = this.primary,
-        onPrimary = this.onPrimary,
-        primaryContainer = this.primaryContainer,
-        onPrimaryContainer = this.onPrimaryContainer,
-        inversePrimary = this.inversePrimary,
-        secondary = this.secondary,
-        onSecondary = this.onSecondary,
-        secondaryContainer = this.secondaryContainer,
-        onSecondaryContainer = this.onSecondaryContainer,
-        tertiary = this.tertiary,
-        onTertiary = this.onTertiary,
-        tertiaryContainer = this.tertiaryContainer,
-        onTertiaryContainer = this.onTertiaryContainer,
-        background = this.background,
-        onBackground = this.onBackground,
-        surface = this.surface,
-        onSurface = this.onSurface,
-        surfaceVariant = this.surfaceVariant,
-        onSurfaceVariant = this.onSurfaceVariant,
-        surfaceTint = this.primary,
-        inverseSurface = this.inverseSurface,
-        inverseOnSurface = this.inverseOnSurface,
-        error = this.error,
-        onError = this.onError,
-        errorContainer = this.errorContainer,
-        onErrorContainer = this.onErrorContainer,
-        outline = this.outline,
-        outlineVariant = this.outlineVariant,
-        scrim = this.scrim,
-        surfaceBright = this.surfaceBright,
-        surfaceDim = this.surfaceDim,
-        surfaceContainer = this.surfaceContainer,
-        surfaceContainerHigh = this.surfaceContainerHigh,
-        surfaceContainerHighest = this.surfaceContainerHighest,
-        surfaceContainerLow = this.surfaceContainerLow,
-        surfaceContainerLowest = this.surfaceContainerLowest,
+        primary = primary,
+        onPrimary = onPrimary,
+        primaryContainer = primaryContainer,
+        onPrimaryContainer = onPrimaryContainer,
+        inversePrimary = inversePrimary,
+        secondary = secondary,
+        onSecondary = onSecondary,
+        secondaryContainer = secondaryContainer,
+        onSecondaryContainer = onSecondaryContainer,
+        tertiary = tertiary,
+        onTertiary = onTertiary,
+        tertiaryContainer = tertiaryContainer,
+        onTertiaryContainer = onTertiaryContainer,
+        background = background,
+        onBackground = onBackground,
+        surface = surface,
+        onSurface = onSurface,
+        surfaceVariant = surfaceVariant,
+        onSurfaceVariant = onSurfaceVariant,
+        surfaceTint = surfaceTint,
+        inverseSurface = inverseSurface,
+        inverseOnSurface = inverseOnSurface,
+        error = error,
+        onError = onError,
+        errorContainer = errorContainer,
+        onErrorContainer = onErrorContainer,
+        outline = outline,
+        outlineVariant = outlineVariant,
+        scrim = scrim,
+        surfaceBright = surfaceBright,
+        surfaceDim = surfaceDim,
+        surfaceContainer = surfaceContainer,
+        surfaceContainerHigh = surfaceContainerHigh,
+        surfaceContainerHighest = surfaceContainerHighest,
+        surfaceContainerLow = surfaceContainerLow,
+        surfaceContainerLowest = surfaceContainerLowest,
+        primaryFixed = primaryFixed,
+        primaryFixedDim = primaryFixedDim,
+        onPrimaryFixed = onPrimaryFixed,
+        onPrimaryFixedVariant = onPrimaryFixedVariant,
+        secondaryFixed = secondaryFixed,
+        secondaryFixedDim = secondaryFixedDim,
+        onSecondaryFixed = onSecondaryFixed,
+        onSecondaryFixedVariant = onSecondaryFixedVariant,
+        tertiaryFixed = tertiaryFixed,
+        tertiaryFixedDim = tertiaryFixedDim,
+        onTertiaryFixed = onTertiaryFixed,
+        onTertiaryFixedVariant = onTertiaryFixedVariant,
     )
 }
 

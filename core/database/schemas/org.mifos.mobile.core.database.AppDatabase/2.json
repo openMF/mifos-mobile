@@ -1,0 +1,738 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "dfb77d4755241dcd519d7d52628bb730",
+    "entities": [
+      {
+        "tableName": "charges",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `clientId` INTEGER, `chargeId` INTEGER, `name` TEXT, `dueDate` TEXT NOT NULL, `chargeTimeType` TEXT, `chargeCalculationType` TEXT, `currency` TEXT, `amount` REAL NOT NULL, `amountPaid` REAL NOT NULL, `amountWaived` REAL NOT NULL, `amountWrittenOff` REAL NOT NULL, `amountOutstanding` REAL NOT NULL, `penalty` INTEGER NOT NULL, `isActive` INTEGER NOT NULL, `isChargePaid` INTEGER NOT NULL, `isChargeWaived` INTEGER NOT NULL, `paid` INTEGER NOT NULL, `waived` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "chargeId",
+            "columnName": "chargeId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dueDate",
+            "columnName": "dueDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chargeTimeType",
+            "columnName": "chargeTimeType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "chargeCalculationType",
+            "columnName": "chargeCalculationType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountPaid",
+            "columnName": "amountPaid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountWaived",
+            "columnName": "amountWaived",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountWrittenOff",
+            "columnName": "amountWrittenOff",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountOutstanding",
+            "columnName": "amountOutstanding",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "penalty",
+            "columnName": "penalty",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChargePaid",
+            "columnName": "isChargePaid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChargeWaived",
+            "columnName": "isChargeWaived",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paid",
+            "columnName": "paid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waived",
+            "columnName": "waived",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "mifos_notification",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timeStamp` INTEGER NOT NULL, `msg` TEXT, `read` INTEGER, PRIMARY KEY(`timeStamp`))",
+        "fields": [
+          {
+            "fieldPath": "timeStamp",
+            "columnName": "timeStamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "msg",
+            "columnName": "msg",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "read",
+            "columnName": "read",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "timeStamp"
+          ]
+        }
+      },
+      {
+        "tableName": "clients",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` INTEGER NOT NULL, `accountNo` TEXT NOT NULL, `displayName` TEXT NOT NULL, `officeName` TEXT NOT NULL, `imagePresent` INTEGER NOT NULL, `externalId` TEXT, `status` TEXT NOT NULL, `active` INTEGER NOT NULL, `activationDate` TEXT, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`clientId`))",
+        "fields": [
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountNo",
+            "columnName": "accountNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "officeName",
+            "columnName": "officeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imagePresent",
+            "columnName": "imagePresent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "externalId",
+            "columnName": "externalId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activationDate",
+            "columnName": "activationDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clientId"
+          ]
+        }
+      },
+      {
+        "tableName": "loan_accounts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`loanId` INTEGER NOT NULL, `clientId` INTEGER NOT NULL, `accountNo` TEXT NOT NULL, `productName` TEXT NOT NULL, `principal` REAL NOT NULL, `loanBalance` REAL NOT NULL, `amountPaid` REAL NOT NULL, `totalOutstanding` REAL NOT NULL, `status` TEXT NOT NULL, `loanType` TEXT NOT NULL, `currencyCode` TEXT NOT NULL, `inArrears` INTEGER NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`loanId`))",
+        "fields": [
+          {
+            "fieldPath": "loanId",
+            "columnName": "loanId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountNo",
+            "columnName": "accountNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productName",
+            "columnName": "productName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "principal",
+            "columnName": "principal",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loanBalance",
+            "columnName": "loanBalance",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountPaid",
+            "columnName": "amountPaid",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalOutstanding",
+            "columnName": "totalOutstanding",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loanType",
+            "columnName": "loanType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inArrears",
+            "columnName": "inArrears",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "loanId"
+          ]
+        }
+      },
+      {
+        "tableName": "savings_accounts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`savingsId` INTEGER NOT NULL, `clientId` INTEGER NOT NULL, `accountNo` TEXT NOT NULL, `productName` TEXT NOT NULL, `accountBalance` REAL NOT NULL, `totalDeposits` REAL NOT NULL, `totalWithdrawals` REAL NOT NULL, `status` TEXT NOT NULL, `currencyCode` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`savingsId`))",
+        "fields": [
+          {
+            "fieldPath": "savingsId",
+            "columnName": "savingsId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountNo",
+            "columnName": "accountNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productName",
+            "columnName": "productName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountBalance",
+            "columnName": "accountBalance",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalDeposits",
+            "columnName": "totalDeposits",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalWithdrawals",
+            "columnName": "totalWithdrawals",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "savingsId"
+          ]
+        }
+      },
+      {
+        "tableName": "share_accounts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`shareId` INTEGER NOT NULL, `clientId` INTEGER NOT NULL, `accountNo` TEXT NOT NULL, `productName` TEXT NOT NULL, `totalApprovedShares` INTEGER NOT NULL, `totalPendingShares` INTEGER NOT NULL, `status` TEXT NOT NULL, `currencyCode` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`shareId`))",
+        "fields": [
+          {
+            "fieldPath": "shareId",
+            "columnName": "shareId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountNo",
+            "columnName": "accountNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "productName",
+            "columnName": "productName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalApprovedShares",
+            "columnName": "totalApprovedShares",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalPendingShares",
+            "columnName": "totalPendingShares",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "shareId"
+          ]
+        }
+      },
+      {
+        "tableName": "beneficiaries",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`beneficiaryId` INTEGER NOT NULL, `name` TEXT NOT NULL, `officeName` TEXT NOT NULL, `accountType` TEXT NOT NULL, `accountNumber` TEXT NOT NULL, `transferLimit` REAL NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`beneficiaryId`))",
+        "fields": [
+          {
+            "fieldPath": "beneficiaryId",
+            "columnName": "beneficiaryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "officeName",
+            "columnName": "officeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountType",
+            "columnName": "accountType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountNumber",
+            "columnName": "accountNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "transferLimit",
+            "columnName": "transferLimit",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "beneficiaryId"
+          ]
+        }
+      },
+      {
+        "tableName": "transactions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transactionId` INTEGER NOT NULL, `clientId` INTEGER NOT NULL, `accountId` INTEGER NOT NULL, `amount` REAL NOT NULL, `date` TEXT NOT NULL, `type` TEXT NOT NULL, `currencyCode` TEXT NOT NULL, `accountType` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`transactionId`))",
+        "fields": [
+          {
+            "fieldPath": "transactionId",
+            "columnName": "transactionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "accountId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountType",
+            "columnName": "accountType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "transactionId"
+          ]
+        }
+      },
+      {
+        "tableName": "guarantors",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`guarantorId` INTEGER NOT NULL, `loanId` INTEGER NOT NULL, `firstname` TEXT NOT NULL, `lastname` TEXT NOT NULL, `guarantorType` TEXT NOT NULL, `relationship` TEXT, `amount` REAL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`guarantorId`))",
+        "fields": [
+          {
+            "fieldPath": "guarantorId",
+            "columnName": "guarantorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loanId",
+            "columnName": "loanId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstname",
+            "columnName": "firstname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastname",
+            "columnName": "lastname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "guarantorType",
+            "columnName": "guarantorType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "relationship",
+            "columnName": "relationship",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "guarantorId"
+          ]
+        }
+      },
+      {
+        "tableName": "client_accounts_summary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` INTEGER NOT NULL, `loanAccountsJson` TEXT NOT NULL, `savingsAccountsJson` TEXT NOT NULL, `shareAccountsJson` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`clientId`))",
+        "fields": [
+          {
+            "fieldPath": "clientId",
+            "columnName": "clientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loanAccountsJson",
+            "columnName": "loanAccountsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "savingsAccountsJson",
+            "columnName": "savingsAccountsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareAccountsJson",
+            "columnName": "shareAccountsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "clientId"
+          ]
+        }
+      },
+      {
+        "tableName": "loan_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`loanId` INTEGER NOT NULL, `detailsJson` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`loanId`))",
+        "fields": [
+          {
+            "fieldPath": "loanId",
+            "columnName": "loanId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "detailsJson",
+            "columnName": "detailsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "loanId"
+          ]
+        }
+      },
+      {
+        "tableName": "savings_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`savingsId` INTEGER NOT NULL, `detailsJson` TEXT NOT NULL, `lastFetchedAt` INTEGER NOT NULL, PRIMARY KEY(`savingsId`))",
+        "fields": [
+          {
+            "fieldPath": "savingsId",
+            "columnName": "savingsId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "detailsJson",
+            "columnName": "detailsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastFetchedAt",
+            "columnName": "lastFetchedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "savingsId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dfb77d4755241dcd519d7d52628bb730')"
+    ]
+  }
+}

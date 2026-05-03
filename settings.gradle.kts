@@ -1,5 +1,31 @@
 import org.ajoberstar.reckon.gradle.ReckonExtension
 
+// ── Workspace Library Linker (managed by /lib-integrate) ──────────────────
+// Edit lib-integrate.properties to add/remove libraries. Never edit this block.
+// Path-existence guard: if library not cloned locally → silently uses Maven Central.
+val libProps = java.util.Properties().apply {
+    file("lib-integrate.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+}
+libProps.stringPropertyNames()
+    .filter { it.endsWith(".local") && libProps[it] == "true" }
+    .forEach { key ->
+        val lib      = key.removeSuffix(".local")
+        val path     = libProps["$lib.path"]     as? String ?: return@forEach
+        val module   = libProps["$lib.module"]   as? String ?: return@forEach
+        val artifact = libProps["$lib.artifact"] as? String ?: return@forEach
+        if (!file(path).exists()) {
+            println("📦 [lib-integrate] $lib → Maven Central (source not found at $path)")
+            return@forEach
+        }
+        println("⚡ [lib-integrate] $lib → local source ($path)")
+        includeBuild(path) {
+            dependencySubstitution {
+                substitute(module(artifact)).using(project(module))
+            }
+        }
+    }
+// ── End lib-integrate managed block ───────────────────────────────────────
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {

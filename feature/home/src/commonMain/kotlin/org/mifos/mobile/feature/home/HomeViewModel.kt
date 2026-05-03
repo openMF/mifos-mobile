@@ -67,6 +67,7 @@ internal class HomeViewModel(
     init {
         observeNetworkStatus()
         loadSavedServices()
+        loadData()
     }
 
     /**
@@ -129,48 +130,41 @@ internal class HomeViewModel(
     }
 
     /**
+     * Loads all data streams on init. Store 5 handles offline/online transparently:
+     * - Emits cached data from Room immediately (if available)
+     * - Fetches fresh data from network when online
+     * - Gracefully handles network failures without losing cached state
+     */
+    private fun loadData() {
+        fetchCurrentClient()
+        unreadNotificationsCount()
+        loadClientAccountDetails()
+    }
+
+    /**
      * Manages UI state changes based on network connectivity.
      *
-     * This function updates the application's state to reflect whether the device is online or offline.
+     * When offline: updates network status flag (Store already serves cached data).
+     * Only shows Network error if no cached data has been loaded yet.
      *
-     * When the app is **offline**:
-     * - It immediately updates the `networkStatus` in the state to `false`.
-     * - If this is the **first time the app is launched**, the `uiState` is set to `HomeScreenState.Network`
-     * to inform the user that a network connection is required.
-     *
-     * When the app is **online**:
-     * - It immediately updates the `networkStatus` in the state to `true`.
-     * - It then triggers essential functions to **refresh data** and ensure the UI is up-to-date,
-     * specifically by calling `unreadNotificationsCount()` and `loadClientAccountDetails()`.
-     *
-     * @param isOnline A `Boolean` indicating the current network connectivity status.
-     *
-     * @see HomeScreenState
+     * When online: triggers a refresh. Store will re-fetch from network and
+     * emit updated data through the existing collection.
      */
     private fun handleNetworkStatus(isOnline: Boolean) {
-        val isFirstLaunch = state.uiState == HomeScreenState.Loading
-
         updateState { it.copy(networkStatus = isOnline) }
 
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
+                    // Only show Network error if we have NO cached data yet
+                    val hasData = current.uiState is HomeScreenState.Success
                     current.copy(
-                        uiState = if (isFirstLaunch ||
-                            current.uiState is HomeScreenState.Loading ||
-                            current.uiState is HomeScreenState.Error ||
-                            current.uiState is HomeScreenState.Network
-                        ) {
-                            HomeScreenState.Network
-                        } else {
-                            current.uiState
-                        },
+                        uiState = if (hasData) current.uiState else HomeScreenState.Network,
                     )
                 }
             } else {
-                fetchCurrentClient()
-                unreadNotificationsCount()
-                loadClientAccountDetails()
+                // Re-trigger data load to refresh from network
+                loadData()
             }
         }
     }
@@ -405,17 +399,31 @@ internal class HomeViewModel(
      */
     private fun handleClientAccounts(dataState: DataState<ClientAccounts>) {
         when (dataState) {
-            is DataState.Error -> updateState {
-                it.copy(
-                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
-                )
+            is DataState.Error -> updateState { current ->
+                // If we already have data (cached), keep showing it instead of error
+                if (current.uiState is HomeScreenState.Success) {
+                    current.copy(isFromCache = true, isRefreshing = false)
+                } else {
+                    current.copy(
+                        uiState = HomeScreenState.Error(Res.string.feature_server_error),
+                        isRefreshing = false,
+                    )
+                }
             }
 
-            DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
+            DataState.Loading -> updateState { current ->
+                // If we already have data, show refreshing indicator instead of full loading
+                if (current.uiState is HomeScreenState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = HomeScreenState.Loading)
+                }
+            }
 
             is DataState.Success -> {
                 val hasLoans = dataState.data.loanAccounts.isNotEmpty()
                 val hasSavings = dataState.data.savingsAccounts?.isNotEmpty() ?: false
+                val isFromCache = !state.networkStatus
 
                 val decimals = dataState.data.loanAccounts.firstOrNull()?.currency?.decimalPlaces?.toInt()
                     ?: dataState.data.savingsAccounts?.firstOrNull()?.currency?.decimalPlaces
@@ -436,6 +444,8 @@ internal class HomeViewModel(
                         it.copy(
                             clientAccounts = dataState.data,
                             uiState = HomeScreenState.Success,
+                            isFromCache = isFromCache,
+                            isRefreshing = false,
                             currency = dataState.data.loanAccounts.firstOrNull()?.currency?.displaySymbol
                                 ?: dataState.data.savingsAccounts?.firstOrNull()?.currency?.displaySymbol,
                         )
@@ -445,6 +455,8 @@ internal class HomeViewModel(
                         it.copy(
                             isAccountsPresent = false,
                             uiState = HomeScreenState.Success,
+                            isFromCache = isFromCache,
+                            isRefreshing = false,
                         )
                     }
                 }
@@ -547,6 +559,8 @@ internal data class HomeState(
     val loanAmount: String = "",
     val savingsAmount: String = "",
     val isAmountVisible: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
     val dialogState: DialogState? = null,
     val items: ImmutableList<ServiceItem>,
     val visibleItems: ImmutableList<ServiceItem> = items,

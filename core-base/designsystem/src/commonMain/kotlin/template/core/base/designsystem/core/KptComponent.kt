@@ -1,11 +1,11 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.designsystem.core
 
@@ -132,6 +132,18 @@ interface KptColorScheme {
     val surfaceContainerHighest: Color
     val surfaceContainerLow: Color
     val surfaceContainerLowest: Color
+    val primaryFixed: Color
+    val primaryFixedDim: Color
+    val onPrimaryFixed: Color
+    val onPrimaryFixedVariant: Color
+    val secondaryFixed: Color
+    val secondaryFixedDim: Color
+    val onSecondaryFixed: Color
+    val onSecondaryFixedVariant: Color
+    val tertiaryFixed: Color
+    val tertiaryFixedDim: Color
+    val onTertiaryFixed: Color
+    val onTertiaryFixedVariant: Color
 }
 
 @Stable

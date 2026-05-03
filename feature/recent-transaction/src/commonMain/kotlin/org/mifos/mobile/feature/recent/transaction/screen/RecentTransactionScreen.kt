@@ -75,6 +75,7 @@ import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshSt
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -206,6 +207,11 @@ internal fun RecentTransactionScreenContent(
                     }
                 }
             }
+
+            DataFreshnessIndicator(
+                isFromCache = state.isFromCache,
+                isRefreshing = state.isRefreshing,
+            )
 
             when (state.viewState) {
                 ScreenUiState.Empty -> {

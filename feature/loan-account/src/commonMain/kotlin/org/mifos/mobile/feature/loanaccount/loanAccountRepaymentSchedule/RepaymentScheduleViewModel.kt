@@ -140,15 +140,11 @@ internal class RepaymentScheduleViewModel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 fetchLoanWithAssociations()
@@ -171,7 +167,13 @@ internal class RepaymentScheduleViewModel(
     }
 
     private fun fetchLoanWithAssociations() {
-        updateState { it.copy(uiState = ScreenUiState.Loading) }
+        updateState { current ->
+            if (current.uiState is ScreenUiState.Success) {
+                current.copy(isRefreshing = true)
+            } else {
+                current.copy(uiState = ScreenUiState.Loading)
+            }
+        }
         viewModelScope.launch {
             loanRepositoryImp.getLoanWithAssociations(Constants.REPAYMENT_SCHEDULE, state.accountId)
                 .catch { error ->
@@ -316,18 +318,29 @@ internal class RepaymentScheduleViewModel(
     private fun handleRepaymentScheduleResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isFromCache = true, isRefreshing = false)
+                    } else {
+                        current.copy(
+                            uiState = if (dataState.exception is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            },
+                            isRefreshing = false,
+                        )
+                    }
                 }
             }
 
-            DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
+            DataState.Loading -> updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
+            }
             is DataState.Success -> {
                 viewModelScope.launch {
                     val result = dataState.data
@@ -382,6 +395,8 @@ internal class RepaymentScheduleViewModel(
                                 Res.string.feature_loan_installments_left_label to tableData?.installmentsLeft,
                                 Res.string.feature_loan_total_installments_label to tableData?.totalInstallments,
                             ),
+                            isRefreshing = false,
+                            isFromCache = !it.networkStatus,
                             uiState = ScreenUiState.Success,
                         )
                     }
@@ -407,6 +422,8 @@ internal data class RepaymentScheduleState(
     val repaymentScheduleTableData: RepaymentScheduleTableData? = null,
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**

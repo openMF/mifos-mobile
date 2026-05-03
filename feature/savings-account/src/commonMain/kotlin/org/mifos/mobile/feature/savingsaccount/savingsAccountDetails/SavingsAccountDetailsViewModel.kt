@@ -145,15 +145,11 @@ internal class SavingsAccountDetailsViewModel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 fetchSavingAccount()
@@ -184,20 +180,29 @@ internal class SavingsAccountDetailsViewModel(
     private fun handleSavingsAccountResult(dataState: DataState<SavingsWithAssociations>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isFromCache = true, isRefreshing = false)
+                    } else {
+                        current.copy(
+                            uiState = if (dataState.exception is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            },
+                            isRefreshing = false,
+                        )
+                    }
                 }
             }
 
             DataState.Loading -> {
-                updateState {
-                    it.copy(uiState = ScreenUiState.Loading)
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(uiState = ScreenUiState.Loading)
+                    }
                 }
             }
 
@@ -283,6 +288,8 @@ internal class SavingsAccountDetailsViewModel(
                 submissionDate = DateHelper.getDateAsString(savings.timeline?.submittedOnDate ?: emptyList()),
                 displayItems = displayItems,
                 transactionList = transactions,
+                isRefreshing = false,
+                isFromCache = !it.networkStatus,
                 uiState = ScreenUiState.Success,
             )
         }
@@ -317,6 +324,8 @@ internal data class SavingsAccountDetailsState(
 
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 ) {
     /**

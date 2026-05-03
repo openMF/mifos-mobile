@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.store5)
             implementation(libs.store5.cache)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.datetime)
         }
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)

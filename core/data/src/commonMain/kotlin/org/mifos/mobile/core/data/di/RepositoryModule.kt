@@ -48,6 +48,17 @@ import org.mifos.mobile.core.data.repositoryImpl.TransferRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.UserAuthRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.UserDetailRepositoryImp
 import org.mifos.mobile.core.data.util.NetworkMonitor
+import org.mifos.mobile.core.model.entity.Charge
+import org.mifos.mobile.core.model.entity.Transaction
+import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
+import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
+import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
+import org.mifos.mobile.core.model.entity.client.Client
+import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
+import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
+import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
+import org.mobilenativefoundation.store.store5.Store
 
 private val ioDispatcher = named(MifosDispatchers.IO.name)
 private val unconfinedDispatcher = named(MifosDispatchers.Unconfined.name)
@@ -56,23 +67,66 @@ val RepositoryModule = module {
 
     single<Json> { Json { ignoreUnknownKeys = true } }
 
-    single<AccountsRepository> { AccountsRepositoryImp(get(), get(ioDispatcher)) }
+    single<AccountsRepository> {
+        AccountsRepositoryImp(get<Store<Long, ClientAccounts>>(StoreRegistry.Accounts), get(ioDispatcher))
+    }
     single<UserDataRepository> { AuthenticationUserRepository(get(), get(ioDispatcher), get(unconfinedDispatcher)) }
-    single<BeneficiaryRepository> { BeneficiaryRepositoryImp(get(), get(ioDispatcher)) }
-    single<ClientChargeRepository> { ClientChargeRepositoryImp(get(), get(ioDispatcher)) } // TODO
+    single<BeneficiaryRepository> {
+        BeneficiaryRepositoryImp(
+            get(),
+            get<Store<Unit, List<Beneficiary>>>(StoreRegistry.Beneficiary),
+            get(ioDispatcher),
+        )
+    }
+    single<ClientChargeRepository> {
+        ClientChargeRepositoryImp(get(), get<Store<Long, List<Charge>>>(StoreRegistry.Charge), get(), get(ioDispatcher))
+    }
     single<ClientRepository> { ClientRepositoryImp(get(), get(ioDispatcher)) }
     single<GuarantorRepository> { GuarantorRepositoryImp(get(), get(ioDispatcher)) }
-    single<HomeRepository> { HomeRepositoryImp(get(), get(), get(ioDispatcher)) }
-    single<LoanRepository> { LoanRepositoryImp(get(), get(ioDispatcher)) }
-    single<NotificationRepository> { NotificationRepositoryImp(get(ioDispatcher)) } // TODO
-    single<RecentTransactionRepository> { RecentTransactionRepositoryImp(get(), get(ioDispatcher)) }
+    single<HomeRepository> {
+        HomeRepositoryImp(
+            get(),
+            get(),
+            get<Store<Long, Client>>(StoreRegistry.Client),
+            get<Store<Long, ClientAccounts>>(StoreRegistry.Accounts),
+            get(ioDispatcher),
+        )
+    }
+    single<LoanRepository> {
+        LoanRepositoryImp(
+            get(),
+            get<Store<Long, LoanWithAssociations>>(StoreRegistry.LoanDetails),
+            get<Store<Long, LoanTemplate>>(StoreRegistry.LoanTemplate),
+            get(ioDispatcher),
+        )
+    }
+    single<NotificationRepository> { NotificationRepositoryImp(get(), get(ioDispatcher)) }
+    single<RecentTransactionRepository> {
+        RecentTransactionRepositoryImp(
+            get<Store<Long, List<Transaction>>>(StoreRegistry.Transaction),
+            get(ioDispatcher),
+        )
+    }
     single<ReviewLoanApplicationRepository> { ReviewLoanApplicationRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavingsAccountRepository> { SavingsAccountRepositoryImp(get(), get(ioDispatcher)) }
+    single<SavingsAccountRepository> {
+        SavingsAccountRepositoryImp(
+            get(),
+            get<Store<Long, SavingsWithAssociations>>(StoreRegistry.SavingsDetails),
+            get<Store<Long, SavingsAccountTemplate>>(StoreRegistry.SavingsTemplate),
+            get(ioDispatcher),
+        )
+    }
     single<ThirdPartyTransferRepository> { ThirdPartyTransferRepositoryImp(get(), get(ioDispatcher)) }
     single<TransferRepository> { TransferRepositoryImp(get(), get(ioDispatcher)) }
     single<UserAuthRepository> { UserAuthRepositoryImp(get(), get(ioDispatcher)) }
     single<UserDetailRepository> { UserDetailRepositoryImp(get(), get(ioDispatcher)) }
-    single<ShareAccountRepository> { ShareAccountRepositoryImp(get(), get(ioDispatcher)) }
+    single<ShareAccountRepository> {
+        ShareAccountRepositoryImp(
+            get(),
+            get<Store<Long, List<ShareProduct>>>(StoreRegistry.ShareProducts),
+            get(ioDispatcher),
+        )
+    }
     includes(platformModule)
     single<PlatformDependentDataModule> { getPlatformDataModule }
     single<NetworkMonitor> { getPlatformDataModule.networkMonitor }

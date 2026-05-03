@@ -139,15 +139,11 @@ internal class LoanAccountDetailsViewModel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 fetchLoanAccount()
@@ -201,20 +197,29 @@ internal class LoanAccountDetailsViewModel(
     private fun handleLoanAccountResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isFromCache = true, isRefreshing = false)
+                    } else {
+                        current.copy(
+                            uiState = if (dataState.exception is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            },
+                            isRefreshing = false,
+                        )
+                    }
                 }
             }
 
             DataState.Loading -> {
-                updateState {
-                    it.copy(uiState = ScreenUiState.Loading)
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(uiState = ScreenUiState.Loading)
+                    }
                 }
             }
 
@@ -270,6 +275,8 @@ internal class LoanAccountDetailsViewModel(
                 displayItems = displayItems,
                 transactionList = transactions,
                 totalOutStandingBalance = loan?.summary?.totalOutstanding,
+                isFromCache = !state.networkStatus,
+                isRefreshing = false,
                 uiState = ScreenUiState.Success,
             )
         }
@@ -310,6 +317,8 @@ internal data class LoanAccountDetailsState(
     val items: ImmutableList<LoanActionItems>,
     val isUpdatable: Boolean = false,
 
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
     val uiState: ScreenUiState? = ScreenUiState.Loading,

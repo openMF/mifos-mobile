@@ -52,6 +52,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.SavingStatus
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosAccountCard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
@@ -199,6 +200,11 @@ internal fun SavingsAccountContent(
             }
 
             ScreenUiState.Success -> {
+                DataFreshnessIndicator(
+                    isFromCache = state.isFromCache,
+                    isRefreshing = state.isRefreshing,
+                )
+
                 Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
                 MifosDashboardCard(

@@ -81,15 +81,11 @@ class SavingsAccountViewmodel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 sendAction(SavingsAccountAction.LoadAccounts(emptyList()))
@@ -178,7 +174,13 @@ class SavingsAccountViewmodel(
         selectedFilters: List<StringResource?>,
     ) {
         viewModelScope.launch {
-            updateState { it.copy(uiState = ScreenUiState.Loading) }
+            updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
+            }
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId ?: return@launch,
                 accountType = Constants.SAVINGS_ACCOUNTS,
@@ -206,20 +208,38 @@ class SavingsAccountViewmodel(
         sendEvent(SavingsAccountsEvent.LoadingCompleted)
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
+                if (dataState.data != null) {
+                    // Stale data available from cache — show it with staleness indicator
+                    handleReceivedAccounts(
+                        DataState.Success(dataState.data!!),
+                        selectedFilters,
                     )
+                    updateState { it.copy(isFromCache = true, isRefreshing = false) }
+                } else {
+                    updateState { current ->
+                        if (current.uiState is ScreenUiState.Success) {
+                            current.copy(isFromCache = true, isRefreshing = false)
+                        } else {
+                            current.copy(
+                                uiState = if (dataState.exception.cause is IOException) {
+                                    ScreenUiState.Network
+                                } else {
+                                    ScreenUiState.Error(Res.string.feature_generic_error_server)
+                                },
+                                isRefreshing = false,
+                            )
+                        }
+                    }
                 }
             }
 
             DataState.Loading -> {
-                mutableStateFlow.update {
-                    it.copy(uiState = ScreenUiState.Loading)
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(uiState = ScreenUiState.Loading)
+                    }
                 }
             }
 
@@ -249,6 +269,8 @@ class SavingsAccountViewmodel(
                         originalAccounts = allSavings,
                         selectedFilters = selectedFilters,
                         currency = allSavings.firstOrNull()?.currency?.displaySymbol,
+                        isRefreshing = false,
+                        isFromCache = !it.networkStatus,
                         uiState = if (isEmptyAccounts) {
                             ScreenUiState.Empty
                         } else {
@@ -358,6 +380,8 @@ data class SavingsAccountState(
     val uiState: ScreenUiState? = ScreenUiState.Loading,
 
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
 
     /** Order of statuses for consistent sorting */
     val statusOrder: List<String> = listOf(

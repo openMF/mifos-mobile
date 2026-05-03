@@ -39,18 +39,9 @@ internal class BeneficiaryListViewModel(
     initialState = BeneficiaryListState(),
 ) {
 
-    /**
-     * Initialize the view model.
-     */
     init {
         observeNetwork()
-    }
-
-    /**
-     * Initialize the view model.
-     */
-    init {
-        observeNetwork()
+        fetchBeneficiaries()
     }
 
     /**
@@ -66,25 +57,18 @@ internal class BeneficiaryListViewModel(
         }
     }
 
-    /**
-     * Handle network state changes like LoanAccountDetailsViewModel
-     */
     private fun handleNetworkStatus(isOnline: Boolean) {
         updateState { it.copy(networkStatus = isOnline) }
 
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(
-                            uiState = ScreenUiState.Network,
-                        )
-                    } else {
-                        current
-                    }
+                    // Only show Network error if we have no cached data
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 fetchBeneficiaries()
@@ -132,14 +116,13 @@ internal class BeneficiaryListViewModel(
         mutableStateFlow.update(update)
     }
 
-    /**
-     * Fetch the list of beneficiaries from the repository.
-     */
     private fun fetchBeneficiaries() {
-        updateState {
-            it.copy(
-                uiState = ScreenUiState.Loading,
-            )
+        updateState { current ->
+            if (current.uiState is ScreenUiState.Success) {
+                current.copy(isRefreshing = true)
+            } else {
+                current.copy(uiState = ScreenUiState.Loading)
+            }
         }
         viewModelScope.launch {
             beneficiaryRepositoryImp.beneficiaryList().collect { beneficiaryList ->
@@ -155,19 +138,24 @@ internal class BeneficiaryListViewModel(
      */
     private fun processBeneficiaryList(beneficiaryList: DataState<List<Beneficiary>>) {
         when (beneficiaryList) {
-            DataState.Loading -> updateState {
-                it.copy(
-                    uiState = ScreenUiState.Loading,
-                )
+            DataState.Loading -> updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
             }
 
             is DataState.Success -> {
                 val list = beneficiaryList.data
+                val isFromCache = !state.networkStatus
 
                 updateState {
                     if (list.isEmpty()) {
                         it.copy(
                             uiState = ScreenUiState.Empty,
+                            isRefreshing = false,
+                            isFromCache = false,
                         )
                     } else {
                         it.copy(
@@ -177,6 +165,8 @@ internal class BeneficiaryListViewModel(
                             selectedAccounts = emptySet(),
                             isFilteredEmpty = false,
                             uiState = ScreenUiState.Success,
+                            isRefreshing = false,
+                            isFromCache = isFromCache,
                         )
                     }
                 }
@@ -187,14 +177,20 @@ internal class BeneficiaryListViewModel(
             }
 
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (beneficiaryList.exception is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
+                updateState { current ->
+                    // If we already have cached data, keep showing it
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isFromCache = true, isRefreshing = false)
+                    } else {
+                        current.copy(
+                            uiState = if (beneficiaryList.exception is IOException) {
+                                ScreenUiState.Network
+                            } else {
+                                ScreenUiState.Error(Res.string.feature_generic_error_server)
+                            },
+                            isRefreshing = false,
+                        )
+                    }
                 }
             }
         }
@@ -373,6 +369,7 @@ internal class BeneficiaryListViewModel(
 data class BeneficiaryListState(
     val networkStatus: Boolean = false,
     val isRefreshing: Boolean = false,
+    val isFromCache: Boolean = false,
     val beneficiaries: List<Beneficiary> = emptyList(),
     val template: BeneficiaryTemplate? = null,
     val selectedAccounts: Set<String> = emptySet(),

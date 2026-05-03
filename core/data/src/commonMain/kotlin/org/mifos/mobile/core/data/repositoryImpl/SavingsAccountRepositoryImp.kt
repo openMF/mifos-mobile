@@ -21,10 +21,10 @@ import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.payloads.toDto
-import org.mifos.mobile.core.data.mapper.savings.toModel
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
+import org.mifos.mobile.core.data.util.asMifosDataStateFlow
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
@@ -34,9 +34,13 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociatio
 import org.mifos.mobile.core.model.entity.templates.account.AccountOptionsTemplate
 import org.mifos.mobile.core.model.entity.templates.savings.SavingsAccountTemplate
 import org.mifos.mobile.core.network.DataManager
+import org.mobilenativefoundation.store.store5.Store
+import template.core.base.store.streamData
 
 class SavingsAccountRepositoryImp(
     private val dataManager: DataManager,
+    private val savingsDetailsStore: Store<Long, SavingsWithAssociations>,
+    private val savingsTemplateStore: Store<Long, SavingsAccountTemplate>,
     private val ioDispatcher: CoroutineDispatcher,
 ) : SavingsAccountRepository {
 
@@ -44,12 +48,9 @@ class SavingsAccountRepositoryImp(
         accountId: Long?,
         associationType: String?,
     ): Flow<DataState<SavingsWithAssociations>> {
-        return dataManager.savingAccountsListApi.getSavingsWithAssociations(
-            accountId!!,
-            associationType,
-        )
-            .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+        return savingsDetailsStore.streamData(accountId!!)
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 
     override fun getSavingsAccountTransactionDetails(
@@ -66,9 +67,9 @@ class SavingsAccountRepositoryImp(
     override fun getSavingAccountApplicationTemplate(
         clientId: Long?,
     ): Flow<DataState<SavingsAccountTemplate>> {
-        return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplate(clientId)
-            .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+        return savingsTemplateStore.streamData(clientId!!)
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 
     override fun getSavingAccountApplicationTemplateByProduct(

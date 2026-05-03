@@ -9,12 +9,12 @@
  */
 package org.mifos.mobile.core.database.dao
 
+import androidx.room3.Dao
+import androidx.room3.Insert
+import androidx.room3.OnConflictStrategy
+import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.database.entity.ChargeEntity
-import template.core.base.database.Dao
-import template.core.base.database.Insert
-import template.core.base.database.OnConflictStrategy
-import template.core.base.database.Query
 
 @Dao
 interface ChargeDao {
@@ -22,9 +22,18 @@ interface ChargeDao {
     @Query("SELECT * FROM charges")
     fun getAllLocalCharges(): Flow<List<ChargeEntity>>
 
+    @Query("SELECT * FROM charges WHERE clientId = :clientId")
+    fun getChargesByClientId(clientId: Long): Flow<List<ChargeEntity>>
+
     @Insert(entity = ChargeEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharge(charge: List<ChargeEntity>)
 
     @Insert(entity = ChargeEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun syncCharges(charges: List<ChargeEntity>)
+
+    @Query("DELETE FROM charges WHERE clientId = :clientId")
+    suspend fun deleteByClientId(clientId: Long)
+
+    @Query("DELETE FROM charges")
+    suspend fun deleteAll()
 }

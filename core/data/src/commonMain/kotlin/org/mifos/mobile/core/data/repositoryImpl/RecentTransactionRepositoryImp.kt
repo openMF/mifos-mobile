@@ -12,18 +12,17 @@ package org.mifos.mobile.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
-import org.mifos.mobile.core.data.mapper.toPageModel
-import org.mifos.mobile.core.data.mapper.transactions.toRecentTransactionModel
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
+import org.mifos.mobile.core.data.util.asMifosDataStateFlow
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.Transaction
-import org.mifos.mobile.core.network.DataManager
+import org.mobilenativefoundation.store.store5.Store
+import template.core.base.store.mapData
+import template.core.base.store.streamData
 
 class RecentTransactionRepositoryImp(
-    private val dataManager: DataManager,
+    private val transactionStore: Store<Long, List<Transaction>>,
     private val ioDispatcher: CoroutineDispatcher,
 ) : RecentTransactionRepository {
     override fun recentTransactions(
@@ -31,16 +30,9 @@ class RecentTransactionRepositoryImp(
         offset: Int?,
         limit: Int?,
     ): Flow<DataState<Page<Transaction>>> {
-        return dataManager.recentTransactionsApi.getRecentTransactionsList(
-            clientId!!,
-            offset,
-            limit,
-        )
-            .map { response ->
-                response.toPageModel { dto ->
-                    dto.toRecentTransactionModel()
-                }
-            }
-            .asDataStateFlow().flowOn(ioDispatcher)
+        return transactionStore.streamData(clientId!!)
+            .mapData { transactions -> Page(transactions.size, transactions) }
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 }

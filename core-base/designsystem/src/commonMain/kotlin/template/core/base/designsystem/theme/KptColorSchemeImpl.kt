@@ -1,11 +1,11 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package template.core.base.designsystem.theme
 
@@ -66,6 +66,18 @@ data class KptColorSchemeImpl(
     override val surfaceContainerHigh: Color = Color(0xFFDAD6DC),
     override val surfaceContainerHighest: Color = Color(0xFFCFC8D0),
     override val surfaceTint: Color = Color(0xFF6750A4),
+    override val primaryFixed: Color = Color(0xFFD0BCFF),
+    override val primaryFixedDim: Color = Color(0xFFA694D1),
+    override val onPrimaryFixed: Color = Color(0xFF21005D),
+    override val onPrimaryFixedVariant: Color = Color(0xFF49307B),
+    override val secondaryFixed: Color = Color(0xFFCCC2DC),
+    override val secondaryFixedDim: Color = Color(0xFF9A8F9E),
+    override val onSecondaryFixed: Color = Color(0xFF1D192B),
+    override val onSecondaryFixedVariant: Color = Color(0xFF51445D),
+    override val tertiaryFixed: Color = Color(0xFFFFD8E4),
+    override val tertiaryFixedDim: Color = Color(0xFFFFB1C8),
+    override val onTertiaryFixed: Color = Color(0xFF31111D),
+    override val onTertiaryFixedVariant: Color = Color(0xFF4D2733),
 ) : KptColorScheme
 
 @Immutable

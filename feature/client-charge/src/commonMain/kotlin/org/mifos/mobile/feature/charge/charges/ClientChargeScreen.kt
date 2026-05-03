@@ -76,6 +76,7 @@ import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.model.entity.Charge
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -191,13 +192,19 @@ private fun ClientChargeScreen(
                     }
 
                     ScreenUiState.Success -> {
-                        ClientChargeContent(
-                            modifier = Modifier.padding(KptTheme.spacing.lg),
-                            chargesList = state.charges,
-                            onChargeClick = {
-                                onAction(ClientChargeAction.OnChargeClick(it))
-                            },
-                        )
+                        Column {
+                            DataFreshnessIndicator(
+                                isFromCache = state.isFromCache,
+                                isRefreshing = state.isRefreshing,
+                            )
+                            ClientChargeContent(
+                                modifier = Modifier.padding(KptTheme.spacing.lg),
+                                chargesList = state.charges,
+                                onChargeClick = {
+                                    onAction(ClientChargeAction.OnChargeClick(it))
+                                },
+                            )
+                        }
                     }
 
                     else -> {}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,6 +19,7 @@ import io.ktor.client.statement.HttpResponse
 import kotlinx.serialization.SerializationException
 import template.core.base.network.NetworkError
 import template.core.base.network.NetworkResult
+import co.touchlab.kermit.Logger
 
 /**
  * A custom [Converter.Factory] for Ktorfit that provides a suspend
@@ -77,7 +78,7 @@ class ResultSuspendConverterFactory : Converter.Factory {
                 override suspend fun convert(result: KtorfitResult): NetworkResult<Any, NetworkError> {
                     return when (result) {
                         is KtorfitResult.Failure -> {
-                            println("Failure: " + result.throwable.message)
+                            Logger.d("ResultConverter") { "Failure: ${result.throwable.message}" }
                             NetworkResult.Error(NetworkError.UNKNOWN)
                         }
 
@@ -92,7 +93,7 @@ class ResultSuspendConverterFactory : Converter.Factory {
                                     } catch (e: NoTransformationFoundException) {
                                         NetworkResult.Error(NetworkError.SERIALIZATION)
                                     } catch (e: SerializationException) {
-                                        println("Serialization error: ${e.message}")
+                                        Logger.d("ResultConverter") { "Serialization error: ${e.message}" }
                                         NetworkResult.Error(NetworkError.SERIALIZATION)
                                     }
                                 }
@@ -104,7 +105,7 @@ class ResultSuspendConverterFactory : Converter.Factory {
                                 429 -> NetworkResult.Error(NetworkError.TOO_MANY_REQUESTS)
                                 in 500..599 -> NetworkResult.Error(NetworkError.SERVER)
                                 else -> {
-                                    println("Status code $status")
+                                    Logger.d("ResultConverter") { "Unhandled status code $status" }
                                     NetworkResult.Error(NetworkError.UNKNOWN)
                                 }
                             }

@@ -72,6 +72,7 @@ internal class ClientChargeViewModel(
 
     init {
         observeNetworkStatus()
+        loadCharges()
     }
 
     private fun observeNetworkStatus() {
@@ -307,15 +308,12 @@ internal class ClientChargeViewModel(
         updateState { it.copy(networkStatus = isOnline) }
         if (!isOnline) {
             updateState { current ->
-                if (current.uiState is ScreenUiState.Loading ||
-                    current.uiState is ScreenUiState.Error ||
-                    current.uiState is ScreenUiState.Empty ||
-                    current.uiState is ScreenUiState.Network
-                ) {
-                    current.copy(uiState = ScreenUiState.Network)
-                } else {
-                    current
-                }
+                // Only show Network error if no cached data loaded yet
+                val hasData = current.uiState is ScreenUiState.Success
+                current.copy(
+                    uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                    isFromCache = hasData,
+                )
             }
         } else {
             loadCharges()
@@ -352,18 +350,35 @@ internal class ClientChargeViewModel(
 
     private fun handleClientChargesResult(result: DataState<Page<Charge>>) {
         when (result) {
-            is DataState.Loading -> updateState { it.copy(uiState = ScreenUiState.Loading) }
-            is DataState.Error -> updateState {
-                it.copy(
-                    uiState = if (result.exception.cause is IOException) {
-                        ScreenUiState.Network
-                    } else {
-                        ScreenUiState.Error(Res.string.feature_generic_error_server)
-                    },
-                )
+            is DataState.Loading -> updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
+            }
+            is DataState.Error -> updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isFromCache = true, isRefreshing = false)
+                } else {
+                    current.copy(
+                        uiState = if (result.exception.cause is IOException) {
+                            ScreenUiState.Network
+                        } else {
+                            ScreenUiState.Error(Res.string.feature_generic_error_server)
+                        },
+                        isRefreshing = false,
+                    )
+                }
             }
             is DataState.Success -> {
-                updateState { it.copy(originalCharges = result.data.pageItems) }
+                updateState {
+                    it.copy(
+                        originalCharges = result.data.pageItems,
+                        isRefreshing = false,
+                        isFromCache = !it.networkStatus,
+                    )
+                }
                 applyLocalFilter()
             }
         }
@@ -387,7 +402,13 @@ internal class ClientChargeViewModel(
     }
 
     private fun loadCharges() {
-        updateState { it.copy(uiState = ScreenUiState.Loading) }
+        updateState { current ->
+            if (current.uiState is ScreenUiState.Success) {
+                current.copy(isRefreshing = true)
+            } else {
+                current.copy(uiState = ScreenUiState.Loading)
+            }
+        }
 
         viewModelScope.launch {
             when (state.chargeType) {
@@ -429,6 +450,8 @@ internal class ClientChargeViewModel(
 
 data class ClientChargeState(
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
     val clientId: Long,
     val chargeType: ChargeType,
     val chargeTypeId: Long?,

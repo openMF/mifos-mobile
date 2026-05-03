@@ -20,19 +20,22 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.data.mapper.beneficiary.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
+import org.mifos.mobile.core.data.util.asMifosDataStateFlow
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryPayload
 import org.mifos.mobile.core.model.entity.beneficiary.BeneficiaryUpdatePayload
 import org.mifos.mobile.core.model.entity.templates.beneficiary.BeneficiaryTemplate
 import org.mifos.mobile.core.network.DataManager
+import org.mobilenativefoundation.store.store5.Store
+import template.core.base.store.streamData
 
 class BeneficiaryRepositoryImp(
     private val dataManager: DataManager,
+    private val beneficiaryStore: Store<Unit, List<Beneficiary>>,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
     override fun beneficiaryTemplate(): Flow<DataState<BeneficiaryTemplate>> = flow {
@@ -88,7 +91,6 @@ class BeneficiaryRepositoryImp(
         return withContext(ioDispatcher) {
             try {
                 val response = dataManager.beneficiaryApi.deleteBeneficiary(beneficiaryId!!)
-
                 DataState.Success(response.bodyAsText())
             } catch (e: ClientRequestException) {
                 val errorMessage = extractErrorMessage(e.response)
@@ -101,14 +103,9 @@ class BeneficiaryRepositoryImp(
         }
     }
 
-    override fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> = flow {
-        try {
-            dataManager.beneficiaryApi.beneficiaryList()
-                .collect { response ->
-                    emit(DataState.Success(response.map { it.toModel() }))
-                }
-        } catch (e: Exception) {
-            emit(DataState.Error(e, null))
-        }
-    }.flowOn(ioDispatcher)
+    override fun beneficiaryList(): Flow<DataState<List<Beneficiary>>> {
+        return beneficiaryStore.streamData(Unit)
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
+    }
 }

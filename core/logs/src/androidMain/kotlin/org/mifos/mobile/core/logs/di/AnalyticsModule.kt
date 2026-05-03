@@ -9,15 +9,15 @@
  */
 package org.mifos.mobile.core.logs.di
 
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.dsl.module
 import org.mifos.mobile.core.logs.AnalyticsHelper
 
 val AnalyticsModule = module {
 
     single {
-        Firebase.analytics
+        FirebaseAnalytics.getInstance(get<Context>())
     }
     single<AnalyticsHelper> {
         FirebaseAnalyticsHelper(firebaseAnalytics = get())

@@ -121,15 +121,11 @@ class LoanAccountsViewmodel(
         viewModelScope.launch {
             if (!isOnline) {
                 updateState { current ->
-                    if (current.uiState is ScreenUiState.Loading ||
-                        current.uiState is ScreenUiState.Error ||
-                        current.uiState is ScreenUiState.Empty ||
-                        current.uiState is ScreenUiState.Network
-                    ) {
-                        current.copy(uiState = ScreenUiState.Network)
-                    } else {
-                        current
-                    }
+                    val hasData = current.uiState is ScreenUiState.Success
+                    current.copy(
+                        uiState = if (hasData) current.uiState else ScreenUiState.Network,
+                        isFromCache = hasData,
+                    )
                 }
             } else {
                 sendAction(LoanAccountsAction.LoadAccounts(emptyList()))
@@ -179,7 +175,13 @@ class LoanAccountsViewmodel(
         selectedFilters: List<StringResource?>,
     ) {
         viewModelScope.launch {
-            updateState { it.copy(uiState = ScreenUiState.Loading) }
+            updateState { current ->
+                if (current.uiState is ScreenUiState.Success) {
+                    current.copy(isRefreshing = true)
+                } else {
+                    current.copy(uiState = ScreenUiState.Loading)
+                }
+            }
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId ?: return@launch,
                 accountType = Constants.LOAN_ACCOUNTS,
@@ -207,20 +209,37 @@ class LoanAccountsViewmodel(
         sendEvent(LoanAccountsEvent.LoadingCompleted)
         when (dataState) {
             is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = if (dataState.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
+                if (dataState.data != null) {
+                    handleReceivedAccounts(
+                        DataState.Success(dataState.data!!),
+                        selectedFilters,
                     )
+                    updateState { it.copy(isFromCache = true, isRefreshing = false) }
+                } else {
+                    updateState { current ->
+                        if (current.uiState is ScreenUiState.Success) {
+                            current.copy(isFromCache = true, isRefreshing = false)
+                        } else {
+                            current.copy(
+                                uiState = if (dataState.exception.cause is IOException) {
+                                    ScreenUiState.Network
+                                } else {
+                                    ScreenUiState.Error(Res.string.feature_generic_error_server)
+                                },
+                                isRefreshing = false,
+                            )
+                        }
+                    }
                 }
             }
 
             DataState.Loading -> {
-                updateState {
-                    it.copy(uiState = ScreenUiState.Loading)
+                updateState { current ->
+                    if (current.uiState is ScreenUiState.Success) {
+                        current.copy(isRefreshing = true)
+                    } else {
+                        current.copy(uiState = ScreenUiState.Loading)
+                    }
                 }
             }
 
@@ -247,6 +266,8 @@ class LoanAccountsViewmodel(
                         loanAccounts = sortedAccounts,
                         originalAccounts = loanAccounts,
                         selectedFilters = selectedFilters,
+                        isRefreshing = false,
+                        isFromCache = !it.networkStatus,
                         uiState = if (isEmptyAccounts) {
                             ScreenUiState.Empty
                         } else {
@@ -362,6 +383,8 @@ data class LoanAccountsState(
 
     /** Network connectivity status */
     val networkStatus: Boolean = false,
+    val isFromCache: Boolean = false,
+    val isRefreshing: Boolean = false,
 
     /** Hold the state of the screen */
     val uiState: ScreenUiState? = ScreenUiState.Loading,

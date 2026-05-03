@@ -1,15 +1,14 @@
 /*
- * Copyright 2026 Mifos Initiative
+ * Copyright 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 plugins {
     alias(libs.plugins.kmp.core.base.library.convention)
-    id("kotlinx-serialization")
 }
 
 android {
@@ -19,18 +18,22 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":core-base:common"))
+            implementation(project(":core-base:security"))
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.serialization)
             implementation(libs.multiplatform.settings.coroutines)
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.datetime)
+            api(libs.koin.core)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.security.crypto)
+            implementation(libs.koin.android)
         }
 
         commonTest.dependencies {
+            implementation(libs.kotlin.test)
             implementation(libs.multiplatform.settings.test)
-            implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.turbine)
         }
     }
 }

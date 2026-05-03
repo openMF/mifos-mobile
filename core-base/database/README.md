@@ -38,9 +38,9 @@ Provides actual implementations for Android, Desktop, and Native platforms throu
 
 - **AppDatabaseFactory**: Desktop-specific factory with platform-aware directory selection
 - Creates databases in platform-appropriate directories:
-    - **Windows**: `%APPDATA%/MifosDatabase`
-    - **macOS**: `~/Library/Application Support/MifosDatabase`
-    - **Linux**: `~/.local/share/MifosDatabase`
+  - **Windows**: `%APPDATA%/MifosDatabase`
+  - **macOS**: `~/Library/Application Support/MifosDatabase`
+  - **Linux**: `~/.local/share/MifosDatabase`
 - Uses inline reified generics for type-safe database instantiation
 - Automatically creates storage directories when required
 
@@ -505,9 +505,9 @@ The module relies on the following dependencies:
 - **androidx.room.runtime** (2.8.4+): Core Room database functionality
 - **Kotlin Multiplatform**: Cross-platform code sharing infrastructure
 - **Platform APIs**:
-    - Android: Context for database creation
-    - Desktop: File system APIs for storage management
-    - Native: Foundation framework (NSFileManager, NSDocumentDirectory)
+  - Android: Context for database creation
+  - Desktop: File system APIs for storage management
+  - Native: Foundation framework (NSFileManager, NSDocumentDirectory)
 
 ## Gradle Configuration
 
@@ -543,9 +543,9 @@ kotlin {
 - Supports full Room functionality on JVM platforms
 - Automatic directory creation with proper permissions
 - Platform-specific storage conventions:
-    - Windows follows APPDATA guidelines
-    - macOS uses Application Support directory
-    - Linux adheres to XDG Base Directory specification
+  - Windows follows APPDATA guidelines
+  - macOS uses Application Support directory
+  - Linux adheres to XDG Base Directory specification
 
 ### Native (iOS/macOS)
 

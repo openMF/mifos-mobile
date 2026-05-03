@@ -14,43 +14,41 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
-import org.mifos.mobile.core.data.mapper.loan.toModel
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.LoanRepository
+import org.mifos.mobile.core.data.util.asMifosDataStateFlow
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanWithdraw
 import org.mifos.mobile.core.model.entity.templates.loans.LoanTemplate
 import org.mifos.mobile.core.network.DataManager
+import org.mobilenativefoundation.store.store5.Store
+import template.core.base.store.streamData
 
 class LoanRepositoryImp(
     private val dataManager: DataManager,
+    private val loanDetailsStore: Store<Long, LoanWithAssociations>,
+    private val loanTemplateStore: Store<Long, LoanTemplate>,
     private val ioDispatcher: CoroutineDispatcher,
 ) : LoanRepository {
 
     override fun getLoanWithAssociations(
         associationType: String?,
         loanId: Long?,
-    ): Flow<DataState<LoanWithAssociations?>> = flow {
-        try {
-            dataManager.loanAccountsListApi.getLoanWithAssociations(loanId!!, associationType)
-                .collect { response ->
-                    emit(DataState.Success(response.toModel()))
-                }
-        } catch (exception: Exception) {
-            emit(DataState.Error(exception))
-        }
-    }.flowOn(ioDispatcher)
+    ): Flow<DataState<LoanWithAssociations?>> {
+        return loanDetailsStore.streamData(loanId!!)
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
+    }
 
     override fun getLoanTransactionDetails(
         loanId: Long,
@@ -84,9 +82,9 @@ class LoanRepositoryImp(
     }
 
     override fun template(clientId: Long?): Flow<DataState<LoanTemplate?>> {
-        return dataManager.loanAccountsListApi.getLoanTemplate(clientId = clientId)
-            .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+        return loanTemplateStore.streamData(clientId!!)
+            .asMifosDataStateFlow()
+            .flowOn(ioDispatcher)
     }
 
     override fun getLoanTemplateByProduct(clientId: Long?, productId: Int?): Flow<DataState<LoanTemplate?>> {

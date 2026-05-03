@@ -14,7 +14,6 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -23,8 +22,8 @@ import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.share.toModel
-import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
+import org.mifos.mobile.core.data.util.asMifosDataStateFlow
 import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
@@ -32,22 +31,20 @@ import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
 import org.mifos.mobile.core.model.entity.templates.shareProductDetails.ShareProductDetails
 import org.mifos.mobile.core.model.entity.templates.shares.ShareProduct
 import org.mifos.mobile.core.network.DataManager
+import org.mobilenativefoundation.store.store5.Store
+import template.core.base.store.mapData
+import template.core.base.store.streamData
 
 class ShareAccountRepositoryImp(
     private val dataManager: DataManager,
+    private val shareProductsStore: Store<Long, List<ShareProduct>>,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ShareAccountRepository {
 
     override fun getShareProducts(clientId: Long?): Flow<DataState<Page<ShareProduct>>> {
-        return dataManager.shareAccountApi.getShareProducts(clientId)
-            .map { response ->
-                DataState.Success(
-                    response.toPageModel { dto ->
-                        dto.toModel()
-                    },
-                )
-            }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+        return shareProductsStore.streamData(clientId!!)
+            .mapData { products -> Page(products.size, products) }
+            .asMifosDataStateFlow()
             .flowOn(ioDispatcher)
     }
 

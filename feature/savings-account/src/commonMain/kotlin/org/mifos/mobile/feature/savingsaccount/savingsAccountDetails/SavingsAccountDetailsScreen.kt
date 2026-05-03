@@ -48,6 +48,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.SavingStatus
 import org.mifos.mobile.core.model.enums.ChargeType
+import org.mifos.mobile.core.ui.component.DataFreshnessIndicator
 import org.mifos.mobile.core.ui.component.MifosActionCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosLabelValueCard
@@ -185,6 +186,11 @@ internal fun SavingsAccountDetailsContent(
                         .padding(KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
+                    DataFreshnessIndicator(
+                        isFromCache = state.isFromCache,
+                        isRefreshing = state.isRefreshing,
+                    )
+
                     ActionBar(
                         isUpdatable = state.isUpdatable,
                         onAction = onAction,
