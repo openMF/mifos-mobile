@@ -263,8 +263,8 @@ fun LoanProductResponseDto.toModel(): Product =
         interestType = interestType.toInterestType(),
         interestCalculationPeriodType =
         interestCalculationPeriodType?.toInterestCalculationPeriodType(),
-        allowPartialPeriodInterestCalcualtion =
-        allowPartialPeriodInterestCalcualtion,
+        allowPartialPeriodInterestCalculation =
+        allowPartialPeriodInterestCalculation,
         transactionProcessingStrategyId =
         transactionProcessingStrategyId,
         transactionProcessingStrategyName =
