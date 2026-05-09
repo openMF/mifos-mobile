@@ -40,10 +40,11 @@ import org.mifos.mobile.feature.shareaccount.di.shareAccountModule
 import org.mifos.mobile.feature.status.di.StatusModule
 import org.mifos.mobile.feature.third.party.transfer.di.ThirdPartyTransferModule
 import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
+import template.core.base.security.di.SecurityModule
 
 object KoinModules {
     private val commonModules = module {
-        includes(DispatchersModule)
+        includes(DispatchersModule, SecurityModule)
     }
     private val dataModules = module {
         includes(RepositoryModule)
