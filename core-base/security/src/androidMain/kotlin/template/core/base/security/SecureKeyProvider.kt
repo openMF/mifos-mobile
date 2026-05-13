@@ -20,14 +20,17 @@ private const val ANDROID_KEYSTORE = "AndroidKeyStore"
 
 actual class SecureKeyProvider {
 
-    actual fun getKey(): ByteArray? {
+    actual fun getExistingKey(): Any? {
         val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
         val entry = keyStore.getEntry(KEYSTORE_ALIAS, null) as? KeyStore.SecretKeyEntry
             ?: return null
-        return entry.secretKey.encoded
+        return entry.secretKey
     }
 
-    actual fun generateKey(): ByteArray {
+    actual fun getOrCreateKey(): Any {
+        val existing = getExistingKey() as? SecretKey
+        if (existing != null) return existing
+
         val keyGenerator = KeyGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_AES,
             ANDROID_KEYSTORE,
@@ -42,9 +45,7 @@ actual class SecureKeyProvider {
                 .setKeySize(256)
                 .build(),
         )
-        val secretKey: SecretKey = keyGenerator.generateKey()
-        return secretKey.encoded ?: getKey()
-            ?: throw SecurityException("Failed to generate encryption key")
+        return keyGenerator.generateKey()
     }
 
     actual fun deleteKey() {

@@ -19,6 +19,7 @@ import javax.crypto.spec.SecretKeySpec
 private const val AES_GCM = "AES/GCM/NoPadding"
 private const val GCM_TAG_LENGTH = 128
 private const val GCM_IV_LENGTH = 12
+private const val ENCRYPTED_PREFIX = "ENC:"
 
 actual class FieldEncryptor(private val keyProvider: SecureKeyProvider) {
 
@@ -30,16 +31,18 @@ actual class FieldEncryptor(private val keyProvider: SecureKeyProvider) {
 
     actual fun encrypt(plaintext: String): String {
         val encrypted = encrypt(plaintext.encodeToByteArray())
-        return Base64.getEncoder().encodeToString(encrypted)
+        return ENCRYPTED_PREFIX + Base64.getEncoder().encodeToString(encrypted)
     }
 
     actual fun decrypt(ciphertext: String): String {
-        val decoded = Base64.getDecoder().decode(ciphertext)
+        require(ciphertext.startsWith(ENCRYPTED_PREFIX)) { "Invalid encrypted payload format" }
+        val payload = ciphertext.removePrefix(ENCRYPTED_PREFIX)
+        val decoded = Base64.getDecoder().decode(payload)
         return decrypt(decoded).decodeToString()
     }
 
     actual fun encrypt(data: ByteArray): ByteArray {
-        val key = keyProvider.getKey() ?: keyProvider.generateKey()
+        val key = keyProvider.getOrCreateKey() as ByteArray
         val cipher = Cipher.getInstance(AES_GCM, BouncyCastleProvider.PROVIDER_NAME)
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"))
         val iv = cipher.iv
@@ -48,7 +51,8 @@ actual class FieldEncryptor(private val keyProvider: SecureKeyProvider) {
     }
 
     actual fun decrypt(data: ByteArray): ByteArray {
-        val key = keyProvider.getKey()
+        require(data.size > GCM_IV_LENGTH) { "Ciphertext is too short" }
+        val key = keyProvider.getExistingKey() as? ByteArray
             ?: throw SecurityException("Encryption key not found — data unrecoverable")
         val iv = data.copyOfRange(0, GCM_IV_LENGTH)
         val ciphertext = data.copyOfRange(GCM_IV_LENGTH, data.size)

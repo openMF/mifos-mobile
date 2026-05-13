@@ -18,11 +18,11 @@ package template.core.base.security
  * - Web: IndexedDB CryptoKey (non-extractable)
  */
 expect class SecureKeyProvider {
-    /** Retrieves the encryption key, or null if the key was lost (factory reset, etc.). */
-    fun getKey(): ByteArray?
+    /** Retrieves a platform key handle, or null if the key was lost (factory reset, etc.). */
+    fun getExistingKey(): Any?
 
-    /** Generates a new encryption key and stores it securely. */
-    fun generateKey(): ByteArray
+    /** Returns an existing key handle or creates and stores a new one. */
+    fun getOrCreateKey(): Any
 
     /** Deletes the encryption key, making all encrypted data permanently unreadable. */
     fun deleteKey()

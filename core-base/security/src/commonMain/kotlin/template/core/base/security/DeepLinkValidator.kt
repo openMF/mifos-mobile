@@ -36,8 +36,15 @@ class DeepLinkValidator(
         }
 
         val hostValid = if (schemeValid && allowedHosts.isNotEmpty()) {
-            val hostPart = uri.substringAfter("://", "").substringBefore("/").substringBefore("?")
-            val host = hostPart.substringBefore(":").lowercase()
+            val authority = uri.substringAfter("://", "")
+                .substringBefore("/")
+                .substringBefore("?")
+                .substringBefore("#")
+            val hostPort = authority.substringAfterLast("@")
+            val host = when {
+                hostPort.startsWith("[") -> hostPort.substringAfter("[").substringBefore("]").lowercase()
+                else -> hostPort.substringBefore(":").lowercase()
+            }
             val allowed = host in allowedHosts
             if (!allowed) Logger.w("DeepLinkValidator") { "Rejected host: $host" }
             allowed

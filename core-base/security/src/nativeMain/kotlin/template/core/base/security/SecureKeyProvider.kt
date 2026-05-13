@@ -44,7 +44,7 @@ private const val ACCOUNT_NAME = "field_encryptor_key"
 @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 actual class SecureKeyProvider {
 
-    actual fun getKey(): ByteArray? {
+    actual fun getExistingKey(): Any? {
         val query = buildKeychainQuery(kSecReturnData to true)
         val cfQuery = query as CFDictionaryRef
 
@@ -67,7 +67,10 @@ actual class SecureKeyProvider {
         }
     }
 
-    actual fun generateKey(): ByteArray {
+    actual fun getOrCreateKey(): Any {
+        val existing = getExistingKey() as? ByteArray
+        if (existing != null) return existing
+
         deleteKey()
         val key = SecureRandom().nextBytes(32)
         val nsData = key.usePinned { pinned ->

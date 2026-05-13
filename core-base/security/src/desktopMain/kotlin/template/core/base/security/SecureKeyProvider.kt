@@ -11,9 +11,6 @@ package template.core.base.security
 
 import java.io.File
 import java.security.SecureRandom as JSecureRandom
-import javax.crypto.Cipher
-import javax.crypto.spec.GCMParameterSpec
-import javax.crypto.spec.SecretKeySpec
 
 /**
  * Desktop key provider using a local encrypted key file.
@@ -29,12 +26,15 @@ actual class SecureKeyProvider {
         File(dir, "field_key.bin")
     }
 
-    actual fun getKey(): ByteArray? {
+    actual fun getExistingKey(): Any? {
         if (!keyFile.exists()) return null
         return keyFile.readBytes()
     }
 
-    actual fun generateKey(): ByteArray {
+    actual fun getOrCreateKey(): Any {
+        val existing = getExistingKey() as? ByteArray
+        if (existing != null) return existing
+
         val key = ByteArray(32)
         JSecureRandom().nextBytes(key)
         keyFile.parentFile?.mkdirs()

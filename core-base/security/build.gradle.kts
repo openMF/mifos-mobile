@@ -32,10 +32,6 @@ kotlin {
             implementation(libs.koin.compose)
         }
 
-        androidMain.dependencies {
-            implementation(libs.androidx.security.crypto)
-        }
-
         desktopMain.dependencies {
             implementation(libs.bouncycastle)
         }

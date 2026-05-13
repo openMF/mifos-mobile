@@ -17,12 +17,14 @@ package template.core.base.security
 actual class SecureKeyProvider {
     private var storedKey: ByteArray? = null
 
-    actual fun getKey(): ByteArray? = storedKey?.copyOf()
+    actual fun getExistingKey(): Any? = storedKey?.copyOf()
 
-    actual fun generateKey(): ByteArray {
-        val key = SecureRandom().nextBytes(32)
-        storedKey = key.copyOf()
-        return key
+    actual fun getOrCreateKey(): Any {
+        val existing = getExistingKey() as? ByteArray
+        if (existing != null) return existing
+
+        // Fail-closed until WebCrypto-based CSPRNG is integrated.
+        throw SecurityException("Secure key generation is unavailable on JS/Wasm until WebCrypto is integrated")
     }
 
     actual fun deleteKey() {

@@ -9,50 +9,35 @@
  */
 package template.core.base.security
 
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
-
 /**
- * Web/JS [FieldEncryptor] stub — **NO-OP: data is NOT encrypted.**
+ * Web/JS [FieldEncryptor] stub — fail-closed until SubtleCrypto integration.
  *
- * [encrypt] and [decrypt] return an unmodified copy of the input.
- * This exists solely to satisfy the `expect`/`actual` contract on JS/WasmJS targets
- * where the SubtleCrypto API is async-only and cannot be called synchronously.
- *
- * **Do NOT rely on this for data confidentiality.** Callers on web targets should
- * assume all field values are stored in plaintext.
+ * The synchronous API surface cannot safely call async-only SubtleCrypto.
+ * To avoid insecure fallback behavior, encryption/decryption operations throw.
  *
  * Full SubtleCrypto integration is deferred to Phase 4 (T18).
  */
-@Suppress("ReturnCount")
-@OptIn(ExperimentalEncodingApi::class)
 actual class FieldEncryptor {
 
     init {
         co.touchlab.kermit.Logger.w("FieldEncryptor") {
-            "Web FieldEncryptor is a NO-OP stub — data is NOT encrypted. " +
-                "See Phase 4 (T18) for SubtleCrypto integration."
+            "Web FieldEncryptor is fail-closed until SubtleCrypto integration."
         }
     }
 
     actual fun encrypt(plaintext: String): String {
-        val data = plaintext.encodeToByteArray()
-        val encrypted = encrypt(data)
-        return Base64.encode(encrypted)
+        throw SecurityException("Field encryption is unavailable on JS/Wasm until SubtleCrypto is integrated")
     }
 
     actual fun decrypt(ciphertext: String): String {
-        val decoded = Base64.decode(ciphertext)
-        return decrypt(decoded).decodeToString()
+        throw SecurityException("Field decryption is unavailable on JS/Wasm until SubtleCrypto is integrated")
     }
 
     actual fun encrypt(data: ByteArray): ByteArray {
-        // NO-OP: returns unmodified copy. SubtleCrypto is async-only on web.
-        return data.copyOf()
+        throw SecurityException("Field encryption is unavailable on JS/Wasm until SubtleCrypto is integrated")
     }
 
     actual fun decrypt(data: ByteArray): ByteArray {
-        // NO-OP: returns unmodified copy.
-        return data.copyOf()
+        throw SecurityException("Field decryption is unavailable on JS/Wasm until SubtleCrypto is integrated")
     }
 }
