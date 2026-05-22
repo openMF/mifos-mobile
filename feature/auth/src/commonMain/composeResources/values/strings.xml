@@ -72,6 +72,7 @@
     <string name="feature_sign_in_sign_up">Sign up!</string>
     <string name="feature_sign_in_username_error">Email address not found</string>
     <string name="feature_sign_in_password_error">Your password is not correct!</string>
+    <string name="no_client_assigned">No clients are assigned to this account</string>
 
     <string name="feature_signup_title">Sign up</string>
     <string name="feature_signup_sub_title">Create an account to continue!</string>

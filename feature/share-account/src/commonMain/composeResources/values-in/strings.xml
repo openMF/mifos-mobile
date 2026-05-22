@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_share_account_active">Aktif</string>
+    <string name="feature_share_account_approved">Disetujui</string>
+    <string name="feature_share_account_approval_pending">Menunggu Persetujuan</string>
+    <string name="feature_share_account_closed">Ditutup</string>
+    <string name="feature_share_account_rejected">Ditolak</string>
+
+    <string name="feature_share_account_empty_share_accounts">Tidak ada ShareAccount yang terkait dengan Anda</string>
+    <string name="feature_share_account_dashboard">Total Pinjaman</string>
+    <string name="feature_share_account">Share Account</string>
+    <string name="feature_share_account_items">%1$d Item</string>
+
+    <string name="feature_share_account_generic_error_server">Masalah server dari pihak kami tidak dapat dilanjutkan, coba lagi setelah beberapa saat</string>
+
+    <string name="feature_share_account_number">Nomor Akun</string>
+    <string name="feature_share_account_product_name">Nama Produk</string>
+    <string name="feature_share_account_currency">Mata Uang</string>
+    <string name="feature_share_account_status">Status</string>
+    <string name="feature_share_account_approved_shares">Share yang Disetujui</string>
+    <string name="feature_share_account_pending_shares">Bagian yang Tertunda</string>
+    <string name="feature_share_account_market_price">Harga Pasar</string>
+    <string name="feature_share_account_application_date">Tanggal Aplikasi</string>
+    <string name="feature_share_account_activation_date">Tanggal Aktivasi</string>
+
+    <string name="feature_share_account_details_top_bar_title">Detail Akun Saham</string>
+    <string name="feature_share_account_details_action">Tindakan</string>
+
+    <string name="feature_share_account_action_charges">Biaya</string>
+    <string name="feature_share_account_action_charges_subtitle">Lihat biaya akun</string>
+
+    <string name="feature_share_account_action_transactions">Transaksi</string>
+    <string name="feature_share_account_action_transactions_subtitle">Lihat riwayat pembelian</string>
+
+    <string name="feature_share_account_action_qr_code">Kode QR</string>
+    <string name="feature_share_account_action_qr_code_subtitle">Bagikan detail akun</string>
+
+    <string name="feature_share_account_purchased_shares">Saham yang Dibeli</string>
+    <string name="feature_share_account_purchased_date">Tanggal Pembelian</string>
+</resources>
+

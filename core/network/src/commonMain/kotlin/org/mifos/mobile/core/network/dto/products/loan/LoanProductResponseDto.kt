@@ -83,7 +83,7 @@ data class LoanProductResponseDto(
 
     val interestCalculationPeriodType: TypeResponseDto? = null,
 
-    val allowPartialPeriodInterestCalcualtion: Boolean? = null,
+    val allowPartialPeriodInterestCalculation: Boolean? = null,
 
     val transactionProcessingStrategyId: Int? = null,
 
