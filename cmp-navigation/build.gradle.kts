@@ -47,6 +47,7 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.datastore)
             implementation(projects.coreBase.common)
+            implementation(projects.coreBase.security)
             implementation(projects.coreBase.platform)
             implementation(projects.libs.mifosPasscode)
             //put your multiplatform dependencies here
