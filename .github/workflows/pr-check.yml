@@ -67,9 +67,9 @@ name: PR Checks
 # Trigger conditions for the workflow
 on:
   push:
-    branches: [ development ]  # Runs on pushes to dev branch
+    branches: [ dev ]  # Runs on pushes to dev branch
   pull_request:
-    branches: [ development ]  # Runs on pushes to dev branch
+    branches: [ dev ]  # Runs on pushes to dev branch
 
 # Concurrency settings to prevent multiple simultaneous workflow runs
 concurrency:

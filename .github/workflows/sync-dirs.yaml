@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: development
+          ref: dev
 
       - name: Setup Git config
         run: |
@@ -189,8 +189,8 @@ jobs:
           # Preserve root-level exclusions before sync
           preserve_root_files
 
-          # Switch to development branch
-          git checkout development
+          # Switch to dev branch
+          git checkout dev
 
           # Sync directories
           for dir in "${DIRS[@]}"; do
@@ -300,4 +300,4 @@ jobs:
           labels: |
             sync
             automated pr
-          base: development
+          base: dev
