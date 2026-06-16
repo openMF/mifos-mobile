@@ -31,7 +31,8 @@ actual val ktorHttpClient: HttpClient
 
         install(Logging) {
             logger = Logger.DEFAULT
-            level = LogLevel.ALL
+            // Avoid leaking request/response payloads and auth data in logs.
+            level = LogLevel.NONE
             logger = object : Logger {
                 override fun log(message: String) {
                     KermitLogger.d(tag = "KtorClient", messageString = message)
