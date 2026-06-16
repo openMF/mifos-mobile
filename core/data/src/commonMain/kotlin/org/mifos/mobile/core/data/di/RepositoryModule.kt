@@ -21,6 +21,7 @@ import org.mifos.mobile.core.data.repository.GuarantorRepository
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.NotificationRepository
+import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
@@ -39,6 +40,7 @@ import org.mifos.mobile.core.data.repositoryImpl.GuarantorRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.HomeRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.LoanRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.NotificationRepositoryImp
+import org.mifos.mobile.core.data.repositoryImpl.PocketRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.RecentTransactionRepositoryImp
 import org.mifos.mobile.core.data.repositoryImpl.ReviewLoanApplicationRepositoryImpl
 import org.mifos.mobile.core.data.repositoryImpl.SavingsAccountRepositoryImp
@@ -73,6 +75,7 @@ val RepositoryModule = module {
     single<UserAuthRepository> { UserAuthRepositoryImp(get(), get(ioDispatcher)) }
     single<UserDetailRepository> { UserDetailRepositoryImp(get(), get(ioDispatcher)) }
     single<ShareAccountRepository> { ShareAccountRepositoryImp(get(), get(ioDispatcher)) }
+    single<PocketRepository> { PocketRepositoryImp(get(), get(ioDispatcher)) }
     includes(platformModule)
     single<PlatformDependentDataModule> { getPlatformDataModule }
     single<NetworkMonitor> { getPlatformDataModule.networkMonitor }
