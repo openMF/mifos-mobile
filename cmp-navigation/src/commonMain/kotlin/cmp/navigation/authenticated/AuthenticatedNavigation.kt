@@ -367,9 +367,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         pocketNavGraph(
             navigateBack = navController::popBackStack,
-            navigateToManagePocket = {
-                // TODO
-            },
+            navigateToManagePocket = {},
             navigateToLoanAccountDetail = navController::navigateToLoanAccountDetailsScreen,
             navigateToShareAccountDetail = navController::navigateToShareAccountDetailsScreen,
             navigateToSavingsAccountDetail = navController::navigateToSavingsAccountDetailsScreen,

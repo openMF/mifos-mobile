@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
@@ -50,7 +51,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
-import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -99,16 +99,9 @@ internal fun PocketDashboardContent(
     state: PocketDashboardState,
     onAction: (PocketDashboardAction) -> Unit,
 ) {
-    val pullToRefreshState = rememberMifosPullToRefreshState(
-        isEnabled = true,
-        isRefreshing = state.isRefreshing,
-        onRefresh = { onAction(PocketDashboardAction.Refresh) },
-    )
-
     MifosElevatedScaffold(
         onNavigateBack = { onAction(PocketDashboardAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_pocket_dashboard_title),
-        pullToRefreshState = pullToRefreshState,
         containerColor = KptTheme.colorScheme.background,
     ) {
         when (state.uiState) {
@@ -154,14 +147,12 @@ internal fun PocketDashboardContent(
                         Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
                             state.savingsAccounts.forEach { account ->
                                 MifosAccountCard(
-                                    accountId = account.accountId,
+                                    accountId = account.id,
                                     accountType = account.name,
                                     accountNumber = account.accountNumber,
                                     accountStatus = account.balanceOrStatus,
                                     accountStatusColor = account.status.toColor(),
-                                    onAccountClick = {
-                                        onAction(PocketDashboardAction.NavigateToSavingsDetail(account.accountId))
-                                    },
+                                    onAccountClick = { onAction(PocketDashboardAction.ManagePocket) },
                                     icon = MifosIcons.PersonAccounts,
                                 )
                             }
@@ -175,14 +166,12 @@ internal fun PocketDashboardContent(
                         Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
                             state.loanAccounts.forEach { account ->
                                 MifosAccountCard(
-                                    accountId = account.accountId,
+                                    accountId = account.id,
                                     accountType = account.name,
                                     accountNumber = account.accountNumber,
                                     accountStatus = account.balanceOrStatus,
                                     accountStatusColor = account.status.toColor(),
-                                    onAccountClick = {
-                                        onAction(PocketDashboardAction.NavigateToLoanDetail(account.accountId))
-                                    },
+                                    onAccountClick = { onAction(PocketDashboardAction.ManagePocket) },
                                     icon = MifosIcons.CoinMultiple,
                                 )
                             }
@@ -196,14 +185,12 @@ internal fun PocketDashboardContent(
                         Column(verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium)) {
                             state.shareAccounts.forEach { account ->
                                 MifosAccountCard(
-                                    accountId = account.accountId,
+                                    accountId = account.id,
                                     accountType = account.name,
                                     accountNumber = account.accountNumber,
                                     accountStatus = account.balanceOrStatus,
                                     accountStatusColor = account.status.toColor(),
-                                    onAccountClick = {
-                                        onAction(PocketDashboardAction.NavigateToShareDetail(account.accountId))
-                                    },
+                                    onAccountClick = { onAction(PocketDashboardAction.ManagePocket) },
                                     icon = MifosIcons.CoinMultiple,
                                 )
                             }
@@ -283,7 +270,7 @@ internal fun PocketDashboardCard(
                     containerColor = AppColors.customWhite,
                     contentColor = KptTheme.colorScheme.primary,
                 ),
-                content = {
+                text = {
                     Text(
                         text = stringResource(Res.string.feature_pocket_dashboard_manage),
                         style = MifosTypography.titleSmallEmphasized,
@@ -329,14 +316,14 @@ internal fun PocketDashboardContentPreview() {
                 totalBalance = "$ 18,750.00",
                 savingsAccounts = listOf(
                     DetailedPocket(
-                        accountId = 1L,
+                        id = 1L,
                         name = "Emergency Fund",
                         accountNumber = "1004859238",
                         balanceOrStatus = "$ 5,000.00",
                         status = AccountStatus.ACTIVE,
                     ),
                     DetailedPocket(
-                        accountId = 2L,
+                        id = 2L,
                         name = "Vacation Savings",
                         accountNumber = "1004859299",
                         balanceOrStatus = "$ 1,250.00",
@@ -345,14 +332,14 @@ internal fun PocketDashboardContentPreview() {
                 ),
                 loanAccounts = listOf(
                     DetailedPocket(
-                        accountId = 3L,
+                        id = 3L,
                         name = "Personal Loan",
                         accountNumber = "3009284756",
                         balanceOrStatus = "$ 10,000.00",
                         status = AccountStatus.ACTIVE,
                     ),
                     DetailedPocket(
-                        accountId = 4L,
+                        id = 4L,
                         name = "Auto Loan",
                         accountNumber = "3009284812",
                         balanceOrStatus = "PENDING",
@@ -361,13 +348,26 @@ internal fun PocketDashboardContentPreview() {
                 ),
                 shareAccounts = listOf(
                     DetailedPocket(
-                        accountId = 5L,
+                        id = 5L,
                         name = "Company Shares",
                         accountNumber = "5001129384",
                         balanceOrStatus = "$ 2,500.00",
                         status = AccountStatus.ACTIVE,
                     ),
                 ),
+                uiState = ScreenUiState.Success,
+            ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+fun EmptyPocketDashboardContent() {
+    MifosMobileTheme(darkTheme = false) {
+        PocketDashboardContent(
+            state = PocketDashboardState(
                 uiState = ScreenUiState.Success,
             ),
             onAction = {},

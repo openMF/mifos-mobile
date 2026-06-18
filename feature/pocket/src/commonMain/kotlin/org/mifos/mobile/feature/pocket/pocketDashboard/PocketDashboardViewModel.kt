@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.pocket.pocketDashboard
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.pocket.generated.resources.Res
@@ -37,16 +36,13 @@ internal class PocketDashboardViewModel(
         clientId = requireNotNull(userPreferencesRepository.clientId.value),
     ),
 ) {
-    private var loadJob: Job? = null
 
     init {
         loadPocketData()
     }
 
     private fun loadPocketData(forceRefresh: Boolean = false) {
-        loadJob?.cancel()
-
-        loadJob = viewModelScope.launch {
+        viewModelScope.launch {
             val clientId = state.clientId
             pocketRepository.getDetailedPocketAccounts(clientId, forceRefresh)
                 .collect { dataState ->
@@ -71,13 +67,7 @@ internal class PocketDashboardViewModel(
             is PocketDashboardAction.NavigateToShareDetail -> {
                 sendEvent(PocketDashboardEvent.NavigateToShareDetail(action.accountId))
             }
-            PocketDashboardAction.Refresh -> refresh()
         }
-    }
-
-    private fun refresh() {
-        mutableStateFlow.update { it.copy(isRefreshing = true) }
-        loadPocketData(forceRefresh = true)
     }
 
     private fun retry() {
@@ -89,9 +79,7 @@ internal class PocketDashboardViewModel(
         viewModelScope.launch {
             when (dataState) {
                 is DataState.Loading -> {
-                    if (!state.isRefreshing) {
-                        mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
-                    }
+                    mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
                 }
 
                 is DataState.Error -> {
@@ -101,8 +89,7 @@ internal class PocketDashboardViewModel(
                         mutableStateFlow.update {
                             it.copy(
                                 uiState = ScreenUiState.Network,
-                                networkStatus = false,
-                                isRefreshing = false,
+                                networkStatus = isNetworkError,
                             )
                         }
                     } else {
@@ -112,7 +99,6 @@ internal class PocketDashboardViewModel(
                                     dataState.exception.message
                                         ?: getString(Res.string.feature_pocket_error_load_accounts),
                                 ),
-                                isRefreshing = false,
                             )
                         }
                     }
@@ -137,7 +123,7 @@ internal class PocketDashboardViewModel(
                         }
 
                         return DetailedPocket(
-                            accountId = detailed.pocket.accountId,
+                            id = detailed.pocket.id,
                             name = detailed.productName ?: getString(Res.string.feature_pocket_unknown_account),
                             accountNumber = detailed.pocket.accountNumber,
                             balanceOrStatus = balanceStr,
@@ -145,16 +131,17 @@ internal class PocketDashboardViewModel(
                         )
                     }
 
-                    val loanList = mutableListOf<DetailedPocket>()
-                    val savingsList = mutableListOf<DetailedPocket>()
-                    val shareList = mutableListOf<DetailedPocket>()
-                    for (account in detailedAccounts) {
-                        when (account.pocket.accountType) {
-                            AccountType.LOAN -> loanList.add(mapToUiModel(account))
-                            AccountType.SAVINGS -> savingsList.add(mapToUiModel(account))
-                            AccountType.SHARE -> shareList.add(mapToUiModel(account))
-                        }
-                    }
+                    val loanList = detailedAccounts
+                        .filter { it.pocket.accountType == AccountType.LOAN }
+                        .map { mapToUiModel(it) }
+
+                    val savingsList = detailedAccounts
+                        .filter { it.pocket.accountType == AccountType.SAVINGS }
+                        .map { mapToUiModel(it) }
+
+                    val shareList = detailedAccounts
+                        .filter { it.pocket.accountType == AccountType.SHARE }
+                        .map { mapToUiModel(it) }
 
                     val totalSum = detailedAccounts
                         .filter { it.status == AccountStatus.ACTIVE && it.balance != null }
@@ -171,7 +158,6 @@ internal class PocketDashboardViewModel(
                         mutableStateFlow.update {
                             it.copy(
                                 uiState = ScreenUiState.Empty,
-                                isRefreshing = false,
                             )
                         }
                     } else {
@@ -182,7 +168,6 @@ internal class PocketDashboardViewModel(
                                 loanAccounts = loanList,
                                 savingsAccounts = savingsList,
                                 shareAccounts = shareList,
-                                isRefreshing = false,
                             )
                         }
                     }
@@ -199,10 +184,9 @@ data class PocketDashboardState(
     val shareAccounts: List<DetailedPocket> = emptyList(),
     val uiState: ScreenUiState = ScreenUiState.Loading,
     val networkStatus: Boolean = true,
-    val isRefreshing: Boolean = false,
 )
 data class DetailedPocket(
-    val accountId: Long,
+    val id: Long,
     val name: String,
     val accountNumber: String,
     val balanceOrStatus: String,
@@ -224,7 +208,6 @@ internal sealed interface PocketDashboardAction {
     data class NavigateToShareDetail(val accountId: Long) : PocketDashboardAction
     data object ManagePocket : PocketDashboardAction
     data object LinkFirstAccount : PocketDashboardAction
-    data object Refresh : PocketDashboardAction
     data object Retry : PocketDashboardAction
 
     sealed interface Internal : PocketDashboardAction {
