@@ -106,6 +106,7 @@ internal fun HomeScreen(
                     Constants.CHARGES -> onNavigate(HomeNavigationDestination.Charge)
                     Constants.BENEFICIARY -> onNavigate(HomeNavigationDestination.Beneficiary)
                     Constants.HELP -> onNavigate(HomeNavigationDestination.Faq)
+                    Constants.POCKET -> onNavigate(HomeNavigationDestination.Pocket)
                 }
             }
             is HomeEvent.NavigateToNotification -> onNavigate(HomeNavigationDestination.Notification)

@@ -51,6 +51,8 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.pocket.navigation.navigateToPocketGraph
+import org.mifos.mobile.feature.pocket.navigation.pocketNavGraph
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
@@ -130,6 +132,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                     is HomeNavigationDestination.ApplyShare ->
                         navController.navigateToShareApplicationGraph()
+
+                    HomeNavigationDestination.Pocket -> navController.navigateToPocketGraph()
                 }
             },
 
@@ -359,6 +363,14 @@ internal fun NavGraphBuilder.authenticatedGraph(
         helpDestination(
             onBackClick = navController::popBackStack,
             navigateToFAQ = navController::navigateToFaq,
+        )
+
+        pocketNavGraph(
+            navigateBack = navController::popBackStack,
+            navigateToManagePocket = {},
+            navigateToLoanAccountDetail = navController::navigateToLoanAccountDetailsScreen,
+            navigateToShareAccountDetail = navController::navigateToShareAccountDetailsScreen,
+            navigateToSavingsAccountDetail = navController::navigateToSavingsAccountDetailsScreen,
         )
     }
 }

@@ -61,3 +61,4 @@ cmp-ios/iosApp.xcodeproj/xcuserdata/
 cmp-ios/iosApp.xcworkspace/xcuserdata/
 *.xcuserstate
 *.xcuserdatad/
+.hotswan/

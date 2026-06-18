@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.FilterList
@@ -271,4 +272,5 @@ object MifosIcons {
     val CheckCircle1 = FluentIcons.Filled.CheckmarkCircle
     val Pencil = Icons.Filled.Edit
     val Export = Icons.Default.IosShare
+    val Pocket = Icons.Default.CollectionsBookmark
 }

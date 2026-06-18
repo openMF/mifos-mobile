@@ -40,6 +40,7 @@ kotlin {
             implementation(projects.feature.loanApplication)
             implementation(projects.feature.savingsApplication)
             implementation(projects.feature.shareApplication)
+            implementation(projects.feature.pocket)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)

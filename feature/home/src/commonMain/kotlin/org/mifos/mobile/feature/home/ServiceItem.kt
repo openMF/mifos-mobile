@@ -20,6 +20,7 @@ import mifos_mobile.feature.home.generated.resources.feature_home_beneficiary
 import mifos_mobile.feature.home.generated.resources.feature_home_charges
 import mifos_mobile.feature.home.generated.resources.feature_home_faq
 import mifos_mobile.feature.home.generated.resources.feature_home_loan_accounts
+import mifos_mobile.feature.home.generated.resources.feature_home_pocket
 import mifos_mobile.feature.home.generated.resources.feature_home_saving_accounts
 import mifos_mobile.feature.home.generated.resources.feature_home_share_accounts
 import mifos_mobile.feature.home.generated.resources.feature_home_transaction_history
@@ -91,9 +92,16 @@ internal sealed class ServiceItem(
         icon = MifosIcons.Faq,
         route = Constants.HELP,
     )
+
+    data object Pocket : ServiceItem(
+        title = Res.string.feature_home_pocket,
+        icon = MifosIcons.Pocket,
+        route = Constants.POCKET,
+    )
 }
 
 internal val serviceCards: ImmutableList<ServiceItem> = persistentListOf(
+    ServiceItem.Pocket,
     ServiceItem.SavingsAccount,
     ServiceItem.LoanAccount,
     ServiceItem.ShareAccount,
