@@ -17,12 +17,15 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.mapper.accounts.toModel
+import org.mifos.mobile.core.data.mapper.pocket.toAccountStatus
 import org.mifos.mobile.core.data.mapper.pocket.toDomainList
+import org.mifos.mobile.core.data.mapper.share.toModel
 import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.data.util.runAsDataState
 import org.mifos.mobile.core.data.util.withNetworkCheck
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
@@ -84,7 +87,7 @@ class PocketRepositoryImp(
                     productName = detail?.productName,
                     currencyCode = detail?.currency?.code,
                     decimalPlaces = detail?.currency?.decimalPlaces?.toInt(),
-                    isActive = detail?.status?.active == true,
+                    status = detail?.status?.toAccountStatus(),
                 )
             }
             AccountType.SAVINGS -> {
@@ -95,7 +98,7 @@ class PocketRepositoryImp(
                     productName = detail?.productName,
                     currencyCode = detail?.currency?.code,
                     decimalPlaces = detail?.currency?.decimalPlaces,
-                    isActive = detail?.status?.active == true,
+                    status = detail?.status?.toAccountStatus(),
                 )
             }
             AccountType.SHARE -> {
@@ -103,17 +106,17 @@ class PocketRepositoryImp(
                 var productName: String?
                 var currencyCode: String?
                 var decimalPlaces: Int?
-                var isActive: Boolean
+                var accountStatus: AccountStatus? = null
 
                 try {
                     val shareAccountDetails = dataManager
                         .shareAccountApi
-                        .getShareAccountDetails(pocket.accountId).first()
+                        .getShareAccountDetails(pocket.accountId).first().toModel()
 
                     productName = shareAccountDetails.productName
                     currencyCode = shareAccountDetails.currency?.code
                     decimalPlaces = shareAccountDetails.currency?.decimalPlaces
-                    isActive = shareAccountDetails.status?.active == true
+                    accountStatus = shareAccountDetails.status?.toAccountStatus()
 
                     val approvedShares = shareAccountDetails.summary?.totalApprovedShares ?: 0
                     val currentMarketPrice = shareAccountDetails.currentMarketPrice ?: 0.0
@@ -123,7 +126,7 @@ class PocketRepositoryImp(
                     productName = detail?.productName
                     currencyCode = detail?.currency?.code
                     decimalPlaces = detail?.currency?.decimalPlaces
-                    isActive = detail?.status?.active == true
+                    accountStatus = detail?.status?.toAccountStatus()
                 }
 
                 DetailedPocketAccount(
@@ -132,7 +135,7 @@ class PocketRepositoryImp(
                     productName = productName,
                     currencyCode = currencyCode,
                     decimalPlaces = decimalPlaces,
-                    isActive = isActive,
+                    status = accountStatus,
                 )
             }
         }
@@ -217,7 +220,7 @@ class PocketRepositoryImp(
                                         balance = loan.loanBalance,
                                         currencyCode = loan.currency?.code,
                                         decimalPlaces = loan.currency?.decimalPlaces?.toInt(),
-                                        isActive = loan.status?.active == true,
+                                        status = loan.status?.toAccountStatus(),
                                     ),
                                 )
                             }
@@ -234,7 +237,7 @@ class PocketRepositoryImp(
                                         balance = savings.accountBalance,
                                         currencyCode = savings.currency?.code,
                                         decimalPlaces = savings.currency?.decimalPlaces,
-                                        isActive = savings.status?.active == true,
+                                        status = savings.status?.toAccountStatus(),
                                     ),
                                 )
                             }
@@ -268,7 +271,7 @@ class PocketRepositoryImp(
                                         balance = balance,
                                         currencyCode = currencyCode,
                                         decimalPlaces = decimalPlaces,
-                                        isActive = share.status?.active == true,
+                                        status = share.status?.toAccountStatus(),
                                     ),
                                 )
                             }
