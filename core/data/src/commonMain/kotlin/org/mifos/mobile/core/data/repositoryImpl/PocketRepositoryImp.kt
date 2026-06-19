@@ -155,6 +155,7 @@ class PocketRepositoryImp(
     override suspend fun linkAccounts(
         request: PocketLinkRequest,
         explicitlyAddedAccount: DetailedPocketAccount,
+        clientId: Long,
     ): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             dataManager.pocketApi.linkAccounts(request = request)
@@ -172,11 +173,13 @@ class PocketRepositoryImp(
                 val updatedList = currentState.data.toMutableList()
                 updatedList.add(finalAccount)
                 detailedPocketCache.value = DataState.Success(updatedList)
+            } else {
+                syncPockets(clientId = clientId, forceRefresh = true)
             }
         }
     }
 
-    override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>): DataState<Unit> {
+    override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             val request = PocketDelinkRequest(pocketAccountMappingIds)
             dataManager.pocketApi.delinkAccounts(request = request)
@@ -185,6 +188,8 @@ class PocketRepositoryImp(
             if (currentState is DataState.Success) {
                 val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
                 detailedPocketCache.value = DataState.Success(updatedList)
+            } else {
+                syncPockets(clientId = clientId, forceRefresh = true)
             }
         }
     }
