@@ -32,9 +32,11 @@ interface PocketRepository {
     suspend fun linkAccounts(
         request: PocketLinkRequest,
         explicitlyAddedAccount: DetailedPocketAccount,
+        clientId: Long,
     ): DataState<Unit>
 
     suspend fun delinkAccounts(
         pocketAccountMappingIds: List<Long>,
+        clientId: Long,
     ): DataState<Unit>
 }
