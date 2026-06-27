@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.pocket.pocketDashboard
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.pocket.generated.resources.Res
@@ -36,13 +37,16 @@ internal class PocketDashboardViewModel(
         clientId = requireNotNull(userPreferencesRepository.clientId.value),
     ),
 ) {
+    private var loadJob: Job? = null
 
     init {
         loadPocketData()
     }
 
     private fun loadPocketData(forceRefresh: Boolean = false) {
-        viewModelScope.launch {
+        loadJob?.cancel()
+
+        loadJob = viewModelScope.launch {
             val clientId = state.clientId
             pocketRepository.getDetailedPocketAccounts(clientId, forceRefresh)
                 .collect { dataState ->
@@ -89,7 +93,7 @@ internal class PocketDashboardViewModel(
                         mutableStateFlow.update {
                             it.copy(
                                 uiState = ScreenUiState.Network,
-                                networkStatus = isNetworkError,
+                                networkStatus = false,
                             )
                         }
                     } else {
@@ -123,7 +127,7 @@ internal class PocketDashboardViewModel(
                         }
 
                         return DetailedPocket(
-                            id = detailed.pocket.id,
+                            accountId = detailed.pocket.accountId,
                             name = detailed.productName ?: getString(Res.string.feature_pocket_unknown_account),
                             accountNumber = detailed.pocket.accountNumber,
                             balanceOrStatus = balanceStr,
@@ -186,7 +190,7 @@ data class PocketDashboardState(
     val networkStatus: Boolean = true,
 )
 data class DetailedPocket(
-    val id: Long,
+    val accountId: Long,
     val name: String,
     val accountNumber: String,
     val balanceOrStatus: String,
