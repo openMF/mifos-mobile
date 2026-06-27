@@ -42,6 +42,8 @@ class PocketRepositoryImp(
 
     private val detailedPocketCache = MutableStateFlow<DataState<List<DetailedPocketAccount>>?>(null)
 
+    private var cachedClientId: Long? = null
+
     private suspend fun fetchBasicPocketsFromNetwork(): List<PocketAccount> {
         return dataManager.pocketApi.getPocketAccounts().toDomainList()
     }
@@ -53,8 +55,13 @@ class PocketRepositoryImp(
     }
 
     private suspend fun syncPockets(clientId: Long, forceRefresh: Boolean = false) {
-        if (!forceRefresh && detailedPocketCache.value is DataState.Loading) return
-        if (!forceRefresh && detailedPocketCache.value is DataState.Success) return
+        if (cachedClientId != clientId) {
+            detailedPocketCache.value = null
+            cachedClientId = clientId
+        }
+
+        if (!forceRefresh && cachedClientId == clientId && detailedPocketCache.value is DataState.Loading) return
+        if (!forceRefresh && cachedClientId == clientId && detailedPocketCache.value is DataState.Success) return
 
         detailedPocketCache.value = DataState.Loading
 
