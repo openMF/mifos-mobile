@@ -50,6 +50,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
+import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -98,9 +99,16 @@ internal fun PocketDashboardContent(
     state: PocketDashboardState,
     onAction: (PocketDashboardAction) -> Unit,
 ) {
+    val pullToRefreshState = rememberMifosPullToRefreshState(
+        isEnabled = true,
+        isRefreshing = state.isRefreshing,
+        onRefresh = { onAction(PocketDashboardAction.Refresh) },
+    )
+
     MifosElevatedScaffold(
         onNavigateBack = { onAction(PocketDashboardAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_pocket_dashboard_title),
+        pullToRefreshState = pullToRefreshState,
         containerColor = KptTheme.colorScheme.background,
     ) {
         when (state.uiState) {

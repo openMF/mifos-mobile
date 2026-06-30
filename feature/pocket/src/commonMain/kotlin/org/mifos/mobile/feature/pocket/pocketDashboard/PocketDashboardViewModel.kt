@@ -71,7 +71,13 @@ internal class PocketDashboardViewModel(
             is PocketDashboardAction.NavigateToShareDetail -> {
                 sendEvent(PocketDashboardEvent.NavigateToShareDetail(action.accountId))
             }
+            PocketDashboardAction.Refresh -> refresh()
         }
+    }
+
+    private fun refresh() {
+        mutableStateFlow.update { it.copy(isRefreshing = true) }
+        loadPocketData(forceRefresh = true)
     }
 
     private fun retry() {
@@ -83,7 +89,9 @@ internal class PocketDashboardViewModel(
         viewModelScope.launch {
             when (dataState) {
                 is DataState.Loading -> {
-                    mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
+                    if (!state.isRefreshing) {
+                        mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
+                    }
                 }
 
                 is DataState.Error -> {
@@ -94,6 +102,7 @@ internal class PocketDashboardViewModel(
                             it.copy(
                                 uiState = ScreenUiState.Network,
                                 networkStatus = false,
+                                isRefreshing = false,
                             )
                         }
                     } else {
@@ -103,6 +112,7 @@ internal class PocketDashboardViewModel(
                                     dataState.exception.message
                                         ?: getString(Res.string.feature_pocket_error_load_accounts),
                                 ),
+                                isRefreshing = false,
                             )
                         }
                     }
@@ -162,6 +172,7 @@ internal class PocketDashboardViewModel(
                         mutableStateFlow.update {
                             it.copy(
                                 uiState = ScreenUiState.Empty,
+                                isRefreshing = false,
                             )
                         }
                     } else {
@@ -172,6 +183,7 @@ internal class PocketDashboardViewModel(
                                 loanAccounts = loanList,
                                 savingsAccounts = savingsList,
                                 shareAccounts = shareList,
+                                isRefreshing = false,
                             )
                         }
                     }
@@ -188,6 +200,7 @@ data class PocketDashboardState(
     val shareAccounts: List<DetailedPocket> = emptyList(),
     val uiState: ScreenUiState = ScreenUiState.Loading,
     val networkStatus: Boolean = true,
+    val isRefreshing: Boolean = false,
 )
 data class DetailedPocket(
     val accountId: Long,
@@ -212,6 +225,7 @@ internal sealed interface PocketDashboardAction {
     data class NavigateToShareDetail(val accountId: Long) : PocketDashboardAction
     data object ManagePocket : PocketDashboardAction
     data object LinkFirstAccount : PocketDashboardAction
+    data object Refresh : PocketDashboardAction
     data object Retry : PocketDashboardAction
 
     sealed interface Internal : PocketDashboardAction {
