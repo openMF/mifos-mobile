@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.accounts.toModel
 import org.mifos.mobile.core.data.mapper.pocket.toAccountStatus
 import org.mifos.mobile.core.data.mapper.pocket.toDomainList
@@ -65,19 +66,13 @@ class PocketRepositoryImp(
 
         detailedPocketCache.value = DataState.Loading
 
-        try {
+        detailedPocketCache.value = runAsDataState(networkMonitor, ioDispatcher) {
             val basicPockets = fetchBasicPocketsFromNetwork()
+            val clientAccounts = dataManager.clientsApi.getClientAccounts(clientId).first().toModel()
 
-            dataManager.clientsApi.getClientAccounts(clientId).collect { accountsDto ->
-                val clientAccounts = accountsDto.toModel()
-
-                val detailedPocketList = basicPockets.map { pocket ->
-                    addAccountDetails(pocket, clientAccounts)
-                }
-                detailedPocketCache.value = DataState.Success(detailedPocketList)
+            basicPockets.map { pocket ->
+                addAccountDetails(pocket, clientAccounts)
             }
-        } catch (e: Exception) {
-            detailedPocketCache.value = DataState.Error(e)
         }
     }
 
@@ -113,7 +108,7 @@ class PocketRepositoryImp(
                 var productName: String?
                 var currencyCode: String?
                 var decimalPlaces: Int?
-                var accountStatus: AccountStatus? = null
+                var accountStatus: AccountStatus?
 
                 try {
                     val shareAccountDetails = dataManager
@@ -162,6 +157,7 @@ class PocketRepositoryImp(
             },
         ).flowOn(ioDispatcher)
     }
+
     override suspend fun linkAccounts(
         request: PocketLinkRequest,
         explicitlyAddedAccount: DetailedPocketAccount,
@@ -207,89 +203,82 @@ class PocketRepositoryImp(
     override fun getAvailableAccountsToLink(clientId: Long): Flow<DataState<List<LinkableAccount>>> {
         return networkMonitor.withNetworkCheck(
             flow {
-                emit(DataState.Loading)
-                try {
-                    dataManager.clientsApi.getClientAccounts(clientId).collect { accountsDto ->
-                        val clientAccounts = accountsDto.toModel()
-                        val availableAccounts = mutableListOf<LinkableAccount>()
+                val clientAccounts = dataManager.clientsApi.getClientAccounts(clientId).first().toModel()
+                val availableAccounts = mutableListOf<LinkableAccount>()
 
-                        val alreadyLinkedAccountIds = (detailedPocketCache.value as? DataState.Success)
-                            ?.data?.map { it.pocket.accountId } ?: emptyList()
+                val alreadyLinkedAccountIds = (detailedPocketCache.value as? DataState.Success)
+                    ?.data?.map { it.pocket.accountId } ?: emptyList()
 
-                        clientAccounts.loanAccounts.forEach { loan ->
-                            if (loan.id !in alreadyLinkedAccountIds) {
-                                availableAccounts.add(
-                                    LinkableAccount(
-                                        accountId = loan.id,
-                                        productName = loan.productName,
-                                        accountNumber = loan.accountNo,
-                                        accountType = AccountType.LOAN,
-                                        balance = loan.loanBalance,
-                                        currencyCode = loan.currency?.code,
-                                        decimalPlaces = loan.currency?.decimalPlaces?.toInt(),
-                                        status = loan.status?.toAccountStatus(),
-                                    ),
-                                )
-                            }
-                        }
-
-                        clientAccounts.savingsAccounts?.forEach { savings ->
-                            if (savings.id !in alreadyLinkedAccountIds) {
-                                availableAccounts.add(
-                                    LinkableAccount(
-                                        accountId = savings.id,
-                                        productName = savings.productName,
-                                        accountNumber = savings.accountNo,
-                                        accountType = AccountType.SAVINGS,
-                                        balance = savings.accountBalance,
-                                        currencyCode = savings.currency?.code,
-                                        decimalPlaces = savings.currency?.decimalPlaces,
-                                        status = savings.status?.toAccountStatus(),
-                                    ),
-                                )
-                            }
-                        }
-
-                        clientAccounts.shareAccounts.forEach { share ->
-                            if (share.id !in alreadyLinkedAccountIds) {
-                                var balance = 0.0
-                                var currencyCode: String? = share.currency?.code
-                                var decimalPlaces: Int? = share.currency?.decimalPlaces
-
-                                try {
-                                    val shareAccountDetails = dataManager.shareAccountApi
-                                        .getShareAccountDetails(share.id).first()
-                                    val approvedShares = shareAccountDetails.summary?.totalApprovedShares ?: 0
-                                    val currentMarketPrice = shareAccountDetails.currentMarketPrice ?: 0.0
-                                    balance = approvedShares * currentMarketPrice
-
-                                    currencyCode = shareAccountDetails.currency?.code ?: currencyCode
-                                    decimalPlaces = shareAccountDetails.currency?.decimalPlaces ?: decimalPlaces
-                                } catch (e: Exception) {
-                                    // do nothing
-                                }
-
-                                availableAccounts.add(
-                                    LinkableAccount(
-                                        accountId = share.id,
-                                        productName = share.productName,
-                                        accountNumber = share.accountNo,
-                                        accountType = AccountType.SHARE,
-                                        balance = balance,
-                                        currencyCode = currencyCode,
-                                        decimalPlaces = decimalPlaces,
-                                        status = share.status?.toAccountStatus(),
-                                    ),
-                                )
-                            }
-                        }
-
-                        emit(DataState.Success(availableAccounts))
+                clientAccounts.loanAccounts.forEach { loan ->
+                    if (loan.id !in alreadyLinkedAccountIds) {
+                        availableAccounts.add(
+                            LinkableAccount(
+                                accountId = loan.id,
+                                productName = loan.productName,
+                                accountNumber = loan.accountNo,
+                                accountType = AccountType.LOAN,
+                                balance = loan.loanBalance,
+                                currencyCode = loan.currency?.code,
+                                decimalPlaces = loan.currency?.decimalPlaces?.toInt(),
+                                status = loan.status?.toAccountStatus(),
+                            ),
+                        )
                     }
-                } catch (e: Exception) {
-                    emit(DataState.Error(e))
                 }
-            },
+
+                clientAccounts.savingsAccounts?.forEach { savings ->
+                    if (savings.id !in alreadyLinkedAccountIds) {
+                        availableAccounts.add(
+                            LinkableAccount(
+                                accountId = savings.id,
+                                productName = savings.productName,
+                                accountNumber = savings.accountNo,
+                                accountType = AccountType.SAVINGS,
+                                balance = savings.accountBalance,
+                                currencyCode = savings.currency?.code,
+                                decimalPlaces = savings.currency?.decimalPlaces,
+                                status = savings.status?.toAccountStatus(),
+                            ),
+                        )
+                    }
+                }
+
+                clientAccounts.shareAccounts.forEach { share ->
+                    if (share.id !in alreadyLinkedAccountIds) {
+                        var balance = 0.0
+                        var currencyCode: String? = share.currency?.code
+                        var decimalPlaces: Int? = share.currency?.decimalPlaces
+
+                        try {
+                            val shareAccountDetails = dataManager.shareAccountApi
+                                .getShareAccountDetails(share.id).first()
+                            val approvedShares = shareAccountDetails.summary?.totalApprovedShares ?: 0
+                            val currentMarketPrice = shareAccountDetails.currentMarketPrice ?: 0.0
+                            balance = approvedShares * currentMarketPrice
+
+                            currencyCode = shareAccountDetails.currency?.code ?: currencyCode
+                            decimalPlaces = shareAccountDetails.currency?.decimalPlaces ?: decimalPlaces
+                        } catch (e: Exception) {
+                            // do nothing
+                        }
+
+                        availableAccounts.add(
+                            LinkableAccount(
+                                accountId = share.id,
+                                productName = share.productName,
+                                accountNumber = share.accountNo,
+                                accountType = AccountType.SHARE,
+                                balance = balance,
+                                currencyCode = currencyCode,
+                                decimalPlaces = decimalPlaces,
+                                status = share.status?.toAccountStatus(),
+                            ),
+                        )
+                    }
+                }
+
+                emit(availableAccounts)
+            }.asDataStateFlow(),
         ).flowOn(ioDispatcher)
     }
 }
