@@ -25,7 +25,7 @@ data class DetailedPocketAccount(
     val balance: Double?,
     val currencyCode: String?,
     val decimalPlaces: Int?,
-    val isActive: Boolean,
+    val status: AccountStatus?,
 )
 data class LinkableAccount(
     val accountId: Long,
@@ -35,5 +35,17 @@ data class LinkableAccount(
     val balance: Double?,
     val currencyCode: String?,
     val decimalPlaces: Int?,
-    val isActive: Boolean,
+    val status: AccountStatus?,
 )
+
+enum class AccountStatus {
+    PENDING,
+    APPROVED,
+    ACTIVE,
+    CLOSED,
+    REJECTED,
+    WITHDRAWN,
+    OVERPAID,
+    MATURED,
+    UNKNOWN,
+}

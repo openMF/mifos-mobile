@@ -31,7 +31,7 @@ interface PocketRepository {
 
     suspend fun linkAccounts(
         request: PocketLinkRequest,
-        explicitlyAddedAccount: DetailedPocketAccount,
+        explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     ): DataState<Unit>
 

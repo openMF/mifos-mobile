@@ -9,10 +9,15 @@
  */
 package org.mifos.mobile.core.data.mapper.pocket
 
+import org.mifos.mobile.core.database.entity.PocketAccountEntity
+import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.dto.pocket.PocketAccountDto
 import org.mifos.mobile.core.network.dto.pocket.PocketResponseDto
+import org.mifos.mobile.core.model.entity.accounts.loan.Status as LoanStatus
+import org.mifos.mobile.core.model.entity.accounts.savings.Status as SavingsStatus
+import org.mifos.mobile.core.model.entity.accounts.share.Status as ShareStatus
 
 fun PocketResponseDto.toDomainList(): List<PocketAccount> {
     val all = mutableListOf<PocketAccount>()
@@ -31,3 +36,54 @@ private fun PocketAccountDto.toDomain(type: AccountType) = PocketAccount(
     accountType = type,
     accountNumber = this.accountNumber,
 )
+
+fun PocketAccountEntity.toDomain() = PocketAccount(
+    id = this.id,
+    pocketId = this.pocketId,
+    accountId = this.accountId,
+    accountType = AccountType.valueOf(this.accountType),
+    accountNumber = this.accountNumber,
+)
+
+fun PocketAccount.toEntity() = PocketAccountEntity(
+    id = this.id,
+    pocketId = this.pocketId,
+    accountId = this.accountId,
+    accountType = this.accountType.name,
+    accountNumber = this.accountNumber,
+)
+
+fun LoanStatus.toAccountStatus(): AccountStatus =
+    when {
+        active == true -> AccountStatus.ACTIVE
+        pendingApproval == true -> AccountStatus.PENDING
+        waitingForDisbursal == true -> AccountStatus.APPROVED
+        overpaid == true -> AccountStatus.OVERPAID
+        closed == true ||
+            closedObligationsMet == true ||
+            closedWrittenOff == true ||
+            closedRescheduled == true -> AccountStatus.CLOSED
+        else -> AccountStatus.UNKNOWN
+    }
+
+fun SavingsStatus.toAccountStatus(): AccountStatus =
+    when {
+        active == true -> AccountStatus.ACTIVE
+        submittedAndPendingApproval == true -> AccountStatus.PENDING
+        approved == true -> AccountStatus.APPROVED
+        rejected == true -> AccountStatus.REJECTED
+        withdrawnByApplicant == true -> AccountStatus.WITHDRAWN
+        matured == true -> AccountStatus.MATURED
+        closed == true || prematureClosed == true -> AccountStatus.CLOSED
+        else -> AccountStatus.UNKNOWN
+    }
+
+fun ShareStatus.toAccountStatus(): AccountStatus =
+    when {
+        active == true -> AccountStatus.ACTIVE
+        submittedAndPendingApproval == true -> AccountStatus.PENDING
+        approved == true -> AccountStatus.APPROVED
+        rejected == true -> AccountStatus.REJECTED
+        closed == true -> AccountStatus.CLOSED
+        else -> AccountStatus.UNKNOWN
+    }
