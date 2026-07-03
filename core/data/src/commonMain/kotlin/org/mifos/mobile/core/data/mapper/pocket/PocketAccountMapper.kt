@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.data.mapper.pocket
 
-import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
 import org.mifos.mobile.core.model.enums.AccountType
@@ -34,22 +33,6 @@ private fun PocketAccountDto.toDomain(type: AccountType) = PocketAccount(
     pocketId = this.pocketId,
     accountId = this.accountId,
     accountType = type,
-    accountNumber = this.accountNumber,
-)
-
-fun PocketAccountEntity.toDomain() = PocketAccount(
-    id = this.id,
-    pocketId = this.pocketId,
-    accountId = this.accountId,
-    accountType = AccountType.valueOf(this.accountType),
-    accountNumber = this.accountNumber,
-)
-
-fun PocketAccount.toEntity() = PocketAccountEntity(
-    id = this.id,
-    pocketId = this.pocketId,
-    accountId = this.accountId,
-    accountType = this.accountType.name,
     accountNumber = this.accountNumber,
 )
 
