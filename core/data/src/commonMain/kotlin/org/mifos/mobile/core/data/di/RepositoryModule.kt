@@ -73,6 +73,7 @@ val RepositoryModule = module {
     single<UserAuthRepository> { UserAuthRepositoryImp(get(), get(ioDispatcher)) }
     single<UserDetailRepository> { UserDetailRepositoryImp(get(), get(ioDispatcher)) }
     single<ShareAccountRepository> { ShareAccountRepositoryImp(get(), get(ioDispatcher)) }
+    includes(pocketModule)
     includes(platformModule)
     single<PlatformDependentDataModule> { getPlatformDataModule }
     single<NetworkMonitor> { getPlatformDataModule.networkMonitor }

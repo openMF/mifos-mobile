@@ -7,17 +7,13 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-package org.mifos.mobile.core.database.di
+package org.mifos.mobile.core.data.di
 
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import org.mifos.mobile.core.database.AppDatabase
+import org.mifos.mobile.core.data.repository.PocketRepository
+import org.mifos.mobile.core.data.repositoryImpl.PocketRepositoryImp
 
-val DatabaseModule = module {
-    includes(platformModule)
-    single { get<AppDatabase>().chargeDao }
-    single { get<AppDatabase>().mifosNotificationDao }
-    single { get<AppDatabase>().pocketAccountDao }
+actual val pocketModule: Module = module {
+    single<PocketRepository> { PocketRepositoryImp() }
 }
-
-expect val platformModule: Module

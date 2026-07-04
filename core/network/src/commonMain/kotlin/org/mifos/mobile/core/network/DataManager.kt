@@ -38,4 +38,6 @@ class DataManager(
     val guarantorApi by lazy { ktorfitClient.guarantorApi }
 
     val shareAccountApi by lazy { ktorfitClient.shareAccountApi }
+
+    val pocketApi by lazy { ktorfitClient.pocketApi }
 }

@@ -16,8 +16,10 @@ import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
 import org.mifos.mobile.core.database.dao.ChargeDao
 import org.mifos.mobile.core.database.dao.MifosNotificationDao
+import org.mifos.mobile.core.database.dao.PocketAccountDao
 import org.mifos.mobile.core.database.entity.ChargeEntity
 import org.mifos.mobile.core.database.entity.MifosNotificationEntity
+import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import org.mifos.mobile.core.database.utils.ChargeTypeConverters
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")
@@ -29,6 +31,7 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     entities = [
         ChargeEntity::class,
         MifosNotificationEntity::class,
+        PocketAccountEntity::class,
     ],
     version = AppDatabase.VERSION,
     exportSchema = true,
@@ -39,6 +42,7 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
 actual abstract class AppDatabase : RoomDatabase() {
     actual abstract val mifosNotificationDao: MifosNotificationDao
     actual abstract val chargeDao: ChargeDao
+    actual abstract val pocketAccountDao: PocketAccountDao
 
     companion object {
         const val VERSION = 1

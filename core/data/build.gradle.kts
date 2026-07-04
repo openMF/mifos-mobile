@@ -39,6 +39,12 @@ kotlin {
             implementation(projects.core.analytics)
             implementation(libs.kotlinx.serialization.json)
         }
+        
+        nonJsCommonMain.dependencies {
+            api(projects.core.database)
+        }
+
+
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.tracing.ktx)
