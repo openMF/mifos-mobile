@@ -16,6 +16,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.mobile.core.common.di.DispatchersModule
 import org.mifos.mobile.core.data.di.RepositoryModule
+import org.mifos.mobile.core.database.di.DatabaseModule
 import org.mifos.mobile.core.datastore.di.PreferencesModule
 import org.mifos.mobile.core.network.di.NetworkModule
 import org.mifos.mobile.core.ui.di.navigatorModule
@@ -45,7 +46,7 @@ import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
 object KoinModules {
     private val commonModules = module {
         includes(DispatchersModule)
-        includes(platformDatabaseModule)
+        includes(DatabaseModule)
     }
     private val dataModules = module {
         includes(RepositoryModule)
