@@ -145,17 +145,16 @@ internal class PocketDashboardViewModel(
                         )
                     }
 
-                    val loanList = detailedAccounts
-                        .filter { it.pocket.accountType == AccountType.LOAN }
-                        .map { mapToUiModel(it) }
-
-                    val savingsList = detailedAccounts
-                        .filter { it.pocket.accountType == AccountType.SAVINGS }
-                        .map { mapToUiModel(it) }
-
-                    val shareList = detailedAccounts
-                        .filter { it.pocket.accountType == AccountType.SHARE }
-                        .map { mapToUiModel(it) }
+                    val loanList = mutableListOf<DetailedPocket>()
+                    val savingsList = mutableListOf<DetailedPocket>()
+                    val shareList = mutableListOf<DetailedPocket>()
+                    for (account in detailedAccounts) {
+                        when (account.pocket.accountType) {
+                            AccountType.LOAN -> loanList.add(mapToUiModel(account))
+                            AccountType.SAVINGS -> savingsList.add(mapToUiModel(account))
+                            AccountType.SHARE -> shareList.add(mapToUiModel(account))
+                        }
+                    }
 
                     val totalSum = detailedAccounts
                         .filter { it.status == AccountStatus.ACTIVE && it.balance != null }
