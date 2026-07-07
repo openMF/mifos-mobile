@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.di
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.mifos.mobile.core.data.repository.PocketRepository
+import org.mifos.mobile.core.data.repositoryImpl.PocketRepositoryImp
 
 actual val pocketModule: Module = module {
     single<PocketRepository> { PocketRepositoryImp() }
