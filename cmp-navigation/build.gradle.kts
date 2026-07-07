@@ -48,7 +48,6 @@ kotlin {
             implementation(projects.core.network)
             implementation(projects.core.model)
             implementation(projects.core.datastore)
-            implementation(projects.core.database)
             implementation(projects.coreBase.common)
             implementation(projects.coreBase.platform)
             implementation(projects.libs.mifosPasscode)
