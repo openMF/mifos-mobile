@@ -30,6 +30,7 @@ import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
 import org.mifos.mobile.feature.passcode.di.PasscodeModule
+import org.mifos.mobile.feature.pocket.di.PocketModule
 import org.mifos.mobile.feature.qr.di.QrModule
 import org.mifos.mobile.feature.recent.transaction.di.recentTransactionModule
 import org.mifos.mobile.feature.savings.application.di.savingsApplicationModule
@@ -44,6 +45,7 @@ import org.mifos.mobile.feature.transfer.process.di.TransferProcessModule
 object KoinModules {
     private val commonModules = module {
         includes(DispatchersModule)
+        includes(platformDatabaseModule)
     }
     private val dataModules = module {
         includes(RepositoryModule)
@@ -83,6 +85,7 @@ object KoinModules {
             loanApplicationModule,
             savingsApplicationModule,
             shareApplicationModule,
+            PocketModule,
         )
     }
 
@@ -93,5 +96,6 @@ object KoinModules {
         networkModules,
         featureModules,
         sharedModule,
+
     )
 }

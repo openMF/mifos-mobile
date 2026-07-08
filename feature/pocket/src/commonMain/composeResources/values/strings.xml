@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_pocket_dashboard_title">Pocket Dashboard</string>
+    <string name="feature_pocket_dashboard_total_balance">Total Balance</string>
+    <string name="feature_pocket_dashboard_manage">Manage</string>
+    <string name="feature_pocket_dashboard_savings_accounts">SAVINGS ACCOUNTS</string>
+    <string name="feature_pocket_dashboard_loan_accounts">LOAN ACCOUNTS</string>
+    <string name="feature_pocket_dashboard_share_accounts">SHARE ACCOUNTS</string>
+    <string name="feature_pocket_dashboard_total_balance_description">Total balance</string>
+    <string name="feature_pocket_error_load_accounts">Failed to load pocket accounts</string>
+    <string name="feature_pocket_unknown_status">Unknown Status</string>
+    <string name="feature_pocket_unknown_account">Unknown Account</string>
+    <string name="feature_pocket_empty_title">Your Pocket is Empty</string>
+    <string name="feature_pocket_empty_description">Group your favorite Savings, Loan, and Share accounts here to track them easily.</string>
+    <string name="feature_pocket_empty_action">Link Your First Account</string>
+</resources>

@@ -89,6 +89,7 @@ include(":feature:status")
 include(":feature:loan-application")
 include(":feature:savings-application")
 include(":feature:share-application")
+include(":feature:pocket")
 
 // Lint Modules
 //include(":lint")

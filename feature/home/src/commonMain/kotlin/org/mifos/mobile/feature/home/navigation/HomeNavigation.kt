@@ -34,6 +34,7 @@ sealed class HomeNavigationDestination {
     object ApplySavings : HomeNavigationDestination()
     object ApplyShare : HomeNavigationDestination()
     data class AccountsWithType(val type: String) : HomeNavigationDestination()
+    object Pocket : HomeNavigationDestination()
 }
 
 typealias HomeNavigator = (HomeNavigationDestination) -> Unit
