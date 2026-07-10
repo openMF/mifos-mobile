@@ -11,10 +11,10 @@ package org.mifos.mobile.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
-import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
 
 interface PocketRepository {
 
@@ -30,7 +30,7 @@ interface PocketRepository {
     ): Flow<DataState<List<LinkableAccount>>>
 
     suspend fun linkAccounts(
-        request: PocketLinkRequest,
+        payload: PocketLinkPayload,
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     ): DataState<Unit>

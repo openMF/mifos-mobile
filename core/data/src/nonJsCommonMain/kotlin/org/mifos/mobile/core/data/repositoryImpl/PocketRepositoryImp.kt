@@ -29,6 +29,7 @@ import org.mifos.mobile.core.data.util.runAsDataState
 import org.mifos.mobile.core.data.util.withNetworkCheck
 import org.mifos.mobile.core.database.dao.PocketAccountDao
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
@@ -167,12 +168,20 @@ class PocketRepositoryImp(
     }
 
     override suspend fun linkAccounts(
-        request: PocketLinkRequest,
+        payload: PocketLinkPayload,
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     ): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             try {
+                val request = PocketLinkRequest(
+                    accountsDetail = payload.accountsDetail.map {
+                        PocketLinkRequest.AccountDetail(
+                            accountId = it.accountId,
+                            accountType = it.accountType.name,
+                        )
+                    },
+                )
                 dataManager.pocketApi.linkAccounts(request = request)
                 val updatedBasicPockets = fetchBasicPocketsFromNetwork()
 

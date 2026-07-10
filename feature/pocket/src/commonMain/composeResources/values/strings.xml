@@ -22,4 +22,23 @@
     <string name="feature_pocket_empty_title">Your Pocket is Empty</string>
     <string name="feature_pocket_empty_description">Group your favorite Savings, Loan, and Share accounts here to track them easily.</string>
     <string name="feature_pocket_empty_action">Link Your First Account</string>
+    <string name="feature_pocket_manage_title">Manage Pocket</string>
+    <string name="feature_pocket_link_more_accounts">Link More Accounts</string>
+    <string name="feature_pocket_linked_accounts">LINKED ACCOUNTS</string>
+    <string name="feature_pocket_no_linked_accounts">No accounts are linked to pocket</string>
+    <string name="feature_pocket_link_accounts_title">Link Accounts</string>
+    <string name="feature_pocket_link_selected">Link Selected (%1$d)</string>
+    <string name="feature_pocket_no_available_accounts">No accounts available to link</string>
+    <string name="feature_pocket_remove_account_title">Remove linked account</string>
+    <string name="feature_pocket_you_are_removing">You are removing:</string>
+    <string name="feature_pocket_remove_account_detail">A/c No: %1$s</string>
+    <string name="feature_pocket_delink_account_title">Remove account?</string>
+    <string name="feature_pocket_delink_account_message">This will only remove it from Pocket. You can still access the account from the main accounts list.</string>
+    <string name="feature_pocket_action_link">Link</string>
+    <string name="feature_pocket_action_remove">Remove</string>
+    <string name="feature_pocket_action_cancel">Cancel</string>
+    <string name="feature_pocket_action_ok">OK</string>
+    <string name="feature_pocket_dialog_error_title">Something went wrong</string>
+    <string name="feature_pocket_error_link_accounts">Failed to link selected accounts</string>
+    <string name="feature_pocket_error_delink_account">Failed to remove linked account</string>
 </resources>

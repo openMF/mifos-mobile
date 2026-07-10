@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.pocket.managePocket.managePocketDestination
 import org.mifos.mobile.feature.pocket.pocketDashboard.PocketDashboardRoute
 import org.mifos.mobile.feature.pocket.pocketDashboard.pocketDashboardDestination
 
@@ -39,6 +40,9 @@ fun NavGraphBuilder.pocketNavGraph(
             navigateToLoanAccountDetail = navigateToLoanAccountDetail,
             navigateToShareAccountDetail = navigateToShareAccountDetail,
             navigateToSavingsAccountDetail = navigateToSavingsAccountDetail,
+        )
+        managePocketDestination(
+            navigateBack = navigateBack,
         )
     }
 }
