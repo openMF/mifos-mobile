@@ -9,6 +9,7 @@
  */
 package org.mifos.mobile.feature.pocket.managePocket
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,13 +29,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,7 +49,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -64,6 +73,7 @@ import mifos_mobile.feature.pocket.generated.resources.feature_pocket_no_availab
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_no_linked_accounts
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_remove_account_detail
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_remove_account_title
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_search_accounts_hint
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_you_are_removing
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -75,7 +85,6 @@ import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosLoadingDialog
-import org.mifos.mobile.core.designsystem.component.MifosSearchTextField
 import org.mifos.mobile.core.designsystem.component.MifosTabPager
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
@@ -417,7 +426,7 @@ private fun LinkAccountsSheet(
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.large))
 
-        MifosSearchTextField(
+        ManagePocketSearchTextField(
             value = searchValue,
             onValueChange = {
                 searchValue = it
@@ -427,6 +436,10 @@ private fun LinkAccountsSheet(
                 searchValue = TextFieldValue("")
                 onAction(ManagePocketAction.SearchQueryChanged(""))
             },
+            hint = stringResource(
+                Res.string.feature_pocket_search_accounts_hint,
+                tabs[selectedTabIndex].name.lowercase(),
+            ),
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -494,8 +507,10 @@ private fun LinkAccountsSheet(
                         .background(KptTheme.colorScheme.surface.copy(alpha = 0.95f)),
                 ) {
                     val searchResults = state.availableAccounts.filter {
-                        it.name.contains(state.searchQuery, ignoreCase = true) ||
-                            it.accountNumber.contains(state.searchQuery, ignoreCase = true)
+                        it.accountType == state.selectedTab && (
+                            it.name.contains(state.searchQuery, ignoreCase = true) ||
+                                it.accountNumber.contains(state.searchQuery, ignoreCase = true)
+                            )
                     }
 
                     if (searchResults.isEmpty()) {
@@ -625,6 +640,63 @@ private fun AccountType.toIcon(): ImageVector =
         AccountType.LOAN -> MifosIcons.CoinMultiple
         AccountType.SHARE -> MifosIcons.CoinMultiple
     }
+
+@Composable
+private fun ManagePocketSearchTextField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    onSearchDismiss: () -> Unit,
+    hint: String,
+    modifier: Modifier = Modifier,
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        modifier = modifier,
+        value = value,
+        leadingIcon = {
+            Icon(
+                imageVector = MifosIcons.Search,
+                contentDescription = null,
+            )
+        },
+        placeholder = {
+            Text(
+                text = hint,
+                style = KptTheme.typography.bodyLarge,
+            )
+        },
+        onValueChange = onValueChange,
+        textStyle = KptTheme.typography.bodyLarge,
+        trailingIcon = {
+            AnimatedVisibility(visible = value.text.isNotEmpty()) {
+                IconButton(onClick = onSearchDismiss) {
+                    Icon(
+                        imageVector = MifosIcons.Close,
+                        contentDescription = "Close Icon",
+                    )
+                }
+            }
+        },
+        colors = TextFieldDefaults.colors().copy(
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = Color.LightGray,
+            unfocusedIndicatorColor = Color.LightGray,
+            focusedTextColor = if (androidx.compose.foundation.isSystemInDarkTheme()) Color.White else Color.Black,
+            unfocusedTextColor = if (androidx.compose.foundation.isSystemInDarkTheme()) Color.White else Color.Black,
+        ),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Search,
+        ),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                focusManager.clearFocus()
+            },
+        ),
+        singleLine = true,
+    )
+}
 
 @Composable
 private fun RemoveLinkedAccountSheet(

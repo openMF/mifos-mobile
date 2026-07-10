@@ -38,6 +38,7 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.dto.pocket.PocketDelinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
+import kotlin.random.Random
 
 class PocketRepositoryImp(
     private val dataManager: DataManager,
@@ -202,11 +203,19 @@ class PocketRepositoryImp(
                     syncPockets(clientId = clientId, forceRefresh = true)
                 }
             } catch (e: Exception) {
-                pocketAccountDao.linkPocketAccounts(explicitlyAddedAccounts.map { it.pocket.toEntity() })
+                val newlyGeneratedPocket = explicitlyAddedAccounts.map { account ->
+                    account.copy(
+                        pocket = account.pocket.copy(
+                            id = Random.nextLong(1000, 999999),
+                            pocketId = Random.nextLong(1000, 999999),
+                        ),
+                    )
+                }
+                pocketAccountDao.linkPocketAccounts(newlyGeneratedPocket.map { it.pocket.toEntity() })
                 val currentState = detailedPocketCache.value
                 if (currentState is DataState.Success) {
                     val updatedList = currentState.data.toMutableList()
-                    updatedList.addAll(explicitlyAddedAccounts)
+                    updatedList.addAll(newlyGeneratedPocket)
                     detailedPocketCache.value = DataState.Success(updatedList)
                 }
             }
