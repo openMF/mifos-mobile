@@ -38,7 +38,7 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.dto.pocket.PocketDelinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
-import kotlin.random.Random
+import kotlin.time.Clock
 
 class PocketRepositoryImp(
     private val dataManager: DataManager,
@@ -203,20 +203,24 @@ class PocketRepositoryImp(
                     syncPockets(clientId = clientId, forceRefresh = true)
                 }
             } catch (e: Exception) {
-                val newlyGeneratedPocket = explicitlyAddedAccounts.map { account ->
+                val currentTime = Clock.System.now().toEpochMilliseconds()
+                val accountsWithGeneratedIds = explicitlyAddedAccounts.mapIndexed { index, account ->
+                    val generatedId = -(currentTime + index)
                     account.copy(
                         pocket = account.pocket.copy(
-                            id = Random.nextLong(1000, 999999),
-                            pocketId = Random.nextLong(1000, 999999),
+                            id = generatedId,
+                            pocketId = generatedId,
                         ),
                     )
                 }
-                pocketAccountDao.linkPocketAccounts(newlyGeneratedPocket.map { it.pocket.toEntity() })
+                pocketAccountDao.linkPocketAccounts(accountsWithGeneratedIds.map { it.pocket.toEntity() })
                 val currentState = detailedPocketCache.value
                 if (currentState is DataState.Success) {
                     val updatedList = currentState.data.toMutableList()
-                    updatedList.addAll(newlyGeneratedPocket)
+                    updatedList.addAll(accountsWithGeneratedIds)
                     detailedPocketCache.value = DataState.Success(updatedList)
+                } else {
+                    syncPockets(clientId = clientId, forceRefresh = true)
                 }
             }
         }
@@ -225,8 +229,11 @@ class PocketRepositoryImp(
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             try {
-                val request = PocketDelinkRequest(pocketAccountMappingIds)
-                dataManager.pocketApi.delinkAccounts(request = request)
+                val serverIds = pocketAccountMappingIds.filter { it > 0 }
+                if (serverIds.isNotEmpty()) {
+                    val request = PocketDelinkRequest(serverIds)
+                    dataManager.pocketApi.delinkAccounts(request = request)
+                }
                 pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
 
                 val currentState = detailedPocketCache.value
@@ -242,6 +249,8 @@ class PocketRepositoryImp(
                 if (currentState is DataState.Success) {
                     val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
                     detailedPocketCache.value = DataState.Success(updatedList)
+                } else {
+                    syncPockets(clientId = clientId, forceRefresh = true)
                 }
             }
         }
