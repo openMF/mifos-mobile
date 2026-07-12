@@ -11,8 +11,10 @@ package org.mifos.mobile.feature.pocket.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.mobile.feature.pocket.managePocket.ManagePocketViewModel
 import org.mifos.mobile.feature.pocket.pocketDashboard.PocketDashboardViewModel
 
 val PocketModule = module {
     viewModelOf(::PocketDashboardViewModel)
+    viewModelOf(::ManagePocketViewModel)
 }

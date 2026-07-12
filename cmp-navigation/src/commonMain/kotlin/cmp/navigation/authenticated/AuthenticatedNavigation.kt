@@ -51,6 +51,7 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.pocket.managePocket.navigateToManagePocketScreen
 import org.mifos.mobile.feature.pocket.navigation.navigateToPocketGraph
 import org.mifos.mobile.feature.pocket.navigation.pocketNavGraph
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
@@ -367,9 +368,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
         pocketNavGraph(
             navigateBack = navController::popBackStack,
-            navigateToManagePocket = {
-                // TODO
-            },
+            navigateToManagePocket = navController::navigateToManagePocketScreen,
             navigateToLoanAccountDetail = navController::navigateToLoanAccountDetailsScreen,
             navigateToShareAccountDetail = navController::navigateToShareAccountDetailsScreen,
             navigateToSavingsAccountDetail = navController::navigateToSavingsAccountDetailsScreen,

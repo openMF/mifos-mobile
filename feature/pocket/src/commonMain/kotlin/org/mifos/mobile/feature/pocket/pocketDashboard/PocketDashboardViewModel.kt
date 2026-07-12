@@ -43,6 +43,10 @@ internal class PocketDashboardViewModel(
         loadPocketData()
     }
 
+    private fun updateState(update: (PocketDashboardState) -> PocketDashboardState) {
+        mutableStateFlow.update(update)
+    }
+
     private fun loadPocketData(forceRefresh: Boolean = false) {
         loadJob?.cancel()
 
@@ -76,12 +80,12 @@ internal class PocketDashboardViewModel(
     }
 
     private fun refresh() {
-        mutableStateFlow.update { it.copy(isRefreshing = true) }
+        updateState { it.copy(isRefreshing = true) }
         loadPocketData(forceRefresh = true)
     }
 
     private fun retry() {
-        mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
+        updateState { it.copy(uiState = ScreenUiState.Loading) }
         loadPocketData(forceRefresh = true)
     }
 
@@ -90,7 +94,7 @@ internal class PocketDashboardViewModel(
             when (dataState) {
                 is DataState.Loading -> {
                     if (!state.isRefreshing) {
-                        mutableStateFlow.update { it.copy(uiState = ScreenUiState.Loading) }
+                        updateState { it.copy(uiState = ScreenUiState.Loading) }
                     }
                 }
 
@@ -98,7 +102,7 @@ internal class PocketDashboardViewModel(
                     val isNetworkError = dataState.exception is NetworkUnavailableException
 
                     if (isNetworkError) {
-                        mutableStateFlow.update {
+                        updateState {
                             it.copy(
                                 uiState = ScreenUiState.Network,
                                 networkStatus = false,
@@ -106,12 +110,9 @@ internal class PocketDashboardViewModel(
                             )
                         }
                     } else {
-                        mutableStateFlow.update {
+                        updateState {
                             it.copy(
-                                uiState = ScreenUiState.ErrorString(
-                                    dataState.exception.message
-                                        ?: getString(Res.string.feature_pocket_error_load_accounts),
-                                ),
+                                uiState = ScreenUiState.Error(Res.string.feature_pocket_error_load_accounts),
                                 isRefreshing = false,
                             )
                         }
@@ -168,14 +169,14 @@ internal class PocketDashboardViewModel(
                     )
 
                     if (loanList.isEmpty() && shareList.isEmpty() && savingsList.isEmpty()) {
-                        mutableStateFlow.update {
+                        updateState {
                             it.copy(
                                 uiState = ScreenUiState.Empty,
                                 isRefreshing = false,
                             )
                         }
                     } else {
-                        mutableStateFlow.update {
+                        updateState {
                             it.copy(
                                 uiState = ScreenUiState.Success,
                                 totalBalance = formattedTotal,

@@ -29,6 +29,7 @@ import org.mifos.mobile.core.data.util.runAsDataState
 import org.mifos.mobile.core.data.util.withNetworkCheck
 import org.mifos.mobile.core.database.dao.PocketAccountDao
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
+import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
@@ -37,6 +38,7 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.dto.pocket.PocketDelinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
+import kotlin.time.Clock
 
 class PocketRepositoryImp(
     private val dataManager: DataManager,
@@ -167,12 +169,20 @@ class PocketRepositoryImp(
     }
 
     override suspend fun linkAccounts(
-        request: PocketLinkRequest,
+        payload: PocketLinkPayload,
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     ): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             try {
+                val request = PocketLinkRequest(
+                    accountsDetail = payload.accountsDetail.map {
+                        PocketLinkRequest.AccountDetail(
+                            accountId = it.accountId,
+                            accountType = it.accountType.name,
+                        )
+                    },
+                )
                 dataManager.pocketApi.linkAccounts(request = request)
                 val updatedBasicPockets = fetchBasicPocketsFromNetwork()
 
@@ -193,12 +203,24 @@ class PocketRepositoryImp(
                     syncPockets(clientId = clientId, forceRefresh = true)
                 }
             } catch (e: Exception) {
-                pocketAccountDao.linkPocketAccounts(explicitlyAddedAccounts.map { it.pocket.toEntity() })
+                val currentTime = Clock.System.now().toEpochMilliseconds()
+                val accountsWithGeneratedIds = explicitlyAddedAccounts.mapIndexed { index, account ->
+                    val generatedId = -(currentTime + index)
+                    account.copy(
+                        pocket = account.pocket.copy(
+                            id = generatedId,
+                            pocketId = generatedId,
+                        ),
+                    )
+                }
+                pocketAccountDao.linkPocketAccounts(accountsWithGeneratedIds.map { it.pocket.toEntity() })
                 val currentState = detailedPocketCache.value
                 if (currentState is DataState.Success) {
                     val updatedList = currentState.data.toMutableList()
-                    updatedList.addAll(explicitlyAddedAccounts)
+                    updatedList.addAll(accountsWithGeneratedIds)
                     detailedPocketCache.value = DataState.Success(updatedList)
+                } else {
+                    syncPockets(clientId = clientId, forceRefresh = true)
                 }
             }
         }
@@ -207,8 +229,11 @@ class PocketRepositoryImp(
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(networkMonitor, ioDispatcher) {
             try {
-                val request = PocketDelinkRequest(pocketAccountMappingIds)
-                dataManager.pocketApi.delinkAccounts(request = request)
+                val serverIds = pocketAccountMappingIds.filter { it > 0 }
+                if (serverIds.isNotEmpty()) {
+                    val request = PocketDelinkRequest(serverIds)
+                    dataManager.pocketApi.delinkAccounts(request = request)
+                }
                 pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
 
                 val currentState = detailedPocketCache.value
@@ -224,6 +249,8 @@ class PocketRepositoryImp(
                 if (currentState is DataState.Success) {
                     val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
                     detailedPocketCache.value = DataState.Success(updatedList)
+                } else {
+                    syncPockets(clientId = clientId, forceRefresh = true)
                 }
             }
         }

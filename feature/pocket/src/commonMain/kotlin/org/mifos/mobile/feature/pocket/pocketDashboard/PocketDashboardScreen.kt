@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.feature.pocket.generated.resources.Res
@@ -43,6 +45,9 @@ import mifos_mobile.feature.pocket.generated.resources.feature_pocket_dashboard_
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_dashboard_share_accounts
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_dashboard_title
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_dashboard_total_balance
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_empty_action
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_empty_description
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_empty_title
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -62,7 +67,6 @@ import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.feature.pocket.components.EmptyPocketContent
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -119,6 +123,13 @@ internal fun PocketDashboardContent(
                 MifosErrorComponent(
                     isRetryEnabled = true,
                     message = state.uiState.message,
+                    onRetry = { onAction(PocketDashboardAction.Retry) },
+                )
+            }
+            is ScreenUiState.Error -> {
+                MifosErrorComponent(
+                    isRetryEnabled = true,
+                    message = stringResource(state.uiState.message),
                     onRetry = { onAction(PocketDashboardAction.Retry) },
                 )
             }
@@ -212,8 +223,6 @@ internal fun PocketDashboardContent(
                     }
                 }
             }
-
-            else -> {}
         }
     }
 }
@@ -371,6 +380,80 @@ internal fun PocketDashboardContentPreview() {
                 uiState = ScreenUiState.Success,
             ),
             onAction = {},
+        )
+    }
+}
+
+@Composable
+internal fun EmptyPocketContent(
+    onLinkFirstAccount: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(DesignToken.padding.large),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        androidx.compose.material3.Surface(
+            modifier = Modifier.size(180.dp),
+            shape = CircleShape,
+            color = KptTheme.colorScheme.primaryContainer.copy(alpha = 0.35f),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                androidx.compose.material3.Icon(
+                    imageVector = MifosIcons.SavingsAccount,
+                    contentDescription = null,
+                    tint = KptTheme.colorScheme.primary,
+                    modifier = Modifier.size(80.dp),
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
+
+        Text(
+            text = stringResource(Res.string.feature_pocket_empty_title),
+            style = MifosTypography.headlineSmallEmphasized,
+            color = KptTheme.colorScheme.onSurface,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
+
+        Text(
+            text = stringResource(Res.string.feature_pocket_empty_description),
+            style = MifosTypography.bodyLarge,
+            color = KptTheme.colorScheme.secondary,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
+
+        Spacer(modifier = Modifier.height(DesignToken.spacing.extraLarge))
+
+        MifosButton(
+            onClick = onLinkFirstAccount,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = KptTheme.colorScheme.primary,
+                contentColor = KptTheme.colorScheme.onPrimary,
+            ),
+            text = {
+                Text(
+                    text = stringResource(Res.string.feature_pocket_empty_action),
+                    style = MifosTypography.labelLarge,
+                )
+            },
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun EmptyPocketContentPreview() {
+    MifosMobileTheme(darkTheme = false) {
+        EmptyPocketContent(
+            onLinkFirstAccount = {},
         )
     }
 }
