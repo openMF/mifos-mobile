@@ -56,6 +56,7 @@ fun ComposeApp(
 
     MifosMobileTheme(
         darkTheme = uiState.darkTheme,
+        brandTheme = uiState.brandTheme,
         androidTheme = uiState.isAndroidTheme,
         shouldDisplayDynamicTheming = uiState.isDynamicColorsEnabled,
     ) {
