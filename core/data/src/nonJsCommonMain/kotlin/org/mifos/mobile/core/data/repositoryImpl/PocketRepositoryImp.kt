@@ -77,21 +77,39 @@ class PocketRepositoryImp(
                 serverBasicPockets.none { it.accountId == local.accountId && it.accountType == local.accountType }
             }
 
-            val updatedServerPockets = try {
-                if (accountsToLink.isNotEmpty()) {
-                    val linkRequest = PocketLinkRequest(
-                        accountsDetail = accountsToLink.map {
-                            PocketLinkRequest.AccountDetail(
-                                accountId = it.accountId.toString(),
-                                accountType = it.accountType.name,
-                            )
-                        },
-                    )
+            val accountsToDelink = serverBasicPockets.filter { server ->
+                localBasicPockets.none { it.accountId == server.accountId && it.accountType == server.accountType }
+            }
+
+            if (accountsToDelink.isNotEmpty()) {
+                val delinkIds = accountsToDelink.map { it.id }
+                if (delinkIds.isNotEmpty()) {
                     try {
-                        dataManager.pocketApi.linkAccounts(request = linkRequest)
+                        dataManager.pocketApi.delinkAccounts(request = PocketDelinkRequest(delinkIds))
                     } catch (e: Exception) {
                         // do nothing
                     }
+                }
+            }
+
+            if (accountsToLink.isNotEmpty()) {
+                val linkRequest = PocketLinkRequest(
+                    accountsDetail = accountsToLink.map {
+                        PocketLinkRequest.AccountDetail(
+                            accountId = it.accountId.toString(),
+                            accountType = it.accountType.name,
+                        )
+                    },
+                )
+                try {
+                    dataManager.pocketApi.linkAccounts(request = linkRequest)
+                } catch (e: Exception) {
+                    // do nothing
+                }
+            }
+
+            val updatedServerPockets = try {
+                if (accountsToLink.isNotEmpty() || accountsToDelink.isNotEmpty()) {
                     dataManager.pocketApi.getPocketAccounts().toDomainList()
                         .filter { it.id !in pendingDelinks }
                 } else {
@@ -102,17 +120,17 @@ class PocketRepositoryImp(
                 serverBasicPockets
             }
 
-            val finalLocalPockets = updatedServerPockets.toMutableList()
-            localBasicPockets.forEach { local ->
-                val notOnServer = finalLocalPockets.none {
-                    it.accountId == local.accountId && it.accountType == local.accountType
-                }
-                if (notOnServer) {
-                    finalLocalPockets.add(local)
+            localBasicPockets = localBasicPockets.map { local ->
+                val matchedServer = updatedServerPockets
+                    .find { it.accountId == local.accountId && it.accountType == local.accountType }
+                if (matchedServer != null) {
+                    local.copy(id = matchedServer.id, pocketId = matchedServer.pocketId)
+                } else {
+                    local
                 }
             }
-
-            pocketAccountDao.replaceAllPocketAccounts(finalLocalPockets.map { it.toEntity() })
+            pocketAccountDao.deleteAll()
+            pocketAccountDao.linkPocketAccounts(localBasicPockets.map { it.toEntity() })
         } catch (e: Exception) {
             // do nothing
         }
@@ -252,7 +270,8 @@ class PocketRepositoryImp(
                 }
                 allLocalPockets.add(added.pocket)
             }
-            pocketAccountDao.replaceAllPocketAccounts(allLocalPockets.map { it.toEntity() })
+            pocketAccountDao.deleteAll()
+            pocketAccountDao.linkPocketAccounts(allLocalPockets.map { it.toEntity() })
 
             val currentState = detailedPocketCache.value
             if (currentState is DataState.Success) {
