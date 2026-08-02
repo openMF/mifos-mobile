@@ -9,7 +9,6 @@
  */
 package org.mifos.mobile.core.database.dao
 
-import androidx.room.Transaction
 import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import template.core.base.database.Dao
 import template.core.base.database.Insert
@@ -29,10 +28,4 @@ interface PocketAccountDao {
 
     @Query("DELETE FROM pockets")
     suspend fun deleteAll()
-
-    @Transaction
-    suspend fun replaceAllPocketAccounts(pockets: List<PocketAccountEntity>) {
-        deleteAll()
-        linkPocketAccounts(pockets)
-    }
 }
