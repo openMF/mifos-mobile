@@ -25,4 +25,7 @@ interface PocketAccountDao {
 
     @Query("DELETE FROM pockets WHERE id IN (:pocketAccountMappingIds)")
     suspend fun delinkPocketAccounts(pocketAccountMappingIds: List<Long>)
+
+    @Query("DELETE FROM pockets")
+    suspend fun deleteAll()
 }

@@ -39,4 +39,6 @@ interface PocketRepository {
         pocketAccountMappingIds: List<Long>,
         clientId: Long,
     ): DataState<Unit>
+
+    suspend fun resetPocketCache()
 }
