@@ -39,6 +39,10 @@ kotlin {
             implementation(projects.core.analytics)
             implementation(libs.kotlinx.serialization.json)
         }
+
+        commonTest.dependencies {
+            implementation(libs.mockk)
+        }
         
         nonJsCommonMain.dependencies {
             api(projects.core.database)

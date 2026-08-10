@@ -384,7 +384,7 @@ private fun PocketAccountRow(
 }
 
 @Composable
-private fun LinkAccountsSheet(
+internal fun LinkAccountsSheet(
     state: ManagePocketState,
     onAction: (ManagePocketAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -699,7 +699,7 @@ private fun ManagePocketSearchTextField(
 }
 
 @Composable
-private fun RemoveLinkedAccountSheet(
+internal fun RemoveLinkedAccountSheet(
     account: ManagePocketAccount,
     onCancelClick: () -> Unit,
     onRemoveClick: () -> Unit,
