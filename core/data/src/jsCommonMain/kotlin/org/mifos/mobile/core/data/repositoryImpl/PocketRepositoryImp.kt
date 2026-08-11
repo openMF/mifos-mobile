@@ -48,4 +48,6 @@ class PocketRepositoryImp : PocketRepository {
     override fun getAvailableAccountsToLink(clientId: Long): Flow<DataState<List<LinkableAccount>>> {
         return flowOf(DataState.Success(emptyList()))
     }
+
+    override suspend fun resetPocketCache() {}
 }

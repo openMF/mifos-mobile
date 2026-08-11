@@ -32,8 +32,7 @@ actual object CurrencyFormatter {
 
                 setMinimumFractionDigits(digits.toULong())
                 setMaximumFractionDigits(digits.toULong())
-
-                setInternationalCurrencySymbol(currencyCode)
+                this.currencyCode = currencyCode
             }
 
             formatter.stringFromNumber(NSNumber(balance)) ?: balance.toString()

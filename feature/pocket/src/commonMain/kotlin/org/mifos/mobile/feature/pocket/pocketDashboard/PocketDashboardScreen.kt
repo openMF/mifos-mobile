@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -251,7 +252,7 @@ internal fun PocketDashboardCard(
     Box(
         modifier = modifier
             .clip(KptTheme.shapes.large)
-            .height(DesignToken.sizes.cardDp112)
+            .heightIn(min = DesignToken.sizes.cardDp112)
             .fillMaxWidth(),
     ) {
         Image(

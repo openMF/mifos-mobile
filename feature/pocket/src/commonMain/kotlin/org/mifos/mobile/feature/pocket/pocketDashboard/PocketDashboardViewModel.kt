@@ -40,7 +40,10 @@ internal class PocketDashboardViewModel(
     private var loadJob: Job? = null
 
     init {
-        loadPocketData()
+        viewModelScope.launch {
+            pocketRepository.resetPocketCache()
+            loadPocketData()
+        }
     }
 
     private fun updateState(update: (PocketDashboardState) -> PocketDashboardState) {
@@ -157,16 +160,28 @@ internal class PocketDashboardViewModel(
                         }
                     }
 
-                    val totalSum = detailedAccounts
-                        .filter { it.status == AccountStatus.ACTIVE && it.balance != null }
-                        .sumOf { it.balance ?: 0.0 }
+                    val balancesByCurrency = detailedAccounts
+                        .filter { it.status == AccountStatus.ACTIVE && it.balance != null && it.currencyCode != null }
+                        .groupBy { it.currencyCode!! }
+                        .map { (currencyCode, accounts) ->
+                            val sum = accounts.sumOf { it.balance ?: 0.0 }
+                            CurrencyFormatter.format(
+                                sum,
+                                currencyCode,
+                                accounts.first().decimalPlaces,
+                            )
+                        }
 
-                    val sampleAccount = detailedAccounts.firstOrNull { it.currencyCode != null }
-                    val formattedTotal = CurrencyFormatter.format(
-                        totalSum,
-                        sampleAccount?.currencyCode,
-                        sampleAccount?.decimalPlaces,
-                    )
+                    val formattedTotal = if (balancesByCurrency.isNotEmpty()) {
+                        balancesByCurrency.joinToString("\n")
+                    } else {
+                        val sampleAccount = detailedAccounts.firstOrNull { it.currencyCode != null }
+                        CurrencyFormatter.format(
+                            0.0,
+                            sampleAccount?.currencyCode,
+                            sampleAccount?.decimalPlaces,
+                        )
+                    }
 
                     if (loanList.isEmpty() && shareList.isEmpty() && savingsList.isEmpty()) {
                         updateState {

@@ -51,17 +51,61 @@ class PocketRepositoryImp(
 
     private var cachedClientId: Long? = null
 
-    private suspend fun fetchBasicPocketsFromNetwork(): List<PocketAccount> {
-        return try {
-            dataManager.pocketApi.getPocketAccounts().toDomainList()
+    private suspend fun syncPocketsWithServer() {
+        if (!networkMonitor.isOnline.first()) return
+
+        try {
+            val serverBasicPockets = dataManager.pocketApi.getPocketAccounts().toDomainList()
+            var localBasicPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
+
+            val accountsToLink = localBasicPockets.filter { local ->
+                serverBasicPockets.none { it.accountId == local.accountId && it.accountType == local.accountType }
+            }
+
+            val updatedServerPockets = try {
+                if (accountsToLink.isNotEmpty()) {
+                    val linkRequest = PocketLinkRequest(
+                        accountsDetail = accountsToLink.map {
+                            PocketLinkRequest.AccountDetail(
+                                accountId = it.accountId.toString(),
+                                accountType = it.accountType.name,
+                            )
+                        },
+                    )
+                    try {
+                        dataManager.pocketApi.linkAccounts(request = linkRequest)
+                    } catch (e: Exception) {
+                        // do nothing
+                    }
+                    dataManager.pocketApi.getPocketAccounts().toDomainList()
+                } else {
+                    serverBasicPockets
+                }
+            } catch (e: Exception) {
+                // do nothing
+                serverBasicPockets
+            }
+
+            val finalLocalPockets = updatedServerPockets.toMutableList()
+            localBasicPockets.forEach { local ->
+                val notOnServer = finalLocalPockets.none {
+                    it.accountId == local.accountId && it.accountType == local.accountType
+                }
+                if (notOnServer) {
+                    finalLocalPockets.add(local)
+                }
+            }
+
+            pocketAccountDao.replaceAllPocketAccounts(finalLocalPockets.map { it.toEntity() })
         } catch (e: Exception) {
-            pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
+            // do nothing
         }
     }
 
     override suspend fun getPocketAccounts(): DataState<List<PocketAccount>> {
-        return runAsDataState(networkMonitor, ioDispatcher) {
-            fetchBasicPocketsFromNetwork()
+        return runAsDataState(context = ioDispatcher) {
+            syncPocketsWithServer()
+            pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
         }
     }
 
@@ -77,7 +121,8 @@ class PocketRepositoryImp(
         detailedPocketCache.value = DataState.Loading
 
         detailedPocketCache.value = runAsDataState(networkMonitor, ioDispatcher) {
-            val basicPockets = fetchBasicPocketsFromNetwork()
+            syncPocketsWithServer()
+            val basicPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
             val clientAccounts = dataManager.clientsApi.getClientAccounts(clientId).first().toModel()
 
             basicPockets.map { pocket ->
@@ -173,84 +218,95 @@ class PocketRepositoryImp(
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     ): DataState<Unit> {
-        return runAsDataState(networkMonitor, ioDispatcher) {
-            try {
-                val request = PocketLinkRequest(
-                    accountsDetail = payload.accountsDetail.map {
-                        PocketLinkRequest.AccountDetail(
-                            accountId = it.accountId,
-                            accountType = it.accountType.name,
-                        )
-                    },
+        return runAsDataState(context = ioDispatcher) {
+            val currentTime = Clock.System.now().toEpochMilliseconds()
+            val accountsWithGeneratedIds = explicitlyAddedAccounts.mapIndexed { index, account ->
+                val generatedId = -(currentTime + index)
+                account.copy(
+                    pocket = account.pocket.copy(
+                        id = generatedId,
+                        pocketId = generatedId,
+                    ),
                 )
-                dataManager.pocketApi.linkAccounts(request = request)
-                val updatedBasicPockets = fetchBasicPocketsFromNetwork()
+            }
+            val allLocalPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }.toMutableList()
+            accountsWithGeneratedIds.forEach { added ->
+                allLocalPockets.removeAll {
+                    it.accountId == added.pocket.accountId && it.accountType == added.pocket.accountType
+                }
+                allLocalPockets.add(added.pocket)
+            }
+            pocketAccountDao.replaceAllPocketAccounts(allLocalPockets.map { it.toEntity() })
 
-                val currentState = detailedPocketCache.value
-                if (currentState is DataState.Success) {
-                    val updatedList = currentState.data.toMutableList()
-                    explicitlyAddedAccounts.forEach { explicitlyAddedAccount ->
-                        val newlyGeneratedPocket = updatedBasicPockets.find {
-                            it.accountId == explicitlyAddedAccount.pocket.accountId
-                        }
-                        if (newlyGeneratedPocket != null) {
-                            val finalAccount = explicitlyAddedAccount.copy(pocket = newlyGeneratedPocket)
-                            updatedList.add(finalAccount)
-                        }
+            val currentState = detailedPocketCache.value
+            if (currentState is DataState.Success) {
+                val updatedList = currentState.data.toMutableList()
+                accountsWithGeneratedIds.forEach { added ->
+                    updatedList.removeAll {
+                        it.pocket.accountId == added.pocket.accountId &&
+                            it.pocket.accountType == added.pocket.accountType
                     }
-                    detailedPocketCache.value = DataState.Success(updatedList)
-                } else {
-                    syncPockets(clientId = clientId, forceRefresh = true)
+                    updatedList.add(added)
                 }
-            } catch (e: Exception) {
-                val currentTime = Clock.System.now().toEpochMilliseconds()
-                val accountsWithGeneratedIds = explicitlyAddedAccounts.mapIndexed { index, account ->
-                    val generatedId = -(currentTime + index)
-                    account.copy(
-                        pocket = account.pocket.copy(
-                            id = generatedId,
-                            pocketId = generatedId,
-                        ),
+                detailedPocketCache.value = DataState.Success(updatedList)
+            }
+
+            if (networkMonitor.isOnline.first()) {
+                try {
+                    val request = PocketLinkRequest(
+                        accountsDetail = payload.accountsDetail.map {
+                            PocketLinkRequest.AccountDetail(
+                                accountId = it.accountId,
+                                accountType = it.accountType.name,
+                            )
+                        },
                     )
-                }
-                pocketAccountDao.linkPocketAccounts(accountsWithGeneratedIds.map { it.pocket.toEntity() })
-                val currentState = detailedPocketCache.value
-                if (currentState is DataState.Success) {
-                    val updatedList = currentState.data.toMutableList()
-                    updatedList.addAll(accountsWithGeneratedIds)
-                    detailedPocketCache.value = DataState.Success(updatedList)
-                } else {
-                    syncPockets(clientId = clientId, forceRefresh = true)
+                    dataManager.pocketApi.linkAccounts(request = request)
+                    syncPocketsWithServer()
+
+                    val updatedBasicPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
+                    if (detailedPocketCache.value is DataState.Success) {
+                        val currentList =
+                            (detailedPocketCache.value as DataState.Success<List<DetailedPocketAccount>>).data
+                        val finalUpdatedList = currentList.map { detailed ->
+                            val matched = updatedBasicPockets.find {
+                                it.accountId == detailed.pocket.accountId &&
+                                    it.accountType == detailed.pocket.accountType
+                            }
+                            if (matched != null) {
+                                detailed.copy(pocket = matched)
+                            } else {
+                                detailed
+                            }
+                        }
+                        detailedPocketCache.value = DataState.Success(finalUpdatedList)
+                    }
+                } catch (e: Exception) {
+                    // do nothing
                 }
             }
         }
     }
 
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
-        return runAsDataState(networkMonitor, ioDispatcher) {
-            try {
-                val serverIds = pocketAccountMappingIds.filter { it > 0 }
-                if (serverIds.isNotEmpty()) {
+        return runAsDataState(context = ioDispatcher) {
+            pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
+
+            val currentState = detailedPocketCache.value
+            if (currentState is DataState.Success) {
+                val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
+                detailedPocketCache.value = DataState.Success(updatedList)
+            } else {
+                syncPockets(clientId = clientId, forceRefresh = true)
+            }
+
+            val serverIds = pocketAccountMappingIds.filter { it > 0 }
+            if (networkMonitor.isOnline.first() && serverIds.isNotEmpty()) {
+                try {
                     val request = PocketDelinkRequest(serverIds)
                     dataManager.pocketApi.delinkAccounts(request = request)
-                }
-                pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
-
-                val currentState = detailedPocketCache.value
-                if (currentState is DataState.Success) {
-                    val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
-                    detailedPocketCache.value = DataState.Success(updatedList)
-                } else {
-                    syncPockets(clientId = clientId, forceRefresh = true)
-                }
-            } catch (e: Exception) {
-                pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
-                val currentState = detailedPocketCache.value
-                if (currentState is DataState.Success) {
-                    val updatedList = currentState.data.filter { it.pocket.id !in pocketAccountMappingIds }
-                    detailedPocketCache.value = DataState.Success(updatedList)
-                } else {
-                    syncPockets(clientId = clientId, forceRefresh = true)
+                } catch (e: Exception) {
+                    // do nothing
                 }
             }
         }
@@ -336,5 +392,10 @@ class PocketRepositoryImp(
                 emit(availableAccounts)
             }.asDataStateFlow(),
         ).flowOn(ioDispatcher)
+    }
+
+    override suspend fun resetPocketCache() {
+        detailedPocketCache.value = null
+        cachedClientId = null
     }
 }
