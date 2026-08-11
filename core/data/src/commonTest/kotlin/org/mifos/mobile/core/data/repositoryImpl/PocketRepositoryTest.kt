@@ -20,6 +20,7 @@ import kotlinx.coroutines.test.runTest
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.database.dao.PocketAccountDao
+import org.mifos.mobile.core.database.entity.PendingPocketDelinkEntity
 import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
@@ -207,8 +208,67 @@ class PocketRepositoryTest {
 
         assertIs<DataState.Success<Unit>>(result)
         assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+        assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
         val cached = repository.getDetailedPocketAccounts(clientId = 7L).first { it is DataState.Success }
         assertTrue(assertIs<DataState.Success<List<DetailedPocketAccount>>>(cached).data.isEmpty())
+    }
+
+    @Test
+    fun delinkAccounts_keepsFailedRemoteDelinkPendingAndFiltersServerRefresh() = runTest(testDispatcher) {
+        pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
+        pocketService.response = PocketResponseDto(
+            loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
+        )
+        pocketService.delinkFailure = IllegalStateException("server unavailable")
+
+        val result = repository.delinkAccounts(
+            pocketAccountMappingIds = listOf(100L),
+            clientId = 7L,
+        )
+
+        assertIs<DataState.Success<Unit>>(result)
+        assertEquals(setOf(100L), pocketAccountDao.pendingDelinks)
+        assertTrue(pocketAccountDao.accounts.isEmpty())
+
+        val refreshResult = repository.getPocketAccounts()
+
+        val refreshedAccounts = assertIs<DataState.Success<List<PocketAccount>>>(refreshResult).data
+        assertTrue(refreshedAccounts.isEmpty())
+        assertEquals(setOf(100L), pocketAccountDao.pendingDelinks)
+        assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+    }
+
+    @Test
+    fun getPocketAccounts_retriesPersistedPendingDelinksAndClearsThemWhenSuccessful() = runTest(testDispatcher) {
+        pocketAccountDao.pendingDelinks = mutableSetOf(100L)
+        pocketService.response = PocketResponseDto()
+        repository = PocketRepositoryImp(
+            dataManager = dataManager,
+            networkMonitor = networkMonitor,
+            pocketAccountDao = pocketAccountDao,
+            ioDispatcher = testDispatcher,
+        )
+
+        val result = repository.getPocketAccounts()
+
+        assertIs<DataState.Success<List<PocketAccount>>>(result)
+        assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+        assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
+    }
+
+    @Test
+    fun delinkAccounts_withoutDetailedCacheDoesNotSendDuplicateRemoteDelink() = runTest(testDispatcher) {
+        pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
+        pocketService.response = PocketResponseDto()
+
+        val result = repository.delinkAccounts(
+            pocketAccountMappingIds = listOf(100L),
+            clientId = 7L,
+        )
+
+        assertIs<DataState.Success<Unit>>(result)
+        assertEquals(listOf(PocketDelinkRequest(listOf(100L))), pocketService.delinkRequests)
+        assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
     }
 
     private fun pocketDto(
@@ -265,6 +325,8 @@ private class FakePocketService : PocketService {
     var lastLinkCommand: String? = null
     var lastLinkRequest: PocketLinkRequest? = null
     var lastDelinkRequest: PocketDelinkRequest? = null
+    val delinkRequests = mutableListOf<PocketDelinkRequest>()
+    var delinkFailure: Exception? = null
 
     override suspend fun getPocketAccounts(): PocketResponseDto {
         failure?.let { throw it }
@@ -279,6 +341,8 @@ private class FakePocketService : PocketService {
 
     override suspend fun delinkAccounts(command: String, request: PocketDelinkRequest): PocketCommandResponse {
         lastDelinkRequest = request
+        delinkRequests.add(request)
+        delinkFailure?.let { throw it }
         return PocketCommandResponse(resourceId = 1L)
     }
 }
@@ -318,6 +382,7 @@ private class FakeClientService : ClientService {
 
 private class FakePocketAccountDao : PocketAccountDao {
     var accounts = mutableListOf<PocketAccountEntity>()
+    var pendingDelinks = mutableSetOf<Long>()
 
     override suspend fun getAllPocketAccounts(): List<PocketAccountEntity> = accounts.toList()
 
@@ -332,6 +397,16 @@ private class FakePocketAccountDao : PocketAccountDao {
 
     override suspend fun deleteAll() {
         accounts.clear()
+    }
+
+    override suspend fun getPendingDelinkIds(): List<Long> = pendingDelinks.toList()
+
+    override suspend fun insertPendingDelinks(pendingDelinks: List<PendingPocketDelinkEntity>) {
+        this.pendingDelinks.addAll(pendingDelinks.map { it.pocketAccountMappingId })
+    }
+
+    override suspend fun deletePendingDelinks(pocketAccountMappingIds: List<Long>) {
+        pendingDelinks.removeAll(pocketAccountMappingIds.toSet())
     }
 
     override suspend fun replaceAllPocketAccounts(pockets: List<PocketAccountEntity>) {
