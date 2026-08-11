@@ -254,6 +254,7 @@ internal fun PocketDashboardCard(
             .clip(KptTheme.shapes.large)
             .heightIn(min = DesignToken.sizes.cardDp112)
             .fillMaxWidth(),
+        contentAlignment = Alignment.Center,
     ) {
         Image(
             modifier = Modifier.matchParentSize(),
@@ -264,7 +265,7 @@ internal fun PocketDashboardCard(
 
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(DesignToken.padding.large),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,

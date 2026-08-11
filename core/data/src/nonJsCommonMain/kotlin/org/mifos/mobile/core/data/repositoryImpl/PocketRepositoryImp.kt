@@ -28,6 +28,7 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.data.util.runAsDataState
 import org.mifos.mobile.core.data.util.withNetworkCheck
 import org.mifos.mobile.core.database.dao.PocketAccountDao
+import org.mifos.mobile.core.database.entity.PendingPocketDelinkEntity
 import org.mifos.mobile.core.model.entity.client.ClientAccounts
 import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
@@ -55,8 +56,22 @@ class PocketRepositoryImp(
         if (!networkMonitor.isOnline.first()) return
 
         try {
+            var pendingDelinks = pocketAccountDao.getPendingDelinkIds().toSet()
+
+            if (pendingDelinks.isNotEmpty()) {
+                val pendingList = pendingDelinks.toList()
+                try {
+                    dataManager.pocketApi.delinkAccounts(request = PocketDelinkRequest(pendingList))
+                    pocketAccountDao.deletePendingDelinks(pendingList)
+                    pendingDelinks = pocketAccountDao.getPendingDelinkIds().toSet()
+                } catch (e: Exception) {
+                    // retain persisted pending delinks
+                }
+            }
+
             val serverBasicPockets = dataManager.pocketApi.getPocketAccounts().toDomainList()
-            var localBasicPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
+                .filter { it.id !in pendingDelinks }
+            val localBasicPockets = pocketAccountDao.getAllPocketAccounts().map { it.toDomain() }
 
             val accountsToLink = localBasicPockets.filter { local ->
                 serverBasicPockets.none { it.accountId == local.accountId && it.accountType == local.accountType }
@@ -78,6 +93,7 @@ class PocketRepositoryImp(
                         // do nothing
                     }
                     dataManager.pocketApi.getPocketAccounts().toDomainList()
+                        .filter { it.id !in pendingDelinks }
                 } else {
                     serverBasicPockets
                 }
@@ -290,7 +306,11 @@ class PocketRepositoryImp(
 
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(context = ioDispatcher) {
-            pocketAccountDao.delinkPocketAccounts(pocketAccountMappingIds)
+            val serverIds = pocketAccountMappingIds.filter { it > 0 }
+            pocketAccountDao.delinkPocketAccountsAndTrackPending(
+                pocketAccountMappingIds = pocketAccountMappingIds,
+                pendingDelinks = serverIds.map(::PendingPocketDelinkEntity),
+            )
 
             val currentState = detailedPocketCache.value
             if (currentState is DataState.Success) {
@@ -300,13 +320,14 @@ class PocketRepositoryImp(
                 syncPockets(clientId = clientId, forceRefresh = true)
             }
 
-            val serverIds = pocketAccountMappingIds.filter { it > 0 }
-            if (networkMonitor.isOnline.first() && serverIds.isNotEmpty()) {
+            val pendingServerIds = pocketAccountDao.getPendingDelinkIds().filter { it in serverIds }
+            if (networkMonitor.isOnline.first() && pendingServerIds.isNotEmpty()) {
                 try {
-                    val request = PocketDelinkRequest(serverIds)
+                    val request = PocketDelinkRequest(pendingServerIds)
                     dataManager.pocketApi.delinkAccounts(request = request)
+                    pocketAccountDao.deletePendingDelinks(pendingServerIds)
                 } catch (e: Exception) {
-                    // do nothing
+                    // Already persisted above; keep pending delinks for the next pocket sync retry.
                 }
             }
         }
