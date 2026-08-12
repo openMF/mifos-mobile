@@ -10,8 +10,6 @@
 package org.mifos.mobile.core.data.repositoryImpl
 
 import io.ktor.client.statement.HttpResponse
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -25,6 +23,7 @@ import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.AccountStatus
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
+import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.DataManager
@@ -55,22 +54,25 @@ import kotlin.test.assertTrue
 class PocketRepositoryTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var dataManager: DataManager
-    private lateinit var clientService: FakeClientService
-    private lateinit var pocketService: FakePocketService
-    private lateinit var shareAccountService: FakeShareAccountService
     private lateinit var networkMonitor: FakeNetworkMonitor
     private lateinit var pocketAccountDao: FakePocketAccountDao
     private lateinit var repository: PocketRepositoryImp
 
+    private lateinit var fakeClientService: FakeClientService
+    private lateinit var fakePocketService: FakePocketService
+    private lateinit var fakeShareAccountService: FakeShareAccountService
+
     @BeforeTest
     fun setUp() {
-        dataManager = mockk()
-        clientService = FakeClientService()
-        pocketService = FakePocketService()
-        shareAccountService = FakeShareAccountService()
-        every { dataManager.clientsApi } returns clientService
-        every { dataManager.pocketApi } returns pocketService
-        every { dataManager.shareAccountApi } returns shareAccountService
+        fakeClientService = FakeClientService()
+        fakePocketService = FakePocketService()
+        fakeShareAccountService = FakeShareAccountService()
+
+        dataManager = object : DataManager() {
+            override val clientsApi = fakeClientService
+            override val pocketApi = fakePocketService
+            override val shareAccountApi = fakeShareAccountService
+        }
         networkMonitor = FakeNetworkMonitor()
         pocketAccountDao = FakePocketAccountDao()
         repository = PocketRepositoryImp(
@@ -82,8 +84,8 @@ class PocketRepositoryTest {
     }
 
     @Test
-    fun getPocketAccounts_mapsAllPocketTypesAndPersistsTheDomainMapping() = runTest(testDispatcher) {
-        pocketService.response = PocketResponseDto(
+    fun getPocketAccountsMapsAllPocketTypesAndPersistsTheDomainMapping() = runTest(testDispatcher) {
+        fakePocketService.response = PocketResponseDto(
             loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
             savingsAccounts = listOf(pocketDto(2L, 20L, "SV-20", 200L, AccountType.SAVINGS)),
             shareAccounts = listOf(pocketDto(3L, 30L, "SH-30", 300L, AccountType.SHARE)),
@@ -103,10 +105,10 @@ class PocketRepositoryTest {
     }
 
     @Test
-    fun getPocketAccounts_returnsCachedAccountsWhenNetworkCallFails() = runTest(testDispatcher) {
+    fun getPocketAccountsReturnsCachedAccountsWhenNetworkCallFails() = runTest(testDispatcher) {
         val cachedAccount = localEntity(10L, AccountType.LOAN, 100L)
         pocketAccountDao.accounts = mutableListOf(cachedAccount)
-        pocketService.failure = IllegalStateException("server unavailable")
+        fakePocketService.failure = IllegalStateException("server unavailable")
 
         val result = repository.getPocketAccounts()
 
@@ -115,11 +117,11 @@ class PocketRepositoryTest {
     }
 
     @Test
-    fun getDetailedPocketAccounts_enrichesPocketWithClientAccountDetails() = runTest(testDispatcher) {
-        pocketService.response = PocketResponseDto(
+    fun getDetailedPocketAccountsEnrichesPocketWithClientAccountDetails() = runTest(testDispatcher) {
+        fakePocketService.response = PocketResponseDto(
             loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
         )
-        clientService.accounts = AccountsResponseDto(
+        fakeClientService.accounts = AccountsResponseDto(
             loanAccounts = listOf(loanAccount(10L, "Personal loan", 1250.5)),
         )
 
@@ -135,12 +137,12 @@ class PocketRepositoryTest {
     }
 
     @Test
-    fun getAvailableAccountsToLink_excludesAccountsAlreadyInPocketAndMapsRemainingAccounts() =
+    fun getAvailableAccountsToLinkExcludesAccountsAlreadyInPocketAndMapsRemainingAccounts() =
         runTest(testDispatcher) {
-            pocketService.response = PocketResponseDto(
+            fakePocketService.response = PocketResponseDto(
                 loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
             )
-            clientService.accounts = AccountsResponseDto(
+            fakeClientService.accounts = AccountsResponseDto(
                 loanAccounts = listOf(
                     loanAccount(10L, "Already linked"),
                     loanAccount(11L, "Available loan", 90.0),
@@ -151,7 +153,7 @@ class PocketRepositoryTest {
             val result = repository.getAvailableAccountsToLink(clientId = 7L).first { it is DataState.Success }
 
             val accounts = assertIs<
-                DataState.Success<List<org.mifos.mobile.core.model.entity.pocket.LinkableAccount>>,
+                DataState.Success<List<LinkableAccount>>,
                 >(result).data
             assertEquals(1, accounts.size)
             assertEquals(11L, accounts.single().accountId)
@@ -161,11 +163,11 @@ class PocketRepositoryTest {
         }
 
     @Test
-    fun linkAccounts_mapsPayloadAndRefreshesDetailedCache() = runTest(testDispatcher) {
-        pocketService.response = PocketResponseDto(
+    fun linkAccountsMapsPayloadAndRefreshesDetailedCache() = runTest(testDispatcher) {
+        fakePocketService.response = PocketResponseDto(
             loanAccounts = listOf(pocketDto(1L, 11L, "LN-11", 101L, AccountType.LOAN)),
         )
-        clientService.accounts = AccountsResponseDto(
+        fakeClientService.accounts = AccountsResponseDto(
             loanAccounts = listOf(loanAccount(11L, "New loan")),
         )
 
@@ -178,10 +180,10 @@ class PocketRepositoryTest {
         )
 
         assertIs<DataState.Success<Unit>>(result)
-        assertEquals("linkAccounts", pocketService.lastLinkCommand)
+        assertEquals("linkAccounts", fakePocketService.lastLinkCommand)
         assertEquals(
             PocketLinkRequest.AccountDetail(accountId = "11", accountType = "LOAN"),
-            pocketService.lastLinkRequest?.accountsDetail?.single(),
+            fakePocketService.lastLinkRequest?.accountsDetail?.single(),
         )
 
         val cached = repository.getDetailedPocketAccounts(clientId = 7L).first { it is DataState.Success }
@@ -192,11 +194,11 @@ class PocketRepositoryTest {
     }
 
     @Test
-    fun delinkAccounts_sendsPositiveMappingIdsAndRemovesAccountFromCache() = runTest(testDispatcher) {
-        pocketService.response = PocketResponseDto(
+    fun delinkAccountsSendsPositiveMappingIdsAndRemovesAccountFromCache() = runTest(testDispatcher) {
+        fakePocketService.response = PocketResponseDto(
             loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
         )
-        clientService.accounts = AccountsResponseDto(
+        fakeClientService.accounts = AccountsResponseDto(
             loanAccounts = listOf(loanAccount(10L, "Personal loan")),
         )
         repository.getDetailedPocketAccounts(clientId = 7L).first { it is DataState.Success }
@@ -207,19 +209,19 @@ class PocketRepositoryTest {
         )
 
         assertIs<DataState.Success<Unit>>(result)
-        assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+        assertEquals(PocketDelinkRequest(listOf(100L)), fakePocketService.lastDelinkRequest)
         assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
         val cached = repository.getDetailedPocketAccounts(clientId = 7L).first { it is DataState.Success }
         assertTrue(assertIs<DataState.Success<List<DetailedPocketAccount>>>(cached).data.isEmpty())
     }
 
     @Test
-    fun delinkAccounts_keepsFailedRemoteDelinkPendingAndFiltersServerRefresh() = runTest(testDispatcher) {
+    fun delinkAccountsKeepsFailedRemoteDelinkPendingAndFiltersServerRefresh() = runTest(testDispatcher) {
         pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
-        pocketService.response = PocketResponseDto(
+        fakePocketService.response = PocketResponseDto(
             loanAccounts = listOf(pocketDto(1L, 10L, "LN-10", 100L, AccountType.LOAN)),
         )
-        pocketService.delinkFailure = IllegalStateException("server unavailable")
+        fakePocketService.delinkFailure = IllegalStateException("server unavailable")
 
         val result = repository.delinkAccounts(
             pocketAccountMappingIds = listOf(100L),
@@ -235,13 +237,13 @@ class PocketRepositoryTest {
         val refreshedAccounts = assertIs<DataState.Success<List<PocketAccount>>>(refreshResult).data
         assertTrue(refreshedAccounts.isEmpty())
         assertEquals(setOf(100L), pocketAccountDao.pendingDelinks)
-        assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+        assertEquals(PocketDelinkRequest(listOf(100L)), fakePocketService.lastDelinkRequest)
     }
 
     @Test
-    fun getPocketAccounts_retriesPersistedPendingDelinksAndClearsThemWhenSuccessful() = runTest(testDispatcher) {
+    fun getPocketAccountsRetriesPersistedPendingDelinksAndClearsThemWhenSuccessful() = runTest(testDispatcher) {
         pocketAccountDao.pendingDelinks = mutableSetOf(100L)
-        pocketService.response = PocketResponseDto()
+        fakePocketService.response = PocketResponseDto()
         repository = PocketRepositoryImp(
             dataManager = dataManager,
             networkMonitor = networkMonitor,
@@ -252,14 +254,14 @@ class PocketRepositoryTest {
         val result = repository.getPocketAccounts()
 
         assertIs<DataState.Success<List<PocketAccount>>>(result)
-        assertEquals(PocketDelinkRequest(listOf(100L)), pocketService.lastDelinkRequest)
+        assertEquals(PocketDelinkRequest(listOf(100L)), fakePocketService.lastDelinkRequest)
         assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
     }
 
     @Test
-    fun delinkAccounts_withoutDetailedCacheDoesNotSendDuplicateRemoteDelink() = runTest(testDispatcher) {
+    fun delinkAccountsWithoutDetailedCacheDoesNotSendDuplicateRemoteDelink() = runTest(testDispatcher) {
         pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
-        pocketService.response = PocketResponseDto()
+        fakePocketService.response = PocketResponseDto()
 
         val result = repository.delinkAccounts(
             pocketAccountMappingIds = listOf(100L),
@@ -267,7 +269,7 @@ class PocketRepositoryTest {
         )
 
         assertIs<DataState.Success<Unit>>(result)
-        assertEquals(listOf(PocketDelinkRequest(listOf(100L))), pocketService.delinkRequests)
+        assertEquals(listOf(PocketDelinkRequest(listOf(100L))), fakePocketService.delinkRequests)
         assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
     }
 

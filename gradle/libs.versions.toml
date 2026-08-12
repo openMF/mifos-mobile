@@ -9,7 +9,7 @@ androidxActivity = "1.10.1"
 androidxComposeBom = "2025.06.01"
 androidxComposeCompiler = "1.5.15"
 androidxCoreSplashscreen = "1.0.1"
-androidxEspresso = "3.6.1"
+androidxEspresso = "3.7.0"
 androidxLifecycle = "2.9.2"
 androidxMetrics = "1.0.0-beta01"
 androidxNavigation = "2.9.2"
@@ -267,6 +267,7 @@ ktor-client-json = { group = "io.ktor", name = "ktor-client-json", version.ref =
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktorVersion" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktorVersion" }
 
 ktorfit-ksp = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-ksp", version.ref = "ktorfitKsp" }
 ktorfit-lib = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib", version.ref = "ktorfit" }

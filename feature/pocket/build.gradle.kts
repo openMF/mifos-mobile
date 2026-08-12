@@ -7,7 +7,12 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
+@file:OptIn(
+    org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class,
+)
+
 import org.gradle.api.tasks.testing.Test
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.cmp.feature.convention)
@@ -16,9 +21,18 @@ plugins {
 
 android {
     namespace = "org.mifos.mobile.feature.pocket"
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 kotlin {
+    androidTarget {
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.material3)
@@ -31,6 +45,10 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.turbine)
             implementation(libs.jb.composeUiTest)
+        }
+
+        androidInstrumentedTest.dependencies {
+            implementation(libs.androidx.test.espresso.core)
         }
     }
 }
