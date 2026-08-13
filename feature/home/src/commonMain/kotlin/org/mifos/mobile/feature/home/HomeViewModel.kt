@@ -15,7 +15,6 @@ import co.touchlab.kermit.Logger
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,6 +23,7 @@ import mifos_mobile.feature.home.generated.resources.feature_server_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -83,6 +83,17 @@ internal class HomeViewModel(
                     sendAction(HomeAction.ObserveNetworkStatus(isOnline))
                     isHandlingNetworkChange = false
                 }
+        }
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> HomeScreenState.Network
+                    else -> HomeScreenState.Error(Res.string.feature_server_error)
+                },
+            )
         }
     }
 
@@ -193,10 +204,11 @@ internal class HomeViewModel(
 
     private suspend fun checkAuthorization() {
         homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
-            .catch {
-                updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
+            .collect { result ->
+                if (result is DataState.Error) {
+                    handleError(result.exception)
+                }
             }
-            .collect {}
     }
 
     /**
@@ -340,9 +352,6 @@ internal class HomeViewModel(
 
         viewModelScope.launch {
             homeRepositoryImpl.currentClient(clientId = state.clientId ?: 0)
-                .catch {
-                    updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
-                }
                 .collect { client ->
                     sendAction(HomeAction.Internal.ReceiveClientDetails(client))
                 }
@@ -361,11 +370,7 @@ internal class HomeViewModel(
      */
     private fun handleClientDetails(dataState: DataState<Client>) {
         when (dataState) {
-            is DataState.Error -> updateState {
-                it.copy(
-                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
-                )
-            }
+            is DataState.Error -> handleError(dataState.exception)
 
             DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
 
@@ -385,9 +390,6 @@ internal class HomeViewModel(
     private fun loadClientAccountDetails() {
         viewModelScope.launch {
             homeRepositoryImpl.clientAccounts(clientId = state.clientId ?: 0)
-                .catch {
-                    updateState { it.copy(uiState = HomeScreenState.Error(Res.string.feature_server_error)) }
-                }
                 .collect { clientAccounts ->
                     sendAction(HomeAction.Internal.ReceiveClientAccounts(clientAccounts))
                 }
@@ -405,11 +407,7 @@ internal class HomeViewModel(
      */
     private fun handleClientAccounts(dataState: DataState<ClientAccounts>) {
         when (dataState) {
-            is DataState.Error -> updateState {
-                it.copy(
-                    uiState = HomeScreenState.Error(Res.string.feature_server_error),
-                )
-            }
+            is DataState.Error -> handleError(dataState.exception)
 
             DataState.Loading -> updateState { it.copy(uiState = HomeScreenState.Loading) }
 
@@ -458,11 +456,7 @@ internal class HomeViewModel(
      */
     private fun unreadNotificationsCount() {
         viewModelScope.launch {
-            homeRepositoryImpl.unreadNotificationsCount().catch {
-                updateState {
-                    it.copy(notificationCount = 0)
-                }
-            }.collect { count ->
+            homeRepositoryImpl.unreadNotificationsCount().collect { count ->
                 when (count) {
                     is DataState.Error -> updateState {
                         it.copy(notificationCount = 0)

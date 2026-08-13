@@ -11,10 +11,8 @@ package org.mifos.mobile.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.mapper.transactions.toRecentTransactionModel
 import org.mifos.mobile.core.data.repository.RecentTransactionRepository
@@ -24,8 +22,8 @@ import org.mifos.mobile.core.network.DataManager
 
 class RecentTransactionRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : RecentTransactionRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), RecentTransactionRepository {
     override fun recentTransactions(
         clientId: Long?,
         offset: Int?,
@@ -41,6 +39,6 @@ class RecentTransactionRepositoryImp(
                     dto.toRecentTransactionModel()
                 }
             }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 }

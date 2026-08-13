@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.loan.application.confirmDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.internal_server_error
@@ -28,10 +27,10 @@ import mifos_mobile.feature.loan_application.generated.resources.feature_apply_l
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_action
 import mifos_mobile.feature.loan_application.generated.resources.feature_apply_loan_status_success_tip
-import okio.IOException
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.LoanRepository
 import org.mifos.mobile.core.data.repository.ReviewLoanApplicationRepository
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -245,7 +244,7 @@ internal class ConfirmDetailsViewModel(
                 updateState {
                     it.copy(
                         showOverlay = false,
-                        uiState = if (template.exception is IOException) {
+                        uiState = if (template.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_apply_loan_error_server)
@@ -286,14 +285,14 @@ internal class ConfirmDetailsViewModel(
                 updateState {
                     it.copy(showOverlay = false)
                 }
-                val errorMsg = if (status.exception.cause is ServerResponseException) {
+                val errorMsg = if (status.exception is MifosException.ServerError) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     status.message
                 }
                 sendEvent(
                     ConfirmDetailsEvent.NavigateToStatus(
-                        eventType = if (status.exception.cause is ServerResponseException) {
+                        eventType = if (status.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name

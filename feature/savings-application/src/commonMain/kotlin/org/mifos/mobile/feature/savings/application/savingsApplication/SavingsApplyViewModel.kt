@@ -13,12 +13,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_product_empty
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_server
@@ -27,6 +25,7 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.HomeRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -119,6 +118,17 @@ internal class SavingsApplyViewModel(
     private var submitAttempts = 0
     private val maxSubmitAttempts = 5
 
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
+                },
+            )
+        }
+    }
+
     /**
      * Handles incoming actions from the UI and dispatches them to the appropriate
      * business logic functions.
@@ -186,27 +196,14 @@ internal class SavingsApplyViewModel(
                 savingsAccountRepositoryImpl.getSavingAccountApplicationTemplate(state.clientId),
             ) { client, template ->
                 client to template
+            }.collect { (client, template) ->
+                sendAction(
+                    SavingsApplicationAction.Internal.ReceiveClientAndTemplateResult(
+                        client,
+                        template,
+                    ),
+                )
             }
-                .catch { throwable ->
-
-                    updateState {
-                        it.copy(
-                            uiState = if (throwable.cause is IOException) {
-                                ScreenUiState.Network
-                            } else {
-                                ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
-                            },
-                        )
-                    }
-                }
-                .collect { (client, template) ->
-                    sendAction(
-                        SavingsApplicationAction.Internal.ReceiveClientAndTemplateResult(
-                            client,
-                            template,
-                        ),
-                    )
-                }
         }
     }
 
@@ -238,7 +235,10 @@ internal class SavingsApplyViewModel(
         template: DataState<SavingsAccountTemplate?>,
     ) {
         when {
-            listOf(client, template).any { it is DataState.Loading } -> {
+            client is DataState.Error -> handleError(client.exception)
+            template is DataState.Error -> handleError(template.exception)
+
+            client is DataState.Loading || template is DataState.Loading -> {
                 showLoading()
             }
 
@@ -250,12 +250,6 @@ internal class SavingsApplyViewModel(
                         uiState = ScreenUiState.Success,
                     )
                 }
-            }
-
-            else -> updateState {
-                it.copy(
-                    uiState = ScreenUiState.Error(Res.string.feature_apply_savings_error_server),
-                )
             }
         }
     }

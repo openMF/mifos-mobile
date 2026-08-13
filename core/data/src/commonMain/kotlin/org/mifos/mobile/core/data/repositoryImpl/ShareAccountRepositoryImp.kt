@@ -9,23 +9,15 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.share.toModel
 import org.mifos.mobile.core.data.mapper.toPageModel
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccountWithAssociations
 import org.mifos.mobile.core.model.entity.payload.ShareApplicationPayload
@@ -35,20 +27,17 @@ import org.mifos.mobile.core.network.DataManager
 
 class ShareAccountRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : ShareAccountRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), ShareAccountRepository {
 
     override fun getShareProducts(clientId: Long?): Flow<DataState<Page<ShareProduct>>> {
         return dataManager.shareAccountApi.getShareProducts(clientId)
             .map { response ->
-                DataState.Success(
-                    response.toPageModel { dto ->
-                        dto.toModel()
-                    },
-                )
+                response.toPageModel { dto ->
+                    dto.toModel()
+                }
             }
-            .catch { exception -> DataState.Error(exception, exception.message) }
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun getShareProductById(
@@ -57,30 +46,20 @@ class ShareAccountRepositoryImp(
     ): Flow<DataState<ShareProductDetails>> {
         return dataManager.shareAccountApi.getShareProductById(productId, clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 
-    override suspend fun submitShareApplication(payload: ShareApplicationPayload?): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response =
-                    dataManager.shareAccountApi.submitShareApplication(payload?.toDto())
-                DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
-            }
-        }
+    override suspend fun submitShareApplication(
+        payload: ShareApplicationPayload?,
+    ): DataState<String> = safeCall {
+        dataManager.shareAccountApi
+            .submitShareApplication(payload?.toDto())
+            .bodyAsText()
     }
 
     override fun getShareAccountDetails(accountId: Long): Flow<DataState<ShareAccountWithAssociations>> {
         return dataManager.shareAccountApi.getShareAccountDetails(accountId)
             .map { it.toModel() }
-            .asDataStateFlow()
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 }

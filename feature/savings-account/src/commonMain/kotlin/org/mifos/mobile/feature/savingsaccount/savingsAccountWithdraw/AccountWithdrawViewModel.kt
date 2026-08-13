@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.savingsaccount.savingsAccountWithdraw
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -33,6 +32,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.model.StatusNavigationDestination
@@ -198,7 +198,7 @@ internal class AccountWithdrawViewModel(
             }
 
             is DataState.Error -> {
-                val errorMsg = if (dataState.exception.cause is ServerResponseException) {
+                val errorMsg = if (dataState.exception is MifosException.ServerError) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     getString(Res.string.feature_savings_withdraw_request_failed_message)
@@ -206,7 +206,7 @@ internal class AccountWithdrawViewModel(
 
                 sendEvent(
                     AccountWithdrawEvent.NavigateToStatus(
-                        eventType = if (dataState.exception.cause is ServerResponseException) {
+                        eventType = if (dataState.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name

@@ -9,23 +9,16 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
-import kotlinx.io.IOException
 import org.mifos.mobile.core.common.DataState
-import org.mifos.mobile.core.common.asDataStateFlow
 import org.mifos.mobile.core.data.mapper.payloads.toDto
 import org.mifos.mobile.core.data.mapper.savings.toModel
 import org.mifos.mobile.core.data.mapper.templates.toModel
 import org.mifos.mobile.core.data.mapper.transactions.toModel
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
-import org.mifos.mobile.core.data.util.extractErrorMessage
 import org.mifos.mobile.core.model.entity.TransactionDetails
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountApplicationPayload
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsAccountUpdatePayload
@@ -37,8 +30,8 @@ import org.mifos.mobile.core.network.DataManager
 
 class SavingsAccountRepositoryImp(
     private val dataManager: DataManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : SavingsAccountRepository {
+    ioDispatcher: CoroutineDispatcher,
+) : BaseRepository(ioDispatcher), SavingsAccountRepository {
 
     override fun getSavingsWithAssociations(
         accountId: Long?,
@@ -49,7 +42,7 @@ class SavingsAccountRepositoryImp(
             associationType,
         )
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun getSavingsAccountTransactionDetails(
@@ -59,8 +52,7 @@ class SavingsAccountRepositoryImp(
         return dataManager.savingAccountsListApi
             .getSavingsAccountTransactionDetails(accountId, transactionId)
             .map { it.toModel() }
-            .asDataStateFlow()
-            .flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun getSavingAccountApplicationTemplate(
@@ -68,7 +60,7 @@ class SavingsAccountRepositoryImp(
     ): Flow<DataState<SavingsAccountTemplate>> {
         return dataManager.savingAccountsListApi.getSavingsAccountApplicationTemplate(clientId)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override fun getSavingAccountApplicationTemplateByProduct(
@@ -80,72 +72,33 @@ class SavingsAccountRepositoryImp(
             productId,
         )
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 
     override suspend fun submitSavingAccountApplication(
         payload: SavingsAccountApplicationPayload?,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response =
-                    dataManager.savingAccountsListApi.submitSavingAccountApplication(payload?.toDto())
-                DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.savingAccountsListApi
+            .submitSavingAccountApplication(payload?.toDto())
+            .bodyAsText()
     }
 
     override suspend fun updateSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountUpdatePayload?,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response =
-                    dataManager.savingAccountsListApi.updateSavingsAccountUpdate(
-                        accountId!!,
-                        payload?.toDto(),
-                    )
-                DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.savingAccountsListApi
+            .updateSavingsAccountUpdate(accountId!!, payload?.toDto())
+            .bodyAsText()
     }
 
     override suspend fun submitWithdrawSavingsAccount(
         accountId: Long?,
         payload: SavingsAccountWithdrawPayload?,
-    ): DataState<String> {
-        return withContext(ioDispatcher) {
-            try {
-                val response =
-                    dataManager.savingAccountsListApi.submitWithdrawSavingsAccount(
-                        accountId!!,
-                        payload?.toDto(),
-                    )
-                DataState.Success(response.bodyAsText())
-            } catch (e: ClientRequestException) {
-                val errorMessage = extractErrorMessage(e.response)
-                DataState.Error(Exception(errorMessage), null)
-            } catch (e: IOException) {
-                DataState.Error(Exception("Network error", e), null)
-            } catch (e: ServerResponseException) {
-                DataState.Error(Exception("Server error", e), null)
-            }
-        }
+    ): DataState<String> = safeCall {
+        dataManager.savingAccountsListApi
+            .submitWithdrawSavingsAccount(accountId!!, payload?.toDto())
+            .bodyAsText()
     }
 
     override fun accountTransferTemplate(
@@ -154,6 +107,6 @@ class SavingsAccountRepositoryImp(
     ): Flow<DataState<AccountOptionsTemplate>> {
         return dataManager.savingAccountsListApi.accountTransferTemplate(accountId!!, accountType)
             .map { it.toModel() }
-            .asDataStateFlow().flowOn(ioDispatcher)
+            .asDataState()
     }
 }

@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryApplicationConfirmation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,6 +38,7 @@ import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.EventType
@@ -179,14 +179,14 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                     updateState {
                         it.copy(showOverlay = false)
                     }
-                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    val errorMsg = if (response.exception is MifosException.ServerError) {
                         getString(UiRes.string.internal_server_error)
                     } else {
                         response.message
                     }
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
-                            eventType = if (response.exception.cause is ServerResponseException) {
+                            eventType = if (response.exception is MifosException.ServerError) {
                                 EventType.SERVER_EXCEPTION.name
                             } else {
                                 EventType.FAILURE.name
@@ -257,7 +257,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
                         it.copy(showOverlay = false)
                     }
 
-                    val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    val errorMsg = if (response.exception is MifosException.ServerError) {
                         getString(UiRes.string.internal_server_error)
                     } else {
                         response.message
@@ -265,7 +265,7 @@ internal class BeneficiaryApplicationConfirmationViewModel(
 
                     sendEvent(
                         BeneficiaryApplicationConfirmationEvent.NavigateToStatus(
-                            eventType = if (response.exception.cause is ServerResponseException) {
+                            eventType = if (response.exception is MifosException.ServerError) {
                                 EventType.SERVER_EXCEPTION.name
                             } else {
                                 EventType.FAILURE.name

@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.feature_generic_error_server
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -189,7 +189,7 @@ internal class BeneficiaryListViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (beneficiaryList.exception is IOException) {
+                        uiState = if (beneficiaryList.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_generic_error_server)

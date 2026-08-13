@@ -10,7 +10,6 @@
 package org.mifos.mobile.feature.settings.password
 
 import androidx.lifecycle.viewModelScope
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -31,6 +30,7 @@ import mifos_mobile.feature.settings.generated.resources.password_update_failed
 import mifos_mobile.feature.settings.generated.resources.password_update_success
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.data.repository.UserDataRepository
 import org.mifos.mobile.core.ui.PasswordStrengthState
@@ -368,7 +368,7 @@ internal class ChangePasswordViewModel(
             when (action.result) {
                 is DataState.Error -> {
                     val errorMsg =
-                        if (action.result.exception.cause is ServerResponseException) {
+                        if (action.result.exception is MifosException.ServerError) {
                             UiRes.string.internal_server_error
                         } else {
                             Res.string.password_update_failed

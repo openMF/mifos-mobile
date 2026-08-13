@@ -17,7 +17,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.share_account.generated.resources.Res
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_activation_date
 import mifos_mobile.feature.share_account.generated.resources.feature_share_account_application_date
@@ -32,6 +31,7 @@ import mifos_mobile.feature.share_account.generated.resources.feature_share_acco
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -125,9 +125,7 @@ internal class ShareAccountDetailsViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (dataState.exception is IOException ||
-                            dataState.exception.cause is IOException
-                        ) {
+                        uiState = if (dataState.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_share_account_generic_error_server)

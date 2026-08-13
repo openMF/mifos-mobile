@@ -18,7 +18,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.core.ui.generated.resources.validation_amount_empty
 import mifos_mobile.feature.savings_application.generated.resources.Res
 import mifos_mobile.feature.savings_application.generated.resources.feature_apply_savings_error_frequency_invalid
@@ -29,6 +28,7 @@ import mifos_mobile.feature.savings_application.generated.resources.feature_appl
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -506,7 +506,7 @@ internal class SavingsFillApplicationViewModel(
             is DataState.Error -> {
                 updateState {
                     it.copy(
-                        uiState = if (template.exception is IOException) {
+                        uiState = if (template.exception is MifosException.NetworkError) {
                             ScreenUiState.Network
                         } else {
                             ScreenUiState.Error(Res.string.feature_apply_savings_error_server)

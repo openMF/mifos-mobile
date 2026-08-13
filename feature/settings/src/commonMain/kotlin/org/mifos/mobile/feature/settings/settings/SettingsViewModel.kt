@@ -12,7 +12,6 @@ package org.mifos.mobile.feature.settings.settings
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -208,9 +207,6 @@ internal class SettingsViewModel(
 
         viewModelScope.launch {
             homeRepositoryImpl.clientImage(state.clientId ?: -1L)
-                .catch {
-                    // Do nothing on image fetch error, as it's not critical.
-                }
                 .collect { sendAction(SettingsAction.Internal.ReceiveClientImage(it)) }
         }
     }

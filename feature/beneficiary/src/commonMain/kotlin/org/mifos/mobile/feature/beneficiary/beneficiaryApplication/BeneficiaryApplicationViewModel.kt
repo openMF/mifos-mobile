@@ -12,12 +12,10 @@ package org.mifos.mobile.feature.beneficiary.beneficiaryApplication
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
 import mifos_mobile.feature.beneficiary.generated.resources.Res
 import mifos_mobile.feature.beneficiary.generated.resources.add_beneficiary
 import mifos_mobile.feature.beneficiary.generated.resources.enter_account_number
@@ -30,6 +28,7 @@ import mifos_mobile.feature.beneficiary.generated.resources.select_account_type
 import mifos_mobile.feature.beneficiary.generated.resources.update_beneficiary
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.BeneficiaryRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.model.entity.beneficiary.Beneficiary
@@ -102,6 +101,17 @@ internal class BeneficiaryApplicationViewModel(
      */
     private fun setLoadingState(loading: ScreenUiState.Loading) {
         updateState { it.copy(uiState = loading) }
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ScreenUiState.Network
+                    else -> ScreenUiState.Error(Res.string.feature_generic_error_server)
+                },
+            )
+        }
     }
 
     /**
@@ -194,16 +204,6 @@ internal class BeneficiaryApplicationViewModel(
                 beneficiaryRepositoryImp.beneficiaryTemplate(),
             ) { beneficiaryList, beneficiaryTemplate ->
                 beneficiaryList to beneficiaryTemplate
-            }.catch { error ->
-                updateState {
-                    it.copy(
-                        uiState = if (error.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_generic_error_server)
-                        },
-                    )
-                }
             }.collect { (beneficiaryList, beneficiaryTemplate) ->
                 sendAction(
                     BeneficiaryApplicationAction.Internal.ReceiveBeneficiaryResult(
@@ -223,18 +223,11 @@ internal class BeneficiaryApplicationViewModel(
         beneficiaryTemplate: DataState<BeneficiaryTemplate>,
     ) {
         when {
-            beneficiaryList is DataState.Loading && beneficiaryTemplate is DataState.Loading -> {
-                setLoadingState(ScreenUiState.Loading)
-            }
+            beneficiaryList is DataState.Error -> handleError(beneficiaryList.exception)
+            beneficiaryTemplate is DataState.Error -> handleError(beneficiaryTemplate.exception)
 
-            beneficiaryList is DataState.Error && beneficiaryTemplate is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = ScreenUiState.Error(
-                            Res.string.feature_generic_error_server,
-                        ),
-                    )
-                }
+            beneficiaryList is DataState.Loading || beneficiaryTemplate is DataState.Loading -> {
+                setLoadingState(ScreenUiState.Loading)
             }
 
             beneficiaryList is DataState.Success && beneficiaryTemplate is DataState.Success -> {

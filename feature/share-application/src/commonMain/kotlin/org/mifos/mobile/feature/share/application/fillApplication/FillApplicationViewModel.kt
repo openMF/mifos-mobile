@@ -13,10 +13,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -42,6 +40,7 @@ import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
+import org.mifos.mobile.core.common.MifosException
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ShareAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -111,6 +110,17 @@ internal class ShareFillApplicationViewModel(
     init {
         observeNetworkStatus()
         observeAuthResult()
+    }
+
+    private fun handleError(exception: Throwable) {
+        updateState {
+            it.copy(
+                uiState = when (exception) {
+                    is MifosException.NetworkError -> ShareApplicationUiState.Network
+                    else -> ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server)
+                },
+            )
+        }
     }
 
     /**
@@ -280,13 +290,7 @@ internal class ShareFillApplicationViewModel(
             accountsRepositoryImpl.loadAccounts(
                 clientId = state.clientId,
                 accountType = Constants.SAVINGS_ACCOUNTS,
-            ).catch { e ->
-                mutableStateFlow.update {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(Res.string.feature_apply_share_error_server),
-                    )
-                }
-            }.collect { clientAccounts ->
+            ).collect { clientAccounts ->
                 sendAction(
                     ShareApplicationAction.Internal.ReceiveClientSavingsAccounts(
                         accounts = clientAccounts,
@@ -307,15 +311,7 @@ internal class ShareFillApplicationViewModel(
     private fun handleClientAccountResult(response: DataState<ClientAccounts>) {
         when (response) {
             is DataState.Loading -> showLoading()
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(
-                            Res.string.feature_apply_share_error_server,
-                        ),
-                    )
-                }
-            }
+            is DataState.Error -> handleError(response.exception)
             is DataState.Success -> {
                 val shareTemplate = response.data
                 updateState {
@@ -339,15 +335,7 @@ internal class ShareFillApplicationViewModel(
     private fun handleShareTemplateResult(template: DataState<ShareProductDetails?>) {
         when (template) {
             is DataState.Loading -> showLoading()
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        uiState = ShareApplicationUiState.Error(
-                            Res.string.feature_apply_share_error_server,
-                        ),
-                    )
-                }
-            }
+            is DataState.Error -> handleError(template.exception)
             is DataState.Success -> {
                 val shareTemplate = template.data ?: return
                 updateState {
@@ -651,7 +639,7 @@ internal class ShareFillApplicationViewModel(
             is DataState.Error -> {
                 updateState { it.copy(showOverlay = false) }
 
-                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                val errorMsg = if (response.exception is MifosException.ServerError) {
                     getString(UiRes.string.internal_server_error)
                 } else {
                     "${response.message}, ${getString(
@@ -661,7 +649,7 @@ internal class ShareFillApplicationViewModel(
                 }
                 sendEvent(
                     ShareApplicationEvent.NavigateToStatus(
-                        eventType = if (response.exception.cause is ServerResponseException) {
+                        eventType = if (response.exception is MifosException.ServerError) {
                             EventType.SERVER_EXCEPTION.name
                         } else {
                             EventType.FAILURE.name
