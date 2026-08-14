@@ -32,6 +32,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.third_party_transfer.generated.resources.Res
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_cancel
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_confirm
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_message
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_title
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_amount
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_destination
@@ -117,6 +121,21 @@ internal fun TptDialog(
     onAction: (TptAction) -> Unit,
 ) {
     when (dialogState) {
+        TptState.DialogState.AddToPocketConfirmation -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    title = stringResource(Res.string.add_to_pocket_title),
+                    message = stringResource(Res.string.add_to_pocket_message),
+                ),
+                onConfirm = { onAction(TptAction.ConfirmAddToPocket(true)) },
+                onDismissRequest = { onAction(TptAction.ConfirmAddToPocket(false)) },
+                confirmText = stringResource(Res.string.add_to_pocket_confirm),
+                cancelText = stringResource(Res.string.add_to_pocket_cancel),
+            )
+        }
+
+        TptState.DialogState.Loading -> MifosProgressIndicator()
+
         is TptState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(

@@ -27,6 +27,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
 import org.mifos.mobile.core.data.repository.ClientChargeRepository
+import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.entity.Charge
@@ -34,6 +35,7 @@ import org.mifos.mobile.core.model.entity.Page
 import org.mifos.mobile.core.model.entity.accounts.loan.LoanAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.share.ShareAccount
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.model.enums.ChargeType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
@@ -44,6 +46,7 @@ internal class ClientChargeViewModel(
     private val clientChargeRepositoryImp: ClientChargeRepository,
     userPreferencesRepositoryImpl: UserPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
+    private val pocketRepository: PocketRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<ClientChargeState, ClientChargeEvent, ClientChargeAction>(
     initialState = run {
@@ -266,6 +269,20 @@ internal class ClientChargeViewModel(
                 accountType = accountType,
             ).collect { dataState ->
                 if (dataState is DataState.Success) {
+                    val pocketAccountIds = pocketRepository.getPocketAccounts()
+                        .let { result ->
+                            if (result is DataState.Success) {
+                                val expectedType = when (accountType) {
+                                    Constants.SAVINGS_ACCOUNTS -> AccountType.SAVINGS
+                                    Constants.LOAN_ACCOUNTS -> AccountType.LOAN
+                                    Constants.SHARE_ACCOUNTS -> AccountType.SHARE
+                                    else -> null
+                                }
+                                result.data.filter { it.accountType == expectedType }.map { it.accountId }.toSet()
+                            } else {
+                                emptySet()
+                            }
+                        }
                     val accounts = when (accountType) {
                         Constants.SAVINGS_ACCOUNTS -> dataState.data.savingsAccounts.orEmpty()
                             .filter { it.status?.active == true }
@@ -279,6 +296,13 @@ internal class ClientChargeViewModel(
                                 .filter { it.status?.active == true }
 
                         else -> emptyList()
+                    }.sortedByDescending { account ->
+                        when (account) {
+                            is SavingAccount -> account.id in pocketAccountIds
+                            is LoanAccount -> account.id in pocketAccountIds
+                            is ShareAccount -> account.id in pocketAccountIds
+                            else -> false
+                        }
                     }
 
                     when (accountType) {

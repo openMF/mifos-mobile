@@ -137,6 +137,24 @@ class PocketRepositoryTest {
     }
 
     @Test
+    fun linkAccountPersistsTypedAccountAndSendsSingleAccountRequest() = runTest(testDispatcher) {
+        val result = repository.linkAccount(
+            accountId = 42L,
+            accountType = AccountType.SAVINGS,
+            accountNumber = "SV-42",
+        )
+
+        assertIs<DataState.Success<Unit>>(result)
+        assertEquals(1, pocketAccountDao.accounts.size)
+        assertEquals(42L, pocketAccountDao.accounts.single().accountId)
+        assertEquals(AccountType.SAVINGS.name, pocketAccountDao.accounts.single().accountType)
+        assertEquals(
+            listOf(PocketLinkRequest.AccountDetail("42", AccountType.SAVINGS.name)),
+            fakePocketService.lastLinkRequest?.accountsDetail,
+        )
+    }
+
+    @Test
     fun getAvailableAccountsToLinkExcludesAccountsAlreadyInPocketAndMapsRemainingAccounts() =
         runTest(testDispatcher) {
             fakePocketService.response = PocketResponseDto(

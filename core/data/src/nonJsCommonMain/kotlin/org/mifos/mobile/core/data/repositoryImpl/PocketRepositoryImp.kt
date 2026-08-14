@@ -304,6 +304,48 @@ class PocketRepositoryImp(
         }
     }
 
+    override suspend fun linkAccount(
+        accountId: Long,
+        accountType: AccountType,
+        accountNumber: String,
+    ): DataState<Unit> {
+        return runAsDataState(context = ioDispatcher) {
+            val temporaryId = -Clock.System.now().toEpochMilliseconds()
+            val account = PocketAccount(
+                pocketId = temporaryId,
+                id = temporaryId,
+                accountId = accountId,
+                accountType = accountType,
+                accountNumber = accountNumber,
+            )
+            val localPockets = pocketAccountDao.getAllPocketAccounts()
+                .map { it.toDomain() }
+                .toMutableList()
+            localPockets.removeAll {
+                it.accountId == accountId && it.accountType == accountType
+            }
+            localPockets.add(account)
+            pocketAccountDao.replaceAllPocketAccounts(localPockets.map { it.toEntity() })
+
+            if (networkMonitor.isOnline.first()) {
+                try {
+                    dataManager.pocketApi.linkAccounts(
+                        request = PocketLinkRequest(
+                            accountsDetail = listOf(
+                                PocketLinkRequest.AccountDetail(
+                                    accountId = accountId.toString(),
+                                    accountType = accountType.name,
+                                ),
+                            ),
+                        ),
+                    )
+                } catch (_: Exception) {
+                    // Keep the local link and retry it during the next pocket sync.
+                }
+            }
+        }
+    }
+
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(context = ioDispatcher) {
             val serverIds = pocketAccountMappingIds.filter { it > 0 }

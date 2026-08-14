@@ -43,6 +43,7 @@ internal class FakePocketRepository : PocketRepository {
     val delinkRequests = mutableListOf<List<Long>>()
     val explicitlyAddedAccounts = mutableListOf<List<DetailedPocketAccount>>()
     var linkAccountsResult: DataState<Unit> = DataState.Success(Unit)
+    var linkAccountResult: DataState<Unit> = DataState.Success(Unit)
     var delinkAccountsResult: DataState<Unit> = DataState.Success(Unit)
     var detailedAccountsAfterLink: DataState<List<DetailedPocketAccount>>? = null
     var detailedAccountsAfterDelink: DataState<List<DetailedPocketAccount>>? = null
@@ -91,6 +92,12 @@ internal class FakePocketRepository : PocketRepository {
         detailedAccountsAfterDelink?.let { detailedAccounts.value = it }
         return delinkAccountsResult
     }
+
+    override suspend fun linkAccount(
+        accountId: Long,
+        accountType: AccountType,
+        accountNumber: String,
+    ): DataState<Unit> = linkAccountResult
 
     override suspend fun resetPocketCache() {
         resetPocketCacheCalled = true
