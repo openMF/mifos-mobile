@@ -269,20 +269,21 @@ internal class ClientChargeViewModel(
                 accountType = accountType,
             ).collect { dataState ->
                 if (dataState is DataState.Success) {
-                    val pocketAccountIds = pocketRepository.getPocketAccounts()
-                        .let { result ->
-                            if (result is DataState.Success) {
-                                val expectedType = when (accountType) {
-                                    Constants.SAVINGS_ACCOUNTS -> AccountType.SAVINGS
-                                    Constants.LOAN_ACCOUNTS -> AccountType.LOAN
-                                    Constants.SHARE_ACCOUNTS -> AccountType.SHARE
-                                    else -> null
-                                }
-                                result.data.filter { it.accountType == expectedType }.map { it.accountId }.toSet()
-                            } else {
-                                emptySet()
-                            }
+                    val pocketResult = pocketRepository.getPocketAccounts()
+                    if (pocketResult is DataState.Error) {
+                        updateState {
+                            it.copy(uiState = ScreenUiState.Error(Res.string.feature_generic_error_server))
                         }
+                        return@collect
+                    }
+                    val expectedType = when (accountType) {
+                        Constants.SAVINGS_ACCOUNTS -> AccountType.SAVINGS
+                        Constants.LOAN_ACCOUNTS -> AccountType.LOAN
+                        Constants.SHARE_ACCOUNTS -> AccountType.SHARE
+                        else -> null
+                    }
+                    val pocketAccountIds = (pocketResult as DataState.Success)
+                        .data.filter { it.accountType == expectedType }.map { it.accountId }.toSet()
                     val accounts = when (accountType) {
                         Constants.SAVINGS_ACCOUNTS -> dataState.data.savingsAccounts.orEmpty()
                             .filter { it.status?.active == true }

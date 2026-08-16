@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.repositories
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -19,6 +20,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -53,10 +55,13 @@ class SavingsAccountRepositoryImpTest {
     private val mockAssociationType = Constants.TRANSACTIONS
     private val mockClientId = 1L
 
-    private suspend fun getFakeHttpResponse(content: String = "Success"): HttpResponse {
+    private suspend fun getFakeHttpResponse(
+        content: String = "Success",
+        status: HttpStatusCode = HttpStatusCode.OK,
+    ): HttpResponse {
         val client = HttpClient(
             MockEngine {
-                respond(content, HttpStatusCode.OK)
+                respond(content, status)
             },
         )
         return client.get("/")
@@ -103,7 +108,7 @@ class SavingsAccountRepositoryImpTest {
                         accountId: Long,
                         associationType: String?,
                     ): Flow<SavingsWithAssociationsResponseDto> {
-                        throw Exception(errorMessage)
+                        return flow { throw Exception(errorMessage) }
                     }
                 }
             }
@@ -151,7 +156,7 @@ class SavingsAccountRepositoryImpTest {
                     override fun getSavingsAccountApplicationTemplate(
                         clientId: Long?,
                     ): Flow<SavingsAccountTemplateResponseDto> {
-                        throw Exception(errorMessage)
+                        return flow { throw Exception(errorMessage) }
                     }
                 }
             }
@@ -207,7 +212,10 @@ class SavingsAccountRepositoryImpTest {
                     override suspend fun submitSavingAccountApplication(
                         payload: SavingsAccountApplicationPayloadDto?,
                     ): HttpResponse {
-                        throw Exception(errorMessage)
+                        throw ClientRequestException(
+                            getFakeHttpResponse(errorMessage, HttpStatusCode.BadRequest),
+                            errorMessage,
+                        )
                     }
                 }
             }
@@ -256,7 +264,10 @@ class SavingsAccountRepositoryImpTest {
                     accountsId: Long,
                     payload: SavingsAccountUpdatePayloadDto?,
                 ): HttpResponse {
-                    throw Exception(errorMessage)
+                    throw ClientRequestException(
+                        getFakeHttpResponse(errorMessage, HttpStatusCode.BadRequest),
+                        errorMessage,
+                    )
                 }
             }
         }
@@ -307,7 +318,10 @@ class SavingsAccountRepositoryImpTest {
                     savingsId: Long,
                     payload: SavingsAccountWithdrawPayloadDto?,
                 ): HttpResponse {
-                    throw Exception(errorMessage)
+                    throw ClientRequestException(
+                        getFakeHttpResponse(errorMessage, HttpStatusCode.BadRequest),
+                        errorMessage,
+                    )
                 }
             }
         }
@@ -353,7 +367,7 @@ class SavingsAccountRepositoryImpTest {
                     accountId: Long?,
                     accountType: Long?,
                 ): Flow<AccountOptionsTemplateResponseDto> {
-                    throw Exception(errorMessage)
+                    return flow { throw Exception(errorMessage) }
                 }
             }
         }

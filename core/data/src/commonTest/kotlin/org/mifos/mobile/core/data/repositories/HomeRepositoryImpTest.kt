@@ -122,7 +122,7 @@ class HomeRepositoryImpTest {
     @Test
     fun testUnreadNotificationsCount_Successful() = runTest(testDispatcher) {
         val flow = homeRepositoryImp.unreadNotificationsCount()
-        val item = flow.drop(1).first()
+        val item = flow.first()
         val data = assertIs<DataState.Success<Int>>(item)
         assertEquals(5, data.data)
     }
@@ -158,7 +158,7 @@ class HomeRepositoryImpTest {
     fun testUnreadNotificationsCount_Error() = runTest(testDispatcher) {
         isError = true
         val flow = homeRepositoryImp.unreadNotificationsCount()
-        val item = flow.drop(1).first()
+        val item = flow.first()
         val error = assertIs<DataState.Error<Int>>(item)
         assertEquals("Failed to fetch unread notifications count", error.exception.message)
     }

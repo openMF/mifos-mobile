@@ -10,7 +10,6 @@
 package org.mifos.mobile.core.data.repositories
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -39,7 +38,7 @@ class NotificationRepositoryImpTest {
     @Test
     fun testLoadNotifications_SuccessResponseReceivedFromDataManager_ReturnsSuccess() = runTest(testDispatcher) {
         val notifications = notificationRepositoryImp.loadNotifications()
-        val item = notifications.drop(1).first()
+        val item = notifications.first()
         val data = assertIs<DataState.Success<List<MifosNotification>>>(item)
         assertEquals(emptyList(), data.data)
     }
@@ -47,7 +46,7 @@ class NotificationRepositoryImpTest {
     @Test
     fun testUnreadNotificationsCount_Successful() = runTest(testDispatcher) {
         val flow = notificationRepositoryImp.getUnReadNotificationCount()
-        val item = flow.drop(1).first()
+        val item = flow.first()
         val data = assertIs<DataState.Success<Int>>(item)
         assertEquals(0, data.data)
     }

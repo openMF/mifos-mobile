@@ -12,7 +12,9 @@ package org.mifos.mobile.core.data.repositories
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
@@ -62,7 +64,7 @@ class LoanRepositoryImpTest {
             "associationType",
             1,
         )
-        val item = result.drop(1).first()
+        val item = result.first()
         assertIs<DataState.Success<LoanWithAssociations?>>(item)
     }
 
@@ -82,7 +84,7 @@ class LoanRepositoryImpTest {
             "associationType",
             1,
         )
-        val item = result.drop(1).first()
+        val item = result.first()
         val error = assertIs<DataState.Error<LoanWithAssociations?>>(item)
         assertEquals("Error occurred", error.exception.message)
     }
@@ -119,13 +121,19 @@ class LoanRepositoryImpTest {
     @Test
     fun testWithdrawLoanAccount_Unsuccessful() = runTest(testDispatcher) {
         val loanWithdraw = LoanWithdraw()
+        val client = HttpClient(MockEngine) {
+            engine {
+                addHandler { respond("Error occurred", HttpStatusCode.BadRequest) }
+            }
+        }
+        val errorResponse = client.get("")
 
         dataManager = object : DataManager() {
             override val loanAccountsListApi = object : BaseFakeLoanAccountsListService() {
                 override suspend fun withdrawLoanAccount(
                     loanId: Long,
                     loanWithdraw: LoanWithdrawPayloadDto?,
-                ) = throw Exception("Error occurred")
+                ) = throw ClientRequestException(errorResponse, "Error occurred")
             }
         }
         loanRepositoryImp = LoanRepositoryImp(dataManager, testDispatcher)

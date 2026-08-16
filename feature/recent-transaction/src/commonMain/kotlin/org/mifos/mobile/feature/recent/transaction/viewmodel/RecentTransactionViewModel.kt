@@ -226,19 +226,21 @@ internal class RecentTransactionViewModel(
             ).collect { dataState ->
                 when (dataState) {
                     is DataState.Success -> {
-                        val pocketAccountIds = pocketRepository.getPocketAccounts()
-                            .let { result ->
-                                if (result is DataState.Success) {
-                                    result.data
-                                        .filter {
-                                            it.accountType == AccountType.SAVINGS
-                                        }
-                                        .map { it.accountId }
-                                        .toSet()
-                                } else {
-                                    emptySet()
-                                }
+                        val pocketResult = pocketRepository.getPocketAccounts()
+                        if (pocketResult is DataState.Error) {
+                            updateState {
+                                it.copy(
+                                    viewState = ScreenUiState.ErrorString(
+                                        pocketResult.exception.message ?: "Something went wrong",
+                                    ),
+                                )
                             }
+                            return@collect
+                        }
+                        val pocketAccountIds = (pocketResult as DataState.Success).data
+                            .filter { it.accountType == AccountType.SAVINGS }
+                            .map { it.accountId }
+                            .toSet()
                         val savingsAccounts =
                             dataState.data.savingsAccounts.orEmpty().filter {
                                 it.status?.active == true

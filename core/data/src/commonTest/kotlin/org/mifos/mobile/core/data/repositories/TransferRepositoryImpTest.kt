@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.repositories
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -152,7 +153,10 @@ class TransferRepositoryImpTest {
         dataManager = object : DataManager() {
             override val thirdPartyTransferApi = object : BaseFakeThirdPartyTransferService() {
                 override suspend fun makeTransfer(transferPayload: TransferPayloadDto?): HttpResponse {
-                    throw Exception("Error occurred")
+                    throw ClientRequestException(
+                        createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                        "Error occurred",
+                    )
                 }
             }
         }
@@ -188,7 +192,10 @@ class TransferRepositoryImpTest {
         dataManager = object : DataManager() {
             override val savingAccountsListApi = object : BaseFakeSavingAccountsListService() {
                 override suspend fun makeTransfer(transferPayload: TransferPayloadDto?): HttpResponse {
-                    throw Exception("Error occurred")
+                    throw ClientRequestException(
+                        createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                        "Error occurred",
+                    )
                 }
             }
         }

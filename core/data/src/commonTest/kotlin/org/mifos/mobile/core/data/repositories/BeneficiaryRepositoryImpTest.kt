@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.repositories
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -42,10 +43,13 @@ class BeneficiaryRepositoryImpTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
-    private suspend fun fakeHttpResponse(content: String = "Success"): HttpResponse {
+    private suspend fun fakeHttpResponse(
+        content: String = "Success",
+        status: HttpStatusCode = HttpStatusCode.OK,
+    ): HttpResponse {
         val client = HttpClient(MockEngine) {
             engine {
-                addHandler { respond(content, HttpStatusCode.OK) }
+                addHandler { respond(content, status) }
             }
         }
         return client.get("")
@@ -108,7 +112,7 @@ class BeneficiaryRepositoryImpTest {
         val beneficiaryPayload = BeneficiaryPayload()
         val fakeService = object : BaseFakeBeneficiaryService() {
             override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryCreatePayloadDto?): HttpResponse {
-                throw Exception(errorMsg)
+                throw ClientRequestException(fakeHttpResponse(errorMsg, HttpStatusCode.BadRequest), errorMsg)
             }
         }
         val repository = createRepository(fakeService)
@@ -145,7 +149,7 @@ class BeneficiaryRepositoryImpTest {
                 beneficiaryId: Long,
                 payload: BeneficiaryUpdatePayloadDto?,
             ): HttpResponse {
-                throw Exception(errorMsg)
+                throw ClientRequestException(fakeHttpResponse(errorMsg, HttpStatusCode.BadRequest), errorMsg)
             }
         }
         val repository = createRepository(fakeService)
@@ -174,7 +178,7 @@ class BeneficiaryRepositoryImpTest {
         val errorMsg = "Error occurred"
         val fakeService = object : BaseFakeBeneficiaryService() {
             override suspend fun deleteBeneficiary(beneficiaryId: Long): HttpResponse {
-                throw Exception(errorMsg)
+                throw ClientRequestException(fakeHttpResponse(errorMsg, HttpStatusCode.BadRequest), errorMsg)
             }
         }
         val repository = createRepository(fakeService)

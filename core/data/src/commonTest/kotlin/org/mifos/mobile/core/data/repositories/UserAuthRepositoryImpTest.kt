@@ -12,6 +12,7 @@ package org.mifos.mobile.core.data.repositories
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -42,11 +43,14 @@ class UserAuthRepositoryImpTest {
     private lateinit var userAuthRepositoryImp: UserAuthRepository
     private lateinit var mockUser: User
 
-    private suspend fun createMockHttpResponse(content: String): HttpResponse {
+    private suspend fun createMockHttpResponse(
+        content: String,
+        status: HttpStatusCode = HttpStatusCode.OK,
+    ): HttpResponse {
         val client = HttpClient(MockEngine) {
             engine {
                 addHandler { request ->
-                    respond(content, HttpStatusCode.OK, headersOf("Content-Type", "application/json"))
+                    respond(content, status, headersOf("Content-Type", "application/json"))
                 }
             }
         }
@@ -97,7 +101,10 @@ class UserAuthRepositoryImpTest {
             dataManager = object : DataManager() {
                 override val registrationApi = object : BaseFakeRegistrationService() {
                     override suspend fun registerUser(registerPayload: RegisterPayloadDto?): HttpResponse {
-                        throw Exception("Error occurred")
+                        throw ClientRequestException(
+                            createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                            "Error occurred",
+                        )
                     }
                 }
             }
@@ -150,7 +157,10 @@ class UserAuthRepositoryImpTest {
         dataManager = object : DataManager() {
             override val authenticationApi = object : BaseFakeAuthenticationService() {
                 override suspend fun authenticate(loginPayload: LoginPayloadDto): UserDto {
-                    throw Exception("Error occurred")
+                    throw ClientRequestException(
+                        createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                        "Error occurred",
+                    )
                 }
             }
         }
@@ -189,7 +199,10 @@ class UserAuthRepositoryImpTest {
             dataManager = object : DataManager() {
                 override val registrationApi = object : BaseFakeRegistrationService() {
                     override suspend fun verifyUser(userVerify: UserVerifyPayloadDto?): HttpResponse {
-                        throw Exception("Error occurred")
+                        throw ClientRequestException(
+                            createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                            "Error occurred",
+                        )
                     }
                 }
             }

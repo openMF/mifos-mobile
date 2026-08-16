@@ -584,14 +584,20 @@ internal class TptViewModel(
 
                 val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
                 val pocketResult = pocketRepository.getPocketAccounts()
-                val pocketAccountIds = if (pocketResult is DataState.Success) {
-                    pocketResult.data
-                        .filter { it.accountType == AccountType.SAVINGS }
-                        .map { it.accountId }
-                        .toSet()
-                } else {
-                    emptySet()
+                if (pocketResult is DataState.Error) {
+                    updateState {
+                        it.copy(
+                            uiState = ScreenUiState.Error(
+                                Res.string.feature_tpt_error_server,
+                            ),
+                        )
+                    }
+                    return
                 }
+                val pocketAccountIds = (pocketResult as DataState.Success).data
+                    .filter { it.accountType == AccountType.SAVINGS }
+                    .map { it.accountId }
+                    .toSet()
                 val sortedSavingsFromAccounts = savingsFromAccounts.sortedByDescending {
                     it.accountId?.toLong() in pocketAccountIds
                 }
