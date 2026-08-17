@@ -333,6 +333,7 @@ internal class TptViewModel(
         val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
             .filterSavingsAccounts()
             .filter { it.accountNo != toAccount }
+            .sortedByDescending { it.accountId?.toLong() in state.pocketAccountIds }
 
         updateState {
             it.copy(

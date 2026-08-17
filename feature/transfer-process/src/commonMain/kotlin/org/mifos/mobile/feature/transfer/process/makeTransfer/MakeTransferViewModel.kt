@@ -188,6 +188,7 @@ internal class MakeTransferViewModel(
                 it.accountType?.value == AccountType.SAVINGS.value &&
                     it.accountNo != toAccountNo
             }
+            .sortedByDescending { it.accountId?.toLong() in state.pocketAccountIds }
 
         updateState {
             it.copy(

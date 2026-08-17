@@ -102,7 +102,10 @@ class UserAuthRepositoryImpTest {
                 override val registrationApi = object : BaseFakeRegistrationService() {
                     override suspend fun registerUser(registerPayload: RegisterPayloadDto?): HttpResponse {
                         throw ClientRequestException(
-                            createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                            createMockHttpResponse(
+                                "{\"defaultUserMessage\":\"Error occurred\"}",
+                                HttpStatusCode.BadRequest,
+                            ),
                             "Error occurred",
                         )
                     }
@@ -158,7 +161,10 @@ class UserAuthRepositoryImpTest {
             override val authenticationApi = object : BaseFakeAuthenticationService() {
                 override suspend fun authenticate(loginPayload: LoginPayloadDto): UserDto {
                     throw ClientRequestException(
-                        createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                        createMockHttpResponse(
+                            "{\"defaultUserMessage\":\"Error occurred\"}",
+                            HttpStatusCode.BadRequest,
+                        ),
                         "Error occurred",
                     )
                 }
@@ -200,7 +206,10 @@ class UserAuthRepositoryImpTest {
                 override val registrationApi = object : BaseFakeRegistrationService() {
                     override suspend fun verifyUser(userVerify: UserVerifyPayloadDto?): HttpResponse {
                         throw ClientRequestException(
-                            createMockHttpResponse("Error occurred", HttpStatusCode.BadRequest),
+                            createMockHttpResponse(
+                                "{\"defaultUserMessage\":\"Error occurred\"}",
+                                HttpStatusCode.BadRequest,
+                            ),
                             "Error occurred",
                         )
                     }
