@@ -17,6 +17,7 @@ import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
+import org.mifos.mobile.core.model.enums.AccountType
 
 class PocketRepositoryImp : PocketRepository {
     override suspend fun getPocketAccounts(): DataState<List<PocketAccount>> {
@@ -37,6 +38,12 @@ class PocketRepositoryImp : PocketRepository {
     ): DataState<Unit> {
         return DataState.Success(Unit)
     }
+
+    override suspend fun linkAccount(
+        accountId: Long,
+        accountType: AccountType,
+        accountNumber: String,
+    ): DataState<Unit> = DataState.Success(Unit)
 
     override suspend fun delinkAccounts(
         pocketAccountMappingIds: List<Long>,

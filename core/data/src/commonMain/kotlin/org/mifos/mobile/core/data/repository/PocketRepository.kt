@@ -15,6 +15,7 @@ import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
 import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
 import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
+import org.mifos.mobile.core.model.enums.AccountType
 
 interface PocketRepository {
 
@@ -33,6 +34,12 @@ interface PocketRepository {
         payload: PocketLinkPayload,
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
+    ): DataState<Unit>
+
+    suspend fun linkAccount(
+        accountId: Long,
+        accountType: AccountType,
+        accountNumber: String,
     ): DataState<Unit>
 
     suspend fun delinkAccounts(

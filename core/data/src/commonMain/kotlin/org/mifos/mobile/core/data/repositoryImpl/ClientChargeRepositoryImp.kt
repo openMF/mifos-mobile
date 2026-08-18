@@ -36,24 +36,26 @@ class ClientChargeRepositoryImp(
     override fun getCharges(clientId: Long): Flow<DataState<Page<Charge>>> {
         return dataManager.clientChargeApi.getClientChargeList(clientId)
             .map { response ->
-                DataState.Success(
+                val state: DataState<Page<Charge>> = DataState.Success(
                     response.toPageModel { dto ->
                         dto.toModel()
                     },
                 )
+                state
             }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+            .catch { exception -> emit(DataState.Error<Page<Charge>>(exception)) }
             .flowOn(ioDispatcher)
     }
 
     override fun getLoanOrSavingsCharges(chargeType: ChargeType, chargeTypeId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.clientChargeApi.getChargeList(chargeType.type, chargeTypeId)
             .map { response ->
-                DataState.Success(
+                val state: DataState<List<Charge>> = DataState.Success(
                     response.map { it.toModel() },
                 )
+                state
             }
-            .catch { exception -> DataState.Error(exception, exception.message) }
+            .catch { exception -> emit(DataState.Error<List<Charge>>(exception)) }
             .flowOn(ioDispatcher)
     }
 
@@ -80,12 +82,13 @@ class ClientChargeRepositoryImp(
     override fun getShareAccountCharges(shareAccountId: Long): Flow<DataState<List<Charge>>> {
         return dataManager.shareAccountApi.getShareAccountDetails(shareAccountId)
             .map { response ->
-                DataState.Success(
+                val state: DataState<List<Charge>> = DataState.Success(
                     response.charges.map { it.toShareChargeModel() },
                 )
+                state
             }
             .catch { exception ->
-                DataState.Error(exception, exception.message)
+                emit(DataState.Error<List<Charge>>(exception))
             }
             .flowOn(ioDispatcher)
     }

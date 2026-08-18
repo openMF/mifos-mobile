@@ -26,6 +26,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -56,6 +57,7 @@ internal class MakeTransferViewModel(
     private val networkMonitor: NetworkMonitor,
     private val accountsRepositoryImpl: AccountsRepository,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    private val pocketRepository: PocketRepository,
 ) : BaseViewModel<MakeTransferState, MakeTransferEvent, MakeTransferAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<MakeTransferRoute>()
@@ -105,10 +107,12 @@ internal class MakeTransferViewModel(
                 it.copy(dialogState = null)
             }
 
+            is MakeTransferAction.ConfirmAddToPocket -> confirmAddToPocket(action.add)
+
             is MakeTransferAction.Internal.PerformTransfer -> performTransfer()
 
             is MakeTransferAction.Internal.ReceiveAccountOptionsTemplateResult -> {
-                handleTransferResult(action.dataState)
+                viewModelScope.launch { handleTransferResult(action.dataState) }
             }
 
             MakeTransferAction.NavigateBack -> {
@@ -184,6 +188,7 @@ internal class MakeTransferViewModel(
                 it.accountType?.value == AccountType.SAVINGS.value &&
                     it.accountNo != toAccountNo
             }
+            .sortedByDescending { it.accountId?.toLong() in state.pocketAccountIds }
 
         updateState {
             it.copy(
@@ -215,7 +220,43 @@ internal class MakeTransferViewModel(
             it.copy(
                 fromAccount = fromAccountSelected,
                 toAccountOptions = toAccounts,
+                dialogState = if (
+                    fromAccountSelected != null &&
+                    !state.pocketAccountIds.contains(fromAccountSelected.accountId?.toLong())
+                ) {
+                    MakeTransferState.DialogState.AddToPocketConfirmation
+                } else {
+                    null
+                },
             )
+        }
+    }
+
+    private fun confirmAddToPocket(add: Boolean) {
+        if (!add) {
+            updateState { it.copy(dialogState = null) }
+            return
+        }
+
+        val account = state.fromAccount
+        val accountId = account?.accountId?.toLong()
+        val accountNumber = account?.accountNo
+        if (accountId == null || accountNumber.isNullOrBlank()) {
+            updateState { it.copy(dialogState = null) }
+            return
+        }
+
+        updateState { it.copy(dialogState = MakeTransferState.DialogState.Loading) }
+        viewModelScope.launch {
+            when (pocketRepository.linkAccount(accountId, AccountType.SAVINGS, accountNumber)) {
+                is DataState.Success -> updateState {
+                    it.copy(dialogState = null, pocketAccountIds = it.pocketAccountIds + accountId)
+                }
+                is DataState.Error -> updateState {
+                    it.copy(dialogState = MakeTransferState.DialogState.Error("Unable to add account to Pocket"))
+                }
+                DataState.Loading -> Unit
+            }
         }
     }
 
@@ -386,7 +427,7 @@ internal class MakeTransferViewModel(
      *
      * @param dataState The [DataState] of the [AccountOptionsTemplate] fetch operation.
      */
-    private fun handleTransferResult(dataState: DataState<AccountOptionsTemplate>) {
+    private suspend fun handleTransferResult(dataState: DataState<AccountOptionsTemplate>) {
         when (dataState) {
             is DataState.Error -> {
                 updateState {
@@ -407,17 +448,34 @@ internal class MakeTransferViewModel(
             }
 
             is DataState.Success -> {
+                val template = dataState.data
+                val savingsFromAccounts = template.fromAccountOptions.filter {
+                    it.accountType?.value == AccountType.SAVINGS.value
+                }
+                val pocketResult = pocketRepository.getPocketAccounts()
+                if (pocketResult is DataState.Error) {
+                    updateState {
+                        it.copy(
+                            uiState = MakeTransferState.MakeTransferScreenState.Error(
+                                Res.string.feature_make_transfer_error_server,
+                            ),
+                        )
+                    }
+                    return
+                }
+                val pocketAccountIds = (pocketResult as DataState.Success).data
+                    .filter { it.accountType == AccountType.SAVINGS }
+                    .map { it.accountId }.toSet()
+                val sortedSavingsFromAccounts = savingsFromAccounts.sortedByDescending {
+                    it.accountId?.toLong() in pocketAccountIds
+                }
+
                 updateState { current ->
-                    val template = dataState.data
 
                     when (current.transferSuccessDestination) {
                         StatusNavigationDestination.SAVINGS_ACCOUNT.name,
                         StatusNavigationDestination.LOAN_ACCOUNT.name,
                         -> {
-                            val savingsFromAccounts = template.fromAccountOptions.filter {
-                                it.accountType?.value == AccountType.SAVINGS.value
-                            }
-
                             val prepopulatedFromAccount =
                                 when (current.transferSuccessDestination) {
                                     StatusNavigationDestination.SAVINGS_ACCOUNT.name,
@@ -426,7 +484,7 @@ internal class MakeTransferViewModel(
                                         savingsFromAccounts.firstOrNull { it.accountId?.toLong() == current.accountId }
                                     }
 
-                                    else -> current.fromAccount
+                                    else -> current.fromAccount ?: sortedSavingsFromAccounts.firstOrNull()
                                 }
 
                             val prepopulatedToAccount = when (current.transferSuccessDestination) {
@@ -441,7 +499,7 @@ internal class MakeTransferViewModel(
 
                             val amount = current.outstandingBalance?.toString() ?: current.amount
 
-                            val filteredFromAccounts = savingsFromAccounts.filter {
+                            val filteredFromAccounts = sortedSavingsFromAccounts.filter {
                                 it.accountNo != prepopulatedToAccount?.accountNo
                             }
                             val filteredToAccounts = template.toAccountOptions.filter {
@@ -455,6 +513,7 @@ internal class MakeTransferViewModel(
                                 fromAccount = prepopulatedFromAccount,
                                 toAccount = prepopulatedToAccount,
                                 amount = amount,
+                                pocketAccountIds = pocketAccountIds,
                                 uiState = MakeTransferState.MakeTransferScreenState.Success,
                             )
                         }
@@ -462,8 +521,9 @@ internal class MakeTransferViewModel(
                         else -> {
                             current.copy(
                                 accountOptionsTemplate = template,
-                                fromAccountOptions = template.fromAccountOptions,
+                                fromAccountOptions = sortedSavingsFromAccounts,
                                 toAccountOptions = template.toAccountOptions,
+                                pocketAccountIds = pocketAccountIds,
                                 uiState = MakeTransferState.MakeTransferScreenState.Success,
                             )
                         }
@@ -615,6 +675,7 @@ internal data class MakeTransferState(
     var toAccountOptions: List<AccountOption> = emptyList(),
     val fromAccount: AccountOption? = null,
     val toAccount: AccountOption? = null,
+    val pocketAccountIds: Set<Long> = emptySet(),
     val dialogState: DialogState? = null,
     val networkStatus: Boolean = false,
     val uiState: MakeTransferScreenState? = null,
@@ -623,6 +684,9 @@ internal data class MakeTransferState(
      * Represents the possible states of a dialog shown on the Make Transfer screen.
      */
     sealed interface DialogState {
+        data object Loading : DialogState
+        data object AddToPocketConfirmation : DialogState
+
         /**
          * Represents an error state, containing an error message.
          * @property message The error message to display.
@@ -685,6 +749,8 @@ internal sealed interface MakeTransferAction {
 
     /** Action triggered to dismiss any currently shown dialog. */
     data object DismissDialog : MakeTransferAction
+
+    data class ConfirmAddToPocket(val add: Boolean) : MakeTransferAction
 
     /** Action triggered to navigate back from the current screen. */
     data object NavigateBack : MakeTransferAction

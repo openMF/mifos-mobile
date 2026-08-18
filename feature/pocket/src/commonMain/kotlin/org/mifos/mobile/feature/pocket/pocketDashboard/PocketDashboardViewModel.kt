@@ -17,9 +17,9 @@ import mifos_mobile.feature.pocket.generated.resources.Res
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_error_load_accounts
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_unknown_account
 import mifos_mobile.feature.pocket.generated.resources.feature_pocket_unknown_status
-import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.CurrencyFormatter
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.StringProvider
 import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.util.NetworkUnavailableException
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -32,6 +32,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 internal class PocketDashboardViewModel(
     private val pocketRepository: PocketRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val stringProvider: StringProvider,
 ) : BaseViewModel<PocketDashboardState, PocketDashboardEvent, PocketDashboardAction>(
     initialState = PocketDashboardState(
         clientId = requireNotNull(userPreferencesRepository.clientId.value),
@@ -54,17 +55,29 @@ internal class PocketDashboardViewModel(
         loadJob?.cancel()
 
         loadJob = viewModelScope.launch {
+            val unknownStatus = stringProvider.get(Res.string.feature_pocket_unknown_status)
+            val unknownAccount = stringProvider.get(Res.string.feature_pocket_unknown_account)
             val clientId = state.clientId
             pocketRepository.getDetailedPocketAccounts(clientId, forceRefresh)
                 .collect { dataState ->
-                    trySendAction(PocketDashboardAction.Internal.ReceiveAccounts(dataState))
+                    trySendAction(
+                        PocketDashboardAction.Internal.ReceiveAccounts(
+                            dataState = dataState,
+                            unknownStatus = unknownStatus,
+                            unknownAccount = unknownAccount,
+                        ),
+                    )
                 }
         }
     }
 
     override fun handleAction(action: PocketDashboardAction) {
         when (action) {
-            is PocketDashboardAction.Internal.ReceiveAccounts -> handleReceivedAccounts(action.dataState)
+            is PocketDashboardAction.Internal.ReceiveAccounts -> handleReceivedAccounts(
+                dataState = action.dataState,
+                unknownStatus = action.unknownStatus,
+                unknownAccount = action.unknownAccount,
+            )
             PocketDashboardAction.NavigateBack -> sendEvent(PocketDashboardEvent.NavigateBack)
             PocketDashboardAction.ManagePocket -> sendEvent(PocketDashboardEvent.ManagePocket)
             PocketDashboardAction.LinkFirstAccount -> sendEvent(PocketDashboardEvent.ManagePocket)
@@ -92,7 +105,11 @@ internal class PocketDashboardViewModel(
         loadPocketData(forceRefresh = true)
     }
 
-    private fun handleReceivedAccounts(dataState: DataState<List<DetailedPocketAccount>>) {
+    private fun handleReceivedAccounts(
+        dataState: DataState<List<DetailedPocketAccount>>,
+        unknownStatus: String,
+        unknownAccount: String,
+    ) {
         viewModelScope.launch {
             when (dataState) {
                 is DataState.Loading -> {
@@ -137,12 +154,12 @@ internal class PocketDashboardViewModel(
                                 ""
                             }
                         } else {
-                            detailed.status?.name ?: getString(Res.string.feature_pocket_unknown_status)
+                            detailed.status?.name ?: unknownStatus
                         }
 
                         return DetailedPocket(
                             accountId = detailed.pocket.accountId,
-                            name = detailed.productName ?: getString(Res.string.feature_pocket_unknown_account),
+                            name = detailed.productName ?: unknownAccount,
                             accountNumber = detailed.pocket.accountNumber,
                             balanceOrStatus = balanceStr,
                             status = detailed.status ?: AccountStatus.UNKNOWN,
@@ -246,6 +263,8 @@ internal sealed interface PocketDashboardAction {
     sealed interface Internal : PocketDashboardAction {
         data class ReceiveAccounts(
             val dataState: DataState<List<DetailedPocketAccount>>,
+            val unknownStatus: String,
+            val unknownAccount: String,
         ) : Internal
     }
 }

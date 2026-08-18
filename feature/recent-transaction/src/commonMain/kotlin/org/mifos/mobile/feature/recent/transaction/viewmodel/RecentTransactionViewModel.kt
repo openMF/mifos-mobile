@@ -18,6 +18,7 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.data.repository.AccountsRepository
+import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
@@ -25,6 +26,7 @@ import org.mifos.mobile.core.model.entity.accounts.savings.SavingAccount
 import org.mifos.mobile.core.model.entity.accounts.savings.SavingsWithAssociations
 import org.mifos.mobile.core.model.entity.accounts.savings.TransactionType
 import org.mifos.mobile.core.model.entity.accounts.savings.Transactions
+import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
@@ -44,6 +46,7 @@ internal class RecentTransactionViewModel(
     private val savingsAccountRepositoryImpl: SavingsAccountRepository,
     private val networkMonitor: NetworkMonitor,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val pocketRepository: PocketRepository,
 ) : BaseViewModel<RecentTransactionUiState, RecentTransactionEvent, RecentTransactionAction>(
     initialState = run {
         val clientId = userPreferencesRepository.clientId.value
@@ -223,10 +226,25 @@ internal class RecentTransactionViewModel(
             ).collect { dataState ->
                 when (dataState) {
                     is DataState.Success -> {
+                        val pocketResult = pocketRepository.getPocketAccounts()
+                        if (pocketResult is DataState.Error) {
+                            updateState {
+                                it.copy(
+                                    viewState = ScreenUiState.ErrorString(
+                                        pocketResult.exception.message ?: "Something went wrong",
+                                    ),
+                                )
+                            }
+                            return@collect
+                        }
+                        val pocketAccountIds = (pocketResult as DataState.Success).data
+                            .filter { it.accountType == AccountType.SAVINGS }
+                            .map { it.accountId }
+                            .toSet()
                         val savingsAccounts =
                             dataState.data.savingsAccounts.orEmpty().filter {
                                 it.status?.active == true
-                            }
+                            }.sortedByDescending { it.id in pocketAccountIds }
                         handleAction(RecentTransactionAction.Internal.AccountsLoaded(savingsAccounts))
                     }
                     is DataState.Loading -> {

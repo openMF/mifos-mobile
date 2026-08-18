@@ -41,6 +41,7 @@ kotlin {
             api(libs.squareup.okio)
             api(libs.jb.kotlin.stdlib)
             api(libs.kotlinx.datetime)
+            implementation(compose.components.resources)
             implementation(libs.jb.composeRuntime)
         }
 

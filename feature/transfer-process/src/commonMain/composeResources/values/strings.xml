@@ -39,4 +39,9 @@
     <string name="feature_make_transfer_beneficiary_name">Beneficiary Name</string>
     <string name="feature_make_transfer_details">Transfer Details</string>
 
+
+    <string name="add_to_pocket_title">Add to Pocket</string>
+    <string name="add_to_pocket_message">Would you like to add this account to Pocket?</string>
+    <string name="add_to_pocket_confirm">Add</string>
+    <string name="add_to_pocket_cancel">No</string>
 </resources>
