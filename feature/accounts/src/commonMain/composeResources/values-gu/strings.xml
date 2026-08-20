@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">ખાતાઓ</string>
     <string name="feature_loan_account_title">લોન ખાતાઓ</string>
     <string name="feature_saving_account_title">બચત ખાતાઓ</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">સ્થિતિ</string>
     <string name="feature_accounts_filter_type">પ્રકાર</string>
 
+    <!-- Loan account filters -->
     <string name="feature_loan_account_filter_active">સક્રિય</string>
     <string name="feature_loan_account_filter_approval_pending">મંજૂરી બાકી</string>
     <string name="feature_loan_account_filter_closed">બંધ</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">વ્યક્તિગત</string>
     <string name="feature_loan_account_filter_bronze">બ્રોન્ઝ</string>
 
+    <!-- Savings Account filters -->
     <string name="feature_savings_filter_wallet_account">વોલેટ એકાઉન્ટ</string>
     <string name="feature_savings_filter_bank_account">બેંક એકાઉન્ટ</string>
     <string name="feature_savings_filter_group_account">જૂથ એકાઉન્ટ</string>
@@ -49,10 +50,10 @@
 
     <string name="feature_transaction_transaction_history">વ્યવહાર ઇતિહાસ</string>
     <string name="feature_transaction_statement">સ્ટેટમેન્ટ</string>
-    <string name="feature_transaction_download_icon_description">ડાઉનલોડ આયકન</string>
-    <string name="feature_transaction_filter">ફિલ્ટર</string>
     <string name="feature_transaction_filter_icon_description">ફિલ્ટર આયકન</string>
+    <string name="feature_transaction_filter">ફિલ્ટર</string>
 
+    <!-- Transaction Filters -->
     <string name="feature_transaction_filter_credit">જમા</string>
     <string name="feature_transaction_filter_debit">ઉધાર</string>
 
@@ -69,6 +70,7 @@
 
     <string name="feature_generic_error_server">અમારી બાજુથી સર્વર સમસ્યા હોવાથી આગળ વધી શકાતું નથી, થોડીવાર પછી ફરી પ્રયાસ કરો</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">વ્યવહાર વિગતો</string>
     <string name="feature_transaction_detail_id">ટ્રાન્ઝેક્શન આઈડી</string>
     <string name="feature_transaction_detail_transfer_description">ટ્રાન્સફર વર્ણન</string>
@@ -89,4 +91,18 @@
     <string name="feature_transaction_detail_balance">બાકી સિલક</string>
     <string name="feature_transaction_detail_default_type">વ્યવહાર</string>
 
+    <string name="feature_transaction_history_deposit">જમા</string>
+    <string name="feature_transaction_history_withdrawal">ઉપાડ</string>
+    <string name="feature_transaction_history_interest_posting">વ્યાજ જમા</string>
+    <string name="feature_transaction_history_fee_deduction">ફી કપાત</string>
+    <string name="feature_transaction_history_transfer">ટ્રાન્સફર</string>
+    <string name="feature_transaction_history_transaction">ટ્રાન્ઝેક્શન</string>
+    <string name="feature_transaction_history_disbursement">લોન વિતરણ</string>
+    <string name="feature_transaction_history_repayment">લોન હપ્તો</string>
+    <string name="feature_transaction_history_purchase">ખરીદી</string>
+    <string name="feature_transaction_history_charge_payment">ચાર્જ ચુકવણી</string>
+    <string name="feature_transaction_history_redeem">રીડીમ</string>
+    <string name="feature_transaction_history_recovery_repayment">રિકવરી ચુકવણી</string>
+    <string name="feature_transaction_history_interest_waiver">વ્યાજ માફી</string>
+    <string name="feature_transaction_history_fee_waiver">ફી માફી</string>
 </resources>

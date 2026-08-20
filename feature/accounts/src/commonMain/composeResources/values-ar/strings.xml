@@ -9,15 +9,14 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">الحسابات</string>
     <string name="feature_loan_account_title">حسابات القروض</string>
     <string name="feature_saving_account_title">حسابات التوفير</string>
     <string name="feature_share_account_title">حسابات الأسهم</string>
-
     <string name="feature_accounts_filter_status">الحالة</string>
     <string name="feature_accounts_filter_type">النوع</string>
 
+    <!--    Loan Account Filters -->
     <string name="feature_loan_account_filter_active">نشط</string>
     <string name="feature_loan_account_filter_approval_pending">بانتظار الموافقة</string>
     <string name="feature_loan_account_filter_closed">مغلق</string>
@@ -27,10 +26,10 @@
     <string name="feature_loan_account_filter_withdrawn">مسحوب</string>
     <string name="feature_loan_account_filter_matured">مستحق</string>
     <string name="feature_loan_account_filter_rejected">مرفوض</string>
-
     <string name="feature_loan_account_filter_personal">شخصي</string>
     <string name="feature_loan_account_filter_bronze">برونزي</string>
 
+    <!--     Savings account filters -->
     <string name="feature_savings_filter_wallet_account">حساب المحفظة</string>
     <string name="feature_savings_filter_bank_account">حساب بنكي</string>
     <string name="feature_savings_filter_group_account">حساب مجموعة</string>
@@ -53,22 +52,21 @@
     <string name="feature_transaction_filter">تصفية</string>
     <string name="feature_transaction_filter_icon_description">أيقونة التصفية</string>
 
+    <!-- Transaction  filters -->
     <string name="feature_transaction_filter_credit">إيداع</string>
     <string name="feature_transaction_filter_debit">خصم</string>
-
     <string name="feature_transaction_filter_past_month">الشهر الماضي</string>
     <string name="feature_transaction_filter_past_3_months">آخر 3 أشهر</string>
     <string name="feature_transaction_filter_past_6_months">آخر 6 أشهر</string>
     <string name="feature_transaction_filter_past_1_year">آخر سنة</string>
     <string name="feature_transaction_filter_past_2_years">آخر سنتين</string>
-
     <string name="feature_transaction_type">نوع المعاملة</string>
     <string name="feature_duration">المدة</string>
     <string name="feature_no_transactions_found">لا توجد معاملات</string>
     <string name="feature_no__filtered_transactions_found">لا توجد معاملات للتصفية المحددة</string>
-
     <string name="feature_generic_error_server">مشكلة في الخادم من جانبنا، لا يمكن المتابعة، حاول مرة أخرى بعد قليل</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">تفاصيل المعاملة</string>
     <string name="feature_transaction_detail_id">معرف المعاملة</string>
     <string name="feature_transaction_detail_transfer_description">وصف التحويل</string>
@@ -88,5 +86,20 @@
     <string name="feature_transaction_detail_penalties">العقوبات</string>
     <string name="feature_transaction_detail_balance">الرصيد المتبقي</string>
     <string name="feature_transaction_detail_default_type">معاملة</string>
+
+    <string name="feature_transaction_history_deposit">إيداع</string>
+    <string name="feature_transaction_history_withdrawal">سحب</string>
+    <string name="feature_transaction_history_interest_posting">تقييد الفائدة</string>
+    <string name="feature_transaction_history_fee_deduction">خصم الرسوم</string>
+    <string name="feature_transaction_history_transfer">تحويل</string>
+    <string name="feature_transaction_history_transaction">معاملة</string>
+    <string name="feature_transaction_history_disbursement">صرف</string>
+    <string name="feature_transaction_history_repayment">سداد</string>
+    <string name="feature_transaction_history_purchase">شراء</string>
+    <string name="feature_transaction_history_charge_payment">دفع الرسوم</string>
+    <string name="feature_transaction_history_redeem">استرداد</string>
+    <string name="feature_transaction_history_recovery_repayment">سداد استرداد</string>
+    <string name="feature_transaction_history_interest_waiver">إعفاء من الفائدة</string>
+    <string name="feature_transaction_history_fee_waiver">إعفاء من الرسوم</string>
 
 </resources>

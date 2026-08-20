@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">လတ်တလော ငွေလွှဲမှုများ</string>
+    <string name="no_transaction">ငွေလွှဲမှု မရှိပါ</string>
+    <string name="filter">စစ်ထုတ်ရန်</string>
+    <string name="filter_transactions">ငွေလွှဲမှုများ စစ်ထုတ်ရန်</string>
+    <string name="clear_all">အားလုံးကို ပယ်ဖျက်ရန်</string>
+    <string name="filter_by_account">အကောင့်ဖြင့် စစ်ထုတ်ရန်:</string>
+    <string name="account_number_label">အကောင့်နံပါတ်: %1$s</string>
+    <string name="select_account">အကောင့်ရွေးချယ်ပါ</string>
+    <string name="balance">လက်ကျန်ငွေ: %1$s %2$s</string>
+    <string name="transaction_type">ငွေလွှဲမှု အမျိုးအစား:</string>
+    <string name="all">အားလုံး</string>
+    <string name="debits">ငွေထုတ်ယူမှုများ</string>
+    <string name="credits">ငွေသွင်းမှုများ</string>
+    <string name="apply_filters">စစ်ထုတ်မှုများ အသုံးပြုရန်</string>
+
+    <string name="deposit">ငွေသွင်းခြင်း</string>
+    <string name="withdrawal">ငွေထုတ်ခြင်း</string>
+    <string name="interest_posting">အတိုးထည့်သွင်းခြင်း</string>
+    <string name="fee_deduction">ဝန်ဆောင်ခနှုတ်ယူခြင်း</string>
+    <string name="transfer">ငွေလွှဲပြောင်းခြင်း</string>
+    <string name="transaction">ငွေလွှဲမှု</string>
+</resources>

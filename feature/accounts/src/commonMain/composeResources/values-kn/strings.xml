@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">ಖಾತೆಗಳು</string>
     <string name="feature_loan_account_title">ಸಾಲದ ಖಾತೆಗಳು</string>
     <string name="feature_saving_account_title">ಉಳಿತಾಯ ಖಾತೆಗಳು</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">ಸ್ಥಿತಿ</string>
     <string name="feature_accounts_filter_type">ಪ್ರಕಾರ</string>
 
+    <!-- loan account filters -->
     <string name="feature_loan_account_filter_active">ಸಕ್ರಿಯ</string>
     <string name="feature_loan_account_filter_approval_pending">ಅನುಮೋದನೆ ಬಾಕಿ ಇದೆ</string>
     <string name="feature_loan_account_filter_closed">ಮುಚ್ಚಲಾಗಿದೆ</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">ವೈಯಕ್ತಿಕ</string>
     <string name="feature_loan_account_filter_bronze">ಕಂಚು</string>
 
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">ವ್ಯಾಲೆಟ್ ಖಾತೆ</string>
     <string name="feature_savings_filter_bank_account">ಬ್ಯಾಂಕ್ ಖಾತೆ</string>
     <string name="feature_savings_filter_group_account">ಗುಂಪು ಖಾತೆ</string>
@@ -53,6 +54,7 @@
     <string name="feature_transaction_filter">ಫಿಲ್ಟರ್</string>
     <string name="feature_transaction_filter_icon_description">ಫಿಲ್ಟರ್ ಐಕಾನ್</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">ಕ್ರೆಡಿಟ್</string>
     <string name="feature_transaction_filter_debit">ಡೆಬಿಟ್</string>
 
@@ -69,6 +71,7 @@
 
     <string name="feature_generic_error_server">ನಮ್ಮ ಕಡೆಯಿಂದ ಸರ್ವರ್ ಸಮಸ್ಯೆ ಇದೆ, ಮುಂದುವರಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ, ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">ವಹಿವಾಟಿನ ವಿವರಗಳು</string>
     <string name="feature_transaction_detail_id">ವಹಿವಾಟು ID</string>
     <string name="feature_transaction_detail_transfer_description">ವರ್ಗಾವಣೆ ವಿವರಣೆ</string>
@@ -89,4 +92,18 @@
     <string name="feature_transaction_detail_balance">ಉಳಿದ ಬಾಕಿ</string>
     <string name="feature_transaction_detail_default_type">ವಹಿವಾಟು</string>
 
+    <string name="feature_transaction_history_deposit">ಠೇವಣಿ</string>
+    <string name="feature_transaction_history_withdrawal">ಹಿಂಪಡೆಯುವಿಕೆ</string>
+    <string name="feature_transaction_history_interest_posting">ಬಡ್ಡಿ ನಮೂದು</string>
+    <string name="feature_transaction_history_fee_deduction">ಶುಲ್ಕ ಕಡಿತ</string>
+    <string name="feature_transaction_history_transfer">ವರ್ಗಾವಣೆ</string>
+    <string name="feature_transaction_history_transaction">ವಹಿವಾಟು</string>
+    <string name="feature_transaction_history_disbursement">ಸಾಲ ವಿತರಣೆ</string>
+    <string name="feature_transaction_history_repayment">ಮರುಪಾವತಿ</string>
+    <string name="feature_transaction_history_purchase">ಖರೀದಿ</string>
+    <string name="feature_transaction_history_charge_payment">ಶುಲ್ಕ ಪಾವತಿ</string>
+    <string name="feature_transaction_history_redeem">ರಿಡೀಮ್</string>
+    <string name="feature_transaction_history_recovery_repayment">ವಸೂಲಾತಿ ಮರುಪಾವತಿ</string>
+    <string name="feature_transaction_history_interest_waiver">ಬಡ್ಡಿ ಮನ್ನಾ</string>
+    <string name="feature_transaction_history_fee_waiver">ಶುಲ್ಕ ಮನ್ನಾ</string>
 </resources>

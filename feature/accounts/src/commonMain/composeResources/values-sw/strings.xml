@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">Akaunti</string>
     <string name="feature_loan_account_title">Akaunti za Mikopo</string>
     <string name="feature_saving_account_title">Akaunti za Akiba</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">Hali</string>
     <string name="feature_accounts_filter_type">Aina</string>
 
+    <!-- Loan account filters -->
     <string name="feature_loan_account_filter_active">Inatumika</string>
     <string name="feature_loan_account_filter_approval_pending">Inasubiri Idhini</string>
     <string name="feature_loan_account_filter_closed">Imefungwa</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">Binafsi</string>
     <string name="feature_loan_account_filter_bronze">Shaba</string>
 
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">Akaunti ya Wallet</string>
     <string name="feature_savings_filter_bank_account">Akaunti ya Benki</string>
     <string name="feature_savings_filter_group_account">Akaunti ya Kikundi</string>
@@ -53,6 +54,7 @@
     <string name="feature_transaction_filter">Chuja</string>
     <string name="feature_transaction_filter_icon_description">Aikoni ya Kuchuja</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">Amana</string>
     <string name="feature_transaction_filter_debit">Makato</string>
 
@@ -69,6 +71,7 @@
 
     <string name="feature_generic_error_server">Tatizo la seva kutoka upande wetu, haiwezi kuendelea. Jaribu tena baada ya muda</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">Maelezo ya Muamala</string>
     <string name="feature_transaction_detail_id">Kitambulisho cha Muamala</string>
     <string name="feature_transaction_detail_transfer_description">Maelezo ya Uhamisho</string>
@@ -89,4 +92,18 @@
     <string name="feature_transaction_detail_balance">Salio Lililobaki</string>
     <string name="feature_transaction_detail_default_type">Muamala</string>
 
+    <string name="feature_transaction_history_deposit">Amana</string>
+    <string name="feature_transaction_history_withdrawal">Utoaji</string>
+    <string name="feature_transaction_history_interest_posting">Kuweka Riba</string>
+    <string name="feature_transaction_history_fee_deduction">Makato ya Ada</string>
+    <string name="feature_transaction_history_transfer">Uhamisho</string>
+    <string name="feature_transaction_history_transaction">Muamala</string>
+    <string name="feature_transaction_history_disbursement">Utoaji wa Mkopo</string>
+    <string name="feature_transaction_history_repayment">Ulipaji wa Mkopo</string>
+    <string name="feature_transaction_history_purchase">Ununuzi</string>
+    <string name="feature_transaction_history_charge_payment">Malipo ya Tozo</string>
+    <string name="feature_transaction_history_redeem">Komboa</string>
+    <string name="feature_transaction_history_recovery_repayment">Ulipaji wa Deni lililofutwa</string>
+    <string name="feature_transaction_history_interest_waiver">Msamaha wa Riba</string>
+    <string name="feature_transaction_history_fee_waiver">Msamaha wa Ada</string>
 </resources>

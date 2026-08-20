@@ -25,6 +25,7 @@ import kotlinx.io.IOException
 import mifos_mobile.feature.accounts.generated.resources.Res
 import mifos_mobile.feature.accounts.generated.resources.feature_generic_error_server
 import mifos_mobile.feature.accounts.generated.resources.feature_no__filtered_transactions_found
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_detail_default_type
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_credit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_debit
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_1_year
@@ -32,6 +33,20 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_fil
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_3_months
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_6_months
 import mifos_mobile.feature.accounts.generated.resources.feature_transaction_filter_past_month
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_charge_payment
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_deposit
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_disbursement
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_fee_deduction
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_fee_waiver
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_interest_posting
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_interest_waiver
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_purchase
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_recovery_repayment
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_redeem
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_repayment
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_transaction
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_transfer
+import mifos_mobile.feature.accounts.generated.resources.feature_transaction_history_withdrawal
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.common.DataState
@@ -399,9 +414,11 @@ internal class AccountsTransactionViewModel(
         amount = amount,
         type = null,
         typeValue = type?.value,
-        isCredit = when {
-            type?.value?.contains("Purchase", ignoreCase = true) == true -> false
-            type?.value?.contains("Charge Payment", ignoreCase = true) == true -> false
+        labelRes = mapShareTransactionTypeToRes(type?.code),
+        isCredit = when (ShareTransactionType.fromCode(type?.code)) {
+            ShareTransactionType.PURCHASE,
+            ShareTransactionType.CHARGE_PAYMENT,
+            -> false
             else -> true
         },
         currency = currency?.code ?: "USD",
@@ -552,7 +569,7 @@ internal class AccountsTransactionViewModel(
 
     /**
      * Handles the result of the loan transactions API call by updating the UI state
-     * based on [DataState] — success, loading, or error.
+     * based [DataState] — success, loading, or error.
      */
     private fun handleLoanTransactionsResult(dataState: DataState<LoanWithAssociations?>) {
         when (dataState) {
@@ -732,12 +749,58 @@ internal class AccountsTransactionViewModel(
         date = date,
         amount = amount,
         typeValue = type.value,
-        isCredit = when (type.value?.lowercase()) {
-            "disbursement", "repayment" -> false
+        labelRes = mapLoanTransactionTypeToRes(type?.code),
+        isCredit = when (LoanTransactionType.fromCode(type?.code)) {
+            LoanTransactionType.DISBURSEMENT,
+            LoanTransactionType.REPAYMENT,
+            -> false
             else -> true
         },
         currency = currency?.code ?: "USD",
     )
+}
+internal enum class LoanTransactionType(val code: String) {
+    DISBURSEMENT("loanTransactionType.disbursement"),
+    REPAYMENT("loanTransactionType.repayment"),
+    RECOVERY_REPAYMENT("loanTransactionType.recoveryRepayment"),
+    INTEREST_WAIVER("loanTransactionType.interestWaiver"),
+    FEE_WAIVER("loanTransactionType.feeWaiver"),
+    UNKNOWN(""),
+    ;
+
+    companion object {
+        fun fromCode(code: String?) = entries.find { it.code == code } ?: UNKNOWN
+    }
+}
+
+internal fun mapLoanTransactionTypeToRes(typeCode: String?): StringResource {
+    return when (LoanTransactionType.fromCode(typeCode)) {
+        LoanTransactionType.DISBURSEMENT -> Res.string.feature_transaction_history_disbursement
+        LoanTransactionType.REPAYMENT -> Res.string.feature_transaction_history_repayment
+        LoanTransactionType.RECOVERY_REPAYMENT -> Res.string.feature_transaction_history_recovery_repayment
+        LoanTransactionType.INTEREST_WAIVER -> Res.string.feature_transaction_history_interest_waiver
+        LoanTransactionType.FEE_WAIVER -> Res.string.feature_transaction_history_fee_waiver
+        LoanTransactionType.UNKNOWN -> Res.string.feature_transaction_detail_default_type
+    }
+}
+internal enum class ShareTransactionType(val code: String) {
+    PURCHASE("shareTransactionType.purchase"),
+    REDEEM("shareTransactionType.redeem"),
+    CHARGE_PAYMENT("shareTransactionType.chargePayment"),
+    UNKNOWN(""),
+    ;
+
+    companion object {
+        fun fromCode(code: String?) = entries.find { it.code == code } ?: UNKNOWN
+    }
+}
+internal fun mapShareTransactionTypeToRes(code: String?): StringResource {
+    return when (ShareTransactionType.fromCode(code)) {
+        ShareTransactionType.PURCHASE -> Res.string.feature_transaction_history_purchase
+        ShareTransactionType.REDEEM -> Res.string.feature_transaction_history_redeem
+        ShareTransactionType.CHARGE_PAYMENT -> Res.string.feature_transaction_history_charge_payment
+        ShareTransactionType.UNKNOWN -> Res.string.feature_transaction_history_transaction
+    }
 }
 
 /**
@@ -756,10 +819,25 @@ data class UiTransaction(
     val date: List<Int>,
     val amount: Double?,
     val type: TransactionType? = null,
+    val labelRes: StringResource? = null,
     val typeValue: String? = null,
     val isCredit: Boolean?,
     val currency: String,
 )
+
+/**
+ * Extension function to map TransactionType to localized StringResource
+ */
+internal fun TransactionType?.getLabelRes(): StringResource {
+    return when {
+        this?.deposit == true -> Res.string.feature_transaction_history_deposit
+        this?.withdrawal == true -> Res.string.feature_transaction_history_withdrawal
+        this?.interestPosting == true -> Res.string.feature_transaction_history_interest_posting
+        this?.feeDeduction == true -> Res.string.feature_transaction_history_fee_deduction
+        this?.initiateTransfer == true -> Res.string.feature_transaction_history_transfer
+        else -> Res.string.feature_transaction_history_transaction
+    }
+}
 
 /**
  * The state of the account transactions screen.
