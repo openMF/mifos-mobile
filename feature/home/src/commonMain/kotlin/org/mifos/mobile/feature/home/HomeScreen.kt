@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -46,6 +47,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
+import mifos_mobile.core.ui.generated.resources.ipotekabank_logo_green
+import mifos_mobile.core.ui.generated.resources.ipotekabank_logo_white
 import mifos_mobile.feature.home.generated.resources.Res
 import mifos_mobile.feature.home.generated.resources.feature_home_edit_services
 import mifos_mobile.feature.home.generated.resources.feature_home_greet
@@ -65,9 +68,11 @@ import org.mifos.mobile.core.common.Constants
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
+import org.mifos.mobile.core.designsystem.theme.MifosBrand
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.designsystem.utils.clippedClickable
+import org.mifos.mobile.core.model.MifosBrandTheme
 import org.mifos.mobile.core.ui.component.MifosAccountApplyDashboard
 import org.mifos.mobile.core.ui.component.MifosDashboardCard
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -136,9 +141,21 @@ internal fun HomeContent(
     onAction: (HomeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val brandIcon = when (MifosBrand.current) {
+        MifosBrandTheme.IPOTEKA -> {
+            if (KptTheme.colorScheme.background.luminance() < 0.5f) {
+                mifos_mobile.core.ui.generated.resources.Res.drawable.ipotekabank_logo_white
+            } else {
+                mifos_mobile.core.ui.generated.resources.Res.drawable.ipotekabank_logo_green
+            }
+        }
+        MifosBrandTheme.AURORA,
+        MifosBrandTheme.GRAPHITE,
+        -> mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1
+    }
     MifosElevatedScaffold(
         modifier = modifier,
-        brandIcon = mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1,
+        brandIcon = brandIcon,
         topBarTitle = "Home",
         onNavigateBack = {},
         actions = {
