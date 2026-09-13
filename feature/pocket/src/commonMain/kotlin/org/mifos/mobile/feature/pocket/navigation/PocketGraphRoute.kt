@@ -20,10 +20,12 @@ import org.mifos.mobile.feature.pocket.pocketDashboard.pocketDashboardDestinatio
 @Serializable
 data object PocketGraphRoute
 
+/** Opens the nested Pocket navigation graph. */
 fun NavController.navigateToPocketGraph() {
     navigate(PocketGraphRoute)
 }
 
+/** Registers the Pocket dashboard and account-management destinations. */
 fun NavGraphBuilder.pocketNavGraph(
     navigateBack: () -> Unit,
     navigateToManagePocket: () -> Unit,

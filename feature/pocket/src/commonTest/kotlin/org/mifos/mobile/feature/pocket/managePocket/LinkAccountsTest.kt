@@ -21,8 +21,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
+/** Verifies the available-account selection sheet and link actions. */
 internal class LinkAccountsTest {
 
+    /** Renders available accounts with their type-specific details. */
     @Test
     fun givenLinkAccountsState_thenAvailableAccountsAreDisplayed() = runComposeUiTest {
         val state = ManagePocketState(
@@ -45,6 +47,7 @@ internal class LinkAccountsTest {
         onNodeWithText("1234567890").assertIsDisplayed()
     }
 
+    /** Emits selection changes when an available account is toggled. */
     @Test
     fun whenAvailableAccountIsClicked_thenSelectionActionIsEmitted() = runComposeUiTest {
         var emittedAction: ManagePocketAction? = null
@@ -73,6 +76,7 @@ internal class LinkAccountsTest {
         )
     }
 
+    /** Emits the link action with the currently selected accounts. */
     @Test
     fun whenSelectedAccountsAreSubmitted_thenLinkActionIsEmitted() = runComposeUiTest {
         var emittedAction: ManagePocketAction? = null

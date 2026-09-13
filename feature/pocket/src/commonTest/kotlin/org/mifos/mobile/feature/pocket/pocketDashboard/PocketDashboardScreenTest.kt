@@ -23,8 +23,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalTestApi::class)
+/** Verifies dashboard account rendering and user actions. */
 internal class PocketDashboardScreenTest {
 
+    /** Shows the total balance and all account categories. */
     @Test
     fun givenSuccessState_whenRendering_thenDashboardShowsBalanceAndAllAccountCategories() =
         runComposeUiTest {
@@ -71,6 +73,7 @@ internal class PocketDashboardScreenTest {
             onNodeWithText("5001129384").performScrollTo().assertIsDisplayed()
         }
 
+    /** Emits the management action from the dashboard. */
     @Test
     fun givenSuccessState_whenManageIsClicked_thenManageActionIsEmitted() = runComposeUiTest {
         var emittedAction: PocketDashboardAction? = null
@@ -87,6 +90,7 @@ internal class PocketDashboardScreenTest {
         assertEquals(PocketDashboardAction.ManagePocket, emittedAction)
     }
 
+    /** Emits the first-account link action from the empty state. */
     @Test
     fun givenEmptyState_whenLinkFirstAccountIsClicked_thenLinkActionIsEmitted() = runComposeUiTest {
         var emittedAction: PocketDashboardAction? = null
@@ -104,6 +108,7 @@ internal class PocketDashboardScreenTest {
         assertEquals(PocketDashboardAction.LinkFirstAccount, emittedAction)
     }
 
+    /** Shows the error message and retry action when loading fails. */
     @Test
     fun givenErrorState_whenRendering_thenErrorMessageAndRetryActionAreShown() = runComposeUiTest {
         var emittedAction: PocketDashboardAction? = null
@@ -124,6 +129,7 @@ internal class PocketDashboardScreenTest {
     }
 }
 
+/** Provides a representative successful dashboard state for UI tests. */
 private fun dashboardState() = PocketDashboardState(
     totalBalance = "$ 1,250.00",
     savingsAccounts = listOf(

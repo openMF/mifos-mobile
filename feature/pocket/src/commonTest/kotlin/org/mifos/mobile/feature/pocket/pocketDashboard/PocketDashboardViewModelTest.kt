@@ -35,6 +35,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
+/** Verifies dashboard loading, grouping, totals, refresh, and navigation. */
 internal class PocketDashboardViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var preferences: FakeUserPreferencesRepository
@@ -55,6 +56,7 @@ internal class PocketDashboardViewModelTest {
         Dispatchers.resetMain()
     }
 
+    /** Publishes an empty state when the repository returns no accounts. */
     @Test
     fun givenEmptyRepository_whenViewModelLoads_thenEmptyStateIsPublished() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Success(emptyList()))
@@ -67,6 +69,7 @@ internal class PocketDashboardViewModelTest {
         assertTrue(repository.resetPocketCacheCalled)
     }
 
+    /** Publishes loading while the repository has not completed. */
     @Test
     fun givenRepositoryLoading_whenViewModelLoads_thenLoadingStateIsPublished() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Loading)
@@ -77,6 +80,7 @@ internal class PocketDashboardViewModelTest {
         assertEquals(ScreenUiState.Loading, viewModel.stateFlow.value.uiState)
     }
 
+    /** Publishes the dashboard error state for repository failures. */
     @Test
     fun givenRepositoryError_whenViewModelLoads_thenErrorStateIsPublished() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Error(Exception("network")))
@@ -88,6 +92,7 @@ internal class PocketDashboardViewModelTest {
         assertFalse(viewModel.stateFlow.value.isRefreshing)
     }
 
+    /** Groups account types and formats the aggregate active balance. */
     @Test
     fun givenAccountsOfEachType_whenViewModelLoads_thenAccountsAreCategorizedAndTotalIsFormatted() =
         runTest(testDispatcher) {
@@ -122,6 +127,7 @@ internal class PocketDashboardViewModelTest {
             assertEquals("Unknown Account", state.savingsAccounts[1].name)
         }
 
+    /** Forces a fresh repository read when retry is selected. */
     @Test
     fun whenRetryIsClicked_thenForceRefreshLoadsTheLatestState() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Error(Exception("first attempt")))
@@ -136,6 +142,7 @@ internal class PocketDashboardViewModelTest {
         assertTrue(repository.detailedAccountRequests.last().second)
     }
 
+    /** Keeps totals separate when accounts use different currencies. */
     @Test
     fun givenMultipleCurrencies_whenViewModelLoads_thenTotalIsFormattedPerCurrency() =
         runTest(testDispatcher) {
@@ -161,6 +168,7 @@ internal class PocketDashboardViewModelTest {
             )
         }
 
+    /** Clears the refreshing indicator after a successful refresh. */
     @Test
     fun whenRefreshIsClicked_thenRefreshingStateIsClearedAfterSuccess() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Success(emptyList()))
@@ -179,6 +187,7 @@ internal class PocketDashboardViewModelTest {
         assertTrue(repository.detailedAccountRequests.last().second)
     }
 
+    /** Emits the expected navigation event for each dashboard action. */
     @Test
     fun whenNavigationActionsAreHandled_thenExpectedEventsAreEmitted() = runTest(testDispatcher) {
         createViewModel()
