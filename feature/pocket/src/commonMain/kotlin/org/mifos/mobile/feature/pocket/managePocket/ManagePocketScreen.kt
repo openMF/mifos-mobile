@@ -99,6 +99,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import template.core.base.designsystem.theme.KptTheme
 
+/** Hosts the management ViewModel, navigation events, and management content. */
 @Composable
 internal fun ManagePocketScreen(
     navigateBack: () -> Unit,
@@ -127,6 +128,7 @@ internal fun ManagePocketScreen(
     )
 }
 
+/** Renders linked accounts, loading/error states, and management dialogs. */
 @Composable
 internal fun ManagePocketContent(
     state: ManagePocketState,
@@ -210,6 +212,7 @@ internal fun ManagePocketContent(
     }
 }
 
+/** Displays the active link, loading, error, or delink confirmation dialog. */
 @Composable
 private fun ManagePocketDialogs(
     state: ManagePocketState,
@@ -261,6 +264,7 @@ private fun ManagePocketDialogs(
     }
 }
 
+/** Renders the card used to start linking another account. */
 @Composable
 private fun LinkMoreAccountsCard(
     onLinkClick: () -> Unit,
@@ -310,6 +314,7 @@ private fun LinkMoreAccountsCard(
     }
 }
 
+/** Renders one account currently linked to the Pocket. */
 @Composable
 private fun LinkedPocketAccountCard(
     account: ManagePocketAccount,
@@ -343,6 +348,7 @@ private fun LinkedPocketAccountCard(
     )
 }
 
+/** Renders the compact account row used in the linked-account list. */
 @Composable
 private fun PocketAccountRow(
     account: ManagePocketAccount,
@@ -383,6 +389,7 @@ private fun PocketAccountRow(
     }
 }
 
+/** Displays available accounts grouped by type for multi-selection. */
 @Composable
 internal fun LinkAccountsSheet(
     state: ManagePocketState,
@@ -571,6 +578,7 @@ internal fun LinkAccountsSheet(
     }
 }
 
+/** Renders one selectable account in the link-account sheet. */
 @Composable
 private fun SelectablePocketAccountCard(
     account: AvailablePocketAccount,
@@ -616,6 +624,7 @@ private fun SelectablePocketAccountCard(
     }
 }
 
+/** Selects the account-type icon used by Pocket account rows. */
 @Composable
 private fun PocketAccountIcon(
     icon: ImageVector,
@@ -634,6 +643,7 @@ private fun PocketAccountIcon(
     )
 }
 
+/** Maps a Pocket account type to its management-screen icon. */
 private fun AccountType.toIcon(): ImageVector =
     when (this) {
         AccountType.SAVINGS -> MifosIcons.PersonAccounts
@@ -641,6 +651,7 @@ private fun AccountType.toIcon(): ImageVector =
         AccountType.SHARE -> MifosIcons.CoinMultiple
     }
 
+/** Renders the search field for filtering available accounts. */
 @Composable
 private fun ManagePocketSearchTextField(
     value: TextFieldValue,
@@ -698,6 +709,7 @@ private fun ManagePocketSearchTextField(
     )
 }
 
+/** Displays the confirmation sheet before removing a linked account. */
 @Composable
 internal fun RemoveLinkedAccountSheet(
     account: ManagePocketAccount,
@@ -812,6 +824,7 @@ internal fun RemoveLinkedAccountSheet(
     }
 }
 
+/** Preview for linked-account management content. */
 @Preview
 @Composable
 private fun ManagePocketContentPreview() {
@@ -830,6 +843,7 @@ private fun ManagePocketContentPreview() {
     }
 }
 
+/** Preview for the account-linking sheet. */
 @Preview
 @Composable
 private fun LinkAccountsSheetContentPreview() {
@@ -848,6 +862,7 @@ private fun LinkAccountsSheetContentPreview() {
     }
 }
 
+/** Preview for the account-removal confirmation sheet. */
 @Preview
 @Composable
 private fun RemoveLinkedAccountSheetContentPreview() {
@@ -860,6 +875,7 @@ private fun RemoveLinkedAccountSheetContentPreview() {
     }
 }
 
+/** Creates a representative linked account for Compose previews. */
 private fun previewPocketAccount(
     id: Long,
     type: AccountType,
@@ -873,6 +889,7 @@ private fun previewPocketAccount(
     accountType = type,
 )
 
+/** Creates a representative linkable account for Compose previews. */
 private fun previewAvailablePocketAccount(
     id: Long,
     type: AccountType,

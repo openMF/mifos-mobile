@@ -20,8 +20,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalTestApi::class)
+/** Verifies rendering and actions for linked-account management content. */
 internal class ManagePocketScreenTest {
 
+    /** Shows linked account details in the successful content state. */
     @Test
     fun givenSuccessState_withLinkedAccounts_thenAccountsAreDisplayed() = runComposeUiTest {
         val state = ManagePocketState(
@@ -43,6 +45,7 @@ internal class ManagePocketScreenTest {
         onNodeWithText("9988776655").assertIsDisplayed()
     }
 
+    /** Emits the link action when the user chooses to add another account. */
     @Test
     fun givenSuccessState_whenLinkMoreAccountsIsClicked_thenLinkActionIsEmitted() = runComposeUiTest {
         var emittedAction: ManagePocketAction? = null
@@ -59,6 +62,7 @@ internal class ManagePocketScreenTest {
         assertEquals(ManagePocketAction.OpenLinkAccounts, emittedAction)
     }
 
+    /** Shows the empty linked-account message when no account is present. */
     @Test
     fun givenSuccessState_withoutLinkedAccounts_thenEmptyMessageIsDisplayed() = runComposeUiTest {
         setContent {

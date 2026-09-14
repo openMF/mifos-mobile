@@ -41,6 +41,13 @@ import org.mifos.mobile.core.network.dto.pocket.PocketDelinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
 import kotlin.time.Clock
 
+/**
+ * Coordinates Pocket API synchronization, local DAO persistence, and the
+ * in-memory detailed-account cache for the non-JS targets.
+ *
+ * Local Pocket rows are used as the offline source, while pending links and
+ * delinks are retried by [syncPocketsWithServer] when connectivity is restored.
+ */
 class PocketRepositoryImp(
     private val dataManager: DataManager,
     private val networkMonitor: NetworkMonitor,
@@ -52,6 +59,13 @@ class PocketRepositoryImp(
 
     private var cachedClientId: Long? = null
 
+    /**
+     * Reconciles locally persisted Pocket mappings with the server.
+     *
+     * Pending delinks are sent first, then missing local links are submitted.
+     * The final merged mapping list is persisted so temporary network failures
+     * do not discard a user's local Pocket changes.
+     */
     private suspend fun syncPocketsWithServer() {
         if (!networkMonitor.isOnline.first()) return
 
@@ -118,6 +132,7 @@ class PocketRepositoryImp(
         }
     }
 
+    /** Returns the persisted basic Pocket mappings after attempting a sync. */
     override suspend fun getPocketAccounts(): DataState<List<PocketAccount>> {
         return runAsDataState(context = ioDispatcher) {
             syncPocketsWithServer()
@@ -125,6 +140,7 @@ class PocketRepositoryImp(
         }
     }
 
+    /** Loads and caches client-specific Pocket details when the cache is stale. */
     private suspend fun syncPockets(clientId: Long, forceRefresh: Boolean = false) {
         if (cachedClientId != clientId) {
             detailedPocketCache.value = null
@@ -147,6 +163,7 @@ class PocketRepositoryImp(
         }
     }
 
+    /** Enriches one Pocket mapping with its loan, savings, or share details. */
     private suspend fun addAccountDetails(
         pocket: PocketAccount,
         clientAccounts: ClientAccounts,
@@ -214,6 +231,12 @@ class PocketRepositoryImp(
         }
     }
 
+    /**
+     * Emits detailed Pocket accounts from the client-scoped cache.
+     *
+     * [forceRefresh] invalidates the cached result before loading fresh
+     * mappings and account details.
+     */
     override fun getDetailedPocketAccounts(
         clientId: Long,
         forceRefresh: Boolean,
@@ -229,6 +252,10 @@ class PocketRepositoryImp(
         ).flowOn(ioDispatcher)
     }
 
+    /**
+     * Adds several accounts optimistically, then submits their typed link
+     * payload when the network is available.
+     */
     override suspend fun linkAccounts(
         payload: PocketLinkPayload,
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
@@ -304,6 +331,7 @@ class PocketRepositoryImp(
         }
     }
 
+    /** Adds one typed account using the same local-first link path. */
     override suspend fun linkAccount(
         accountId: Long,
         accountType: AccountType,
@@ -346,6 +374,10 @@ class PocketRepositoryImp(
         }
     }
 
+    /**
+     * Removes selected mappings locally and retries positive server mapping
+     * IDs until the remote delink succeeds.
+     */
     override suspend fun delinkAccounts(pocketAccountMappingIds: List<Long>, clientId: Long): DataState<Unit> {
         return runAsDataState(context = ioDispatcher) {
             val serverIds = pocketAccountMappingIds.filter { it > 0 }
@@ -375,6 +407,10 @@ class PocketRepositoryImp(
         }
     }
 
+    /**
+     * Builds linkable accounts from the client's loan, savings, and share
+     * accounts, excluding account IDs already present in the Pocket cache.
+     */
     override fun getAvailableAccountsToLink(clientId: Long): Flow<DataState<List<LinkableAccount>>> {
         return networkMonitor.withNetworkCheck(
             flow {
@@ -457,6 +493,7 @@ class PocketRepositoryImp(
         ).flowOn(ioDispatcher)
     }
 
+    /** Clears the detailed cache so the next collection performs a fresh load. */
     override suspend fun resetPocketCache() {
         detailedPocketCache.value = null
         cachedClientId = null

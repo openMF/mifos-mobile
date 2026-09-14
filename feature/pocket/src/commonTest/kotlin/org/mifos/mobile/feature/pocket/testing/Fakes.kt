@@ -29,6 +29,7 @@ import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
 import org.mifos.mobile.core.model.entity.pocket.PocketAccount
 import org.mifos.mobile.core.model.enums.AccountType
 
+/** In-memory repository fake used by dashboard and management ViewModel tests. */
 internal class FakePocketRepository : PocketRepository {
     private val detailedAccounts = MutableStateFlow<DataState<List<DetailedPocketAccount>>>(
         DataState.Success(emptyList()),
@@ -49,10 +50,12 @@ internal class FakePocketRepository : PocketRepository {
     var detailedAccountsAfterDelink: DataState<List<DetailedPocketAccount>>? = null
     var resetPocketCacheCalled = false
 
+    /** Publishes the next detailed-account state to repository collectors. */
     fun setDetailedPocketAccounts(state: DataState<List<DetailedPocketAccount>>) {
         detailedAccounts.value = state
     }
 
+    /** Publishes the next available-account state to repository collectors. */
     fun setAvailableAccountsToLink(state: DataState<List<LinkableAccount>>) {
         availableAccounts.value = state
     }
@@ -104,12 +107,14 @@ internal class FakePocketRepository : PocketRepository {
     }
 }
 
+/** Returns a deterministic string for ViewModel tests. */
 internal class FakeStringProvider(
     private val value: String = "Unknown Account",
 ) : StringProvider {
     override suspend fun get(resource: StringResource, vararg formatArgs: Any): String = value
 }
 
+/** Supplies an isolated client ID and no-op preference persistence. */
 internal class FakeUserPreferencesRepository(
     initialClientId: Long? = 42L,
 ) : UserPreferencesRepository {

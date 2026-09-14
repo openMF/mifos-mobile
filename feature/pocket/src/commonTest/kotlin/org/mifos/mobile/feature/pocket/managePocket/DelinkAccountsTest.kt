@@ -22,6 +22,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalTestApi::class)
+/** Verifies the linked-account removal confirmation flow. */
 internal class DelinkAccountsTest {
 
     private fun linkedAccount() = ManagePocketAccount(
@@ -32,6 +33,7 @@ internal class DelinkAccountsTest {
         mappingId = 1L,
     )
 
+    /** Opens confirmation for the account selected for removal. */
     @Test
     fun givenLinkedAccount_whenRemoveIsClicked_thenDelinkConfirmationIsOpened() = runComposeUiTest {
         var emittedAction: ManagePocketAction? = null
@@ -55,6 +57,7 @@ internal class DelinkAccountsTest {
         )
     }
 
+    /** Shows the account details and actions in the confirmation sheet. */
     @Test
     fun givenDelinkConfirmationState_whenRendering_thenAccountDetailsAndActionsAreDisplayed() =
         runComposeUiTest {
@@ -78,6 +81,7 @@ internal class DelinkAccountsTest {
             onNodeWithText("Remove").assertIsDisplayed()
         }
 
+    /** Emits the delink action with the confirmed account. */
     @Test
     fun whenRemoveIsConfirmed_thenDelinkAccountActionIsEmitted() = runComposeUiTest {
         val account = linkedAccount()
@@ -97,6 +101,7 @@ internal class DelinkAccountsTest {
         assertEquals(account, (emittedAction as ManagePocketAction.DelinkAccount).account)
     }
 
+    /** Dismisses confirmation without emitting a delink action. */
     @Test
     fun whenDelinkConfirmationIsCancelled_thenDismissDialogActionIsEmitted() = runComposeUiTest {
         var emittedAction: ManagePocketAction? = null

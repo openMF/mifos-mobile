@@ -17,10 +17,12 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 @Serializable
 data object PocketDashboardRoute
 
+/** Navigates to the Pocket dashboard. */
 fun NavController.navigateToPocketDashboardScreen() {
     navigate(PocketDashboardRoute)
 }
 
+/** Adds the Pocket dashboard destination and its account-detail callbacks. */
 fun NavGraphBuilder.pocketDashboardDestination(
     navigateBack: () -> Unit,
     navigateToManagePocket: () -> Unit,

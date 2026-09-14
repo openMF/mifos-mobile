@@ -9,13 +9,15 @@
  */
 package org.mifos.mobile.core.data.repositoryImpl
 
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repositories.BaseFakeClientService
+import org.mifos.mobile.core.data.repositories.BaseFakePocketService
+import org.mifos.mobile.core.data.repositories.BaseFakeShareAccountService
 import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.database.dao.PocketAccountDao
 import org.mifos.mobile.core.database.entity.PendingPocketDelinkEntity
@@ -28,29 +30,24 @@ import org.mifos.mobile.core.model.entity.pocket.PocketAccount
 import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.network.DataManager
 import org.mifos.mobile.core.network.dto.accounts.AccountsResponseDto
-import org.mifos.mobile.core.network.dto.client.ClientResponseDto
-import org.mifos.mobile.core.network.dto.common.PageResponseDto
 import org.mifos.mobile.core.network.dto.currency.CurrencyResponseDto
 import org.mifos.mobile.core.network.dto.loanAccount.LoanAccountResponseDto
 import org.mifos.mobile.core.network.dto.loanAccount.LoanStatusResponseDto
-import org.mifos.mobile.core.network.dto.payloads.ShareApplicationPayloadDto
 import org.mifos.mobile.core.network.dto.pocket.PocketAccountDto
 import org.mifos.mobile.core.network.dto.pocket.PocketCommandResponse
 import org.mifos.mobile.core.network.dto.pocket.PocketDelinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketLinkRequest
 import org.mifos.mobile.core.network.dto.pocket.PocketResponseDto
-import org.mifos.mobile.core.network.dto.products.share.ShareProductDetailsResponseDto
-import org.mifos.mobile.core.network.dto.products.share.ShareProductResponseDto
-import org.mifos.mobile.core.network.dto.shareAccount.ShareWithAssociationsResponseDto
-import org.mifos.mobile.core.network.services.ClientService
-import org.mifos.mobile.core.network.services.PocketService
-import org.mifos.mobile.core.network.services.ShareAccountService
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
+/**
+ * Verifies Pocket synchronization by combining fake network
+ * services, a fake network monitor, and an in-memory Pocket DAO.
+ */
 class PocketRepositoryTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var dataManager: DataManager
@@ -60,13 +57,13 @@ class PocketRepositoryTest {
 
     private lateinit var fakeClientService: FakeClientService
     private lateinit var fakePocketService: FakePocketService
-    private lateinit var fakeShareAccountService: FakeShareAccountService
+    private lateinit var fakeShareAccountService: BaseFakeShareAccountService
 
     @BeforeTest
     fun setUp() {
         fakeClientService = FakeClientService()
         fakePocketService = FakePocketService()
-        fakeShareAccountService = FakeShareAccountService()
+        fakeShareAccountService = BaseFakeShareAccountService()
 
         dataManager = object : DataManager() {
             override val clientsApi = fakeClientService
@@ -83,6 +80,7 @@ class PocketRepositoryTest {
         )
     }
 
+    /** Maps loan, savings, and share mappings and persists the domain values. */
     @Test
     fun getPocketAccountsMapsAllPocketTypesAndPersistsTheDomainMapping() = runTest(testDispatcher) {
         fakePocketService.response = PocketResponseDto(
@@ -104,6 +102,7 @@ class PocketRepositoryTest {
         assertEquals(accounts.map { it.accountId }, pocketAccountDao.accounts.map { it.accountId })
     }
 
+    /** Returns persisted mappings when the remote Pocket request fails. */
     @Test
     fun getPocketAccountsReturnsCachedAccountsWhenNetworkCallFails() = runTest(testDispatcher) {
         val cachedAccount = localEntity(10L, AccountType.LOAN, 100L)
@@ -116,6 +115,7 @@ class PocketRepositoryTest {
         assertEquals(listOf(10L), accounts.map { it.accountId })
     }
 
+    /** Joins a Pocket mapping with client account product and balance details. */
     @Test
     fun getDetailedPocketAccountsEnrichesPocketWithClientAccountDetails() = runTest(testDispatcher) {
         fakePocketService.response = PocketResponseDto(
@@ -136,6 +136,7 @@ class PocketRepositoryTest {
         assertEquals(AccountStatus.ACTIVE, account.status)
     }
 
+    /** Persists one typed account and sends the matching link request. */
     @Test
     fun linkAccountPersistsTypedAccountAndSendsSingleAccountRequest() = runTest(testDispatcher) {
         val result = repository.linkAccount(
@@ -154,6 +155,7 @@ class PocketRepositoryTest {
         )
     }
 
+    /** Excludes linked accounts and maps the remaining client accounts. */
     @Test
     fun getAvailableAccountsToLinkExcludesAccountsAlreadyInPocketAndMapsRemainingAccounts() =
         runTest(testDispatcher) {
@@ -180,6 +182,7 @@ class PocketRepositoryTest {
             assertEquals(AccountType.LOAN, accounts.single().accountType)
         }
 
+    /** Sends a multi-account payload and refreshes detailed Pocket data. */
     @Test
     fun linkAccountsMapsPayloadAndRefreshesDetailedCache() = runTest(testDispatcher) {
         fakePocketService.response = PocketResponseDto(
@@ -211,6 +214,7 @@ class PocketRepositoryTest {
         )
     }
 
+    /** Sends only real mapping IDs and removes the mapping from the cache. */
     @Test
     fun delinkAccountsSendsPositiveMappingIdsAndRemovesAccountFromCache() = runTest(testDispatcher) {
         fakePocketService.response = PocketResponseDto(
@@ -233,6 +237,7 @@ class PocketRepositoryTest {
         assertTrue(assertIs<DataState.Success<List<DetailedPocketAccount>>>(cached).data.isEmpty())
     }
 
+    /** Keeps failed remote delinks pending and hides them on refresh. */
     @Test
     fun delinkAccountsKeepsFailedRemoteDelinkPendingAndFiltersServerRefresh() = runTest(testDispatcher) {
         pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
@@ -258,6 +263,7 @@ class PocketRepositoryTest {
         assertEquals(PocketDelinkRequest(listOf(100L)), fakePocketService.lastDelinkRequest)
     }
 
+    /** Retries persisted pending delinks and clears them after success. */
     @Test
     fun getPocketAccountsRetriesPersistedPendingDelinksAndClearsThemWhenSuccessful() = runTest(testDispatcher) {
         pocketAccountDao.pendingDelinks = mutableSetOf(100L)
@@ -276,6 +282,7 @@ class PocketRepositoryTest {
         assertTrue(pocketAccountDao.pendingDelinks.isEmpty())
     }
 
+    /** Avoids sending a duplicate delink when detailed data is not cached. */
     @Test
     fun delinkAccountsWithoutDetailedCacheDoesNotSendDuplicateRemoteDelink() = runTest(testDispatcher) {
         pocketAccountDao.accounts = mutableListOf(localEntity(10L, AccountType.LOAN, 100L))
@@ -332,14 +339,14 @@ class PocketRepositoryTest {
     )
 }
 
-private class FakeNetworkMonitor : NetworkMonitor {
+class FakeNetworkMonitor : NetworkMonitor {
     var online = true
 
     override val isOnline: Flow<Boolean>
         get() = flowOf(online)
 }
 
-private class FakePocketService : PocketService {
+class FakePocketService : BaseFakePocketService() {
     var response = PocketResponseDto()
     var failure: Exception? = null
     var lastLinkCommand: String? = null
@@ -367,40 +374,13 @@ private class FakePocketService : PocketService {
     }
 }
 
-private class FakeShareAccountService : ShareAccountService {
-    override fun getShareProducts(clientId: Long?): Flow<PageResponseDto<ShareProductResponseDto>> =
-        error("Not used by pocket tests")
-
-    override fun getShareProductById(
-        productId: Long,
-        clientId: Long?,
-    ): Flow<ShareProductDetailsResponseDto> = error("Not used by pocket tests")
-
-    override suspend fun submitShareApplication(payload: ShareApplicationPayloadDto?): HttpResponse =
-        error("Not used by pocket tests")
-
-    override fun getShareAccountDetails(
-        accountId: Long,
-        associations: String,
-    ): Flow<ShareWithAssociationsResponseDto> = error("Not used by pocket tests")
-}
-
-private class FakeClientService : ClientService {
+class FakeClientService : BaseFakeClientService() {
     var accounts = AccountsResponseDto()
 
-    override fun clients(): Flow<PageResponseDto<ClientResponseDto>> = error("Not used by pocket tests")
-
-    override fun getClientForId(clientId: Long): Flow<ClientResponseDto> = error("Not used by pocket tests")
-
-    override fun getClientImage(clientId: Long): Flow<HttpResponse> = error("Not used by pocket tests")
-
     override fun getClientAccounts(clientId: Long): Flow<AccountsResponseDto> = flowOf(accounts)
-
-    override fun getAccounts(clientId: Long, accountType: String?): Flow<AccountsResponseDto> =
-        error("Not used by pocket tests")
 }
 
-private class FakePocketAccountDao : PocketAccountDao {
+class FakePocketAccountDao : PocketAccountDao {
     var accounts = mutableListOf<PocketAccountEntity>()
     var pendingDelinks = mutableSetOf<Long>()
 

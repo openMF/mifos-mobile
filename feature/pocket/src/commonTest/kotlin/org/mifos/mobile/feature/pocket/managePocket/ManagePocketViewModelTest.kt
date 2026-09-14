@@ -36,6 +36,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
+/** Verifies account loading, selection, linking, delinking, and navigation state. */
 internal class ManagePocketViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var preferences: FakeUserPreferencesRepository
@@ -56,6 +57,7 @@ internal class ManagePocketViewModelTest {
         Dispatchers.resetMain()
     }
 
+    /** Maps linked repository accounts into management state. */
     @Test
     fun givenLinkedAccounts_whenViewModelLoads_thenAccountsAreMappedToManageState() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(
@@ -83,6 +85,7 @@ internal class ManagePocketViewModelTest {
         assertEquals("ACC-101", state.linkedAccounts.single().accountNumber)
     }
 
+    /** Publishes an error state when linked account loading fails. */
     @Test
     fun givenLinkedAccountsError_whenViewModelLoads_thenErrorStateIsPublished() = runTest(testDispatcher) {
         repository.setDetailedPocketAccounts(DataState.Error(Exception("network")))
@@ -93,6 +96,7 @@ internal class ManagePocketViewModelTest {
         assertIs<ScreenUiState.Error>(viewModel.stateFlow.value.uiState)
     }
 
+    /** Stores the selected account type and search query. */
     @Test
     fun whenTabAndSearchActionsAreHandled_thenSelectionAndQueryAreStored() = runTest(testDispatcher) {
         createViewModel()
@@ -105,6 +109,7 @@ internal class ManagePocketViewModelTest {
         assertEquals("car", viewModel.stateFlow.value.searchQuery)
     }
 
+    /** Adds and removes account identifiers from the selection state. */
     @Test
     fun whenAccountSelectionChanges_thenIdentifierIsAddedAndRemoved() = runTest(testDispatcher) {
         createViewModel()
@@ -118,6 +123,7 @@ internal class ManagePocketViewModelTest {
         assertFalse(101L in viewModel.stateFlow.value.selectedAccountIds)
     }
 
+    /** Loads available accounts when the link flow opens. */
     @Test
     fun whenOpenLinkAccountsIsHandled_thenAvailableAccountsAreLoaded() = runTest(testDispatcher) {
         repository.setAvailableAccountsToLink(
@@ -145,6 +151,7 @@ internal class ManagePocketViewModelTest {
         assertEquals(listOf(9L), repository.availableAccountRequests)
     }
 
+    /** Sends selected account details and clears selection after success. */
     @Test
     fun whenLinkingSelectedAccountsSucceeds_thenSelectionIsClearedAndRepositoryReceivesPayload() =
         runTest(testDispatcher) {
@@ -178,6 +185,7 @@ internal class ManagePocketViewModelTest {
             assertEquals(9L to true, repository.detailedAccountRequests.last())
         }
 
+    /** Shows the link error dialog when linking fails. */
     @Test
     fun whenLinkingSelectedAccountsFails_thenLinkErrorDialogIsShown() = runTest(testDispatcher) {
         repository.setAvailableAccountsToLink(
@@ -200,6 +208,7 @@ internal class ManagePocketViewModelTest {
         assertIs<ManagePocketDialogState.Error>(viewModel.stateFlow.value.dialogState)
     }
 
+    /** Refreshes linked accounts and closes the dialog after delinking. */
     @Test
     fun whenDelinkSucceeds_thenAccountIsRemovedAndLinkedAccountsReload() = runTest(testDispatcher) {
         val account = manageAccount()
@@ -218,6 +227,7 @@ internal class ManagePocketViewModelTest {
         assertEquals(9L to true, repository.detailedAccountRequests.last())
     }
 
+    /** Shows the delink error dialog when delinking fails. */
     @Test
     fun whenDelinkFails_thenDelinkErrorDialogIsShown() = runTest(testDispatcher) {
         repository.delinkAccountsResult = DataState.Error(Exception("delink failed"))
@@ -231,6 +241,7 @@ internal class ManagePocketViewModelTest {
         assertIs<ManagePocketDialogState.Error>(viewModel.stateFlow.value.dialogState)
     }
 
+    /** Emits the back navigation event. */
     @Test
     fun whenNavigateBackIsHandled_thenNavigateBackEventIsEmitted() = runTest(testDispatcher) {
         createViewModel()

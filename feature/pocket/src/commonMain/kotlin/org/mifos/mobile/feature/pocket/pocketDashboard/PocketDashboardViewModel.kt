@@ -29,6 +29,13 @@ import org.mifos.mobile.core.model.enums.AccountType
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 
+/**
+ * Loads the client's linked Pocket accounts and prepares dashboard state.
+ *
+ * Accounts are grouped by type and active balances are aggregated by
+ * currency. Account status is shown instead of a balance for non-active
+ * accounts.
+ */
 internal class PocketDashboardViewModel(
     private val pocketRepository: PocketRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -47,10 +54,12 @@ internal class PocketDashboardViewModel(
         }
     }
 
+    /** Applies a state update to the dashboard state flow. */
     private fun updateState(update: (PocketDashboardState) -> PocketDashboardState) {
         mutableStateFlow.update(update)
     }
 
+    /** Collects detailed Pocket data and forwards repository states as actions. */
     private fun loadPocketData(forceRefresh: Boolean = false) {
         loadJob?.cancel()
 
@@ -71,6 +80,7 @@ internal class PocketDashboardViewModel(
         }
     }
 
+    /** Handles dashboard refresh, retry, management, and detail navigation actions. */
     override fun handleAction(action: PocketDashboardAction) {
         when (action) {
             is PocketDashboardAction.Internal.ReceiveAccounts -> handleReceivedAccounts(
@@ -95,16 +105,19 @@ internal class PocketDashboardViewModel(
         }
     }
 
+    /** Requests a forced reload while keeping the refresh indicator visible. */
     private fun refresh() {
         updateState { it.copy(isRefreshing = true) }
         loadPocketData(forceRefresh = true)
     }
 
+    /** Resets the visible state to loading and retries the repository read. */
     private fun retry() {
         updateState { it.copy(uiState = ScreenUiState.Loading) }
         loadPocketData(forceRefresh = true)
     }
 
+    /** Maps repository states into dashboard content, empty, or error state. */
     private fun handleReceivedAccounts(
         dataState: DataState<List<DetailedPocketAccount>>,
         unknownStatus: String,
@@ -224,6 +237,8 @@ internal class PocketDashboardViewModel(
         }
     }
 }
+
+/** State rendered by the Pocket dashboard. */
 data class PocketDashboardState(
     val clientId: Long = 0,
     val totalBalance: String = "$ 0",
@@ -234,6 +249,8 @@ data class PocketDashboardState(
     val networkStatus: Boolean = true,
     val isRefreshing: Boolean = false,
 )
+
+/** UI-ready account row shown in one of the dashboard account sections. */
 data class DetailedPocket(
     val accountId: Long,
     val name: String,
