@@ -15,7 +15,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
@@ -37,8 +36,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -48,17 +47,14 @@ import mifos_mobile.core.ui.generated.resources.feature_dashboard_no_accounts_ti
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_open_account
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_toggle_visibility
 import mifos_mobile.core.ui.generated.resources.feature_dashboard_totals
-import mifos_mobile.core.ui.generated.resources.ic_icon_dashboard
 import mifos_mobile.core.ui.generated.resources.powered_by
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mifos.mobile.core.designsystem.component.CardVariant
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosCustomCard
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
-import org.mifos.mobile.core.designsystem.theme.AppColors
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
@@ -91,16 +87,18 @@ fun MifosDashboardCard(
                 contentDescription = totalDescription
             }
             .clip(KptTheme.shapes.large)
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        KptTheme.colorScheme.primary,
+                        KptTheme.colorScheme.secondary,
+                        KptTheme.colorScheme.tertiary,
+                    ),
+                ),
+            )
             .height(if (isSingleLine) DesignToken.sizes.boxDp76 else DesignToken.sizes.boxDp128)
             .fillMaxWidth(),
     ) {
-        Image(
-            modifier = Modifier
-                .matchParentSize(),
-            painter = painterResource(Res.drawable.ic_icon_dashboard),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,7 +119,7 @@ fun MifosDashboardCard(
                         Text(
                             text = stringResource(loanAccount),
                             style = MifosTypography.bodySmall,
-                            color = AppColors.customWhite.copy(alpha = 0.85f),
+                            color = KptTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
                         )
                         AnimatedContent(
                             targetState = isVisible,
@@ -133,7 +131,7 @@ fun MifosDashboardCard(
                             Text(
                                 text = if (visible) "$loanAmount" else "$currency •••••••••",
                                 style = MifosTypography.titleMediumEmphasized,
-                                color = AppColors.customWhite,
+                                color = KptTheme.colorScheme.onPrimary,
                             )
                         }
                     }
@@ -145,7 +143,7 @@ fun MifosDashboardCard(
                             text = stringResource(savingsAccount),
                             style = MifosTypography.bodySmall,
 //                            color = KptTheme.colorScheme.secondary,
-                            color = AppColors.customWhite.copy(alpha = 0.85f),
+                            color = KptTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
                         )
                         AnimatedContent(
                             targetState = isVisible,
@@ -157,7 +155,7 @@ fun MifosDashboardCard(
                             Text(
                                 text = if (visible) "$savingsAmount" else "$currency •••••••••",
                                 style = MifosTypography.titleMediumEmphasized,
-                                color = AppColors.customWhite,
+                                color = KptTheme.colorScheme.onPrimary,
                             )
                         }
                     }
@@ -174,7 +172,7 @@ fun MifosDashboardCard(
             Icon(
                 imageVector = if (isVisible) MifosIcons.Eye else MifosIcons.EyeOff,
                 contentDescription = stringResource(Res.string.feature_dashboard_toggle_visibility),
-                tint = Color.White,
+                tint = KptTheme.colorScheme.onPrimary,
             )
         }
     }

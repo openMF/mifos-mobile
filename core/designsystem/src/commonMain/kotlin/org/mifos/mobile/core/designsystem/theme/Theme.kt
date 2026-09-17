@@ -14,8 +14,11 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import org.mifos.mobile.core.model.MifosBrandTheme
 import template.core.base.designsystem.KptMaterialTheme
 import template.core.base.designsystem.theme.KptThemeProviderImpl
 import template.core.base.designsystem.toKptColorScheme
@@ -264,17 +267,25 @@ val unspecified_scheme = ColorFamily(
     Color.Unspecified,
 )
 
+val LocalMifosBrandTheme = staticCompositionLocalOf { MifosBrandTheme.IPOTEKA }
+
+object MifosBrand {
+    val current: MifosBrandTheme
+        @Composable get() = LocalMifosBrandTheme.current
+}
+
 @Composable
 fun MifosMobileTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    brandTheme: MifosBrandTheme = MifosBrandTheme.IPOTEKA,
     androidTheme: Boolean = false,
     shouldDisplayDynamicTheming: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
-        shouldDisplayDynamicTheming -> colorScheme(darkTheme, true)
+        shouldDisplayDynamicTheming && androidTheme -> colorScheme(darkTheme, true)
         androidTheme -> if (darkTheme) darkColorScheme() else lightColorScheme()
-        else -> if (darkTheme) darkScheme else lightScheme
+        else -> brandColorScheme(brandTheme, darkTheme)
     }.toKptColorScheme()
 
     val typography = appTypography().toKptTypography()
@@ -282,12 +293,16 @@ fun MifosMobileTheme(
     val theme = KptThemeProviderImpl(
         colors = colorScheme,
         typography = typography,
+        shapes = brandShapes(brandTheme),
+        elevation = brandElevation(brandTheme),
     )
 
-    KptMaterialTheme(
-        theme = theme,
-        content = content,
-    )
+    CompositionLocalProvider(LocalMifosBrandTheme provides brandTheme) {
+        KptMaterialTheme(
+            theme = theme,
+            content = content,
+        )
+    }
 }
 
 @Composable
