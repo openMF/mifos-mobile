@@ -29,6 +29,8 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.feature.loan.application.component.DocumentType
 import org.mifos.mobile.feature.loan.application.component.SignatureUploadType
 import kotlin.io.encoding.ExperimentalEncodingApi
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * `ViewModel` for the Upload Documents screen.
@@ -88,10 +90,9 @@ internal class UploadDocsViewModel :
                 mutableStateFlow.update {
                     it.copy(
                         dialogState = null,
-                        signatureDocumentFile = action.image,
-                        // TODO:: Generate Unique Name & Calculate Size
-                        signatureFileName = "signature.png",
-                        signatureSize = "100 KB",
+                        signatureDocumentFile = action.imageArray.toBase64DataUri(),
+                        signatureFileName = generateUniqueFileName("signature", "png"),
+                        signatureSize = formatFileSize(action.imageArray.size.toLong()),
                     )
                 }
             }
@@ -172,19 +173,11 @@ internal class UploadDocsViewModel :
             try {
                 val image = FileKit.openFilePicker(type = FileKitType.Image)
                 image?.let { file ->
-                    val sizeInKB = file.size() / 1024
-                    val sizeInMb = sizeInKB / 1024
-                    val showFileSize = if (sizeInMb >= 1) {
-                        "$sizeInMb MB"
-                    } else {
-                        "$sizeInKB KB"
-                    }
-
                     mutableStateFlow.update {
                         it.copy(
                             propertyDocumentsFile = file.readBytes().toBase64DataUri(),
                             propertyDocumentFileName = file.name,
-                            propertyDocumentsSize = showFileSize,
+                            propertyDocumentsSize = formatFileSize(file.size()),
                         )
                     }
                 }
@@ -204,19 +197,11 @@ internal class UploadDocsViewModel :
             try {
                 val image = FileKit.openFilePicker(type = FileKitType.Image)
                 image?.let { file ->
-                    val sizeInKB = file.size() / 1024
-                    val sizeInMb = sizeInKB / 1024
-                    val showFileSize = if (sizeInMb >= 1) {
-                        "$sizeInMb MB"
-                    } else {
-                        "$sizeInKB KB"
-                    }
-
                     mutableStateFlow.update {
                         it.copy(
                             bankStatementFile = file.readBytes().toBase64DataUri(),
                             bankStatementFileName = file.name,
-                            bankStatementSize = showFileSize,
+                            bankStatementSize = formatFileSize(file.size()),
                         )
                     }
                 }
@@ -252,20 +237,12 @@ internal class UploadDocsViewModel :
                 val image = FileKit.openFilePicker(type = FileKitType.Image)
 
                 image?.let { file ->
-                    val sizeInKB = file.size() / 1024
-                    val sizeInMb = sizeInKB / 1024
-                    val showFileSize = if (sizeInMb >= 1) {
-                        "$sizeInMb MB"
-                    } else {
-                        "$sizeInKB KB"
-                    }
-
                     mutableStateFlow.update {
                         it.copy(
                             dialogState = null,
                             signatureDocumentFile = file.readBytes().toBase64DataUri(),
                             signatureFileName = file.name,
-                            signatureSize = showFileSize,
+                            signatureSize = formatFileSize(file.size()),
                         )
                     }
                 }
@@ -341,6 +318,34 @@ internal class UploadDocsViewModel :
     @Suppress("UnusedParameter")
     private fun handleUploadDocumentResult(action: UploadDocsAction.Internal.UploadDocumentResultReceived) {
         // TODO: Implement logic to handle the upload result, e.g., show a toast or update state.
+    }
+
+    /**
+     * Calculates and formats the file size from bytes to a human-readable string.
+     *
+     * @param bytes The size in bytes.
+     * @return A formatted string showing size in MB or KB.
+     */
+    private fun formatFileSize(bytes: Long): String {
+        val sizeInKB = bytes / 1024
+        val sizeInMb = sizeInKB / 1024
+        return if (sizeInMb >= 1) {
+            "$sizeInMb MB"
+        } else {
+            "$sizeInKB KB"
+        }
+    }
+
+    /**
+     * Generates a unique filename with a timestamp.
+     *
+     * @param prefix The prefix for the filename .
+     * @param extension The file extension without the dot.
+     * @return A unique filename in the format "prefix_timestamp.extension".
+     */
+    @OptIn(ExperimentalTime::class)
+    private fun generateUniqueFileName(prefix: String, extension: String): String {
+        return "${prefix}_${Clock.System.now().toEpochMilliseconds()}.$extension"
     }
 }
 
@@ -441,9 +446,9 @@ internal sealed interface UploadDocsAction {
 
     /**
      * User action to upload a signed image.
-     * @property image The base64-encoded string of the signature image.
+     * `@property` imageArray Raw bytes of the signature image.
      */
-    data class UploadSign(val image: String) : UploadDocsAction
+    data class UploadSign(val imageArray: ByteArray) : UploadDocsAction
 
     /**
      * User action to initiate the upload of a document.
