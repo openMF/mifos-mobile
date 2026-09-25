@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">Последние транзакции</string>
+    <string name="no_transaction">Нет транзакций</string>
+    <string name="filter">Фильтр</string>
+    <string name="filter_transactions">Фильтрация транзакций</string>
+    <string name="clear_all">Очистить все</string>
+    <string name="filter_by_account">Фильтр по счету:</string>
+    <string name="account_number_label">№ счета: %1$s</string>
+    <string name="select_account">Выберите счет</string>
+    <string name="balance">Баланс: %1$s %2$s</string>
+    <string name="transaction_type">Тип транзакции:</string>
+    <string name="all">Все</string>
+    <string name="debits">Дебет</string>
+    <string name="credits">Кредит</string>
+    <string name="apply_filters">Применить фильтры</string>
+
+    <string name="deposit">Депозит</string>
+    <string name="withdrawal">Снятие средств</string>
+    <string name="interest_posting">Начисление процентов</string>
+    <string name="fee_deduction">Удержание комиссии</string>
+    <string name="transfer">Перевод</string>
+    <string name="transaction">Транзакция</string>
+</resources>

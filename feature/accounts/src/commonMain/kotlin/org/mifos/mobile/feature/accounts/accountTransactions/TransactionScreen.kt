@@ -200,7 +200,13 @@ internal fun TransactionScreenContent(
                                 items(transactions.size) { index ->
                                     val transaction = transactions[index]
                                     TransactionScreenItem(
-                                        title = transaction.typeValue ?: "",
+                                        title = if (transaction.labelRes != null) {
+                                            stringResource(transaction.labelRes)
+                                        } else if (transaction.type != null) {
+                                            stringResource(transaction.type.getLabelRes())
+                                        } else {
+                                            transaction.typeValue ?: ""
+                                        },
                                         date = DateHelper.getDateAsString(transaction.date),
                                         time = "",
                                         transactionAmount = CurrencyFormatter.format(

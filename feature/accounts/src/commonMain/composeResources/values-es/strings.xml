@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">Cuentas</string>
     <string name="feature_loan_account_title">Cuentas de Crédito</string>
     <string name="feature_saving_account_title">Cuentas de Ahorros</string>
@@ -18,7 +17,7 @@
     <string name="feature_accounts_filter_status">Estado</string>
     <string name="feature_accounts_filter_type">Tipo</string>
 
-<!--    Loan Account Filters-->
+    <!-- Loan Account Filters -->
 
     <string name="feature_loan_account_filter_active">Activa</string>
     <string name="feature_loan_account_filter_approval_pending">Pendiente de Aprobación</string>
@@ -33,7 +32,7 @@
     <string name="feature_loan_account_filter_personal">Personal</string>
     <string name="feature_loan_account_filter_bronze">Bronce</string>
 
-    <!--    Savings account filters-->
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">Cuenta de Monedero</string>
     <string name="feature_savings_filter_bank_account">Cuenta de Banco</string>
     <string name="feature_savings_filter_group_account">Cuenta grupal</string>
@@ -56,7 +55,7 @@
     <string name="feature_transaction_filter">Filtro</string>
     <string name="feature_transaction_filter_icon_description">Icon de Filtro</string>
 
-    <!--    Transaction filters -->
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">Crédito</string>
     <string name="feature_transaction_filter_debit">Débito</string>
 
@@ -73,7 +72,7 @@
 
     <string name="feature_generic_error_server">Error del servidor. No se puede completar la operación. Inténtelo de nuevo.</string>
 
-    <!--    Transaction Details -->
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">Detalles de la transacción</string>
     <string name="feature_transaction_detail_id">Id Transacción</string>
     <string name="feature_transaction_detail_transfer_description">Descripción de la transferencia</string>
@@ -94,4 +93,18 @@
     <string name="feature_transaction_detail_balance">Saldo disponible</string>
     <string name="feature_transaction_detail_default_type">Transacción</string>
 
+    <string name="feature_transaction_history_deposit">Depósito</string>
+    <string name="feature_transaction_history_withdrawal">Retiro</string>
+    <string name="feature_transaction_history_interest_posting">Registro de intereses</string>
+    <string name="feature_transaction_history_fee_deduction">Deducción de comisión</string>
+    <string name="feature_transaction_history_transfer">Transferencia</string>
+    <string name="feature_transaction_history_transaction">Transacción</string>
+    <string name="feature_transaction_history_disbursement">Desembolso</string>
+    <string name="feature_transaction_history_repayment">Reembolso</string>
+    <string name="feature_transaction_history_purchase">Compra</string>
+    <string name="feature_transaction_history_charge_payment">Pago de cargo</string>
+    <string name="feature_transaction_history_redeem">Canjear</string>
+    <string name="feature_transaction_history_recovery_repayment">Pago de recuperación</string>
+    <string name="feature_transaction_history_interest_waiver">Exención de intereses</string>
+    <string name="feature_transaction_history_fee_waiver">Exención de comisiones</string>
 </resources>

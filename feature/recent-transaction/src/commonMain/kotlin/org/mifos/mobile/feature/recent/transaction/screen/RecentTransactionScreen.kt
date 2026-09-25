@@ -253,7 +253,8 @@ internal fun RecentTransactionScreenContent(
                                 },
                             ) { transaction ->
                                 TransactionScreenItem(
-                                    title = transaction.typeValue.orEmpty(),
+                                    title = transaction.labelRes?.let { stringResource(it) }
+                                        ?: transaction.typeValue.orEmpty(),
                                     date = DateHelper.getDateAsString(transaction.date),
                                     time = "",
                                     transactionAmount = CurrencyFormatter.format(

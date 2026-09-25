@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">खाती</string>
     <string name="feature_loan_account_title">कर्ज खाती</string>
     <string name="feature_saving_account_title">बचत खाती</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">स्थिती</string>
     <string name="feature_accounts_filter_type">प्रकार</string>
 
+    <!-- Loan account filters -->
     <string name="feature_loan_account_filter_active">सक्रिय</string>
     <string name="feature_loan_account_filter_approval_pending">मंजूरी प्रलंबित</string>
     <string name="feature_loan_account_filter_closed">बंद</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">वैयक्तिक</string>
     <string name="feature_loan_account_filter_bronze">कांस्य</string>
 
+    <!-- Savings Account filters -->
     <string name="feature_savings_filter_wallet_account">वॉलेट खाते</string>
     <string name="feature_savings_filter_bank_account">बँक खाते</string>
     <string name="feature_savings_filter_group_account">गट खाते</string>
@@ -53,6 +54,7 @@
     <string name="feature_transaction_filter">फिल्टर</string>
     <string name="feature_transaction_filter_icon_description">फिल्टर चिन्ह</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">जमा</string>
     <string name="feature_transaction_filter_debit">नावे</string>
 
@@ -69,6 +71,7 @@
 
     <string name="feature_generic_error_server">आमच्या बाजूने सर्व्हर समस्या असल्याने पुढे जाऊ शकत नाही, थोड्या वेळाने पुन्हा प्रयत्न करा</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">व्यवहार तपशील</string>
     <string name="feature_transaction_detail_id">व्यवहार ID</string>
     <string name="feature_transaction_detail_transfer_description">हस्तांतरण वर्णन</string>
@@ -89,4 +92,18 @@
     <string name="feature_transaction_detail_balance">शिल्लक रक्कम</string>
     <string name="feature_transaction_detail_default_type">व्यवहार</string>
 
+    <string name="feature_transaction_history_deposit">ठेव (Deposit)</string>
+    <string name="feature_transaction_history_withdrawal">काढून घेणे (Withdrawal)</string>
+    <string name="feature_transaction_history_interest_posting">व्याज जमा</string>
+    <string name="feature_transaction_history_fee_deduction">शुल्क कपात</string>
+    <string name="feature_transaction_history_transfer">हस्तांतरण</string>
+    <string name="feature_transaction_history_transaction">व्यवहार</string>
+    <string name="feature_transaction_history_disbursement">कर्ज वितरण</string>
+    <string name="feature_transaction_history_repayment">कर्ज परतफेड</string>
+    <string name="feature_transaction_history_purchase">खरेदी</string>
+    <string name="feature_transaction_history_charge_payment">शुल्क पेमेंट</string>
+    <string name="feature_transaction_history_redeem">रिडीम</string>
+    <string name="feature_transaction_history_recovery_repayment">वसुली परतफेड</string>
+    <string name="feature_transaction_history_interest_waiver">व्याज माफी</string>
+    <string name="feature_transaction_history_fee_waiver">शुल्क माफी</string>
 </resources>
