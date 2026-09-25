@@ -4,6 +4,13 @@ require_relative File.join(project_dir, 'fastlane-config', 'android_config')
 require_relative File.join(project_dir, 'fastlane-config', 'ios_config')
 require_relative './config/config_helpers'
 
+# Helper: reject empty-string option values so || fallbacks work correctly.
+# GitHub Actions custom actions pass "" for unset optional parameters,
+# but Ruby treats "" as truthy ("" || "fallback" returns "", not "fallback").
+def sanitize_options(options)
+  options.reject { |_, v| v.is_a?(String) && v.strip.empty? }
+end
+
 default_platform(:android)
 
 platform :android do
@@ -36,7 +43,7 @@ platform :android do
     generateVersion = generateVersion()
 
     buildAndSignApp(
-      taskName: "bundle",
+      taskName: "assemble",
       buildType: "Release",
       **signing_config
     )
@@ -324,80 +331,112 @@ platform :ios do
   # Shared Private Lane Helpers
   #############################
 
-  private_lane :setup_ci_if_needed do
-    unless ENV['CI']
-      UI.message("🖥️ Running locally, skipping CI-specific setup.")
-    else
-      setup_ci
-    end
+  private_lane :setup_ci_if_needed do |options|
+      options = sanitize_options(options)
+      unless ENV['CI']
+          UI.message("🖥️ Running locally, skipping CI-specific setup.")
+      else
+          ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+          setup_ci(
+            provider: options[:ci_provider] || ios_config[:ci_provider]
+          )
+      end
   end
 
   private_lane :load_api_key do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      options = sanitize_options(options)
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
-    app_store_connect_api_key(
-      key_id: options[:appstore_key_id] || ios_config[:key_id],
-      issuer_id: options[:appstore_issuer_id] || ios_config[:issuer_id],
-      key_filepath: options[:key_filepath] || ios_config[:key_filepath],
-      duration: 1200
-    )
+      app_store_connect_api_key(
+        key_id: options[:appstore_key_id] || ios_config[:key_id],
+        issuer_id: options[:appstore_issuer_id] || ios_config[:issuer_id],
+        key_filepath: options[:key_filepath] || ios_config[:key_filepath],
+        duration: 1200
+      )
   end
 
   private_lane :fetch_certificates_with_match do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-    match(
-      type: options[:match_type] || ios_config[:match_type],
-      app_identifier: options[:app_identifier] || ios_config[:app_identifier],
-      readonly: true,
-      git_url: options[:git_url] || ios_config[:git_url],
-      git_branch: options[:git_branch] || ios_config[:git_branch],
-      git_private_key: options[:git_private_key] || ios_config[:match_git_private_key],
-      force_for_new_devices: true,
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
-    )
+      options = sanitize_options(options)
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      match(
+        type: options[:match_type] || ios_config[:match_type],
+        app_identifier: options[:app_identifier] || ios_config[:app_identifier],
+        readonly: false,
+        git_url: options[:git_url] || ios_config[:git_url],
+        git_branch: options[:git_branch] || ios_config[:git_branch],
+        git_private_key: options[:git_private_key] || ios_config[:match_git_private_key],
+        force_for_new_devices: true,
+        api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+      )
   end
 
   private_lane :build_ios_project do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-    app_identifier = options[:app_identifier] || ios_config[:app_identifier]
-    provisioning_profile_name = options[:provisioning_profile_name] || ios_config[:provisioning_profile_name]
+      options = sanitize_options(options)
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      app_identifier = options[:app_identifier] || ios_config[:app_identifier]
+      provisioning_profile_name = options[:provisioning_profile_name] || ios_config[:provisioning_profile_name]
+      team_id = options[:team_id] || ios_config[:team_id]
 
-    cocoapods(
-      podfile: ios_config[:podfile_path],
-      clean_install: true,
-      repo_update: true
-    )
-
-    # Manual signing for your main app target
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: ios_config[:project_path],
-      targets: [ios_config[:target]],
-      team_id: ios_config[:team_id],
-      code_sign_identity: ios_config[:code_sign_identity],
-      profile_name: provisioning_profile_name,
-      bundle_identifier: app_identifier
-    )
-
-    build_ios_app(
-      scheme: ios_config[:scheme],
-      workspace: ios_config[:workspace_path],
-      output_name: ios_config[:output_name],
-      output_directory: ios_config[:output_directory],
-      configuration: ios_config[:configuration]
-    )
+      build_ios_app(
+        scheme: ios_config[:scheme],
+        workspace: ios_config[:workspace_path],
+        output_name: ios_config[:output_name],
+        output_directory: ios_config[:output_directory],
+        export_options: {
+            provisioningProfiles: {
+                app_identifier => provisioning_profile_name
+            }
+        },
+        xcargs: "CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=\"Apple Distribution\" DEVELOPMENT_TEAM=#{team_id} PROVISIONING_PROFILE_SPECIFIER=\"#{provisioning_profile_name}\""
+      )
   end
 
-  private_lane :set_plist_values do
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-    update_plist(
-      plist_path: ios_config[:plist_path],
-      block: proc do |plist|
-        plist["ITSAppUsesNonExemptEncryption"] = false
-        plist["NSCameraUsageDescription"] = "We use the camera to scan QR codes for payments and to add beneficiaries. No images or video are stored."
-        plist["NSPhotoLibraryUsageDescription"] = "Allow access to choose a photo or document you decide to upload (e.g., profile photo or ID)."
+  private_lane :get_version_from_gradle do |options|
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+
+      # Generate version.txt from gradle
+      gradle(tasks: ["versionFile"])
+      full_version = File.read("../version.txt").strip rescue ios_config[:version_number]
+
+      # Sanitize for App Store if needed
+      # App Store requires: MAJOR.MINOR.PATCH (1-3 period-separated integers)
+      if options[:sanitize_for_appstore]
+          # Extract commit count from version
+          # Format: 2026.1.1-beta.0.9 → Extract year, month, and commit count
+          # Transform to: 2026.1.9 (Year.Month.CommitCount)
+
+          base_version = full_version.split('-')[0].split('+')[0]  # Get 2026.1.1
+          parts = base_version.split('.')
+
+          # Extract commit count from pre-release identifier
+          # -beta.0.9 → extract 9
+          # -rc.0.15 → extract 15
+          commit_count = "0"
+          if full_version.include?('-')
+              pre_release = full_version.split('-')[1].split('+')[0]  # Get "beta.0.9"
+              commit_parts = pre_release.split('.')
+              commit_count = commit_parts[-1] if commit_parts.length > 0  # Get last number (9)
+          end
+
+          # Construct App Store version: Year.Month.CommitCount
+          if parts.length >= 2
+              version = "#{parts[0]}.#{parts[1]}.#{commit_count}"
+          else
+              # Fallback if version format is unexpected
+              version = base_version
+          end
+
+          UI.important("📱 Full version from Gradle: #{full_version}")
+          UI.important("📱 App Store compatible version: #{version}")
+          UI.important("   ├─ Year: #{parts[0] if parts.length > 0}")
+          UI.important("   ├─ Month: #{parts[1] if parts.length > 1}")
+          UI.important("   └─ Commit Count: #{commit_count}")
+
+          version
+      else
+          UI.important("📱 Version from Gradle: #{full_version}")
+          full_version
       end
-    )
   end
 
   ###################
@@ -406,36 +445,52 @@ platform :ios do
 
   desc "Build Ios application"
   lane :build_ios do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
-    cocoapods(
-      podfile: ios_config[:podfile_path],
-      clean_install: true,
-      repo_update: true
-    )
+      # Install CocoaPods dependencies
+      cocoapods(
+          podfile: "cmp-ios/Podfile",
+          try_repo_update_on_error: true
+      )
 
-    build_ios_app(
-      scheme: ios_config[:scheme],
-      workspace: ios_config[:workspace_path],
-      output_name: ios_config[:output_name],
-      output_directory: ios_config[:output_directory],
-      skip_codesigning: true,
-      skip_archive: true
-    )
+      build_ios_app(
+          scheme: ios_config[:scheme],
+          workspace: ios_config[:workspace_path],
+          output_name: ios_config[:output_name],
+          output_directory: ios_config[:output_directory],
+          skip_codesigning: true,
+          skip_archive: true
+      )
   end
 
   desc "Build Signed Ios application"
   lane :build_signed_ios do |options|
-    setup_ci_if_needed
-    load_api_key(options)
-    fetch_certificates_with_match(options)
-    build_ios_project(options)
+      options = sanitize_options(options)
+      # Install CocoaPods dependencies
+      cocoapods(
+          podfile: "cmp-ios/Podfile",
+          try_repo_update_on_error: true
+      )
+
+      setup_ci_if_needed
+      load_api_key(options)
+      fetch_certificates_with_match(options)
+      build_ios_project(options)
   end
 
-  desc "Increment build number from latest Firebase release"
+  desc "Increment build number from latest Firebase release and set version number"
   lane :increment_version do |options|
     firebase_config = FastlaneConfig.get_firebase_config(:ios)
     ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+
+    # Get version from gradle - Firebase accepts full semantic version with pre-release identifiers
+    version = get_version_from_gradle(sanitize_for_appstore: false)
+
+    # Set version number to match Android version
+    increment_version_number(
+      xcodeproj: ios_config[:project_path],
+      version_number: version
+    )
 
     latest_release = firebase_app_distribution_get_latest_release(
       app: firebase_config[:appId],
@@ -463,15 +518,17 @@ platform :ios do
 
   desc "Upload iOS application to Firebase App Distribution"
   lane :deploy_on_firebase do |options|
+    options = sanitize_options(options)
     firebase_config = FastlaneConfig.get_firebase_config(:ios)
+    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
     increment_version(serviceCredsFile: firebase_config[:serviceCredsFile])
 
     build_signed_ios(
-      options.merge(
-        match_type: "adhoc",
-        provisioning_profile_name: "match AdHoc org.mifos.mobile"
-      )
+        options.merge(
+            match_type: ios_config[:match_type],
+            provisioning_profile_name: ios_config[:provisioning_profile_name]
+        )
     )
 
     releaseNotes = generateReleaseNote()
@@ -486,239 +543,274 @@ platform :ios do
 
   desc "Upload beta build to TestFlight"
   lane :beta do |options|
+      options = sanitize_options(options)
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      testflight_config = FastlaneConfig::IosConfig::TESTFLIGHT_CONFIG
 
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-
-    setup_ci_if_needed
-    load_api_key(options)
-    fetch_certificates_with_match(
-      options.merge(match_type: "appstore")
-    )
-
-    increment_version_number(
-      xcodeproj: ios_config[:project_path],
-      version_number: ios_config[:version_number]
-    )
-
-    latest_build_number = latest_testflight_build_number(
-      app_identifier: options[:app_identifier] || ios_config[:app_identifier],
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      version: ios_config[:version_number]
-    )
-
-    increment_build_number(
-      xcodeproj: ios_config[:project_path],
-      build_number: latest_build_number + 1
-    )
-
-    set_plist_values
-
-    build_ios_project(
-      options.merge(
-        provisioning_profile_name: "match AppStore org.mifos.mobile"
+      # Install CocoaPods dependencies
+      cocoapods(
+          podfile: "cmp-ios/Podfile",
+          try_repo_update_on_error: true
       )
-    )
 
-    pilot(
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      skip_waiting_for_build_processing: true
-    )
+      setup_ci_if_needed
+      load_api_key(options)
+      fetch_certificates_with_match(
+        options.merge(match_type: "appstore")
+      )
+
+      # Get version from gradle (sanitized for App Store)
+      gradle_version = get_version_from_gradle(sanitize_for_appstore: true)
+
+      # Get latest TestFlight build number and version FIRST
+      # so we can ensure our version is always higher
+      latest_build_number = latest_testflight_build_number(
+        app_identifier: options[:app_identifier] || ios_config[:app_identifier],
+        api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+      )
+      latest_version = Actions.lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
+
+      # Determine final version: must be higher than latest TestFlight version
+      version = options[:version_number] || gradle_version
+      if latest_version && !latest_version.to_s.empty?
+        begin
+          if Gem::Version.new(version) <= Gem::Version.new(latest_version)
+            # Bump: increment patch of latest TestFlight version
+            parts = latest_version.split('.')
+            parts[-1] = (parts[-1].to_i + 1).to_s
+            bumped = parts.join('.')
+            UI.important("⚠️ Gradle version #{version} <= TestFlight #{latest_version}, bumping to #{bumped}")
+            version = bumped
+          end
+        rescue ArgumentError => e
+          UI.error("Version comparison failed: #{e.message}, using gradle version #{version}")
+        end
+      end
+      UI.important("📱 Final App Store version: #{version}")
+
+      # Set version in Xcode project
+      increment_version_number(
+        xcodeproj: ios_config[:project_path],
+        version_number: version
+      )
+
+      # Increment build number
+      increment_build_number(
+        xcodeproj: ios_config[:project_path],
+        build_number: latest_build_number + 1
+      )
+
+      # Build signed IPA
+      build_ios_project(
+        options.merge(
+            provisioning_profile_name: ios_config[:provisioning_profile_appstore]
+        )
+      )
+
+      # Generate release notes from git commits
+      releaseNotes = generateReleaseNote()
+
+      # Prepare localized build info with changelog
+      locale = ios_config[:primary_locale]
+      localized_build_info = {
+        "default" => {
+          whats_new: releaseNotes
+        },
+        locale => {
+          whats_new: releaseNotes
+        }
+      }
+
+      # Upload to TestFlight with comprehensive metadata
+      pilot(
+        # API Key
+        api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+
+        # Beta App Review Information (for Apple reviewers)
+        beta_app_review_info: testflight_config[:beta_app_review_info],
+
+        # Beta App Configuration
+        beta_app_feedback_email: testflight_config[:beta_app_feedback_email],
+        beta_app_description: testflight_config[:beta_app_description],
+        demo_account_required: testflight_config[:demo_account_required],
+
+        # Distribution Settings
+        distribute_external: testflight_config[:distribute_external],
+        notify_external_testers: testflight_config[:notify_external_testers],
+        groups: testflight_config[:groups],  # Tester groups to distribute to
+
+        # Submission Settings
+        skip_submission: testflight_config[:skip_submission],
+        skip_waiting_for_build_processing: testflight_config[:skip_waiting_for_build_processing],
+        submit_beta_review: testflight_config[:submit_beta_review],
+
+        # Build Management
+        expire_previous_builds: testflight_config[:expire_previous_builds],
+        reject_build_waiting_for_review: testflight_config[:reject_build_waiting_for_review],
+
+        # Processing Wait Settings
+        wait_processing_interval: testflight_config[:wait_processing_interval],
+        wait_processing_timeout_duration: testflight_config[:wait_processing_timeout_duration],
+
+        # Encryption Compliance
+        uses_non_exempt_encryption: testflight_config[:uses_non_exempt_encryption],
+
+        # Release notes for this build
+        changelog: releaseNotes,
+
+        # Localized information
+        localized_app_info: testflight_config[:localized_app_info],
+        localized_build_info: localized_build_info
+      )
+
+      UI.success("✅ Successfully uploaded to TestFlight!")
+      UI.success("📝 Release Notes: #{releaseNotes}")
   end
 
-  desc "Upload iOS Application to AppStore"
+  desc "Upload iOS Application to App Store"
   lane :release do |options|
+     options = sanitize_options(options)
+     ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+     appstore_config = FastlaneConfig::IosConfig::APPSTORE_CONFIG
 
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-
-    setup_ci_if_needed
-    load_api_key(options)
-    fetch_certificates_with_match(
-      options.merge(match_type: "appstore")
-    )
-
-    increment_version_number(
-      xcodeproj: ios_config[:project_path],
-      version_number: ios_config[:version_number]
-    )
-
-    latest_build_number = latest_testflight_build_number(
-      app_identifier: options[:app_identifier] || ios_config[:app_identifier],
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      version: ios_config[:version_number]
-    )
-
-    increment_build_number(
-      xcodeproj: ios_config[:project_path],
-      build_number: latest_build_number + 1
-    )
-
-    set_plist_values
-
-    build_ios_project(
-      options.merge(
-        provisioning_profile_name: "match AppStore org.mifos.mobile"
+      # Install CocoaPods dependencies
+      cocoapods(
+          podfile: "cmp-ios/Podfile",
+          try_repo_update_on_error: true
       )
-    )
 
-    deliver(
-      screenshots_path: ios_config[:screenshots_ios_path],
-      metadata_path: options[:metadata_path] || ios_config[:metadata_path],
-      submit_for_review: false, # Set to true if you want to auto-submit for review
-      automatic_release: true, # Set to true if you want to auto-release once it approved
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      skip_app_version_update: false,
-      force: true, # Skips HTML report verification
-      precheck_include_in_app_purchases: false,
-      overwrite_screenshots: true,
-      reject_if_possible: true,
-      app_rating_config_path: ios_config[:app_rating_config_path],
-      submission_information: {
-        add_id_info_uses_idfa: false,
-        add_id_info_limits_tracking: false,
-        add_id_info_serves_ads: false,
-        add_id_info_tracks_action: false,
-        add_id_info_tracks_install: false,
-        content_rights_has_rights: true,
-        content_rights_contains_third_party_content: false,
-        export_compliance_platform: 'ios',
-        export_compliance_compliance_required: false,
-        export_compliance_encryption_updated: false,
-        export_compliance_app_type: nil,
-        export_compliance_uses_encryption: false,
-        export_compliance_is_exempt: true,
-        export_compliance_contains_third_party_cryptography: false,
-        export_compliance_contains_proprietary_cryptography: false,
-        export_compliance_available_on_french_store: true
-      }
-    )
-  end
-end
+      setup_ci_if_needed
+      load_api_key(options)
+      fetch_certificates_with_match(
+        options.merge(match_type: "appstore")
+      )
 
-platform :mac do
-  #############################
-  # Shared Private Lane Helpers
-  #############################
+      # Get version from gradle (sanitized for App Store)
+      gradle_version = get_version_from_gradle(sanitize_for_appstore: true)
 
-  private_lane :setup_ci_if_needed do
-    if ENV['CI']
-      setup_ci
-    else
-      UI.message("🖥️ Running locally, skipping CI-specific setup.")
-    end
-  end
+      # Get latest TestFlight build number and version FIRST
+      # so we can ensure our version is always higher
+      latest_build_number = latest_testflight_build_number(
+        app_identifier: options[:app_identifier] || ios_config[:app_identifier],
+        api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+      )
+      latest_version = Actions.lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
 
-  private_lane :load_api_key_macos do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      # Determine final version: must be higher than latest TestFlight version
+      version = options[:version_number] || gradle_version
+      if latest_version && !latest_version.to_s.empty?
+        begin
+          if Gem::Version.new(version) <= Gem::Version.new(latest_version)
+            parts = latest_version.split('.')
+            parts[-1] = (parts[-1].to_i + 1).to_s
+            bumped = parts.join('.')
+            UI.important("⚠️ Gradle version #{version} <= TestFlight #{latest_version}, bumping to #{bumped}")
+            version = bumped
+          end
+        rescue ArgumentError => e
+          UI.error("Version comparison failed: #{e.message}, using gradle version #{version}")
+        end
+      end
+      UI.important("📱 Final App Store version: #{version}")
 
-    app_store_connect_api_key(
-      key_id: options[:appstore_key_id] || ios_config[:key_id],
-      issuer_id: options[:appstore_issuer_id] || ios_config[:issuer_id],
-      key_filepath: options[:key_filepath] || ios_config[:key_filepath],
-      duration: 1200
-    )
-  end
+      # Set version in Xcode project
+      increment_version_number(
+        xcodeproj: ios_config[:project_path],
+        version_number: version
+      )
 
-  private_lane :next_macos_build_number do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
+      # Increment build number
+      increment_build_number(
+        xcodeproj: ios_config[:project_path],
+        build_number: latest_build_number + 1
+      )
 
-    latest = latest_testflight_build_number(
-      app_identifier: options[:app_identifier] || ios_config[:app_identifier],
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      platform: "osx",
-      version: ios_config[:version_number]
-    )
-    (latest.to_i + 1).to_s
-  end
+      # Update Info.plist with required privacy strings
+      update_plist(
+        plist_path: ios_config[:plist_path],
+        block: proc do |plist|
+          plist['NSContactsUsageDescription'] = 'This app does not access your contacts. This message is required for compliance only.'
+          plist['NSLocationWhenInUseUsageDescription'] = 'This app does not access your location. This message is required for compliance only.'
+          plist['NSBluetoothAlwaysUsageDescription'] = 'This app does not use Bluetooth. This message is required for compliance only.'
+        end
+      )
 
-  # Resolve the most-recent generated .pkg path
-    private_lane :find_pkg_path do
-      project_dir = File.expand_path('..', Dir.pwd)
-      Dir[File.join(project_dir, 'cmp-desktop', 'build', 'release', '**', 'pkg', '*.pkg')]
-        .max_by { |p| File.mtime(p) } || UI.user_error!('PKG not found!')
-    end
+      # Build signed IPA
+      build_ios_project(
+        options.merge(
+            provisioning_profile_name: ios_config[:provisioning_profile_appstore]
+        )
+      )
 
-  ###################
-  # Public lanes
-  ###################
+      # Generate release notes from git commits
+      releaseNotes = generateReleaseNote()
 
-  desc "Build & upload macOS (.pkg) to TestFlight"
-  lane :desktop_testflight do |options|
-    setup_ci_if_needed
-    load_api_key_macos(options)
+      # Write release notes to metadata file (required when creating new versions)
+      locale = ios_config[:primary_locale]
+      release_notes_path = File.join(ios_config[:metadata_path], locale, "release_notes.txt")
+      FileUtils.mkdir_p(File.dirname(release_notes_path))
+      File.write(release_notes_path, releaseNotes)
+      UI.message("📝 Wrote release notes to: #{release_notes_path}")
 
-    new_build_number = next_macos_build_number(options)
+      # Log what metadata will be uploaded
+      UI.important("📋 Metadata files that will be uploaded:")
+      metadata_files = Dir.glob(File.join(ios_config[:metadata_path], locale, "*.txt"))
+      if metadata_files.empty?
+        UI.error("⚠️  No metadata files found!")
+      else
+        metadata_files.each do |file|
+          UI.message("   - #{File.basename(file)}")
+        end
+      end
+      UI.important("ℹ️  Other metadata (description, screenshots, etc.) will be copied from previous version")
 
-    gradle(
-      tasks: ["packageReleasePkg"],
-      properties: {
-        "buildNumber" => new_build_number,
-        "macOsAppStoreRelease" => true
-      }
-    )
+      # Upload binary and release notes to App Store
+      # Note: Metadata (description, screenshots, age rating) is already configured in App Store Connect
+      # We only upload the IPA, release notes, copyright, and submit for review
+      deliver(
+        # API Key
+        api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
 
-    pkg_path = find_pkg_path
-        UI.message("Found PKG at: #{pkg_path}")
+        # Copyright (required by precheck)
+        copyright: "#{Time.now.year} #{FastlaneConfig::ProjectConfig::ORGANIZATION_NAME}",
 
-    pilot(
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      pkg: pkg_path,
-      app_platform: 'osx',
-      skip_waiting_for_build_processing: true,
-    )
-  end
+        # Metadata path (contains release_notes.txt with "What's New")
+        metadata_path: ios_config[:metadata_path],
 
-  desc "Build & submit macOS app to App Store (non-beta)"
-    lane :desktop_release do |options|
-    ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
-    setup_ci_if_needed
-    load_api_key_macos(options)
+        # Skip uploading other metadata and screenshots (already in App Store Connect)
+        # But we DO upload release_notes.txt for "What's New" requirement
+        skip_metadata: false,  # Must be false to upload release_notes.txt
+        skip_screenshots: true,
+        skip_binary_upload: options[:skip_binary_upload] || false,
 
-    new_build_number = next_macos_build_number(options)
+        # Only overwrite specific fields we provide (don't clear existing metadata)
+        overwrite_screenshots: false,
 
-    gradle(
-      tasks: ["packageReleasePkg"],
-      properties: {
-        "buildNumber" => new_build_number,
-        "macOsAppStoreRelease" => true
-      }
-    )
+        # App Review Information (contact details for Apple reviewers)
+        app_review_information: appstore_config[:app_review_information],
 
-    # Locate the produced PKG (adjust pattern if you rename)
-    pkg_path = find_pkg_path
-      UI.message("Found PKG at: #{pkg_path}")
+        # Submission settings
+        submit_for_review: options[:submit_for_review] || appstore_config[:submit_for_review],
+        automatic_release: options[:automatic_release] || appstore_config[:automatic_release],
+        phased_release: options[:phased_release] || appstore_config[:phased_release],
 
-    deliver(
-      platform: 'osx',
-      pkg: pkg_path,
-      screenshots_path: ios_config[:screenshots_macos_path],
-      metadata_path: options[:metadata_path] || ios_config[:metadata_path],
-      submit_for_review: true, # Set to true if you want to auto-submit for review
-      automatic_release: true, # Set to true if you want to auto-release once it approved
-      api_key: Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      skip_app_version_update: false,
-      force: true, # Skips HTML report verification
-      precheck_include_in_app_purchases: false,
-      overwrite_screenshots: true,
-      reject_if_possible: true,
-      app_rating_config_path: ios_config[:app_rating_config_path],
-      submission_information: {
-        add_id_info_uses_idfa: false,
-        add_id_info_limits_tracking: false,
-        add_id_info_serves_ads: false,
-        add_id_info_tracks_action: false,
-        add_id_info_tracks_install: false,
-        content_rights_has_rights: true,
-        content_rights_contains_third_party_content: false,
-        export_compliance_platform: 'osx',
-        export_compliance_compliance_required: false,
-        export_compliance_encryption_updated: false,
-        export_compliance_app_type: nil,
-        export_compliance_uses_encryption: false,
-        export_compliance_is_exempt: true,
-        export_compliance_contains_third_party_cryptography: false,
-        export_compliance_contains_proprietary_cryptography: false,
-        export_compliance_available_on_french_store: true
-      }
-    )
+        # Version and build management
+        skip_app_version_update: options[:skip_app_version_update] || appstore_config[:skip_app_version_update],
+        reject_if_possible: appstore_config[:reject_if_possible],
+
+        # Processing settings
+        force: appstore_config[:force],
+        precheck_include_in_app_purchases: appstore_config[:precheck_include_in_app_purchases],
+        run_precheck_before_submit: appstore_config[:run_precheck_before_submit],
+
+        # Submission information (compliance, ads, etc.)
+        submission_information: appstore_config[:submission_information],
+
+        # Age rating declarations (lootBox, parentalControls, advertising, etc.)
+        app_rating_config_path: ios_config[:app_rating_config_path]
+      )
+
+      UI.success("✅ Successfully deployed to App Store!")
+      UI.success("📝 Release Notes: #{releaseNotes}")
   end
 end
