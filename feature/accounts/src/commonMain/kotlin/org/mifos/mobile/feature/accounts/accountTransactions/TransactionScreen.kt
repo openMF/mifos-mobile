@@ -46,7 +46,6 @@ import mifos_mobile.feature.accounts.generated.resources.feature_transaction_typ
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
@@ -54,6 +53,7 @@ import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshSt
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.entity.client.Type
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.FilterTopSection
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
@@ -62,6 +62,11 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.formatTransactionDate
+import org.mifos.mobile.core.ui.utils.formatTransactionDateWithPrefix
+import org.mifos.mobile.core.ui.utils.localizeAmount
+import org.mifos.mobile.core.ui.utils.localizeTransactionType
+import org.mifos.mobile.core.ui.utils.parseIsoDate
 import org.mifos.mobile.feature.accounts.component.FilterSection
 import org.mifos.mobile.feature.accounts.model.TransactionFilterType
 import template.core.base.designsystem.theme.KptTheme
@@ -191,7 +196,7 @@ internal fun TransactionScreenContent(
                             state.filteredData.forEach { (date, transactions) ->
                                 item {
                                     Text(
-                                        text = date,
+                                        text = formatTransactionDateWithPrefix(parseIsoDate(date)),
                                         style = MifosTypography.labelLargeEmphasized,
                                         modifier = Modifier.padding(vertical = DesignToken.padding.medium),
                                     )
@@ -200,13 +205,17 @@ internal fun TransactionScreenContent(
                                 items(transactions.size) { index ->
                                     val transaction = transactions[index]
                                     TransactionScreenItem(
-                                        title = transaction.typeValue ?: "",
-                                        date = DateHelper.getDateAsString(transaction.date),
+                                        title = localizeTransactionType(
+                                            Type(code = transaction.typeCode, value = transaction.typeValue),
+                                        ),
+                                        date = formatTransactionDate(transaction.date),
                                         time = "",
-                                        transactionAmount = CurrencyFormatter.format(
-                                            balance = transaction.amount,
-                                            currencyCode = transaction.currency,
-                                            maximumFractionDigits = 3,
+                                        transactionAmount = localizeAmount(
+                                            CurrencyFormatter.format(
+                                                balance = transaction.amount,
+                                                currencyCode = transaction.currency,
+                                                maximumFractionDigits = 3,
+                                            ),
                                         ),
                                         isCredited = transaction.isCredit == true,
                                         onClick = {

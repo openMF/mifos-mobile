@@ -69,12 +69,12 @@ import mifos_mobile.feature.recent_transaction.generated.resources.transaction_t
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.mobile.core.common.CurrencyFormatter
-import org.mifos.mobile.core.common.DateHelper
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
+import org.mifos.mobile.core.model.entity.client.Type
 import org.mifos.mobile.core.ui.component.EmptyDataView
 import org.mifos.mobile.core.ui.component.MifosErrorComponent
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
@@ -82,6 +82,11 @@ import org.mifos.mobile.core.ui.component.MifosProgressIndicator
 import org.mifos.mobile.core.ui.component.TransactionScreenItem
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.formatTransactionDate
+import org.mifos.mobile.core.ui.utils.formatTransactionDateWithPrefix
+import org.mifos.mobile.core.ui.utils.localizeAmount
+import org.mifos.mobile.core.ui.utils.localizeTransactionType
+import org.mifos.mobile.core.ui.utils.parseIsoDate
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionAction
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionEvent
 import org.mifos.mobile.feature.recent.transaction.viewmodel.RecentTransactionUiState
@@ -239,7 +244,7 @@ internal fun RecentTransactionScreenContent(
                         state.groupedTransactions.forEach { (date, transactions) ->
                             item(key = date) {
                                 Text(
-                                    text = date,
+                                    text = formatTransactionDateWithPrefix(parseIsoDate(date)),
                                     style = MifosTypography.labelLargeEmphasized,
                                     modifier = Modifier.padding(vertical = DesignToken.padding.medium),
                                 )
@@ -253,13 +258,17 @@ internal fun RecentTransactionScreenContent(
                                 },
                             ) { transaction ->
                                 TransactionScreenItem(
-                                    title = transaction.typeValue.orEmpty(),
-                                    date = DateHelper.getDateAsString(transaction.date),
+                                    title = localizeTransactionType(
+                                        Type(code = transaction.typeCode, value = transaction.typeValue),
+                                    ),
+                                    date = formatTransactionDate(transaction.date),
                                     time = "",
-                                    transactionAmount = CurrencyFormatter.format(
-                                        balance = transaction.amount,
-                                        currencyCode = transaction.currency,
-                                        maximumFractionDigits = 3,
+                                    transactionAmount = localizeAmount(
+                                        CurrencyFormatter.format(
+                                            balance = transaction.amount,
+                                            currencyCode = transaction.currency,
+                                            maximumFractionDigits = 3,
+                                        ),
                                     ),
                                     isCredited = transaction.isCredit,
                                     onClick = {
