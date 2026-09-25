@@ -11,6 +11,7 @@ package cmp.android.app
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -46,6 +47,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Secure the whole app by preventing screenshots and screen recordings
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
         runBlocking {
             val userThemeConfig = userPreferencesRepository.observeDarkThemeConfig.first()
             AppCompatDelegate.setDefaultNightMode(userThemeConfig.osValue)
