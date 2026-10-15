@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     `kotlin-dsl`
@@ -12,9 +12,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_21
     }
 }
 
@@ -29,7 +30,7 @@ dependencies {
     compileOnly(libs.ktlint.gradlePlugin)
     compileOnly(libs.spotless.gradlePlugin)
     implementation(libs.truth)
-
+    compileOnly(libs.room.gradlePlugin)
     compileOnly(libs.firebase.crashlytics.gradlePlugin)
     compileOnly(libs.firebase.performance.gradlePlugin)
 }
@@ -38,6 +39,14 @@ tasks {
     validatePlugins {
         enableStricterValidation = true
         failOnWarning = true
+    }
+
+    // Configure JUnit 5 for testing keystore management functionality
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
     }
 }
 
@@ -120,6 +129,17 @@ gradlePlugin {
         register("kmpLibrary") {
             id = "org.convention.kmp.library"
             implementationClass = "KMPLibraryConventionPlugin"
+        }
+
+        register("kmpCoreBaseLibrary") {
+            id = "org.convention.kmp.core.base.library"
+            implementationClass = "KMPCoreBaseLibraryConventionPlugin"
+        }
+
+        register("ktlint") {
+            id = "org.convention.ktlint.plugin"
+            implementationClass = "KtlintConventionPlugin"
+            description = "Configures kotlinter for the project"
         }
     }
 }

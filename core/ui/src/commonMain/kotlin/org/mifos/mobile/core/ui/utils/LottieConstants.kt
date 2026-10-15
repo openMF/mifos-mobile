@@ -11,4 +11,5 @@ package org.mifos.mobile.core.ui.utils
 
 object LottieConstants {
     const val LOADING_ANIMATION = "files/loading_animation.json"
+    const val ERROR_ANIMATION = "files/error_animation.json"
 }

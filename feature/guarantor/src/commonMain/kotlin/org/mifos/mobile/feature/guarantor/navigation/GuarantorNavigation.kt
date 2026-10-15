@@ -16,26 +16,48 @@ import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_DE
 import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_LIST_SCREEN_ROUTE
 import org.mifos.mobile.feature.guarantor.navigation.GuarantorRoute.GUARANTOR_NAVIGATION_ROUTE_BASE
 
+/**
+ * Sealed class representing the possible navigation destinations within the Guarantor feature.
+ *
+ * This class defines all the navigation routes for the guarantor management flow,
+ * including list, detail, and add screens with their respective argument requirements.
+ */
 sealed class GuarantorNavigation(val route: String) {
 
+    /**
+     * Represents the base route for the Guarantor feature.
+     * Serves as the entry point for the guarantor navigation graph.
+     */
     data object GuarantorScreenBase : GuarantorNavigation(
         route = "$GUARANTOR_NAVIGATION_ROUTE_BASE/{$LOAN_ID}",
     ) {
         fun passArguments(loanId: String) = "$GUARANTOR_NAVIGATION_ROUTE_BASE/$loanId"
     }
 
+    /**
+     * Represents the guarantor list screen route.
+     * Displays all guarantors for a specific loan.
+     */
     data object GuarantorList : GuarantorNavigation(
         route = "$GUARANTOR_LIST_SCREEN_ROUTE/{$LOAN_ID}",
     ) {
         fun passArguments(loanId: String) = "$GUARANTOR_LIST_SCREEN_ROUTE/$loanId"
     }
 
+    /**
+     * Represents the guarantor detail screen route.
+     * Shows detailed information about a specific guarantor.
+     */
     data object GuarantorDetails : GuarantorNavigation(
         route = "$GUARANTOR_DETAIL_SCREEN_ROUTE/{$LOAN_ID}/{$INDEX}",
     ) {
         fun passArguments(index: Int, loanId: Long) = "$GUARANTOR_DETAIL_SCREEN_ROUTE/$loanId/$index"
     }
 
+    /**
+     * Represents the add/edit guarantor screen route.
+     * Used for both adding new guarantors and editing existing ones.
+     */
     data object GuarantorAdd : GuarantorNavigation(
         route = "$GUARANTOR_ADD_SCREEN_ROUTE/{$LOAN_ID}/{$INDEX}",
     ) {
@@ -43,6 +65,11 @@ sealed class GuarantorNavigation(val route: String) {
     }
 }
 
+/**
+ * Object containing the route constants for the Guarantor feature navigation.
+ *
+ * These constants define the base routes used throughout the guarantor navigation graph.
+ */
 object GuarantorRoute {
     const val GUARANTOR_NAVIGATION_ROUTE_BASE = "guarantor_route"
     const val GUARANTOR_LIST_SCREEN_ROUTE = "guarantor_list_screen_route"

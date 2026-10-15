@@ -51,6 +51,9 @@ import org.mifos.mobile.feature.notification.navigation.notificationDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.verifyPasscode.navigateToVerifyPasscodeScreen
 import org.mifos.mobile.feature.passcode.verifyPasscode.passcodeDestination
+import org.mifos.mobile.feature.pocket.managePocket.navigateToManagePocketScreen
+import org.mifos.mobile.feature.pocket.navigation.navigateToPocketGraph
+import org.mifos.mobile.feature.pocket.navigation.pocketNavGraph
 import org.mifos.mobile.feature.qr.navigation.qrNavGraph
 import org.mifos.mobile.feature.qr.qr.navigateToQrReaderScreen
 import org.mifos.mobile.feature.qr.qrCodeDisplay.navigateToQrDisplayScreen
@@ -62,6 +65,8 @@ import org.mifos.mobile.feature.savingsaccount.navigation.savingsNavGraph
 import org.mifos.mobile.feature.savingsaccount.savingsAccountDetails.navigateToSavingsAccountDetailsScreen
 import org.mifos.mobile.feature.settings.faq.faqDestination
 import org.mifos.mobile.feature.settings.faq.navigateToFaq
+import org.mifos.mobile.feature.settings.help.helpDestination
+import org.mifos.mobile.feature.settings.help.navigateToHelp
 import org.mifos.mobile.feature.share.application.navigation.navigateToShareApplicationGraph
 import org.mifos.mobile.feature.share.application.navigation.shareApplicationNavGraph
 import org.mifos.mobile.feature.shareaccount.navigation.shareNavGraph
@@ -128,6 +133,8 @@ internal fun NavGraphBuilder.authenticatedGraph(
 
                     is HomeNavigationDestination.ApplyShare ->
                         navController.navigateToShareApplicationGraph()
+
+                    HomeNavigationDestination.Pocket -> navController.navigateToPocketGraph()
                 }
             },
 
@@ -142,6 +149,7 @@ internal fun NavGraphBuilder.authenticatedGraph(
                             StatusNavigationDestination.THIRD_PARTY_TRANSFER.name,
                         )
                     }
+
                     else -> {
                         navController.navigateToManualBeneficiaryAddScreen()
                     }
@@ -267,7 +275,10 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navController = navController,
             navigateToClientChargeScreen = navController::navigateToClientChargeScreen,
             navigateToShareAccountTransactionScreen = { accountId ->
-                navController.navigateToAccountTransactionsScreen(Constants.SHARE_ACCOUNTS, accountId)
+                navController.navigateToAccountTransactionsScreen(
+                    Constants.SHARE_ACCOUNTS,
+                    accountId,
+                )
             },
             navigateToQrCodeScreen = navController::navigateToQrDisplayScreen,
         )
@@ -345,7 +356,23 @@ internal fun NavGraphBuilder.authenticatedGraph(
             navigateToStatusScreen = navController::navigateToStatusScreenWithoutPopUpTo,
         )
 
-        faqDestination(onBackClick = navController::popBackStack, contact = {})
+        faqDestination(
+            onBackClick = navController::popBackStack,
+            contact = navController::navigateToHelp,
+        )
+
+        helpDestination(
+            onBackClick = navController::popBackStack,
+            navigateToFAQ = navController::navigateToFaq,
+        )
+
+        pocketNavGraph(
+            navigateBack = navController::popBackStack,
+            navigateToManagePocket = navController::navigateToManagePocketScreen,
+            navigateToLoanAccountDetail = navController::navigateToLoanAccountDetailsScreen,
+            navigateToShareAccountDetail = navController::navigateToShareAccountDetailsScreen,
+            navigateToSavingsAccountDetail = navController::navigateToSavingsAccountDetailsScreen,
+        )
     }
 }
 

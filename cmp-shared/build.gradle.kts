@@ -24,8 +24,12 @@ kotlin {
             // Navigation Modules
             implementation(projects.cmpNavigation)
             implementation(compose.components.resources)
+            implementation(projects.coreBase.platform)
+            implementation(projects.coreBase.ui)
             api(projects.core.data)
             api(projects.core.network)
+            implementation(libs.coil.kt.compose)
+
             //put your multiplatform dependencies here
             implementation(compose.material)
             implementation(compose.material3)
@@ -41,7 +45,7 @@ kotlin {
     cocoapods {
         summary = "KMP Shared Module"
         homepage = "https://github.com/openMF/mifos-mobile"
-        version = "1.0"
+        version = project.version.toString().substringBefore("-").substringBefore("+")
         ios.deploymentTarget = "16.0"
         podfile = project.file("../cmp-ios/Podfile")
 

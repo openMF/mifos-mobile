@@ -33,6 +33,7 @@ import org.mifos.mobile.core.model.EventType
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosStatusComponent
 import org.mifos.mobile.core.ui.utils.EventsEffect
+import org.mifos.mobile.core.ui.utils.LottieConstants
 import template.core.base.designsystem.theme.KptTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -80,10 +81,14 @@ internal fun StatusScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             MifosStatusComponent(
-                icon = if (uiState.eventType == EventType.SUCCESS.name) {
-                    Res.drawable.ic_icon_success
-                } else {
-                    Res.drawable.ic_icon_error
+                icon = when (uiState.eventType) {
+                    EventType.SUCCESS.name -> Res.drawable.ic_icon_success
+                    EventType.FAILURE.name -> Res.drawable.ic_icon_error
+                    else -> null
+                },
+                path = when (uiState.eventType) {
+                    EventType.SERVER_EXCEPTION.name -> LottieConstants.ERROR_ANIMATION
+                    else -> null
                 },
                 title = uiState.title ?: "",
                 subTitle = uiState.subtitle ?: "",

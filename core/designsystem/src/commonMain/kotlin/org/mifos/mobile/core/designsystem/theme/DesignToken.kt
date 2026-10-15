@@ -218,6 +218,7 @@ data class AppShapes(
     // custom shapes
     val topCornerDp8: Shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
     val topCornerDp16: Shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    val bottomCornerDp8: Shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp),
     val bottomCornerDp12: Shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp),
     val dp2: Shape = RoundedCornerShape(2.dp),
     val dp25: Shape = RoundedCornerShape(25.dp),
@@ -362,6 +363,9 @@ data class AppSizes(
     val backgroundDp100: Dp = 100.dp,
     val buttonHeightDp48: Dp = 48.dp,
     val stepIndicatorDp40: Dp = 40.dp,
+    val tableCellWidthSmall: Dp = 60.dp,
+    val tableCellWidthMedium: Dp = 100.dp,
+    val tableCellWidthLarge: Dp = 150.dp,
 )
 
 @Immutable

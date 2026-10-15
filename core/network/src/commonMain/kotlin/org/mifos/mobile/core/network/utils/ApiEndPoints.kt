@@ -25,4 +25,5 @@ object ApiEndPoints {
     const val DEVICE = "device"
     const val USER = "user"
     const val PRODUCTS = "products"
+    const val POCKETS = "pockets"
 }

@@ -12,10 +12,12 @@ package org.mifos.mobile.feature.transfer.process.transferProcess
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.number
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.transfer_process.generated.resources.Res
 import mifos_mobile.feature.transfer_process.generated.resources.back_to_accounts
 import mifos_mobile.feature.transfer_process.generated.resources.transfer_failed
@@ -37,6 +39,7 @@ import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.core.ui.utils.observe
 import kotlin.coroutines.cancellation.CancellationException
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * ViewModel responsible for managing the transfer process logic.
@@ -145,6 +148,11 @@ internal class TransferProcessViewModel(
         }
     }
 
+    /**
+     * Observes the network connectivity status and updates the UI state accordingly.
+     * Monitors connectivity changes and updates the [networkStatus] flag in [TransferProcessState]
+     * so the UI can react to network availability changes.
+     */
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.isOnline
@@ -227,12 +235,23 @@ internal class TransferProcessViewModel(
                         showOverlay = false,
                     )
                 }
+
+                val errorMsg = if (response.exception.cause is ServerResponseException) {
+                    getString(UiRes.string.internal_server_error)
+                } else {
+                    response.message
+                }
+
                 sendEvent(
                     TransferProcessEvent.NavigateToStatus(
-                        eventType = EventType.FAILURE.name,
+                        eventType = if (response.exception.cause is ServerResponseException) {
+                            EventType.SERVER_EXCEPTION.name
+                        } else {
+                            EventType.FAILURE.name
+                        },
                         eventDestination = StatusNavigationDestination.PREVIOUS_SCREEN.name,
                         title = getString(Res.string.transfer_failed),
-                        subtitle = response.message,
+                        subtitle = errorMsg,
                         buttonText = getString(Res.string.back_to_accounts),
                     ),
                 )

@@ -24,14 +24,12 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
  * savings account application, ensuring robust and error-free navigation.
  *
  * @property savingsProductId The unique identifier of the selected savings product.
- * @property fieldOfficerId The unique identifier of the assigned field officer.
- * @property fieldOfficerName The name of the assigned field officer.
+ * @property savingsProductName The name of the selected savings product.
  */
 @Serializable
 data class SavingsFillApplicationRoute(
     val savingsProductId: Long,
-    val fieldOfficerId: Long,
-    val fieldOfficerName: String,
+    val savingsProductName: String,
 )
 
 /**
@@ -39,20 +37,18 @@ data class SavingsFillApplicationRoute(
  *
  * This is an extension function on [NavController] that simplifies the process
  * of navigating to the application form by constructing and passing the
- * [SavingsFillApplicationRoute] with the required product and officer details.
+ * [SavingsFillApplicationRoute] with the required product details.
  *
  * @param savingsProductId The ID of the savings product.
- * @param fieldOfficerId The ID of the field officer.
- * @param fieldOfficerName The name of the field officer.
+ * @param savingsProductName The name of the savings product.
  * @param navOptions Optional [NavOptions] to apply to this navigation operation.
  */
 fun NavController.navigateToSavingsFillApplicationScreen(
     savingsProductId: Long,
-    fieldOfficerId: Long,
-    fieldOfficerName: String,
+    savingsProductName: String,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate(SavingsFillApplicationRoute(savingsProductId, fieldOfficerId, fieldOfficerName), navOptions)
+    this.navigate(SavingsFillApplicationRoute(savingsProductId, savingsProductName), navOptions)
 }
 
 /**
@@ -62,22 +58,19 @@ fun NavController.navigateToSavingsFillApplicationScreen(
  * This function sets up the route and the screen content (`SavingsFillApplicationScreen`),
  * and wires up the necessary navigation callbacks for actions initiated from the screen.
  *
- * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen,
- *   typically required before submitting the application.
- * @param navigateToStatusScreen A lambda to navigate to a generic status/result screen
- *   after the application submission is complete.
+ * @param navigateToConfirmDetailsScreen A lambda to navigate to the confirmation preview screen,
+ *   where users can review their application before final submission.
  * @param navigateBack A lambda function to handle the back navigation event.
  */
+@Suppress("MaxLineLength")
 fun NavGraphBuilder.savingsFillApplicationDestination(
-    navigateToAuthenticateScreen: () -> Unit,
-    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
+    navigateToConfirmDetailsScreen: (Long, String, String, String, String, String, String, Long, Boolean, String) -> Unit,
     navigateBack: () -> Unit,
 ) {
     composableWithSlideTransitions<SavingsFillApplicationRoute> {
         SavingsFillApplicationScreen(
             navigateBack = navigateBack,
-            navigateToAuthenticateScreen = navigateToAuthenticateScreen,
-            navigateToStatusScreen = navigateToStatusScreen,
+            navigateToConfirmDetailsScreen = navigateToConfirmDetailsScreen,
         )
     }
 }

@@ -28,4 +28,9 @@
     <!-- Button texts -->
     <string name="feature_tpt_transfer_button">Transfer Amount</string>
 
+
+    <string name="add_to_pocket_title">Add to Pocket</string>
+    <string name="add_to_pocket_message">Would you like to add this account to Pocket?</string>
+    <string name="add_to_pocket_confirm">Add</string>
+    <string name="add_to_pocket_cancel">No</string>
 </resources>

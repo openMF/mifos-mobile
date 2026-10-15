@@ -4,10 +4,12 @@ package org.mifos.mobile
 import com.android.build.api.artifact.ScopedArtifact
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ScopedArtifacts
+import com.android.build.api.variant.SourceDirectories
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.register
@@ -68,8 +70,16 @@ internal fun Project.configureJacoco(
                     html.required.set(true)
                 }
 
-                // TODO: This is missing files in src/debug/, src/prod, src/demo, src/demoDebug...
-                sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
+                fun SourceDirectories.Flat?.toFilePaths(): Provider<List<String>> = this
+                    ?.all
+                    ?.map { directories -> directories.map { it.asFile.path } }
+                    ?: provider { emptyList() }
+                sourceDirectories.setFrom(
+                    files(
+                        variant.sources.java.toFilePaths(),
+                        variant.sources.kotlin.toFilePaths()
+                    )
+                )
 
                 executionData.setFrom(
                     project.fileTree("$buildDir/outputs/unit_test_code_coverage/${variant.name}UnitTest")

@@ -32,6 +32,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.third_party_transfer.generated.resources.Res
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_cancel
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_confirm
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_message
+import mifos_mobile.feature.third_party_transfer.generated.resources.add_to_pocket_title
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_amount
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_label_destination
@@ -106,17 +110,32 @@ internal fun TptScreen(
 }
 
 /**
-* Composable function for the Third Party Transfer dialog.
-*
-* @param dialogState The dialog state for the Third Party Transfer screen.
-* @param onAction A [TptAction] function to handle actions from this dialog.
-* */
+ * Composable function for the Third Party Transfer dialog.
+ *
+ * @param dialogState The dialog state for the Third Party Transfer screen.
+ * @param onAction A [TptAction] function to handle actions from this dialog.
+ * */
 @Composable
 internal fun TptDialog(
     dialogState: TptState.DialogState?,
     onAction: (TptAction) -> Unit,
 ) {
     when (dialogState) {
+        TptState.DialogState.AddToPocketConfirmation -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    title = stringResource(Res.string.add_to_pocket_title),
+                    message = stringResource(Res.string.add_to_pocket_message),
+                ),
+                onConfirm = { onAction(TptAction.ConfirmAddToPocket(true)) },
+                onDismissRequest = { onAction(TptAction.ConfirmAddToPocket(false)) },
+                confirmText = stringResource(Res.string.add_to_pocket_confirm),
+                cancelText = stringResource(Res.string.add_to_pocket_cancel),
+            )
+        }
+
+        TptState.DialogState.Loading -> MifosProgressIndicator()
+
         is TptState.DialogState.Error -> {
             MifosBasicDialog(
                 visibilityState = BasicDialogState.Shown(
@@ -192,18 +211,18 @@ internal fun TprContent(
                 TptForm(state, onAction)
             }
 
-            else -> { }
+            else -> {}
         }
     }
 }
 
 /**
-* Composable function for the Third Party Transfer form.
-*
-* @param state The state for the Third Party Transfer screen.
-* @param onAction A [TptAction] function to handle actions from this form.
-* @param modifier The modifier to apply to this composable.
-* */
+ * Composable function for the Third Party Transfer form.
+ *
+ * @param state The state for the Third Party Transfer screen.
+ * @param onAction A [TptAction] function to handle actions from this form.
+ * @param modifier The modifier to apply to this composable.
+ * */
 @Composable
 internal fun TptForm(
     state: TptState,
@@ -264,6 +283,7 @@ internal fun TptForm(
                     ),
                 )
             },
+            shape = KptTheme.shapes.medium,
         )
 
         Row(
@@ -353,7 +373,7 @@ internal fun TptForm(
         ) {
             Text(
                 text = stringResource(Res.string.feature_tpt_transfer_button),
-                style = KptTheme.typography.titleMedium,
+                style = KptTheme.typography.titleSmall,
             )
         }
     }

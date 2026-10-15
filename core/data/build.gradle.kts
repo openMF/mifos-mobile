@@ -36,8 +36,18 @@ kotlin {
             api(projects.core.datastore)
             api(projects.core.model)
             implementation(projects.core.network)
+            implementation(projects.core.analytics)
             implementation(libs.kotlinx.serialization.json)
         }
+
+        commonTest.dependencies {
+            implementation(libs.ktor.client.mock)
+        }
+        
+        nonJsCommonMain.dependencies {
+            api(projects.core.database)
+        }
+        
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.tracing.ktx)

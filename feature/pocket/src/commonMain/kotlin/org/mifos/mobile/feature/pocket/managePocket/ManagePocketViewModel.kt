@@ -1,0 +1,435 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+ */
+package org.mifos.mobile.feature.pocket.managePocket
+
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import mifos_mobile.feature.pocket.generated.resources.Res
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_error_delink_account
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_error_link_accounts
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_error_load_accounts
+import mifos_mobile.feature.pocket.generated.resources.feature_pocket_unknown_account
+import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.common.StringProvider
+import org.mifos.mobile.core.data.repository.PocketRepository
+import org.mifos.mobile.core.data.util.NetworkUnavailableException
+import org.mifos.mobile.core.datastore.UserPreferencesRepository
+import org.mifos.mobile.core.model.entity.payload.PocketLinkPayload
+import org.mifos.mobile.core.model.entity.pocket.AccountStatus
+import org.mifos.mobile.core.model.entity.pocket.DetailedPocketAccount
+import org.mifos.mobile.core.model.entity.pocket.LinkableAccount
+import org.mifos.mobile.core.model.entity.pocket.PocketAccount
+import org.mifos.mobile.core.model.enums.AccountType
+import org.mifos.mobile.core.ui.utils.BaseViewModel
+import org.mifos.mobile.core.ui.utils.ScreenUiState
+
+/**
+ * Coordinates linked-account management, account selection, and Pocket
+ * link/delink submissions for the current client.
+ */
+internal class ManagePocketViewModel(
+    private val pocketRepository: PocketRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val stringProvider: StringProvider,
+) : BaseViewModel<ManagePocketState, ManagePocketEvent, ManagePocketAction>(
+    initialState = ManagePocketState(
+        clientId = requireNotNull(userPreferencesRepository.clientId.value),
+    ),
+) {
+    private var linkedAccountsJob: Job? = null
+    private var availableAccountsJob: Job? = null
+
+    init {
+        loadLinkedAccounts()
+    }
+
+    /** Applies a state update to the management screen state flow. */
+    private fun updateState(update: (ManagePocketState) -> ManagePocketState) {
+        mutableStateFlow.update(update)
+    }
+
+    /** Handles management, selection, dialog, link, and delink actions. */
+    override fun handleAction(action: ManagePocketAction) {
+        when (action) {
+            ManagePocketAction.NavigateBack -> sendEvent(ManagePocketEvent.NavigateBack)
+            ManagePocketAction.Retry -> loadLinkedAccounts(forceRefresh = true)
+            ManagePocketAction.OpenLinkAccounts -> openLinkAccounts()
+            ManagePocketAction.DismissDialog -> dismissDialog()
+            is ManagePocketAction.OpenDelinkConfirmation -> openDelinkConfirmation(action.account)
+            is ManagePocketAction.TabSelected -> updateState { it.copy(selectedTab = action.accountType) }
+            is ManagePocketAction.SearchQueryChanged -> updateState { it.copy(searchQuery = action.query) }
+            is ManagePocketAction.AccountSelectionChanged -> updateSelectedAccount(
+                accountId = action.accountId,
+                selected = action.selected,
+            )
+            ManagePocketAction.LinkSelectedAccounts -> linkSelectedAccounts()
+            is ManagePocketAction.DelinkAccount -> delinkAccount(action.account)
+            is ManagePocketAction.Internal.ReceiveLinkedAccounts -> handleLinkedAccounts(
+                dataState = action.dataState,
+                unknownAccount = action.unknownAccount,
+            )
+            is ManagePocketAction.Internal.ReceiveAvailableAccounts -> handleAvailableAccounts(
+                dataState = action.dataState,
+                unknownAccount = action.unknownAccount,
+            )
+        }
+    }
+
+    /** Collects linked detailed accounts for the current client. */
+    private fun loadLinkedAccounts(forceRefresh: Boolean = false) {
+        linkedAccountsJob?.cancel()
+        linkedAccountsJob = viewModelScope.launch {
+            val unknownAccount = stringProvider.get(Res.string.feature_pocket_unknown_account)
+            pocketRepository.getDetailedPocketAccounts(state.clientId, forceRefresh)
+                .collect { dataState ->
+                    trySendAction(
+                        ManagePocketAction.Internal.ReceiveLinkedAccounts(
+                            dataState = dataState,
+                            unknownAccount = unknownAccount,
+                        ),
+                    )
+                }
+        }
+    }
+
+    /** Loads accounts that can be added to the Pocket. */
+    private fun loadAvailableAccounts() {
+        availableAccountsJob?.cancel()
+        availableAccountsJob = viewModelScope.launch {
+            val unknownAccount = stringProvider.get(Res.string.feature_pocket_unknown_account)
+            pocketRepository.getAvailableAccountsToLink(state.clientId)
+                .collect { dataState ->
+                    trySendAction(
+                        ManagePocketAction.Internal.ReceiveAvailableAccounts(
+                            dataState = dataState,
+                            unknownAccount = unknownAccount,
+                        ),
+                    )
+                }
+        }
+    }
+
+    /** Opens the link sheet and starts loading eligible accounts. */
+    private fun openLinkAccounts() {
+        updateState {
+            it.copy(
+                dialogState = ManagePocketDialogState.LinkAccounts,
+            )
+        }
+        loadAvailableAccounts()
+    }
+
+    /** Closes the active link, loading, error, or confirmation dialog. */
+    private fun dismissDialog() {
+        updateState {
+            it.copy(
+                dialogState = null,
+            )
+        }
+    }
+
+    /** Stores the selected account while showing delink confirmation. */
+    private fun openDelinkConfirmation(account: ManagePocketAccount) {
+        updateState {
+            it.copy(dialogState = ManagePocketDialogState.DelinkConfirmation(account))
+        }
+    }
+
+    /** Adds or removes an account ID from the link selection set. */
+    private fun updateSelectedAccount(accountId: Long, selected: Boolean) {
+        updateState {
+            val updated = if (selected) {
+                it.selectedAccountIds + accountId
+            } else {
+                it.selectedAccountIds - accountId
+            }
+
+            it.copy(selectedAccountIds = updated)
+        }
+    }
+
+    /** Builds the typed link payload and submits the selected accounts. */
+    private fun linkSelectedAccounts() {
+        val accountsToLink = state.availableAccounts.filter {
+            it.accountId in state.selectedAccountIds
+        }
+
+        if (accountsToLink.isEmpty()) return
+
+        viewModelScope.launch {
+            updateState { it.copy(dialogState = ManagePocketDialogState.Loading) }
+
+            val payload = PocketLinkPayload(
+                accountsDetail = accountsToLink.map {
+                    PocketLinkPayload.AccountDetail(
+                        accountId = it.accountId.toString(),
+                        accountType = it.accountType,
+                    )
+                },
+            )
+
+            val explicitAccounts = accountsToLink.map { it.toDetailedPocketAccount() }
+
+            when (
+                val dataState = pocketRepository.linkAccounts(
+                    payload = payload,
+                    explicitlyAddedAccounts = explicitAccounts,
+                    clientId = state.clientId,
+                )
+            ) {
+                is DataState.Success -> {
+                    updateState {
+                        it.copy(
+                            dialogState = null,
+                            selectedAccountIds = emptySet(),
+                            searchQuery = "",
+                        )
+                    }
+                    loadLinkedAccounts(forceRefresh = true)
+                }
+
+                is DataState.Error -> {
+                    updateState {
+                        it.copy(
+                            dialogState = ManagePocketDialogState.Error(
+                                Res.string.feature_pocket_error_link_accounts,
+                            ),
+                        )
+                    }
+                }
+
+                DataState.Loading -> Unit
+            }
+        }
+    }
+
+    /** Submits the selected Pocket mapping ID for delinking. */
+    private fun delinkAccount(account: ManagePocketAccount) {
+        viewModelScope.launch {
+            updateState { it.copy(dialogState = ManagePocketDialogState.Loading) }
+
+            when (
+                val dataState = pocketRepository.delinkAccounts(
+                    pocketAccountMappingIds = listOf(account.mappingId),
+                    clientId = state.clientId,
+                )
+            ) {
+                is DataState.Success -> {
+                    updateState { it.copy(dialogState = null) }
+                    loadLinkedAccounts(forceRefresh = true)
+                }
+
+                is DataState.Error -> {
+                    updateState {
+                        it.copy(
+                            dialogState = ManagePocketDialogState.Error(
+                                Res.string.feature_pocket_error_delink_account,
+                            ),
+                        )
+                    }
+                }
+
+                DataState.Loading -> Unit
+            }
+        }
+    }
+
+    /** Maps linked-account repository states into management screen state. */
+    private fun handleLinkedAccounts(
+        dataState: DataState<List<DetailedPocketAccount>>,
+        unknownAccount: String,
+    ) {
+        viewModelScope.launch {
+            when (dataState) {
+                DataState.Loading -> {
+                    updateState { it.copy(uiState = ScreenUiState.Loading) }
+                }
+
+                is DataState.Error -> {
+                    val isNetworkError = dataState.exception is NetworkUnavailableException
+                    updateState {
+                        if (isNetworkError) {
+                            it.copy(
+                                uiState = ScreenUiState.Network,
+                                networkStatus = false,
+                            )
+                        } else {
+                            it.copy(
+                                uiState = ScreenUiState.Error(Res.string.feature_pocket_error_load_accounts),
+                            )
+                        }
+                    }
+                }
+
+                is DataState.Success -> {
+                    val linkedAccounts = dataState.data.map { it.toManagePocketAccount(unknownAccount) }
+                    updateState {
+                        it.copy(
+                            linkedAccounts = linkedAccounts,
+                            uiState = ScreenUiState.Success,
+                            networkStatus = true,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    /** Maps linkable-account repository states into selection models. */
+    private fun handleAvailableAccounts(
+        dataState: DataState<List<LinkableAccount>>,
+        unknownAccount: String,
+    ) {
+        viewModelScope.launch {
+            when (dataState) {
+                DataState.Loading -> updateState {
+                    it.copy(isAvailableAccountsLoading = true)
+                }
+
+                is DataState.Error -> updateState {
+                    it.copy(
+                        isAvailableAccountsLoading = false,
+                        dialogState = ManagePocketDialogState.Error(
+                            Res.string.feature_pocket_error_load_accounts,
+                        ),
+                    )
+                }
+
+                is DataState.Success -> {
+                    val availableAccounts = dataState.data.map { account ->
+                        account.toAvailablePocketAccount(unknownAccount)
+                    }
+                    updateState {
+                        it.copy(
+                            availableAccounts = availableAccounts,
+                            isAvailableAccountsLoading = false,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    /** Converts a repository account into the compact linked-account row model. */
+    private fun DetailedPocketAccount.toManagePocketAccount(unknownAccount: String): ManagePocketAccount {
+        return ManagePocketAccount(
+            accountId = pocket.accountId,
+            mappingId = pocket.id,
+            name = productName ?: unknownAccount,
+            accountNumber = pocket.accountNumber,
+            accountType = pocket.accountType,
+        )
+    }
+
+    /** Converts a linkable domain account into the selection-row model. */
+    private fun LinkableAccount.toAvailablePocketAccount(unknownAccount: String): AvailablePocketAccount {
+        return AvailablePocketAccount(
+            accountId = accountId,
+            name = productName ?: unknownAccount,
+            accountNumber = accountNumber.orEmpty(),
+            accountType = accountType,
+            balance = balance,
+            currencyCode = currencyCode,
+            decimalPlaces = decimalPlaces,
+            status = status,
+        )
+    }
+
+    /** Creates the detailed account payload needed for optimistic linking. */
+    private fun AvailablePocketAccount.toDetailedPocketAccount(): DetailedPocketAccount {
+        return DetailedPocketAccount(
+            pocket = PocketAccount(
+                pocketId = -1,
+                id = -1,
+                accountId = accountId,
+                accountType = accountType,
+                accountNumber = accountNumber,
+            ),
+            productName = name,
+            balance = balance,
+            currencyCode = currencyCode,
+            decimalPlaces = decimalPlaces,
+            status = status,
+        )
+    }
+}
+
+/** State for linked accounts, available accounts, selection, and dialogs. */
+internal data class ManagePocketState(
+    val clientId: Long = 0,
+    val linkedAccounts: List<ManagePocketAccount> = emptyList(),
+    val availableAccounts: List<AvailablePocketAccount> = emptyList(),
+    val selectedAccountIds: Set<Long> = emptySet(),
+    val selectedTab: AccountType = AccountType.SAVINGS,
+    val searchQuery: String = "",
+    val uiState: ScreenUiState = ScreenUiState.Loading,
+    val dialogState: ManagePocketDialogState? = null,
+    val isAvailableAccountsLoading: Boolean = false,
+    val networkStatus: Boolean = true,
+)
+
+/** Compact linked-account model used by management and delink confirmation UI. */
+data class ManagePocketAccount(
+    val accountId: Long,
+    val mappingId: Long,
+    val name: String,
+    val accountNumber: String,
+    val accountType: AccountType,
+)
+
+/** Account row model used by the link-account selection sheet. */
+internal data class AvailablePocketAccount(
+    val accountId: Long,
+    val name: String,
+    val accountNumber: String,
+    val accountType: AccountType,
+    val balance: Double? = null,
+    val currencyCode: String? = null,
+    val decimalPlaces: Int? = null,
+    val status: AccountStatus? = null,
+)
+
+internal sealed interface ManagePocketDialogState {
+    data object LinkAccounts : ManagePocketDialogState
+    data object Loading : ManagePocketDialogState
+    data class DelinkConfirmation(val account: ManagePocketAccount) : ManagePocketDialogState
+    data class Error(val message: org.jetbrains.compose.resources.StringResource) : ManagePocketDialogState
+}
+
+internal sealed interface ManagePocketEvent {
+    data object NavigateBack : ManagePocketEvent
+}
+
+internal sealed interface ManagePocketAction {
+    data object NavigateBack : ManagePocketAction
+    data object Retry : ManagePocketAction
+    data object OpenLinkAccounts : ManagePocketAction
+    data object DismissDialog : ManagePocketAction
+    data object LinkSelectedAccounts : ManagePocketAction
+    data class OpenDelinkConfirmation(val account: ManagePocketAccount) : ManagePocketAction
+    data class DelinkAccount(val account: ManagePocketAccount) : ManagePocketAction
+    data class TabSelected(val accountType: AccountType) : ManagePocketAction
+    data class SearchQueryChanged(val query: String) : ManagePocketAction
+    data class AccountSelectionChanged(val accountId: Long, val selected: Boolean) : ManagePocketAction
+
+    sealed interface Internal : ManagePocketAction {
+        data class ReceiveLinkedAccounts(
+            val dataState: DataState<List<DetailedPocketAccount>>,
+            val unknownAccount: String,
+        ) : Internal
+
+        data class ReceiveAvailableAccounts(
+            val dataState: DataState<List<LinkableAccount>>,
+            val unknownAccount: String,
+        ) : Internal
+    }
+}

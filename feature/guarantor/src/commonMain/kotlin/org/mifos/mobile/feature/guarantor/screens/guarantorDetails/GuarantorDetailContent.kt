@@ -25,6 +25,17 @@ import org.mifos.mobile.core.model.entity.guarantor.GuarantorPayload
 import org.mifos.mobile.core.ui.component.MifosTextTitleDescDoubleLine
 import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Content composable for displaying guarantor details.
+ *
+ * This composable renders the detailed information about a guarantor in a
+ * column layout, showing first name, last name, city, and guarantor type.
+ * Each field is displayed with a title-description format and separated
+ * by horizontal dividers for better visual organization.
+ *
+ * @param data The guarantor payload containing all the details to display.
+ * @param modifier Modifier for styling and positioning the content.
+ */
 @Composable
 internal fun GuarantorDetailContent(
     data: GuarantorPayload,

@@ -15,8 +15,26 @@ import org.mifos.mobile.feature.guarantor.screens.guarantorAdd.AddGuarantorViewM
 import org.mifos.mobile.feature.guarantor.screens.guarantorDetails.GuarantorDetailViewModel
 import org.mifos.mobile.feature.guarantor.screens.guarantorList.GuarantorListViewModel
 
+/**
+ * Koin module for providing dependencies related to the Guarantor feature.
+ *
+ * This module declares the ViewModels used in the guarantor management workflow,
+ * allowing Koin's dependency injection framework to construct and provide them where needed.
+ */
 val GuarantorModule = module {
+    /**
+     * Provides an instance of [AddGuarantorViewModel].
+     * This ViewModel manages the logic for adding new guarantors.
+     */
     viewModelOf(::AddGuarantorViewModel)
+    /**
+     * Provides an instance of [GuarantorDetailViewModel].
+     * This ViewModel handles the logic for viewing guarantor details.
+     */
     viewModelOf(::GuarantorDetailViewModel)
+    /**
+     * Provides an instance of [GuarantorListViewModel].
+     * This ViewModel manages the logic for displaying the list of guarantors.
+     */
     viewModelOf(::GuarantorListViewModel)
 }

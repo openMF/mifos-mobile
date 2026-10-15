@@ -37,16 +37,19 @@ run_spotless_checks() {
 # Function to run ktlint checks
 run_dependency_guard() {
     printf "\n🚀 Brace yourself! We're about to generate dependency guard baseline!"
-    ./gradlew dependencyGuardBaseline
+    ./gradlew dependencyGuardBaseline > /tmp/dependency-result
     KT_EXIT_CODE=$?
 
     if [ ${KT_EXIT_CODE} -ne 0 ]; then
+        cat /tmp/dependency-result
+        rm /tmp/dependency-result
         printf "\n*********************************************************************************"
         echo "     💥 Oh no! Something went wrong! 💥"
         echo "     💡 Unable to generate dependency baseline. 🛠️"
         printf "*********************************************************************************\n"
         exit ${KT_EXIT_CODE}
     else
+        rm /tmp/dependency-result
         echo "🎉 Bravo! Dependency baseline has been generated successfully! Keep rocking that clean code! 🚀💫"
     fi
 }

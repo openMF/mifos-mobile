@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,16 +43,19 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import org.mifos.mobile.core.designsystem.component.MifosPullToRefreshState
 import org.mifos.mobile.core.designsystem.component.rememberMifosPullToRefreshState
-import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.navigation.MifosBottomBar
 import org.mifos.mobile.core.ui.navigation.MifosNavigationRail
-
+import template.core.base.designsystem.theme.KptTheme
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Suppress("LongMethod")
 @Composable
@@ -157,17 +161,41 @@ private fun ScaffoldBottomAppBar(
     navigationData: ScaffoldNavigationData,
     modifier: Modifier = Modifier,
 ) {
+    val surfaceColor = KptTheme.colorScheme.onSurface
+    val shadowColor = surfaceColor.copy(alpha = 0.03f)
+
     Box(modifier = modifier.fillMaxWidth()) {
         Column {
-            MifosPoweredCard(
-                modifier = Modifier.fillMaxWidth(),
-            )
+            // TODO remove the comment if MifosPoweredCard is required
+//            MifosPoweredCard(
+//                modifier = Modifier.fillMaxWidth(),
+//            )
             MifosBottomBar(
                 navigationItems = navigationData.navigationItems,
                 selectedItem = navigationData.selectedNavigationItem,
                 onClick = navigationData.onNavigationClick,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .drawWithContent {
+                        val shadowHeight = 15.dp.toPx()
+                        drawRect(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    shadowColor,
+                                    shadowColor,
+                                ),
+                                startY = -shadowHeight,
+                                endY = 0f,
+                            ),
+                            topLeft = Offset(0f, -shadowHeight),
+                            size = Size(size.width, shadowHeight),
+                        )
+                        drawContent()
+                    }
+                    .background(
+                        KptTheme.colorScheme.surface,
+                    )
                     .testTag(tag = "NavigationBarContainer"),
             )
         }

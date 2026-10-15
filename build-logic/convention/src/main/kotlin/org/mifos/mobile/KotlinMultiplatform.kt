@@ -27,6 +27,8 @@ internal fun Project.configureKotlinMultiplatform() {
 
         compilerOptions {
             freeCompilerArgs.add("-Xexpect-actual-classes")
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
         }
     }
 }

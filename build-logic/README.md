@@ -29,10 +29,10 @@ setup.
 
 Current list of convention plugins:
 
-- [`mifos.android.application`](convention/src/main/kotlin/AndroidApplicationConventionPlugin.kt),
-  [`mifos.android.library`](convention/src/main/kotlin/AndroidLibraryConventionPlugin.kt),
-  [`mifos.android.test`](convention/src/main/kotlin/AndroidTestConventionPlugin.kt):
+- [`android.application`](convention/src/main/kotlin/AndroidApplicationConventionPlugin.kt),
+  [`android.library`](convention/src/main/kotlin/AndroidLibraryConventionPlugin.kt),
+  [`android.test`](convention/src/main/kotlin/AndroidTestConventionPlugin.kt):
   Configures common Android and Kotlin options.
-- [`mifos.android.application.compose`](convention/src/main/kotlin/AndroidApplicationComposeConventionPlugin.kt),
-  [`mifos.android.library.compose`](convention/src/main/kotlin/AndroidLibraryComposeConventionPlugin.kt):
+- [`android.application.compose`](convention/src/main/kotlin/AndroidApplicationComposeConventionPlugin.kt),
+  [`android.library.compose`](convention/src/main/kotlin/AndroidLibraryComposeConventionPlugin.kt):
   Configures Jetpack Compose options

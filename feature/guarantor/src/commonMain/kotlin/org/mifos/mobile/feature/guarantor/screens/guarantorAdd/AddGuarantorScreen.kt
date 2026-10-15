@@ -53,6 +53,19 @@ import org.mifos.mobile.core.ui.component.MifosDropDownTextField
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import template.core.base.designsystem.theme.KptTheme
 
+/**
+ * Main composable function for the "Add Guarantor" screen.
+ *
+ * This screen allows users to add new guarantors or edit existing ones for a loan.
+ * It handles form input for guarantor details including first name, last name, city,
+ * and guarantor type. The screen manages different UI states including loading,
+ * error, and success.
+ *
+ * @param navigateBack A lambda function to handle the back navigation event.
+ * @param modifier Modifier for styling and positioning the screen.
+ * @param viewModel The ViewModel that manages the screen's state and business logic.
+ *   Provided by Koin dependency injection.
+ */
 @Composable
 internal fun AddGuarantorScreen(
     navigateBack: () -> Unit,
@@ -92,6 +105,18 @@ internal fun AddGuarantorScreen(
     )
 }
 
+/**
+ * Private composable function for the "Add Guarantor" screen content.
+ *
+ * This composable renders the main UI structure including the scaffold,
+ * content based on UI state, and dialog management. It handles both
+ * adding new guarantors and editing existing ones.
+ *
+ * @param state The current UI state containing all necessary data for rendering.
+ * @param onAction Callback function to handle user actions and UI events.
+ * @param snackbarHostState The SnackbarHostState for showing toast messages.
+ * @param modifier Modifier for styling and positioning the screen.
+ */
 @Composable
 private fun AddGuarantorScreen(
     state: AddGuarantorState,
@@ -129,6 +154,19 @@ private fun AddGuarantorScreen(
     )
 }
 
+/**
+ * Content composable for the "Add Guarantor" screen.
+ *
+ * This composable displays the form for adding/editing guarantor information,
+ * including input fields for first name, last name, city, and guarantor type.
+ * It also handles form submission and validation.
+ *
+ * @param state The current state containing form data and UI information.
+ * @param guarantorItem The existing guarantor data for editing, null for new guarantors.
+ * @param guarantorTypeOptions List of available guarantor type options.
+ * @param onAction Callback function to handle user actions (form submission, navigation).
+ * @param modifier Modifier for styling and positioning the content.
+ */
 @Composable
 private fun AddGuarantorContent(
     state: AddGuarantorState,
@@ -208,6 +246,15 @@ private fun AddGuarantorContent(
     }
 }
 
+/**
+ * Dialog composable for showing dialogs on the "Add Guarantor" screen.
+ *
+ * This composable handles the display of loading and error dialogs based on the current
+ * dialog state in the [AddGuarantorState]. It shows loading overlays and error messages.
+ *
+ * @param dialogState The current state containing dialog information.
+ * @param onDismissRequest Callback function to handle dialog dismissal.
+ */
 @Composable
 private fun AddGuarantorDialog(
     dialogState: AddGuarantorState.DialogState?,

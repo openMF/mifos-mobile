@@ -70,15 +70,14 @@ import template.core.base.designsystem.theme.KptTheme
  * events, and orchestrate navigation based on user actions and ViewModel commands.
  *
  * @param navigateBack A lambda to handle the back navigation event.
- * @param navigateToStatusScreen A lambda to navigate to a generic status screen after an operation.
- * @param navigateToAuthenticateScreen A lambda to navigate to an authentication screen for sensitive actions.
+ * @param navigateToConfirmDetailsScreen A lambda to navigate to the confirmation preview screen.
  * @param viewModel The ViewModel responsible for the screen's logic and state.
  */
 @Composable
+@Suppress("MaxLineLength")
 internal fun SavingsFillApplicationScreen(
     navigateBack: () -> Unit,
-    navigateToStatusScreen: (String, String, String, String, String) -> Unit,
-    navigateToAuthenticateScreen: () -> Unit,
+    navigateToConfirmDetailsScreen: (Long, String, String, String, String, String, String, Long, Boolean, String) -> Unit,
     viewModel: SavingsFillApplicationViewModel = koinViewModel(),
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -87,15 +86,18 @@ internal fun SavingsFillApplicationScreen(
         when (event) {
             is SavingsApplicationEvent.NavigateBack -> navigateBack.invoke()
 
-            SavingsApplicationEvent.NavigateToAuthentication -> navigateToAuthenticateScreen.invoke()
-
-            is SavingsApplicationEvent.NavigateToStatus -> {
-                navigateToStatusScreen.invoke(
-                    event.eventType,
-                    event.eventDestination,
-                    event.title,
-                    event.subtitle,
-                    event.buttonText,
+            is SavingsApplicationEvent.NavigateToConfirmDetails -> {
+                navigateToConfirmDetailsScreen.invoke(
+                    event.savingsProductId,
+                    event.applicantName,
+                    event.savingsProductName,
+                    event.currency,
+                    event.minOpeningBalance,
+                    event.frequency,
+                    event.frequencyTypeName,
+                    event.frequencyTypeId,
+                    event.allowOverdraft,
+                    event.submittedOnDate,
                 )
             }
         }

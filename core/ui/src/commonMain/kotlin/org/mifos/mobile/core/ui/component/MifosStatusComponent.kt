@@ -37,12 +37,13 @@ import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 fun MifosStatusComponent(
-    icon: DrawableResource,
     title: String,
     subTitle: String,
     buttonText: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    icon: DrawableResource? = null,
+    path: String? = null,
 ) {
     Column(
         modifier = modifier
@@ -50,13 +51,19 @@ fun MifosStatusComponent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(
-            modifier = Modifier
-                .height(DesignToken.sizes.imageDp96)
-                .width(DesignToken.sizes.imageDp96),
-            painter = painterResource(icon),
-            contentDescription = "Status icon",
-        )
+        icon?.let {
+            Image(
+                modifier = Modifier
+                    .height(DesignToken.sizes.imageDp96)
+                    .width(DesignToken.sizes.imageDp96),
+                painter = painterResource(icon),
+                contentDescription = "Status icon",
+            )
+        }
+
+        path?.let {
+            MifosLottieAnimation(path = path, iterations = 1)
+        }
 
         Spacer(modifier = Modifier.height(DesignToken.spacing.medium))
 

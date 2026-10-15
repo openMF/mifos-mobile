@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.settings.password
 
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.password_confirm_mismatch_error
 import mifos_mobile.feature.settings.generated.resources.password_current_incorrect_error
@@ -36,6 +38,7 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.PasswordChecker
 import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * ViewModel for the "Change Password" screen.
@@ -361,38 +364,47 @@ internal class ChangePasswordViewModel(
      * @param action The internal action containing the [DataState] result.
      */
     private fun handleUpdatePasswordResult(action: PasswordAction.Internal.UpdatePasswordResult) {
-        when (action.result) {
-            is DataState.Error -> {
-                mutableStateFlow.update {
-                    it.copy(
-                        dialogState = PasswordState.DialogState.Error(
-                            Res.string
-                                .password_update_failed,
-                        ),
-                    )
-                }
-            }
+        viewModelScope.launch {
+            when (action.result) {
+                is DataState.Error -> {
+                    val errorMsg =
+                        if (action.result.exception.cause is ServerResponseException) {
+                            UiRes.string.internal_server_error
+                        } else {
+                            Res.string.password_update_failed
+                        }
 
-            is DataState.Success -> {
-                mutableStateFlow.update {
-                    it.copy(
-                        dialogState = PasswordState.DialogState.Success(Res.string.password_update_success),
-                    )
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = PasswordState.DialogState.Error(
+                                errorMsg,
+                            ),
+                        )
+                    }
                 }
 
-                // Clear sensitive data after successful update
-                clearSensitiveData()
-                viewModelScope.launch {
-                    delay(3000)
-                    userDataRepository.logOut()
+                is DataState.Success -> {
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = PasswordState.DialogState.Success(Res.string.password_update_success),
+                        )
+                    }
+
+                    // Clear sensitive data after successful update
+                    clearSensitiveData()
+                    viewModelScope.launch {
+                        delay(3000)
+                        userDataRepository.logOut()
+                    }
                 }
-            }
-            else -> {
-                failedAttempts++
-                mutableStateFlow.update {
-                    it.copy(
-                        dialogState = PasswordState.DialogState.Error(Res.string.password_update_failed),
-                    )
+
+                else -> {
+                    failedAttempts++
+                    mutableStateFlow.update {
+                        it.copy(
+                            dialogState = PasswordState.DialogState.Error(Res.string.password_update_failed),
+                        )
+                    }
                 }
             }
         }

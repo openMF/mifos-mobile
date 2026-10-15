@@ -32,6 +32,20 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
  * to show a list of guarantors. You can look at the implementation of [GuarantorRepository] for better understanding
  */
 
+/**
+ * ViewModel for managing state and business logic of "Guarantor Detail" screen.
+ *
+ * This ViewModel handles displaying guarantor details and managing operations like:
+ * - Fetching specific guarantor data from the repository
+ * - Deleting guarantors with proper confirmation flow
+ * - Managing network connectivity status
+ * - Handling UI states and error conditions
+ * - Providing navigation to update guarantor screen
+ *
+ * @property guarantorRepositoryImp Repository for guarantor-related API operations.
+ * @property savedStateHandle Handle to saved state for retrieving navigation arguments.
+ * @property networkMonitor Utility to monitor network connectivity status.
+ */
 internal class GuarantorDetailViewModel(
     private val guarantorRepositoryImp: GuarantorRepository,
     savedStateHandle: SavedStateHandle,
@@ -53,10 +67,20 @@ internal class GuarantorDetailViewModel(
         getGuarantorItem()
     }
 
+    /**
+     * Helper function to update [GuarantorDetailState].
+     *
+     * @param update A lambda function that takes the current state and returns an updated state.
+     */
     private fun updateState(update: (GuarantorDetailState) -> GuarantorDetailState) {
         mutableStateFlow.update(update)
     }
 
+    /**
+     * Fetches specific guarantor data from the repository.
+     * Updates UI state based on the result (loading, error, or success).
+     * Filters for active guarantors and selects the one at the specified index.
+     */
     private fun getGuarantorItem() {
         viewModelScope.launch {
             state.loanId?.let {
@@ -93,6 +117,12 @@ internal class GuarantorDetailViewModel(
         }
     }
 
+    /**
+     * Deletes a guarantor using the repository.
+     * Updates UI state based on the API response and sends success events.
+     *
+     * @param guarantorId The ID of the guarantor to be deleted.
+     */
     private fun deleteGuarantor(guarantorId: Long) {
         viewModelScope.launch {
             when (
@@ -121,6 +151,11 @@ internal class GuarantorDetailViewModel(
         }
     }
 
+    /**
+     * Handles incoming actions from the UI or internal events within the ViewModel.
+     *
+     * @param action The [GuarantorDetailAction] to be processed.
+     */
     override fun handleAction(action: GuarantorDetailAction) {
         when (action) {
             is GuarantorDetailAction.DeleteGuarantor -> state.guarantor?.id?.let {
@@ -147,6 +182,16 @@ internal class GuarantorDetailViewModel(
     }
 }
 
+/**
+ * Represents the UI state for the "Guarantor Detail" screen.
+ *
+ * @property loanId The ID of the loan for which guarantors are being managed.
+ * @property index The index of the guarantor being viewed (null for new guarantors).
+ * @property dialogState The current dialog state (loading, error, or null).
+ * @property guarantor The guarantor data being displayed.
+ * @property isOnline The network connectivity status.
+ * @property showDialog Boolean indicating whether the delete confirmation dialog should be shown.
+ */
 @Parcelize
 data class GuarantorDetailState(
     val loanId: Long? = null,
@@ -157,6 +202,9 @@ data class GuarantorDetailState(
     val isOnline: Boolean = false,
     val showDialog: Boolean = false,
 ) : Parcelable {
+    /**
+     * Sealed interface representing possible dialog states for the "Guarantor Detail" screen.
+     */
     sealed interface DialogState : Parcelable {
 
         @Parcelize
@@ -167,12 +215,20 @@ data class GuarantorDetailState(
     }
 }
 
+/**
+ * Sealed interface representing events that can be emitted from the "Guarantor Detail" ViewModel.
+ * These events are typically used to trigger navigation or show one-time messages.
+ */
 sealed interface GuarantorDetailEvent {
     data object NavigateBack : GuarantorDetailEvent
     data class ShowToast(val message: String) : GuarantorDetailEvent
     data class UpdateGuarantor(val index: Int, val loanId: Long) : GuarantorDetailEvent
 }
 
+/**
+ * Sealed interface representing actions that can be dispatched to the "Guarantor Detail" ViewModel.
+ * These actions can originate from the UI or be used internally by the ViewModel.
+ */
 sealed interface GuarantorDetailAction {
     data object NavigateBack : GuarantorDetailAction
     data object DeleteGuarantor : GuarantorDetailAction

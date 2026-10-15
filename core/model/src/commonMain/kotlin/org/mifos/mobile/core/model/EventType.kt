@@ -19,4 +19,7 @@ enum class EventType {
 
     @SerialName("failure")
     FAILURE,
+
+    @SerialName("server")
+    SERVER_EXCEPTION,
 }

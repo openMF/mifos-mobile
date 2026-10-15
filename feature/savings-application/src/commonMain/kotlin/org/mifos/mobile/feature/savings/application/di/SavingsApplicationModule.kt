@@ -11,6 +11,7 @@ package org.mifos.mobile.feature.savings.application.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.mifos.mobile.feature.savings.application.confirmDetails.SavingsConfirmDetailsViewModel
 import org.mifos.mobile.feature.savings.application.fillApplication.SavingsFillApplicationViewModel
 import org.mifos.mobile.feature.savings.application.savingsApplication.SavingsApplyViewModel
 
@@ -31,4 +32,5 @@ val savingsApplicationModule = module {
      * This ViewModel handles the logic for filling out the details of a new savings application.
      */
     viewModelOf(::SavingsFillApplicationViewModel)
+    viewModelOf(::SavingsConfirmDetailsViewModel)
 }

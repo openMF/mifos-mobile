@@ -103,8 +103,13 @@ dependencyGuard {
 
 dependencies {
     implementation(projects.cmpShared)
-
     implementation(projects.core.ui)
+    implementation(projects.coreBase.ui)
+    implementation(projects.coreBase.analytics)
+
+    implementation(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.datastore)
 
     implementation(projects.coreBase.platform)
 

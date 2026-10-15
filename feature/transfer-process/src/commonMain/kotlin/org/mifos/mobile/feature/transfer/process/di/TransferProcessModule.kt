@@ -14,7 +14,21 @@ import org.koin.dsl.module
 import org.mifos.mobile.feature.transfer.process.makeTransfer.MakeTransferViewModel
 import org.mifos.mobile.feature.transfer.process.transferProcess.TransferProcessViewModel
 
+/**
+ * Koin module for providing dependencies related to the Transfer Process feature.
+ *
+ * This module declares the ViewModels used in the transfer process workflow,
+ * allowing Koin's dependency injection framework to construct and provide them where needed.
+ */
 val TransferProcessModule = module {
+    /**
+     * Provides an instance of [TransferProcessViewModel].
+     * This ViewModel manages the logic for the final transfer processing and authentication.
+     */
     viewModelOf(::TransferProcessViewModel)
+    /**
+     * Provides an instance of [MakeTransferViewModel].
+     * This ViewModel handles the logic for making transfers and form validation.
+     */
     viewModelOf(::MakeTransferViewModel)
 }

@@ -10,10 +10,12 @@
 package org.mifos.mobile.feature.auth.registration
 
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_empty
@@ -26,6 +28,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_signup_error_passwo
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_required_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_password_short
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.mifos.mobile.core.common.DataState
 import org.mifos.mobile.core.data.repository.UserAuthRepository
 import org.mifos.mobile.core.model.entity.register.RegisterPayload
@@ -36,6 +39,7 @@ import org.mifos.mobile.core.ui.utils.PasswordStrength
 import org.mifos.mobile.core.ui.utils.PasswordStrengthResult
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import org.mifos.mobile.core.ui.utils.ValidationHelper
+import mifos_mobile.core.ui.generated.resources.Res as UiRes
 
 /**
  * ViewModel responsible for handling user registration logic.
@@ -538,24 +542,33 @@ class RegistrationViewModel(
      * Handles the result of the user registration API call and updates UI state.
      */
     private fun handleRegisterResult(action: SignUpAction.Internal.ReceiveRegisterResult) {
-        when (val result = action.registerResult) {
-            is DataState.Success -> {
-                updateState { it.copy(dialogState = null, showOverlay = false) }
-                sendEvent(
-                    SignUpEvent.NavigateToUploadDocuments,
-                )
-            }
-
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        showOverlay = false,
-                        dialogState = SignUpState.SignUpDialog.Error(result.message),
+        viewModelScope.launch {
+            when (val result = action.registerResult) {
+                is DataState.Success -> {
+                    updateState { it.copy(dialogState = null, showOverlay = false) }
+                    sendEvent(
+                        SignUpEvent.NavigateToUploadDocuments,
                     )
                 }
-            }
 
-            DataState.Loading -> updateState { it.copy(showOverlay = true) }
+                is DataState.Error -> {
+                    val errorMsg =
+                        if (result.exception.cause is ServerResponseException) {
+                            getString(UiRes.string.internal_server_error)
+                        } else {
+                            result.message
+                        }
+
+                    updateState {
+                        it.copy(
+                            showOverlay = false,
+                            dialogState = SignUpState.SignUpDialog.Error(errorMsg),
+                        )
+                    }
+                }
+
+                DataState.Loading -> updateState { it.copy(showOverlay = true) }
+            }
         }
     }
 

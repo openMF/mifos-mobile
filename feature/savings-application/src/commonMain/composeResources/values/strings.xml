@@ -79,4 +79,8 @@
     <string name="feature_apply_savings_status_failure_tip">Failed to apply for a saving account under %1$s.</string>
     <string name="feature_apply_savings_status_failure_action">Try Again</string>
 
+
+<!--    confirm savings application-->
+    <string name="feature_savings_application_savings_confirmation_title">Savings Confirmation</string>
+
 </resources>

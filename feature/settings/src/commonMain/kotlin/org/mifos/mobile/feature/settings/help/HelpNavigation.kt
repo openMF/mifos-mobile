@@ -21,7 +21,7 @@ import org.mifos.mobile.feature.settings.componenets.SettingsItems
  *
  * @param navOptions Optional [NavOptions] to apply to this navigation operation.
  */
-internal fun NavController.navigateToHelp(navOptions: NavOptions? = null) =
+fun NavController.navigateToHelp(navOptions: NavOptions? = null) =
     navigate(SettingsItems.Help, navOptions)
 
 /**
@@ -31,7 +31,7 @@ internal fun NavController.navigateToHelp(navOptions: NavOptions? = null) =
  * @param onBackClick A lambda function to be invoked when the user initiates a back action.
  * @param navigateToFAQ A lambda function to navigate to the "FAQ" screen.
  */
-internal fun NavGraphBuilder.helpDestination(
+fun NavGraphBuilder.helpDestination(
     onBackClick: () -> Unit,
     navigateToFAQ: () -> Unit,
 ) {

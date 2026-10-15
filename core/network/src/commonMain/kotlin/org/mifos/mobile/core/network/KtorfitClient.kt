@@ -18,6 +18,7 @@ import org.mifos.mobile.core.network.services.createClientService
 import org.mifos.mobile.core.network.services.createGuarantorService
 import org.mifos.mobile.core.network.services.createLoanAccountsListService
 import org.mifos.mobile.core.network.services.createNotificationService
+import org.mifos.mobile.core.network.services.createPocketService
 import org.mifos.mobile.core.network.services.createRecentTransactionsService
 import org.mifos.mobile.core.network.services.createRegistrationService
 import org.mifos.mobile.core.network.services.createSavingAccountsListService
@@ -55,6 +56,8 @@ class KtorfitClient(
     internal val guarantorApi by lazy { ktorfit.createGuarantorService() }
 
     internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
+
+    internal val pocketApi by lazy { ktorfit.createPocketService() }
 
     class Builder internal constructor() {
         private lateinit var baseURL: String

@@ -1,8 +1,15 @@
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import cmp.shared.SharedApp
 import cmp.shared.utils.initKoin
 import kotlinx.browser.document
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import org.jetbrains.skiko.wasm.onWasmReady
 
 /*
@@ -18,13 +25,41 @@ fun main() {
 
     initKoin() // Set up Koin for dependency injection.
 
+    // Apply stored language preference on startup
+    val storedLanguage = localStorage.getItem("app_language")
+    if (storedLanguage != null) {
+        document.documentElement?.setAttribute("lang", storedLanguage)
+    }
+
     onWasmReady {
         ComposeViewport(document.body!!) {
-            SharedApp(
-                handleThemeMode = {},
-                handleAppLocale = {},
-                onSplashScreenRemoved = {},
-            )
+            // State to trigger recomposition when locale changes
+            var localeVersion by remember { mutableStateOf(0) }
+
+            // Use key() to force complete recomposition when locale changes
+            key(localeVersion) {
+                SharedApp(
+                    handleThemeMode = {},
+                    handleAppLocale = { languageTag ->
+                        if (languageTag != null) {
+                            // Store language preference in localStorage
+                            localStorage.setItem("app_language", languageTag)
+                            // Set HTML lang attribute for accessibility
+                            document.documentElement?.setAttribute("lang", languageTag)
+                        } else {
+                            // System Default: remove stored language preference
+                            localStorage.removeItem("app_language")
+                            // Reset to browser's default language
+                            val browserLang = window.navigator.language
+                            document.documentElement?.setAttribute("lang", browserLang)
+                        }
+                        // Reload page to apply language changes (required for web)
+                        // Note: This will reload the page, and locale selection depends on browser settings
+                        // window.location.reload()
+                    },
+                    onSplashScreenRemoved = {}
+                )
+            }
         }
     }
 }

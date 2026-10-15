@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Shape
 import mifos_mobile.core.ui.generated.resources.Res
 import mifos_mobile.core.ui.generated.resources.retry
 import org.jetbrains.compose.resources.StringResource
@@ -46,6 +47,7 @@ fun MifosDropDownTextField(
     isEnabled: Boolean = true,
     supportingText: String? = null,
     error: Boolean = false,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     optionsList: List<String> = listOf(),
     selectedOption: String? = null,
 ) {
@@ -62,6 +64,7 @@ fun MifosDropDownTextField(
     ) {
         OutlinedTextField(
             value = selectedOption ?: "",
+            shape = shape,
             onValueChange = { },
             label = { Text(stringResource(labelResId)) },
             modifier = Modifier
@@ -121,6 +124,7 @@ fun MifosDropDownDoubleTextField(
     isEnabled: Boolean = true,
     supportingText: String? = null,
     error: Boolean = false,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     optionsList: List<Pair<String, String>> = listOf(),
     selectedOption: String? = null,
 ) {
@@ -143,6 +147,7 @@ fun MifosDropDownDoubleTextField(
                 .fillMaxWidth()
                 .menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
             readOnly = true,
+            shape = shape,
             enabled = isEnabled,
             textStyle = KptTheme.typography.labelSmall,
             supportingText = { if (error) Text(text = supportingText ?: "") },

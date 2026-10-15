@@ -17,6 +17,7 @@ val DatabaseModule = module {
     includes(platformModule)
     single { get<AppDatabase>().chargeDao }
     single { get<AppDatabase>().mifosNotificationDao }
+    single { get<AppDatabase>().pocketAccountDao }
 }
 
 expect val platformModule: Module

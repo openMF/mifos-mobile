@@ -11,8 +11,10 @@ package org.mifos.mobile.core.database
 
 import org.mifos.mobile.core.database.dao.ChargeDao
 import org.mifos.mobile.core.database.dao.MifosNotificationDao
+import org.mifos.mobile.core.database.dao.PocketAccountDao
 
 actual abstract class AppDatabase {
     actual abstract val mifosNotificationDao: MifosNotificationDao
     actual abstract val chargeDao: ChargeDao
+    actual abstract val pocketAccountDao: PocketAccountDao
 }

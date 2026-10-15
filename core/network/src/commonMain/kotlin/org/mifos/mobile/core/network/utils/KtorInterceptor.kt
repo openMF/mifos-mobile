@@ -25,7 +25,7 @@ class KtorInterceptor(
     companion object Plugin : HttpClientPlugin<Config, KtorInterceptor> {
         private const val HEADER_TENANT = "Fineract-Platform-TenantId"
         private const val HEADER_AUTH = "Authorization"
-        private const val DEFAULT = "default"
+        private const val MIFOS_BANK_1 = "mifos-bank-1"
         private const val CONTENT_TYPE = "Content-Type"
         override val key: AttributeKey<KtorInterceptor> = AttributeKey("KtorInterceptor")
 
@@ -34,7 +34,7 @@ class KtorInterceptor(
                 context.header(CONTENT_TYPE, "application/json")
                 context.header("Accept", "application/json")
                 context.header("Accept", "*/*")
-                context.header(HEADER_TENANT, DEFAULT)
+                context.header(HEADER_TENANT, MIFOS_BANK_1)
 
                 plugin.getToken()?.let { token ->
                     if (token.isNotEmpty()) {

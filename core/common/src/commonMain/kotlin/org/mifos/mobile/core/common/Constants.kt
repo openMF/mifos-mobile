@@ -105,6 +105,7 @@ object Constants {
     const val ABOUT_US = "about_us"
     const val FAQ = "faq"
     const val HELP = "help"
+    const val POCKET = "pocket"
     const val APP_INFO = "app_info"
     const val RATE_US = "rate_us"
     const val LOGOUT = "logout"

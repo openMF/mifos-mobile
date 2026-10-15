@@ -9,6 +9,7 @@
  */
 
 plugins {
+
     alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.cmp.feature.convention)
     alias(libs.plugins.kmp.koin.convention)
@@ -40,10 +41,15 @@ kotlin {
             implementation(projects.feature.loanApplication)
             implementation(projects.feature.savingsApplication)
             implementation(projects.feature.shareApplication)
+            implementation(projects.feature.pocket)
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.common)
             implementation(projects.core.network)
+            implementation(projects.core.model)
+            implementation(projects.core.datastore)
+            implementation(projects.coreBase.common)
+            implementation(projects.coreBase.platform)
             implementation(projects.libs.mifosPasscode)
             //put your multiplatform dependencies here
             implementation(compose.material3)
@@ -55,12 +61,23 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.serialization.json)
-
         }
+
+
+        
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.tracing.ktx)
             implementation(libs.koin.android)
+            implementation(projects.core.database)
+        }
+        
+        appleMain.dependencies {
+            implementation(projects.core.database)
+        }
+        
+        desktopMain.dependencies {
+            implementation(projects.core.database)
         }
     }
 }

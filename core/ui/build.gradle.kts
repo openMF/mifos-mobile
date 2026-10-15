@@ -30,6 +30,7 @@ kotlin{
             implementation(libs.google.oss.licenses)
         }
         commonMain.dependencies {
+            implementation(projects.core.analytics)
             api(projects.core.designsystem)
             implementation(projects.core.model)
             api(libs.kotlinx.datetime)
@@ -47,6 +48,11 @@ kotlin{
             implementation(libs.filekit.dialog.compose)
             implementation(libs.compottie.resources)
             implementation(libs.compottie.lite)
+            implementation(libs.kotlinx.html)
+        }
+        desktopMain.dependencies {
+            implementation(libs.openhtmltopdf.pdfbox)
+            implementation(libs.openhtmltopdf.svg.support)
         }
     }
 }

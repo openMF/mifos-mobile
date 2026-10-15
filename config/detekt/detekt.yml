@@ -432,6 +432,7 @@ naming:
         "**/androidInstrumentedTest/**",
         "**/jsTest/**",
         "**/iosTest/**",
+        "**/generated/**",
       ]
     functionPattern: "[a-z][a-zA-Z0-9]*"
     excludeClassPattern: "$^"

@@ -127,10 +127,6 @@ internal class SavingsApplyViewModel(
      */
     override fun handleAction(action: SavingsApplicationAction) {
         when (action) {
-            is SavingsApplicationAction.FieldOfficerChange -> {
-                onFieldOfficerChange(action.fieldOfficerId, action.fieldOfficeName)
-            }
-
             is SavingsApplicationAction.SavingsProductChange -> {
                 onSavingsProductChange(action.id, action.name)
             }
@@ -145,15 +141,10 @@ internal class SavingsApplyViewModel(
 
             is SavingsApplicationAction.DismissDialog -> dismissDialog()
 
-            is SavingsApplicationAction.GetFieldOfficer -> fetchFieldOfficer()
-
             is SavingsApplicationAction.ReceiveNetworkStatus -> handleNetworkStatus(action.isOnline)
 
             is SavingsApplicationAction.Internal.ReceiveClientAndTemplateResult ->
                 handleClientAndSavingsTemplate(action.client, action.template)
-
-            is SavingsApplicationAction.Internal.ReceiveSavingsFieldOfficers ->
-                handleFieldOfficers(action.template)
 
             SavingsApplicationAction.Retry -> retry()
         }
@@ -220,34 +211,10 @@ internal class SavingsApplyViewModel(
     }
 
     /**
-     * Fetches field officer options based on the currently selected savings product.
-     * Shows a loading overlay while the data is being fetched.
-     */
-    private fun fetchFieldOfficer() {
-        showOverlayLoading()
-        viewModelScope.launch {
-            savingsAccountRepositoryImpl.getSavingAccountApplicationTemplateByProduct(
-                state.clientId,
-                state.selectedSavingsProductId,
-            )
-                .collect { result ->
-                    sendAction(SavingsApplicationAction.Internal.ReceiveSavingsFieldOfficers(result))
-                }
-        }
-    }
-
-    /**
      * Sets the dialog state to a full-screen loading spinner.
      */
     private fun showLoading() {
         updateState { it.copy(uiState = ScreenUiState.Loading) }
-    }
-
-    /**
-     * Sets the dialog state to an overlay loading spinner.
-     */
-    private fun showOverlayLoading() {
-        updateState { it.copy(showOverlay = !state.showOverlay) }
     }
 
     /**
@@ -294,65 +261,6 @@ internal class SavingsApplyViewModel(
     }
 
     /**
-     * Handles the result of the `fetchFieldOfficer` network call.
-     * On success, it maps the field officer options and updates the state.
-     * On failure, it shows an error dialog and navigates back.
-     *
-     * @param template The [DataState] containing the savings template data,
-     * including field officer options.
-     */
-    private fun handleFieldOfficers(template: DataState<SavingsAccountTemplate?>) {
-        when (template) {
-            is DataState.Loading -> {
-                updateState {
-                    it.copy(
-                        showOverlay = true,
-                    )
-                }
-            }
-            is DataState.Success -> {
-                updateState {
-                    it.copy(
-                        showOverlay = false,
-                    )
-                }
-                val mappedSavingsFieldOfficer: Map<Long, String> = template.data?.fieldOfficerOptions
-                    ?.mapNotNull { option ->
-                        val id = option.id?.toLong()
-                        val name = option.displayName
-                        if (id != null && name != null) id to name else null
-                    }
-                    ?.takeIf { it.isNotEmpty() }
-                    ?.toMap() ?: emptyMap()
-
-                updateState {
-                    it.copy(
-                        savingsProductTemplate = template.data,
-                        savingsFieldOfficer = mappedSavingsFieldOfficer,
-                    )
-                }
-            }
-
-            is DataState.Error -> {
-                updateState {
-                    it.copy(
-                        showOverlay = false,
-                    )
-                }
-                updateState {
-                    it.copy(
-                        uiState = if (template.exception.cause is IOException) {
-                            ScreenUiState.Network
-                        } else {
-                            ScreenUiState.Error(Res.string.feature_apply_savings_error_server)
-                        },
-                    )
-                }
-            }
-        }
-    }
-
-    /**
      * Validates that a savings product has been selected.
      *
      * @param savingsProduct The name of the selected savings product.
@@ -376,14 +284,11 @@ internal class SavingsApplyViewModel(
             it.copy(
                 selectedSavingsProduct = name,
                 selectedSavingsProductId = id,
-                selectedFieldOfficer = "",
                 savingsProductError = null,
                 hasChanges = true,
             )
         }
-        viewModelScope.launch {
-            sendAction(SavingsApplicationAction.GetFieldOfficer)
-        }
+
         debounceValidation {
             val result = validateSavingsProduct(name)
             mutableStateFlow.update {
@@ -391,22 +296,6 @@ internal class SavingsApplyViewModel(
                     savingsProductError = if (result is ValidationResult.Error) result.message else null,
                 )
             }
-        }
-    }
-
-    /**
-     * Handles changes to the field officer selection.
-     *
-     * @param id The new id of the field officer selection.
-     * @param name The new name of the field officer selection.
-     */
-    private fun onFieldOfficerChange(id: Long, name: String) {
-        mutableStateFlow.update {
-            it.copy(
-                selectedFieldOfficerId = id,
-                selectedFieldOfficer = name,
-                hasChanges = true,
-            )
         }
     }
 
@@ -554,8 +443,6 @@ internal data class SavingsApplicationState(
     val productOptions: List<SavingsProduct> = emptyList(),
     val selectedSavingsProduct: String = "",
     val selectedSavingsProductId: Long = 0,
-    val savingsFieldOfficer: Map<Long, String> = emptyMap(),
-    val selectedFieldOfficer: String = "",
     val selectedFieldOfficerId: Long = 0,
     val savingsApplicationDialogState: SavingsApplicationDialogState? = null,
     val savingsProductTemplate: SavingsAccountTemplate? = null,
@@ -639,19 +526,6 @@ internal sealed interface SavingsApplicationAction {
      */
     data class SavingsProductChange(val id: Long, val name: String) : SavingsApplicationAction
 
-    /**
-     * User action when the field officer selection changes.
-     * @property fieldOfficerId The new value of the field officer id selection.
-     * @property fieldOfficeName The new value of the field officer name selection.
-     */
-    data class FieldOfficerChange(
-        val fieldOfficerId: Long,
-        val fieldOfficeName: String,
-    ) : SavingsApplicationAction
-
-    /** User action to get the field officer options for the selected product. */
-    data object GetFieldOfficer : SavingsApplicationAction
-
     /** User action to navigate to the confirm details screen, triggering form validation. */
     data object NavigateToConfirmDetails : SavingsApplicationAction
 
@@ -669,14 +543,6 @@ internal sealed interface SavingsApplicationAction {
          */
         data class ReceiveClientAndTemplateResult(
             val client: DataState<Client>,
-            val template: DataState<SavingsAccountTemplate?>,
-        ) : Internal
-
-        /**
-         * An internal action to handle the result of fetching field officer options.
-         * @property template The [DataState] containing the savings template data.
-         */
-        data class ReceiveSavingsFieldOfficers(
             val template: DataState<SavingsAccountTemplate?>,
         ) : Internal
     }

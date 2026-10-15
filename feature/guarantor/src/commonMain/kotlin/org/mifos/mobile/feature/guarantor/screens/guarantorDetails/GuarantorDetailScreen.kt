@@ -32,6 +32,19 @@ import org.mifos.mobile.core.ui.component.MifosAlertDialog
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 
+/**
+ * Main composable function for "Guarantor Detail" screen.
+ *
+ * This screen displays detailed information about a specific guarantor,
+ * including options to update or delete the guarantor. It handles
+ * various UI states and user interactions.
+ *
+ * @param navigateBack A lambda function to handle back navigation event.
+ * @param updateGuarantor A lambda to navigate to update guarantor screen with index and loan ID.
+ * @param modifier Modifier for styling and positioning screen.
+ * @param viewModel The ViewModel that manages screen's state and business logic.
+ *   Provided by Koin dependency injection.
+ */
 @Composable
 internal fun GuarantorDetailScreen(
     navigateBack: () -> Unit,
@@ -69,6 +82,18 @@ internal fun GuarantorDetailScreen(
     )
 }
 
+/**
+ * Private composable function for "Guarantor Detail" screen content.
+ *
+ * This composable renders the main UI structure including scaffold,
+ * content based on UI state, and dialog management. It displays
+ * guarantor details and handles user interactions.
+ *
+ * @param state The current UI state containing all necessary data for rendering.
+ * @param onAction Callback function to handle user actions and UI events.
+ * @param snackbarHostState The SnackbarHostState for showing toast messages.
+ * @param modifier Modifier for styling and positioning screen.
+ */
 @Composable
 private fun GuarantorDetailScreen(
     state: GuarantorDetailState,
@@ -110,6 +135,18 @@ private fun GuarantorDetailScreen(
     )
 }
 
+/**
+ * Dialog composable for showing dialogs on "Guarantor Detail" screen.
+ *
+ * This composable handles display of loading overlays, error messages,
+ * and confirmation dialogs for delete operations based on current
+ * dialog state in [GuarantorDetailState].
+ *
+ * @param alertDialogState Boolean indicating whether the delete confirmation dialog should be shown.
+ * @param dialogState The current state containing dialog information.
+ * @param onDismissRequest Callback function to handle dialog dismissal.
+ * @param onAction Callback function to handle user actions from dialogs.
+ */
 @Composable
 private fun GuarantorDetailsDialog(
     alertDialogState: Boolean,
