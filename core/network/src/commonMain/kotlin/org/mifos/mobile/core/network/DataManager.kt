@@ -9,35 +9,35 @@
  */
 package org.mifos.mobile.core.network
 
-class DataManager(
-    private val ktorfitClient: KtorfitClient,
+open class DataManager(
+    private val ktorfitClient: KtorfitClient? = null,
 ) {
 
-    val authenticationApi by lazy { ktorfitClient.authenticationApi }
+    open val authenticationApi by lazy { ktorfitClient!!.authenticationApi }
 
-    val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
+    open val beneficiaryApi by lazy { ktorfitClient!!.beneficiaryApi }
 
-    val clientsApi by lazy { ktorfitClient.clientsApi }
+    open val clientsApi by lazy { ktorfitClient!!.clientsApi }
 
-    val loanAccountsListApi by lazy { ktorfitClient.loanAccountsListApi }
+    open val loanAccountsListApi by lazy { ktorfitClient!!.loanAccountsListApi }
 
-    val savingAccountsListApi by lazy { ktorfitClient.savingAccountsListApi }
+    open val savingAccountsListApi by lazy { ktorfitClient!!.savingAccountsListApi }
 
-    val recentTransactionsApi by lazy { ktorfitClient.recentTransactionsApi }
+    open val recentTransactionsApi by lazy { ktorfitClient!!.recentTransactionsApi }
 
-    val clientChargeApi by lazy { ktorfitClient.clientChargeApi }
+    open val clientChargeApi by lazy { ktorfitClient!!.clientChargeApi }
 
-    val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
+    open val thirdPartyTransferApi by lazy { ktorfitClient!!.thirdPartyTransferApi }
 
-    val registrationApi by lazy { ktorfitClient.registrationApi }
+    open val registrationApi by lazy { ktorfitClient!!.registrationApi }
 
-    val notificationApi by lazy { ktorfitClient.notificationApi }
+    open val notificationApi by lazy { ktorfitClient!!.notificationApi }
 
-    val userDetailsApi by lazy { ktorfitClient.userDetailsApi }
+    open val userDetailsApi by lazy { ktorfitClient!!.userDetailsApi }
 
-    val guarantorApi by lazy { ktorfitClient.guarantorApi }
+    open val guarantorApi by lazy { ktorfitClient!!.guarantorApi }
 
-    val shareAccountApi by lazy { ktorfitClient.shareAccountApi }
+    open val shareAccountApi by lazy { ktorfitClient!!.shareAccountApi }
 
-    val pocketApi by lazy { ktorfitClient.pocketApi }
+    open val pocketApi by lazy { ktorfitClient!!.pocketApi }
 }

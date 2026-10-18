@@ -24,6 +24,7 @@ import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt
 import mifos_mobile.feature.third_party_transfer.generated.resources.feature_tpt_error_server
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.mobile.core.common.DataState
+import org.mifos.mobile.core.data.repository.PocketRepository
 import org.mifos.mobile.core.data.repository.SavingsAccountRepository
 import org.mifos.mobile.core.data.repository.ThirdPartyTransferRepository
 import org.mifos.mobile.core.data.util.NetworkMonitor
@@ -53,6 +54,7 @@ internal class TptViewModel(
     private val thirdPartyTransferRepositoryImpl: ThirdPartyTransferRepository,
     private val networkMonitor: NetworkMonitor,
     private val userPreferencesRepositoryImpl: UserPreferencesRepository,
+    private val pocketRepository: PocketRepository,
 ) : BaseViewModel<TptState, TptEvent, TptAction>(
     initialState = run {
         TptState(
@@ -136,10 +138,12 @@ internal class TptViewModel(
 
             TptAction.DismissDialog -> dismissDialog()
 
+            is TptAction.ConfirmAddToPocket -> confirmAddToPocket(action.add)
+
             is TptAction.Internal.PerformTransfer -> performTransfer()
 
             is TptAction.Internal.ReceiveTransferTemplateResult ->
-                handleTransferTemplateResult(action.dataState)
+                viewModelScope.launch { handleTransferTemplateResult(action.dataState) }
 
             TptAction.OnRetry -> retry()
 
@@ -195,6 +199,11 @@ internal class TptViewModel(
                 isBalanceLoading = true,
                 balanceError = false,
                 toAccountOptions = toAccounts,
+                dialogState = if (state.pocketAccountIds.contains(accountId)) {
+                    null
+                } else {
+                    TptState.DialogState.AddToPocketConfirmation
+                },
             )
         }
 
@@ -202,6 +211,37 @@ internal class TptViewModel(
             sendAction(
                 TptAction.Internal.FetchSavingsBalance(accountId),
             )
+        }
+    }
+
+    private fun confirmAddToPocket(add: Boolean) {
+        if (!add) {
+            dismissDialog()
+            return
+        }
+
+        val account = state.fromAccount
+        val accountId = account?.accountId?.toLong()
+        val accountNumber = account?.accountNo
+        if (accountId == null || accountNumber.isNullOrBlank()) {
+            dismissDialog()
+            return
+        }
+
+        updateState { it.copy(dialogState = TptState.DialogState.Loading) }
+        viewModelScope.launch {
+            when (pocketRepository.linkAccount(accountId, AccountType.SAVINGS, accountNumber)) {
+                is DataState.Success -> updateState {
+                    it.copy(
+                        dialogState = null,
+                        pocketAccountIds = it.pocketAccountIds + accountId,
+                    )
+                }
+                is DataState.Error -> updateState {
+                    it.copy(dialogState = TptState.DialogState.Error(Res.string.feature_tpt_error_server))
+                }
+                DataState.Loading -> Unit
+            }
         }
     }
 
@@ -293,6 +333,7 @@ internal class TptViewModel(
         val fromAccounts = state.accountOptionsTemplate.fromAccountOptions
             .filterSavingsAccounts()
             .filter { it.accountNo != toAccount }
+            .sortedByDescending { it.accountId?.toLong() in state.pocketAccountIds }
 
         updateState {
             it.copy(
@@ -525,7 +566,7 @@ internal class TptViewModel(
      *
      * @param dataState The [DataState] of the [AccountOptionsTemplate] fetch operation.
      */
-    private fun handleTransferTemplateResult(dataState: DataState<AccountOptionsTemplate>) {
+    private suspend fun handleTransferTemplateResult(dataState: DataState<AccountOptionsTemplate>) {
         when (dataState) {
             is DataState.Error -> {
                 updateState {
@@ -543,12 +584,31 @@ internal class TptViewModel(
                 val template = dataState.data
 
                 val savingsFromAccounts = template.fromAccountOptions.filterSavingsAccounts()
+                val pocketResult = pocketRepository.getPocketAccounts()
+                if (pocketResult is DataState.Error) {
+                    updateState {
+                        it.copy(
+                            uiState = ScreenUiState.Error(
+                                Res.string.feature_tpt_error_server,
+                            ),
+                        )
+                    }
+                    return
+                }
+                val pocketAccountIds = (pocketResult as DataState.Success).data
+                    .filter { it.accountType == AccountType.SAVINGS }
+                    .map { it.accountId }
+                    .toSet()
+                val sortedSavingsFromAccounts = savingsFromAccounts.sortedByDescending {
+                    it.accountId?.toLong() in pocketAccountIds
+                }
 
                 updateState {
                     it.copy(
                         accountOptionsTemplate = dataState.data,
-                        fromAccountOptions = savingsFromAccounts,
+                        fromAccountOptions = sortedSavingsFromAccounts,
                         toAccountOptions = dataState.data.toAccountOptions,
+                        pocketAccountIds = pocketAccountIds,
                         uiState = ScreenUiState.Success,
                     )
                 }
@@ -600,6 +660,7 @@ internal data class TptState(
     var toAccountOptions: List<AccountOption> = emptyList(),
     val fromAccount: AccountOption? = null,
     val toAccount: AccountOption? = null,
+    val pocketAccountIds: Set<Long> = emptySet(),
     val fromAccountBalance: Double? = null,
     val isBalanceLoading: Boolean = false,
     val balanceError: Boolean = false,
@@ -613,6 +674,9 @@ internal data class TptState(
      * Represents the possible states of a dialog shown on the Make Transfer screen.
      */
     sealed interface DialogState {
+        data object Loading : DialogState
+        data object AddToPocketConfirmation : DialogState
+
         /**
          * Represents an error state, containing an error message.
          * @property message The error message to display.
@@ -666,6 +730,8 @@ internal sealed interface TptAction {
 
     /** Action triggered to dismiss any currently shown dialog. */
     data object DismissDialog : TptAction
+
+    data class ConfirmAddToPocket(val add: Boolean) : TptAction
 
     /** Action triggered to retry a failed operation, typically fetching account options. */
     data object OnRetry : TptAction

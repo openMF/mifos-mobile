@@ -14,6 +14,7 @@ import org.koin.dsl.module
 import org.mifos.mobile.feature.pocket.managePocket.ManagePocketViewModel
 import org.mifos.mobile.feature.pocket.pocketDashboard.PocketDashboardViewModel
 
+/** Provides ViewModels used by the Pocket dashboard and management screens. */
 val PocketModule = module {
     viewModelOf(::PocketDashboardViewModel)
     viewModelOf(::ManagePocketViewModel)

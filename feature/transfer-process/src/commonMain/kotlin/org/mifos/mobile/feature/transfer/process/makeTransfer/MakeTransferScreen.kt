@@ -29,6 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.feature.transfer_process.generated.resources.Res
+import mifos_mobile.feature.transfer_process.generated.resources.add_to_pocket_cancel
+import mifos_mobile.feature.transfer_process.generated.resources.add_to_pocket_confirm
+import mifos_mobile.feature.transfer_process.generated.resources.add_to_pocket_message
+import mifos_mobile.feature.transfer_process.generated.resources.add_to_pocket_title
 import mifos_mobile.feature.transfer_process.generated.resources.amount
 import mifos_mobile.feature.transfer_process.generated.resources.error_description
 import mifos_mobile.feature.transfer_process.generated.resources.feature_make_transfer_error_server
@@ -38,6 +42,8 @@ import mifos_mobile.feature.transfer_process.generated.resources.remarks
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.mobile.core.designsystem.component.BasicDialogState
+import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosElevatedScaffold
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
@@ -299,6 +305,21 @@ internal fun MakeTransferDialog(
     modifier: Modifier = Modifier,
 ) {
     when (state.dialogState) {
+        MakeTransferState.DialogState.AddToPocketConfirmation -> {
+            MifosBasicDialog(
+                visibilityState = BasicDialogState.Shown(
+                    title = stringResource(Res.string.add_to_pocket_title),
+                    message = stringResource(Res.string.add_to_pocket_message),
+                ),
+                onConfirm = { onAction(MakeTransferAction.ConfirmAddToPocket(true)) },
+                onDismissRequest = { onAction(MakeTransferAction.ConfirmAddToPocket(false)) },
+                confirmText = stringResource(Res.string.add_to_pocket_confirm),
+                cancelText = stringResource(Res.string.add_to_pocket_cancel),
+            )
+        }
+
+        MakeTransferState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+
         is MakeTransferState.DialogState.Error -> {
             MifosErrorComponent(
                 isNetworkConnected = state.networkStatus,

@@ -9,6 +9,8 @@
  */
 package org.mifos.mobile.core.database.dao
 
+import androidx.room.Transaction
+import org.mifos.mobile.core.database.entity.PendingPocketDelinkEntity
 import org.mifos.mobile.core.database.entity.PocketAccountEntity
 import template.core.base.database.Dao
 import template.core.base.database.Insert
@@ -25,4 +27,33 @@ interface PocketAccountDao {
 
     @Query("DELETE FROM pockets WHERE id IN (:pocketAccountMappingIds)")
     suspend fun delinkPocketAccounts(pocketAccountMappingIds: List<Long>)
+
+    @Query("DELETE FROM pockets")
+    suspend fun deleteAll()
+
+    @Query("SELECT pocketAccountMappingId FROM pending_pocket_delinks")
+    suspend fun getPendingDelinkIds(): List<Long>
+
+    @Insert(entity = PendingPocketDelinkEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPendingDelinks(pendingDelinks: List<PendingPocketDelinkEntity>)
+
+    @Query("DELETE FROM pending_pocket_delinks WHERE pocketAccountMappingId IN (:pocketAccountMappingIds)")
+    suspend fun deletePendingDelinks(pocketAccountMappingIds: List<Long>)
+
+    @Transaction
+    suspend fun delinkPocketAccountsAndTrackPending(
+        pocketAccountMappingIds: List<Long>,
+        pendingDelinks: List<PendingPocketDelinkEntity>,
+    ) {
+        if (pendingDelinks.isNotEmpty()) {
+            insertPendingDelinks(pendingDelinks)
+        }
+        delinkPocketAccounts(pocketAccountMappingIds)
+    }
+
+    @Transaction
+    suspend fun replaceAllPocketAccounts(pockets: List<PocketAccountEntity>) {
+        deleteAll()
+        linkPocketAccounts(pockets)
+    }
 }

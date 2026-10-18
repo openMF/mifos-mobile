@@ -17,10 +17,12 @@ import org.mifos.mobile.core.ui.composableWithSlideTransitions
 @Serializable
 data object ManagePocketRoute
 
+/** Navigates to the Pocket account-management screen. */
 fun NavController.navigateToManagePocketScreen() {
     navigate(ManagePocketRoute)
 }
 
+/** Adds the Pocket account-management destination to the navigation graph. */
 fun NavGraphBuilder.managePocketDestination(
     navigateBack: () -> Unit,
 ) {

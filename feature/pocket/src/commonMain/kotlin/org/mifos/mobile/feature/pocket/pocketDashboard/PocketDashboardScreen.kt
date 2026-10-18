@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -69,6 +70,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import template.core.base.designsystem.theme.KptTheme
 
+/** Hosts the dashboard ViewModel, navigation events, and rendered content. */
 @Composable
 internal fun PocketDashboardScreen(
     navigateBack: () -> Unit,
@@ -98,6 +100,7 @@ internal fun PocketDashboardScreen(
     )
 }
 
+/** Renders loading, error, empty, or grouped Pocket account content. */
 @Composable
 internal fun PocketDashboardContent(
     state: PocketDashboardState,
@@ -227,6 +230,7 @@ internal fun PocketDashboardContent(
     }
 }
 
+/** Renders the title and account count for one Pocket account section. */
 @Composable
 internal fun PocketSectionHeader(
     title: StringResource,
@@ -241,6 +245,7 @@ internal fun PocketSectionHeader(
     )
 }
 
+/** Renders one linked Pocket account with balance/status and detail navigation. */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun PocketDashboardCard(
@@ -251,8 +256,9 @@ internal fun PocketDashboardCard(
     Box(
         modifier = modifier
             .clip(KptTheme.shapes.large)
-            .height(DesignToken.sizes.cardDp112)
+            .heightIn(min = DesignToken.sizes.cardDp112)
             .fillMaxWidth(),
+        contentAlignment = Alignment.Center,
     ) {
         Image(
             modifier = Modifier.matchParentSize(),
@@ -263,7 +269,7 @@ internal fun PocketDashboardCard(
 
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(DesignToken.padding.large),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -303,6 +309,7 @@ internal fun PocketDashboardCard(
     }
 }
 
+/** Maps an account status to the color used by the dashboard status label. */
 @Composable
 fun AccountStatus.toColor(): Color =
     when (this) {
@@ -329,6 +336,7 @@ fun AccountStatus.toColor(): Color =
             KptTheme.colorScheme.onSurface
     }
 
+/** Preview containing representative loan, savings, and share sections. */
 @Preview
 @Composable
 internal fun PocketDashboardContentPreview() {
@@ -384,6 +392,7 @@ internal fun PocketDashboardContentPreview() {
     }
 }
 
+/** Renders the call to action shown when no Pocket account is linked. */
 @Composable
 internal fun EmptyPocketContent(
     onLinkFirstAccount: () -> Unit,
@@ -448,6 +457,7 @@ internal fun EmptyPocketContent(
     }
 }
 
+/** Preview for the empty Pocket dashboard state. */
 @Preview
 @Composable
 private fun EmptyPocketContentPreview() {

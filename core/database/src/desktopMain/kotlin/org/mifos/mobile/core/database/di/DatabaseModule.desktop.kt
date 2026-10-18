@@ -10,6 +10,7 @@
 package org.mifos.mobile.core.database.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -23,7 +24,7 @@ actual val platformModule: Module = module {
             .createDatabase<AppDatabase>(AppDatabase.DATABASE_NAME)
             .fallbackToDestructiveMigrationOnDowngrade(false)
             .setDriver(BundledSQLiteDriver())
-            .setQueryCoroutineContext(get(named(MifosDispatchers.IO.name)))
+            .setQueryCoroutineContext(get<CoroutineDispatcher>(named(MifosDispatchers.IO.name)))
             .build()
     }
 }

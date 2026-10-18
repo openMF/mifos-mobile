@@ -7,7 +7,6 @@
  *
  * See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
  */
-@file:Suppress("MaxLineLength")
 
 package template.core.base.datastore.reactive
 
