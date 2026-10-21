@@ -67,6 +67,7 @@ import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
+import org.mifos.mobile.core.ui.utils.SecureScreen
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -120,6 +121,7 @@ private fun LoginScreen(
     modifier: Modifier = Modifier,
     onAction: (LoginAction) -> Unit,
 ) {
+    SecureScreen()
     MifosScaffold(
         bottomBar = {
             Surface {
