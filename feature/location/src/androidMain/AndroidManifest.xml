@@ -10,6 +10,17 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
+        Requested together so that the system dialog lets the user choose between precise and
+        approximate location. The feature is optional so that devices without a GPS can still
+        install the application.
+    -->
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application>
 
         <meta-data

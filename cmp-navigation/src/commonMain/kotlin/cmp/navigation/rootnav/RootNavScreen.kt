@@ -39,6 +39,7 @@ import org.mifos.mobile.core.ui.RootTransitionProviders
 import org.mifos.mobile.feature.auth.navigation.AuthGraphRoute
 import org.mifos.mobile.feature.auth.navigation.authenticationNavGraph
 import org.mifos.mobile.feature.auth.navigation.navigateToAuthGraph
+import org.mifos.mobile.feature.location.permission.LocationPermissionRequest
 import org.mifos.mobile.feature.onboarding.language.navigation.OnboardingLanguageRoute
 import org.mifos.mobile.feature.onboarding.language.navigation.navigateToOnboardingLanguage
 import org.mifos.mobile.feature.onboarding.language.navigation.onBoardingLanguageDestination
@@ -61,6 +62,12 @@ fun RootNavScreen(
     LaunchedEffect(isNotSplashScreen) {
         if (isNotSplashScreen) onSplashScreenRemoved()
     }
+
+    // Ask for location access before onboarding or the login screen becomes reachable, so that the
+    // user has already decided by the time they reach the sign in or registration screens.
+    val isPreAuthenticationState =
+        state == RootNavState.SetLanguage || state == RootNavState.Auth
+    LocationPermissionRequest(enabled = isPreAuthenticationState)
 
     NavHost(
         navController = navController,

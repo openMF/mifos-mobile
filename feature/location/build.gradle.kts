@@ -29,6 +29,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.google.map.compose)
+            implementation(libs.accompanist.permissions)
         }
         desktopMain.dependencies {
 
