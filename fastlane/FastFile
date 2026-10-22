@@ -405,19 +405,26 @@ platform :ios do
   ###################
 
   desc "Build unsigned debug iOS app for PR checks (no signing, no archive)"
-  lane :build_ios do
-    sh("cd .. && ./gradlew :cmp-shared:assembleComposeAppDebugXCFramework")
+    lane :build_ios do |options|
+      ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
-    build_ios_app(
-      scheme:           "prodDebug",
-      project:          "cmp-ios/iosApp.xcodeproj",
-      output_name:      "iosApp.ipa",
-      output_directory: "cmp-ios/build",
-      destination:      "generic/platform=iOS Simulator",
-      skip_codesigning: true,
-      skip_archive:     true
-    )
-  end
+      cocoapods(
+        podfile: ios_config[:podfile_path],
+        clean_install: true,
+        repo_update: true
+      )
+
+      build_ios_app(
+        scheme: ios_config[:scheme],
+        workspace: ios_config[:workspace_path],
+        output_name: ios_config[:output_name],
+        output_directory: ios_config[:output_directory],
+        configuration: "Debug",
+        destination: "generic/platform=iOS Simulator",
+        skip_codesigning: true,
+        skip_archive: true
+      )
+    end
 
   desc "Build Signed Ios application"
   lane :build_signed_ios do |options|
