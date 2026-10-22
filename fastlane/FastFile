@@ -419,6 +419,7 @@ platform :ios do
       workspace: ios_config[:workspace_path],
       output_name: ios_config[:output_name],
       output_directory: ios_config[:output_directory],
+      destination: "generic/platform=iOS Simulator",
       skip_codesigning: true,
       skip_archive: true
     )
