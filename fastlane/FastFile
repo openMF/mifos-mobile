@@ -408,6 +408,8 @@ platform :ios do
     lane :build_ios do |options|
       ios_config = FastlaneConfig::IosConfig::BUILD_CONFIG
 
+      sh("cd .. && ./gradlew :cmp-shared:generateDummyFramework")
+
       cocoapods(
         podfile: ios_config[:podfile_path],
         clean_install: true,
