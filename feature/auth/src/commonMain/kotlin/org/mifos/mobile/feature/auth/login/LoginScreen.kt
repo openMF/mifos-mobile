@@ -29,6 +29,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,6 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
+import com.mohamedrejeb.calf.permissions.Permission
+import com.mohamedrejeb.calf.permissions.isGranted
+import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.auth.generated.resources.Res
@@ -69,6 +74,7 @@ import org.mifos.mobile.core.ui.utils.EventsEffect
 import org.mifos.mobile.core.ui.utils.ScreenUiState
 import template.core.base.designsystem.theme.KptTheme
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun LoginScreen(
     navigateToRegisterScreen: () -> Unit,
@@ -81,6 +87,16 @@ internal fun LoginScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    val locationPermissionState = rememberPermissionState(
+        permission = Permission.FineLocation,
+    )
+
+    LaunchedEffect(Unit) {
+        if (!locationPermissionState.status.isGranted) {
+            locationPermissionState.launchPermissionRequest()
+        }
+    }
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
