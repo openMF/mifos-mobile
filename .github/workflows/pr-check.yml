@@ -85,4 +85,5 @@ jobs:
       shared_module:        cmp-shared
       desktop_package_name: cmp-desktop
       web_package_name:     cmp-web
+      java-version:         '21'
     secrets: inherit
