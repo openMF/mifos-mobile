@@ -27,7 +27,6 @@ kotlin {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.compose.ui.tooling)
             implementation(libs.androidx.activity.compose)
-            implementation(projects.core.model)
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.androidx.compose.ui.test)
@@ -48,6 +47,7 @@ kotlin {
             implementation(libs.fluentui.system.icons)
             api(libs.back.handler)
             api(libs.window.size)
+            implementation(projects.core.model)
             api(projects.coreBase.designsystem)
         }
 
