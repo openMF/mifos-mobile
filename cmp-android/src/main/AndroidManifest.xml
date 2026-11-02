@@ -25,6 +25,7 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" android:minSdkVersion="33"/>
     <!--
     Firebase automatically adds the AD_ID permission, even though we don't use it. If you use this
     permission you must declare how you're using it to Google Play, otherwise the app will be
