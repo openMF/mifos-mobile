@@ -11,6 +11,7 @@ package org.mifos.mobile.core.datastore.model
 
 import kotlinx.serialization.Serializable
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosBrandTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 
 @Serializable
@@ -20,6 +21,7 @@ data class AppSettings(
     val baseUrl: String,
     val passcode: String,
     val appTheme: MifosThemeConfig,
+    val brandTheme: MifosBrandTheme = MifosBrandTheme.IPOTEKA,
     val sentTokenToServer: Boolean = false,
     val gcmToken: String? = null,
     val useDynamicColor: Boolean,
@@ -37,6 +39,7 @@ data class AppSettings(
             tenant = "mifos-bank-1",
             baseUrl = "https://mifos-bank-1.mifos.community/",
             appTheme = MifosThemeConfig.FOLLOW_SYSTEM,
+            brandTheme = MifosBrandTheme.IPOTEKA,
             sentTokenToServer = false,
             gcmToken = null,
             language = LanguageConfig.DEFAULT,

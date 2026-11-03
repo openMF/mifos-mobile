@@ -23,6 +23,7 @@ import org.mifos.mobile.core.data.util.NetworkMonitor
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.TimeBasedTheme
 import org.mifos.mobile.core.model.LanguageConfig
+import org.mifos.mobile.core.model.MifosBrandTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.NetworkBannerState
@@ -36,6 +37,7 @@ class ComposeAppViewModel(
         isAndroidTheme = false,
         isDynamicColorsEnabled = false,
         themeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
+        brandTheme = MifosBrandTheme.IPOTEKA,
     ),
 ) {
     val networkStatus = networkMonitor.isOnline
@@ -58,6 +60,12 @@ class ComposeAppViewModel(
         userPreferencesRepository
             .observeDarkThemeConfig
             .onEach { trySendAction(AppAction.Internal.ThemeUpdate(it)) }
+            .launchIn(viewModelScope)
+
+        userPreferencesRepository
+            .settingsInfo
+            .map { it.brandTheme }
+            .onEach { trySendAction(AppAction.Internal.BrandThemeUpdate(it)) }
             .launchIn(viewModelScope)
 
         userPreferencesRepository
@@ -141,6 +149,10 @@ class ComposeAppViewModel(
 
             is AppAction.Internal.ThemeUpdate -> handleAppThemeUpdated(action)
 
+            is AppAction.Internal.BrandThemeUpdate -> {
+                mutableStateFlow.update { it.copy(brandTheme = action.theme) }
+            }
+
             is AppAction.Internal.DynamicColorsUpdate -> handleDynamicColorsUpdate(action)
 
             is AppAction.Internal.SystemThemeUpdate -> handleSystemThemeUpdate(action)
@@ -222,6 +234,7 @@ data class AppState(
     val isDynamicColorsEnabled: Boolean,
     val networkBanner: NetworkBannerState = NetworkBannerState.None,
     val themeConfig: MifosThemeConfig = MifosThemeConfig.FOLLOW_SYSTEM,
+    val brandTheme: MifosBrandTheme = MifosBrandTheme.IPOTEKA,
     val timeBasedTheme: TimeBasedTheme = TimeBasedTheme(
         hourStart = 6,
         hourEnd = 18,
@@ -249,6 +262,10 @@ sealed interface AppAction {
 
         data class ThemeUpdate(
             val theme: MifosThemeConfig,
+        ) : Internal()
+
+        data class BrandThemeUpdate(
+            val theme: MifosBrandTheme,
         ) : Internal()
 
         data class DynamicColorsUpdate(

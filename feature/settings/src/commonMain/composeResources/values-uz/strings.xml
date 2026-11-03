@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_settings_action_theme">Ko‘rinish</string>
+    <string name="feature_settings_action_theme_tip">Ilova uslubi va rang rejimini tanlang</string>
+    <string name="feature_settings_theme_appearance">Ilova ko‘rinishi</string>
+    <string name="feature_settings_theme_brand_subtitle">Vizual uslubni tanlang. Yorug‘ va tungi rejim alohida sozlanadi.</string>
+    <string name="feature_settings_theme_mode">Rang rejimi</string>
+    <string name="feature_settings_theme_brand_ipoteka">Ipoteka Bank</string>
+    <string name="feature_settings_theme_brand_ipoteka_description">OTP rasmiy yashil palitrasi va sokin bank interfeysi.</string>
+    <string name="feature_settings_theme_brand_aurora">Avrora</string>
+    <string name="feature_settings_theme_brand_aurora_description">Yumshoq binafsha va moviy aksentlar, keng va ravon shakllar.</string>
+    <string name="feature_settings_theme_brand_graphite">Grafit</string>
+    <string name="feature_settings_theme_brand_graphite_description">Aniq neytral yuzalar va vazmin zumrad aksentlari.</string>
+    <string name="feature_settings_theme_light">Yorug‘ mavzu</string>
+    <string name="feature_settings_theme_dark">Tungi mavzu</string>
+    <string name="feature_settings_theme_system">Tizim kabi</string>
+    <string name="feature_settings_apply_theme">Qo‘llash</string>
+    <string name="feature_settings_theme_based_on_time">Jadval bo‘yicha</string>
+    <string name="feature_settings_theme_choose_dark_mode_time">Tungi mavzu jadvali</string>
+    <string name="feature_settings_theme_choose_dark_mode_starts_at">Tungi mavzu boshlanishi</string>
+    <string name="feature_settings_theme_choose_dark_mode_ends_at">Tungi mavzu tugashi</string>
+    <string name="feature_settings_theme_apply">Tayyor</string>
+</resources>

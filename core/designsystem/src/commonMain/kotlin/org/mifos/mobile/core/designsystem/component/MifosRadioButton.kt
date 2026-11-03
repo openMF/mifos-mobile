@@ -13,7 +13,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
@@ -144,7 +144,8 @@ fun MifosRadioButton(
                     ),
                     shape = KptTheme.shapes.medium,
                 )
-                .clickable(
+                .selectable(
+                    selected = selected,
                     enabled = enabled,
                     onClick = onClick,
                     role = Role.RadioButton,

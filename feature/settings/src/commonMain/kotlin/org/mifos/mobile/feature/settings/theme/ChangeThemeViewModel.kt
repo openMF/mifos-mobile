@@ -11,16 +11,21 @@ package org.mifos.mobile.feature.settings.theme
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.feature.settings.generated.resources.Res
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_based_on_time
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_brand_aurora
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_brand_graphite
+import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_brand_ipoteka
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_dark
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_light
 import mifos_mobile.feature.settings.generated.resources.feature_settings_theme_system
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.datastore.model.TimeBasedTheme
+import org.mifos.mobile.core.model.MifosBrandTheme
 import org.mifos.mobile.core.model.MifosThemeConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 
@@ -36,7 +41,10 @@ import org.mifos.mobile.core.ui.utils.BaseViewModel
 internal class ChangeThemeViewModel(
     private val repository: UserPreferencesRepository,
 ) : BaseViewModel<ThemeState, ThemeEvent, ThemeAction>(
-    ThemeState(MifosThemeConfig.FOLLOW_SYSTEM),
+    ThemeState(
+        currentTheme = MifosThemeConfig.FOLLOW_SYSTEM,
+        currentBrand = MifosBrandTheme.IPOTEKA,
+    ),
 ) {
 
     init {
@@ -52,6 +60,11 @@ internal class ChangeThemeViewModel(
                 trySendAction(ThemeAction.Internal.LoadTimeBasedTheme(it))
             }
             .launchIn(viewModelScope)
+
+        repository.settingsInfo
+            .map { it.brandTheme }
+            .onEach { trySendAction(ThemeAction.Internal.LoadBrandTheme(it)) }
+            .launchIn(viewModelScope)
     }
 
     /**
@@ -63,10 +76,14 @@ internal class ChangeThemeViewModel(
         when (action) {
             is ThemeAction.SetTheme -> handleSetTheme()
             is ThemeAction.ThemeSelection -> handleThemeSelection(action.theme)
+            is ThemeAction.BrandSelection -> handleBrandSelection(action.theme)
             ThemeAction.NavigateBack -> {
                 sendEvent(ThemeEvent.OnNavigateBack)
             }
             is ThemeAction.Internal.LoadTheme -> handleLoadTheme(action)
+            is ThemeAction.Internal.LoadBrandTheme -> {
+                mutableStateFlow.update { it.copy(currentBrand = action.theme) }
+            }
             ThemeAction.HideTimeBasedDialog -> {
                 mutableStateFlow.update {
                     it.copy(
@@ -125,6 +142,15 @@ internal class ChangeThemeViewModel(
         }
     }
 
+    private fun handleBrandSelection(theme: MifosBrandTheme) {
+        mutableStateFlow.update { it.copy(currentBrand = theme) }
+        viewModelScope.launch {
+            repository.updateSettings(
+                repository.settingsInfo.value.copy(brandTheme = theme),
+            )
+        }
+    }
+
     /**
      * Persists the currently selected theme to the [UserPreferencesRepository].
      *
@@ -170,6 +196,7 @@ internal class ChangeThemeViewModel(
  */
 internal data class ThemeState(
     val currentTheme: MifosThemeConfig,
+    val currentBrand: MifosBrandTheme,
     val showTimeBasedDialog: Boolean = false,
     val timeBasedTheme: TimeBasedTheme = TimeBasedTheme(
         hourStart = 6,
@@ -187,6 +214,13 @@ internal data class ThemeState(
             MifosThemeConfig.DARK to Res.string.feature_settings_theme_dark,
             MifosThemeConfig.LIGHT to Res.string.feature_settings_theme_light,
             MifosThemeConfig.BASED_ON_TIME to Res.string.feature_settings_theme_based_on_time,
+        )
+
+    val brandOptions
+        get() = listOf(
+            MifosBrandTheme.IPOTEKA to Res.string.feature_settings_theme_brand_ipoteka,
+            MifosBrandTheme.AURORA to Res.string.feature_settings_theme_brand_aurora,
+            MifosBrandTheme.GRAPHITE to Res.string.feature_settings_theme_brand_graphite,
         )
 }
 
@@ -216,6 +250,8 @@ internal sealed interface ThemeAction {
      */
     data class ThemeSelection(val theme: MifosThemeConfig) : ThemeAction
 
+    data class BrandSelection(val theme: MifosBrandTheme) : ThemeAction
+
     /**
      * An action to trigger navigation back from the theme settings screen.
      */
@@ -237,6 +273,8 @@ internal sealed interface ThemeAction {
          * @property theme The [MifosThemeConfig] loaded from the repository.
          */
         data class LoadTheme(val theme: MifosThemeConfig) : Internal
+
+        data class LoadBrandTheme(val theme: MifosBrandTheme) : Internal
 
         data class LoadTimeBasedTheme(val theme: TimeBasedTheme) : Internal
     }

@@ -209,6 +209,15 @@
     <string name="feature_settings_change_language">Change Language</string>
 
     <!--  Theme  -->
+    <string name="feature_settings_theme_appearance">App appearance</string>
+    <string name="feature_settings_theme_brand_subtitle">Choose a visual identity. Light and dark mode are configured separately.</string>
+    <string name="feature_settings_theme_mode">Color mode</string>
+    <string name="feature_settings_theme_brand_ipoteka">Ipoteka Bank</string>
+    <string name="feature_settings_theme_brand_ipoteka_description">Official OTP green palette with calm banking surfaces.</string>
+    <string name="feature_settings_theme_brand_aurora">Aurora</string>
+    <string name="feature_settings_theme_brand_aurora_description">Soft violet, cyan and warm accents with generous shapes.</string>
+    <string name="feature_settings_theme_brand_graphite">Graphite</string>
+    <string name="feature_settings_theme_brand_graphite_description">Precise neutral surfaces with restrained emerald accents.</string>
     <string name="feature_settings_theme_light">Light Theme</string>
     <string name="feature_settings_theme_dark">Dark Theme</string>
     <string name="feature_settings_theme_system">Default System Theme</string>
