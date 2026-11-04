@@ -26,12 +26,12 @@ fun NavController.navigateToRegisterScreen(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.registrationDestination(
     navigateToLoginScreen: () -> Unit,
-    navigateToUploadIdScreen: () -> Unit,
+    navigateToNextScreen: () -> Unit,
 ) {
     composableWithStayTransitions<RegistrationRoute> {
         RegistrationScreen(
             navigateToLoginScreen = navigateToLoginScreen,
-            navigateToUploadIdScreen = navigateToUploadIdScreen,
+            navigateToNextScreen = navigateToNextScreen,
         )
     }
 }

@@ -188,4 +188,14 @@
     <string name="feature_recover_now_recovered_failed">Password Recovery Failed</string>
     <string name="feature_recover_now_registered_failed_tip">There is an error to recover the password of the user. Please try again.</string>
 
+    <!-- Onboarding Flow Strings -->
+    <!-- Email Entry Strings -->
+    <string name="feature_signup_enter_email_title">Enter your personal email address.</string>
+    <string name="feature_signup_enter_email_subtitle">We will send a code to your email.</string>
+    <string name="feature_signup_confirm_email_label">Confirm email address</string>
+    <string name="feature_signup_privacy_acceptance">By continuing, you accept our </string>
+    <string name="feature_signup_privacy_notice">Privacy Notice.</string>
+    <string name="feature_signup_continue">Continue</string>
+    <string name="feature_signup_already_started">Had you already started your registration? </string>
+    <string name="feature_signup_pick_up_left_off">Pick up where you left off.</string>
 </resources>

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
+import mifos_mobile.feature.auth.generated.resources.feature_recover_now_email_format_error
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_not_valid
@@ -85,6 +86,18 @@ class RegistrationViewModel(
 
             is SignUpAction.OnEmailChange -> {
                 handleEmailChange(action.email.trim())
+            }
+
+            is SignUpAction.OnConfirmEmailChange -> {
+                handleConfirmEmailChange(action.confirmEmail.trim())
+            }
+
+            is SignUpAction.OnEmailStepContinue -> {
+                handleEmailStepContinue()
+            }
+
+            is SignUpAction.OnNavigationToLogin -> {
+                sendEvent(SignUpEvent.NavigateToLogin)
             }
 
             is SignUpAction.OnMobileNumberChange -> {
@@ -203,17 +216,33 @@ class RegistrationViewModel(
     private fun handleEmailChange(email: String) {
         mutableStateFlow.update {
             it.copy(
-                email = email,
+                email = email.trim(),
                 emailError = null,
             )
         }
 
         debounceValidation {
-            val result = validateEmail(email)
+            val result = validateEmail(email.trim())
             mutableStateFlow.update {
                 it.copy(
                     emailError = if (result is ValidationResult.Error) result.message else null,
                 )
+            }
+        }
+    }
+
+    private fun handleConfirmEmailChange(confirmEmail: String) {
+        mutableStateFlow.update { it.copy(confirmEmail = confirmEmail, confirmEmailError = null) }
+        debounceValidation {
+            val result = validateEmail(confirmEmail)
+            val matchResult = if (confirmEmail.isNotEmpty() && confirmEmail != state.email) {
+                ValidationResult.Error(Res.string.feature_recover_now_email_format_error)
+            } else {
+                result
+            }
+
+            mutableStateFlow.update {
+                it.copy(confirmEmailError = if (matchResult is ValidationResult.Error) matchResult.message else null)
             }
         }
     }
@@ -417,6 +446,19 @@ class RegistrationViewModel(
         mutableStateFlow.update { it.copy(isConfirmPasswordVisible = !state.isConfirmPasswordVisible) }
     }
 
+    private fun handleEmailStepContinue() {
+        val emailValid = ValidationHelper.isValidEmail(state.email)
+        if (!emailValid) {
+            updateState { it.copy(emailError = Res.string.feature_signup_error_invalid_email) }
+            return
+        }
+        if (state.email != state.confirmEmail) {
+            updateState { it.copy(confirmEmailError = Res.string.feature_recover_now_email_format_error) }
+            return
+        }
+        sendEvent(SignUpEvent.NavigateToNextStep)
+    }
+
     /**
      * Handles the result from password strength checker and updates UI accordingly.
      */
@@ -594,6 +636,9 @@ data class SignUpState(
     val middleName: String = "",
     val lastName: String = "",
     val email: String = "",
+    val confirmEmail: String = "",
+    val confirmEmailError: StringResource? = null,
+
     val password: String = "",
     val confirmPassword: String = "",
     val mobileNumber: String = "",
@@ -625,6 +670,9 @@ data class SignUpState(
         data class Error(val message: String) : SignUpDialog
     }
 
+    val isEmailStepContinueEnabled: Boolean
+        get() = email.isNotBlank() && confirmEmail.isNotBlank() && email == confirmEmail
+
     /**
      * Whether the submit button should be enabled based on required fields.
      */
@@ -644,6 +692,7 @@ sealed interface SignUpEvent {
     data class ShowToast(val message: String) : SignUpEvent
     data object NavigateToUploadDocuments : SignUpEvent
     data object NavigateToLogin : SignUpEvent
+    data object NavigateToNextStep : SignUpEvent
 }
 
 /**
@@ -663,6 +712,9 @@ sealed interface SignUpAction {
     data class OnMiddleNameChange(val middleName: String) : SignUpAction
     data class OnLastNameChange(val lastName: String) : SignUpAction
     data class OnEmailChange(val email: String) : SignUpAction
+    data class OnConfirmEmailChange(val confirmEmail: String) : SignUpAction
+    data object OnEmailStepContinue : SignUpAction
+    data object OnNavigationToLogin : SignUpAction
     data class OnPasswordChange(val password: String) : SignUpAction
     data class OnConfirmPasswordChange(val confirmPassword: String) : SignUpAction
 
