@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="recent_transactions">ಇತ್ತೀಚಿನ ವಹಿವಾಟುಗಳು</string>
     <string name="no_transaction">ಯಾವುದೇ ವಹಿವಾಟು ಇಲ್ಲ</string>
     <string name="atm_icon">ATM ಐಕಾನ್</string>
@@ -29,4 +28,11 @@
     <string name="debits">ಡೆಬಿಟ್‌ಗಳು</string>
     <string name="credits">ಕ್ರೆಡಿಟ್‌ಗಳು</string>
     <string name="apply_filters">ಫಿಲ್ಟರ್‌ಗಳನ್ನು ಅನ್ವಯಿಸಿ</string>
+
+    <string name="deposit">ಠೇವಣಿ</string>
+    <string name="withdrawal">ಹಿಂಪಡೆಯುವಿಕೆ</string>
+    <string name="interest_posting">ಬಡ್ಡಿ ಜಮೆ</string>
+    <string name="fee_deduction">ಶುಲ್ಕ ಕಡಿತ</string>
+    <string name="transfer">ವರ್ಗಾವಣೆ</string>
+    <string name="transaction">ವಹಿವಾಟು</string>
 </resources>

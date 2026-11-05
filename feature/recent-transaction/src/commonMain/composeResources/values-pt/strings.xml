@@ -29,4 +29,11 @@
     <string name="debits">Débitos</string>
     <string name="credits">Créditos</string>
     <string name="apply_filters">Aplicar Filtros</string>
+
+    <string name="deposit">Depósito</string>
+    <string name="withdrawal">Levantamento</string>
+    <string name="interest_posting">Lançamento de Juros</string>
+    <string name="fee_deduction">Dedução de Taxa</string>
+    <string name="transfer">Transferência</string>
+    <string name="transaction">Transação</string>
 </resources>

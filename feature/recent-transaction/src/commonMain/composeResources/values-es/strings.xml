@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 Mifos Initiative
+    Copyright 2026 Mifos Initiative
 
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
     If a copy of the MPL was not distributed with this file,
@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="recent_transactions">Transacciones Recientes</string>
     <string name="no_transaction">Sin Transacciones</string>
     <string name="atm_icon">Icono de cajero automático</string>
@@ -29,4 +28,11 @@
     <string name="debits">Cargos</string>
     <string name="credits">Abonos</string>
     <string name="apply_filters">Aplicar Filtros</string>
+
+    <string name="deposit">Depósito</string>
+    <string name="withdrawal">Retiro</string>
+    <string name="interest_posting">Publicación de intereses</string>
+    <string name="fee_deduction">Deducción de tarifa</string>
+    <string name="transfer">Transferencia</string>
+    <string name="transaction">Transacción</string>
 </resources>

@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">Comptes</string>
     <string name="feature_loan_account_title">Comptes de prêt</string>
     <string name="feature_saving_account_title">Comptes d\'épargne</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">Statut</string>
     <string name="feature_accounts_filter_type">Type</string>
 
+    <!-- Loan Accounts filters -->
     <string name="feature_loan_account_filter_active">Actif</string>
     <string name="feature_loan_account_filter_approval_pending">En attente d\'approbation</string>
     <string name="feature_loan_account_filter_closed">Fermé</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">Personnel</string>
     <string name="feature_loan_account_filter_bronze">Bronze</string>
 
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">Compte portefeuille</string>
     <string name="feature_savings_filter_bank_account">Compte bancaire</string>
     <string name="feature_savings_filter_group_account">Compte de groupe</string>
@@ -53,6 +54,7 @@
     <string name="feature_transaction_filter">Filtrer</string>
     <string name="feature_transaction_filter_icon_description">Icône de filtre</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">Crédit</string>
     <string name="feature_transaction_filter_debit">Débit</string>
 
@@ -69,6 +71,7 @@
 
     <string name="feature_generic_error_server">Problème de serveur de notre côté, impossible de continuer. Réessayez dans un moment.</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">Détails de la transaction</string>
     <string name="feature_transaction_detail_id">ID de transaction</string>
     <string name="feature_transaction_detail_transfer_description">Description du transfert</string>
@@ -89,4 +92,18 @@
     <string name="feature_transaction_detail_balance">Solde restant</string>
     <string name="feature_transaction_detail_default_type">Transaction</string>
 
+    <string name="feature_transaction_history_deposit">Dépôt</string>
+    <string name="feature_transaction_history_withdrawal">Retrait</string>
+    <string name="feature_transaction_history_interest_posting">Comptabilisation des intérêts</string>
+    <string name="feature_transaction_history_fee_deduction">Déduction de frais</string>
+    <string name="feature_transaction_history_transfer">Transfert</string>
+    <string name="feature_transaction_history_transaction">Transaction</string>
+    <string name="feature_transaction_history_disbursement">Décaissement</string>
+    <string name="feature_transaction_history_repayment">Remboursement</string>
+    <string name="feature_transaction_history_purchase">Achat</string>
+    <string name="feature_transaction_history_charge_payment">Paiement de charge</string>
+    <string name="feature_transaction_history_redeem">Racheter</string>
+    <string name="feature_transaction_history_recovery_repayment">Remboursement de recouvrement</string>
+    <string name="feature_transaction_history_interest_waiver">Remise d’intérêt</string>
+    <string name="feature_transaction_history_fee_waiver">Remise de frais</string>
 </resources>

@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">ගිණුම්</string>
     <string name="feature_loan_account_title">ණය ගිණුම්</string>
     <string name="feature_saving_account_title">ඉතුරුම් ගිණුම්</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">තත්වය</string>
     <string name="feature_accounts_filter_type">වර්ගය</string>
 
+    <!-- Loan account filters -->
     <string name="feature_loan_account_filter_active">සක්‍රීය</string>
     <string name="feature_loan_account_filter_approval_pending">අනුමැතිය අපේක්ෂිත</string>
     <string name="feature_loan_account_filter_closed">වසා ඇත</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">පුද්ගලික</string>
     <string name="feature_loan_account_filter_bronze">ලෝකඩ</string>
 
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">පසුම්බි ගිණුම</string>
     <string name="feature_savings_filter_bank_account">බැංකු ගිණුම</string>
     <string name="feature_savings_filter_group_account">කණ්ඩායම් ගිණුම</string>
@@ -53,6 +54,7 @@
     <string name="feature_transaction_filter">පෙරහන්න</string>
     <string name="feature_transaction_filter_icon_description">පෙරහන් නිරූපකය</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">බැර</string>
     <string name="feature_transaction_filter_debit">හර</string>
 
@@ -69,6 +71,7 @@
 
     <string name="feature_generic_error_server">අපගේ පාර්ශවයෙන් සේවාදායක දෝෂයක් ඇත, ඉදිරියට යා නොහැක, මොහොතකින් නැවත උත්සාහ කරන්න</string>
 
+    <!-- Transaction Details -->
     <string name="feature_transaction_details">ගනුදෙනු විස්තර</string>
     <string name="feature_transaction_detail_id">ගනුදෙනු ID</string>
     <string name="feature_transaction_detail_transfer_description">මාරු කිරීමේ විස්තරය</string>
@@ -89,4 +92,18 @@
     <string name="feature_transaction_detail_balance">ඉතිරි ශේෂය</string>
     <string name="feature_transaction_detail_default_type">ගනුදෙනුව</string>
 
+    <string name="feature_transaction_history_deposit">තැන්පතු</string>
+    <string name="feature_transaction_history_withdrawal">මුදල් ලබා ගැනීම</string>
+    <string name="feature_transaction_history_interest_posting">පොලිය බැර කිරීම</string>
+    <string name="feature_transaction_history_fee_deduction">ගාස්තු අය කිරීම</string>
+    <string name="feature_transaction_history_transfer">මාරු කිරීම්</string>
+    <string name="feature_transaction_history_transaction">ගනුදෙනුව</string>
+    <string name="feature_transaction_history_disbursement">ණය නිකුත් කිරීම</string>
+    <string name="feature_transaction_history_repayment">ණය වාරික ගෙවීම</string>
+    <string name="feature_transaction_history_purchase">මිලදී ගැනීම්</string>
+    <string name="feature_transaction_history_charge_payment">ගාස්තු ගෙවීම</string>
+    <string name="feature_transaction_history_redeem">මුදවා ගැනීම්</string>
+    <string name="feature_transaction_history_recovery_repayment">පියවීම් ගෙවීම්</string>
+    <string name="feature_transaction_history_interest_waiver">පොලී කපා හැරීම</string>
+    <string name="feature_transaction_history_fee_waiver">ගාස්තු කපා හැරීම</string>
 </resources>

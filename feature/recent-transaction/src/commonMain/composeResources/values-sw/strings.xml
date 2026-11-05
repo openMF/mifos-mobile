@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="recent_transactions">Miamala ya Hivi Karibuni</string>
     <string name="no_transaction">Hakuna Muamala</string>
     <string name="atm_icon">Aikoni ya ATM</string>
@@ -29,4 +28,11 @@
     <string name="debits">Makato</string>
     <string name="credits">Amana</string>
     <string name="apply_filters">Weka Vichujio</string>
+
+    <string name="deposit">Akiba</string>
+    <string name="withdrawal">Kutoa</string>
+    <string name="interest_posting">Malipo ya Riba</string>
+    <string name="fee_deduction">Makato ya Ada</string>
+    <string name="transfer">Hamisho</string>
+    <string name="transaction">Muamala</string>
 </resources>

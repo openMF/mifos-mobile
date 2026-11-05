@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">تراکنش‌های اخیر</string>
+    <string name="no_transaction">تراکنی وجود ندارد</string>
+    <string name="filter">فیلتر</string>
+    <string name="filter_transactions">فیلتر تراکنش‌ها</string>
+    <string name="clear_all">پاک کردن همه</string>
+    <string name="filter_by_account">فیلتر بر اساس حساب:</string>
+    <string name="account_number_label">شماره حساب: %1$s</string>
+    <string name="select_account">انتخاب حساب</string>
+    <string name="balance">موجودی: %1$s %2$s</string>
+    <string name="transaction_type">نوع تراکنش:</string>
+    <string name="all">همه</string>
+    <string name="debits">برداشت‌ها</string>
+    <string name="credits">واریزها</string>
+    <string name="apply_filters">اعمال فیلترها</string>
+
+    <string name="deposit">سپرده</string>
+    <string name="withdrawal">برداشت</string>
+    <string name="interest_posting">ثبت سود</string>
+    <string name="fee_deduction">کسر کارمزد</string>
+    <string name="transfer">انتقال</string>
+    <string name="transaction">تراکنش</string>
+</resources>

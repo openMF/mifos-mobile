@@ -29,4 +29,11 @@
     <string name="debits">ഡെബിറ്റുകൾ</string>
     <string name="credits">ക്രെഡിറ്റുകൾ</string>
     <string name="apply_filters">ഫിൽട്ടറുകൾ പ്രയോഗിക്കുക</string>
+
+    <string name="deposit">നിക്ഷേപം</string>
+    <string name="withdrawal">പിൻവലിക്കൽ</string>
+    <string name="interest_posting">പലിശ ചേർക്കൽ</string>
+    <string name="fee_deduction">ഫീസ് കുറയ്ക്കൽ</string>
+    <string name="transfer">കൈമാറ്റം</string>
+    <string name="transaction">ഇടപാട്</string>
 </resources>
