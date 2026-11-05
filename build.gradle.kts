@@ -60,3 +60,20 @@ tasks.register("printModulePaths") {
         }
     }
 }
+subprojects {
+    // This tells Gradle how to choose between multiple JAR files
+    configurations.all {
+        if (name.contains("OssLicenses")) {
+            attributes {
+                attribute(Attribute.of("artifactType", String::class.java), "android-classes-jar")
+            }
+        }
+    }
+
+    // This disables the task that is crashing your PR
+    tasks.configureEach {
+        if (name.contains("OssLicensesTask", ignoreCase = true)) {
+            enabled = false
+        }
+    }
+}
