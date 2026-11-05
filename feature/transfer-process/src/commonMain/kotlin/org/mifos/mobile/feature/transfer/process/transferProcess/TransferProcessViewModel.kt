@@ -36,7 +36,6 @@ import org.mifos.mobile.core.ui.utils.AuthResult
 import org.mifos.mobile.core.ui.utils.BaseViewModel
 import org.mifos.mobile.core.ui.utils.ResultNavigator
 import org.mifos.mobile.core.ui.utils.ScreenUiState
-import org.mifos.mobile.core.ui.utils.ScreenUiState.Network
 import org.mifos.mobile.core.ui.utils.observe
 import kotlin.coroutines.cancellation.CancellationException
 import mifos_mobile.core.ui.generated.resources.Res as UiRes
@@ -66,11 +65,11 @@ internal class TransferProcessViewModel(
 ) : BaseViewModel<TransferProcessState, TransferProcessEvent, TransferProcessAction>(
     initialState = run {
         val route = savedStateHandle.toRoute<TransferProcessRoute>()
-        val transferDate = listOf(
-            currentDate.day,
-            currentDate.month.number,
-            currentDate.year,
+        val backendDate = DateHelper.getDateMonthYearString(
+            listOf(currentDate.day, currentDate.month.number, currentDate.year),
         )
+        val uiDate = backendDate
+
         println("TransferProcessViewModel: route = ${route.transferSuccessDestination}")
         TransferProcessState(
             transferDestination = route.transferSuccessDestination,
@@ -84,7 +83,7 @@ internal class TransferProcessViewModel(
                 toAccountId = route.toAccountId,
                 toClientId = route.toClientId,
                 toAccountType = route.toAccountType,
-                transferDate = DateHelper.getDateMonthYearString(transferDate),
+                transferDate = backendDate,
                 transferAmount = route.transferAmount?.toDouble(),
                 transferDescription = route.transferDescription,
                 dateFormat = "dd MMMM yyyy",
@@ -92,6 +91,7 @@ internal class TransferProcessViewModel(
             ),
             fromClientName = route.fromClientName,
             toClientName = route.toClientName,
+            uiTransferDate = uiDate,
         )
     },
 ) {
@@ -293,6 +293,7 @@ data class TransferProcessState(
     val showOverlay: Boolean = false,
     val fromClientName: String? = null,
     val toClientName: String? = null,
+    val uiTransferDate: String? = null,
 )
 
 /**
