@@ -138,4 +138,50 @@
     <string name="feature_dashboard_totals">Total Available Loan %2$s%1$s, Savings %4$s%3$s</string>
     <string name="feature_dashboard_toggle_visibility">Toggle Visibility</string>
 
+    <!-- Transaction date labels -->
+    <string name="tx_date_today">Today</string>
+    <string name="tx_date_yesterday">Yesterday</string>
+
+    <!-- Month abbreviations for transaction date display -->
+    <string name="tx_month_jan">Jan</string>
+    <string name="tx_month_feb">Feb</string>
+    <string name="tx_month_mar">Mar</string>
+    <string name="tx_month_apr">Apr</string>
+    <string name="tx_month_may">May</string>
+    <string name="tx_month_jun">Jun</string>
+    <string name="tx_month_jul">Jul</string>
+    <string name="tx_month_aug">Aug</string>
+    <string name="tx_month_sep">Sep</string>
+    <string name="tx_month_oct">Oct</string>
+    <string name="tx_month_nov">Nov</string>
+    <string name="tx_month_dec">Dec</string>
+
+    <!-- Transaction type names -->
+    <string name="tx_type_deposit">Deposit</string>
+    <string name="tx_type_withdrawal">Withdrawal</string>
+    <string name="tx_type_interest_posting">Interest Posting</string>
+    <string name="tx_type_repayment">Repayment</string>
+    <string name="tx_type_repayment_at_disbursement">Repayment at Disbursement</string>
+    <string name="tx_type_waive_interest">Waive Interest</string>
+    <string name="tx_type_waive_charges">Waive Charges</string>
+    <string name="tx_type_charge_payment">Charge Payment</string>
+    <string name="tx_type_fee_deduction">Fee Deduction</string>
+    <string name="tx_type_initiate_transfer">Transfer</string>
+    <string name="tx_type_dividend_payout">Dividend Payout</string>
+    <string name="tx_type_accrual">Accrual</string>
+    <string name="tx_type_write_off">Write-Off</string>
+    <string name="tx_type_recover_repayment">Recover Repayment</string>
+    <string name="tx_type_refund">Refund</string>
+    <string name="tx_type_credit_balance_refund">Credit Balance Refund</string>
+    <string name="tx_type_overpayment">Overpayment</string>
+    <string name="tx_type_loan_charge_added">Loan Charge Added</string>
+    <string name="tx_type_approval">Approval</string>
+    <string name="tx_type_undo_approval">Undo Approval</string>
+    <string name="tx_type_undo_disbursal">Undo Disbursal</string>
+    <string name="tx_type_reschedule">Reschedule</string>
+    <string name="tx_type_charge_off">Charge-Off</string>
+    <string name="tx_type_interest_waiver">Interest Waiver</string>
+    <string name="tx_type_tax_withholding">Tax Withholding</string>
+    <string name="tx_type_recalculate_interest">Recalculate Interest</string>
+
 </resources>
