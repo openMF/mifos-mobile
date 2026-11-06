@@ -237,7 +237,7 @@ class RegistrationViewModel(
             val hasMismatch = confirmEmail.isNotEmpty() && confirmEmail != state.email
             mutableStateFlow.update {
                 it.copy(
-                    confirmEmailError = if (hasMismatch) Res.string.feature_signup_error_email_mismatch else null
+                    confirmEmailError = if (hasMismatch) Res.string.feature_signup_error_email_mismatch else null,
                 )
             }
         }
