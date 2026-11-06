@@ -234,15 +234,11 @@ class RegistrationViewModel(
     private fun handleConfirmEmailChange(confirmEmail: String) {
         mutableStateFlow.update { it.copy(confirmEmail = confirmEmail, confirmEmailError = null) }
         debounceValidation {
-            val result = validateEmail(confirmEmail)
-            val matchResult = if (confirmEmail.isNotEmpty() && confirmEmail != state.email) {
-                ValidationResult.Error(Res.string.feature_signup_error_email_mismatch)
-            } else {
-                result
-            }
-
+            val hasMismatch = confirmEmail.isNotEmpty() && confirmEmail != state.email
             mutableStateFlow.update {
-                it.copy(confirmEmailError = if (matchResult is ValidationResult.Error) matchResult.message else null)
+                it.copy(
+                    confirmEmailError = if (hasMismatch) Res.string.feature_signup_error_email_mismatch else null
+                )
             }
         }
     }
