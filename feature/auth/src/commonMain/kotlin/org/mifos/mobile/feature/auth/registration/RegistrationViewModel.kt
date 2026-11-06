@@ -21,6 +21,7 @@ import mifos_mobile.feature.auth.generated.resources.feature_recover_now_email_f
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_not_valid
+import mifos_mobile.feature.auth.generated.resources.feature_signup_error_email_mismatch
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_first_name_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_email
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_invalid_name
@@ -236,7 +237,7 @@ class RegistrationViewModel(
         debounceValidation {
             val result = validateEmail(confirmEmail)
             val matchResult = if (confirmEmail.isNotEmpty() && confirmEmail != state.email) {
-                ValidationResult.Error(Res.string.feature_recover_now_email_format_error)
+                ValidationResult.Error(Res.string.feature_signup_error_email_mismatch)
             } else {
                 result
             }
@@ -453,7 +454,7 @@ class RegistrationViewModel(
             return
         }
         if (state.email != state.confirmEmail) {
-            updateState { it.copy(confirmEmailError = Res.string.feature_recover_now_email_format_error) }
+            updateState { it.copy(confirmEmailError = Res.string.feature_signup_error_email_mismatch) }
             return
         }
         sendEvent(SignUpEvent.NavigateToNextStep)
