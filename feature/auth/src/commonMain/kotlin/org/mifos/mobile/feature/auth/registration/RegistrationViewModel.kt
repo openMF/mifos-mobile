@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mifos_mobile.core.ui.generated.resources.internal_server_error
 import mifos_mobile.feature.auth.generated.resources.Res
-import mifos_mobile.feature.auth.generated.resources.feature_recover_now_email_format_error
 import mifos_mobile.feature.auth.generated.resources.feature_recover_now_phone_number_error
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_empty
 import mifos_mobile.feature.auth.generated.resources.feature_signup_error_customer_account_not_valid
