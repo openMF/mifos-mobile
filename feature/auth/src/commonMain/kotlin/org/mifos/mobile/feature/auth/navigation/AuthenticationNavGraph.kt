@@ -29,7 +29,6 @@ import org.mifos.mobile.feature.auth.registration.navigateToRegisterScreen
 import org.mifos.mobile.feature.auth.registration.registrationDestination
 import org.mifos.mobile.feature.auth.setNewPassword.navigateToSetPasswordScreen
 import org.mifos.mobile.feature.auth.setNewPassword.setPasswordDestination
-import org.mifos.mobile.feature.auth.uploadId.navigateToUploadIdScreen
 import org.mifos.mobile.feature.auth.uploadId.uploadIdDestination
 
 @Serializable
@@ -56,9 +55,8 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         registrationDestination(
             navigateToLoginScreen = navController::navigateToLoginScreen,
-//            navigateToUploadIdScreen = navController::navigateToUploadIdScreen,
 //            TODO Remove this and use above one after getting an api for upload id screen
-            navigateToUploadIdScreen = navController::navigateToOtpAuthScreen,
+            navigateToNextScreen = { navController.navigateToOtpAuthScreen() },
         )
 
         uploadIdDestination(

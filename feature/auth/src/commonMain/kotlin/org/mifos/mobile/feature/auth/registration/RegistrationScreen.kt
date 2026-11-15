@@ -9,11 +9,12 @@
  */
 package org.mifos.mobile.feature.auth.registration
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,16 +24,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,28 +37,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
 import mifos_mobile.feature.auth.generated.resources.Res
-import mifos_mobile.feature.auth.generated.resources.feature_signup_already_have_an_account
+import mifos_mobile.feature.auth.generated.resources.feature_signup_already_started
 import mifos_mobile.feature.auth.generated.resources.feature_signup_cell_phone_label
+import mifos_mobile.feature.auth.generated.resources.feature_signup_confirm_email_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_confirm_password_label
+import mifos_mobile.feature.auth.generated.resources.feature_signup_continue
 import mifos_mobile.feature.auth.generated.resources.feature_signup_customer_account_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_email_label
+import mifos_mobile.feature.auth.generated.resources.feature_signup_enter_email_subtitle
+import mifos_mobile.feature.auth.generated.resources.feature_signup_enter_email_title
 import mifos_mobile.feature.auth.generated.resources.feature_signup_first_name_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_last_name_label
-import mifos_mobile.feature.auth.generated.resources.feature_signup_log_in
 import mifos_mobile.feature.auth.generated.resources.feature_signup_middle_name_label
 import mifos_mobile.feature.auth.generated.resources.feature_signup_password_label
-import mifos_mobile.feature.auth.generated.resources.feature_signup_sub_title
-import mifos_mobile.feature.auth.generated.resources.feature_signup_submit
-import mifos_mobile.feature.auth.generated.resources.feature_signup_title
+import mifos_mobile.feature.auth.generated.resources.feature_signup_pick_up_left_off
+import mifos_mobile.feature.auth.generated.resources.feature_signup_privacy_acceptance
+import mifos_mobile.feature.auth.generated.resources.feature_signup_privacy_notice
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -69,15 +67,11 @@ import org.mifos.mobile.core.designsystem.component.BasicDialogState
 import org.mifos.mobile.core.designsystem.component.MifosBasicDialog
 import org.mifos.mobile.core.designsystem.component.MifosButton
 import org.mifos.mobile.core.designsystem.component.MifosOutlinedTextField
-import org.mifos.mobile.core.designsystem.component.MifosPasswordField
 import org.mifos.mobile.core.designsystem.component.MifosScaffold
 import org.mifos.mobile.core.designsystem.component.MifosTextFieldConfig
-import org.mifos.mobile.core.designsystem.icon.MifosIcons
 import org.mifos.mobile.core.designsystem.theme.DesignToken
 import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
-import org.mifos.mobile.core.ui.CombinedPasswordErrorCard
-import org.mifos.mobile.core.ui.PasswordStrengthIndicator
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
 import org.mifos.mobile.core.ui.component.MifosProgressIndicatorOverlay
 import org.mifos.mobile.core.ui.utils.EventsEffect
@@ -86,7 +80,7 @@ import template.core.base.designsystem.theme.KptTheme
 
 @Composable
 internal fun RegistrationScreen(
-    navigateToUploadIdScreen: () -> Unit,
+    navigateToNextScreen: () -> Unit,
     navigateToLoginScreen: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = koinViewModel(),
@@ -98,15 +92,17 @@ internal fun RegistrationScreen(
 
     EventsEffect(viewModel.eventFlow) { event ->
         when (event) {
+            is SignUpEvent.NavigateToNextStep -> {
+                navigateToNextScreen.invoke()
+            }
             is SignUpEvent.ShowToast -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(event.message)
                 }
             }
 
-            is SignUpEvent.NavigateToUploadDocuments -> navigateToUploadIdScreen.invoke()
-
             is SignUpEvent.NavigateToLogin -> navigateToLoginScreen.invoke()
+            SignUpEvent.NavigateToUploadDocuments -> TODO()
         }
     }
 
@@ -149,6 +145,8 @@ private fun RegistrationScreen(
     onAction: (SignUpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     MifosScaffold(
         bottomBar = {
             Surface {
@@ -160,12 +158,23 @@ private fun RegistrationScreen(
     ) {
         when (state.uiState) {
             ScreenUiState.Success -> {
-                RegistrationScreenContent(
-                    state = state,
-                    onAction = onAction,
-                    modifier = modifier,
-                )
-
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } }
+                        .verticalScroll(rememberScrollState())
+                        .padding(KptTheme.spacing.md)
+                        .statusBarsPadding(),
+                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
+                ) {
+                    MifosLogoHeader()
+                    Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
+                    EmailEntryStep(
+                        state = state,
+                        onAction = onAction,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
                 if (state.showOverlay) {
                     MifosProgressIndicatorOverlay()
                 }
@@ -177,229 +186,119 @@ private fun RegistrationScreen(
 }
 
 @Composable
-private fun RegistrationScreenContent(
+fun MifosLogoHeader(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(mifos_mobile.core.ui.generated.resources.Res.drawable.ic_icon_logo_1),
+            contentDescription = "Mifos Logo",
+            modifier = Modifier
+                .height(DesignToken.sizes.imageDp48)
+                .width(DesignToken.sizes.imageDp128),
+        )
+    }
+}
+
+@Composable
+private fun EmailEntryStep(
     state: SignUpState,
     onAction: (SignUpAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
-    val scrollState = rememberScrollState()
-
-    LaunchedEffect(scrollState.canScrollForward) {
-        if (scrollState.canScrollForward) scrollState.scrollTo(scrollState.maxValue)
-    }
-
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    keyboardController?.hide()
-                }
-            }
-            .padding(KptTheme.spacing.md)
-            .padding(top = KptTheme.spacing.md)
-            .statusBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(DesignToken.spacing.medium),
-        contentPadding = PaddingValues(
-            bottom = DesignToken.spacing.extraLarge,
-        ),
-    ) {
-        item {
-            Text(
-                text = stringResource(Res.string.feature_signup_title),
-                style = MifosTypography.headlineMedium,
-                color = KptTheme.colorScheme.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = stringResource(Res.string.feature_signup_sub_title),
-                style = MifosTypography.bodySmall,
-                color = KptTheme.colorScheme.secondary,
-            )
-        }
-
-        item {
-            FormSection(
-                inputConfigs = getInputConfigs(state, onAction),
-            )
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
-            MifosButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(DesignToken.sizes.inputHeight),
-                onClick = { onAction(SignUpAction.SubmitClick) },
-                shape = KptTheme.shapes.medium,
-                enabled = state.isSubmitButtonEnabled,
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_signup_submit),
-                    style = MifosTypography.titleMedium,
-                )
-            }
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_signup_already_have_an_account),
-                    style = MifosTypography.labelMedium,
-                )
-                Spacer(modifier = Modifier.width(KptTheme.spacing.xs))
-                Text(
-                    modifier = Modifier.clickable {
-                        onAction(SignUpAction.OnNavigateToLogin)
-                    },
-                    text = stringResource(Res.string.feature_signup_log_in),
-                    style = MifosTypography.labelMedium,
-                    color = KptTheme.colorScheme.primary,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun FormSection(
-    inputConfigs: List<InputFieldConfig>,
-    modifier: Modifier = Modifier,
-    verticalSpacing: Dp = DesignToken.spacing.largeIncreased,
-) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(verticalSpacing),
+        verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
     ) {
-        inputConfigs.forEach { config ->
-            MifosInputField(config)
-        }
-    }
-}
+        Text(
+            text = stringResource(Res.string.feature_signup_enter_email_title),
+            style = MifosTypography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = stringResource(Res.string.feature_signup_enter_email_subtitle),
+            style = MifosTypography.bodyMedium,
+            color = KptTheme.colorScheme.secondary,
+        )
 
-@Composable
-fun MifosInputField(
-    config: InputFieldConfig,
-    modifier: Modifier = Modifier,
-) {
-    val visualTransformation =
-        if (config.fieldType == InputFieldType.PASSWORD && !config.isPasswordVisible) {
-            PasswordVisualTransformation()
-        } else {
-            VisualTransformation.None
-        }
+        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
 
-    val trailingIcon: @Composable (() -> Unit)? = when {
-        config.fieldType == InputFieldType.PASSWORD && config.onTogglePasswordVisibility != null -> {
-            {
-                IconButton(onClick = config.onTogglePasswordVisibility) {
-                    Icon(
-                        imageVector = if (config.isPasswordVisible) MifosIcons.EyeOff else MifosIcons.Eye,
-                        contentDescription = "Toggle password visibility",
-                        tint = if (config.errorText != null) {
-                            KptTheme.colorScheme.error
-                        } else {
-                            KptTheme.colorScheme.onSurface
-                        },
-                    )
-                }
-            }
-        }
-        config.errorText != null -> {
-            {
-                Icon(
-                    imageVector = MifosIcons.ErrorCircle,
-                    contentDescription = "Error",
-                    tint = KptTheme.colorScheme.error,
-                )
-            }
-        }
-        else -> null
-    }
-
-    val hasError = config.errorText != null || config.state.passwordFeedback.isNotEmpty()
-
-    if (config.fieldType == InputFieldType.PASSWORD) {
-        Column(
-            modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
-        ) {
-            MifosPasswordField(
-                label = stringResource(config.labelRes),
-                value = config.value,
-                onValueChange = config.onValueChange,
-                shape = KptTheme.shapes.medium,
-                modifier = Modifier.fillMaxWidth(),
-                showPassword = config.isPasswordVisible,
-                showPasswordChange = {
-                    config.onTogglePasswordVisibility?.invoke()
-                },
-                isError = config.errorText != null,
-                hint = config.errorText?.let { stringResource(it) },
-            )
-            if (!config.isConfirmPassword) {
-                if (config.value.isNotEmpty() && !hasError) {
-                    PasswordStrengthIndicator(
-                        state = config.state.passwordStrengthState,
-                        currentCharacterCount = config.value.length,
-                        minimumCharacterCount = 8,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-
-                // Show combined error card with integrated strength indicator when there are errors
-
-                if (hasError && config.value.isNotEmpty()) {
-                    CombinedPasswordErrorCard(
-                        passwordStrengthState = config.state.passwordStrengthState,
-                        currentCharacterCount = config.value.length,
-                        errorText = config.errorText,
-                        errors = config.state.passwordFeedback,
-                        minimumCharacterCount = 8,
-                    )
-                }
-            }
-        }
-    } else {
         MifosOutlinedTextField(
-            value = config.value,
-            onValueChange = config.onValueChange,
-            label = stringResource(config.labelRes),
-            shape = KptTheme.shapes.medium,
-            textStyle = MifosTypography.bodyLarge,
+            value = state.email,
+            onValueChange = { onAction(SignUpAction.OnEmailChange(it)) },
+            label = stringResource(Res.string.feature_signup_email_label),
+            modifier = Modifier.fillMaxWidth(),
             config = MifosTextFieldConfig(
-                isError = config.errorText != null,
-                errorText = config.errorText?.let { stringResource(it) },
-                trailingIcon = trailingIcon,
-                visualTransformation = visualTransformation,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = when (config.fieldType) {
-                        InputFieldType.PASSWORD -> {
-                            KeyboardType.Password
-                        }
-                        InputFieldType.NUMBER -> {
-                            KeyboardType.Number
-                        }
-                        InputFieldType.PHONE -> {
-                            KeyboardType.Phone
-                        }
-                        else -> {
-                            KeyboardType.Text
-                        }
-                    },
-                    imeAction = ImeAction.Next,
-                ),
+                isError = state.emailError != null,
+                errorText = state.emailError?.let { stringResource(it) },
             ),
         )
+
+        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
+
+        Text(
+            text = stringResource(Res.string.feature_signup_confirm_email_label),
+            style = MifosTypography.labelLarge,
+            fontWeight = FontWeight.Bold,
+        )
+
+        MifosOutlinedTextField(
+            value = state.confirmEmail,
+            onValueChange = { onAction(SignUpAction.OnConfirmEmailChange(it)) },
+            label = stringResource(Res.string.feature_signup_confirm_email_label),
+            modifier = Modifier.fillMaxWidth(),
+            config = MifosTextFieldConfig(
+                isError = state.confirmEmailError != null,
+                errorText = state.confirmEmailError?.let { stringResource(it) },
+            ),
+        )
+
+        Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = stringResource(Res.string.feature_signup_privacy_acceptance),
+                style = MifosTypography.bodySmall,
+            )
+            Text(
+                text = stringResource(Res.string.feature_signup_privacy_notice),
+                style = MifosTypography.bodySmall,
+                color = KptTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+
+        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+
+        MifosButton(
+            onClick = { onAction(SignUpAction.OnEmailStepContinue) },
+            enabled = state.isEmailStepContinueEnabled,
+            modifier = Modifier.fillMaxWidth().height(DesignToken.sizes.inputHeight),
+        ) {
+            Text(text = stringResource(Res.string.feature_signup_continue))
+        }
+
+        Spacer(modifier = Modifier.height(KptTheme.spacing.md))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            Text(
+                text = stringResource(Res.string.feature_signup_already_started),
+                style = MifosTypography.bodySmall,
+            )
+            Text(
+                text = stringResource(Res.string.feature_signup_pick_up_left_off),
+                style = MifosTypography.bodySmall,
+                color = KptTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clickable { onAction(SignUpAction.OnNavigateToLogin) },
+            )
+        }
     }
 }
 
