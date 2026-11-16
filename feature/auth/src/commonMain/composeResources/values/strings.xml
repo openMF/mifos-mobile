@@ -199,4 +199,7 @@
     <string name="feature_signup_already_started">Had you already started your registration? </string>
     <string name="feature_signup_pick_up_left_off">Pick up where you left off.</string>
     <string name="feature_signup_error_email_mismatch">Email addresses do not match</string>
+    <!-- Account Choice Strings -->
+    <string name="feature_signup_account_choice_title">You have an account.</string>
+    <string name="feature_signup_account_choice_subtitle">Do you already have an active account on Mifos?</string>
 </resources>

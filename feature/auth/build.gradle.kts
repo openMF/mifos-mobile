@@ -37,5 +37,10 @@ kotlin {
             implementation(libs.filekit.dialog.compose)
             implementation(libs.calf.permissions)
         }
+
+        // Compose UI tests need a UI test host, which only the desktop target provides here.
+        desktopTest.dependencies {
+            implementation(libs.jb.composeUiTest)
+        }
     }
 }
