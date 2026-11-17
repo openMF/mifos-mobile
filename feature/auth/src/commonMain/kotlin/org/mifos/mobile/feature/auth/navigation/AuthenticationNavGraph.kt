@@ -18,6 +18,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.navigation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.mifos.mobile.feature.auth.accountChoice.accountChoiceDestination
 import org.mifos.mobile.feature.auth.login.LoginRoute
 import org.mifos.mobile.feature.auth.login.loginDestination
 import org.mifos.mobile.feature.auth.login.navigateToLoginScreen
@@ -78,6 +79,15 @@ fun NavGraphBuilder.authenticationNavGraph(
         setPasswordDestination(
             navigateToStatusScreen = navigateToStatusScreen,
             navigateToLoginScreen = navController::navigateToLoginScreen,
+        )
+
+        // Not reachable yet: the sign-up password screen (MM-597) will navigate here
+        // through navigateToAccountChoiceScreen().
+        accountChoiceDestination(
+            // TODO MM-599: navigate to the account number screen for existing customers.
+            onExistingCustomer = {},
+            // TODO MM-601: navigate to the personal details screen for new customers.
+            onNewCustomer = {},
         )
     }
 }
