@@ -35,7 +35,7 @@ kotlin {
             implementation(projects.feature.qr)
             implementation(projects.feature.notification)
             implementation(projects.feature.location)
-            implementation(projects.feature.onboardingLanguage)
+            implementation(projects.feature.onboarding)
             implementation(projects.feature.passcode)
             implementation(projects.feature.status)
             implementation(projects.feature.loanApplication)

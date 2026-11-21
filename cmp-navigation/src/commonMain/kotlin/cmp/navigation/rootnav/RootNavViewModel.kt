@@ -62,7 +62,7 @@ class RootNavViewModel(
         val settingsData = action.settingsData
         println("User data in view model $settingsData")
         val updatedRootNavState = when {
-            settingsData.firstTimeState -> RootNavState.SetLanguage
+            settingsData.firstTimeState -> RootNavState.Onboarding
 
             !settingsData.isAuthenticated -> RootNavState.Auth
 
@@ -81,7 +81,7 @@ class RootNavViewModel(
 sealed class RootNavState {
     data object Auth : RootNavState()
 
-    data object SetLanguage : RootNavState()
+    data object Onboarding : RootNavState()
 
     data object Splash : RootNavState()
 

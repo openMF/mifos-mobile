@@ -26,7 +26,9 @@ fun NavController.navigateToOnboardingLanguage(navOptions: NavOptions? = null) {
 }
 
 @Suppress("UnusedParameter")
-fun NavGraphBuilder.onBoardingLanguageDestination(navOptions: NavOptions? = null) {
+fun NavGraphBuilder.onBoardingLanguageDestination(
+    navOptions: NavOptions? = null,
+) {
     composableWithStayTransitions<OnboardingLanguageRoute> {
         OnboardingLanguageScreen()
     }
