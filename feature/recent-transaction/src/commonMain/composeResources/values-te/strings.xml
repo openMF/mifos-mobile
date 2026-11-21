@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">ఇటీవలి లావాదేవీలు</string>
+    <string name="no_transaction">లావాదేవీలు లేవు</string>
+    <string name="filter">ఫిల్టర్</string>
+    <string name="filter_transactions">లావాదేవీలను ఫిల్టర్ చేయండి</string>
+    <string name="clear_all">అన్నీ తొలగించు</string>
+    <string name="filter_by_account">ఖాతా ద్వారా ఫిల్టర్ చేయండి:</string>
+    <string name="account_number_label">ఖాతా సంఖ్య: %1$s</string>
+    <string name="select_account">ఖాతాను ఎంచుకోండి</string>
+    <string name="balance">నిల్వ: %1$s %2$s</string>
+    <string name="transaction_type">లావాదేవీ రకం:</string>
+    <string name="all">అన్నీ</string>
+    <string name="debits">డెబిట్లు</string>
+    <string name="credits">క్రెడిట్లు</string>
+    <string name="apply_filters">ఫిల్టర్లను వర్తించు</string>
+
+    <string name="deposit">డిపాజిట్</string>
+    <string name="withdrawal">విత్ డ్రాయల్</string>
+    <string name="interest_posting">వడ్డీ పోస్టింగ్</string>
+    <string name="fee_deduction">రుసుము తగ్గింపు</string>
+    <string name="transfer">బదిలీ</string>
+    <string name="transaction">లావాదేవీ</string>
+</resources>

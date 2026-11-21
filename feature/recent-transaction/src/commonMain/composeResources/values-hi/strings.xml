@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="recent_transactions">हाल के लेन-देन</string>
     <string name="no_transaction">कोई लेन-देन नहीं</string>
     <string name="atm_icon">एटीएम आइकन</string>
@@ -29,4 +28,11 @@
     <string name="debits">नामे</string>
     <string name="credits">जमा</string>
     <string name="apply_filters">फ़िल्टर लागू करें</string>
+
+    <string name="deposit">जमा</string>
+    <string name="withdrawal">निकासी</string>
+    <string name="interest_posting">ब्याज पोस्टिंग</string>
+    <string name="fee_deduction">शुल्क कटौती</string>
+    <string name="transfer">स्थानांतरण</string>
+    <string name="transaction">लेनदेन</string>
 </resources>

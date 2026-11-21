@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="feature_account_title">Счета</string>
+    <string name="feature_loan_account_title">Кредитные счета</string>
+    <string name="feature_saving_account_title">Сберегательные счета</string>
+    <string name="feature_share_account_title">Акционерные счета</string>
+
+    <string name="feature_accounts_filter_status">Статус</string>
+    <string name="feature_accounts_filter_type">Тип</string>
+
+    <!-- Loan account filters -->
+    <string name="feature_loan_account_filter_active">Активен</string>
+    <string name="feature_loan_account_filter_approval_pending">Ожидает одобрения</string>
+    <string name="feature_loan_account_filter_closed">Закрыт</string>
+    <string name="feature_loan_account_filter_disburse">Ожидает выдачи</string>
+    <string name="feature_loan_account_filter_overpaid">Излишне уплачено</string>
+    <string name="feature_loan_account_filter_in_arrears">Просрочено</string>
+    <string name="feature_loan_account_filter_withdrawn">Отозван</string>
+    <string name="feature_loan_account_filter_matured">Срок истек</string>
+    <string name="feature_loan_account_filter_rejected">Отклонен</string>
+
+    <string name="feature_loan_account_filter_personal">Личный</string>
+    <string name="feature_loan_account_filter_bronze">Бронзовый</string>
+
+    <!-- Savings account filters -->
+    <string name="feature_savings_filter_wallet_account">Кошелек</string>
+    <string name="feature_savings_filter_bank_account">Банковский счет</string>
+    <string name="feature_savings_filter_group_account">Групповой счет</string>
+    <string name="feature_savings_filter_nb_account">NB счет</string>
+
+    <string name="feature_savings_filter_active_account">Активен</string>
+    <string name="feature_savings_filter_pending_account">Ожидает одобрения</string>
+    <string name="feature_savings_filter_closed_account">Закрыт</string>
+    <string name="feature_savings_filter_matured_account">Срок истек</string>
+    <string name="feature_savings_filter_approved_account">Одобрен</string>
+
+    <string name="feature_savings_filter">Фильтры</string>
+    <string name="feature_savings_reset">Сбросить</string>
+    <string name="feature_savings_apply">Применить</string>
+    <string name="feature_filters_count">Выбрано: %1$s</string>
+
+    <string name="feature_transaction_transaction_history">История транзакций</string>
+    <string name="feature_transaction_statement">Выписка</string>
+    <string name="feature_transaction_download_icon_description">Иконка загрузки</string>
+    <string name="feature_transaction_filter">Фильтр</string>
+    <string name="feature_transaction_filter_icon_description">Иконка фильтра</string>
+
+    <!-- Transaction filters -->
+    <string name="feature_transaction_filter_credit">Кредит (Пополнение)</string>
+    <string name="feature_transaction_filter_debit">Дебет (Списание)</string>
+
+    <string name="feature_transaction_filter_past_month">За прошлый месяц</string>
+    <string name="feature_transaction_filter_past_3_months">За последние 3 месяца</string>
+    <string name="feature_transaction_filter_past_6_months">За последние 6 месяцев</string>
+    <string name="feature_transaction_filter_past_1_year">За прошлый год</string>
+    <string name="feature_transaction_filter_past_2_years">За последние 2 года</string>
+
+    <string name="feature_transaction_type">Тип транзакции</string>
+    <string name="feature_duration">Период</string>
+    <string name="feature_no_transactions_found">Транзакции не найдены</string>
+    <string name="feature_no__filtered_transactions_found">Транзакции по выбранным фильтрам не найдены</string>
+
+    <string name="feature_generic_error_server">Ошибка сервера, повторите попытку позже</string>
+
+    <!-- Transaction details -->
+    <string name="feature_transaction_details">Детали транзакции</string>
+    <string name="feature_transaction_detail_id">ID транзакции</string>
+    <string name="feature_transaction_detail_transfer_description">Описание перевода</string>
+    <string name="feature_transaction_detail_date">Дата</string>
+    <string name="feature_transaction_detail_status">Статус</string>
+    <string name="feature_transaction_detail_status_success">Успешно</string>
+    <string name="feature_transaction_detail_account_ref">Связанный счет</string>
+    <string name="feature_transaction_detail_payment_method">Способ оплаты</string>
+    <string name="feature_transaction_detail_type">Тип</string>
+    <string name="feature_transaction_detail_status_reversed">Аннулировано</string>
+    <string name="feature_transaction_detail_receipt">Квитанция №</string>
+    <string name="feature_transaction_detail_external_id">Внешний ID</string>
+    <string name="feature_transaction_detail_breakdown">Детализация</string>
+    <string name="feature_transaction_detail_principal">Основной долг</string>
+    <string name="feature_transaction_detail_interest">Проценты</string>
+    <string name="feature_transaction_detail_fees">Комиссии</string>
+    <string name="feature_transaction_detail_penalties">Штрафы</string>
+    <string name="feature_transaction_detail_balance">Остаток на балансе</string>
+    <string name="feature_transaction_detail_default_type">Транзакция</string>
+
+    <string name="feature_transaction_history_deposit">Депозит</string>
+    <string name="feature_transaction_history_withdrawal">Снятие</string>
+    <string name="feature_transaction_history_interest_posting">Начисление процентов</string>
+    <string name="feature_transaction_history_fee_deduction">Списание комиссии</string>
+    <string name="feature_transaction_history_transfer">Перевод</string>
+    <string name="feature_transaction_history_transaction">Транзакция</string>
+    <string name="feature_transaction_history_disbursement">Выдача кредита</string>
+    <string name="feature_transaction_history_repayment">Погашение</string>
+    <string name="feature_transaction_history_purchase">Покупка</string>
+    <string name="feature_transaction_history_charge_payment">Оплата сбора</string>
+    <string name="feature_transaction_history_redeem">Выкуп</string>
+    <string name="feature_transaction_history_recovery_repayment">Взыскание</string>
+    <string name="feature_transaction_history_interest_waiver">Отмена процентов</string>
+    <string name="feature_transaction_history_fee_waiver">Отмена комиссии</string>
+</resources>

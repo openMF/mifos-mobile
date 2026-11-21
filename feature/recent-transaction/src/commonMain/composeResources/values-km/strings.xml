@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">ប្រតិបត្តិការថ្មីៗ</string>
+    <string name="no_transaction">គ្មានប្រតិបត្តិការ</string>
+    <string name="filter">ចម្រាញ់</string>
+    <string name="filter_transactions">ចម្រាញ់ប្រតិបត្តិការ</string>
+    <string name="clear_all">សម្អាតទាំងអស់</string>
+    <string name="filter_by_account">ចម្រាញ់តាមគណនី:</string>
+    <string name="account_number_label">លេខគណនី: %1$s</string>
+    <string name="select_account">ជ្រើសរើសគណនី</string>
+    <string name="balance">សមតុល្យ: %1$s %2$s</string>
+    <string name="transaction_type">ប្រភេទប្រតិបត្តិការ:</string>
+    <string name="all">ទាំងអស់</string>
+    <string name="debits">ដកប្រាក់</string>
+    <string name="credits">ដាក់ប្រាក់</string>
+    <string name="apply_filters">អនុវត្តការចម្រាញ់</string>
+
+    <string name="deposit">ការដាក់ប្រាក់</string>
+    <string name="withdrawal">ការដកប្រាក់</string>
+    <string name="interest_posting">ការបញ្ចូលការប្រាក់</string>
+    <string name="fee_deduction">ការកាត់ថ្លៃសេវា</string>
+    <string name="transfer">ការផ្ទេរប្រាក់</string>
+    <string name="transaction">ប្រតិបត្តិការ</string>
+</resources>

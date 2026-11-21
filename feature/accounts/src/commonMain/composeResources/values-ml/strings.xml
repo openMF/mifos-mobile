@@ -18,8 +18,7 @@
     <string name="feature_accounts_filter_status">സ്റ്റാറ്റസ്</string>
     <string name="feature_accounts_filter_type">തരം</string>
 
-    <!--    Loan Account Filters-->
-
+    <!-- Loan account filters -->
     <string name="feature_loan_account_filter_active">സജീവം</string>
     <string name="feature_loan_account_filter_approval_pending">അംഗീകാരം കാത്തിരിക്കുന്നു</string>
     <string name="feature_loan_account_filter_closed">അടച്ചവ</string>
@@ -33,12 +32,11 @@
     <string name="feature_loan_account_filter_personal">വ്യക്തിഗതം</string>
     <string name="feature_loan_account_filter_bronze">വെങ്കലം</string>
 
-    <!--    Savings account filters-->
+    <!-- savings account filters -->
     <string name="feature_savings_filter_wallet_account">വാലറ്റ് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_bank_account">ബാങ്ക് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_group_account">ഗ്രൂപ്പ് അക്കൗണ്ട്</string>
     <string name="feature_savings_filter_nb_account">NB അക്കൗണ്ട്</string>
-
     <string name="feature_savings_filter_active_account">സജീവം</string>
     <string name="feature_savings_filter_pending_account">അംഗീകാരം കാത്തിരിക്കുന്നു</string>
     <string name="feature_savings_filter_closed_account">അടച്ചവ</string>
@@ -56,7 +54,7 @@
     <string name="feature_transaction_filter">ഫിൽട്ടർ</string>
     <string name="feature_transaction_filter_icon_description">ഫിൽട്ടർ ഐക്കൺ</string>
 
-    <!--    Transaction filters -->
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">ക്രെഡിറ്റ്</string>
     <string name="feature_transaction_filter_debit">ഡെബിറ്റ്</string>
 
@@ -73,7 +71,7 @@
 
     <string name="feature_generic_error_server">സെർവർ തകരാർ കാരണം മുന്നോട്ട് പോകാനാവില്ല, കുറച്ചു കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക</string>
 
-    <!--    Transaction Details -->
+    <!-- Transaction details -->
     <string name="feature_transaction_details">ഇടപാട് വിവരങ്ങൾ</string>
     <string name="feature_transaction_detail_id">ഇടപാട് ഐഡി</string>
     <string name="feature_transaction_detail_transfer_description">കൈമാറ്റ വിവരണം</string>
@@ -94,4 +92,18 @@
     <string name="feature_transaction_detail_balance">ബാക്കി തുക</string>
     <string name="feature_transaction_detail_default_type">ഇടപാട്</string>
 
+    <string name="feature_transaction_history_deposit">നിക്ഷേപം</string>
+    <string name="feature_transaction_history_withdrawal">പിൻവലിക്കൽ</string>
+    <string name="feature_transaction_history_interest_posting">പലിശ വരവ്</string>
+    <string name="feature_transaction_history_fee_deduction">ഫീസ്‌ ഈടാക്കൽ</string>
+    <string name="feature_transaction_history_transfer">കൈമാറ്റം</string>
+    <string name="feature_transaction_history_transaction">ഇടപാട്</string>
+    <string name="feature_transaction_history_disbursement">വായ്പാ വിതരണം</string>
+    <string name="feature_transaction_history_repayment">തിരിച്ചടവ്</string>
+    <string name="feature_transaction_history_purchase">വാങ്ങൽ</string>
+    <string name="feature_transaction_history_charge_payment">ചാർജ് പേയ്മെന്റ്</string>
+    <string name="feature_transaction_history_redeem">റീഡീം ചെയ്യുക</string>
+    <string name="feature_transaction_history_recovery_repayment">റിക്കവറി തിരിച്ചടവ്</string>
+    <string name="feature_transaction_history_interest_waiver">പലിശ ഇളവ്</string>
+    <string name="feature_transaction_history_fee_waiver">ഫീസ്‌ ഇളവ്</string>
 </resources>

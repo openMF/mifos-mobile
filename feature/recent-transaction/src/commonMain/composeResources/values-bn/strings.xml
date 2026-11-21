@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
+-->
+<resources>
+    <string name="recent_transactions">সাম্প্রতিক লেনদেন</string>
+    <string name="no_transaction">কোন লেনদেন নেই</string>
+    <string name="filter">ফিল্টার</string>
+    <string name="filter_transactions">লেনদেন ফিল্টার করুন</string>
+    <string name="clear_all">সব মুছে ফেলুন</string>
+    <string name="filter_by_account">অ্যাকাউন্ট দ্বারা ফিল্টার করুন:</string>
+    <string name="account_number_label">অ্যাকাউন্ট নম্বর: %1$s</string>
+    <string name="select_account">অ্যাকাউন্ট নির্বাচন করুন</string>
+    <string name="balance">ব্যালেন্স: %1$s %2$s</string>
+    <string name="transaction_type">লেনদেনের ধরন:</string>
+    <string name="all">সব</string>
+    <string name="debits">ডেবিট</string>
+    <string name="credits">ক্রেডিট</string>
+    <string name="apply_filters">ফিল্টার প্রয়োগ করুন</string>
+
+    <string name="deposit">জমা</string>
+    <string name="withdrawal">উত্তোলন</string>
+    <string name="interest_posting">সুদ প্রদান</string>
+    <string name="fee_deduction">চার্জ কর্তন</string>
+    <string name="transfer">স্থানান্তর</string>
+    <string name="transaction">লেনদেন</string>
+</resources>

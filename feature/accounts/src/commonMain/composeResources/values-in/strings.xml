@@ -9,7 +9,6 @@
     See https://github.com/openMF/mobile-mobile/blob/master/LICENSE.md
 -->
 <resources>
-
     <string name="feature_account_title">Akun</string>
     <string name="feature_loan_account_title">Akun Pinjaman</string>
     <string name="feature_saving_account_title">Akun Tabungan</string>
@@ -18,6 +17,7 @@
     <string name="feature_accounts_filter_status">Status</string>
     <string name="feature_accounts_filter_type">Jenis</string>
 
+    <!-- Loan Account filters -->
     <string name="feature_loan_account_filter_active">Aktif</string>
     <string name="feature_loan_account_filter_approval_pending">Menunggu Persetujuan</string>
     <string name="feature_loan_account_filter_closed">Ditutup</string>
@@ -31,6 +31,7 @@
     <string name="feature_loan_account_filter_personal">Pribadi</string>
     <string name="feature_loan_account_filter_bronze">Perunggu</string>
 
+    <!-- Savings account filters -->
     <string name="feature_savings_filter_wallet_account">Akun Dompet</string>
     <string name="feature_savings_filter_bank_account">Akun Bank</string>
     <string name="feature_savings_filter_group_account">Akun Grup</string>
@@ -53,9 +54,9 @@
     <string name="feature_transaction_filter">Filter</string>
     <string name="feature_transaction_filter_icon_description">Ikon Filter</string>
 
+    <!-- Transaction filters -->
     <string name="feature_transaction_filter_credit">Kredit</string>
     <string name="feature_transaction_filter_debit">Debit</string>
-
     <string name="feature_transaction_filter_past_month">Bulan Lalu</string>
     <string name="feature_transaction_filter_past_3_months">3 Bulan Terakhir</string>
     <string name="feature_transaction_filter_past_6_months">6 Bulan Terakhir</string>
@@ -69,6 +70,7 @@
 
     <string name="feature_generic_error_server">Masalah server dari sisi kami, tidak dapat melanjutkan. Coba lagi sesaat lagi</string>
 
+    <!-- Transaction details -->
     <string name="feature_transaction_details">Detail Transaksi</string>
     <string name="feature_transaction_detail_id">ID Transaksi</string>
     <string name="feature_transaction_detail_transfer_description">Deskripsi Transfer</string>
@@ -89,4 +91,18 @@
     <string name="feature_transaction_detail_balance">Sisa Saldo</string>
     <string name="feature_transaction_detail_default_type">Transaksi</string>
 
+    <string name="feature_transaction_history_deposit">Setoran</string>
+    <string name="feature_transaction_history_withdrawal">Penarikan</string>
+    <string name="feature_transaction_history_interest_posting">Posting Bunga</string>
+    <string name="feature_transaction_history_fee_deduction">Deduksi Biaya</string>
+    <string name="feature_transaction_history_transfer">Transfer</string>
+    <string name="feature_transaction_history_transaction">Transaksi</string>
+    <string name="feature_transaction_history_disbursement">Pencairan</string>
+    <string name="feature_transaction_history_repayment">Pembayaran Kembali</string>
+    <string name="feature_transaction_history_purchase">Pembelian</string>
+    <string name="feature_transaction_history_charge_payment">Pembayaran Biaya</string>
+    <string name="feature_transaction_history_redeem">Tukar (Redeem)</string>
+    <string name="feature_transaction_history_recovery_repayment">Pembayaran Pemulihan</string>
+    <string name="feature_transaction_history_interest_waiver">Penghapusan Bunga</string>
+    <string name="feature_transaction_history_fee_waiver">Penghapusan Biaya</string>
 </resources>
