@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import mifos_mobile.feature.settings.generated.resources.Res
@@ -275,7 +276,9 @@ internal fun SettingsActions(
         ) {
             items.forEach { item ->
                 MifosActionCard(
-                    modifier = Modifier.padding(horizontal = KptTheme.spacing.md),
+                    modifier = Modifier
+                        .padding(horizontal = KptTheme.spacing.md)
+                        .testTag("settings.item.${item.route}"),
                     title = item.title,
                     subTitle = item.subTitle,
                     icon = item.icon,

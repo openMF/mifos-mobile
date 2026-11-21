@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_settings_action_theme">Оформление</string>
+    <string name="feature_settings_action_theme_tip">Выберите стиль и цветовой режим приложения</string>
+    <string name="feature_settings_theme_appearance">Оформление приложения</string>
+    <string name="feature_settings_theme_brand_subtitle">Выберите визуальный стиль. Светлый и тёмный режим настраиваются отдельно.</string>
+    <string name="feature_settings_theme_mode">Цветовой режим</string>
+    <string name="feature_settings_theme_brand_ipoteka">Ipoteka Bank</string>
+    <string name="feature_settings_theme_brand_ipoteka_description">Официальная зелёная палитра OTP и спокойные банковские поверхности.</string>
+    <string name="feature_settings_theme_brand_aurora">Аврора</string>
+    <string name="feature_settings_theme_brand_aurora_description">Мягкие фиолетовые и бирюзовые акценты, больше воздуха и плавные формы.</string>
+    <string name="feature_settings_theme_brand_graphite">Графит</string>
+    <string name="feature_settings_theme_brand_graphite_description">Точные нейтральные поверхности со сдержанными изумрудными акцентами.</string>
+    <string name="feature_settings_theme_light">Светлая тема</string>
+    <string name="feature_settings_theme_dark">Тёмная тема</string>
+    <string name="feature_settings_theme_system">Как в системе</string>
+    <string name="feature_settings_apply_theme">Применить</string>
+    <string name="feature_settings_theme_based_on_time">По расписанию</string>
+    <string name="feature_settings_theme_choose_dark_mode_time">Расписание тёмной темы</string>
+    <string name="feature_settings_theme_choose_dark_mode_starts_at">Тёмная тема включается</string>
+    <string name="feature_settings_theme_choose_dark_mode_ends_at">Тёмная тема выключается</string>
+    <string name="feature_settings_theme_apply">Готово</string>
+</resources>
