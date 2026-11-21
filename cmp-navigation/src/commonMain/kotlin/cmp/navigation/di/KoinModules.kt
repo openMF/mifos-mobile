@@ -30,6 +30,7 @@ import org.mifos.mobile.feature.loan.application.di.loanApplicationModule
 import org.mifos.mobile.feature.loanaccount.di.loanAccountModule
 import org.mifos.mobile.feature.notification.di.NotificationModule
 import org.mifos.mobile.feature.onboarding.language.di.SetOnboardingLanguageModule
+import org.mifos.mobile.feature.onboarding.permissions.di.OnboardingPermissionsModule
 import org.mifos.mobile.feature.passcode.di.PasscodeModule
 import org.mifos.mobile.feature.pocket.di.PocketModule
 import org.mifos.mobile.feature.qr.di.QrModule
@@ -82,6 +83,7 @@ object KoinModules {
             GuarantorModule,
             NotificationModule,
             SetOnboardingLanguageModule,
+            OnboardingPermissionsModule,
             PasscodeModule,
             StatusModule,
             loanApplicationModule,

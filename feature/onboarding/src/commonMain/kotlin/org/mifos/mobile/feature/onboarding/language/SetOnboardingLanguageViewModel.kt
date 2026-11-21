@@ -10,6 +10,7 @@
 package org.mifos.mobile.feature.onboarding.language
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 import org.mifos.mobile.core.datastore.UserPreferencesRepository
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.utils.BaseViewModel
+import kotlin.time.Duration.Companion.milliseconds
 
 internal class SetOnboardingLanguageViewModel(
     private val repository: UserPreferencesRepository,
@@ -39,13 +41,18 @@ internal class SetOnboardingLanguageViewModel(
     }
 
     private fun handleSetLanguage(action: OnboardingLanguageAction.SetLanguage) {
+        mutableStateFlow.update {
+            it.copy(
+                currentLanguage = action.languageConfig,
+                loading = true,
+            )
+        }
         viewModelScope.launch {
             repository.setLanguage(action.languageConfig)
-            mutableStateFlow.update {
-                it.copy(currentLanguage = action.languageConfig)
-            }
             repository.setShowOnboarding(false)
             repository.setFirstTimeState(false)
+            delay(200L.milliseconds)
+            sendEvent(OnboardingLanguageEvent.OnboardingCompleted)
         }
     }
 
@@ -58,9 +65,12 @@ internal class SetOnboardingLanguageViewModel(
 
 internal data class OnboardingLanguageState(
     val currentLanguage: LanguageConfig,
+    val loading: Boolean = false,
 )
 
-internal sealed interface OnboardingLanguageEvent
+internal sealed interface OnboardingLanguageEvent {
+    data object OnboardingCompleted : OnboardingLanguageEvent
+}
 
 internal sealed interface OnboardingLanguageAction {
     data class SetLanguage(val languageConfig: LanguageConfig) : OnboardingLanguageAction

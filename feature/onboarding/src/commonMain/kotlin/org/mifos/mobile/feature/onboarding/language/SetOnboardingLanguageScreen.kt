@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,10 +33,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import mifos_mobile.core.ui.generated.resources.ic_icon_logo_1
-import mifos_mobile.feature.onboarding_language.generated.resources.Res
-import mifos_mobile.feature.onboarding_language.generated.resources.feature_onboarding_choose_your_app_language
-import mifos_mobile.feature.onboarding_language.generated.resources.feature_onboarding_chosen_language_can_be_changed_later_in_the_settings
-import mifos_mobile.feature.onboarding_language.generated.resources.feature_onboarding_submit
+import mifos_mobile.feature.onboarding.generated.resources.Res
+import mifos_mobile.feature.onboarding.generated.resources.feature_onboarding_choose_your_app_language
+import mifos_mobile.feature.onboarding.generated.resources.feature_onboarding_chosen_language_can_be_changed_later_in_the_settings
+import mifos_mobile.feature.onboarding.generated.resources.feature_onboarding_powered_by
+import mifos_mobile.feature.onboarding.generated.resources.feature_onboarding_submit
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -49,6 +51,7 @@ import org.mifos.mobile.core.designsystem.theme.MifosMobileTheme
 import org.mifos.mobile.core.designsystem.theme.MifosTypography
 import org.mifos.mobile.core.model.LanguageConfig
 import org.mifos.mobile.core.ui.component.MifosPoweredCard
+import org.mifos.mobile.core.ui.utils.EventsEffect
 import template.core.base.designsystem.theme.KptTheme
 
 @Composable
@@ -58,13 +61,27 @@ internal fun OnboardingLanguageScreen(
 ) {
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    OnboardingLanguageScreenContent(
-        uiState = uiState,
-        modifier = modifier,
-        onAction = remember(viewModel) {
-            { viewModel.trySendAction(it) }
-        },
-    )
+    EventsEffect(viewModel.eventFlow) { event ->
+        when (event) {
+            is OnboardingLanguageEvent.OnboardingCompleted -> {
+                // Handled via RootNavViewModel state observation
+            }
+        }
+    }
+    when (uiState.loading) {
+        true -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+        else -> OnboardingLanguageScreenContent(
+            uiState = uiState,
+            modifier = modifier,
+            onAction = remember(viewModel) {
+                { viewModel.trySendAction(it) }
+            },
+        )
+    }
 }
 
 @Composable
@@ -87,14 +104,18 @@ internal fun OnboardingLanguageScreenContent(
                         .padding(KptTheme.spacing.md)
                         .height(DesignToken.sizes.buttonHeight),
                     shape = KptTheme.shapes.medium,
-                    onClick = { onAction(OnboardingLanguageAction.SetLanguage(selectedLanguage)) },
+                    onClick = {
+                        onAction(OnboardingLanguageAction.SetLanguage(selectedLanguage))
+                    },
                 ) {
                     Text(
                         text = stringResource(Res.string.feature_onboarding_submit),
                         style = MifosTypography.titleMedium,
                     )
                 }
-                MifosPoweredCard()
+                MifosPoweredCard(
+                    text = stringResource(Res.string.feature_onboarding_powered_by),
+                )
             }
         },
     ) {

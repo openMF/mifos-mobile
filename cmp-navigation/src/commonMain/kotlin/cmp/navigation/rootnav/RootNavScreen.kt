@@ -42,6 +42,9 @@ import org.mifos.mobile.feature.auth.navigation.navigateToAuthGraph
 import org.mifos.mobile.feature.onboarding.language.navigation.OnboardingLanguageRoute
 import org.mifos.mobile.feature.onboarding.language.navigation.navigateToOnboardingLanguage
 import org.mifos.mobile.feature.onboarding.language.navigation.onBoardingLanguageDestination
+import org.mifos.mobile.feature.onboarding.permissions.navigation.OnboardingPermissionsRoute
+import org.mifos.mobile.feature.onboarding.permissions.navigation.navigateToOnboardingPermissions
+import org.mifos.mobile.feature.onboarding.permissions.navigation.onBoardingPermissionsDestination
 import org.mifos.mobile.feature.passcode.navigation.PasscodeRoute
 import org.mifos.mobile.feature.passcode.navigation.navigateToPasscodeScreen
 import org.mifos.mobile.feature.passcode.navigation.passcodeDestination
@@ -73,6 +76,9 @@ fun RootNavScreen(
     ) {
         splashDestination()
         onBoardingLanguageDestination()
+        onBoardingPermissionsDestination(
+            onNavigateToLanguageDestination = navController::navigateToOnboardingLanguage,
+        )
         authenticationNavGraph(
             navController,
             navController::navigateToPasscodeScreen,
@@ -83,22 +89,29 @@ fun RootNavScreen(
     }
 
     val targetRoute = when (state) {
-        RootNavState.SetLanguage -> OnboardingLanguageRoute
+        RootNavState.Onboarding -> OnboardingPermissionsRoute
         RootNavState.Auth -> AuthGraphRoute
         RootNavState.Splash -> SplashRoute
         RootNavState.UserLocked -> PasscodeRoute.Standard
         is RootNavState.UserUnlocked -> AuthenticatedGraphRoute
     }
     val currentRoute = navController.currentDestination?.rootLevelRoute()
+    val isAlreadyInSetLanguage = (
+        (state is RootNavState.Onboarding) &&
+            (
+                currentRoute == OnboardingLanguageRoute.toObjectNavigationRoute() ||
+                    currentRoute == OnboardingPermissionsRoute.toObjectNavigationRoute()
+                )
+        )
 
     // Don't navigate if we are already at the correct root. This notably happens during process
     // death. In this case, the NavHost already restores state, so we don't have to navigate.
     // However, if the route is correct but the underlying state is different, we should still
     // proceed in order to get a fresh version of that route.
-    if (currentRoute == targetRoute.toObjectNavigationRoute() &&
+    if ((currentRoute == targetRoute.toObjectNavigationRoute() || isAlreadyInSetLanguage) &&
         previousStateReference.value == state
     ) {
-        previousStateReference.value == state
+        previousStateReference.value = state
         return
     }
     previousStateReference.value = state
@@ -121,7 +134,7 @@ fun RootNavScreen(
         when (state) {
             RootNavState.Splash -> navController.navigateToSplash(rootNavOptions)
             RootNavState.Auth -> navController.navigateToAuthGraph(rootNavOptions)
-            RootNavState.SetLanguage -> navController.navigateToOnboardingLanguage(rootNavOptions)
+            RootNavState.Onboarding -> navController.navigateToOnboardingPermissions(rootNavOptions)
             RootNavState.UserLocked -> navController.navigateToPasscodeScreen(rootNavOptions)
             is RootNavState.UserUnlocked -> navController.navigateToAuthenticatedGraph(
                 navOptions = rootNavOptions,

@@ -30,4 +30,20 @@
     <string name="feature_onboarding_swahili">Swahili(Kiswahili)</string>
     <string name="feature_onboarding_farsi">Farsi(فارسی)</string>
     <string name="feature_onboarding_submit">Submit</string>
+
+    <!-- Permissions Onboarding -->
+    <string name="feature_onboarding_permissions_title">App Permissions</string>
+    <string name="feature_onboarding_permissions_subtitle">To provide you with a seamless experience, Mifos Mobile requires a few permissions.</string>
+    <string name="feature_onboarding_continue">Continue</string>
+    <string name="feature_onboarding_grant">Grant</string>
+    <string name="feature_onboarding_grant_and_continue">Grant and Continue</string>
+    <string name="feature_onboarding_skip_for_now">Skip for Now</string>
+    <string name="feature_onboarding_permission_granted">Granted</string>
+    <string name="feature_onboarding_permission_notification_title">Notifications</string>
+    <string name="feature_onboarding_permission_notification_desc">Get real-time updates and transaction alerts</string>
+    <string name="feature_onboarding_permission_camera_title">Camera</string>
+    <string name="feature_onboarding_permission_camera_desc">Scan QR codes for quick transfers and payments</string>
+    <string name="feature_onboarding_permission_location_title">Location</string>
+    <string name="feature_onboarding_permission_location_desc">Find nearby branches and secure transaction locations</string>
+    <string name="feature_onboarding_powered_by">Powered by</string>
 </resources>
