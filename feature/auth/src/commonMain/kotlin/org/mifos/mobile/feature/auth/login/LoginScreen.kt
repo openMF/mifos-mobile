@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -91,10 +92,17 @@ internal fun LoginScreen(
     val locationPermissionState = rememberPermissionState(
         permission = Permission.FineLocation,
     )
+    val notificationPermissionState = rememberPermissionState(
+        permission = Permission.Notification
+    )
 
-    LaunchedEffect(Unit) {
-        if (!locationPermissionState.status.isGranted) {
+    val hasPromptedLocation = remember { mutableStateOf(false) }
+    LaunchedEffect(locationPermissionState.status) {
+        if (!locationPermissionState.status.isGranted && !hasPromptedLocation.value) {
             locationPermissionState.launchPermissionRequest()
+            hasPromptedLocation.value = true
+        } else if (!notificationPermissionState.status.isGranted){
+            notificationPermissionState.launchPermissionRequest()
         }
     }
 
